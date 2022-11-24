@@ -1,4 +1,4 @@
-# Rivtlib Index
+# rivt Index
 
 > Auto-generated documentation index.
 

@@ -2,7 +2,7 @@
 layout: default
 ---
 
-[link to **rivt** code on Github](https://github.com/rivtcalc/rivt)
+[link to **rivt code** on Github](https://github.com/rivtcalc/rivt)
 
 [link to user manual](https://github.com/rivtcalc/rivtdoc)
 
@@ -109,10 +109,10 @@ into a collated report. The file, folder and prefix naming divide the
 calculation report into modular, easily edited and shareable components.
 Folders are shown in bold, user names in italics and notes in parenthesis.
 
-- **rivt_*project_name***
+- **rivt_*project_name*** 
     - .gitignore (share text folder only)
     - .vscode (rivt settings)
-    - **text**
+    - **calcs**
         - **rv00*_config_name*** (calc configuration data)
             - units.py
         - **rv01*_calc_division_name1***  (report division name)
@@ -144,7 +144,13 @@ Folders are shown in bold, user names in italics and notes in parenthesis.
         - **d02**
             - *image2*.jpg
             - *attachment*.pdf    
-        - **html** (html calc output files)
+    - **reports** (PDF output)
+            - d0101_*calc_name1*.pdf
+            - d0102_*calc_name2*.pdf
+            - d0201_*calc_name3*.pdf
+            - d0202_*calc_name4*.pdf
+            - *report*.pdf
+    - **sites** (HTML output)
             - **resources**
                 - *image1*.png
                 - *image2*.png
@@ -153,25 +159,18 @@ Folders are shown in bold, user names in italics and notes in parenthesis.
             - d0102_*calc_name2*.html
             - d0201_*calc_name3*.html
             - d0202_*calc_name4*.html
-        - **pdf** (pdf calc output files)
-            - d0101_*calc_name1*.pdf
-            - d0102_*calc_name2*.pdf
-            - d0201_*calc_name3*.pdf
-            - d0202_*calc_name4*.pdf
-            - *report*.pdf
-    - **files** (additional user resource files)
-        - ***user_folder_name***
-            - info.txt 
-
+            
 The **rivt_** prefix for the project folder, the three top-level folder names
 (text, docs and files) and the two output doc folders (html and pdf) are
 required. The file prefix determines the report document organization with the
 form rvddnn_*filename*.py where dd is the division number and ddnn is the calc
 number.  The rest of the file name is a user chosen label for the calc name.
 Underscores that separate words in file and folder names are stripped out when
-used in the output. The API is designed so that only files in the **text**
-folder are uploaded for version control and sharing. They constitute the
-essential core of the calculation that is helpful to share. Files in the docs
+used in the output. 
+
+The API is designed so that only the **calcs**
+folder can be copied to version control and sharing. The folder constitutes the
+essential core of the calculation. Files in the docs
 folder are typically binary and proprietary files such as images, PDF
 attachments and client data.
 

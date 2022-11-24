@@ -145,20 +145,20 @@ Folders are shown in bold, user names in italics and notes in parenthesis.
             - *image2*.jpg
             - *attachment*.pdf    
     - **reports** (PDF output)
-            - d0101_*calc_name1*.pdf
-            - d0102_*calc_name2*.pdf
-            - d0201_*calc_name3*.pdf
-            - d0202_*calc_name4*.pdf
-            - *report*.pdf
+        - d0101_*calc_name1*.pdf
+        - d0102_*calc_name2*.pdf
+        - d0201_*calc_name3*.pdf
+        - d0202_*calc_name4*.pdf
+        - *report*.pdf
     - **sites** (HTML output)
-            - **resources**
-                - *image1*.png
-                - *image2*.png
-            - index.html
-            - d0101_*calc_name1*.html
-            - d0102_*calc_name2*.html
-            - d0201_*calc_name3*.html
-            - d0202_*calc_name4*.html
+        - **resources**
+            - *image1*.png
+            - *image2*.png
+        - index.html
+        - d0101_*calc_name1*.html
+        - d0102_*calc_name2*.html
+        - d0201_*calc_name3*.html
+        - d0202_*calc_name4*.html
             
 The **rivt_** prefix for the project folder, the three top-level folder names
 (text, docs and files) and the two output doc folders (html and pdf) are

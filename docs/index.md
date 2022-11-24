@@ -2,11 +2,11 @@
 layout: default
 ---
 
-[link to **rivtlib** code on Github](https://github.com/ShareCalcs/rivtlib)
+[link to **rivt** code on Github](https://github.com/rivtcalc/rivt)
 
-[link to **rivt** user manual](https://github.com/ShareCalcs/rivtdoc)
+[link to user manual](https://github.com/rivtcalc/rivtdoc)
 
-[link to **rivt** installers](https://github.com/ShareCalcs/rivt)
+[link to installers](https://github.com/rivtcalc/rivtcalc)
 
 ## Introduction
 
@@ -47,9 +47,9 @@ to sharing and collaboration.
 
 <img src="./assets/img/table2.png" width="700" height="140" />
 
-## rivt Overview
+## rivtcalc Overview
 
-**rivt** is an open source software stack for writing calculation documents. It
+**rivtcalc** is an open source software stack for writing calculation documents. It
 defines the **rivtText** markup language and a default installation that
 includes **rivtlib**, **VSCode**, and **Github**. **rivtText** is a plain text,
 human readable language built on restructuredText. It can be used to write
@@ -58,7 +58,7 @@ Python library and API that processes **rivtText**. **VSCode** and **Github**
 are the extensible, customizable editor and searchable repository system from
 Microsoft.
 
-**rivt** can be installed on the desktop or mobile devices, or run remotely in
+**rivtcalc** can be installed on the desktop or mobile devices, or run remotely in
 the cloud.  The minimum software needed to process rivtText (with text output
 only) is Python 3.8 and above plus a few Python libraries and a plain text
 processor.  This minimum implementation can be explored online at 
@@ -72,7 +72,7 @@ installation requires:
 3. LaTeX 
 4. Github account
 
-**rivt** installers are available for every OS platforms.  **rivt** in the cloud
+**rivtcalc** installers are available for every OS platforms.  **rivt** in the cloud
 is discussed using GitHub CodeSpaces in the documentation here 
 [**link to rivtDocs**](https://github.com/ShareCalcs/rivtdocs). Installation 
 programs are provided here - [**link to rivt**](https://github.com/ShareCalcs/rivt)
@@ -80,7 +80,7 @@ programs are provided here - [**link to rivt**](https://github.com/ShareCalcs/ri
 
 ## rivtText Overview
 
-An API for **rivtText** is the **rivtlib** Python package with has five methods:
+An API for **rivtText** is the **rivt** Python package and API that includes five methods:
 R(rs), I(rs), V(rs), T(rs), X(rs). The argument rs is a triple quoted Python
 string containing rivtText commands and tags. 
 

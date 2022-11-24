@@ -101,9 +101,9 @@ project specific and copyrighted information (clients, images etc), which are ty
 shared in the generic text input and output files.
     
 
-## **rivtlib** Overview
+## **rivt** Overview
 
-**rivtlib** is a Python package providing a calculation API for **rivtText**.
+**rivt** is a Python package providing a calculation API for **rivtText**.
 The API uses file and folder naming conventions to organize and assemble calcs
 into a collated report. The file, folder and prefix naming divide the
 calculation report into modular, easily edited and shareable components.
@@ -217,7 +217,7 @@ repo of interest and editing.
 
 ```
 
-## **rivtlib** Installation Overview
+## **rivt** Installation Overview
 
 **rivt** may be run in a number of different ways:
 
@@ -234,5 +234,5 @@ repo of interest and editing.
 3. Github Codespace
       - clone environment into your repository from here [**link to rivtDocs**](https://github.com/ShareCalcs/rivt)
 
-[**rivt User Manual**] (https://github.com/ShareCalcs/rivtdocs)
+[**rivt User Manual**] (https://github.com/rivtcalc/rivtdocs)
 

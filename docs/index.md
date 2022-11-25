@@ -6,10 +6,8 @@ layout: default
 
 [link to user manual](https://github.com/rivtcalc/rivtdoc)
 
-
-rivtcalc installers
-<a href="https://github.com/rivtcalc/rivtcalc)"> <img src="./assets/img/rivt_install.png" width="200" height="200" /></a>
-
+<a href="https://github.com/rivtcalc/rivtinstall)"> <img src="./assets/img/rivt_install.png" width="200" height="130" /></a>
+**rivtcalc installers**
 
 
 ## Introduction

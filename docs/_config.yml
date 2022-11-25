@@ -1,13 +1,13 @@
 title: rivt
-logo: /assets/img/rivt06a.png
+logo: /assets/img/rivt01.png
 show_downloads: false
 remote_theme: pages-themes/minimal@v0.2.0
-description: Share Calcs Anywhere - an embedded Python markup language for calculation documents
+description:  easy to write engineering calculations you can share
 google_analytics:
 # Enable or disable the site search
 # Supports true (default) or false
-  # Aux links for the upper right navigation
-#aux_links:
+# Aux links for the upper right navigation
+# aux_links:
 #  "Just the Docs on GitHub":
 #    - "//github.com/just-the-docs/just-the-docs"
 # Makes Aux links open in a new tab. Default is false
@@ -18,6 +18,3 @@ aux_links_new_tab: false
 # Supports true (default) or false
 heading_anchors: true
 color_scheme: rivt
-
-
-

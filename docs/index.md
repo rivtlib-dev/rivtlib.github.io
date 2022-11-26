@@ -48,7 +48,7 @@ to sharing and collaboration.
 
 **Table: Program Comparison**
 
-<img src="./assets/img/table2.png" width="700" height="140" />
+<img src="./assets/img/table1.png" width="1000" height="200" />
 
 ## rivtcalc Overview
 

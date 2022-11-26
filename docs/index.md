@@ -2,27 +2,25 @@
 layout: default
 ---
 
-
-<style>
-table, th, td {
-  border:0px solid black;
-}
-</style>
-<table width = "600px">
-  <tr>
-  <td width = "200px"></td>
-  <td width = "200px"></td>
-  <td width = "200px"></td>
-  <tr>
-    <th>rivt (API)</th>
-    <th>RivtCalc (installers)</th>
-    <th>RivtDocs (documentation)</th>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/rivtcalc/rivt"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
-    <td><a href="https://github.com/rivtcalc/rivtinstall"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
-    <td><a href="https://github.com/rivtcalc/rivtdoc"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
-  </tr>
+<table>
+<colgroup>
+  <col width="30%" />
+  <col width="30%" />
+  <col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+  <th>rivt (API)</th>
+  <th>RivtCalc (installers)</th>
+  <th>RivtDocs (documentation)</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td><a href="https://github.com/rivtcalc/rivt"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
+  <td><a href="https://github.com/rivtcalc/rivtinstall"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
+  <td><a href="https://github.com/rivtcalc/rivtdoc"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
+</tr>
+</tbody>
 </table>
 
 ## Introduction

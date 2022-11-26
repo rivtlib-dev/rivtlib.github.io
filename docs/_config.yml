@@ -2,7 +2,7 @@ title: rivt
 logo: /assets/img/rivt01.png
 show_downloads: false
 remote_theme: pages-themes/minimal@v0.2.0
-description: engineering calculations that are easy to write, format and share
+description: engineering calculations made natural to write, format and share
 google_analytics:
 # Enable or disable the site search
 # Supports true (default) or false

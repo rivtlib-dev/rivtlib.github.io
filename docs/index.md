@@ -59,7 +59,7 @@ and collaboration. It
 
 **Table: Program Comparison**
 
-<img src="./assets/img/table1.png" width="1000" height="200" />
+<img src="./assets/img/table1.png" width="1000" height="180" />
 
 ## rivtcalc Overview
 

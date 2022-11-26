@@ -29,18 +29,18 @@ table, th, td {
 
 ## Introduction
 
-Open source tools for writing software, when used for writing general
-engineering calculations, will increase sharing and reuse.
+Open source software tools applied to general engineering calculations will
+increase sharing and reuse.
 
 Since engineering technologies change slowly, design procedures are often fixed
 by legal codes and standards that persist for decades. The core of engineering
 work lies in understanding established technologies and then fitting those
 to specific project requirements. Calculations define how things fit together. 
-If they are easy to share and edit, a prior design of a similar project will be an efficient starting point for a new design. The intial draft can then be refined to a final design and reshared.  
+If they are easy to share and edit, a prior similar design should be an efficient starting point for a new design. This intial draft can then be refined to a final design and reshared in a virtuous cycle.  
 
 Through this sharing process the engineering professions have an opportunity to
-produce large, general calculation libraries that can be reused and recombined
-in efficient and productive ways. The model of shared, incremental improvement
+produce large, general calculation libraries that can be recombined in
+efficient and productive ways. The model of shared, incremental improvement
 using text-based documents has proven very effective in open source software
 programming. An extension of the approach to engineering calculations is
 natural.

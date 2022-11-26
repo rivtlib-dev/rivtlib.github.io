@@ -9,11 +9,15 @@ table, th, td {
 }
 </style>
 <body>
-<table style="width:100%">
+<table width = "600px">
+  <tr>
+  <td width = "200px"></td>
+  <td width = "200px"></td>
+  <td width = "200px"></td>
   <tr>
     <th>rivt (API)</th>
     <th>RivtCalc (installers)</th>
-    <th>RivtDocs (documentation</th>
+    <th>RivtDocs (documentation)</th>
   </tr>
   <tr>
     <td><a href="https://github.com/rivtcalc/rivt"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>

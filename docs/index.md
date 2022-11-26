@@ -2,49 +2,62 @@
 layout: default
 ---
 
-[link to rivt code on Github](https://github.com/rivtcalc/rivt)
+<style>
+table, th, td {
+  border:0px solid black;
+}
+</style>
+<body>
 
-[link to user manual](https://github.com/rivtcalc/rivtdoc)
+<h2>A basic HTML table</h2>
 
-<a href="https://github.com/rivtcalc/rivtinstall"> <img src="./assets/img/rivt_install.png" width="150" height="110" /></a>
-
-**rivtcalc installers**
-
+<table style="width:100%">
+  <tr>
+    <th>rivt (API)</th>
+    <th>RivtCalc (installers)</th>
+    <th>RivtDocs (documentation</th>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/rivtcalc/rivt"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
+    <td>Germany</td>
+    <td><a href="https://github.com/rivtcalc/rivtinstall"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
+    <td><a href="https://github.com/rivtcalc/rivtdoc"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
+    <td>Germany</td>
+  </tr>
+</table>
 
 ## Introduction
 
-Open source tools for writing software can also be used to increase sharing and
-collaboration when writing engineering calculation documents. 
+Open source tools used for writing software, when used for writing general engineering calculations, will increase sharing and reuse. 
 
-Because most engineering technologies are changing slowly, design procedures
-are often fixed by legal or de facto codes and standards for decades at a time.
-The core of engineering work lies in understanding the available established
-technologies, and then skillfully and efficiently combining them to fit project
-requirements. Shared calculations can provide a first draft outline for a
-design. They can then be edited and adapted to fit the needs of a particular
-project.
+Since engineering technologies change slowly, design procedures are often fixed
+by legal codes and standards that persist for decades. The core of engineering
+work lies in understanding established technologies and then fitting them
+to specific project requirements. Calculations define how things fit together. 
+If they are easy to share and edit, a prior design can be an efficient first draft of a new project design. The draft can then be refined to a final design and reshared.  
 
 Engineering professions have an opportunity to produce large, general
-calculation libraries that can be reused and recombined as needed. This model
+calculation libraries that can be reused and recombined as needed. The model
 of shared, incremental improvement using text-based documents has proven
-effective in open source software programming. An extension of the approach to
+very effective in open source software programming. An extension of the approach to
 engineering calculations is natural.
 
 A number of powerful calculation programs exist, but they include barriers to
-widespread sharing (see table). These include high initial and recurring
-software costs and strict limitations on computing devices. File formats and
-features change in a way that requires continual program upgrades or
-subscriptions. File incompatibility between different programs requires
-multiple software purchases and rewrites. And they do not produce collated
-reports or easily allow version control.
+widespread sharing (see table). Most of them are commerical with high initial
+and recurring software costs and strict limitations on number of computing
+devices. File formats and features change in a way that requires continual
+program upgrades or subscriptions. File incompatibility between different
+programs requires multiple software purchases and rewrites. And they do not
+produce collated reports or easily allow version control.
 
 Taken together these barriers prevent efficiencies that would come from
 widespread calculation sharing. Instead they promote rewriting nearly identical
 calculations thousands of times, sometimes with errors and often with
 incomplete and confusing organization. They also slow technology transfer,
-which often includes an understanding of the calculation processes. **rivt**
-was written as an an open source software stack that minimizes these barriers
-to sharing and collaboration.
+which often includes an understanding of the calculation processes. 
+
+**rivt** is an open source Python API that minimizes these barriers
+to sharing and collaboration. It 
 
 **Table: Program Comparison**
 

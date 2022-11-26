@@ -8,7 +8,6 @@ table, th, td {
   border:0px solid black;
 }
 </style>
-<body>
 <table width = "600px">
   <tr>
   <td width = "200px"></td>
@@ -25,7 +24,6 @@ table, th, td {
     <td><a href="https://github.com/rivtcalc/rivtdoc"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
   </tr>
 </table>
-</body>
 
 ## Introduction
 

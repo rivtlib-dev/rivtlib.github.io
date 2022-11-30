@@ -10,52 +10,50 @@ layout: default
 </colgroup>
 <thead>
 <tr class="header">
-  <th>rivt (API)</th>
-  <th>RivtCalc (installers)</th>
-  <th>RivtDocs (documentation)</th></tr>
+  <th style="text-align: center">rivt (API)</th>
+  <th style="text-align: center">RivtCalc (installers)</th>
+  <th style="text-align: center">RivtDocs (documentation)</th></tr>
 </thead>
 <tbody>
 <tr>
-  <td><a href="https://github.com/rivtcalc/rivt"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
-  <td><a href="https://github.com/rivtcalc/rivtinstall"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
-  <td><a href="https://github.com/rivtcalc/rivtdoc"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
+  <td style="text-align: center"><a href="https://github.com/rivtcalc/rivt"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
+  <td style="text-align: center"><a href="https://github.com/rivtcalc/rivtinstall"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
+  <td style="text-align: center"><a href="https://github.com/rivtcalc/rivtdoc"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
 </tr>
 </tbody>
 </table>
 
 ## Introduction
 
-Open source software tools applied to general engineering calculations will
-increase sharing and reuse.
+Open source software tools can be applied to general engineering calculations
+to increase sharing, reuse and productivity.
 
-Since engineering technologies change slowly, design procedures are often fixed
-by legal codes and standards that persist for decades. The core of engineering
-work lies in understanding established technologies and then fitting those
-to specific project requirements. Calculations define how things fit together. 
-If they are easy to share and edit, a prior similar design should be an efficient starting point for a new design. This intial draft can then be refined to a final design and reshared in a virtuous cycle.  
+Many engineering technologies change slowly. Design procedures become fixed by
+legal codes and standards for years. Engineering design work is typically a
+matter of understanding established technologies and fitting them together to
+specific project requirements. Calculations define and convey the logic behind
+the fitting. If they are easy to share and edit, a prior similar design becomes
+an efficient starting point for a new design. This intial compendium can then
+be developed into a final design more efficiently then starting from scratch.
+But all of this depends on a calculation tool adapted to exchange and
+integration.
 
-Through this sharing process the engineering professions have an opportunity to
-produce large, general calculation libraries that can be recombined in
-efficient and productive ways. The model of shared, incremental improvement
-using text-based documents has proven very effective in open source software
-programming. An extension of the approach to engineering calculations is
-natural.
-
-A number of powerful calculation programs exist, but they include barriers to
-widespread sharing (see table). Most of them are commerical with high initial
-and recurring software costs and strict limitations on number of computing
+Many calculation programs are in widespread use, but they include barriers to
+widespread calculation sharing (see table). Most of them have high initial and
+recurring software costs and strict limitations on the number of computing
 devices. File formats and features often change in a way that require continual
-program upgrades or subscriptions. File incompatibility between different
-programs requires multiple software purchases and rewrites. And they do not
-produce collated reports or easily allow version control.
+program upgrades or subscriptions. Incompatibility between different programs
+requires multiple software purchases. And they do not produce collated reports
+or easily allow version control. These barriers to sharing forces duplicate
+work, increased errors, reduced quality, and slower technology transfer.
 
-Taken together these are barriers to widespread calculation sharing. Instead
-they promote rewriting nearly identical calculations thousands of times,
-sometimes incomplete, confusing organization or with errors. The barriers to
-sharing also slow technology transfer, which almost always includes understanding of the underlying calculations.
+Through a standard sharing framework the engineering professions have an
+opportunity to produce large, general calculation libraries that can be
+recombined in efficient and productive ways for new designs. This model of
+shared, incremental improvement using text-based documents is perhaps the major reason behind the rapid advances in computers and software.  An extension of the approach to general engineering calculations is natural.
 
 **rivt** is an open source Python API that minimizes these barriers to sharing
-and collaboration. It
+and collaboration. It incorporates a 
 
 **Table: Program Comparison**
 

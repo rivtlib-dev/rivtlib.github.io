@@ -18,7 +18,7 @@ layout: default
 <tr>
   <td style="text-align: center"><a href="https://github.com/rivtcalc/rivt"> <img src="./assets/img/rivt01a.png" width="60" height="40" /></a></td>
   <td style="text-align: center"><a href="https://github.com/rivtcalc/rivtinstall"> <img src="./assets/img/rivt_install.png" width="60" height="40" /></a></td>
-  <td style="text-align: center"><a href="https://github.com/rivtcalc/rivtdoc"> <img src="./assets/img/rivtdoc2a.png" width="60" height="40" /></a></td>
+  <td style="text-align: center"><a href="https://github.com/rivtcalc/rivtdocs"> <img src="./assets/img/rivtdoc2a.png" width="60" height="40" /></a></td>
 </tr>
 </tbody>
 </table>

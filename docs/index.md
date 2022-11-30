@@ -11,8 +11,8 @@ layout: default
 <thead>
 <tr class="header">
   <th style="text-align: center">rivt (API)</th>
-  <th style="text-align: center">RivtCalc (installers)</th>
-  <th style="text-align: center">RivtDocs (documentation)</th></tr>
+  <th style="text-align: center">rivtCalc (installers)</th>
+  <th style="text-align: center">rivtDocs (documentation)</th></tr>
 </thead>
 <tbody>
 <tr>
@@ -25,101 +25,51 @@ layout: default
 
 ## Introduction
 
-Open source software tools can be applied to general engineering calculations
-to increase sharing, reuse and productivity.
+Open source software tools applied to general engineering calculations
+will increase sharing, reuse and productivity.
 
 Many engineering technologies change slowly. Design procedures become fixed by
-legal codes and standards for years. Engineering design work is typically a
-matter of understanding established technologies and fitting them together to
-specific project requirements. Calculations define and convey the logic behind
-the fitting. If they are easy to share and edit, a prior similar design becomes
-an efficient starting point for a new design. This intial compendium can then
-be developed into a final design more efficiently then starting from scratch.
-But all of this depends on a calculation tool adapted to exchange and
-integration.
+legal codes and standards for years at time. Good engineering design work
+understands the established technologies and fits them together to meet
+specific project requirements. 
 
-Many calculation programs are in widespread use, but they include barriers to
-widespread calculation sharing (see table). Most of them have high initial and
-recurring software costs and strict limitations on the number of computing
-devices. File formats and features often change in a way that require continual
-program upgrades or subscriptions. Incompatibility between different programs
-requires multiple software purchases. And they do not produce collated reports
-or easily allow version control. These barriers to sharing forces duplicate
-work, increased errors, reduced quality, and slower technology transfer.
+Calculations work out and convey the logic behind the fitting. If they are easy
+to share and edit, then prior similar designs become efficient starting points
+for a new design. The initial compendium can be developed into a final design
+more efficiently then starting from scratch. This depends on a calculation tool
+adapted to exchange and integration.
 
-Through a standard sharing framework the engineering professions have an
-opportunity to produce large, general calculation libraries that can be
-recombined in efficient and productive ways for new designs. This model of
-shared, incremental improvement using text-based documents is perhaps the major reason behind the rapid advances in computers and software.  An extension of the approach to general engineering calculations is natural.
-
-**rivt** is an open source Python API that minimizes these barriers to sharing
-and collaboration. It incorporates a 
+Many high-quality calculation programs are in widespread use. Unfortunately
+they include barriers to widespread calculation sharing (see table). Most of
+them have high initial and recurring software costs as well as strict
+limitations on computing devices. File formats and features often change in a
+way that require continual program upgrades or subscriptions. Incompatibility
+between the different programs requires multiple software purchases. And
+generally they do not produce collated reports or easily allow version control.
+These barriers to sharing forces duplicate work, increased errors, reduced
+quality, and slower technology transfer.
 
 **Table: Program Comparison**
 
 <img src="./assets/img/table1.png" width="1000" height="180" />
 
-## rivtcalc Overview
+Through a standard sharing framework the engineering professions have an
+opportunity to produce extensive, general calculation libraries that can be
+recombined in efficient and productive ways for new designs. This model of
+shared, incremental improvement using text-based documents is perhaps **the** major reason behind recent rapid advances in software.  The extension of this approach to general engineering calculations is natural.
 
-**rivtcalc** is an open source software stack for writing calculation documents. It
-defines the **rivtText** markup language and a default installation that
-includes **rivtlib**, **VSCode**, and **Github**. **rivtText** is a plain text,
-human readable language built on restructuredText. It can be used to write
-standalone calculations or included in any Python program. **rivtlib** is the
-Python library and API that processes **rivtText**. **VSCode** and **Github**
-are the extensible, customizable editor and searchable repository system from
-Microsoft.
+## Overview
 
-**rivtcalc** can be installed on the desktop or mobile devices, or run remotely in
-the cloud.  The minimum software needed to process rivtText (with text output
-only) is Python 3.8 and above plus a few Python libraries and a plain text
-processor.  This minimum implementation can be explored online at 
-[**link to repl.it**](https://repl.it)
+**rivt** is an open source Python API that minimizes the barriers to sharing
+and collaboration. It incorporates a lightweight, highly readable markup language (**rivtText**) and installers for the open source stack (**rivtCalc**) that facilitates efficient calculation generation.
 
-For efficient workflow and formal document production the minimum **rivt**
-installation requires: 
+## **rivt** 
 
-1. Python 3.8 or above + libraries
-2. VSCode + extensions
-3. LaTeX 
-4. Github account
-
-**rivtcalc** installers are available for every OS platforms.  **rivt** in the cloud
-is discussed using GitHub CodeSpaces in the documentation here 
-[**link to rivtDocs**](https://github.com/ShareCalcs/rivtdocs). Installation 
-programs are provided here - [**link to rivt**](https://github.com/ShareCalcs/rivt)
-
-
-## rivtText Overview
-
-An API for **rivtText** is the **rivt** Python package and API that includes five methods:
-R(rs), I(rs), V(rs), T(rs), X(rs). The argument rs is a triple quoted Python
-string containing rivtText commands and tags. 
-
-**rivtText** was designed for simplicity and readability. It includes commands,
-tags, reStructuredText (reST) markup and native Python code. **rivt** strings
-are interpreted line by line, as Python itself is. Lines that begin with ||
-process external data files. Lines that terminate with [tag]_ format output.
-Tags that end in double underscore [tag]__ format blocks of text. 
-
-In interactive mode using an IDE (e.g. VSCode), each API call can be called
-separately using the cell tag (#%%) in the preceding line. Cells can be
-evaluated one at a time and the output (utf8) displayed interactively. 
-
-In file execution mode the entire input file is executed and the formatted
-calculation is written to disk as a calc (utf8) or doc (PDF or HTML). **rivt**
-input files are Python files and calcs are text files. Doc files also include
-project specific and copyrighted information (clients, images etc), which are typically not
-shared in the generic text input and output files.
-    
-
-## **rivt** Overview
-
-**rivt** is a Python package providing a calculation API for **rivtText**.
-The API uses file and folder naming conventions to organize and assemble calcs
-into a collated report. The file, folder and prefix naming divide the
-calculation report into modular, easily edited and shareable components.
-Folders are shown in bold, user names in italics and notes in parenthesis.
+The **rivt** API uses file and folder naming conventions to organize and
+assemble calcs into a collated report. The file, folder and prefix naming
+divide the calculation report into modular, easily edited and shareable
+components. Folders are shown in bold, user names in italics and notes in
+parenthesis.
 
 - **rivt_*project_name*** 
     - .gitignore (share text folder only)
@@ -228,7 +178,58 @@ repo of interest and editing.
 
 ```
 
-## **rivt** Installation Overview
+
+## rivtText Overview
+
+An API for **rivtText** is the **rivt** Python package and API that includes five methods:
+R(rs), I(rs), V(rs), T(rs), X(rs). The argument rs is a triple quoted Python
+string containing rivtText commands and tags. 
+
+**rivtText** was designed for simplicity and readability. It includes commands,
+tags, reStructuredText (reST) markup and native Python code. **rivt** strings
+are interpreted line by line, as Python itself is. Lines that begin with ||
+process external data files. Lines that terminate with [tag]_ format output.
+Tags that end in double underscore [tag]__ format blocks of text. 
+
+In interactive mode using an IDE (e.g. VSCode), each API call can be called
+separately using the cell tag (#%%) in the preceding line. Cells can be
+evaluated one at a time and the output (utf8) displayed interactively. 
+
+In file execution mode the entire input file is executed and the formatted
+calculation is written to disk as a calc (utf8) or doc (PDF or HTML). **rivt**
+input files are Python files and calcs are text files. Doc files also include
+project specific and copyrighted information (clients, images etc), which are typically not
+shared in the generic text input and output files.
+    
+## rivtCalc Overview
+
+**rivtcalc** is an open source software stack for writing calculation documents. It
+defines the **rivtText** markup language and a default installation that
+includes **rivtlib**, **VSCode**, and **Github**. **rivtText** is a plain text,
+human readable language built on restructuredText. It can be used to write
+standalone calculations or included in any Python program. **rivtlib** is the
+Python library and API that processes **rivtText**. **VSCode** and **Github**
+are the extensible, customizable editor and searchable repository system from
+Microsoft.
+
+**rivtcalc** can be installed on the desktop or mobile devices, or run remotely in
+the cloud.  The minimum software needed to process rivtText (with text output
+only) is Python 3.8 and above plus a few Python libraries and a plain text
+processor.  This minimum implementation can be explored online at 
+[**link to repl.it**](https://repl.it)
+
+For efficient workflow and formal document production the minimum **rivt**
+installation requires: 
+
+1. Python 3.8 or above + libraries
+2. VSCode + extensions
+3. LaTeX 
+4. Github account
+
+**rivtcalc** installers are available for every OS platforms.  **rivt** in the cloud
+is discussed using GitHub CodeSpaces in the documentation here 
+[**link to rivtDocs**](https://github.com/ShareCalcs/rivtdocs). Installation 
+programs are provided here - [**link to rivt**](https://github.com/ShareCalcs/rivt)
 
 **rivt** may be run in a number of different ways:
 

@@ -29,9 +29,10 @@ Open source software tools, when used for general engineering calculations,
 will increase sharing and improve productivity.
 
 Many engineering technologies change slowly. Design procedures become fixed by
-legal codes and standards for years at time. Good engineering design work is
-based on skillful use of established technologies that are fit together to
-meet specific project requirements.
+legal codes and standards for years at time. In this case, rather than
+developing new technologies or methods, good engineering design work is based
+on skillful use of established technologies that are fit together to meet
+specific project requirements.
 
 Useful calculations derive and convey the reasoning behind the fitting. If they
 are easy to share and edit, then prior similar designs become efficient
@@ -129,17 +130,23 @@ italics and explanatory notes in parenthesis.
         - d0202_*calc_name4*.html
             
 The **rivt_** prefix for the project folder and the four top-level folder names
-(calcs, docs, reports and sites) are required. The file prefix is used to
+(*calcs, docs, reports and sites*) are required. The file prefix is used to
 organize a report and has the form rvddnn_*filename*.py, where dd is the
 division number and ddnn is the calc number. The rest of the file name is a
 user chosen label.
 
-The API is designed so that only the **calcs** folder is shared. The folder includes all of the calculation, except for binary and proprietary
-files such as images, PDF attachments and client data, which are stored in the docs folder.
+The API is designed so that only the **calcs** folder is shared. The folder
+includes all of the calculation, except for binary and proprietary files such
+as images, PDF attachments and client data. They are stored in the **docs**
+folder.
 
-A project is started by searching **Github** README files using the primary
-search term **rivt** and including additional specific terms - then cloning the
-repo of interest and editing. 
+A typical project flow includes:
+
+1. Search **Github** README files using the primary
+search term **rivt**, plus additional specific terms. Since each calc output is written to the README file, the search is full text. 
+2. Clone the repo of interest 
+3. Combine and edit calcs for the new project.
+4. Create a public repo for the new calc folder.  
 
 ```
                 +-------------------------+
@@ -194,7 +201,8 @@ input files are Python files and calcs are text files. Doc files also include
 project specific and copyrighted information (clients, images etc), which are
 typically not shared in the generic text input and output files.
 
-The rivtText syntax is defined in the documentation:  [**link to rivtDocs**](https://github.com/rivtcalc/rivtdocs)
+The rivtText syntax is defined in the documentation:  
+[**link to rivtDocs**](https://github.com/rivtcalc/rivtdocs)
     
 ## rivtCalc
 
@@ -219,8 +227,8 @@ installation requires:
 4. Github account
 
 **rivtcalc** installers are available for every OS platforms and **rivt** can
-be run in the cloud (e.g. Codespaces). Installation programs are provided here
-- [**link to rivt**](https://github.com/rivtcalc/rivtinstall)
+be run in the cloud (e.g. Codespaces). Installation programs are provided here:
+[**link to rivt**](https://github.com/rivtcalc/rivtinstall)
 
 **rivt** may be run in a number of different ways:
 

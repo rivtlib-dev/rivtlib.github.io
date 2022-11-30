@@ -16,9 +16,9 @@ layout: default
 </thead>
 <tbody>
 <tr>
-  <td style="text-align: center"><a href="https://github.com/rivtcalc/rivt"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
-  <td style="text-align: center"><a href="https://github.com/rivtcalc/rivtinstall"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
-  <td style="text-align: center"><a href="https://github.com/rivtcalc/rivtdoc"> <img src="./assets/img/rivt_install.png" width="50" height="35" /></a></td>
+  <td style="text-align: center"><a href="https://github.com/rivtcalc/rivt"> <img src="./assets/img/rivt01a.png" width="60" height="40" /></a></td>
+  <td style="text-align: center"><a href="https://github.com/rivtcalc/rivtinstall"> <img src="./assets/img/rivt_install.png" width="60" height="40" /></a></td>
+  <td style="text-align: center"><a href="https://github.com/rivtcalc/rivtdoc"> <img src="./assets/img/rivtdoc2a.png" width="60" height="40" /></a></td>
 </tr>
 </tbody>
 </table>
@@ -60,29 +60,33 @@ shared, incremental improvement using text-based documents is perhaps **the** ma
 
 ## Overview
 
-**rivt** is an open source Python API that minimizes the barriers to sharing
-and collaboration. It incorporates a lightweight, highly readable markup language (**rivtText**) and installers for the open source stack (**rivtCalc**) that facilitates efficient calculation generation.
 
-## **rivt** 
+
+## **rivt Overview** 
+
+**rivt** is an open source Python API that minimizes barriers to sharing and
+collaboration. It incorporates a lightweight, highly readable markup language
+(**rivtText**) Installers are provided for the open source stack and tools
+(**rivtCalc**) that facilitate efficient editing and publishing.
 
 The **rivt** API uses file and folder naming conventions to organize and
-assemble calcs into a collated report. The file, folder and prefix naming
-divide the calculation report into modular, easily edited and shareable
-components. Folders are shown in bold, user names in italics and notes in
-parenthesis.
+assemble calcs into collated reports. Folders are shown in bold, user names in
+italics and explanatory notes in parenthesis.
 
 - **rivt_*project_name*** 
-    - .gitignore (share text folder only)
-    - .vscode (rivt settings)
+    - .vscode **(VSCode settings)**
     - **calcs**
-        - **rv00*_config_name*** (calc configuration data)
+        - **rv00** **(calc configuration data)**
             - units.py
-        - **rv01*_calc_division_name1***  (report division name)
+            - pdf.sty
+            - html.css
+        - **rv01*_calc_division_name1***  **(division name for report**)
             - **rv0101_calc_name1**
-                - rv0101_*calc_name1*.py (input file)
-                - *chart1*.csv (csv resource)
-                - *functions1*.py (functions resource)
-                - README.txt (calc output)
+                - rv0101_*calc_name1*.py **(input file)**
+                - *chart1*.csv **(csv resource)**
+                - *functions1*.py **(functions resource)**
+                - *paragraph1*.txt **(text file resource)**
+                - README.txt **(calc output)**
             - **rv0102_calc_name2**
                 - rv0102_*calc_name2*.py
                 - *functions2*.py
@@ -90,29 +94,29 @@ parenthesis.
          - **rv02*_calc_division_name2***
             - **rv0201_calc_name3**
                 - rv0201_*calc_name3*.py 
-                - *paragraph*.txt (text file resource)
+                - *paragraph2*.txt
                 - README.txt 
             - **rv0202_calc_name4**
                 - rv0102_*calc_name4*.py
                 - *functions3*.py
                 - README.txt
    - **docs**
-        - **d00** (project and report configuration data)
+        - **d00** **(project and report configuration data)**
             - report.txt
             - *pdf_style*.sty
             - *project_data*.xlsx
-        - **d01** (corresponds to the division calc folder)
+        - **d01** **(corresponds to the division calc folder)**
             - *image1*.jpg
         - **d02**
             - *image2*.jpg
             - *attachment*.pdf    
-    - **reports** (PDF output)
+    - **reports** **(PDF output)**
         - d0101_*calc_name1*.pdf
         - d0102_*calc_name2*.pdf
         - d0201_*calc_name3*.pdf
         - d0202_*calc_name4*.pdf
         - *report*.pdf
-    - **sites** (HTML output)
+    - **sites** **(HTML output)**
         - **resources**
             - *image1*.png
             - *image2*.png
@@ -122,26 +126,14 @@ parenthesis.
         - d0201_*calc_name3*.html
         - d0202_*calc_name4*.html
             
-The **rivt_** prefix for the project folder, the three top-level folder names
-(text, docs and files) and the two output doc folders (html and pdf) are
-required. The file prefix determines the report document organization with the
-form rvddnn_*filename*.py where dd is the division number and ddnn is the calc
-number.  The rest of the file name is a user chosen label for the calc name.
-Underscores that separate words in file and folder names are stripped out when
-used in the output. 
+The **rivt_** prefix for the project folder and the four top-level folder names
+(calcs, docs, reports and sites) are required. The file prefix is used to
+organize a report and has the form rvddnn_*filename*.py, where dd is the
+division number and ddnn is the calc number. The rest of the file name is a
+user chosen label.
 
-The API is designed so that only the **calcs**
-folder can be copied to version control and sharing. The folder constitutes the
-essential core of the calculation. Files in the docs
-folder are typically binary and proprietary files such as images, PDF
-attachments and client data.
-
-Files File type	File description rivt file (.py) input model written in RivtText
-calc (.txt)	formatted UTF-8 output, written to screen and file doc (.pdf or
-.html)	formatted HTML or PDF calc output written to a file report (.pdf)
-collated PDF docs written to a file API Functions The rivtlib API consists of
-five functions that take a rivt-string as input (only four produce output) and a
-function that controls the output format. The library is imported with:
+The API is designed so that only the **calcs** folder is shared. The folder includes all of the calculation, except for binary and proprietary
+files such as images, PDF attachments and client data, which are stored in the docs folder.
 
 A project is started by searching **Github** README files using the primary
 search term **rivt** and including additional specific terms - then cloning the
@@ -155,7 +147,7 @@ repo of interest and editing.
                 +-----------||------------+
 +-------------+ +-----------||------------+  
 |  Write cell | |   interactive IDE?      | 
-|  output to  | |  (VSCode,Spyder,Pyzo)   |
+|  output to  | |  (VSCode,Pyzo,etc.)   |
 |  terminal   === YES       NO            |  
 +------+------+ +-----------||------------+  
        |        +===========||============+      
@@ -198,8 +190,8 @@ evaluated one at a time and the output (utf8) displayed interactively.
 In file execution mode the entire input file is executed and the formatted
 calculation is written to disk as a calc (utf8) or doc (PDF or HTML). **rivt**
 input files are Python files and calcs are text files. Doc files also include
-project specific and copyrighted information (clients, images etc), which are typically not
-shared in the generic text input and output files.
+project specific and copyrighted information (clients, images etc), which are
+typically not shared in the generic text input and output files.
     
 ## rivtCalc Overview
 
@@ -226,10 +218,10 @@ installation requires:
 3. LaTeX 
 4. Github account
 
-**rivtcalc** installers are available for every OS platforms.  **rivt** in the cloud
-is discussed using GitHub CodeSpaces in the documentation here 
-[**link to rivtDocs**](https://github.com/ShareCalcs/rivtdocs). Installation 
-programs are provided here - [**link to rivt**](https://github.com/ShareCalcs/rivt)
+**rivtcalc** installers are available for every OS platforms. **rivt** in the
+cloud is discussed using GitHub CodeSpaces in the documentation here [**link to
+rivtDocs**](https://github.com/ShareCalcs/rivtdocs). Installation programs are
+provided here - [**link to rivt**](https://github.com/ShareCalcs/rivt)
 
 **rivt** may be run in a number of different ways:
 
@@ -244,7 +236,15 @@ programs are provided here - [**link to rivt**](https://github.com/ShareCalcs/ri
       - VSCode xxxx with extensions
       - TexLive 2022
 3. Github Codespace
-      - clone environment into your repository from here [**link to rivtDocs**](https://github.com/ShareCalcs/rivt)
+      - clone environment into your repository from here 
+      [**link to rivtDocs**](https://github.com/ShareCalcs/rivt)
 
 [**rivt User Manual**] (https://github.com/rivtcalc/rivtdocs)
+
+Files File type	File description rivt file (.py) input model written in RivtText
+calc (.txt)	formatted UTF-8 output, written to screen and file doc (.pdf or
+.html)	formatted HTML or PDF calc output written to a file report (.pdf)
+collated PDF docs written to a file API Functions The rivtlib API consists of
+five functions that take a rivt-string as input (only four produce output) and a
+function that controls the output format. The library is imported with:
 

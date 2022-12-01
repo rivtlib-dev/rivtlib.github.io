@@ -1,3 +1,4 @@
+# type:ignore
 """
 ***rivtcalc** may be run interactively from an editor or IDE and from the
 command line. In an IDE an API function or cell (designated by # %%) can be run
@@ -45,18 +46,15 @@ if sys.version_info < (3, 7):
 def _cmdlinehelp():
     """command line help"""
     print()
-    print("Run rivtcalc at the command line in the 'calc' folder with:")
-    print("     python  -m rivtcalc cddss_calcfilename.py")
-    print("where cddcc_ calcname.py is the calc file in the folder")
-    print("and **ddss** is the calc number")
+    print("Run rivt at the command line within the calc folder as:")
+    print("     python -m rivt ")
+    print("The program will find and run the file rvddnn_calcfilename.py")
     print()
-    print("Specified output is written to the 'calcs' or 'docs' folder:")
-    print("     dddss_calcfilename.txt")
-    print("     dddss_calcfilename.html")
-    print("     dddss_calcfilename.pdf")
-    print("Logs and other intermediate files are written to the tmp folder.")
     print()
-    print("Program and documentation are here: http://rivtcalc.github.io.")
+    print("The logs and output specified in the calc is written to the") 
+    print("calc, pdf or html folder.")
+    print()
+    print("The rivtCalc user manual is at: https://rivt.info.")
     sys.exit()
 
 

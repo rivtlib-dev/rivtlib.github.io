@@ -8,13 +8,11 @@ share calcs anywhere, anytime
 
 ---------------------------
 
-**rivtlib code documentation menu (left or upper right)**
 
-[link to **rivtlib** code on Github](https://github.com/ShareCalcs/rivtlib)
+[link to **rivtlib** code on Github](https://github.com/rivtcalc/rivt)
 
-[link to **rivt** user manual](https://github.com/ShareCalcs/rivtdocs)
+[link to **rivt** user manual](https://github.com/rivtdocs.net)
 
-[link to **rivt** installers](https://github.com/ShareCalcs/rivtdocs)
 
 ## Introduction
 

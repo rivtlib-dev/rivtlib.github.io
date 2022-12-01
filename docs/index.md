@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<img src="./assets/img/rivtdoc09.png" width="300" height="80" />
+<img src="./assets/img/rivtdoc09.png" width="150" height="40" />
 
 share calcs anywhere, anytime
 
@@ -11,7 +11,7 @@ share calcs anywhere, anytime
 
 [link to **rivt** source code on Github](https://github.com/rivtcalc/rivt)
 
-[link to **rivt** user manual](https://github.com/rivtdocs.net)
+[link to **rivt** user manual](https://rivt.info)
 
 
 **rivt** is a Python package that provides a calculation API for **rivt**.

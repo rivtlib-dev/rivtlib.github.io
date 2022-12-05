@@ -1,5 +1,5 @@
 #!python
-""" rivt file write methods"""
+""" rivt write methods for pdf and html files"""
 
 import os
 import time
@@ -14,7 +14,7 @@ def _write_html(rstS):
 
 
 def _write_pdf(texfileP):
-    """write pdf calc to doc folder and open
+    """write pdf calc to reports folder and open
 
     Args:
         texfileP (path): doc config folder

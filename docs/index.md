@@ -4,7 +4,7 @@ layout: default
 
 <img src="./assets/img/rivtdoc09.png" width="150" height="40" />
 
-share calcs anywhere, anytime
+share calcs - simply
 
 ---------------------------
 

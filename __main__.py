@@ -1,20 +1,22 @@
 # type:ignore
-"""
-***rivtcalc** may be run interactively from an editor or IDE and from the
-command line. In an IDE an API function or cell (designated by # %%) can be run
-at a time. The command line invocation that operates on the whole file is made
-from the folder containing the file:
+""" 
 
-    python -m rivtcalc cddss_calcfile.py (-term)
+**rivt** may be run interactively from an IDE or from the command line. In
+IDE's one or more API calls can be grouped by the standard cell designation #%%
+and run interactively.
 
-The calc number ddss is used for document and report organization, where dd is
-a two digit division number and ss is a two digit subdivision number. Calcs are
-output as UTF text calcs or PDF docs. UTF calcs are printed to the terminal
-when interactive cell is run. If file output is specified, the calc or doc
-files are written to the calc folder.
+If run from the the command line within the calc folder, **rivt** processes the
+entire file:
 
-The following convention for variable names has been used: the last letter of
-each variable name indicates the type.
+    python -m rivt
+
+In this case the program finds the calc file *rvddnn_calcfile.py*, where where
+dd is the two digit division number and nn is the two digit subdivision number.
+Calcs are output as UTF text, PDF and HTML files. See https://rivt.info for the
+**rivtcalc** manual.
+
+The following convention for typing variable names has been used, where the
+last letter of each variable name indicates the type.
 
 A = array
 B = boolean
@@ -30,29 +32,25 @@ C = class instance
 import os
 import sys
 import importlib
-import numpy as np
 from pathlib import Path
-from collections import deque
-from typing import List, Set, Dict, Tuple, Optional
 
-__version__ = "0.8.1-beta.1"
+__version__ = "0.9.1-beta.1"
 __author__ = "rholland@structurelabs.com"
-_calcfileS = "empty"
+_calcfileS = "empty"    # primary processed rivtText string
 
-if sys.version_info < (3, 7):
-    sys.exit("rivtCalc requires Python version 3.7 or later")
+if sys.version_info < (3, 8):
+    sys.exit("rivtCalc requires Python version 3.8 or later")
 
 
-def _cmdlinehelp():
+def cmdlinehelp():
     """command line help"""
     print()
     print("Run rivt at the command line within the calc folder as:")
     print("     python -m rivt ")
     print("The program will find and run the file rvddnn_calcfilename.py")
     print()
-    print()
-    print("The logs and output specified in the calc is written to the") 
-    print("calc, pdf or html folder.")
+    print("The logs and output specified in the calc are written to the") 
+    print("calc (.txt), pdf (.pdf) or html (.html) folder.")
     print()
     print("The rivtCalc user manual is at: https://rivt.info.")
     sys.exit()
@@ -71,7 +69,9 @@ if __name__ == "__main__":
     except ImportError as error:
         print("error---------------------------------------------")
         print(error)
+        cmndlinehelp()
     except Exception as exception:
         # Output unexpected Exceptions.
         print("exception-----------------------------------------")
         print(exception)
+        cmndlinehelp()

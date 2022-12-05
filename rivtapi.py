@@ -102,7 +102,8 @@ from rivt import rivtapi as rv
 rv.R("""(section title) | (calc title) | utf,pdf,html | (start page) 
 
     The Repo method specifies repository and output parameters. It is used once
-    at the beginning of each file and typically includes a summary .
+    at the beginning of each file and typically includes a summary of the
+    calculation.
     
     The ||output command specifies the type of output, calculation title
     override, starting page number and temporary file cleanup options. The
@@ -116,10 +117,6 @@ rv.R("""(section title) | (calc title) | utf,pdf,html | (start page)
     doc folders. The folder structure of rivt keeps confidential, binary and
     copyrighted information separate from shareable, version controlled text.
 
-    The ||attach command attaches PDF documents to the front or back of a doc.
-    Any existing PDF document stored in its corresponding doc folder can be
-    attached to the doc. The command can also overlay a title block page
-    template on each page of the calc.
 
     
     || github  | param1 | param2 
@@ -150,6 +147,10 @@ rv.I("""Insert method [n]_
 
     http://wwww.someurl.suffix  (label) [link]_ {formats a URL link}
 
+    The ||attach command attaches PDF documents to the front or back of a doc.
+    Any existing PDF document stored in its corresponding doc folder can be
+    attached to the doc. The command can also overlay a title block page
+    template on each page of the calc.
     """
 ) rv.V("""Value method [n]_ 
 

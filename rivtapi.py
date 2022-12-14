@@ -1,143 +1,153 @@
 #! python
 '''rivt API
 
-    This module is imported at the beginning of a calc and defines the rivt
-    API, which has five methods: R(rs), I(rs), V(rs), T(rs), X(rs); where rs
+    The rivtapi module is imported at the beginning of a rivt calc.  It
+    defines the five API methods: R(rs), I(rs), V(rs), T(rs), X(rs); where rs
     represents a rivtText string.
-        
-    When writing in an IDE (e.g. VSCode), each API method can become a standard
-    cell by adding a preceding #%%. Cells are evaluated interactively. In file
-    write mode the entire formatted calculation is processed and written to the
-    screen disk as a utf8, PDF, or HTML file. rivt calc input are text files
-    developed under version control and easily shared. Doc files are typically
-    binary files (images, pdf etc.) that may also include confidential project
-    information or copyright. They are typically not shared in their generic,
-    executable form. The file types are kept in different folders to control
-    sharing.
     
-    The rivt calculation input file is written in rivtText (a superset of
-    reStructuredText) which is designed to be more readable and productive for
-    calculations. rivtText includes commands, tags, reStructuredText (reST) and
-    native Python code. Commands read and write files into the calculation and
-    begin the line with ||. Tags format output and terminate a line or block
-    with the symbol _[tag] for a single line and ___[tag] for a block.
+    When running in an IDE (e.g. VSCode), each method can become an interactive
+    cell by adding a preceding #%%. In run-file mode, where the entire
+    calculation file is processed, the output is written to the screen and disk
+    as a utf8, PDF, or HTML file.
     
-    rivtCalc is an open source software stack for systematically writing,
-    sharing and integrating engineering calculations. It includes Python, the
-    rivt pakckage, VSCode, TexLive and GitHub. 
-
-
-    API methods ----------------------------------------------------------------
+    The primary calculation input files are separated into two folders labeled
+    calcs and docs. calc folder files are text files under version control that
+    contain the primary calculation and supporting files. They are designed to
+    be shared. Doc files are supporting calculation files that are typically
+    binary files (images, pdf etc.) or files that include confidential project
+    information or copyrights. The docs folder is typically not shared.
     
-    method                first line settings
-    ==============  ============================================================= 
-    R(rs) repo   
-    commands        ||text, ||tables, ||github
-    I(rs) insert   
-    commands        ||text, ||tables, ||image, ||append 
-    V(rs) values     
-    commands        =, ||values, ||lists, ||import, I commands
-    T(rs) tables   
-    commands        Python simple statements, I and V commands 
-    X(rs) exclude   exclude evaluation (for debugging and markup)
-
-
-    commands -------------------------------------------------------------------
-
-    command syntax                                      description
-    ================================================ ===========================
-    || text 
-    || tables
-    || image
-    || append
-    || values
-    || lists
-    || import
-    =
-
-
-    tags -----------------------------------------------------------------------
-
-    tag syntax              description (user input)                methods
-    ======================  ===================================== =============
-    (sympy eq) _[s]         format sympy equation text              R,I,V,T   
-    (latex eq) _[x]         format LaTeX equation text              R,I,V,T   
-    (title) _[t]            table title with autonumber             R,I,V,T
-    (caption) _[f]          figure caption with autonumber          R,I,V,T
-    (descrip) _[e]          equation description with autonumber    R,I,V,T
-    (equation) _[2,2]       equation eval and decimal places        V,T 
-    (text) _[r]             right justify text                      R,I,V,T
-    (text) _[c]             center text                             R,I,V,T
-    (text) _[line]          horizontal line - width of page         R,I,V,T
-    (text) _[page]          new PDF page                            R,I,V,T
-    (text) _[#]             footnote autonumber                     R,I,V,T
-    (footnote) _[foot]      footnote description                    R,I,V,T
-    (url) _[link]           (http://xyz label) label                R,I,V,T
-
-    ___[literal]            literal block                           R,I,V,T
-    ___[latex]              LateX block                             R,I,V,T
-    ___[math]               LaTeX math block                        R,I,V,T
-    ___[r]                  right justify text block                R,I,V,T
-    ___[c]                  center text block                       R,I,V,T
-
-    In the example below user text associated with commands and tags are in
-    braces, selections (e.g. L;R;C) are separated by a semi-colons, and
-    explanatory comments are in parenthesis. The first line of a rivt file
-    imports the *rivtapi*,followed by the API methods in any number or order,
-    except for R(rs).
+    The rivt calculation input file is a Python file written in rivtText, a
+    superset of the markup language reStructuredText (reST) defined at
+    https://docutils.sourceforge.io/rst.html. rivtText (rvTxt) is designed to
+    be more readable and efficient for calculations. It includes rivt commands
+    and tags, reStructuredText (reST) and native Python code. Commands start a
+    line with ||, and read and write files into and out of the calculation.
+    Tags terminate a line with the symbol _[tag] and format the output. Block
+    tags start the block with ___[tag] and end with a blank line. 
     
-    The Repo method (R(rs)) is an exception. It occurs first and only one time.
-    R(rs) sets options for repository, report and output formats. Other methods
-    may occur in any order and frequency. API methods start in column 1
-    followed by optional section titles and style parameters. Subsequent lines
-    in the function must be indented 4 spaces. This structures the calc for
-    editor folding, bookmarking and improved legibility. Input rormatting
-    conventions follow the Python formatter Black.
+    rivtCalc is an integrated open source software stack for systematically
+    writing and sharing engineering calculation input and output as text file
+    input and PDF or HTML output. The stack includes Python, VSCode, TexLive,
+    GitHub and rivt.
 
+    In the syntax summary below, user input is separated by | and user
+    selections are separated by semi-colons for a single selection and commas
+    for multiply selectable settings.
+
+    rivt methods ---------------------------------------------------------------
+    
+    name           method, first line settings and commands
+    ========= ================================================================== 
+    repo       R(""" section_title | calc_title | utf,pdf,html;none | start_page
+                       ||text, ||table, ||github ||project""")
+    
+    insert     I(""" section_title | doc_folder_override;default 
+                       ||text, ||table, ||image, ||append """)
+    
+    values     V(""" section_title | sub;nosub | doc_folder_override;default 
+                        =, ||values, ||lists, ||import, I commands """)
+    
+    tables     T(""" section_title | doc_folder_override;default
+                        Python simple statements, I commands """)
+    
+    exclude    X("""  any text           
+                        any commands """)
+
+
+    rivt commands --------------------------------------------------------------
+
+    command syntax                                                     method
+    =============================================================== ============
+    || github | param1 | param2                                      R
+                github repo parameters
+    || project | /docfolder;default | filename                       R
+                folder for private project information | project info file
+    || text | file_name | rivt;plain | 0                             R,I,V,T
+                plain or rivt .txt file | indent space
+    || table | file_name |  60r;l;c                                  R,I,V,T
+                .csv or .rst file | max col width,right;left;center
+    || image | file_name  | .50                                        I,V,T
+                .png or .jpg file | fraction of page width
+    || image2 | file_name  | .40 | file_name  | .40 |                  I,V,T
+                side by side images
+    || append | file_name | count                                      I,V,T
+                .pdf file | include page numbers
+    || lists | file_name  |  [:];[x:y]                                   V
+                .csv;.syk;.txt;.py | rows to import
+    || values | file_name |                                              V
+                .csv;.syk;.txt;.py | rows to import
+    || import | file_name |  print; noprint                              V
+                
+    rivt tags ------------------------------------------------------------------
+
+    tag syntax                 description (user input)                
+    =====================  ===================================================== 
+    section title _[n]         start new section, autonumber
+    sympy eq _[s]              format sympy equation                
+    latex eq _[x]              format LaTeX equation                
+    title _[t]                 table title, autonumber            
+    caption _[f]               figure caption, autonumber         
+    text _[r]                  right justify text                     
+    text _[c]                  center text                            
+    text _[line]               horizontal line - width of page        
+    text _[page]               new PDF page                           
+    text _[#]                  footnote, autonumber                    
+    footnote _[foot]           footnote description
+    url _[link]                (http://xyz label) label               
+    descrip _[2,2]             * equation title, autonumber, decimal places  
+    a = b | u1, u2             * define equation | units of answer
+    a = n | u1, u2 | descrip   * assign value | units of answer | description
+    ___[literal]               literal block                          
+    ___[latex]                 LateX block                            
+    ___[math]                  LaTeX math block                       
+    ___[r]                     right justify text block                
+    ___[c]                     center text block                      
+    
+    * only applies to Value method
+
+    The first line of a rivt file imports *rivtapi*. The first method is always
+    the Repo method R(rs), followed by any of the other four methods in any
+    number or order. R(rs) occurs only one time. It sets options for
+    repository, report and output formats. Method names start in column 1 and
+    subsequent lines must be indented 4 spaces. This structure facilitates
+    section folding and navigation, bookmarking and improved legibility. Format
+    conventions follow the Python auto-formatter Black.
 
 example rivt calc file  --------------------------------------------------------
 
-from rivt import rivtapi as rv
+import rivt.rivtapi as rv
 
-rv.R("""(section title) | (calc title) | utf,pdf,html | (start page) 
+rv.R(
+    """ Repo method summary _[n] | Example Calculation | utf, pdf | 1 
 
-    The Repo method specifies repository and output parameters. It is used once
-    at the beginning of each file and typically includes a summary of the
-    calculation.
+    The Repo method is the first section and it specifies repository and output
+    formats, and typically includes a calculation summary.
     
-    The ||output command specifies the type of output, calculation title
-    override, starting page number and temporary file cleanup options. The
-    |term setting is used for interactive calc editing. If an output type other
-    than |term is specified the entire calc is evaluated and the output is
-    written to the specified file type. If utf is specified, the calc output is
-    written to README.txt for upload to the repository and searching.
-    
-    The ||project command inserts a project table from information in private
-    doc folders. Other private files include image and PDF files read from the
-    doc folders. The folder structure of rivt keeps confidential, binary and
-    copyrighted information separate from shareable, version controlled text.
+    The ||github command specifies settings for updating a public calc repo. 
 
+    || github  | param1 | param2
 
+    || project |  
     
-    || github  | param1 | param2 
-    """) 
-    
-rv.I("""Insert method [n]_ 
+    """
+) 
+rv.I(""" Insert method summary | /doc folder/override
 
     The Insert method formats descriptive information with three commands;
     ||text, ||table, ||image and a dozen tags. Tags [t]_ and [f]_ format and
     autonumber tables and figures.
     
-    || text | (file.txt) | rivt;plain;indent
+    || text | file.txt | rivt;plain | indent
 
     table title  [t]_ 
-    || table | (file.csv;.rst) | (60,r;l;c) {max col width,location }
+    || table | file.csv;.rst | 60r;l;c 
 
-    || image | (f1.png) | (50,l;c;r) {scale percent of page width, location} 
-    A figure caption [f]_ {centered}
+    || image | f1.png | 50 
+    A figure caption [f]_
 
-    Insert two images side by side using the following syntax: 
-    || image | (f1.png) | (35,s) | image | (f2.png) | (45,s) {scale percent of page width}
+    Insert two images side by side: 
+    || images | f2.png | 35 | f3.png | 45
     [a] The first figure caption [f]_ 
     [b] The second figure caption  [f]_
 
@@ -152,55 +162,54 @@ rv.I("""Insert method [n]_
     attached to the doc. The command can also overlay a title block page
     template on each page of the calc.
     """
-) rv.V("""Value method [n]_ 
+) 
+rv.V(
+    """ Value method summary | nosub | save | /docfolder/override
 
-    The Value method assigns values to variables and numerically evaluates
-    equations. The = sign is the tag that triggers the evaluation values. Rows
-    of values are formatted into tables that are terminated with a blank line.
-    Recorded values can be read from files into subsequent calcs.
-
-    a1 = 10.1    | unit, alt unit | description 
-    d1 = 12.1    | unit, alt unit | description # save {records to csv file - values.csv}
-
-    Equations have the syntax:
-
-    a1 = 3.14*(d1/2)^2   | unit, alt unit  # save {stores to file}
-
-    An equation tag placed above an equation labels it with a description, auto
-    numbers it, specifies the printed decimal places in equations and results
-    respectively, and whether the equation is printed with substituted numerical
-    values. The equation tag precedes the equation and has the syntax,
+    The Value method assigns values to variables and evaluates equations. The
+    first setting is the section title. The sub;nosub setting specifies whether
+    equations are output with substituted numerical values. The save;nosave
+    setting specifies whether equations and value assignments are written to a
+    values.txt file when the calc file is run. The values write is not triggered in
+    interactive mode. The docfolder setting overrides the folder containing image
     
-    Area of circle | 2,2 | nosub;sub [e]_ 
+    The = tag triggers the evaluation of values and equations. Rows of values
+    are terminated with a blank line and formatted into tables. 
 
-    The decimal and substitution formatting options are retained until changed -
-    they do not need to be specified each time. The equation tag is optional and
-    defaults to the description "equation" if stored.
+    a1 = 10.1    | unit, alt | description 
+    d1 = 12.1    | unit, alt | description 
+    
+    Example equation tag - Area of circle  _[2,2]
+    a1 = 3.14*(d1/2)^2 | unit, alt 
 
-    The commands ||values, ||list and ||import read values and functions from
-    files.
+    An equation tag prior to an equation, 1) labels it with a description 2)
+    auto numbers it and 3) specifies the printed decimal places in equations
+    and results respectively. The decimal formatting options are retained until
+    changed - they do not need to be specified each time. The equation tag is
+    optional and defaults to the description "equation".
 
-    || values | (file.csv .xlxs .syk) | print([x:y]) {list of rows to print}
+    The Values method 
+
+    || values | file | [:]
     
     The ||values command imports all values from a file, where the content in
     each row follows the input order (variable name, value, primary unit,
     secondary unit, description). Selected values may be printed. 
     
-    || list | (file.csv .xlxs .syk) | [:];([x:y]) {rows to import}
+    || list | file | [:] 
   
-    The ||list command imports data from a file, where the first column is the
-    variable name and the subsequent csv values make up a vector of values assigned
-    to the variable.
+    The ||list command imports and printes data from a file, where the first
+    column is the variable name and the subsequent values make up a vector of
+    values assigned to the variable.
     
-    || import | (file.py) | docs;nodocs
+    || import | file | docs;nodocs
 
-    Functions are imported from a Python file.  The function name, arguments and
-    doc strings may be included in the calc. Single line functions may also be
-    defined by the Table method.
-
-
+    Imported functions from Python, Fortran, C or C++. On import the
+    function name, arguments and doc strings or comments are inserted in the
+    calcs. Single line functions may be defined in the Table method.
     """
-) rv.T("""Table method [n]_  
+)
+ rv.T(""" Table method summary
 
     The Table method generates tables, plots and functions from native Python
     code. The method may include any Python simple statement (single line), rivt
@@ -210,18 +219,17 @@ rv.I("""Insert method [n]_
     
     pandas pd.method() np.method() mp.method()
 
-    Some common single line Python statements for defining functions or reading
+    Common single line Python statements for defining functions or reading
     a file include:
     
-    def f1(x,y): print(x,y); return x*y
+    def f1(x,y): z = x + y; print(z); return
     
     with open('file.csv', 'r') as f: output = f.readlines()
-    
     """
-) rv.X("""[n]_ skip-string
+)
+rv.X("""[n]_ skip-string
 
     Skips evaluation of the string. Used for comments and debugging. 
-
     """ 
 ) '''
 

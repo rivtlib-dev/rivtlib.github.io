@@ -10,7 +10,7 @@ import importlib.util
 from pathlib import Path, PurePath
 
 # rivtcalc path information - comment out for more general
-path1 = importlib.util.find_spec("rivtcalc")
+path1 = importlib.util.find_spec("rivt")
 rivpath = Path(path1.origin).parent
 unumpath = Path(rivpath, "unum")
 sys.path.append(str(rivpath))

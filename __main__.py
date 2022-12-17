@@ -1,7 +1,7 @@
 # type:ignore
 """ 
 
-**rivt** may be run interactively from an IDE or from the command line. In
+*rivt* may be run interactively from an IDE or from the command line. In
 IDE's one or more API calls can be grouped by the standard cell designation #%%
 and run interactively.
 
@@ -36,7 +36,8 @@ from pathlib import Path
 
 __version__ = "0.9.1-beta.1"
 __author__ = "rholland@structurelabs.com"
-_calcfileS = "empty"    # primary processed rivtText string
+cfileS = ""  # rivtText string
+cfileP = ""  # calc file name
 
 if sys.version_info < (3, 8):
     sys.exit("rivtCalc requires Python version 3.8 or later")
@@ -45,27 +46,33 @@ if sys.version_info < (3, 8):
 def cmdlinehelp():
     """command line help"""
     print()
-    print("Run rivt at the command line within the calc folder as:")
-    print("     python -m rivt ")
-    print("The program will find and run the file rvddnn_calcfilename.py")
+    print("Run rivt at the command line in the calc folder: ")
     print()
-    print("The logs and output specified in the calc are written to the") 
-    print("calc (.txt), pdf (.pdf) or html (.html) folder.")
+    print("                 python -m rivt                         ")
     print()
-    print("The rivtCalc user manual is at: https://rivt.info.")
+    print("The program will find and run the file cddnn_calcfile.py")
+    print()
+    print("The output files specified in the calc are written to:  ")
+    print("          calc folder:      README.txt                  ")
+    print("          report folder:    cddnn_calcfile.pdf          ")
+    print("          site folder:      index.html                  ")
+    print()
+    print("The rivtCalc user manual is at: https://rivtDocs.net    ")
     sys.exit()
 
 
 if __name__ == "__main__":
     try:
-        _calcfileS = sys.argv[1]  # calc file argument
-        _cwdS = os.getcwd()  # get calc folder
-        _cfull = Path(_calcfileS)  # calc file full path
-        _cfileS = Path(_cfull).name  # calc file name
-        _cbaseS = _cfileS.split(".py")[0]  # calc file basename
-        print("MAIN  current folder: ", _cwdS)
-        print("MAIN  calc name: ", _cfileS)
-        importlib.import_module(_cbaseS)
+        # get calc file name
+        for fileP in os.listdir("."):
+            if fnmatch.fnmatch(file, "c[0-9][0-9][0-9][0-9]_*.py"):
+                cfileP = fileP
+        cwdP = os.getcwd()  # get calc folder
+        cfullP = Path(cfileP)  # calc file full path
+        cbaseP = cfileP.split(".py")[0]  # calc file basename
+        print("MAIN  current folder: ", cwdP)
+        print("MAIN  calc name: ", cfileP)
+        importlib.import_module(cbaseP)
     except ImportError as error:
         print("error---------------------------------------------")
         print(error)

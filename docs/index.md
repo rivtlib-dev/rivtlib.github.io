@@ -14,7 +14,6 @@ share calcs - simply
 [link to **rivt** user manual](https://rivt.info)
 
 
-**rivt** is a Python package that provides a calculation API for the
-**rivtcalc** open source stack. The API is file and folder based with a
-specified naming conventions. They divide the calculation report into modular,
-easily edited and shareable components.
+**rivt** is a Python package and API for the **rivtText** calculation document
+markdown language. The API uses a file and folder structure that divides the
+calculation report into modular, easily edited and shareable components.

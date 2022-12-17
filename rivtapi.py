@@ -6,20 +6,20 @@
     represents a rivtText string.
     
     When running in an IDE (e.g. VSCode), each method can become an interactive
-    cell by adding a preceding #%%. In run-file mode, where the entire
-    calculation file is processed, the output is written to the screen and disk
-    as a utf8, PDF, or HTML file.
+    cell by adding a preceding #%%. In file run mode (entire file processed)
+    the output is written to the screen and disk as a utf8, PDF, or HTML file.
     
-    The primary calculation input files are separated into two folders labeled
-    calcs and docs. calc folder files are text files under version control that
-    contain the primary calculation and supporting files. They are designed to
-    be shared. Doc files are supporting calculation files that are typically
-    binary files (images, pdf etc.) or files that include confidential project
-    information or copyrights. The docs folder is typically not shared.
+    The calculation input files are separated into two folders labeled calcs
+    and docs. Files in the calc folder are text files under version control
+    that contain the primary calculation and supporting files. They are
+    designed to be shared. Doc files are supporting calculation files that are
+    typically binary files (images, pdf etc.) or files that include
+    confidential project information or copyrights. The docs folder is
+    typically not shared.
     
     The rivt calculation input file is a Python file written in rivtText, a
     superset of the markup language reStructuredText (reST) defined at
-    https://docutils.sourceforge.io/rst.html. rivtText (rvTxt) is designed to
+    https://docutils.sourceforge.io/rst.html. rivtText is designed to
     be more readable and efficient for calculations. It includes rivt commands
     and tags, reStructuredText (reST) and native Python code. Commands start a
     line with ||, and read and write files into and out of the calculation.
@@ -31,95 +31,132 @@
     input and PDF or HTML output. The stack includes Python, VSCode, TexLive,
     GitHub and rivt.
 
-    In the syntax summary below, user input is separated by | and user
-    selections are separated by semi-colons for a single selection and commas
-    for multiply selectable settings.
+    In the syntax summary below, user inputs are separated by | and user
+    selections are separated by semi-colons for a single selection, and commas
+    for multiply selectable settings. The first line of each method specifies
+    formating and labeling parameters for that rivt string. The method label
+    can be a section or paragraph title, or just a lable for bookmarking (see
+    tags for explanation).
 
-    rivt methods ---------------------------------------------------------------
-    
-    name           method, first line settings and commands
+    ========= ==================================================================     
+    API name           method, first line settings and commands
     ========= ================================================================== 
-    repo       R(""" section_title | calc_title | utf,pdf,html;none | start_page
-                       ||text, ||table, ||github ||project""")
+    repo      rv.R("""method label | calc title | utf,pdf,html;none | page #
+                       
+                  ||text, ||table, ||github ||project
+                       
+                  """)
     
-    insert     I(""" section_title | doc_folder_override;default 
-                       ||text, ||table, ||image, ||append """)
+    insert    rv.I("""method label | /docs/folder_override;default 
+                       
+                  ||text, ||table, ||image, ||image2, ||append 
+                  
+                  """)
     
-    values     V(""" section_title | sub;nosub | doc_folder_override;default 
-                        =, ||values, ||lists, ||import, I commands """)
-    
-    tables     T(""" section_title | doc_folder_override;default
-                        Python simple statements, I commands """)
-    
-    exclude    X("""  any text           
-                        any commands """)
+    values    rv.V("""method label | sub;nosub | /docs/folder_override;default 
+                        
+                  =, ||values, ||lists, ||import
 
+                  ||text, ||table, ||image, ||image2, ||append 
+                        
+                  """)
+    
+    tables    rv.T("""method label | /docs/folder_override;default
+                        
+                  Python simple statements 
+                  (any valid expression or statment on a single line)
 
-    rivt commands --------------------------------------------------------------
+                  ||text, ||table, ||image, ||image2, ||append  
+                        
+                  """)
+    
+    exclude  rv.X("""  any text           
+                        
+                 any commands 
+                        
+                 """)
 
-    command syntax                                                     method
     =============================================================== ============
-    || github | param1 | param2                                      R
+    rivt command syntax                                               methods
+    =============================================================== ============
+    || github | repo_name | param1 | param                             R
                 github repo parameters
-    || project | /docfolder;default | filename                       R
-                folder for private project information | project info file
-    || text | file_name | rivt;plain | 0                             R,I,V,T
-                plain or rivt .txt file | indent space
-    || table | file_name |  60r;l;c                                  R,I,V,T
-                .csv or .rst file | max col width,right;left;center
-    || image | file_name  | .50                                        I,V,T
-                .png or .jpg file | fraction of page width
-    || image2 | file_name  | .40 | file_name  | .40 |                  I,V,T
-                side by side images
-    || append | file_name | count                                      I,V,T
-                .pdf file | include page numbers
-    || lists | file_name  |  [:];[x:y]                                   V
+    
+    || project | file_name | docs/folder/;default                      R
+                .txt;rst;csv;syk;xls | project info folder 
+    
+    || lists | file_name  |  [:];[x:y]                                    V
                 .csv;.syk;.txt;.py | rows to import
+     
     || values | file_name |                                              V
                 .csv;.syk;.txt;.py | rows to import
-    || import | file_name |  print; noprint                              V
-                
-    rivt tags ------------------------------------------------------------------
-
-    tag syntax                 description (user input)                
-    =====================  ===================================================== 
-    section title _[n]         start new section, autonumber
-    sympy eq _[s]              format sympy equation                
-    latex eq _[x]              format LaTeX equation                
-    title _[t]                 table title, autonumber            
-    caption _[f]               figure caption, autonumber         
-    text _[r]                  right justify text                     
-    text _[c]                  center text                            
-    text _[line]               horizontal line - width of page        
-    text _[page]               new PDF page                           
-    text _[#]                  footnote, autonumber                    
-    footnote _[foot]           footnote description
-    url _[link]                (http://xyz label) label               
-    descrip _[2,2]             * equation title, autonumber, decimal places  
-    a = b | u1, u2             * define equation | units of answer
-    a = n | u1, u2 | descrip   * assign value | units of answer | description
-    ___[literal]               literal block                          
-    ___[latex]                 LateX block                            
-    ___[math]                  LaTeX math block                       
-    ___[r]                     right justify text block                
-    ___[c]                     center text block                      
     
-    * only applies to Value method
+    || import | file_name |  print; noprint                               V
+                .for;.py;.c;.c++;.jl | insert docstrings
 
+    || image | file_name  | .50                                         I,V,T
+                .png or .jpg file | fraction of page width
+    
+    || image2 | file_name  | .40 | file_name  | .40 |                   I,V,T
+                side by side images
+    
+    || append | file_name | count                                       I,V,T
+                .pdf file | include page numbers
+
+    || text | file_name | rivt;plain | 0                               R,I,V,T
+                plain or rivt .txt file | indent space
+    
+    || table | file_name |  [:] | 60 r;l;c                             R,I,V,T
+                .csv or .rst file | rows | max col width, locate text
+
+    =====================  ===================================================== 
+    rivt tag syntax                 description (user input)                
+    =====================  ===================================================== 
+                Start of rivt string - first line:
+    """Title |                     Denotes new section title, autonumber
+    """ Title |                    Single start space - denotes paragraph title
+    """  label |                   Double start space - denotes continuation    
+                  All other lines:
+    sympy eq _[s]                 format sympy equation                
+    latex eq _[x]                 format LaTeX equation                
+    title _[p]                    paragraph title (centered)                        
+    title _[t]                    table title, autonumber            
+    caption _[f]                  figure caption, autonumber         
+    text _[r]                     right justify line of text                     
+    text _[c]                     center line of text                            
+    text _[line]                  horizontal line - width of page        
+    text _[page]                  new PDF page
+    text _[#]                     footnote, autonumber                    
+    footnote _[foot]              footnote description
+    _[address label _url]         http://xyz link label
+    _[target _lnk]                target is title of section, paragraph, 
+                                  footnote, table,equation
+    ___[literal]                  literal block, end with blank line                          
+    ___[latex]                    LateX block, end with blank line                            
+    ___[math]                     LaTeX math block, end with blank line                       
+    ___[r]                        right justify text block, end with blank line                
+    ___[c]                        center text block, end with blank line                      
+                The following tags only apply to Values method:
+    descrip _[2,2]                equation description, autonumber, decimals
+    a = b + c | unit, alt         define equation, units
+    a = n | unit, alt | descrip   assign value, units, description
+    
     The first line of a rivt file imports *rivtapi*. The first method is always
     the Repo method R(rs), followed by any of the other four methods in any
-    number or order. R(rs) occurs only one time. It sets options for
-    repository, report and output formats. Method names start in column 1 and
-    subsequent lines must be indented 4 spaces. This structure facilitates
-    section folding and navigation, bookmarking and improved legibility. Format
-    conventions follow the Python auto-formatter Black.
+    number or order. R(rs) occurs only one time and sets options for
+    repository, report and calc output formats. 
+    
+    All method names start in column 1 and subsequent lines must be indented 4
+    spaces. This layout facilitates section folding and navigation, bookmarking
+    and improved legibility. Format conventions follow the Python formatter
+    *yapf*.
 
 example rivt calc file  --------------------------------------------------------
 
 import rivt.rivtapi as rv
 
 rv.R(
-    """ Repo method summary _[n] | Example Calculation | utf, pdf | 1 
+    """Repo method summary | Example Calculation | utf, pdf | 1 
 
     The Repo method is the first section and it specifies repository and output
     formats, and typically includes a calculation summary.
@@ -132,7 +169,7 @@ rv.R(
     
     """
 ) 
-rv.I(""" Insert method summary | /doc folder/override
+rv.I("""Insert method summary | /doc folder/override
 
     The Insert method formats descriptive information with three commands;
     ||text, ||table, ||image and a dozen tags. Tags [t]_ and [f]_ format and
@@ -164,7 +201,7 @@ rv.I(""" Insert method summary | /doc folder/override
     """
 ) 
 rv.V(
-    """ Value method summary | nosub | save | /docfolder/override
+    """Value method summary | nosub | save | /docfolder/override
 
     The Value method assigns values to variables and evaluates equations. The
     first setting is the section title. The sub;nosub setting specifies whether
@@ -209,7 +246,7 @@ rv.V(
     calcs. Single line functions may be defined in the Table method.
     """
 )
- rv.T(""" Table method summary
+ rv.T("""Table method summary
 
     The Table method generates tables, plots and functions from native Python
     code. The method may include any Python simple statement (single line), rivt
@@ -266,7 +303,7 @@ _cwdS = os.getcwd()
 _cfullP = Path(_cfileS)  # calc file full path
 _cfileS = _cfullP.name  # calc file name
 _cnameS = _cfileS.split(".py")[0]  # calc file basename
-_cdescrip = _cnameS.split("_")[1]
+_cdescripS = _cnameS.split("_")[1]
 _ddirS = "".join(["d", _cnameS[1:3], "_", _cdescrip])
 _curcalcP = _cfullP.parent  # current calc folder path
 _calcsP = _cfullP.parent.parent  # calcs folder path
@@ -275,9 +312,11 @@ _docsP = Path(_rivtP / "docs")  # docs folder path
 _dcfgP = Path(_docsP / "d00_docs")  # doc config folder
 _htmlP = Path(_docsP / "html")  # doc folder path
 _curdocP = Path(_docsP / _ddirS)  # doc folder path
-_rivtcaldP = Path("rivtcalc.calc.py").parent  # rivtcalc program path
+_rivtcaldP = Path("rivt.rivtapi.py").parent  # rivtcalc program path
 print("INFO: calc directory is ", _curcalcP)
 print("INFO: doc directory is ", _curdocP)
+print("INFO: report directory is ", _curcalcP)
+print("INFO: site directory is ", _curdocP)
 
 # check that calc and doc directories exist
 for root, dir, file in os.walk(_calcsP):

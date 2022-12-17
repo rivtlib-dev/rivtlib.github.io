@@ -25,7 +25,6 @@ from sympy.abc import _clash2
 from tabulate import tabulate
 from pathlib import Path
 from numpy import *
-from rivtlib.rivt import *
 
 logging.getLogger("numexpr").setLevel(logging.WARNING)
 # tabulate.PRESERVE_WHITESPACE = True

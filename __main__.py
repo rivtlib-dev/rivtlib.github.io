@@ -1,6 +1,5 @@
 # type:ignore
 """ 
-
 *rivt* may be run interactively from an IDE or from the command line. In
 IDE's one or more API calls can be grouped by the standard cell designation #%%
 and run interactively.
@@ -36,7 +35,7 @@ from pathlib import Path
 
 __version__ = "0.9.1-beta.1"
 __author__ = "rholland@structurelabs.com"
-cfileS = ""  # rivtText string
+utfS = """"""  # rivtText string
 cfileP = ""  # calc file name
 
 if sys.version_info < (3, 8):

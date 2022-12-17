@@ -277,6 +277,7 @@ import time
 import logging
 import warnings
 import shutil
+import fnmatch
 import numpy as np
 from pathlib import Path
 from collections import deque
@@ -287,32 +288,28 @@ import rivt._t as _tM
 import rivt.reports as _rptM
 import rivt.tags as _tagM
 
-try:
-    _cfileS = sys.argv[1]
-except:
-    _cfileS = sys.argv[0]
-# print("argv0 argv1", sys.argv[0], sys.argv[1])
-if ".py" not in _cfileS:  # get VSCode file reference
-    # print(dir(__main__))
-    import __main__
-
-    _cfileS = __main__.__file__
+for _fileS in os.listdir("."):
+    if fnmatch.fnmatch(_fileS, "c[0-9][0-9][0-9][0-9]_*.py"):
+        _cfileS = _fileS  # calc file name
+        break
+    else:
+        print("calc file not found - check file name")
+        sys.exit
 
 # define path variables
-_cwdS = os.getcwd()
-_cfullP = Path(_cfileS)  # calc file full path
-_cfileS = _cfullP.name  # calc file name
-_cnameS = _cfileS.split(".py")[0]  # calc file basename
-_cdescripS = _cnameS.split("_")[1]
-_ddirS = "".join(["d", _cnameS[1:3], "_", _cdescrip])
-_curcalcP = _cfullP.parent  # current calc folder path
-_calcsP = _cfullP.parent.parent  # calcs folder path
-_rivtP = _cfullP.parent.parent.parent  # project folder path
+_curcalcP = Path(os.getcwd())  # calc file full path
+_rivtP = _curcalcP.parent.parent  # project folder path
+_cbaseS = _cfileS.split(".py")[0]  # calc file basename
+_rvbak = Path(_curcalcP / ".".join((_cbaseS, "bak")))
+_calcsP = _curcalcP.parent  # calcs folder path
+_cdescripS = _cbaseS.split("_")[1]
 _docsP = Path(_rivtP / "docs")  # docs folder path
-_dcfgP = Path(_docsP / "d00_docs")  # doc config folder
-_htmlP = Path(_docsP / "html")  # doc folder path
+_ddirS = "".join(["d", _cbaseS[1:3], "_", _cdescripS])
 _curdocP = Path(_docsP / _ddirS)  # doc folder path
-_rivtcaldP = Path("rivt.rivtapi.py").parent  # rivtcalc program path
+_dcfgP = Path(_docsP / "d00_docs")  # doc config folder
+_siteP = Path(_rivtP / "site")  # site folder path
+_reportP = Path(_rivtP / "reports")  # report folder path
+_rivtcaldP = Path("rivt.rivtapi.py").parent  # rivt package path
 print("INFO: calc directory is ", _curcalcP)
 print("INFO: doc directory is ", _curdocP)
 print("INFO: report directory is ", _curcalcP)
@@ -339,15 +336,15 @@ exportS = """"""  # values string export
 rivtD = {}  # values dictionary
 _foldD = {}  # folder dict
 _rstB = False  # reST generation flag
-for variable in ["_projP", "_calcsP", "_curcalcP"]:
+for variable in ["_rivtP", "_calcsP", "_curcalcP"]:
     _foldD[variable] = eval(variable)
-for variable in ["_curdocP", "_docsP", "_dcfgP", "_htmlP"]:
+for variable in ["_curdocP", "_docsP", "_dcfgP", "_siteP"]:
     _foldD[variable] = eval(variable)
 _tagD = {
-    "fnumS": _cnameS[0:5],  # file number
-    "cnumS": _cnameS[1:5],  # calc number
-    "dnumS": _cnameS[1:3],  # division number
-    "sdnumS": _cnameS[3:5],  # subdivision number
+    "fnumS": _cbaseS[0:5],  # file number
+    "cnumS": _cbaseS[1:5],  # calc number
+    "dnumS": _cbaseS[1:3],  # division number
+    "sdnumS": _cbaseS[3:5],  # subdivision number
     "snameS": "",  # section title
     "snumS": "",  # section number
     "swidthI": 80,  # utf section width
@@ -362,12 +359,11 @@ _tagD = {
     "subvB": False,
 }
 # run backups and logging
-_logfileP = Path(_dcfgP / ".".join((_cnameS, "logging")))
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
     datefmt="%m-%d %H:%M",
-    filename=_logfile,
+    filename="error_log.txt",
     filemode="w",
 )
 logconsole = logging.StreamHandler()
@@ -376,11 +372,10 @@ formatter = logging.Formatter("%(levelname)-8s %(message)s")
 logconsole.setFormatter(formatter)
 logging.getLogger("").addHandler(logconsole)
 warnings.filterwarnings("ignore")
-_rshortP = Path(*Path(_cfullP).parts[-3:])
-_lshortP = Path(*Path(_logfileP).parts[-4:])
+_rshortP = Path(*Path(_dcfgP).parts[-3:])
+_lshortP = Path(*Path(_dcfgP).parts[-4:])
 logging.info(f"""calc path: {_rshortP}""")
 logging.info(f"""log path: {_lshortP}""")
-_rvbak = Path(_curcalcP / ".".join((_cnameS, "bak")))
 with open(_cfullP, "r") as f2:
     calcbak = f2.read()
 with open(_rvbak, "w") as f3:

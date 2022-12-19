@@ -1,0 +1,58 @@
+{
+    "new R method": {
+        "prefix": "rvR",
+        "description": "add new Repo method",
+        "scope": "python",
+        "body": [
+            "rv.R(\"\"\"${1:section label} | ${2:calc title} | ${3:utf;pdf;html;inter} | ${4:start}",
+            "    ",
+            "    ${0: new Repo text}",
+            "    ",
+            "    \"\"\")"
+        ]
+    },
+    "new I method": {
+        "prefix": "rvI",
+        "description": "add new Insert method",
+        "scope": "python",
+        "body": [
+            "rv.I(\"\"\"${1:section label} | ${2:docfolder; default}",
+            "    ",
+            "    ${0: new Insert text}",
+            "    ",
+            "    \"\"\")"
+        ]
+    },
+    "new V method": {
+        "prefix": "rvV",
+        "description": "add new Value method",
+        "scope": "python",
+        "body": [
+            "rv.V(\"\"\"${1:section label} | ${2:docfolder; default} | ${3:sub; nosub} ",
+            "    ",
+            "    ${0: new Value text}",
+            "    ",
+            "    \"\"\")"
+        ]
+    },
+    "new T method": {
+        "prefix": "rvT",
+        "description": "add new Value method",
+        "scope": "python",
+        "body": [
+            "rv.T(\"\"\"${1:section label} | ${2:docfolder; default} ",
+            "    ",
+            "    ${0: new Table text}",
+            "    ",
+            "    \"\"\")"
+        ]
+    },
+    "cmd image": {
+        "prefix": "img",
+        "description": "insert image",
+        "scope": "python",
+        "body": [
+        "    || image | ${1: filename} | ${0: scale}"
+        ]
+    }
+}

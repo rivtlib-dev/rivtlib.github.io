@@ -1,0 +1,306 @@
+{
+	"new R method": {
+		"prefix": "rvR",
+		"description": "add new Repo method",
+		"scope": "python",
+		"body": [
+			"rv.R(\"\"\"${1:section label} | ${2:calc title} | ${3:utf;pdf;html;inter} | ${4:start}",
+			"    ",
+			"    ${0: new Repo text}",
+			"    ",
+			"    \"\"\")"
+		]
+	},
+	"new I method": {
+		"prefix": "rvI",
+		"description": "add new Insert method",
+		"scope": "python",
+		"body": [
+			"rv.I(\"\"\"${1:section label} | ${2:docfolder; default}",
+			"    ",
+			"    ${0: new Insert text}",
+			"    ",
+			"    \"\"\")"
+		]
+	},
+	"new V method": {
+		"prefix": "rvV",
+		"description": "add new Value method",
+		"scope": "python",
+		"body": [
+			"rv.V(\"\"\"${1:section label} | ${2:docfolder; default} | ${3:sub; nosub} ",
+			"    ",
+			"    ${0: new Value text}",
+			"    ",
+			"    \"\"\")"
+		]
+	},
+	"new T method": {
+		"prefix": "rvT",
+		"description": "add new Value method",
+		"scope": "python",
+		"body": [
+			"rv.T(\"\"\"${1:section label} | ${2:docfolder; default} ",
+			"    ",
+			"    ${0: new Table text}",
+			"    ",
+			"    \"\"\")"
+		]
+	},
+	"cmd-header": {
+		"scope": "python",
+		"prefix": [
+			"|| header"
+		],
+		"body": [
+			"|| header | ${1:calc title} | ${2:toc} | ${0:date} "
+		],
+		"description": "repo and calc parameters"
+	},
+	"cmd-codes": {
+		"scope": "python",
+		"prefix": [
+			"|| codes"
+		],
+		"body": [
+			"|| codes | ${1:code1} | ${2:code1} | ${0:filename}"
+		],
+		"description": "list codes"
+	},
+	"cmd-attach": {
+		"scope": "python",
+		"prefix": [
+			"|| attach"
+		],
+		"body": [
+			"|| attach | ${1:location} | ${0:filename} "
+		],
+		"description": "attach PDF files"
+	},
+	"cmd-image1": {
+		"scope": "python",
+		"prefix": [
+			"|| image1"
+		],
+		"body": [
+			"|| image | ${1: filename} | ${0: scale}"
+		],
+		"description": "image"
+	},
+	"cmd-image2": {
+		"scope": "python",
+		"prefix": [
+			"|| image2"
+		],
+		"body": [
+			"|| image | ${1:filename}, ${2:filename} | ${3:scale}, ${0:scale}"
+		],
+		"description": "side by side images"
+	},
+	"cmd-table": {
+		"scope": "python",
+		"prefix": [
+			"|| table"
+		],
+		"body": [
+			"|| table | ${1:filename}.csv | ${2:max width}, [${0:col list}]"
+		],
+		"description": "table from csv file"
+	},
+	"cmd-text": {
+		"scope": "python",
+		"prefix": [
+			"|| text"
+		],
+		"body": [
+			"|| text | ${1:filename}.txt | ${0:max text width}"
+		],
+		"description": "text file"
+	},
+	"cmd-tex": {
+		"scope": "python",
+		"prefix": [
+			"|| tex"
+		],
+		"body": [
+			"|| tex | ${0:latex equation"
+		],
+		"description": "LaTeX equation"
+	},
+	"cmd-sym": {
+		"scope": "python",
+		"prefix": [
+			"|| sympy"
+		],
+		"body": [
+			"|| sym | ${0:sympy equation}"
+		],
+		"description": "sympy equation"
+	},
+	"cmd-value-param": {
+		"scope": "python",
+		"prefix": [
+			"|| valueparameters"
+		],
+		"body": [
+			"|| value | ${1:sub or nosub} | ${0:truncate result, terms}"
+		],
+		"description": "value parameters"
+	},
+	"cmd-value-file": {
+		"scope": "python",
+		"prefix": [
+			"|| valuefile"
+		],
+		"body": [
+			"|| value | file | ${1:file}.${0:type}"
+		],
+		"description": "import values from csv or xlsx file"
+	},
+	"cmd-value-list": {
+		"scope": "python",
+		"prefix": [
+			"|| valuelsit"
+		],
+		"body": [
+			"|| value | list | ${1:file name}.csv | [${0:rows}]"
+		],
+		"description": "import rows, var name in first column"
+	},
+	"tag-table": {
+		"scope": "python",
+		"prefix": [
+			"tagtable"
+		],
+		"body": [
+			"${0:table reference} [t]_"
+		],
+		"description": "table reference"
+	},
+	"tag-equation": {
+		"scope": "python",
+		"prefix": [
+			"tagequation"
+		],
+		"body": [
+			"${0:equation reference} [e]_"
+		],
+		"description": "equation reference"
+	},
+	"tag-figure": {
+		"scope": "python",
+		"prefix": [
+			"tagfigure"
+		],
+		"body": [
+			"${0:figure caption} [f]_"
+		],
+		"description": "figure caption"
+	},
+	"tag-center": {
+		"scope": "python",
+		"prefix": [
+			"tagcenter"
+		],
+		"body": [
+			"${0:text} [c[page]_]_"
+		],
+		"description": "center text"
+	},
+	"tag-right": {
+		"scope": "python",
+		"prefix": [
+			"tagright"
+		],
+		"body": [
+			"${0:text} [r]_"
+		],
+		"description": "right justify text"
+	},
+	"tag-literal": {
+		"scope": "python",
+		"prefix": [
+			"tagliteral"
+		],
+		"body": [
+			"[literal]_"
+		],
+		"description": "literal code block"
+	},
+	"tag-line": {
+		"scope": "python",
+		"prefix": [
+			"tagline"
+		],
+		"body": [
+			"[line]_"
+		],
+		"description": "line tag"
+	},
+	"tag-page": {
+		"scope": "python",
+		"prefix": [
+			"tagpage"
+		],
+		"body": [
+			"[page]_"
+		],
+		"description": "page tag"
+	},
+	"tag-link": {
+		"scope": "python",
+		"prefix": [
+			"taglink"
+		],
+		"body": [
+			"${0:url} [link]_"
+		],
+		"description": "insert link"
+	},
+	"tag-cite": {
+		"scope": "python",
+		"prefix": [
+			"tagcite"
+		],
+		"body": [
+			"[${0:cite}]_"
+		],
+		"description": "cite tag"
+	},
+	"tag-foot": {
+		"scope": "python",
+		"prefix": [
+			"tagfoot"
+		],
+		"body": [
+			"[#]_"
+		],
+		"description": "footnote tag"
+	},
+	"tag-footnote": {
+		"scope": "python",
+		"prefix": [
+			"tagnote"
+		],
+		"body": [
+			"${0:table title} [foot]_"
+		],
+		"description": "footnote"
+	},
+}
+// Place your rivt workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+// Placeholders with the same ids are connected.
+// Example:
+// "Print to console": {
+// 	"scope": "javascript,typescript",
+// 	"prefix": "log",
+// 	"body": [
+// 		"console.log('$1');",
+// 		"$2"
+// 	],
+// 	"description": "Log output to console"
+// }

@@ -6,6 +6,6 @@
         "rivtcalc",
         "sympy"
     ],
-    "cSpell.enabled": false,
-    "python.formatting.provider": "black"
+    "python.formatting.provider": "yapf",
+    "cSpell.enabled": false
 }

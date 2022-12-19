@@ -1,0 +1,10 @@
+{
+    "test": {
+        "prefix": "ttt",
+        "description": "test this",
+        "scope": "python",
+        "body": [
+            "this is a test"
+        ]
+    }
+}

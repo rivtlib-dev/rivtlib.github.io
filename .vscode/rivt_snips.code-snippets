@@ -6,7 +6,7 @@
         "body": [
             "rv.R(\"\"\"${1:section label} | ${2:calc title} | ${3:utf;pdf;html;inter} | ${4:start}",
             "    ",
-            "    ${0: new Repo text}",
+            "    ${0:new Repo text}",
             "    ",
             "    \"\"\")"
         ]
@@ -18,7 +18,7 @@
         "body": [
             "rv.I(\"\"\"${1:section label} | ${2:docfolder; default}",
             "    ",
-            "    ${0: new Insert text}",
+            "    ${0:new Insert text}",
             "    ",
             "    \"\"\")"
         ]
@@ -30,29 +30,69 @@
         "body": [
             "rv.V(\"\"\"${1:section label} | ${2:docfolder; default} | ${3:sub; nosub} ",
             "    ",
-            "    ${0: new Value text}",
+            "    ${0:new Value text}",
             "    ",
             "    \"\"\")"
         ]
     },
     "new T method": {
         "prefix": "rvT",
-        "description": "add new Value method",
+        "description": "add new Table method",
         "scope": "python",
         "body": [
             "rv.T(\"\"\"${1:section label} | ${2:docfolder; default} ",
             "    ",
-            "    ${0: new Table text}",
+            "    ${0:new Table text}",
             "    ",
             "    \"\"\")"
         ]
     },
-    "cmd image": {
+    "image": {
         "prefix": "img",
         "description": "insert image",
         "scope": "python",
         "body": [
-        "    || image | ${1: filename} | ${0: scale}"
+            "|| image | ${1: filename} | ${0:0.5}"
+        ]
+    },
+    "image2": {
+        "prefix": "img2",
+        "description": "insert side by side image",
+        "scope": "python",
+        "body": [
+            "|| image2 | ${1: filename} | ${0:0.5} | ${1: filename} | ${0:0.5}"
+        ]
+    },
+    "table": {
+        "prefix": "tab",
+        "description": "insert table ",
+        "scope": "python",
+        "body": [
+            "|| table | ${1: filename} | ${2:40} | ${3:[:]}"
+        ]
+    },
+    "text": {
+        "prefix": "text",
+        "description": "insert text file",
+        "scope": "python",
+        "body": [
+            "|| text | ${1: filename} | ${0:plain} "
+        ]
+    },
+    "attach": {
+        "prefix": "att",
+        "description": "attach pdf file",
+        "scope": "python",
+        "body": [
+            "|| attach | ${1: filename} | ${0:number} "
+        ]
+    },
+    "tag equation": {
+        "prefix": "eq",
+        "description": "equation tag",
+        "scope": "python",
+        "body": [
+            "_[e]"
         ]
     }
 }

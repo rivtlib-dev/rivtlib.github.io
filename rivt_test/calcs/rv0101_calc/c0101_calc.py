@@ -23,6 +23,9 @@ rv.V("""new V section | default | nosub
 
 rv.T("""new T section | default 
     
-     new Table text
+    new Table text
+
+    || table | test.py | 40 | [:]
     
+    || attach | test.pdf | nonumber     
     """)

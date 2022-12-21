@@ -10,10 +10,9 @@ layout: default
 ---------------------------
 
 
-[**rivt** code on Github](https://github.com/rivtcalc/rivt)  <img src="./assets/img/rivt01.png" width="100" height="80" /> 
+<img src="./assets/img/rivt01.png" width="100" height="80" />  [**rivt** code on Github](https://github.com/rivtcalc/rivt)  
 
-
-[**rivt** user manual](https://rivtdocs.net) <img src="./assets/img/manual12.png" width="100" height="80" /> 
+<img src="./assets/img/manual12.png" width="100" height="80" />  [**rivt** user manual](https://rivtdocs.net) 
 
 
 [**rivt** installers](https://rivtcalc.org)

@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<link rel="shortcut icon" type="image/png" href="./assets/img/favicon.png"> 
+<link rel="shortcut icon" type="image/png" href="./assets/img/favicon.png"/> 
 
 <img src="./assets/img/codedocs09.png" width="150" height="110" /> 
 

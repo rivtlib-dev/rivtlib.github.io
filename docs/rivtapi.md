@@ -26,26 +26,26 @@ The *rivtapi* module is part of the *rivt* Python package and is imported
     *sites* folder.
     
     The rivt calc input file is a Python file written in *rivtText*, a superset
-    markup language reStructuredText (reST) defined at
+    of the markup language reStructuredText (reST) defined at
     https://docutils.sourceforge.io/rst.html. *rivtText* is designed for
-    clarity and brevity when reading and writing calculation input and output.
-    It may include rivt commands and tags, reStructuredText (reST) and native
-    Python code. Commands start a line with || and always read or write files
-    into and out of the calculation. Tags terminate a line with the symbol
-    _[tag] and always evaluate or format. Block tags start the block with
-    ___[tag] (three underscores) and end with a blank line.
+    clarity, brevity and universality when reading and writing calculation
+    inputs and outputs. It may include rivt file commands and format tags,
+    reStructuredText (reST) and native Python code. Commands start a line with
+    || and always read or write files into and out of the calculation. Tags
+    terminate a line with the symbol _[tag] and always evaluate or format.
+    Block tags start the block with ___[tag] (three underscores) and end with a
+    blank line.
     
-    *rivtCalc* is an open source software stack for writing, sharing and
+    *rivtCalc* is the open source software stack for writing, sharing and
     publishing engineering calculations. The stack includes *Python*, Python
     science and engineering libraries, *VSCode*, *LaTeX (TexLive)*, *GitHub* and
     *rivt*.
 
-    In the syntax summary below, user settings are separated by |. User
-    selections are separated by semi-colons for a single selection and commas
-    for multiply selectable settings. The first line of each method specifies
-    formatting and labeling parameters for that rivt string. The method label
-    can be a section or paragraph title, or just a label for bookmarking (see
-    tags for explanation).
+    rivt command parameters are separated by |. User selections are separated
+    by semi-colons for a single selection and commas for multiply selectable
+    settings. The first line of each method specifies formatting and labeling
+    parameters for that rivt string. The method label can be a section or
+    paragraph title, or a label for bookmarking (see tags for usage).
 
     ========= ==================================================================     
     API name           method, first line settings and commands
@@ -58,7 +58,7 @@ The *rivtapi* module is part of the *rivt* Python package and is imported
     
     insert    rv.I("""method label | /docs/folder_override;default 
                        
-                  ||text, ||table, ||image, ||image2, ||append 
+                  ||text, ||table, ||image, ||image2, ||attach
                   
                   """)
     
@@ -66,7 +66,7 @@ The *rivtapi* module is part of the *rivt* Python package and is imported
                         
                   =, ||values, ||lists, ||import
 
-                  ||text, ||table, ||image, ||image2, ||append 
+                  ||text, ||table, ||image, ||image2, ||attach 
                         
                   """)
     
@@ -75,7 +75,7 @@ The *rivtapi* module is part of the *rivt* Python package and is imported
                   Python simple statements 
                   (any valid expression or statment on a single line)
 
-                  ||text, ||table, ||image, ||image2, ||append  
+                  ||text, ||table, ||image, ||image2, ||attach  
                         
                   """)
     
@@ -213,7 +213,9 @@ rv.I("""Insert method summary | default
     A figure caption [f]_
 
     Insert two images side by side: 
+
     || image2 | f2.png | 35 | f3.png | 45
+    The first figure caption  [f]_
     The second figure caption  [f]_
 
     The tags [x]_ and [s]_ format LaTeX and sympy equations:
@@ -221,9 +223,14 @@ rv.I("""Insert method summary | default
     \gamma = rac{5}{x+y} + 3  [x]_ 
     x = 32 + (y/2)  [s]_
 
-    http://wwww.someurl.suffix  (label) [link]_ {formats a URL link}
+    The url tag formats a url link.
+    _[http://wwww.url  label url] 
 
-    The ||attach command attaches PDF documents at the end of the method. 
+    The link tag formats an internal document link to a table, equation,
+    section or paragraph title:
+    _["a calc title" link]
+
+    Attach PDF documents at the end of the method:
 
     || attach | file | default | count
     """
@@ -352,25 +359,27 @@ rv.X("""[n]_ skip-string
 
             The rivt calc input file is a Python file written in *rivtText*, a superset
 
-            markup language reStructuredText (reST) defined at
+            of the markup language reStructuredText (reST) defined at
 
             https://docutils.sourceforge.io/rst.html. *rivtText* is designed for
 
-            clarity and brevity when reading and writing calculation input and output.
+            clarity, brevity and universality when reading and writing calculation
 
-            It may include rivt commands and tags, reStructuredText (reST) and native
+            inputs and outputs. It may include rivt file commands and format tags,
 
-            Python code. Commands start a line with || and always read or write files
+            reStructuredText (reST) and native Python code. Commands start a line with
 
-            into and out of the calculation. Tags terminate a line with the symbol
+            || and always read or write files into and out of the calculation. Tags
 
-            _[tag] and always evaluate or format. Block tags start the block with
+            terminate a line with the symbol _[tag] and always evaluate or format.
 
-            ___[tag] (three underscores) and end with a blank line.
+            Block tags start the block with ___[tag] (three underscores) and end with a
+
+            blank line.
 
             
 
-            *rivtCalc* is an open source software stack for writing, sharing and
+            *rivtCalc* is the open source software stack for writing, sharing and
 
             publishing engineering calculations. The stack includes *Python*, Python
 
@@ -380,17 +389,15 @@ rv.X("""[n]_ skip-string
 
         
 
-            In the syntax summary below, user settings are separated by |. User
+            rivt command parameters are separated by |. User selections are separated
 
-            selections are separated by semi-colons for a single selection and commas
+            by semi-colons for a single selection and commas for multiply selectable
 
-            for multiply selectable settings. The first line of each method specifies
+            settings. The first line of each method specifies formatting and labeling
 
-            formatting and labeling parameters for that rivt string. The method label
+            parameters for that rivt string. The method label can be a section or
 
-            can be a section or paragraph title, or just a label for bookmarking (see
-
-            tags for explanation).
+            paragraph title, or a label for bookmarking (see tags for usage).
 
         
 
@@ -416,7 +423,7 @@ rv.X("""[n]_ skip-string
 
                                
 
-                          ||text, ||table, ||image, ||image2, ||append 
+                          ||text, ||table, ||image, ||image2, ||attach
 
                           
 
@@ -432,7 +439,7 @@ rv.X("""[n]_ skip-string
 
         
 
-                          ||text, ||table, ||image, ||image2, ||append 
+                          ||text, ||table, ||image, ||image2, ||attach 
 
                                 
 
@@ -450,7 +457,7 @@ rv.X("""[n]_ skip-string
 
         
 
-                          ||text, ||table, ||image, ||image2, ||append  
+                          ||text, ||table, ||image, ||image2, ||attach  
 
                                 
 
@@ -726,7 +733,11 @@ rv.X("""[n]_ skip-string
 
             Insert two images side by side: 
 
+        
+
             || image2 | f2.png | 35 | f3.png | 45
+
+            The first figure caption  [f]_
 
             The second figure caption  [f]_
 
@@ -742,11 +753,21 @@ rv.X("""[n]_ skip-string
 
         
 
-            http://wwww.someurl.suffix  (label) [link]_ {formats a URL link}
+            The url tag formats a url link.
+
+            _[http://wwww.url  label url] 
 
         
 
-            The ||attach command attaches PDF documents at the end of the method. 
+            The link tag formats an internal document link to a table, equation,
+
+            section or paragraph title:
+
+            _["a calc title" link]
+
+        
+
+            Attach PDF documents at the end of the method:
 
         
 
@@ -1216,7 +1237,7 @@ rv.X("""[n]_ skip-string
 
                 utfS += _tagM._tags(utfL[0])  # section
 
-                rC = _rM._R2utf()
+                rC = rM._R2utf()
 
                 for i in utfL[1:]:
 
@@ -1230,7 +1251,7 @@ rv.X("""[n]_ skip-string
 
                 """write utf-calc to associated calc folder and exit"""
 
-                f1 = open(_cfullP, "r")
+                f1 = open(calcfileP, "r")
 
                 utfL = f1.readlines()
 
@@ -1254,7 +1275,7 @@ rv.X("""[n]_ skip-string
 
                 # print(utfS)
 
-                exec(utFS, globals(), locals())
+                exec(utfS, globals(), locals())
 
                 utffile = Path(
 
@@ -1364,7 +1385,7 @@ rv.X("""[n]_ skip-string
 
             rvL = rvS.split("\n")
 
-            iC = _iM._I2utf()
+            iC = iM._I2utf()
 
         
 
@@ -1410,7 +1431,7 @@ rv.X("""[n]_ skip-string
 
             rvL = rvS.split("\n")
 
-            vC = _vM._V2utf()
+            vC = vM._V2utf()
 
         
 
@@ -1456,7 +1477,7 @@ rv.X("""[n]_ skip-string
 
             rvL = rvS.split("\n")
 
-            tC = _tM._T2utf()
+            tC = tM._T2utf()
 
         
 
@@ -1687,7 +1708,7 @@ Reads, formats and adds processed string to calc string.
 
             rvL = rvS.split("\n")
 
-            iC = _iM._I2utf()
+            iC = iM._I2utf()
 
         
 
@@ -1774,7 +1795,7 @@ Reads, formats and adds processed string to calc string.
 
                 utfS += _tagM._tags(utfL[0])  # section
 
-                rC = _rM._R2utf()
+                rC = rM._R2utf()
 
                 for i in utfL[1:]:
 
@@ -1788,7 +1809,7 @@ Reads, formats and adds processed string to calc string.
 
                 """write utf-calc to associated calc folder and exit"""
 
-                f1 = open(_cfullP, "r")
+                f1 = open(calcfileP, "r")
 
                 utfL = f1.readlines()
 
@@ -1812,7 +1833,7 @@ Reads, formats and adds processed string to calc string.
 
                 # print(utfS)
 
-                exec(utFS, globals(), locals())
+                exec(utfS, globals(), locals())
 
                 utffile = Path(
 
@@ -1939,7 +1960,7 @@ table-string to utf-string
 
             rvL = rvS.split("\n")
 
-            tC = _tM._T2utf()
+            tC = tM._T2utf()
 
         
 
@@ -2000,7 +2021,7 @@ Value-string
 
             rvL = rvS.split("\n")
 
-            vC = _vM._V2utf()
+            vC = vM._V2utf()
 
         
 

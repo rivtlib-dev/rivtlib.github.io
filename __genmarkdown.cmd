@@ -1,0 +1,1 @@
+pdocs as_markdown -o docs __init__.py __main__.py _i.py _r.py _t.py _v.py commands.py reports.py rivtapi.py scan.py tags.py units.py

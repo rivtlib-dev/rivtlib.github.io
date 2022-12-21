@@ -22,7 +22,7 @@ layout: default
 <figure>
 <img src="./assets/img/manual12.png" width="100" height="80" />  
 <figcaption>
-<a href="https://rivtdocs.net"><b>rivt User Manual<\b></a>
+<a href="https://rivtdocs.net"><b>rivt User Manual</b></a>
 </figcaption>  
 </figure>
 

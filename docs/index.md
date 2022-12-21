@@ -2,9 +2,9 @@
 layout: default
 ---
 
-<img src="./assets/img/codedocs09.png" width="200" height="150" /> 
+<img src="./assets/img/codedocs09.png" width="150" height="110" /> 
 
-## rivtDocs - code documentation
+# rivt code documentation
 **share calcs anywhere, anytime**
 
 ---------------------------
@@ -12,9 +12,12 @@ layout: default
 
 [**rivt** code on Github](https://github.com/rivtcalc/rivt)
 
-<img src="./assets/img/manual12" width="150" height="100" /> 
+<img src="./assets/img/rivt01.png" width="100" height="80" /> 
+
 
 [**rivt** user manual](https://rivtdocs.net)
+
+<img src="./assets/img/manual12.png" width="100" height="80" /> 
 
 
 [**rivt** installers](https://rivtcalc.org)
@@ -24,13 +27,13 @@ layout: default
 
 ## **rivt** Overview
 
-**rivt** is a Python package that provides a calculation API for *rivtText*, a
-highly readable calculation markup language built on reStructuredText. The API
-uses a file and folder conventions to simplify formatting, navigation and code
-folding. The file, folder and prefix naming (italic shows optional) divide the
-calculation report into modular, easily edited and shareable components. The
-naming structure is also used to assemble calcs into a collated report. Folders
-are shown bracketed and notes are in parenthesis.
+**rivt** is a Python package providing a calculation document API for
+*rivtText*, a highly readable calculation markup language wrapping and
+extending reStructuredText. The API uses file and folder conventions to
+simplify formatting, navigation and code folding. Calculation reports are
+divided into modular, easily edited and shareable components that are used to
+assemble calcs into a collated report. Folders are shown bracketed and notes
+are in parenthesis.
 
 **rivt Folder Structure**
 

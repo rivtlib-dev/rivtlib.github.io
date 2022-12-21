@@ -2,6 +2,8 @@
 layout: default
 ---
 
+<link rel="shortcut icon" type="image/png" href="./assets/img/favicon.png"> 
+
 <img src="./assets/img/codedocs09.png" width="150" height="110" /> 
 
 ### rivt code documentation
@@ -12,7 +14,8 @@ layout: default
 <figure>
 <img src="./assets/img/rivt01.png" width="100" height="80" />  
 <figcaption>
-[**rivt** code on Github](https://github.com/rivtcalc/rivt)  
+[**rivt** code on Github](https://github.com/rivtcalc/rivt)
+</figcaption>  
 </figure>
 
 <img src="./assets/img/manual12.png" width="100" height="80" />  [**rivt** user manual](https://rivtdocs.net) 

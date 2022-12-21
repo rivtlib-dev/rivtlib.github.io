@@ -314,10 +314,10 @@ import fnmatch
 import numpy as np
 from pathlib import Path
 from collections import deque
-import rivt._r as rM
-import rivt._i as iM
-import rivt._v as vM
-import rivt._t as tM
+import rivt.rv_r as rM
+import rivt.rv_i as iM
+import rivt.rv_v as vM
+import rivt.rv_t as tM
 import rivt.reports as rptM
 import rivt.tags as tagM
 import rivt.commands as cmdM

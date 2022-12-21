@@ -1,4 +1,4 @@
-# Module _v
+# Module rv_v
 
 V2utf and V2rst classes
 

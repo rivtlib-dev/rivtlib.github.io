@@ -1,6 +1,7 @@
 """I2utf and I2rst classes
 """
 
+
 import os
 import sys
 import csv
@@ -235,7 +236,8 @@ class I2utf:
         Args:
             ipl (list): parameter list
         """
-        alignD = {"S": "", "D": "decimal", "C": "center", "R": "right", "L": "left"}
+        alignD = {"S": "", "D": "decimal",
+                  "C": "center", "R": "right", "L": "left"}
         itagL = [
             "[page]_",
             "[line]_",
@@ -588,7 +590,8 @@ class I2rst:
         Args:
             ipl (list): parameter list
         """
-        alignD = {"S": "", "D": "decimal", "C": "center", "R": "right", "L": "left"}
+        alignD = {"S": "", "D": "decimal",
+                  "C": "center", "R": "right", "L": "left"}
         itagL = [
             "[page]_",
             "[line]_",

@@ -1,4 +1,4 @@
-# Module _t
+# Module rv_t
 
 T2utf and T2rst classes
 

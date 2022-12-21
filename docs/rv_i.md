@@ -1,4 +1,4 @@
-# Module _i
+# Module rv_i
 
 I2utf and I2rst classes
 
@@ -8,6 +8,8 @@ None
         """I2utf and I2rst classes
 
         """
+
+        
 
         
 
@@ -479,7 +481,9 @@ None
 
                 """
 
-                alignD = {"S": "", "D": "decimal", "C": "center", "R": "right", "L": "left"}
+                alignD = {"S": "", "D": "decimal",
+
+                          "C": "center", "R": "right", "L": "left"}
 
                 itagL = [
 
@@ -1185,7 +1189,9 @@ None
 
                 """
 
-                alignD = {"S": "", "D": "decimal", "C": "center", "R": "right", "L": "left"}
+                alignD = {"S": "", "D": "decimal",
+
+                          "C": "center", "R": "right", "L": "left"}
 
                 itagL = [
 

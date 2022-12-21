@@ -25,26 +25,26 @@
     *sites* folder.
     
     The rivt calc input file is a Python file written in *rivtText*, a superset
-    markup language reStructuredText (reST) defined at
+    of the markup language reStructuredText (reST) defined at
     https://docutils.sourceforge.io/rst.html. *rivtText* is designed for
-    clarity and brevity when reading and writing calculation input and output.
-    It may include rivt commands and tags, reStructuredText (reST) and native
-    Python code. Commands start a line with || and always read or write files
-    into and out of the calculation. Tags terminate a line with the symbol
-    _[tag] and always evaluate or format. Block tags start the block with
-    ___[tag] (three underscores) and end with a blank line.
+    clarity, brevity and universality when reading and writing calculation
+    inputs and outputs. It may include rivt file commands and format tags,
+    reStructuredText (reST) and native Python code. Commands start a line with
+    || and always read or write files into and out of the calculation. Tags
+    terminate a line with the symbol _[tag] and always evaluate or format.
+    Block tags start the block with ___[tag] (three underscores) and end with a
+    blank line.
     
-    *rivtCalc* is an open source software stack for writing, sharing and
+    *rivtCalc* is the open source software stack for writing, sharing and
     publishing engineering calculations. The stack includes *Python*, Python
     science and engineering libraries, *VSCode*, *LaTeX (TexLive)*, *GitHub* and
     *rivt*.
 
-    In the syntax summary below, user settings are separated by |. User
-    selections are separated by semi-colons for a single selection and commas
-    for multiply selectable settings. The first line of each method specifies
-    formatting and labeling parameters for that rivt string. The method label
-    can be a section or paragraph title, or just a label for bookmarking (see
-    tags for explanation).
+    rivt command parameters are separated by |. User selections are separated
+    by semi-colons for a single selection and commas for multiply selectable
+    settings. The first line of each method specifies formatting and labeling
+    parameters for that rivt string. The method label can be a section or
+    paragraph title, or a label for bookmarking (see tags for usage).
 
     ========= ==================================================================     
     API name           method, first line settings and commands
@@ -57,7 +57,7 @@
     
     insert    rv.I("""method label | /docs/folder_override;default 
                        
-                  ||text, ||table, ||image, ||image2, ||append 
+                  ||text, ||table, ||image, ||image2, ||attach
                   
                   """)
     
@@ -65,7 +65,7 @@
                         
                   =, ||values, ||lists, ||import
 
-                  ||text, ||table, ||image, ||image2, ||append 
+                  ||text, ||table, ||image, ||image2, ||attach 
                         
                   """)
     
@@ -74,7 +74,7 @@
                   Python simple statements 
                   (any valid expression or statment on a single line)
 
-                  ||text, ||table, ||image, ||image2, ||append  
+                  ||text, ||table, ||image, ||image2, ||attach  
                         
                   """)
     
@@ -93,13 +93,13 @@
     || project | file_name | /docsfolder; default                      R
                 .txt; rst; csv; syk; xls | project info folder 
     
-    || lists | file_name  |  [:];[x:y]                                    V
+    || lists | file_name  |  [:];[x:y]                                     V
                 .csv;.syk;.txt;.py | rows to import
      
-    || values | file_name |  [:];[x:y]                                    V 
+    || values | file_name |  [:];[x:y]                                     V 
                 .csv; .syk; .txt; .py | rows to import
     
-    || functions | file_name |  docs; nodocs                              V
+    || functions | file_name |  docs; nodocs                               V
                 .for; .py; .c; .c++; .jl | insert docstrings
 
     || image | file_name  | .50                                          I,V,T
@@ -136,8 +136,8 @@
     caption _[f]                  figure caption, autonumber         
     text _[r]                     right justify line of text                     
     text _[c]                     center line of text                            
-    text _[line]                  horizontal line - width of page        
-    text _[page]                  new PDF page
+    text _[-]                     horizontal line - width of page        
+    text _[new]                   new PDF page
     text _[#]                     footnote, autonumber                    
     footnote _[foot]              footnote description
     _[address label _url]         http://xyz link label
@@ -166,7 +166,9 @@
     layout supports section folding and navigation, bookmarking and improved
     legibility.
 
-example rivt calc file  --------------------------------------------------------
+    ============================================================================
+    rivt calc example  
+    ============================================================================
 
 import rivt.rivtapi as rv
 
@@ -210,8 +212,9 @@ rv.I("""Insert method summary | default
     A figure caption [f]_
 
     Insert two images side by side: 
+
     || image2 | f2.png | 35 | f3.png | 45
-    The first figure caption [f]_ 
+    The first figure caption  [f]_
     The second figure caption  [f]_
 
     The tags [x]_ and [s]_ format LaTeX and sympy equations:
@@ -219,9 +222,14 @@ rv.I("""Insert method summary | default
     \gamma = \frac{5}{x+y} + 3  [x]_ 
     x = 32 + (y/2)  [s]_
 
-    http://wwww.someurl.suffix  (label) [link]_ {formats a URL link}
+    The url tag formats a url link.
+    _[http://wwww.url  label url] 
 
-    The ||attach command attaches PDF documents at the end of the method. 
+    The link tag formats an internal document link to a table, equation,
+    section or paragraph title:
+    _["a calc title" link]
+
+    Attach PDF documents at the end of the method:
 
     || attach | file | default | count
     """
@@ -314,86 +322,97 @@ import rivt.reports as rptM
 import rivt.tags as tagM
 import rivt.commands as cmdM
 
-# specify test files and get paths
-cfileS = "c0101_calc.py"
-cfolderP = Path("./rivt_test/calcs/rv0101_test/")
+# test files and paths
+calcfileS = "c0101_calc.py"
+calcbaseS = "c0101_calc"
+p = Path("rivt_test")
+calcfileP = p / "calcs" / "rv0101_calc" / calcfileS
+print(calcfileP)
 
+# find calc file in folder
+foundB = 1
 for _fileS in os.listdir("."):
     if fnmatch.fnmatch(_fileS, "c[0-9][0-9][0-9][0-9]_*.py"):
-        cfileS = _fileS  # calc file name
-        calcfolderP = Path(os.getcwd())
+        for fileS in os.listdir("."):
+            if fnmatch.fnmatch(fileS, "c[0-9][0-9][0-9][0-9]_*.py"):
+                calcfileP = Path(os.getcwd(), fileS)
+        calcnameS = os.path.basename(calcfileP)  # calc file
+        calcbaseS = calcnameS.split(".py")[0]  # calc file basename
+        foundB = 0
         break
     else:
-        print("calc file not found - check file name")
-        sys.exit
+        continue
+if foundB:
+    print("calc file not found - check file name")
+    # sys.exit
 
-# calc file full path
-cbaseS = cfileS.split(".py")[0]  # calc file basename
-calcbakP = Path(cfolderP / ".".join((cbaseS, "bak")))
-rivtprojectP = cfolderP.parent.parent.parent  # project folder path
-calcsP = cfolderP.parent.parent  # calcs folder path
-cdescripS = cbaseS.split("_")[1]
-
-docsP = Path(rivtprojectP / "docs")  # docs folder path
-docnameS = "".join(["d", cbaseS[1:3], "_", cdescripS])
-docfolderP = Path(docsP / docnameS _)  # doc folder path
-dcfgP = Path(docsP / "d00_docs")  # doc config folder
-siteP = Path(rivtprojectP / "site")  # site folder path
-reportP = Path(rivtprojectP / "reports")  # report folder path
+# files and paths
+calcbaseS = calcfileS.split(".py")[0]  # calc file basename
+calcfolderP = Path(os.path.dirname(calcfileP))
+calcbakP = calcfolderP / ".".join((calcbaseS, "bak"))
+cdescripS = calcbaseS.split("_")[1]
+calcsP = calcfolderP.parent.parent  # calcs folder path
+calcconfigP = calcsP / "c0000_config"
+rivtprojectP = calcfolderP.parent.parent.parent  # rivt project folder path
 rivtcalcP = Path("rivt.rivtapi.py").parent  # rivt package path
 
-print("INFO: calc folder is ", calcfolderP)
-print("INFO: doc folder is ", docfolderP)
+docsP = rivtprojectP / "docs"  # docs folder path
+docsfolderS = "".join(["d", calcbaseS[1:3], "_", cdescripS])
+docsfolderP = docsP / docsfolderS  # doc folder path
+docsconfigP = docsP / "d00"  # doc config folder
+siteP = rivtprojectP / "site"  # site folder path
+reportP = rivtprojectP / "reports"  # report folder path
+
+print("INFO     calc folder: ", calcfolderP)
+print("INFO     doc folder: ", docsfolderP)
+print("INFO     calc backup: ", calcbakP)
 
 # check that calc and doc directories exist
-for root, dir, file in os.walk(_calcsP):
-    for i in dir:
-        if _cfileS[0:5] == i[0:5]:
-            print("INFO: calc directory is ", i)
-        else:
-            print("INFO: calc directory ", _curcalcP, " not found")
-for root, dir, file in os.walk(_docsP):
-    for i in dir:
-        if "".join(["d", _cfileS[1:3]]) == i[0:3]:
-            print("INFO: doc directory is ", i)
-        else:
-            print("INFO: doc directory ", _curdocP, " not found")
+if calcfileP.exists():
+    print("INFO     calc folder found ", calcfolderP)
+else:
+    print("INFO     calc folder ", calcfolderP, " not found")
 
-# initialize objects
-utfS = """"""  # utf accumulating calc-string
-rstS = """"""  # reST accumulating calc-string
-exportS = """"""  # values string export
-rivtD = {}  # values dictionary
-_foldD = {}  # folder dict
-_rstB = False  # reST generation flag
-for variable in ["_rivtP", "_calcsP", "_curcalcP"]:
-    _foldD[variable] = eval(variable)
-for variable in ["_curdocP", "_docsP", "_dcfgP", "_siteP"]:
-    _foldD[variable] = eval(variable)
-_tagD = {
-    "fnumS": _cbaseS[0:5],  # file number
-    "cnumS": _cbaseS[1:5],  # calc number
-    "dnumS": _cbaseS[1:3],  # division number
-    "sdnumS": _cbaseS[3:5],  # subdivision number
-    "snameS": "",  # section title
-    "snumS": "",  # section number
-    "swidthI": 80,  # utf section width
-    "twidthI": 78,  # utf body width
-    "enumI": 0,  # equation number
-    "tnumI": 0,  # table number
-    "fnumI": 0,  # figure number
+if docsfolderP.exists():
+    print("INFO     docs folder found ", docsfolderP)
+else:
+    print("INFO     docs folder ", docsfolderP, " not found")
+
+# initialize dictionaries
+utfS = """"""  # accumulating string in utf
+rstS = """"""  # accumulating string in reST
+valuexS = """"""  # accumulating values string for export
+rivtD = {}  # all computed values dictionary
+foldersD = {}  # folders dictionary
+tagsD = {}
+
+for var in ["calcfileP", "docsfolderP", "calcconfigP", "docsconfigP"]:
+    foldersD[var] = eval(var)
+
+tagsD = {
+    "fnumS": calcbaseS[0:5],  # file number
+    "dnumS": calcbaseS[1:3],  # division number
+    "snumS": calcbaseS[3:5],  # subdivision number
+    "cnumS": calcbaseS[1:5],  # calc number
+    "secnameS": "",  # section title
+    "secnumS": "",  # section number
+    "sepI": 80,  # utf separator width
+    "widthI": 78,  # utf body width
+    "equI": 0,  # equation number
+    "tableI": 0,  # table number
+    "fignumI": 0,  # figure number
     "ftqueL": deque([1]),  # footnote number
     "countI": 0,  # footnote counter
-    "decI": 2,
-    "decvI": 2,
-    "subvB": False,
+    "decvI": 2,  # decimals for variables
+    "decrI": 2,  # decimals for results
+    "subsvarB": False,
 }
 # run backups and logging
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
     datefmt="%m-%d %H:%M",
-    filename="error_log.txt",
+    filename=p / docsconfigP / "error_log.txt",
     filemode="w",
 )
 logconsole = logging.StreamHandler()
@@ -402,25 +421,27 @@ formatter = logging.Formatter("%(levelname)-8s %(message)s")
 logconsole.setFormatter(formatter)
 logging.getLogger("").addHandler(logconsole)
 warnings.filterwarnings("ignore")
-_rshortP = Path(*Path(_dcfgP).parts[-3:])
-_lshortP = Path(*Path(_dcfgP).parts[-4:])
-logging.info(f"""calc path: {_rshortP}""")
-logging.info(f"""log path: {_lshortP}""")
-with open(_cfileS, "r") as f2:
+cshortP = Path(*Path(calcfolderP).parts[-2:])
+lshortP = Path(*Path(docsconfigP).parts[-2:])
+logging.info(f"""calc short path: {cshortP}""")
+logging.info(f"""log short path: {lshortP}""")
+with open(calcfileP, "r") as f2:
     calcbak = f2.read()
-with open(_rvbak, "w") as f3:
+with open(calcbakP, "w") as f3:
     f3.write(calcbak)
 logging.info(f"""calc backup written to calc folder""")
 print(" ")
 
 # set default output parameters
-doctypeS = "term"
+doctypeS = "inter"
 stylefileS = "rivt"
 calctitleS = "Calculation"
 startpageS = "1"
-_rstB = False
+restB = False
 
 # API methods
+
+
 def R(rvS: str):
     """Reads, formats and adds processed string to calc string.
 
@@ -443,14 +464,14 @@ def R(rvS: str):
 
     if doctypeS == "inter":
         utfS += _tagM._tags(utfL[0])  # section
-        rC = _rM._R2utf()
+        rC = rM._R2utf()
         for i in utfL[1:]:
             rC = _rM.R2utf
             utfS += rC.r_utf
         print(utfS)
     elif doctypeS == "utf":  # write utf calc file
         """write utf-calc to associated calc folder and exit"""
-        f1 = open(_cfullP, "r")
+        f1 = open(calcfileP, "r")
         utfL = f1.readlines()
         f1.close()
         print("INFO calc file read: " + str(_cfullP))
@@ -462,8 +483,9 @@ def R(rvS: str):
             else:
                 utfS += _rM.r_utf(cmdL)
         # print(utfS)
-        exec(utFS, globals(), locals())
-        utffile = Path(_cpath / _setsectD["fnumS"] / ".".join([_cnameS, "txt"]))
+        exec(utfS, globals(), locals())
+        utffile = Path(
+            _cpath / _setsectD["fnumS"] / ".".join([_cnameS, "txt"]))
         if filepathS == "default":  # check file write location
             utfpthS = Path(utffile)
         else:
@@ -516,7 +538,7 @@ def I(rvS: str):
     global utfS, rstS, _rstB, _foldD, _tagD, _rivtD
     cmdL = ["text", "table", "image"]
     rvL = rvS.split("\n")
-    iC = _iM._I2utf()  
+    iC = iM._I2utf()
 
     if doctypeS == "term":
         utfS += _tagM.tags(rvL[0])
@@ -539,7 +561,7 @@ def V(rvS: str):
     global utfS, rstS, _rstB, _folderD, _tagD, _rivtD, exportS
     cmdL = ["=", "list", "values", "import", "text", "table", "image"]
     rvL = rvS.split("\n")
-    vC = _vM._V2utf()
+    vC = vM._V2utf()
 
     if doctypeS == "term":
         utfS += _tagM.tags(rvL[0])
@@ -562,7 +584,7 @@ def T(rvS: str):
     global utfS, rstS, rivtD, _rstB, _folderD, _tagD
     cmdL = ["list", "values", "import", "text", "table", "image"]
     rvL = rvS.split("\n")
-    tC = _tM._T2utf()
+    tC = tM._T2utf()
 
     if doctypeS == "term":
         utfS += _tagM.tags(rvL[0])

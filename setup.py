@@ -7,7 +7,7 @@ setup(
     version="0.8.2-beta.0",
     python_requires=">=3.8",
     license="GPLv3",
-    long_description=open("README.rst").read(),
+    long_description=open("README.md").read(),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
@@ -23,5 +23,4 @@ setup(
     #        "docutils",
     #        "xlrd",
     #        "antlr4-python3-runtime>=4.7,<4.8",
-    #    ],
 )

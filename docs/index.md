@@ -17,8 +17,8 @@ layout: default
 <a href="https://github.com/rivtcalc/rivt"><b>rivt source code on Github</b></a>
 </figcaption>  
 </figure>
-
-
+<br/><br/>
+<br/><br/>
 <figure>
 <img src="./assets/img/manual12.png" width="100" height="80" />  
 <figcaption>

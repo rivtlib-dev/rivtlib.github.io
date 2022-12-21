@@ -11,20 +11,31 @@ layout: default
 
 ---------------------------
 
-<figure>
-<img src="./assets/img/rivt01.png" width="100" height="80" />  
-<figcaption>
-<a href="https://github.com/rivtcalc/rivt"><b>rivt source code on Github</b></a>
-</figcaption>  
-</figure>
-<br/><br/>
-<br/><br/>
-<figure>
-<img src="./assets/img/manual12.png" width="100" height="80" />  
-<figcaption>
-<a href="https://rivtdocs.net"><b>rivt User Manual</b></a>
-</figcaption>  
-</figure>
+
+<table>
+<colgroup>
+  <col width="25%" />
+  <col width="25%" />
+  <col width="25%" />
+  <col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+  <th style="text-align: center">rivtGit</th>
+  <th style="text-align: center">rivtCalc (installers)</th>
+  <th style="text-align: center">rivtCode</th>
+  <th style="text-align: center">rivtDocs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align: center"><a href="https://github.com/rivtcalc/rivt"> <img src="./assets/img/rivt01.png" width="60" height="40" /></a></td>
+  <td style="text-align: center"><a href="https://rivtcalc.org"> <img src="./assets/img/rivt_install.png" width="60" height="40" /></a></td>
+  <td style="text-align: center"><a href="https://rivtcode.net"> <img src="./assets/img/rivtdoc09.png" width="60" height="40" /></a></td>
+  <td style="text-align: center"><a href="https://rivtdocs.net"> <img src="./assets/img/manual12.png" width="60" height="40" /></a></td>
+</tr>
+</tbody>
+</table>
 
 
 [**rivt** installers](https://rivtcalc.org)

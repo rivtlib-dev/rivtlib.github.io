@@ -14,11 +14,17 @@ layout: default
 <figure>
 <img src="./assets/img/rivt01.png" width="100" height="80" />  
 <figcaption>
-<a href="https://github.com/rivtcalc/rivt">**rivt** source code on Github</a>
+<a href="https://github.com/rivtcalc/rivt"><b>rivt<\b> source code on Github</a>
 </figcaption>  
 </figure>
 
-<img src="./assets/img/manual12.png" width="100" height="80" />  [**rivt** user manual](https://rivtdocs.net) 
+
+<figure>
+<img src="./assets/img/manual12.png" width="100" height="80" />  
+<figcaption>
+<a href="https://rivtdocs.net"><b>rivt<\b> User Manual</a>
+</figcaption>  
+</figure>
 
 
 [**rivt** installers](https://rivtcalc.org)

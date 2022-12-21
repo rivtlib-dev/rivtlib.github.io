@@ -4,13 +4,16 @@ layout: default
 
 <img src="./assets/img/codedocs09.png" width="150" height="110" /> 
 
-#### rivt code documentation
+### rivt code documentation
 **share calcs anywhere, anytime**
 
 ---------------------------
 
-
-<img src="./assets/img/rivt01.png" width="100" height="80" />  [**rivt** code on Github](https://github.com/rivtcalc/rivt)  
+<figure>
+<img src="./assets/img/rivt01.png" width="100" height="80" />  
+<figcaption>
+[**rivt** code on Github](https://github.com/rivtcalc/rivt)  
+</figure>
 
 <img src="./assets/img/manual12.png" width="100" height="80" />  [**rivt** user manual](https://rivtdocs.net) 
 

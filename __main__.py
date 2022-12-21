@@ -36,7 +36,7 @@ from pathlib import Path
 __version__ = "0.9.1-beta.1"
 __author__ = "rholland@structurelabs.com"
 utfS = """"""  # rivtText string
-cfileP = ""  # calc file name
+calcfileP = ""  # calc file name
 
 if sys.version_info < (3, 8):
     sys.exit("rivtCalc requires Python version 3.8 or later")
@@ -51,10 +51,10 @@ def cmdlinehelp():
     print()
     print("The program will find and run the file cddnn_calcfile.py")
     print()
-    print("The output files specified in the calc are written to:  ")
-    print("          calc folder:      README.txt                  ")
+    print("The output files are written to:  ")
+    print("          calc folder:      README.txt (default)        ")
     print("          report folder:    cddnn_calcfile.pdf          ")
-    print("          site folder:      index.html                  ")
+    print("          site folder:      index.html ....             ")
     print()
     print("The rivtCalc user manual is at: https://rivtDocs.net    ")
     sys.exit()
@@ -63,15 +63,15 @@ def cmdlinehelp():
 if __name__ == "__main__":
     try:
         # get calc file name
-        for fileP in os.listdir("."):
-            if fnmatch.fnmatch(file, "c[0-9][0-9][0-9][0-9]_*.py"):
-                cfileP = fileP
-        cwdP = os.getcwd()  # get calc folder
-        cfullP = Path(cfileP)  # calc file full path
-        cbaseP = cfileP.split(".py")[0]  # calc file basename
+        for fileS in os.listdir("."):
+            if fnmatch.fnmatch(fileS, "c[0-9][0-9][0-9][0-9]_*.py"):
+                calcfileP = Path(os.getcwd(), fileS)
+        calcnameS = os.path.basename(calcfileP)  # calc file
+        calcbaseS = calcnameS.split(".py")[0]  # calc file basename
+        calcfolderP = calcfileP.parent  # calc file basename
         print("MAIN  current folder: ", cwdP)
-        print("MAIN  calc name: ", cfileP)
-        importlib.import_module(cbaseP)
+        print("MAIN  calc name: ", calcbaseS)
+        importlib.import_module(calcbaseS)
     except ImportError as error:
         print("error---------------------------------------------")
         print(error)

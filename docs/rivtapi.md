@@ -94,13 +94,16 @@ The *rivtapi* module is part of the *rivt* Python package and is imported
     || project | file_name | /docsfolder; default                      R
                 .txt; rst; csv; syk; xls | project info folder 
     
-    || lists | file_name  |  [:];[x:y]                                     V
+    || report | report title | cover page | configfile                 R
+                .txt; rst; csv; syk; xls | project info folder 
+
+    || lists | file_name  | [:];[x:y]                                      V
                 .csv;.syk;.txt;.py | rows to import
      
-    || values | file_name |  [:];[x:y]                                     V 
+    || values | file_name | [:];[x:y]                                      V 
                 .csv; .syk; .txt; .py | rows to import
     
-    || functions | file_name |  docs; nodocs                               V
+    || functions | file_name | docs; nodocs                                V
                 .for; .py; .c; .c++; .jl | insert docstrings
 
     || image | file_name  | .50                                          I,V,T
@@ -495,19 +498,25 @@ rv.X("""[n]_ skip-string
 
             
 
-            || lists | file_name  |  [:];[x:y]                                     V
+            || report | report title | cover page | configfile                 R
+
+                        .txt; rst; csv; syk; xls | project info folder 
+
+        
+
+            || lists | file_name  | [:];[x:y]                                      V
 
                         .csv;.syk;.txt;.py | rows to import
 
              
 
-            || values | file_name |  [:];[x:y]                                     V 
+            || values | file_name | [:];[x:y]                                      V 
 
                         .csv; .syk; .txt; .py | rows to import
 
             
 
-            || functions | file_name |  docs; nodocs                               V
+            || functions | file_name | docs; nodocs                                V
 
                         .for; .py; .c; .c++; .jl | insert docstrings
 
@@ -945,7 +954,7 @@ rv.X("""[n]_ skip-string
 
         import rivt.rv_t as tM
 
-        import rivt.reports as rptM
+        import rivt.write as wrtM
 
         import rivt.tags as tagM
 

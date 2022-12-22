@@ -175,8 +175,7 @@
 
 import rivt.rivtapi as rv
 
-rv.R(
-    """Repo method summary | Example Calculation | inter | 1 
+rv.R("""Repo method summary | Example Calculation | inter | 1 
 
     The Repo method (short for repository or report) is the first method in a
     calc and specifies repository settings and output formats. It also typically
@@ -194,8 +193,8 @@ rv.R(
 
     || project | file | default
     
-    """
-) 
+    """)
+
 rv.I("""Insert method summary | default
 
     The Insert method formats descriptive information as opposed to
@@ -235,10 +234,10 @@ rv.I("""Insert method summary | default
     Attach PDF documents at the end of the method:
 
     || attach | file | default | count
-    """
-) 
-rv.V(
-    """Value method summary | nosub | save | /docfolder/override
+    
+    """) 
+
+rv.V("""Value method summary | nosub | save | /docfolder/override
 
     The Value method assigns values to variables and evaluates equations. The
     first setting is the section title. The sub;nosub setting specifies whether

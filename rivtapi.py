@@ -321,7 +321,7 @@ import rivt.rv_r as rM
 import rivt.rv_i as iM
 import rivt.rv_v as vM
 import rivt.rv_t as tM
-import rivt.reports as rptM
+import rivt.write as wrtM
 import rivt.tags as tagM
 import rivt.commands as cmdM
 

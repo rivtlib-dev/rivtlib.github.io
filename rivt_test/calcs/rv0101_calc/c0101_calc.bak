@@ -1,4 +1,4 @@
-import rivtapi as rv
+import rivt.rivtapi as rv
 
 rv.R("""new section | calc title | inter | 1
     
@@ -9,6 +9,8 @@ rv.R("""new section | calc title | inter | 1
 rv.I("""new I section | default
     
     new I text
+
+    || text | filename | plain
     
     """)
 

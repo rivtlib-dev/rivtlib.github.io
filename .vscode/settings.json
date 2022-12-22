@@ -9,5 +9,15 @@
     "python.formatting.provider": "autopep8",
     "cSpell.enabled": false,
     "editor.formatOnSave": true,
-    "inline-bookmarks.view.showVisibleFilesOnly": true
+    "inline-bookmarks.view.showVisibleFilesOnly": true,
+    "fsdeploy.nodes": [
+        {
+            "source": "/git/rivt/",
+            "target": "C:/Users/rodhh/AppData/Roaming/Python/Python38/site-packages/rivt",
+            "include": "**/*.*",
+            "deleteTargetOnDeploy": true,
+        }
+    ],
+    "fsdeploy.deployOnSave": true,
+    "fsdeploy.deployWorkspaceOnSave": true,
 }

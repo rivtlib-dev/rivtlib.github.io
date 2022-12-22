@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<img src="./assets/img/codedocs09.png" width="150" height="110" /> 
+<img src="./assets/img/rivt01.png" width="150" height="110" /> 
 
 ### rivt code documentation
 **share calcs anywhere, anytime**
@@ -28,7 +28,7 @@ layout: default
 <tr>
   <td style="text-align: center"><a href="https://github.com/search"> <img src="./assets/img/search01.png" width="70" height="60" /></a></td>
   <td style="text-align: center"><a href="https://rivtcalc.org"> <img src="./assets/img/rivtcalc01.png" width="80" height="60" /></a></td>
-  <td style="text-align: center"><a href="https://rivtdocs.net"> <img src="./assets/img/manual12.png" width="70" height="60" /></a></td>
+  <td style="text-align: center"><a href="https://rivtdocs.net"> <img src="./assets/img/codedoc09.png" width="70" height="60" /></a></td>
 </tr>
 </tbody>
 </table>

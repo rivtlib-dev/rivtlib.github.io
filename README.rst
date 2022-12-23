@@ -1,2 +1,1 @@
-# rivt
-Python API for engineering calculations
+# rivt API for engineering calculations

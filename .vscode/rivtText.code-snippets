@@ -1,4 +1,20 @@
 {
+    "searchgh": {
+        "prefix": "sgh",
+        "description": "search github rivt READMEs",
+        "scope": "python",
+        "body": [
+            "https://github.com/search?q=rivt+${0:added search terms}+in%3Areadme&ref=simplesearch"
+        ]
+    },
+    "github2": {
+        "prefix": "ghu",
+        "description": "github repo settings",
+        "scope": "python",
+        "body": [
+            "|| github | $(1:repo_name} | ${2:param1} | ${0:param2}    "
+        ]
+    },
     "new R method": {
         "prefix": "rvR",
         "description": "add new Repo method",
@@ -48,7 +64,7 @@
         ]
     },
     "image": {
-        "prefix": "|i1",
+        "prefix": "im1",
         "description": "insert image",
         "scope": "python",
         "body": [
@@ -56,7 +72,7 @@
         ]
     },
     "image2": {
-        "prefix": "|i2",
+        "prefix": "im2",
         "description": "insert side by side image",
         "scope": "python",
         "body": [
@@ -64,7 +80,7 @@
         ]
     },
     "table": {
-        "prefix": "|t",
+        "prefix": "tab",
         "description": "insert table ",
         "scope": "python",
         "body": [
@@ -72,7 +88,7 @@
         ]
     },
     "text": {
-        "prefix": "|x",
+        "prefix": "tex",
         "description": "read table from file",
         "scope": "python",
         "body": [
@@ -80,7 +96,7 @@
         ]
     },
     "values": {
-        "prefix": "|v",
+        "prefix": "val",
         "description": "read values from file",
         "scope": "python",
         "body": [
@@ -88,7 +104,7 @@
         ]
     },
     "lists": {
-        "prefix": "|l",
+        "prefix": "lis",
         "description": "read lists from file",
         "scope": "python",
         "body": [
@@ -96,7 +112,7 @@
         ]
     },
     "functions": {
-        "prefix": "|f",
+        "prefix": "fun",
         "description": "insert functions from file",
         "scope": "python",
         "body": [
@@ -112,19 +128,19 @@
         ]
     },
     "project": {
-        "prefix": "|p",
+        "prefix": "pro",
         "description": "insert project in",
         "scope": "python",
         "body": [
             "|| project | ${1: file} | ${0:default} "
         ]
     },
-    "attach": {
-        "prefix": "|a",
-        "description": "attach pdf file",
+    "append": {
+        "prefix": "app",
+        "description": "append pdf file",
         "scope": "python",
         "body": [
-            "|| attach | ${1: file} |  ${1: number} | ${0:default} |"
+            "|| append | ${1: file} |  ${1:doc folder;default} | ${0: resize;default} |"
         ]
     },
     "tag equation lable": {
@@ -271,5 +287,4 @@
             "___[c]"
         ]
     }
-
 }

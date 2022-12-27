@@ -263,20 +263,9 @@ class R2rst:
         The command is identical to itable except file is read from docs/info.
 
         """
-        alignD = {"S": "", "D": "decimal", "C": "center", "R": "right", "L": "left"}
-        rtagL = [
-            "[page]_",
-            "[line]_",
-            "[link]_",
-            "[literal]_",
-            "[foot]_",
-            "[r]_",
-            "[c]_",
-            "[e]_",
-            "[t]_",
-            "[f]_",
-            "[#]_",
-        ]
+        alignD = {"S": "", "D": "decimal",
+                  "C": "center", "R": "right", "L": "left"}
+
         if len(rL) < 4:
             rL += [""] * (4 - len(rL))  # pad parameters
         rstS = ""

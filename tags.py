@@ -13,6 +13,71 @@ from sympy.parsing.latex import parse_latex
 from sympy.abc import _clash2
 from tabulate import tabulate
 
+"""
+        rtagL = [
+            "[page]_",
+            "[line]_",
+            "[link]_",
+            "[literal]_",
+            "[foot]_",
+            "[r]_",
+            "[c]_",
+            "[e]_",
+            "[t]_",
+            "[f]_",
+            "[#]_",
+        ]
+
+       ttagL = [
+            "[page]_",
+            "[line]_",
+            "[link]_",
+            "[literal]_",
+            "[foot]_",
+            "[s]",
+            "[x]",
+            "[r]_",
+            "[c]_",
+            "[e]_",
+            "[t]_",
+            "[f]_",
+            "[#]_",
+        ]
+"""
+
+
+def e_utf(self) -> tuple:
+    """parse eval-string
+
+    Returns:
+        calcS (list): utf formatted calc-string (appended)
+        setsectD (dict): section settings
+        setcmdD (dict): command settings
+    """
+
+    ecmdL = ["text", "table", "image"]
+    emethL = [self._itext, self._itable, self._iimage]
+    etagL = [
+        "[page]_",
+        "[line]_",
+        "[link]_",
+        "[literal]_",
+        "[foot]_",
+        "[latex]_",
+        "[s]_",
+        "[x]_",
+        "[r]_",
+        "[c]_",
+        "[e]_",
+        "[t]_",
+        "[f]_",
+        "[#]_",
+    ]
+
+    self._parseUTF("insert", icmdL, imethL, itagL)
+
+    return self.calcS, self.setsectD, self.setcmdD
+
 
 def taglist(lineS: str) -> tuple:
     """check for tags
@@ -157,8 +222,9 @@ def _tags(self, lineS: str, sectD: dict) -> tuple:
         widthI = int(_setsectD["swidthI"])
         headS = hdrS
         if re.search(rgx, hdrS):
-            nameSS = _setsectD["snameS"] = hdrS[hdrS.find("]") + 2 :].strip()
-            snumSS = _setsectD["snumS"] = hdrS[hdrS.find("[") + 1 : hdrS.find("]")]
+            nameSS = _setsectD["snameS"] = hdrS[hdrS.find("]") + 2:].strip()
+            snumSS = _setsectD["snumS"] = hdrS[hdrS.find(
+                "[") + 1: hdrS.find("]")]
             cnumSS = str(_sectD["cnumS"])
             widthI = int(_setsectD["swidthI"])
             if _rstB:

@@ -61,6 +61,9 @@ def cmdlinehelp():
 
 
 if __name__ == "__main__":
+    print("""
+    rivt running from commmand line
+    """)
     try:
         # get calc file name
         for fileS in os.listdir("."):

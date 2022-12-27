@@ -1,77 +1,78 @@
 # Module rivtapi
 
-rivtapi 
+rivtapi
 
-The *rivtapi* module is part of the *rivt* Python package and is imported
-    at the beginning of a rivt calculation. It defines the five API methods:
-    R(rs), I(rs), V(rs), T(rs), X(rs); where *rs* represents a *rivtText*
-    string.
+The *rivtapi* module is the api for the *rivt*, a Python package designed
+    to facilitate highly shareable engineering calculation documents. It is
+    imported at the beginning of every rivt calculation and includes five
+    methods: R(rs), I(rs), V(rs), T(rs), X(rs); where *rs* represents a
+    *rivtText* single string parameter.
     
-    When running in an IDE (e.g. VSCode), each method can be run interactively
-    using the cell decorator # %%. In file run mode (entire file processed) the
-    output is written to the screen and disk as a utf8, PDF, or HTML file.
+    When running in an IDE (e.g. VSCode), each methods can be run interactively
+    using the standard cell decorator # %%. In file run mode (the entire file
+    processed from command line) the output is written to the screen and file
+    as a utf8, PDF, or HTML file.
     
     The calculation input files are separated into two folders labeled *calcs*
-    and *docs*. Files in the *calcs* folder are text files under version
-    control that contain the primary calculation and supporting files. They are
-    designed to be shared. The *docs* folders include supporting calculation
-    files that are typically binary files (images, pdf etc.) and files that
-    include confidential project information or copyrights. The *docs* folder
-    is typically not shared.
+    and *docs*. Files in the *calcs* folder are shareable files under version
+    control that contain the primary calculation and supporting text files. The
+    *docs* folder includes supporting binary files (images, pdf etc.) and files
+    that include confidential project information or copyrights. The *docs*
+    folder is not intended to share.
 
     Output files are written to three places. The UTF8 calc output format is
     written as a *readme.txt* file to the *calcs* folder and is automatically
-    displayed on source control platforms like GitHub. The PDF output is
-    written to the *reports* folder, and the HTML output is written to the
-    *sites* folder.
+    displayed on source control platforms like GitHub. PDF output is written to
+    *reports*, and HTML output to the *sites* folder.
     
-    The rivt calc input file is a Python file written in *rivtText*, a superset
-    of the markup language reStructuredText (reST) defined at
-    https://docutils.sourceforge.io/rst.html. *rivtText* is designed for
-    clarity, brevity and universality when reading and writing calculation
-    inputs and outputs. It may include rivt file commands and format tags,
-    reStructuredText (reST) and native Python code. Commands start a line with
-    || and always read or write files into and out of the calculation. Tags
-    terminate a line with the symbol _[tag] and always evaluate or format.
-    Block tags start the block with ___[tag] (three underscores) and end with a
-    blank line.
-    
+    *rivtText* is a superset of the markup language reStructuredText (reST)
+    defined at https://docutils.sourceforge.io/rst.html. It is designed for
+    clarity, brevity and general platform reading and writing and processing.
+    It runs on any platform that supports Python. 
+       
     *rivtCalc* is the open source software stack for writing, sharing and
     publishing engineering calculations. The stack includes *Python*, Python
     science and engineering libraries, *VSCode*, *LaTeX (TexLive)*, *GitHub* and
     *rivt*.
 
-    rivt command parameters are separated by |. User selections are separated
-    by semi-colons for a single selection and commas for multiply selectable
-    settings. The first line of each method specifies formatting and labeling
-    parameters for that rivt string. The method label can be a section or
-    paragraph title, or a label for bookmarking (see tags for usage).
+    The *rivtText* superset includes commands, tags and single line Python
+    statements. Commands read or write files into and out of the calculation
+    and start the line with ||. Tags format text and end a line with _[tag].
+    Block tags start the block with ___[tag] (three underscores) and end with a
+    blank line.
+
+    *rivt* command parameters are separated by |. In the summary below, user
+    selections are separated by semi-colons for single value selections and
+    commas for list settings. The first line of each method specifies
+    formatting and labeling parameters for that calc or rivt-string. The method
+    label can be a section or paragraph title, or simple a label for bookmarking
+    and searching (see tags for usage).
 
     ========= ==================================================================     
-    API name           method, first line settings and commands
+    API name       methods, settings and commands [snippet insert prefix]
     ========= ================================================================== 
     repo      rv.R("""method label | calc title | utf;pdf;html;inter | page #
-                       
+    [rvr]                   
                   ||text, ||table, ||github ||project
                        
-                  """)
+                  """) 
     
     insert    rv.I("""method label | /docs/folder_override;default 
-                       
+    [rvi]                   
                   ||text, ||table, ||image, ||image2, ||attach
                   
                   """)
     
     values    rv.V("""method label | sub;nosub | /docs/folder_override;default 
-                        
+    [rvv]                    
                   =, ||values, ||lists, ||import
 
                   ||text, ||table, ||image, ||image2, ||attach 
                         
                   """)
     
-    tables    rv.T("""method label | /docs/folder_override;default
-                        
+    tables    rv.T("""method label | /docs/folder_override;default | show;noshow
+    [rvt]                    
                   Python simple statements 
                   (any valid expression or statment on a single line)
 
@@ -86,52 +87,52 @@ The *rivtapi* module is part of the *rivt* Python package and is imported
                  """)
 
     =============================================================== ============
-    rivt command syntax                                               methods
+    rivt command syntax  [snippet insert prefix]                      methods
     =============================================================== ============
     || github | repo_name | param1 | param                             R
-                github repo parameters
+    [git]        github repo parameters
     
     || project | file_name | /docsfolder; default                      R
-                .txt; rst; csv; syk; xls | project info folder 
+    [pro]       .txt; rst; csv; syk; xls | project info folder 
     
     || report | report title | cover page | configfile                 R
-                .txt; rst; csv; syk; xls | project info folder 
+    [rep]        .txt; rst; csv; syk; xls | project info folder 
 
     || lists | file_name  | [:];[x:y]                                      V
-                .csv;.syk;.txt;.py | rows to import
+    [lis]       .csv;.syk;.txt;.py | rows to import
      
     || values | file_name | [:];[x:y]                                      V 
-                .csv; .syk; .txt; .py | rows to import
+    [val]       .csv; .syk; .txt; .py | rows to import
     
     || functions | file_name | docs; nodocs                                V
-                .for; .py; .c; .c++; .jl | insert docstrings
+    [fun]       .for; .py; .c; .c++; .jl | insert docstrings
 
     || image | file_name  | .50                                          I,V,T
-                .png; .jpg | fraction of page width
+    [img]       .png; .jpg | fraction of page width
     
     || image2 | file_name  | .40 | file_name  | .40 |                    I,V,T
-                side by side images
+    [im2]       side by side images
     
     || attach | file_name | ./docfolder; default / count; nocount        I,V,T
-                .pdf; .txt | pdf folder / include page numbers
+    [att]      .pdf; .txt | pdf folder / include page numbers
 
     || text | file_name | shade; noshade                               R,I,V,T
-                .txt; .py; .tex | shade background
+    [tex]      .txt; .py; .tex | shade background
     
     || table | file_name |  [:] | 60 r;l;c                             R,I,V,T
-                .csv or .rst file | rows | max col width, locate text
+    [tab]      .csv or .rst file | rows | max col width, locate text
 
     =====================  ===================================================== 
-    rivt tag syntax                 description (user input)                
+    rivt tag syntax                 description                
     =====================  ===================================================== 
                 
-                rivt string settings - first line:
+                rivt-string settings; first line of method:
 
-    """Title |                     Denotes new section title, autonumber
-    """ Title |                    Single start space - denotes paragraph title
-    """  label |                   Double start space - denotes continuation    
+    """Title |                     No hyphen denotes section title and number
+    """-Title |                    Single hyphen denotes paragraph title
+    """--label |                   Double hyphen denotes a continuation    
                   
-                  All other rivt string lines:
+                All other rivt string lines:
 
     sympy eq _[s]                 format sympy equation                
     latex eq _[x]                 format LaTeX equation                
@@ -145,14 +146,7 @@ The *rivtapi* module is part of the *rivt* Python package and is imported
     text _[#]                     footnote, autonumber                    
     footnote _[foot]              footnote description
     _[address label _url]         http://xyz link label
-    _[target _lnk]                target can be - title of section, paragraph, 
-                                  table or equation
-
-    ___[literal]                  literal block, end with blank line                          
-    ___[latex]                    LateX block, end with blank line                            
-    ___[math]                     LaTeX math block, end with blank line                       
-    ___[r]                        right justify text block, end with blank line                
-    ___[c]                        center text block, end with blank line                      
+    _[target _lnk]                target is section, paragraph, table, equation                   
                 
                 The following tags only apply to Values method:
 
@@ -160,24 +154,61 @@ The *rivtapi* module is part of the *rivt* Python package and is imported
     a = b + c | unit, alt         define equation, units
     a = n | unit, alt | descrip   assign value, units, description
     
-    By convention the first line of a rivt file is *import rivtapi as rv*. The
-    first method is always the Repo method R(rs), followed by any of the other
-    four methods in any number or order. R(rs) occurs only one time and sets
-    options for repository, report and calc output formats.
+                Block tags; end block with blank line  
+
+    ___[literal]                  literal block, end with blank line                          
+    ___[latex]                    LateX block, end with blank line                            
+    ___[math]                     LaTeX math block, end with blank line                       
+    ___[r]                        right justify text block, end with blank line                
+    ___[c]                        center text block, end with blank line   
     
-    Formatting conventions follow the Python formatter *yapf*. Method names
-    start in column 1 and subsequent lines are indented 4 spaces. This
+
+    Additional rivt-specific default shortcut keys and [snippets] for VSCode:
+
+    ================== =========================================================
+    shortcut                  description
+    ================== =========================================================
+
+    ctl+alt+x             reload window
+
+    ctl+alt+u             unfold code
+    ctl+alt+f             fold code
+    ctl+alt+t             toggle local fold at cursor
+    
+    ctl+alt+9             toggle spell check
+    ctl+. / ctl+alt+.     select correct spelling under cursor
+
+    ctl+0                 focus explorer 
+    ctl+1                 focus editor 1
+    ctl+2                 focus editor 2
+    ctl+9                 focus bookmark pane
+
+    alt+q                 wrap paragraph with hard line feeds
+
+    [sg]                 insert keyword search of GitHub rivt readmes
+    ctl+alt+S            open URL under cursor in browser
+
+    [date]               insert date
+    [time]               insert time
+    [track]              insert time spent in VSCode
+
+    By convention the first line of a rivt file is *import rivtapi as rv*. The
+    first method is the Repo method R(rs) which occurs once, followed by any of
+    the other four methods in any number or order. R(rs) sets options for
+    repository, report and the calc output formats.
+    
+    Formatting conventions follow the Python formatter *pep8*. Method names
+    start in column 1 and all subsequent lines are indented 4 spaces. This
     layout supports section folding and navigation, bookmarking and improved
     legibility.
 
     ============================================================================
-    rivt calc example  
+    rivt calculation example  
     ============================================================================
 
 import rivt.rivtapi as rv
 
-rv.R(
-    """Repo method summary | Example Calculation | inter | 1 
+rv.R("""Repo method summary | Example Calculation | inter | 1 
 
     The Repo method (short for repository or report) is the first method in a
     calc and specifies repository settings and output formats. It also typically
@@ -195,8 +226,8 @@ rv.R(
 
     || project | file | default
     
-    """
-) 
+    """)
+
 rv.I("""Insert method summary | default
 
     The Insert method formats descriptive information as opposed to
@@ -236,10 +267,10 @@ rv.I("""Insert method summary | default
     Attach PDF documents at the end of the method:
 
     || attach | file | default | count
-    """
-) 
-rv.V(
-    """Value method summary | nosub | save | /docfolder/override
+    
+    """) 
+
+rv.V("""Value method summary | nosub | save | /docfolder/override
 
     The Value method assigns values to variables and evaluates equations. The
     first setting is the section title. The sub;nosub setting specifies whether
@@ -310,41 +341,43 @@ rv.X("""[n]_ skip-string
 ??? example "View Source"
         #! python
 
-        '''rivtapi 
+        '''rivtapi
 
         
 
-            The *rivtapi* module is part of the *rivt* Python package and is imported
+            The *rivtapi* module is the api for the *rivt*, a Python package designed
 
-            at the beginning of a rivt calculation. It defines the five API methods:
+            to facilitate highly shareable engineering calculation documents. It is
 
-            R(rs), I(rs), V(rs), T(rs), X(rs); where *rs* represents a *rivtText*
+            imported at the beginning of every rivt calculation and includes five
 
-            string.
+            methods: R(rs), I(rs), V(rs), T(rs), X(rs); where *rs* represents a
+
+            *rivtText* single string parameter.
 
             
 
-            When running in an IDE (e.g. VSCode), each method can be run interactively
+            When running in an IDE (e.g. VSCode), each methods can be run interactively
 
-            using the cell decorator # %%. In file run mode (entire file processed) the
+            using the standard cell decorator # %%. In file run mode (the entire file
 
-            output is written to the screen and disk as a utf8, PDF, or HTML file.
+            processed from command line) the output is written to the screen and file
+
+            as a utf8, PDF, or HTML file.
 
             
 
             The calculation input files are separated into two folders labeled *calcs*
 
-            and *docs*. Files in the *calcs* folder are text files under version
+            and *docs*. Files in the *calcs* folder are shareable files under version
 
-            control that contain the primary calculation and supporting files. They are
+            control that contain the primary calculation and supporting text files. The
 
-            designed to be shared. The *docs* folders include supporting calculation
+            *docs* folder includes supporting binary files (images, pdf etc.) and files
 
-            files that are typically binary files (images, pdf etc.) and files that
+            that include confidential project information or copyrights. The *docs*
 
-            include confidential project information or copyrights. The *docs* folder
-
-            is typically not shared.
+            folder is not intended to share.
 
         
 
@@ -352,35 +385,21 @@ rv.X("""[n]_ skip-string
 
             written as a *readme.txt* file to the *calcs* folder and is automatically
 
-            displayed on source control platforms like GitHub. The PDF output is
+            displayed on source control platforms like GitHub. PDF output is written to
 
-            written to the *reports* folder, and the HTML output is written to the
-
-            *sites* folder.
+            *reports*, and HTML output to the *sites* folder.
 
             
 
-            The rivt calc input file is a Python file written in *rivtText*, a superset
+            *rivtText* is a superset of the markup language reStructuredText (reST)
 
-            of the markup language reStructuredText (reST) defined at
+            defined at https://docutils.sourceforge.io/rst.html. It is designed for
 
-            https://docutils.sourceforge.io/rst.html. *rivtText* is designed for
+            clarity, brevity and general platform reading and writing and processing.
 
-            clarity, brevity and universality when reading and writing calculation
+            It runs on any platform that supports Python. 
 
-            inputs and outputs. It may include rivt file commands and format tags,
-
-            reStructuredText (reST) and native Python code. Commands start a line with
-
-            || and always read or write files into and out of the calculation. Tags
-
-            terminate a line with the symbol _[tag] and always evaluate or format.
-
-            Block tags start the block with ___[tag] (three underscores) and end with a
-
-            blank line.
-
-            
+               
 
             *rivtCalc* is the open source software stack for writing, sharing and
 
@@ -392,39 +411,53 @@ rv.X("""[n]_ skip-string
 
         
 
-            rivt command parameters are separated by |. User selections are separated
+            The *rivtText* superset includes commands, tags and single line Python
 
-            by semi-colons for a single selection and commas for multiply selectable
+            statements. Commands read or write files into and out of the calculation
 
-            settings. The first line of each method specifies formatting and labeling
+            and start the line with ||. Tags format text and end a line with _[tag].
 
-            parameters for that rivt string. The method label can be a section or
+            Block tags start the block with ___[tag] (three underscores) and end with a
 
-            paragraph title, or a label for bookmarking (see tags for usage).
+            blank line.
+
+        
+
+            *rivt* command parameters are separated by |. In the summary below, user
+
+            selections are separated by semi-colons for single value selections and
+
+            commas for list settings. The first line of each method specifies
+
+            formatting and labeling parameters for that calc or rivt-string. The method
+
+            label can be a section or paragraph title, or simple a label for bookmarking
+
+            and searching (see tags for usage).
 
         
 
             ========= ==================================================================     
 
-            API name           method, first line settings and commands
+            API name       methods, settings and commands [snippet insert prefix]
 
             ========= ================================================================== 
 
             repo      rv.R("""method label | calc title | utf;pdf;html;inter | page #
 
-                               
+            [rvr]                   
 
                           ||text, ||table, ||github ||project
 
                                
 
-                          """)
+                          """) 
 
             
 
             insert    rv.I("""method label | /docs/folder_override;default 
 
-                               
+            [rvi]                   
 
                           ||text, ||table, ||image, ||image2, ||attach
 
@@ -436,7 +469,7 @@ rv.X("""[n]_ skip-string
 
             values    rv.V("""method label | sub;nosub | /docs/folder_override;default 
 
-                                
+            [rvv]                    
 
                           =, ||values, ||lists, ||import
 
@@ -450,9 +483,9 @@ rv.X("""[n]_ skip-string
 
             
 
-            tables    rv.T("""method label | /docs/folder_override;default
+            tables    rv.T("""method label | /docs/folder_override;default | show;noshow
 
-                                
+            [rvt]                    
 
                           Python simple statements 
 
@@ -482,97 +515,97 @@ rv.X("""[n]_ skip-string
 
             =============================================================== ============
 
-            rivt command syntax                                               methods
+            rivt command syntax  [snippet insert prefix]                      methods
 
             =============================================================== ============
 
             || github | repo_name | param1 | param                             R
 
-                        github repo parameters
+            [git]        github repo parameters
 
             
 
             || project | file_name | /docsfolder; default                      R
 
-                        .txt; rst; csv; syk; xls | project info folder 
+            [pro]       .txt; rst; csv; syk; xls | project info folder 
 
             
 
             || report | report title | cover page | configfile                 R
 
-                        .txt; rst; csv; syk; xls | project info folder 
+            [rep]        .txt; rst; csv; syk; xls | project info folder 
 
         
 
             || lists | file_name  | [:];[x:y]                                      V
 
-                        .csv;.syk;.txt;.py | rows to import
+            [lis]       .csv;.syk;.txt;.py | rows to import
 
              
 
             || values | file_name | [:];[x:y]                                      V 
 
-                        .csv; .syk; .txt; .py | rows to import
+            [val]       .csv; .syk; .txt; .py | rows to import
 
             
 
             || functions | file_name | docs; nodocs                                V
 
-                        .for; .py; .c; .c++; .jl | insert docstrings
+            [fun]       .for; .py; .c; .c++; .jl | insert docstrings
 
         
 
             || image | file_name  | .50                                          I,V,T
 
-                        .png; .jpg | fraction of page width
+            [img]       .png; .jpg | fraction of page width
 
             
 
             || image2 | file_name  | .40 | file_name  | .40 |                    I,V,T
 
-                        side by side images
+            [im2]       side by side images
 
             
 
             || attach | file_name | ./docfolder; default / count; nocount        I,V,T
 
-                        .pdf; .txt | pdf folder / include page numbers
+            [att]      .pdf; .txt | pdf folder / include page numbers
 
         
 
             || text | file_name | shade; noshade                               R,I,V,T
 
-                        .txt; .py; .tex | shade background
+            [tex]      .txt; .py; .tex | shade background
 
             
 
             || table | file_name |  [:] | 60 r;l;c                             R,I,V,T
 
-                        .csv or .rst file | rows | max col width, locate text
+            [tab]      .csv or .rst file | rows | max col width, locate text
 
         
 
             =====================  ===================================================== 
 
-            rivt tag syntax                 description (user input)                
+            rivt tag syntax                 description                
 
             =====================  ===================================================== 
 
                         
 
-                        rivt string settings - first line:
+                        rivt-string settings; first line of method:
 
         
 
-            """Title |                     Denotes new section title, autonumber
+            """Title |                     No hyphen denotes section title and number
 
-            """ Title |                    Single start space - denotes paragraph title
+            """-Title |                    Single hyphen denotes paragraph title
 
-            """  label |                   Double start space - denotes continuation    
+            """--label |                   Double hyphen denotes a continuation    
 
                           
 
-                          All other rivt string lines:
+                        All other rivt string lines:
 
         
 
@@ -600,21 +633,7 @@ rv.X("""[n]_ skip-string
 
             _[address label _url]         http://xyz link label
 
-            _[target _lnk]                target can be - title of section, paragraph, 
-
-                                          table or equation
-
-        
-
-            ___[literal]                  literal block, end with blank line                          
-
-            ___[latex]                    LateX block, end with blank line                            
-
-            ___[math]                     LaTeX math block, end with blank line                       
-
-            ___[r]                        right justify text block, end with blank line                
-
-            ___[c]                        center text block, end with blank line                      
+            _[target _lnk]                target is section, paragraph, table, equation                   
 
                         
 
@@ -630,19 +649,95 @@ rv.X("""[n]_ skip-string
 
             
 
-            By convention the first line of a rivt file is *import rivtapi as rv*. The
+                        Block tags; end block with blank line  
 
-            first method is always the Repo method R(rs), followed by any of the other
+        
 
-            four methods in any number or order. R(rs) occurs only one time and sets
+            ___[literal]                  literal block, end with blank line                          
 
-            options for repository, report and calc output formats.
+            ___[latex]                    LateX block, end with blank line                            
+
+            ___[math]                     LaTeX math block, end with blank line                       
+
+            ___[r]                        right justify text block, end with blank line                
+
+            ___[c]                        center text block, end with blank line   
 
             
 
-            Formatting conventions follow the Python formatter *yapf*. Method names
+        
 
-            start in column 1 and subsequent lines are indented 4 spaces. This
+            Additional rivt-specific default shortcut keys and [snippets] for VSCode:
+
+        
+
+            ================== =========================================================
+
+            shortcut                  description
+
+            ================== =========================================================
+
+        
+
+            ctl+alt+x             reload window
+
+        
+
+            ctl+alt+u             unfold code
+
+            ctl+alt+f             fold code
+
+            ctl+alt+t             toggle local fold at cursor
+
+            
+
+            ctl+alt+9             toggle spell check
+
+            ctl+. / ctl+alt+.     select correct spelling under cursor
+
+        
+
+            ctl+0                 focus explorer 
+
+            ctl+1                 focus editor 1
+
+            ctl+2                 focus editor 2
+
+            ctl+9                 focus bookmark pane
+
+        
+
+            alt+q                 wrap paragraph with hard line feeds
+
+        
+
+            [sg]                 insert keyword search of GitHub rivt readmes
+
+            ctl+alt+S            open URL under cursor in browser
+
+        
+
+            [date]               insert date
+
+            [time]               insert time
+
+            [track]              insert time spent in VSCode
+
+        
+
+            By convention the first line of a rivt file is *import rivtapi as rv*. The
+
+            first method is the Repo method R(rs) which occurs once, followed by any of
+
+            the other four methods in any number or order. R(rs) sets options for
+
+            repository, report and the calc output formats.
+
+            
+
+            Formatting conventions follow the Python formatter *pep8*. Method names
+
+            start in column 1 and all subsequent lines are indented 4 spaces. This
 
             layout supports section folding and navigation, bookmarking and improved
 
@@ -652,7 +747,7 @@ rv.X("""[n]_ skip-string
 
             ============================================================================
 
-            rivt calc example  
+            rivt calculation example  
 
             ============================================================================
 
@@ -662,9 +757,7 @@ rv.X("""[n]_ skip-string
 
         
 
-        rv.R(
-
-            """Repo method summary | Example Calculation | inter | 1 
+        rv.R("""Repo method summary | Example Calculation | inter | 1 
 
         
 
@@ -700,9 +793,9 @@ rv.X("""[n]_ skip-string
 
             
 
-            """
+            """)
 
-        ) 
+        
 
         rv.I("""Insert method summary | default
 
@@ -782,13 +875,13 @@ rv.X("""[n]_ skip-string
 
             || attach | file | default | count
 
-            """
+            
 
-        ) 
+            """) 
 
-        rv.V(
+        
 
-            """Value method summary | nosub | save | /docfolder/override
+        rv.V("""Value method summary | nosub | save | /docfolder/override
 
         
 

@@ -26,7 +26,7 @@ layout: default
 </thead>
 <tbody>
 <tr>
-  <td style="text-align: center"><a href="https://github.com/search"> <img src="./assets/img/search01.png" width="70" height="60" /></a></td>
+  <td style="text-align: center"><a href="https://github.com/search?q=rivt&ref=simplesearch"> <img src="./assets/img/search01.png" width="70" height="60" /></a></td>
   <td style="text-align: center"><a href="https://rivtcalc.org"> <img src="./assets/img/rivtcalc01.png" width="75" height="55" /></a></td>
   <td style="text-align: center"><a href="https://rivtdocs.net"> <img src="./assets/img/codedocs09.png" width="80" height="60" /></a></td>
 </tr>

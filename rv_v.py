@@ -49,7 +49,7 @@ class V2utf:
         self.sectD = sectD
         self.cmdD = cmdD
 
-    def _vconfig(self, vL: list):
+    def vconfig(self, vL: list):
         """update dictionary format values
 
         Args:
@@ -60,7 +60,7 @@ class V2utf:
         self.setcmdD["trmrI"] = vL[2].split(",")[0].strip()
         self.setcmdD["trmtI"] = vL[2].split(",")[1].strip()
 
-    def _vassign(self, vL: list):
+    def vassign(self, vL: list):
         """assign values to variables and equations
 
         Args:
@@ -153,7 +153,7 @@ class V2utf:
                 self.exportS += pyS
         self.rivtD.update(locals())
 
-    def _vtable(self, tbl, hdrL, tblfmt, alignL):
+    def vtable(self, tbl, hdrL, tblfmt, alignL):
         """write value table"""
 
         locals().update(self.rivtD)
@@ -172,7 +172,7 @@ class V2utf:
         self.calcS += utfS + "\n"
         self.rivtD.update(locals())
 
-    def _vvalue(self, vL: list):
+    def vvalue(self, vL: list):
         """import values from files
 
         Args:
@@ -214,7 +214,7 @@ class V2utf:
         self._vtable(valL, hdrL, "rst", alignL)
         self.rivtD.update(locals())
 
-    def _vdata(self, vL: list):
+    def vdata(self, vL: list):
         """import data from files
 
         Args:
@@ -244,7 +244,7 @@ class V2utf:
         self._vtable(valL, hdrL, "rst", alignL)
         self.rivtD.update(locals())
 
-    def _vsub(self, eqL: list, eqS: str):
+    def vsub(self, eqL: list, eqS: str):
         """substitute numbers for variables in printed output
 
         Args:
@@ -312,7 +312,7 @@ class V2utf:
         except:
             pass
 
-    def _vfunc(self, vL: list):
+    def vfunc(self, vL: list):
         pass
 
 
@@ -344,7 +344,7 @@ class V2rst:
         self.rivtD.update(locals())
         return self.restS, self.setsectD, self.setcmdD, self.rivtD, self.exportS
 
-    def _vconfig(self, vL: list):
+    def vconfig(self, vL: list):
         """update dictionary format values
 
         Args:
@@ -356,7 +356,7 @@ class V2rst:
         self.setcmdD["trmrI"] = vL[2].split(",")[0].strip()
         self.setcmdD["trmtI"] = vL[2].split(",")[1].strip()
 
-    def _vassign(self, vL: list):
+    def vassign(self, vL: list):
         """assign values to variables and equations
 
         Args:
@@ -451,7 +451,7 @@ class V2rst:
         self.rivtD.update(locals())
         # print(self.rivtD)
 
-    def _vtable(self, tbl, hdrL, tblfmt, alignL, fltfmtS):
+    def vtable(self, tbl, hdrL, tblfmt, alignL, fltfmtS):
         """write value table"""
 
         locals().update(self.rivtD)
@@ -481,7 +481,7 @@ class V2rst:
         self.restS += "\n\n"
         self.rivtD.update(locals())
 
-    def _vvalue(self, vL: list):
+    def vvalue(self, vL: list):
         """import values from files
 
         Args:
@@ -524,7 +524,7 @@ class V2rst:
         self._vtable(valL, hdrL, "rst", alignL, fltfmtS)
         self.rivtD.update(locals())
 
-    def _vdata(self, vL: list):
+    def vdata(self, vL: list):
         """import data from files
 
         Args:
@@ -554,7 +554,7 @@ class V2rst:
         self._vtable(valL, hdrL, "rst", alignL)
         self.rivtD.update(locals())
 
-    def _vsub(self, eqL: list, eqS: str):
+    def vsub(self, eqL: list, eqS: str):
         """substitute numbers for variables in printed output
 
         Args:

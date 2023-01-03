@@ -130,47 +130,47 @@
       rivt tag syntax                       description: snippet prefix
     =====================  =====================================================
 
-                rivt-string first line settings
+                tags for rivt-string first line settings
 
-    """label | ....               No hyphen denotes section title and autonumber
+    """label | ....               label as section title, with autonumber
     """-label | ....              Single hyphen denotes paragraph title
-    """--label | ....             Double hyphen denotes no title, label only
-
-                line tags that apply only to the Values method:
-
-    a = b + c | unit, alt         tag is the = sign, equation has units: _=
-    a = n | unit, alt | descrip   value assign has units and description: _v
-
-                block tags that apply only to the Repo method:
-
-    _[[readme]]                   write to README.txt in *calc* folder: _[[d
-    _[[end]]                      terminates block: _[[e
+    """--label | ....             Double hyphen denotes reference label only
 
                 line tags for all methods:
 
-    label [2,2] _[e]              equation label, decimals, autonumber: _e
+    label _[e]{2,2}               equation label, decimals, autonumber: _e
     caption _[f]                  figure caption, autonumber: _f
     title _[t]                    table title, autonumber: _t
     heading _[p]                  paragraph heading: _p
     sympy eq _[s]                 format sympy equation: _s
     latex eq _[x]                 format LaTeX equation: _x
+    text _[l]                     literal text: _l
     text _[r]                     right justify line of text: _r
     text _[c]                     center line of text: _c
     text _[-]                     horizontal line: _-
     text _[new]                   new PDF page: _n
     text _[#]                     footnote, autonumber: _#
-    footnote _[foot]              footnote description: _[
-    _[address label _url]         http://xyz link label: _u
-    word _[target _lnk]           section, paragraph, title, caption: _g
+    footnote _[foot]              footnote description: _o
+    _[url]{address, label}        http://xyz, link label: _u
+    _[lnk]{label}                 section, paragraph, title, caption: _k
+
+                line tags that apply only to the Values method:
+
+    a = b + c | unit, alt         = sign is tag for evaluation : _=
+    a = n | unit, alt | descrip   units and description: _v
 
                 block tags for all methods:
 
-    _[[literal]]                  literal block: _[[l
-    _[[latex]]                    LateX block: _[[x
-    _[[math]]                     LaTeX math block: _[[m
     _[[r]]                        right justify text block: _[[r
     _[[c]]                        center text block: _[[c
+    _[[lit]]                      literal block: _[[l
+    _[[tex]]                      LateX block: _[[x
+    _[[texm]]                     LaTeX math block: _[[m
     _[[end]]                      terminates block: _[[e
+
+                    block tag that applies only to the Repo method:
+
+    _[[read]]                     write to README.txt in *calc* folder: _read
 
     Additional  VSCode shortcut keys and: snippet prefix
 
@@ -419,7 +419,7 @@ rstS = """"""  # accumulating string in reST
 valuexS = """"""  # accumulating values string for export
 rivtD = {}  # all computed values dictionary
 foldersD = {}  # folders dictionary
-tagsD = {}
+
 
 for var in ["calcfileP", "filefolderP", "calcconfigP", "fileconfigP"]:
     foldersD[var] = eval(var)
@@ -486,39 +486,44 @@ def R(rvrS: str):
 
     """
 
-    global utfS, rstS, rivtD, foldersD, tagsD, restB
+    global utfS, rstS, rivtD, foldersD, tagL, cmdL, restB
     rvr1L = [None]*3
     rvr1L[0] = "Calculation"
     rvr1L[1] = "utf"
     rvr1L[2] = "1"
     restB = False
     cmdL = cmdM.rvcmds("R")     # returns list of valid commands
+    tagL = tagM.rvtags("R")     # returns list of valid tags
     rvrL = rvrS.split("\n")     # list of rivt string lines
     rvr1L = [i.strip() for i in rvrL[0].split("|")]    # first line parameters
-    # processing mode
-    if rvr1L[1] == "inter":
-        utfS += tagM._tags(utfL[0])  # section
-        rC = rM._R2utf()
-        for i in utfL[1:]:
-            rC = rM.R2utf
-            utfS += rC.r_utf
-        print(utfS)
-    elif rvr1L[1] == "utf":
-        utfL = rivtS.split()
-        for i in utfL[1:]:
-            utL = tagM.tags(i, False)
-            if utL[1]:
-                utfS += utL[0]
-                continue
-            else:
-                utfS += rM.rutf(cmdL)
-        print(utfS)
-        utfoutP = Path(calcfileP / "README.txt")
-        with open(utfoutP, "wb") as f1:
-            f1.write(utfS.encode("UTF-8"))
-        logging.info("utf calc written, program complete")
-        print("", flush=True)
-        os._exit(1)
+    typesL = ["inter", "utf", "pdf", "html"]
+
+    inter = """
+    rC = rM.R2utf()
+    utfS += rC.utf1(rvr1L)
+    for i in rvr1L[1:]:
+        rS = rC.parseRutf(i)
+        utfS += rS
+    print(utfS)"""
+
+    utf = """
+    rC = rM.R2utf()
+    utfS += rC.utf1(rvr1L)
+    for i in rvr1L[1:]:
+        rS = rC.parseRutf(i)
+        utfS += rS
+    print(utfS)    
+    utfoutP = Path(calcfileP / "README.txt")
+    with open(utfoutP, "wb") as f1:
+        f1.write(utfS.encode("UTF-8"))
+    logging.info("utf calc written, program complete")
+    print("", flush=True)
+    os._exit(1)
+    """
+
+    if rvr1L[1] in typesL:
+        exec(rvr1L[1])
+
     elif rvrL[1] == "pdf" or rvrL[1] == "html":
         restB = True
         gen_rst(cmdS, doctypeS, stylefileS, calctitleS, startpageS)

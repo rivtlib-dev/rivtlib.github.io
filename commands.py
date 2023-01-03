@@ -1,6 +1,6 @@
 #
 
-def rvcmds(methodS: str):
+def rvcmds(typeS: str):
     """_summary_
 
     :param str methodS: _description_
@@ -27,9 +27,7 @@ def rvcmds(methodS: str):
         "T": [4, 5, 6, 7]
     }
 
-    subsetL = [cmdL[i] for i in cmdsetD[methodS]]
-
-    return subsetL
+    return [cmdL[i] for i in cmdsetD[typeS]]
 
 
 def text_utf(self, iL: list):

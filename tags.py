@@ -1,7 +1,7 @@
 #!python
 """rivt tags
 
-    - list of rivt tags 
+    - list of rivt tags
     - methods for finding tags
     - methods for processing tagged lines to utf or reST
 
@@ -14,13 +14,13 @@ from sympy.abc import _clash2
 from tabulate import tabulate
 
 
-def rvtags():
+def rvtags(typeS: str):
 
-    rtagL = [
+    tagL = [
         "_[new]",
         "_[line]",
         "_[link]",
-        "_[literal]",
+        "_[lit]",
         "_[foot]",
         "_[r]",
         "_[c]",
@@ -29,8 +29,29 @@ def rvtags():
         "_[f]",
         "_[x]",
         "_[s]"
-        "_[#]_",
+        "_[#]",
+        "_[-]",
+        "_[url]",
+        "_[lnk]",
+        "_[[r]]",
+        "_[[c]]",
+        "_[[lit]]",
+        "_[[tex]]",
+        "_[[texm]]",
+        "_[[end]]",
     ]
+
+    tagvL = tagL.append("=")
+    tagrL = ["_[[read]]", "_[[end]]"]
+
+    tagD = {
+        "R": tagrL,
+        "I": tagL,
+        "V": tagvL,
+        "T": tagL,
+    }
+
+    return eval(tagD[typeS])
 
 
 def e_utf(self) -> tuple:

@@ -1,3 +1,0 @@
-12-26 11:41 root         INFO     calc short path: calcs\rv0101_calc
-12-26 11:41 root         INFO     log short path: docs\d00
-12-26 11:41 root         INFO     calc backup written to calc folder

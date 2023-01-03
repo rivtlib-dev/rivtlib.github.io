@@ -8,7 +8,7 @@
     ],
     "python.formatting.provider": "autopep8",
     "editor.formatOnSave": true,
-    "inline-bookmarks.view.showVisibleFilesOnly": true,
+    "inline-bookmarks.view.showVisibleFilesOnly": false,
     "fsdeploy.nodes": [
         {
             "source": "/git/rivt/",

@@ -1,4 +1,37 @@
 #
+
+def rvcmds(methodS: str):
+    """_summary_
+
+    :param str methodS: _description_
+    :return _type_: _description_
+    """
+    cmdL = [
+        "project",
+        "report",
+        "github",
+        "append",
+        "table",
+        "image1",
+        "image2",
+        "text",
+        "values",
+        "list",
+        "functions"
+    ]
+
+    cmdsetD = {
+        "R": [0, 1, 2, 3],
+        "I": [4, 5, 6, 7],
+        "V": [4, 5, 6, 7, 8, 9, 10, 11],
+        "T": [4, 5, 6, 7]
+    }
+
+    subsetL = [cmdL[i] for i in cmdsetD[methodS]]
+
+    return subsetL
+
+
 def text_utf(self, iL: list):
     """insert text from file
 

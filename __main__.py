@@ -66,21 +66,27 @@ if __name__ == "__main__":
     """)
     try:
         # get calc file name
-        for fileS in os.listdir("."):
-            if fnmatch.fnmatch(fileS, "c[0-9][0-9][0-9][0-9]_*.py"):
-                calcfileP = Path(os.getcwd(), fileS)
-        calcnameS = os.path.basename(calcfileP)  # calc file
-        calcbaseS = calcnameS.split(".py")[0]  # calc file basename
-        calcfolderP = calcfileP.parent  # calc file basename
+    for fileS in os.listdir("."):
+        if fnmatch.fnmatch(fileS, "c[0-9][0-9][0-9][0-9]_*.py"):
+            for fileS in os.listdir("."):
+                if fnmatch.fnmatch(fileS, "c[0-9][0-9][0-9][0-9]_*.py"):
+                    calcfileP = Path(os.getcwd(), fileS)
+            calcnameS = os.path.basename(calcfileP)  # calc file
+            calcbaseS = calcnameS.split(".py")[0]  # calc file basename
+            calcfolderP = calcfileP.parent  # calc file basename
         print("MAIN  current folder: ", cwdP)
         print("MAIN  calc name: ", calcbaseS)
         importlib.import_module(calcbaseS)
     except ImportError as error:
         print("error---------------------------------------------")
-        print(error)
-        cmndlinehelp()
-    except Exception as exception:
-        # Output unexpected Exceptions.
-        print("exception-----------------------------------------")
-        print(exception)
+        # test files and paths
+        cwdP = Path(os.getcwd())
+        print("current working directory:", cwdP)
+        calcfileS = "c0101_test.py"
+        calcbaseS = "c0101_test"
+        P = Path(cwdP / "rivt_test")
+        calcfileP = P / "calc" / "rv0101_test" / calcfileS
+        calcnameS = os.path.basename(calcfileP)  # calc file
+        calcbaseS = str(calcnameS.split(".py")[0])  # calc file basename
+        print("calc file not found - check that rivt file name is valid")
         cmndlinehelp()

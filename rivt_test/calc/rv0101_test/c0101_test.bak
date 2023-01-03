@@ -1,8 +1,10 @@
 import rivt.rivtapi as rv
 
-rv.R("""new R section | calc title | utf | 1
+rv.R("""calc title | utf | 1
     
     new R text
+
+    || project | project_info.txt | default
 
     || append.pdf | doc1.pdf | default | 0
     
@@ -16,7 +18,7 @@ rv.I("""new I section | default
     
     """)
 
-rv.V("""new V section | default | nosub
+rv.V("""new V section | default | nosave | nosub
     
     new V text
     

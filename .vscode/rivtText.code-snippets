@@ -1,12 +1,4 @@
 {
-    "searchgh": {
-        "prefix": "sgh",
-        "description": "search github rivt READMEs",
-        "scope": "python",
-        "body": [
-            "https://github.com/search?q=rivt+${0:added search terms}+in%3Areadme&ref=simplesearch"
-        ]
-    },
     "github2": {
         "prefix": "ghu",
         "description": "github repo settings",
@@ -248,11 +240,11 @@
         ]
     },
     "block tag latex": {
-        "prefix": "__x",
+        "prefix": "_[[x",
         "description": "tag latex block",
         "scope": "python",
         "body": [
-            "___[x]"
+            "_[[latex]]"
         ]
     },
     "block tag math": {
@@ -260,31 +252,47 @@
         "description": "tag latex math block",
         "scope": "python",
         "body": [
-            "___[m]"
+            "_[[math]]"
         ]
     },
     "block tag literal": {
-        "prefix": "__l",
+        "prefix": "_[[l",
         "description": "tag literal text block",
         "scope": "python",
         "body": [
-            "___[l]"
+            "_[[literal]]"
         ]
     },
     "block tag right": {
-        "prefix": "__r",
+        "prefix": "_[[r",
         "description": "tag right justify block",
         "scope": "python",
         "body": [
-            "___[r]"
+            "_[[right]]"
         ]
     },
     "block tag center": {
-        "prefix": "__c",
+        "prefix": "_[[c",
         "description": "tag center block",
         "scope": "python",
         "body": [
-            "___[c]"
+            "_[[center]]"
+        ]
+    },
+    "readme block": {
+        "prefix": "_[[d",
+        "description": "start a readme block that is written to the rivt folder README.txt",
+        "scope": "python",
+        "body": [
+            "_[[readme]]"
+        ]
+    },
+    "readme block1": {
+        "prefix": "_[[d",
+        "description": "start a readme block that is written to the rivt folder README.txt",
+        "scope": "python",
+        "body": [
+            "_[[end]]"
         ]
     }
 }

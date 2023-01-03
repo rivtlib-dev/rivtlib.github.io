@@ -13,37 +13,24 @@ from sympy.parsing.latex import parse_latex
 from sympy.abc import _clash2
 from tabulate import tabulate
 
-"""
-        rtagL = [
-            "[page]_",
-            "[line]_",
-            "[link]_",
-            "[literal]_",
-            "[foot]_",
-            "[r]_",
-            "[c]_",
-            "[e]_",
-            "[t]_",
-            "[f]_",
-            "[#]_",
-        ]
 
-       ttagL = [
-            "[page]_",
-            "[line]_",
-            "[link]_",
-            "[literal]_",
-            "[foot]_",
-            "[s]",
-            "[x]",
-            "[r]_",
-            "[c]_",
-            "[e]_",
-            "[t]_",
-            "[f]_",
-            "[#]_",
-        ]
-"""
+def rvtags():
+
+    rtagL = [
+        "_[new]",
+        "_[line]",
+        "_[link]",
+        "_[literal]",
+        "_[foot]",
+        "_[r]",
+        "_[c]",
+        "_[e]",
+        "_[t]",
+        "_[f]",
+        "_[x]",
+        "_[s]"
+        "_[#]_",
+    ]
 
 
 def e_utf(self) -> tuple:

@@ -26,7 +26,7 @@ layout: default
 <tr>
   <td style="text-align:center"><a href="https://rivtdocs.net"> <img src="./assets/img/rivtdocs.png" width="75" height="55" /></a></td>
   <td style="text-align: center;background-color:#999290"><a href="https://rivtcode.net"> <img src="./assets/img/rivt01.png" width="75" height="55" /></a></td>
-  <td style="text-align: center"><a href="https://github.com/search?q=rivt&ref=simplesearch"> <img src="./assets/img/search01.png" width="70" height="60" /></a></td>
+  <td style="text-align: center"><a href="https://github.com/search?q=rivt+in%3Areadme"> <img src="./assets/img/search01.png" width="70" height="60" /></a></td>
   <td style="text-align: center"><a href="https://rivtinstall.net"> <img src="./assets/img/rivtdocs.png" width="75" height="55" /></a></td>
   <td style="text-align: center"><a href="https://rivtmanual.net"> <img src="./assets/img/rivtmanual.png" width="80" height="60" /></a></td>
 </tr>

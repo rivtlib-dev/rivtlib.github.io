@@ -4,30 +4,38 @@ layout: default
 
 ---------------------------
 
+------------------------------------------
+
+<p style="text-align:center; font-weight:bold"> share docs and calcs anywhere and anytime </p>
 <table>
 <colgroup>
-  <col width="25%" />
-  <col width="25%" />
-  <col width="25%" />
-  <col width="25%" />
+  <col width="20%" />
+  <col width="20%" />
+  <col width="20%" />
+  <col width="20%" />
+  <col width="20%" />
 </colgroup>
 <thead>
 <tr class="header">
+  <th style="text-align: center">rivtDocs</th>
   <th style="text-align: center">rivt</th>
   <th style="text-align: center">rivtSearch</th>
-  <th style="text-align: center">rivtInstall</th>
-  <th style="text-align: center">rivtManual</th>
+  <th style="text-align: center">rivtDocs Install</th>
+  <th style="text-align: center">rivtDocs Manual</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align: center"><a href="https://github.com/rivtdocs/rivt"> <img src="./assets/img/rivt01.png" width="75" height="55" /></a></td>
+  <td style="text-align:center"><a href="https://github.com/rivtdocs/rivt"> <img src="./assets/img/rivtdocs.png" width="75" height="55" /></a></td>
+  <td style="text-align: center;background-color:#999290"><a href="https://github.com/rivtdocs/rivt"> <img src="./assets/img/rivt01.png" width="75" height="55" /></a></td>
   <td style="text-align: center"><a href="https://github.com/search?q=rivt&ref=simplesearch"> <img src="./assets/img/search01.png" width="70" height="60" /></a></td>
-  <td style="text-align: center"><a href="https://rivtinstall.net"> <img src="./assets/img/rivtcalc01.png" width="75" height="55" /></a></td>
-  <td style="text-align: center"><a href="https://rivtmanual.net"> <img src="./assets/img/codedocs09.png" width="80" height="60" /></a></td>
+  <td style="text-align: center"><a href="https://rivtinstall.net"> <img src="./assets/img/rivtdocs.png" width="75" height="55" /></a></td>
+  <td style="text-align: center"><a href="https://rivtmanual.net"> <img src="./assets/img/rivtmanual.png" width="80" height="60" /></a></td>
 </tr>
 </tbody>
 </table>
+
+-----------------------------------------
 
 ---------------------------
 ### share docs and calcs anywhere, anytime

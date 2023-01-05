@@ -447,14 +447,14 @@ bshortP = Path(*Path(binfolderP).parts[-2:])
 lshortP = Path(*Path(binconfigP).parts[-2:])
 # check that calc and file directories exist
 if docfileP.exists():
-    logging.info(f"""doc path : {docfileP}""")
+    logging.info(f"""rivt file path : {docfileP}""")
 else:
-    logging.info(f"""doc path not found: {docfileP}""")
+    logging.info(f"""rivt file path not found: {docfileP}""")
 
 if binfolderP.exists:
-    logging.info(f"""default binary path found: {binfolderP}""")
+    logging.info(f"""binary path: {binfolderP}""")
 else:
-    logging.info(f"""default binary path not found: {binfolderP}""")
+    logging.info(f"""binary path not found: {binfolderP}""")
 logging.info(f"""doc short path: {dshortP}""")
 logging.info(f"""log short path: {lshortP}""")
 
@@ -464,7 +464,7 @@ with open(docfileP, "r") as f2:
     rivtL = f2.readlines()
 with open(docbakP, "w") as f3:
     f3.write(rivtS)
-logging.info("""calc read and backed up to calc folder""")
+logging.info("""rivt file read and backed up to text folder""")
 print(" ")
 # set some defaults
 typesL = ["inter", "utf", "pdf", "html"]
@@ -536,7 +536,7 @@ def R(rvrS: str):
 
     global utfS, rstS, valuexS, pubS, rivtvalD, foldersD, tagcountD, genrestB
 
-    rvr1L = [None]*3
+    rvr1L = [None]*5
     rvr1L[0] = "rivt section"
     rvr1L[1] = "default"
     rvr1L[2] = "rivt Document"

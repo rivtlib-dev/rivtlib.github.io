@@ -2,8 +2,6 @@
 layout: default
 ---
 
-### share docs and calcs anywhere, anytime
-
 ---------------------------
 
 <table>
@@ -32,26 +30,26 @@ layout: default
 </table>
 
 ---------------------------
+### share docs and calcs anywhere, anytime
+---------------------------
 
 ## **rivt** Overview
 
 **rivt** is a Python package providing an API for *rivtText*, a highly readable
 and shareable markup language designed in particular for calculation documents.
 It implements a markup language - **rivtText** - that wraps and extends
-[reStructuredText (reST).][https://docutils.sourceforge.io/rst.html]
+[reStructuredText (reST).](https://docutils.sourceforge.io/rst.html) and a
+document production options including HTML, PDF and UTF8
 
-The design of the program follows three principles with regard to document
-production:
+The program design follows three principles:
 
-    - Don't reinvent the wheel
-    - Respect people's time and attention
-    - Simple integration with other tools
+- **Don't reinvent the wheel** - make it easy to create, share and reuse documents
+- **Maximize integration** - leverage existing programs using standard interfaces
+- **Respect people's time** - prioritize clear legibility, efficient editing and intuitive use.
 
-
-The
-API uses file and folder conventions to simplify formatting, navigation and
-code folding. Text, PDF or HTML output are easily organized and assembled into
-collated reports. The folder structure (shown bracketed) is shown below.
+The API uses file and folder conventions to simplify formatting, navigation and
+code folding. Text, PDF and HTML outputs are coordinated and assembled into
+collated reports. The folder (shown bracketed) structure is shown below.
 
 
 **rivt Folder Structure**

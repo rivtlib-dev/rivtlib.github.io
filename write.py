@@ -5,59 +5,47 @@ import os
 import time
 
 
-def _write_utf(utfS):
+def write_utf(utfS):
     pass
 
 
-def _write_html(rstS):
-    pass
-
-
-def _write_pdf(texfileP):
-    """write pdf calc to reports folder and open
+def gen_rst(cmdS, doctypeS, stylefileS, calctitleS, startpageS):
+    """write calc rSt file to d00_docs folder
 
     Args:
-        texfileP (path): doc config folder
+        cmdS (str): [description]
+        doctypeS ([type]): [description]
+        stylefileS ([type]): [description]
+        calctitleS ([type]): [description]
+        startpageS ([type]): [description]
     """
 
     global rstcalcS, _rstflagB
 
-    os.chdir()
-    time.sleep(1)  # cleanup tex files
-    os.system("latexmk -c")
-    time.sleep(1)
+    _rstflagB = True
+    rstcalcS = """"""
+    exec(cmdS, globals(), locals())
+    docdir = os.getcwd()
+    with open(_rstfileP, "wb") as f1:
+        f1.write(rstcalcS.encode("UTF-8"))
+    print("INFO: rst calc written ", docdir, flush=True)
 
-    pdfmkS = (
-        "perl.exe c:/texlive/2020/texmf-dist/scripts/latexmk/latexmk.pl "
-        + "-pdf -xelatex -quiet -f "
-        + str(texfileP)
-    )
+    f1 = open(_rstfileP, "r", encoding="utf-8", errors="ignore")
+    rstcalcL = f1.readlines()
+    f1.close()
+    print("INFO: rst file read: " + str(_rstfileP))
 
-    os.system(pdfmkS)
-    print("\nINFO: pdf file written: " + ".".join([_cnameS, "pdf"]))
-
-    dnameS = _cnameS.replace("c", "d", 1)
-    docpdfP = Path(_dpathP / ".".join([dnameS, "pdf"]))
-    doclocalP = Path(_dpathP0 / ".".join([_cnameS, "pdf"]))
-    time.sleep(2)  # move pdf to doc folder
-    shutil.move(doclocalP, docpdfP)
-    os.chdir(_dpathPcurP)
-    print("INFO: pdf file moved to docs folder", flush=True)
-    print("INFO: program complete")
-
-    cfgP = Path(_dpathP0 / "rv_cfg.txt")  # read pdf display program
-    with open(cfgP) as f2:
-        cfgL = f2.readlines()
-        cfg1S = cfgL[0].split("|")
-        cfg2S = cfg1S[1].strip()
-    cmdS = cfg2S + " " + str(Path(_dpathP) / ".".join([dnameS, "pdf"]))
-    # print(cmdS)
-    subprocess.run(cmdS)
+    if doctypeS == "tex" or doctypeS == "pdf":
+        gen_tex(doctypeS, stylefileS, calctitleS, startpageS)
+    elif doctypeS == "html":
+        gen_html()
+    else:
+        print("INFO: doc type not recognized")
 
     os._exit(1)
 
 
-def _gen_tex(doctypeS, stylefileS, calctitleS, startpageS):
+def gen_tex(doctypeS, stylefileS, calctitleS, startpageS):
 
     global rstcalcS, _rstflagB
 
@@ -146,7 +134,51 @@ def _gen_tex(doctypeS, stylefileS, calctitleS, startpageS):
     os._exit(1)
 
 
-def _gen_rst(cmdS, doctypeS, stylefileS, calctitleS, startpageS):
+def write_pdf(texfileP):
+    """write pdf calc to reports folder and open
+
+    Args:
+        texfileP (path): doc config folder
+    """
+
+    global rstcalcS, _rstflagB
+
+    os.chdir()
+    time.sleep(1)  # cleanup tex files
+    os.system("latexmk -c")
+    time.sleep(1)
+
+    pdfmkS = (
+        "perl.exe c:/texlive/2020/texmf-dist/scripts/latexmk/latexmk.pl "
+        + "-pdf -xelatex -quiet -f "
+        + str(texfileP)
+    )
+
+    os.system(pdfmkS)
+    print("\nINFO: pdf file written: " + ".".join([_cnameS, "pdf"]))
+
+    dnameS = _cnameS.replace("c", "d", 1)
+    docpdfP = Path(_dpathP / ".".join([dnameS, "pdf"]))
+    doclocalP = Path(_dpathP0 / ".".join([_cnameS, "pdf"]))
+    time.sleep(2)  # move pdf to doc folder
+    shutil.move(doclocalP, docpdfP)
+    os.chdir(_dpathPcurP)
+    print("INFO: pdf file moved to docs folder", flush=True)
+    print("INFO: program complete")
+
+    cfgP = Path(_dpathP0 / "rv_cfg.txt")  # read pdf display program
+    with open(cfgP) as f2:
+        cfgL = f2.readlines()
+        cfg1S = cfgL[0].split("|")
+        cfg2S = cfg1S[1].strip()
+    cmdS = cfg2S + " " + str(Path(_dpathP) / ".".join([dnameS, "pdf"]))
+    # print(cmdS)
+    subprocess.run(cmdS)
+
+    os._exit(1)
+
+
+def gen_pdf(cmdS, doctypeS, stylefileS, calctitleS, startpageS):
     """write calc rSt file to d00_docs folder
 
     Args:
@@ -157,26 +189,28 @@ def _gen_rst(cmdS, doctypeS, stylefileS, calctitleS, startpageS):
         startpageS ([type]): [description]
     """
 
-    global rstcalcS, _rstflagB
+    # clean temp files
+    fileL = [
+        Path(fileconfigP, ".".join([calcbaseS, "pdf"])),
+        Path(fileconfigP, ".".join([calcbaseS, "html"])),
+        Path(fileconfigP, ".".join([calcbaseS, "rst"])),
+        Path(fileconfigP, ".".join([calcbaseS, "tex"])),
+        Path(fileconfigP, ".".join([calcbaseS, ".aux"])),
+        Path(fileconfigP, ".".join([calcbaseS, ".out"])),
+        Path(fileconfigP, ".".join([calcbaseS, ".fls"])),
+        Path(fileconfigP, ".".join([calcbaseS, ".fdb_latexmk"])),
+    ]
+    os.chdir(fileconfigP)
+    tmpS = os.getcwd()
+    if tmpS == str(fileconfigP):
+        for f in fileL:
+            try:
+                os.remove(f)
+            except:
+                pass
+        time.sleep(1)
+        print("INFO: temporary Tex files deleted \n", flush=True)
 
-    _rstflagB = True
-    rstcalcS = """"""
-    exec(cmdS, globals(), locals())
-    docdir = os.getcwd()
-    with open(_rstfileP, "wb") as f1:
-        f1.write(rstcalcS.encode("UTF-8"))
-    print("INFO: rst calc written ", docdir, flush=True)
 
-    f1 = open(_rstfileP, "r", encoding="utf-8", errors="ignore")
-    rstcalcL = f1.readlines()
-    f1.close()
-    print("INFO: rst file read: " + str(_rstfileP))
-
-    if doctypeS == "tex" or doctypeS == "pdf":
-        gen_tex(doctypeS, stylefileS, calctitleS, startpageS)
-    elif doctypeS == "html":
-        gen_html()
-    else:
-        print("INFO: doc type not recognized")
-
-    os._exit(1)
+def write_html(rstS):
+    pass

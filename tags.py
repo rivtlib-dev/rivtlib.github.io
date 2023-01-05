@@ -1,11 +1,5 @@
 #!python
-"""rivt tags
-
-    - list of rivt tags
-    - methods for finding tags
-    - methods for processing tagged lines to utf or reST
-
-"""
+"""Manages and processes rivt tags"""
 
 import logging
 import sympy as sp
@@ -51,7 +45,7 @@ def rvtags(typeS: str):
         "T": tagL,
     }
 
-    return eval(tagD[typeS])
+    return eval(str(tagD[typeS]))
 
 
 def e_utf(self) -> tuple:
@@ -126,7 +120,7 @@ def taglist(lineS: str) -> tuple:
         return (lineS, False)
 
 
-def _label(self, objnumI: int, tagD: dict, typeS: str) -> str:
+def label(self, objnumI: int, tagD: dict, typeS: str) -> str:
     """labels for equations, tables and figures
 
     Args:
@@ -149,7 +143,7 @@ def _label(self, objnumI: int, tagD: dict, typeS: str) -> str:
     return labelS
 
 
-def _tags(self, lineS: str, sectD: dict) -> tuple:
+def tags(self, lineS: str, sectD: dict) -> tuple:
     """format line with tag
     Parameters:
         lineS (str): rivt-string line with tag

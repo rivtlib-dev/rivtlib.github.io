@@ -1,6 +1,5 @@
 #!python
-"""R2utf and R2rst classes
-"""
+"""Class R2utf and R2rst"""
 
 import os
 import sys
@@ -11,20 +10,11 @@ import tempfile
 import re
 import io
 import logging
-import numpy.linalg as la
-import pandas as pd
-import sympy as sp
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 import html2text as htm
-from IPython.display import display as _display
-from IPython.display import Image as _Image
 from io import StringIO
-from sympy.parsing.latex import parse_latex
-from sympy.abc import _clash2
 from tabulate import tabulate
 from pathlib import Path
-from numpy import *
+
 
 logging.getLogger("numexpr").setLevel(logging.WARNING)
 # tabulate.PRESERVE_WHITESPACE = True
@@ -33,16 +23,12 @@ logging.getLogger("numexpr").setLevel(logging.WARNING)
 class R2utf:
     """convert repo-string to UTF8 calc"""
 
-    def __init__(self, strL: list, folderD: dict, tagD: dict):
-        """process rivt-string to UTF8 calc-string
+    def __init__(self, strL: list, folderD: dict, tagvalD: dict):
+        """_summary_
 
-        The RvR2utf class converts repo-strings to calc-strings.
-
-        Args:
-            strL (list): calc lines
-            folderD (dict): folder paths
-            cmdD (dict): command settings
-            sectD (dict): section settings
+        :param list strL: _description_
+        :param dict folderD: _description_
+        :param dict tagD: _description_
         """
 
         self.utfS = """"""  # utf calc string
@@ -52,12 +38,13 @@ class R2utf:
         self.valL = []  # value list
 
     def parseRutf(self, strL: list, cmdD: dict, cmdL: list, methL: list):
-        """parse rivt-string to UTF
+        """_summary_
 
-        Args:
-            cmdL (list): command list
-            methL (list): method list
-            tagL (list): tag list
+        :param list strL: _description_
+        :param dict cmdD: _description_
+        :param list cmdL: _description_
+        :param list methL: _description_
+        :return _type_: _description_
         """
         for uS in self.strL:
             if uS[0:2] == "##":
@@ -79,62 +66,7 @@ class R2utf:
 
         return self.calcS, self.setsectD
 
-    def search(self, rutfL):
-        """[summary]
-
-        Args:
-            rsL ([type]): [description]
-        """
-        a = 4
-
-    def project(self, rutfL):
-        b = 5
-
-    def attach(self, rutfL):
-        """[summary]
-
-        Args:
-            rsL ([type]): [description]
-        """
-        a = 4
-
-    def report(self, rutfL):
-        """skip info command for utf calcs
-
-        Command is executed only for docs in order to
-        separate protected information for shareable calcs.
-
-        Args:
-            rL (list): parameter list
-        """
-
-        """       
-        try:
-            filen1 = os.path.join(self.rpath, "reportmerge.txt")
-            print(filen1)
-            file1 = open(filen1, 'r')
-            mergelist = file1.readlines()
-            file1.close()
-            mergelist2 = mergelist[:]
-        except OSError:
-            print('< reportmerge.txt file not found in reprt folder >')
-            return
-        calnum1 = self.pdffile[0:5]
-        file2 = open(filen1, 'w')
-        newstr1 = 'c | ' + self.pdffile + ' | ' + self.calctitle
-        for itm1 in mergelist:
-            if calnum1 in itm1:
-                indx1 = mergelist2.index(itm1)
-                mergelist2[indx1] = newstr1
-                for j1 in mergelist2:
-                    file2.write(j1)
-                file2.close()
-                return
-        mergelist2.append("\n" + newstr1)
-        for j1 in mergelist2:
-            file2.write(j1)
-        file2.close()
-        return """
+    def utf1():
         pass
 
 
@@ -157,7 +89,7 @@ class R2rst:
         self.folderD = folderD
         self.tagD = tagD
 
-    def _parseRST(self, typeS: str, cmdL: list, methL: list, tagL: list):
+    def parseRrst(self, typeS: str, cmdL: list, methL: list, tagL: list):
         """parse rivt-string to reST
 
         Args:
@@ -183,7 +115,7 @@ class R2rst:
                     self._vtable(self.valL, hdrL, "rst", alignL, fltfmtS)
                     self.valL = []
                     self.restS += "\n\n"
-                    self.rivtD.update(locals())
+                    self.rivtvalD.update(locals())
                     continue
                 else:
                     # self.restS += "?x?vspace{7pt}"
@@ -230,144 +162,5 @@ class R2rst:
             if typeS != "table":  # skip table prnt
                 self.restS += uS.rstrip() + "\n"
 
-    def r_rst(self) -> str:
-        """parse repository string
-
-        Returns:
-             rstS (list): utf formatted calc-string (appended)
-             setsectD (dict): section settings
-        """
-
-        rcmdL = ["search", "keys", "info", "text", "table", "pdf"]
-        rmethL = [
-            self._rsearch,
-            self._rkeys,
-            self._rinfo,
-            self._itext,
-            self._itable,
-            self._rpdf,
-        ]
-
-        self._parseRST("repository", rcmdL, rmethL, rtagL)
-
-    def search(self, rsL):
-        a = 4
-
-    def project(self, rL):
-        """insert tables or text from csv, xlsx or txt file
-
-        Args:
-            rL (list): parameter list
-
-        Files are read from /docs/docfolder
-        The command is identical to itable except file is read from docs/info.
-
-        """
-        alignD = {"S": "", "D": "decimal",
-                  "C": "center", "R": "right", "L": "left"}
-
-        if len(rL) < 4:
-            rL += [""] * (4 - len(rL))  # pad parameters
-        rstS = ""
-        contentL = []
-        sumL = []
-        fileS = rL[1].strip()
-        tfileS = Path(self.folderD["dpath0"] / fileS)
-        extS = fileS.split(".")[1]
-        if extS == "csv":
-            with open(tfileS, "r") as csvfile:  # read csv file
-                readL = list(csv.reader(csvfile))
-        elif extS == "xlsx":
-            xDF = pd.read_excel(tfileS, header=None)
-            readL = xDF.values.tolist()
-        else:
-            return
-        incl_colL = list(range(len(readL[0])))
-        widthI = self.setcmdD["cwidthI"]
-        alignS = self.setcmdD["calignS"]
-        saS = alignD[alignS]
-        if rL[2].strip():
-            widthL = rL[2].split(",")  # new max col width
-            widthI = int(widthL[0].strip())
-            alignS = widthL[1].strip()
-            saS = alignD[alignS]  # new alignment
-            self.setcmdD.update({"cwidthI": widthI})
-            self.setcmdD.update({"calignS": alignS})
-        totalL = [""] * len(incl_colL)
-        if rL[3].strip():  # columns
-            if rL[3].strip() == "[:]":
-                totalL = [""] * len(incl_colL)
-            else:
-                incl_colL = eval(rL[3].strip())
-                totalL = [""] * len(incl_colL)
-        ttitleS = readL[0][0].strip() + " [t]_"
-        rstgS = self._tags(ttitleS, rtagL)
-        self.restS += rstgS.rstrip() + "\n\n"
-        for row in readL[1:]:
-            contentL.append([row[i] for i in incl_colL])
-        wcontentL = []
-        for rowL in contentL:
-            wrowL = []
-            for iS in rowL:
-                templist = textwrap.wrap(str(iS), int(widthI))
-                templist = [i.replace("""\\n""", """\n""") for i in templist]
-                wrowL.append("""\n""".join(templist))
-            wcontentL.append(wrowL)
-        sys.stdout.flush()
-        old_stdout = sys.stdout
-        output = StringIO()
-        output.write(
-            tabulate(
-                wcontentL,
-                tablefmt="rst",
-                headers="firstrow",
-                numalign="decimal",
-                stralign=saS,
-            )
-        )
-        rstS = output.getvalue()
-        sys.stdout = old_stdout
-
-        self.restS += rstS + "\n"
-
-    def attach(self, rsL):
-        b = 5
-
-    def report(self, rL):
-        """skip info command for utf calcs
-
-        Command is executed only for docs in order to
-        separate protected information for shareable calcs.
-
-        Args:
-            rL (list): parameter list
-        """
-
-        """       
-        try:
-            filen1 = os.path.join(self.rpath, "reportmerge.txt")
-            print(filen1)
-            file1 = open(filen1, 'r')
-            mergelist = file1.readlines()
-            file1.close()
-            mergelist2 = mergelist[:]
-        except OSError:
-            print('< reportmerge.txt file not found in reprt folder >')
-            return
-        calnum1 = self.pdffile[0:5]
-        file2 = open(filen1, 'w')
-        newstr1 = 'c | ' + self.pdffile + ' | ' + self.calctitle
-        for itm1 in mergelist:
-            if calnum1 in itm1:
-                indx1 = mergelist2.index(itm1)
-                mergelist2[indx1] = newstr1
-                for j1 in mergelist2:
-                    file2.write(j1)
-                file2.close()
-                return
-        mergelist2.append("\n" + newstr1)
-        for j1 in mergelist2:
-            file2.write(j1)
-        file2.close()
-        return """
+    def rst1():
         pass

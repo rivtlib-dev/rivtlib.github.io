@@ -12,16 +12,16 @@ def rvcmds(typeS: str):
         "github",
         "append",
         "table",
+        "text",
         "image1",
         "image2",
-        "text",
         "values",
         "list",
         "functions"
     ]
 
     cmdsetD = {
-        "R": [0, 1, 2, 3],
+        "R": [0, 1, 2, 3, 4, 5],
         "I": [4, 5, 6, 7],
         "V": [4, 5, 6, 7, 8, 9, 10, 11],
         "T": [4, 5, 6, 7]
@@ -429,3 +429,125 @@ def image_rst(self, iL: list):
 
     self.restS += rstS + "\n"
     time.sleep(1)
+
+
+def project(self, rL):
+    """insert tables or text from csv, xlsx or txt file
+
+    Args:
+        rL (list): parameter list
+
+    Files are read from /docs/docfolder
+    The command is identical to itable except file is read from docs/info.
+
+    """
+    alignD = {"S": "", "D": "decimal",
+              "C": "center", "R": "right", "L": "left"}
+
+    if len(rL) < 4:
+        rL += [""] * (4 - len(rL))  # pad parameters
+    rstS = ""
+    contentL = []
+    sumL = []
+    fileS = rL[1].strip()
+    tfileS = Path(self.folderD["dpath0"] / fileS)
+    extS = fileS.split(".")[1]
+    if extS == "csv":
+        with open(tfileS, "r") as csvfile:  # read csv file
+            readL = list(csv.reader(csvfile))
+    elif extS == "xlsx":
+        xDF = pd.read_excel(tfileS, header=None)
+        readL = xDF.values.tolist()
+    else:
+        return
+    incl_colL = list(range(len(readL[0])))
+    widthI = self.setcmdD["cwidthI"]
+    alignS = self.setcmdD["calignS"]
+    saS = alignD[alignS]
+    if rL[2].strip():
+        widthL = rL[2].split(",")  # new max col width
+        widthI = int(widthL[0].strip())
+        alignS = widthL[1].strip()
+        saS = alignD[alignS]  # new alignment
+        self.setcmdD.update({"cwidthI": widthI})
+        self.setcmdD.update({"calignS": alignS})
+    totalL = [""] * len(incl_colL)
+    if rL[3].strip():  # columns
+        if rL[3].strip() == "[:]":
+            totalL = [""] * len(incl_colL)
+        else:
+            incl_colL = eval(rL[3].strip())
+            totalL = [""] * len(incl_colL)
+    ttitleS = readL[0][0].strip() + " [t]_"
+    rstgS = self._tags(ttitleS, rtagL)
+    self.restS += rstgS.rstrip() + "\n\n"
+    for row in readL[1:]:
+        contentL.append([row[i] for i in incl_colL])
+    wcontentL = []
+    for rowL in contentL:
+        wrowL = []
+        for iS in rowL:
+            templist = textwrap.wrap(str(iS), int(widthI))
+            templist = [i.replace("""\\n""", """\n""") for i in templist]
+            wrowL.append("""\n""".join(templist))
+        wcontentL.append(wrowL)
+    sys.stdout.flush()
+    old_stdout = sys.stdout
+    output = StringIO()
+    output.write(
+        tabulate(
+            wcontentL,
+            tablefmt="rst",
+            headers="firstrow",
+            numalign="decimal",
+            stralign=saS,
+        )
+    )
+    rstS = output.getvalue()
+    sys.stdout = old_stdout
+
+    self.restS += rstS + "\n"
+
+
+def attach(self, rsL):
+    b = 5
+
+
+def report(self, rL):
+    """skip info command for utf calcs
+
+    Command is executed only for docs in order to
+    separate protected information for shareable calcs.
+
+    Args:
+        rL (list): parameter list
+    """
+
+    """       
+    try:
+        filen1 = os.path.join(self.rpath, "reportmerge.txt")
+        print(filen1)
+        file1 = open(filen1, 'r')
+        mergelist = file1.readlines()
+        file1.close()
+        mergelist2 = mergelist[:]
+    except OSError:
+        print('< reportmerge.txt file not found in reprt folder >')
+        return
+    calnum1 = self.pdffile[0:5]
+    file2 = open(filen1, 'w')
+    newstr1 = 'c | ' + self.pdffile + ' | ' + self.calctitle
+    for itm1 in mergelist:
+        if calnum1 in itm1:
+            indx1 = mergelist2.index(itm1)
+            mergelist2[indx1] = newstr1
+            for j1 in mergelist2:
+                file2.write(j1)
+            file2.close()
+            return
+    mergelist2.append("\n" + newstr1)
+    for j1 in mergelist2:
+        file2.write(j1)
+    file2.close()
+    return """
+    pass

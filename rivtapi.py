@@ -33,57 +33,58 @@
     clarity, brevity and general platform reading and writing and processing.
     It runs on any platform that supports Python.
 
-    *rivtCalc* is the open source software stack for writing, sharing and
-    publishing engineering calculations. The stack includes *Python*, Python
-    science and engineering libraries, *VSCode* and extensions, *LaTeX (TexLive)*, *GitHub* and
-    *rivt*.
-
     The *rivtText* superset includes commands, tags and single line Python
     statements. Commands read or write files into and out of the calculation
     and start the line with ||. Tags format text and end a line with _[tag].
     Block tags start the block with [[tag]] and end with an [[end]] tag.
 
+    *rivtDoc* is the complete open source software stack for writing, sharing
+    and publishing engineering documents and calculations. The stack includes
+    *Python*, Python science and engineering libraries, *VSCode* and
+    extensions, *LaTeX (TexLive)*, *GitHub*, and *rivt*, and is available
+    through installers.
+
     *rivt* command parameters are separated by |. In the summary below, user
     selections are separated by semi-colons for single value selections and
     commas for list settings. The first line of each method specifies
     formatting and labeling parameters for that calc or rivt-string. The method
-    label can be a section or paragraph title, or just a label for bookmarking
-    and searching (see tags for syntax).
+    label can be a section or paragraph title, or used only for bookmarking and
+    searching (see tags for syntax).
 
     ======= ===================================================================
      name              method, settings, snippet prefix
     ======= ===================================================================
 
-    repo      rv.R("""title | docs_folder;default | utf;pdf;html;inter | page#
+    repo    rv.R("""label | folder;default | title | utf;pdf;html;int | width#n
     rvr
-                  ||text ||table ||github ||project
+                 ||text ||table ||github ||project
 
-                  """)
+                 """)
 
-    insert    rv.I("""label | docs_folder;default
+    insert  rv.I("""label | docs_folder;default
     rvi
-                  ||text ||table ||image ||image2 ||attach
+                 ||text ||table ||image ||image2 ||attach
 
-                  """)
+                 """)
 
-    values    rv.V("""label | docs_folder;default | sub;nosub | save;nosave
+    values  rv.V("""label | docs_folder;default | sub;nosub | save;nosave
     rvv
-                  = ||values ||lists ||import
+                 = ||values ||lists ||import
 
-                  ||text ||table ||image ||image2 ||attach
+                 ||text ||table ||image ||image2 ||attach
 
-                  """)
+                 """)
 
-    tables    rv.T("""label | docs_folder;default | show;noshow
+    tables  rv.T("""label | docs_folder;default | show;noshow
     rvt
-                  Python simple statements
-                  (any valid expression or statment on a single line)
+                 Python simple statements
+                 (any valid expression or statment on a single line)
 
-                  ||text ||table ||image ||image2 ||attach
+                 ||text ||table ||image ||image2 ||attach
 
-                  """)
+                 """)
 
-    exclude  rv.X("""  any text
+    exclude rv.X("""  any text
 
                  any commands
 
@@ -218,7 +219,7 @@
 
 import rivt.rivtapi as rv
 
-rv.R("""Example Calculation | inter | 1
+rv.R("""section label | Example Calculation | inter | 1
 
     The Repo method (short for repository or report) is the first method in a
     calc and specifies repository settings and output formats. It also typically
@@ -280,7 +281,7 @@ rv.I("""Insert method summary | default
 
     """)
 
-rv.V("""Value method summary | nosub | save | default
+rv.V("""Value method summary | folder; default | nosub | save
 
     The Value method assigns values to variables and evaluates equations. The
     first setting is the section title. The sub;nosub setting specifies whether
@@ -368,71 +369,55 @@ import rivt.tags as tagM
 import rivt.commands as cmdM
 
 try:
-    #print("argv1", sys.argv[1])
-    calcfileS = sys.argv[1]
+    # print("argv1", sys.argv[1])
+    docfileS = sys.argv[1]
 except:
-    print("argv0", sys.argv[0])
-    calcfileS = sys.argv[0]
+    # print("argv0", sys.argv[0])
+    docfileS = sys.argv[0]
 if ".py" not in calcfileS:
     import __main__
-    calcfileS = __main__.__file__
+    docfileS = __main__.__file__
     # print(dir(__main__))
 
-calcfileP = Path(calcfileS)
-cwdP = Path(os.getcwd())
 # files and paths
-calcbaseS = calcfileS.split(".py")[0]  # calc file basename
-calcfolderP = Path(os.path.dirname(calcfileP))
-calcP = calcfolderP.parent  # calc folder path
-rivtprojectP = calcfolderP.parent.parent  # rivt project folder path
-filefolderS = "".join(("f", calcbaseS[1:3]))
+docfileP = Path(docfileS)
+cwdP = Path(os.getcwd())
+docbaseS = docfileP.name  # calc file basename
+docfolderP = Path(os.path.dirname(docfileP))
+docP = docfolderP.parent  # calc folder path
+rivtprojectP = docfolderP.parent.parent  # rivt project folder path
+docbakP = docfolderP / ".".join((docbaseS, "bak"))
+descripS = docbaseS.split("_")[1]
+docconfigP = docP / "rv0000"
 
-calcbakP = calcfolderP / ".".join((calcbaseS, "bak"))
-cdescripS = calcbaseS.split("_")[1]
-calcconfigP = calcP / "c0000_config"
-fileP = rivtprojectP / "file"  # docs folder path
-filefolderP = fileP / filefolderS  # doc folder path
-fileconfigP = fileP / "f00"  # doc config folder
+binfolderS = "b" + str(docbaseS[1:3])
+binaryP = rivtprojectP / "binary"  # binary folder path
+binfolderP = binaryP / binfolderS  # binary source folder
+binconfigP = binaryP / "b00"  # file config folder
 
 siteP = rivtprojectP / "site"  # site folder path
 reportP = rivtprojectP / "reports"  # report folder path
 rivtcalcP = Path("rivt.rivtapi.py").parent  # rivt package path
-
-print("INFO     calc folder: ", calcfolderP)
-print("INFO     file folder: ", filefolderP)
-print("INFO     calc backup: ", calcbakP)
-
-# check that calc and doc directories exist
-if calcfileP.exists():
-    print("INFO     calc file found: ", calcfileP)
-else:
-    print("INFO     calc file not found: ", calcfileP)
-
-if filefolderP.exists():
-    print("INFO     file folder found: ", filefolderP)
-else:
-    print("INFO     file folder not found: ", filefolderP)
-
-# initialize dictionaries
-utfS = """"""  # accumulating string in utf
-rstS = """"""  # accumulating string in reST
-valuexS = """"""  # accumulating values string for export
-rivtD = {}  # all computed values dictionary
-foldersD = {}  # folders dictionary
-
-
-for var in ["calcfileP", "filefolderP", "calcconfigP", "fileconfigP"]:
-    foldersD[var] = eval(var)
-
-tagsD = {
-    "fnumS": calcbaseS[0:5],  # file number
-    "dnumS": calcbaseS[1:3],  # division number
-    "snumS": calcbaseS[3:5],  # subdivision number
-    "cnumS": calcbaseS[1:5],  # calc number
-    "secnameS": "",  # section title
-    "secnumS": "",  # section number
-    "sepI": 80,  # utf separator width
-    "widthI": 78,  # utf body width
+# initialize strings
+utfS = """"""  # utf accumulating string
+rstS = """"""  # reST accumulating string
+valuexS = """"""  # export values accumulating string
+# initialize dicts
+rivtvalD = {}  # all persistent computed values
+foldersD = {}  # folders
+# folder names
+for item in ["docfileP", "docconfigP", "binaryfolderP", "binconfigP", "reportP", "siteP"]:
+    foldersD[item] = eval(item)
+# tag settings
+tagcountD = {
+    "divnumI": int(docbaseS[1:3]),  # division number
+    "subnumI": int(docbaseS[3:5]),  # subdivision number
+    "documI": int(docbaseS[1:5]),  # doc number
+    "doctitleS": "rivt Document",  # doc title
+    "methodtitleS": "rivt section",  # section title
+    "secnumI": 0,  # section number
+    "secwidthI": 80,  # utf section width
+    "widthI": 77,  # utf body width
     "equI": 0,  # equation number
     "tableI": 0,  # table number
     "fignumI": 0,  # figure number
@@ -440,7 +425,8 @@ tagsD = {
     "countI": 0,  # footnote counter
     "decvI": 2,  # decimals for variables
     "decrI": 2,  # decimals for results
-    "subsvarB": False,
+    "subsvalsB": False,  # substitute values
+    "savevalsB": False  # save values to file
 }
 # run backups and logging
 logging.basicConfig(
@@ -456,135 +442,177 @@ formatter = logging.Formatter("%(levelname)-8s %(message)s")
 logconsole.setFormatter(formatter)
 logging.getLogger("").addHandler(logconsole)
 warnings.filterwarnings("ignore")
-cshortP = Path(*Path(calcfolderP).parts[-2:])
-lshortP = Path(*Path(fileconfigP).parts[-2:])
-logging.info(f"""calc short path: {cshortP}""")
+dshortP = Path(*Path(docfolderP).parts[-2:])
+bshortP = Path(*Path(binfolderP).parts[-2:])
+lshortP = Path(*Path(binconfigP).parts[-2:])
+# check that calc and file directories exist
+if docfileP.exists():
+    logging.info(f"""calc file path found: {docfileP}""")
+else:
+    logging.info(f"""calc file path not found: {docfileP}""")
+
+if binfolderP.exists:
+    logging.info(f"""default binary folder path found: {binfolderP}""")
+else:
+    logging.info(f"""default binary folder path not found: {binfolderP}""")
+logging.info(f"""calc short path: {dshortP}""")
 logging.info(f"""log short path: {lshortP}""")
-with open(calcfileP, "r") as f2:
+
+# read calc file and write backup
+with open(docfileP, "r") as f2:
     rivtS = f2.read()
-with open(calcbakP, "w") as f3:
+    rivtL = f2.readlines()
+with open(docbakP, "w") as f3:
     f3.write(rivtS)
-logging.info("""calc read and backup written to calc folder""")
+logging.info("""calc read and backed up to calc folder""")
 print(" ")
+# set some defaults
+typesL = ["inter", "utf", "pdf", "html"]
+rest_typeL = ["pdf", "html"]
+typeS = "utf"
+methodS = "R"
+genrestB = False
+
+
+def method_heading(riv1L: list, methodS: str):
+    """format method headings - first line of string
+
+    Args:
+        hdrS (str): section heading line
+    """
+
+    global utfS, rstS, pubS, tagcountD, genrestB
+
+    if riv1L[0][0:2] == "--":
+        utfhS = "\n"
+    elif riv1L[0][0:1] == "-":
+        headS = riv1L[0][1:]
+        utfhS = "\n" + headS + "\n"
+    else:
+        snumI = tagcountD["secnumI"]+1
+        tagcountD["secnumI"] = snumI
+        widthI = tagcountD["secnumI"]
+        docnumS = str("["+tagcountD["docnumI"]+"]")
+        methodS = tagcountD["methodtitleS"]
+        compnumS = docnumS + " - " + str(snumI)
+        headS = " " + methodS + compnumS.rjust(widthI - len(methodS))
+        bordrS = tagcountD["secwidthI"] * "_"
+        utfhS = "\n" + bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
+        utfS += utfhS
+        print(utfS)
+
+    if genrestB:
+        # draw horizontal line
+        rsthS = (
+            ".. raw:: latex"
+            + "\n\n"
+            + "   ?x?vspace{.2in}"
+            + "   ?x?textbf{"
+            + methodS
+            + "}"
+            + "   ?x?hfill?x?textbf{SECTION "
+            + compnumS
+            + "}\n"
+            + "   ?x?newline"
+            + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
+            + "\n\n"
+        )
+        rstS += rsthS
 
 
 def R(rvrS: str):
-    """processes a Repo string
+    """processes a Repo string and set output type
 
-    R('''title | utf;pdf;html;inter | page#
-
-        See user manual for command and tag syntax
-
-        ||text, ||table, ||github ||project ||append
-
-        ''')
+    R('''section lable | Calc title | utf;pdf;html;inter | page#
+        Repo string commands.
+        ||text, ||table, ||github, ||project, ||append, ||report
+    ''')
 
     :param rvrS: triple quoted repo string
     :type rvrS: str
     :return: formatted utf or reST string
     :rtype: str
-
     """
 
-    global utfS, rstS, rivtD, foldersD, tagL, cmdL, restB
+    global utfS, rstS, valuexS, pubS, rivtvalD, foldersD, tagcountD, genrestB,
     rvr1L = [None]*3
-    rvr1L[0] = "Calculation"
-    rvr1L[1] = "utf"
+    rvr1L[0] = "rivt Document"
+    rvr1L[1] = pubS = "utf"
     rvr1L[2] = "1"
-    restB = False
+    methodS = "R"
     cmdL = cmdM.rvcmds("R")     # returns list of valid commands
     tagL = tagM.rvtags("R")     # returns list of valid tags
-    rvrL = rvrS.split("\n")     # list of rivt string lines
-    rvr1L = [i.strip() for i in rvrL[0].split("|")]    # first line parameters
-    typesL = ["inter", "utf", "pdf", "html"]
+    rvL = rvrS.split("\n")     # list of rivt string lines
+    rv1L = [i.strip() for i in rvL[0].split("|")]    # first line parameters
 
-    inter = """
-    rC = rM.R2utf()
-    utfS += rC.utf1(rvr1L)
-    for i in rvr1L[1:]:
+    # get_heading
+    method_heading(rv1L, methodS)
+
+    rvC = rM.R2utf()
+    utfS += rvC.utf1(rvr1L)
+    for i in rivtL[1:]:
         rS = rC.parseRutf(i)
         utfS += rS
-    print(utfS)"""
 
-    utf = """
-    rC = rM.R2utf()
-    utfS += rC.utf1(rvr1L)
-    for i in rvr1L[1:]:
-        rS = rC.parseRutf(i)
-        utfS += rS
-    print(utfS)    
+    intercmdS = """print(utfS)"""
+
+    utfcmdS = """
     utfoutP = Path(calcfileP / "README.txt")
     with open(utfoutP, "wb") as f1:
         f1.write(utfS.encode("UTF-8"))
     logging.info("utf calc written, program complete")
+    print(utfS)
     print("", flush=True)
-    os._exit(1)
-    """
+    os.exit(1)"""
 
+    pdfcmdS = """
+    rcalc = init(rvS)
+    rcalcS, _setsectD = rcalc.r_rst()
+    rstcalcS += rcalcS
+    print("exit")
+    os.exit(1)"""
+
+    htmlcmdS = """
+    rcalc = init(rvS)
+    rcalcS, setsectD = rcalc.r_rst()
+    rstcalcS += rcalcS
+    os.exit(1)"""
+
+    # generate reST file if needed
+    if rvrL[1] in rest_typeL:
+        rC = rM.parserest()
+        genrstB = True
+        wrtM.gen_rst(rivtL)
+
+    # execute command string
     if rvr1L[1] in typesL:
-        exec(rvr1L[1])
-
-    elif rvrL[1] == "pdf" or rvrL[1] == "html":
-        restB = True
-        gen_rst(cmdS, doctypeS, stylefileS, calctitleS, startpageS)
-        _rstB = True
-        if rvrL[1] == "pdf":
-            rcalc = init(rvS)
-            rcalcS, _setsectD = rcalc.r_rst()
-            rstcalcS += rcalcS
-            # clean temp files
-            fileL = [
-                Path(fileconfigP, ".".join([calcbaseS, "pdf"])),
-                Path(fileconfigP, ".".join([calcbaseS, "html"])),
-                Path(fileconfigP, ".".join([calcbaseS, "rst"])),
-                Path(fileconfigP, ".".join([calcbaseS, "tex"])),
-                Path(fileconfigP, ".".join([calcbaseS, ".aux"])),
-                Path(fileconfigP, ".".join([calcbaseS, ".out"])),
-                Path(fileconfigP, ".".join([calcbaseS, ".fls"])),
-                Path(fileconfigP, ".".join([calcbaseS, ".fdb_latexmk"])),
-            ]
-            os.chdir(fileconfigP)
-            tmpS = os.getcwd()
-            if tmpS == str(fileconfigP):
-                for f in fileL:
-                    try:
-                        os.remove(f)
-                    except:
-                        pass
-                time.sleep(1)
-                print("INFO: temporary Tex files deleted \n", flush=True)
-            print("exit")
-            os.exit(1)
-        if rvrL[1] == "html":
-            rcalc = init(rvS)
-            rcalcS, _setsectD = rcalc.r_rst()
-            rstcalcS += rcalcS
+        method_heading(typeS, rv1L)
+        cmdS = rvr1L[1]+"cmdS"
+        exec(cmdS)
 
 
-def I(rvS: str):
+def I(rviS: str):
     """processes an Insert string
 
     I('''section label | file folder; default
 
-        See user manual for command and tag syntax
+        Insert string commands.
+        ||text, ||table, ||image1, ||image2
+    ''')
 
-        ||text, ||table, ||github ||project ||append
-
-        ''')
-
-    :param rvrS: triple quoted repo string
-    :type rvrS: str
+    :param rviS: triple quoted insert string
+    :type rviS: str
     :return: formatted utf or reST string
     :rtype: str
-
     """
 
-    global utfS, rstS, rivtD, foldersD, tagsD, restB
-    cmdL = cmdM.rvcmds("I")  # returns list of valid commands
-    rvL = rvS.split("\n")  # line list of rivt string
+    global utfS, rstS, valuexS, rivtvalD, foldersD, tagcountD, genrstB
+    cmdL = cmdM.rvcmds("I")     # returns list of valid commands
+    tagL = tagM.rvtags("I")     # returns list of valid tags
+    rviL = rviS.split("\n")     # list of rivt string lines
     iC = iM._I2utf()
 
-    if doctypeS == "inter":
+    if typeS == "inter":
         utfS += _tagM.tags(rvL[0])
         for i in rvL[1:]:
             utL = _tagM.tags(i, False)
@@ -596,13 +624,21 @@ def I(rvS: str):
         print(utfS)
 
 
-def V(rvS: str):
-    """Value-string
+def V(rvvS: str):
+    """processes a Value string
 
-    Args:
-        rvS: rivt-string
+    V('''section label | file folder; default | sub; nosub | save; nosave
+
+        Value string commands.
+        ||text, ||table, ||image1, ||image2, || values, || list, || functions
+    ''')
+
+    :param rvvS: triple quoted values string
+    :type rvvS: str
+    :return: formatted utf or reST string
+    :rtype: str
     """
-    global utfS, rstS, rivtD, foldersD, tagsD, restB
+    global utfS, rstS, valuexS, rivtvalD, foldersD, tagcountD, genrstB
     cmdL = cmdM.rvcmds("V")  # returns list of valid commands
     rvL = rvS.split("\n")  # line list of rivt string
     vC = vM._V2utf()
@@ -619,15 +655,23 @@ def V(rvS: str):
         print(utfS)
 
 
-def T(rvS: str):
-    """table-string to utf-string
+def T(rvtS: str):
+    """processes a Tables string
 
-    Args:
-       rvS: rivt-string
+    T('''section label | file folder; default
+        Table string commands
+        ||text, ||table, ||image1, ||image2,
+    ''')
+
+    :param rvtS: triple quoted insert string
+    :type rvtS: str
+    :return: formatted utf or reST string
+    :rtype: str
+
     """
-    global utfS, rstS, rivtD, foldersD, tagsD, restB
+    global utfS, rstS, rivtvalD, foldersD, tagL, cmdL, typeS, genrstB
     cmdL = cmdM.rvcmds("T")  # returns list of valid commands
-    rvL = rvS.split("\n")  # line list of rivt string
+    rvL = rvtS.split("\n")  # line list of rivt string
     tC = tM._T2utf()
 
     if doctypeS == "term":
@@ -642,10 +686,16 @@ def T(rvS: str):
         print(utfS)
 
 
-def X(rvS: str):
-    """skip processing of rv-string
+def X(rvxS: str):
+    """processes an Exclude string
 
-    :param: rvS rivt-string
+    X('''
+
+        An exclude string can be any triple quoted string. It is used for review and debugging. To skip a rivt string processing, change R,I,V,T to X.
+    ''')
+
+    :param rvxS: triple quoted string
+    :type rvxS: str
     """
 
     pass

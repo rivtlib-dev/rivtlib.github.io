@@ -46,12 +46,12 @@ document types include HTML, PDF and UTF8 from the same **rivtText** file.
 The program design follows three principles:
 
 - **Don't reinvent the wheel** - make it easy to create, share and reuse documents
-- **Maximize integration** - leverage existing programs using standard interfaces
-- **Respect people's time** - prioritize clear legibility, efficient editing and intuitive use.
+- **Play well with others** - integrate with existing programs using standard interfaces
+- **Respect people's time** - prioritize clarity, efficiency and intuition.
 
-The API uses file and folder conventions to simplify formatting, navigation and
-code folding. Text, PDF and HTML outputs are coordinated and assembled into
-collated reports. The folder (shown bracketed) structure is shown below.
+The API uses fixed file and folder conventions for input and output to simplify
+formatting, navigation and code folding. rivt folders (names shown in brackets)
+have the following structure:
 
 
 **rivt Folder Structure**
@@ -62,17 +62,17 @@ collated reports. The folder (shown bracketed) structure is shown below.
             - units.py
             - config.py
         - **[rv0101*_user_calc_division_name*]**  (folder report division name)
-            - *c0101*_calc_name.py (calc file name) 
+            - *r0101*_calc_name.py (calc file name) 
             - README.txt (text calc output file)
             - chart.csv (text file used in calc)
             - functions.py (function file used in calc)
         - **[rv0102*_user_calc_division_name*]** 
-            - *c0102*_calc_name.py
+            - *r0102*_calc_name.py
             - README.txt
             - chart1.csv 
             - functions1.py 
          - **[rv0201*_user_calc_division_name*]**
-            - c0201_calc_name.py
+            - r0201_calc_name.py
             - README.txt
             - paragraph.txt
    - **[docs]**
@@ -90,7 +90,7 @@ collated reports. The folder (shown bracketed) structure is shown below.
         - r0201_floor.pdf
         - r0202_roof.pdf
         - report.pdf
-    - **[sites]** (html calc output files)
+    - **[sites]** (html output files)
         - **[resources]**
             - image1.png
             - image2.png
@@ -100,24 +100,25 @@ collated reports. The folder (shown bracketed) structure is shown below.
         - s0201_gravity.html
         - s0202_wind.html
 
-The four top-level folder names ("calcs", "docs", "reports" and "sites") are
-required. Other file names are partially user determined, using the specified
-prefixes. The API is designed so that only files in the text folder are
-uploaded for version control and sharing. They constitute the essential core of
-the calculation - the text, equations, functions and tables. Files in the binary
-folder are not shared and are typically binary input files such as images, pdf
-attachments and proprietary data (e.g. client contact information and costs).
+The four top-level folder names ("text", "binary", "reports" and "sites") are
+required. Other file names are partially user determined, using the specified,
+numbered prefixes. The API is designed so that only files in the text folder
+are uploaded for version control and sharing. They constitute the essential
+core of the calculation - the text, equations, functions and tables. Files in
+the binary folder are not typically not shared and include files such as images
+(may have copyrights), pdf attachments and proprietary data (e.g. client
+contact information and costs).
 
-A rivt file is a Python file that imports rivt and calls functions on rivt
-strings. The file has the form rddnn_filename.py where dd is the division
-file and its supporting files are stored in a separate folder. The text folder
-includes all plain text input files and the output file in the form of a
-README.txt. The binary folder includes all of the binary inputs (i.e. images) and
-private, undistributable files.
+A rivt file is a Python file that imports the rivt package and calls functions
+on rivt strings. The file has the form **rddss_filename.py** where dd is the
+division number and ss the subdivision number. Together they make up the unique
+doc number.The **text** folder includes each rivt file and its supporting plain
+text input files in a unique folder. The folder also includes the document
+output as a README.txt that is displayed and searchable on github. The binary
+folder includes all of the binary and protected inputs for its division number. 
 
 A rivt project is started by copying the folder structure from a similar
-existing project. Files are free-form plain textthat may be edited in any text
-editor. To process a file the command below is run in the folder containing the
-file.
-
-python -m rivt
+existing project. Files are free-form plain text that may be edited with any
+editor. To process a rivt file the command **python -m rivt** is run from the
+command shell in the folder containing the file. It may also be processed in
+and IDE. Refer to the [rivt user manual.](https://rivtmanual.net)

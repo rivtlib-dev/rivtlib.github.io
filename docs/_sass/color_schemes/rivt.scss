@@ -56,9 +56,9 @@ $red-000: #f77e7e !default;
 $red-100: #f96e65 !default;
 $red-200: #e94c4c !default;
 $red-300: #dd2e2e !default;
-$body-background-color:$grey-lt-100;
+$body-background-color: $grey-lt-100;
 $sidebar-color: $white;
-$search-background-color: $white; 
+$search-background-color: $white;
 $table-background-color: $grey-lt-000;
 $code-background-color: $grey-lt-000;
 $feedback-color: darken($sidebar-color, 3%);
@@ -86,7 +86,7 @@ $spacers: (
   sp-8: $spacing-unit * 3,
   sp-9: $spacing-unit * 3.5,
   sp-10: $spacing-unit * 4,
-) !default;
+  ) !default;
 $sp-1: map-get($spacers, sp-1) !default; // 0.25 rem == 4px
 $sp-2: map-get($spacers, sp-2) !default; // 0.5  rem == 8px
 $sp-3: map-get($spacers, sp-3) !default; // 0.75 rem == 12px
@@ -113,7 +113,7 @@ $nav-width-md: 250px;
 $nav-list-item-height: $sp-8;
 $nav-list-item-height-sm: $sp-9;
 $nav-list-expander-right: true;
-$content-width: 800px !default;
+$content-width: 1000px;
 $header-height: 90px !default;
 $search-results-width: $content-width - $nav-width !default;
 $transition-duration: 400ms;
@@ -126,4 +126,4 @@ $media-queries: (
   md: $content-width,
   lg: $content-width + $nav-width,
   xl: 1400px,
-) !default;
+  ) !default;

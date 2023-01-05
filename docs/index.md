@@ -36,12 +36,11 @@ layout: default
 ## **rivt** Overview
 
 **rivt** is a Python package providing an API for *rivtText*, a highly readable
-and shareable calculation markup language. It wraps and extends
-reStructuredText to simplify production of calculation documents. The API uses
-file and folder conventions to simplify formatting, navigation and code
-folding. Calculation reports are divided into easily modified components that
-are assembled into collated calculation reports. Folders are shown bracketed
-and notes are in parenthesis.
+and shareable markup language designed for calculations. It implements a markup
+language - **rivtText** - that wraps and extends reStructuredText (reST). The
+API uses file and folder conventions to simplify formatting, navigation and
+code folding. Text, PDF or HTML output are easily organized and assembled into
+collated reports. The folder structure (shown bracketed) is shown below.
 
 **rivt Folder Structure**
 

@@ -4,7 +4,7 @@ layout: default
 
 ---------------------------
 
-<p style="text-align:center; font-weight:bold"> share docs and calcs anywhere and anytime </p>
+<p style="text-align:center; font-weight:bold"> share docs and calcs anywhere anytime </p>
 <table>
 <colgroup>
   <col width="20%" />

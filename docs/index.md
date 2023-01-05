@@ -36,11 +36,23 @@ layout: default
 ## **rivt** Overview
 
 **rivt** is a Python package providing an API for *rivtText*, a highly readable
-and shareable markup language designed for calculations. It implements a markup
-language - **rivtText** - that wraps and extends reStructuredText (reST). The
+and shareable markup language designed in particular for calculation documents.
+It implements a markup language - **rivtText** - that wraps and extends
+[reStructuredText (reST).][https://docutils.sourceforge.io/rst.html]
+
+The design of the program follows three principles with regard to document
+production:
+
+    - Don't reinvent the wheel
+    - Respect people's time and attention
+    - Simple integration with other tools
+
+
+The
 API uses file and folder conventions to simplify formatting, navigation and
 code folding. Text, PDF or HTML output are easily organized and assembled into
 collated reports. The folder structure (shown bracketed) is shown below.
+
 
 **rivt Folder Structure**
 
@@ -92,18 +104,20 @@ The four top-level folder names ("calcs", "docs", "reports" and "sites") are
 required. Other file names are partially user determined, using the specified
 prefixes. The API is designed so that only files in the text folder are
 uploaded for version control and sharing. They constitute the essential core of
-the calculation - the text, equations, functions and tables. Files in the docs
-folder are not shared and are typically binary files such as images, pdf
+the calculation - the text, equations, functions and tables. Files in the binary
+folder are not shared and are typically binary input files such as images, pdf
 attachments and proprietary data (e.g. client contact information and costs).
 
-A rivt calc file is a Python file that imports rivt and calls functions on rivt
-strings. The file has the form cddnn_filename.py where dd is the division
-number, ss is the subdivision number and ddnn is the calc number. Each calc
-file and its supporting files are stored in a separate folder. The calcs folder
-includes all plain text input files and the output calc file in the form of a
-README.txt. The docs folder includes all of the binary inputs (i.e. images) and copyright or private files. 
+A rivt file is a Python file that imports rivt and calls functions on rivt
+strings. The file has the form rddnn_filename.py where dd is the division
+file and its supporting files are stored in a separate folder. The text folder
+includes all plain text input files and the output file in the form of a
+README.txt. The binary folder includes all of the binary inputs (i.e. images) and
+private, undistributable files.
 
 A rivt project is started by copying the folder structure from a similar
-existing project.  Rivt-strings are free-form plain text strings enclosed in triple quotes that may be edited in any text editor. To process a calc the command below is run in the folder containing the file.
+existing project. Files are free-form plain textthat may be edited in any text
+editor. To process a file the command below is run in the folder containing the
+file.
 
 python -m rivt

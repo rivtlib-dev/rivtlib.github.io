@@ -4,8 +4,6 @@ layout: default
 
 ---------------------------
 
-------------------------------------------
-
 <p style="text-align:center; font-weight:bold"> share docs and calcs anywhere and anytime </p>
 <table>
 <colgroup>
@@ -35,10 +33,6 @@ layout: default
 </tbody>
 </table>
 
------------------------------------------
-
----------------------------
-### share docs and calcs anywhere, anytime
 ---------------------------
 
 ## **rivt** Overview

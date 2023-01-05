@@ -2,8 +2,6 @@
 layout: default
 ---
 
----------------------------
-
 <p style="text-align:center; font-weight:bold"> share docs and calcs anywhere anytime </p>
 <table>
 <colgroup>

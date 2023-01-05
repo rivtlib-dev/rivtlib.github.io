@@ -14,7 +14,9 @@ import html2text as htm
 from io import StringIO
 from tabulate import tabulate
 from pathlib import Path
-
+import rivt.commands as cmdM
+import rivt.tags as tagM
+import rivt.config
 
 logging.getLogger("numexpr").setLevel(logging.WARNING)
 # tabulate.PRESERVE_WHITESPACE = True
@@ -46,6 +48,10 @@ class R2utf:
         :param list methL: _description_
         :return _type_: _description_
         """
+        # get valid tags and commands
+        tagL = tagM.rvtags(typeS)
+
+        # get valid commands
         for uS in self.strL:
             if uS[0:2] == "##":
                 continue  # remove review comment

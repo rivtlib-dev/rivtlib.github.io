@@ -374,7 +374,7 @@ try:
 except:
     # print("argv0", sys.argv[0])
     docfileS = sys.argv[0]
-if ".py" not in calcfileS:
+if ".py" not in docfileS:
     import __main__
     docfileS = __main__.__file__
     # print(dir(__main__))
@@ -406,13 +406,13 @@ valuexS = """"""  # export values accumulating string
 rivtvalD = {}  # all persistent computed values
 foldersD = {}  # folders
 # folder names
-for item in ["docfileP", "docconfigP", "binaryfolderP", "binconfigP", "reportP", "siteP"]:
+for item in ["docfileP", "docconfigP", "binfolderP", "binconfigP", "reportP", "siteP"]:
     foldersD[item] = eval(item)
 # tag settings
 tagcountD = {
-    "divnumI": int(docbaseS[1:3]),  # division number
-    "subnumI": int(docbaseS[3:5]),  # subdivision number
-    "documI": int(docbaseS[1:5]),  # doc number
+    "divnumS": docbaseS[1:3],  # division number
+    "subnumS": docbaseS[3:5],  # subdivision number
+    "docnumS": docbaseS[1:5],  # doc number
     "doctitleS": "rivt Document",  # doc title
     "methodtitleS": "rivt section",  # section title
     "secnumI": 0,  # section number
@@ -433,7 +433,7 @@ logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
     datefmt="%m-%d %H:%M",
-    filename=fileconfigP / "error_log.txt",
+    filename=docconfigP / "error_log.txt",
     filemode="w",
 )
 logconsole = logging.StreamHandler()
@@ -447,15 +447,15 @@ bshortP = Path(*Path(binfolderP).parts[-2:])
 lshortP = Path(*Path(binconfigP).parts[-2:])
 # check that calc and file directories exist
 if docfileP.exists():
-    logging.info(f"""calc file path found: {docfileP}""")
+    logging.info(f"""doc path : {docfileP}""")
 else:
-    logging.info(f"""calc file path not found: {docfileP}""")
+    logging.info(f"""doc path not found: {docfileP}""")
 
 if binfolderP.exists:
-    logging.info(f"""default binary folder path found: {binfolderP}""")
+    logging.info(f"""default binary path found: {binfolderP}""")
 else:
-    logging.info(f"""default binary folder path not found: {binfolderP}""")
-logging.info(f"""calc short path: {dshortP}""")
+    logging.info(f"""default binary path not found: {binfolderP}""")
+logging.info(f"""doc short path: {dshortP}""")
 logging.info(f"""log short path: {lshortP}""")
 
 # read calc file and write backup
@@ -491,15 +491,15 @@ def method_heading(riv1L: list, methodS: str):
     else:
         snumI = tagcountD["secnumI"]+1
         tagcountD["secnumI"] = snumI
-        widthI = tagcountD["secnumI"]
-        docnumS = str("["+tagcountD["docnumI"]+"]")
+        docnumS = "[" + tagcountD["docnumS"]+"]"
         methodS = tagcountD["methodtitleS"]
         compnumS = docnumS + " - " + str(snumI)
+        widthI = tagcountD["widthI"]
         headS = " " + methodS + compnumS.rjust(widthI - len(methodS))
         bordrS = tagcountD["secwidthI"] * "_"
         utfhS = "\n" + bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
         utfS += utfhS
-        print(utfS)
+        print(utfhS)
 
     if genrestB:
         # draw horizontal line
@@ -521,7 +521,7 @@ def method_heading(riv1L: list, methodS: str):
 
 
 def R(rvrS: str):
-    """processes a Repo string and set output type
+    """processes a Repo string and sets output type
 
     R('''section lable | Calc title | utf;pdf;html;inter | page#
         Repo string commands.
@@ -534,11 +534,14 @@ def R(rvrS: str):
     :rtype: str
     """
 
-    global utfS, rstS, valuexS, pubS, rivtvalD, foldersD, tagcountD, genrestB,
+    global utfS, rstS, valuexS, pubS, rivtvalD, foldersD, tagcountD, genrestB
+
     rvr1L = [None]*3
-    rvr1L[0] = "rivt Document"
-    rvr1L[1] = pubS = "utf"
-    rvr1L[2] = "1"
+    rvr1L[0] = "rivt section"
+    rvr1L[1] = "default"
+    rvr1L[2] = "rivt Document"
+    rvr1L[3] = pubS = "utf"
+    rvr1L[4] = "80#1"
     methodS = "R"
     cmdL = cmdM.rvcmds("R")     # returns list of valid commands
     tagL = tagM.rvtags("R")     # returns list of valid tags

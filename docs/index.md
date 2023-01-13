@@ -34,36 +34,35 @@ layout: default
 
 ## **rivt** Overview
 
-**rivt** is a Python package providing an API for **rivtText**, a highly
-readable and shareable document markup language designed for calculations. It
-implements a markup language - **rivtText** - that wraps and extends
-[reStructuredText (reST).](https://docutils.sourceforge.io/rst.html). Ouptut
-document types include HTML, PDF and UTF8 from the same **rivtText** file.
+**rivt** is a Python package providing an API for **rivtText**, a simple,
+readable document markup language designed for calculations. **rivtText** wraps
+and extends [reStructuredText(reST).](https://docutils.sourceforge.io/rst.html). 
+Ouptut documents include UTF8, HTML and PDF from the same **rivtText** file.
 
 The program design follows three principles:
 
-- **Don't reinvent the wheel** - make it easy to create, share and reuse documents
-- **Play well with others** - integrate with existing programs using standard interfaces
-- **Respect people's time** - prioritize clarity, efficiency and intuition.
+- **Maximize Cut and Paste** - make it easy to include content from anywhere.
+- **Integrate** - connect with external programs using standard interfaces.
+- **Respect time** - intuitive, clear, easy to remember program conventions.
 
-The API uses fixed file and folder conventions for input and output to simplify
-formatting, navigation and code folding. rivt folders (names shown in brackets)
-have the following structure:
+The **rivt** API uses fixed file and folder conventions for input and output to
+simplify formatting, navigation, and report assembly. Folder names are shown in
+brackets. Required folder and file name prefixes are shown italicized.
 
 
 **rivt Folder Structure**
 
-- **[rivt*_user_project_name*]** (user project_name)
+- **[*rivt*_user_project_name]** (user project_name)
     - **[calcs]**
-        - **[rv00*_user_config_name*]** (calc configuration data)
+        - **[*rv00*_user_config_name]** (calc configuration data)
             - units.py
             - config.py
-        - **[rv0101*_user_calc_division_name*]**  (folder report division name)
+        - **[*rv0101*_user_calc_division_name]**  (folder report division name)
             - *r0101*_calc_name.py (calc file name) 
             - README.txt (text calc output file)
             - chart.csv (text file used in calc)
             - functions.py (function file used in calc)
-        - **[rv0102*_user_calc_division_name*]** 
+        - **[*rv0102*_user_calc_division_name]** 
             - *r0102*_calc_name.py
             - README.txt
             - chart1.csv 

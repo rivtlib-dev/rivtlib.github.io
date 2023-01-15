@@ -26,13 +26,13 @@ layout: default
 
 ---------------------------
 
-<p style="text-align:center; font-weight:bold"> [rivt source code on GitHub](https://rivtcode.net) </p>
+[rivt source code on GitHub](https://rivtcode.net)
 
 ## **rivt** Overview
 
 **rivt** is a Python package providing an API for **rivtText**, a simple,
 readable document markup language designed for calculations. **rivtText** wraps
-and extends [reStructuredText(reST).](https://docutils.sourceforge.io/rst.html). 
+and extends [reStructuredText(reST)](https://docutils.sourceforge.io/rst.html). 
 Ouptut documents include UTF8, HTML and PDF from the same **rivtText** file.
 
 The program design follows three principles:

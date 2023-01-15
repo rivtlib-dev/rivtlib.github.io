@@ -35,11 +35,11 @@ readable document markup language designed for calculations. **rivtText** wraps
 and extends [reStructuredText(reST).](https://docutils.sourceforge.io/rst.html). 
 Ouptut documents include UTF8, HTML and PDF from the same **rivtText** file.
 
-The program design follows three principles:
+The program design prioritizes three principles:
 
-- **Maximize Cut and Paste** - calculation docs are plain text
-- **Integrate easily** - flexible Python libraries connect with external data
-- **Respect your bandwidth** - rivtText syntax defined by less than three dozen intuitive terms
+- **Cut and Paste** - calculation docs are plain text
+- **Integration** - Python libraries connect broadly with numerous data sources
+- **Legibility** - rivtText syntax is defined by less than 30 intuitive terms
 
 The **rivt** API uses fixed file and folder conventions for input and output to
 simplify formatting, navigation, and report assembly. Folder names are shown in

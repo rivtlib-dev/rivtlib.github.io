@@ -39,7 +39,7 @@ The program design follows three principles:
 
 - **Maximize Cut and Paste** - calculation docs are plain text
 - **Integrate easily** - flexible Python libraries connect with external data
-- **Respect your time** - rivtText syntax defined by less than three dozen terms
+- **Respect your bandwidth** - rivtText syntax defined by less than three dozen intuitive terms
 
 The **rivt** API uses fixed file and folder conventions for input and output to
 simplify formatting, navigation, and report assembly. Folder names are shown in

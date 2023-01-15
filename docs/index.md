@@ -37,7 +37,7 @@ Ouptut documents include UTF8, HTML and PDF from the same **rivtText** file.
 
 The program design prioritizes three principles:
 
-- **Cut and Paste** - calculation docs are plain text
+- **Cut and Paste** - docs are plain text
 - **Integration** - Python libraries connect broadly with numerous data sources
 - **Legibility** - rivtText syntax is defined by less than 30 intuitive terms
 

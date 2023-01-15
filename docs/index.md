@@ -37,9 +37,9 @@ Ouptut documents include UTF8, HTML and PDF from the same **rivtText** file.
 
 The program design follows three principles:
 
-- **Maximize Cut and Paste** - Calculations are text
-- **Integrate easily** - Python libraries connect with external programs and data
-- **Respect your time** - Only two dozen intuitive syntax terms in the language
+- **Maximize Cut and Paste** - calculation docs are plain text
+- **Integrate easily** - flexible Python libraries connect with external data
+- **Respect your time** - rivtText syntax defined by less than three dozen terms
 
 The **rivt** API uses fixed file and folder conventions for input and output to
 simplify formatting, navigation, and report assembly. Folder names are shown in

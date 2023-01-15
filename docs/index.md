@@ -2,7 +2,6 @@
 layout: default
 ---
 
-<p style="text-align:center; font-weight:bold"> Share Docs and Calcs Anywhere, Anytime </p>
 <table>
 <colgroup>
   <col width="30%" />
@@ -10,19 +9,20 @@ layout: default
 </colgroup>
 <thead>
 <tr class="header">
-  <th style="text-align: center;background-color:#959396;border-top:0px none #FFFFFF;border-bottom:0px none #FFFFFF"><a href="https://rivtdocs.net"><b>rivtDocs (installers)</b></a></th>
-  <th style="text-align: center;border-top:0px none #FFFFFF;border-bottom:0px none #FFFFFF"><a href="https://rivtcode.net"><b>rivt (source code)</b></a></th>
-  <th style="text-align: center;border-top:0px none #FFFFFF;border-bottom:0px none #FFFFFF"><a href="https://github.com/search?q=rivt+in%3Areadme"><b>rivtSearch (GitHub)</b></a></th>
+  <th style="text-align: center;border:none"><a href="https://rivtdocs.net"><b>rivtDocs (installers)</b></a></th>
+  <th style="text-align: center;border:none;background-color:#959396"><a href="https://rivtcode.net"><b>rivt (source code)</b></a></th>
+  <th style="text-align: center;border:none"><a href="https://rivtsearch.net"><b>rivtSearch (GitHub)</b></a></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:center;border-top:0px none #FFFFFF;border-bottom:0px none #FFFFFF"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs.png" width="75" height="55" /></a></td>
-  <td style="text-align: center;border-top:0px none #FFFFFF;border-bottom:0px none #FFFFFF"><a href="https://rivtcode.net"><img src="./assets/img/rivt01.png" width="75" height="55" /></a></td>
-  <td style="text-align: center;border-top:0px none #FFFFFF;border-bottom:0px none #FFFFFF"><a href="https://github.com/search?q=rivt+in%3Areadme"><img src="./assets/img/search01.png" width="70" height="60" /></a></td>
+  <td style="text-align:center;border:none"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs.png" width="85" height="60" style="border:2px solid #5c5962"/></a></td>
+  <td style="text-align: center;border:none"><a href="https://rivtcode.net"><img src="./assets/img/rivt01.png" width="80" height="60" style="border:2px solid #5c5962"/></a></td>
+  <td style="text-align: center;border:none"><a href="https://rivtsearch.net"><img src="./assets/img/search01.png" width="85" height="65" style="border:2px solid #5c5962"/></a></td>
 </tr>
 </tbody>
 </table>
+<p style="text-align:center; font-weight:bold"> Share Docs and Calcs Anywhere, Anytime </p>
 
 ---------------------------
 

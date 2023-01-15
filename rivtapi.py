@@ -131,22 +131,24 @@
       rivt tag syntax                       description: snippet prefix
     =====================  =====================================================
 
-                            Line Tags
-    First line formats:
-    """label | ....               label as section title, with autonumber
-    """-label | ....              Single hyphen denotes paragraph title
-    """--label | ....             Double hyphen denotes reference label only
+                            Line Tags (one tag per line)
+    First line format:
+    """label | ....               No hyphen denotes section title, autonumber
+    """-label | ....              Single hyphen denotes paragraph heading
+    """--label | ....             Double hyphen denotes non-printing label
 
-    Element formats: 
+    Element format: 
     caption _[f]                  figure caption, autonumber: _f
     title _[t]                    table title, autonumber: _t
     sympy eq _[s]                 format sympy equation: _s
     latex eq _[x]                 format LaTeX equation: _x
     label _[e]                    equation label, autonumber: _e
     
-    General formats:    
+    General format:    
     text _[p]                   paragraph heading: _p
     text _[l]                   literal text: _l
+    text _[i]                   italic: _i
+    text _[b]                   bold: _b
     text _[r]                   right justify line of text: _r
     text _[c]                   center line of text: _c
     text _[-]                   horizontal line: _-
@@ -161,7 +163,6 @@
     Values method:
     a = n | unit, alt | descrip   tag is =, units and description: _v
     a <= b + c | unit, alt | n,n  tag is <=, units and decimals: _=
-
 
                             Block tags
     Repo method:

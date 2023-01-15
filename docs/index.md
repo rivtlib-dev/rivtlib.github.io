@@ -26,6 +26,8 @@ layout: default
 
 ---------------------------
 
+<p style="text-align:center; font-weight:bold"> [rivt source code on GitHub](https://rivtcode.net) </p>
+
 ## **rivt** Overview
 
 **rivt** is a Python package providing an API for **rivtText**, a simple,

@@ -55,7 +55,7 @@
      name              method, settings, snippet prefix
     ======= ===================================================================
 
-    repo    rv.R("""label | folder;default | title | utf;pdf;html;int | width#n
+    repo    rv.R("""label | folder;default | utf;pdf;html;int | width#n
     rvr
                  ||text ||table ||github ||project
 
@@ -131,37 +131,43 @@
       rivt tag syntax                       description: snippet prefix
     =====================  =====================================================
 
-                tags for rivt-string first line settings
-
+                            Line Tags
+    First line formats:
     """label | ....               label as section title, with autonumber
     """-label | ....              Single hyphen denotes paragraph title
     """--label | ....             Double hyphen denotes reference label only
 
-                line tags for all methods:
-
-    label _[e]{2,2}               equation label, decimals, autonumber: _e
+    Element formats: 
     caption _[f]                  figure caption, autonumber: _f
     title _[t]                    table title, autonumber: _t
-    heading _[p]                  paragraph heading: _p
     sympy eq _[s]                 format sympy equation: _s
     latex eq _[x]                 format LaTeX equation: _x
-    text _[l]                     literal text: _l
-    text _[r]                     right justify line of text: _r
-    text _[c]                     center line of text: _c
-    text _[-]                     horizontal line: _-
-    text _[new]                   new PDF page: _n
-    text _[#]                     footnote, autonumber: _#
-    footnote _[foot]              footnote description: _o
-    _[url]{address, label}        http://xyz, link label: _u
-    _[lnk]{label}                 section, paragraph, title, caption: _k
+    label _[e]                    equation label, autonumber: _e
+    
+    General formats:    
+    text _[p]                   paragraph heading: _p
+    text _[l]                   literal text: _l
+    text _[r]                   right justify line of text: _r
+    text _[c]                   center line of text: _c
+    text _[-]                   horizontal line: _-
+    text _[#]                   footnote, autonumber: _#
+    text _[foot]                footnote description: _o
 
-                line tags that apply only to the Values method:
+    Link formats:
+    _[url]{address, label}      http://xyz, link label: _u
+    _[lnk]{label}               label is section, paragraph, title, caption: _k
+    _[new]                      new PDF page: _n
 
-    a = b + c | unit, alt         = sign is tag for evaluation : _=
-    a = n | unit, alt | descrip   units and description: _v
+    Values method:
+    a = n | unit, alt | descrip   tag is =, units and description: _v
+    a <= b + c | unit, alt | n,n  tag is <=, units and decimals: _=
 
-                block tags for all methods:
 
+                            Block tags
+    Repo method:
+    _[[read]]                     write README.txt to *text* folder: _read
+
+    General formats:
     _[[r]]                        right justify text block: _[[r
     _[[c]]                        center text block: _[[c
     _[[lit]]                      literal block: _[[l
@@ -169,11 +175,8 @@
     _[[texm]]                     LaTeX math block: _[[m
     _[[end]]                      terminates block: _[[e
 
-                    block tag that applies only to the Repo method:
 
-    _[[read]]                     write to README.txt in *calc* folder: _read
-
-    Additional  VSCode shortcut keys and: snippet prefix
+    Additional  VSCode shortcut navigation keeys keys and [snippet prefix]
 
     ================== =========================================================
     shortcut                  description
@@ -184,7 +187,7 @@
     ctl+alt+f            fold code - rivt file
     ctl+alt+a            fold code - all levels
     ctl+alt+t            toggle local fold at cursor
-    ctl+alt+g            search accross GitHub rivt README: sgh
+    ctl+alt+g            search accross GitHub rivt README [sgh]
     ctl+alt+s            open URL under cursor in browser
     ctl+alt+-            insert general tag snippet
 
@@ -201,17 +204,17 @@
 
     [date]               insert date: dat
     [time]               insert time: tim
-    [track]              insert time spent in VSCode: tra
+    [track]              insert time spent in VSCode [tra]
 
     By convention the first line of a rivt file is *import rivtapi as rv*. The
-    first method is the Repo method R(rs) which occurs once, followed by any of
-    the other four methods in any number or order. R(rs) sets options for
-    repository, report and calc output formats.
+    import statement must precede Repo method R(rs) which occurs once and is
+    the first method. It may be followed by any of the other four methods in
+    any number or order. R(rs) sets options for repository, report and calc
+    output formats.
 
-    Formatting conventions follow the Python formatter *pep8*. Method names
-    start in column 1 and all subsequent lines are indented 4 spaces. This
-    layout supports section folding and navigation, bookmarking and improved
-    legibility.
+    File format conventions follow the Python formatter *pep8*. Method names
+    start in column 1 and all subsequent lines are indented 4 spaces to support
+    section folding and navigation, bookmarking and improved legibility.
 
     ============================================================================
     rivt calculation example
@@ -219,7 +222,7 @@
 
 import rivt.rivtapi as rv
 
-rv.R("""section label | Example Calculation | inter | 1
+rv.R("""section label | inter | 80#1
 
     The Repo method (short for repository or report) is the first method in a
     calc and specifies repository settings and output formats. It also typically
@@ -296,8 +299,8 @@ rv.V("""Value method summary | folder; default | nosub | save
     a1 = 10.1    | unit, alt | description
     d1 = 12.1    | unit, alt | description
 
-    Example equation tag - Area of circle  _[2,2]
-    a1 = 3.14*(d1/2)^2 | unit, alt
+    Example equation tag - Area of circle  
+    a1 <= 3.14*(d1/2)^2 | unit, alt | 2,2
 
     An equation tag; labels it with a description, auto numbers it, and
     specifies the printed decimal places in the equation and results. The

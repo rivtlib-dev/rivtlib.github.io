@@ -26,7 +26,7 @@ layout: default
 
 ---------------------------
 
-[<b>rivt source code on GitHub</b>](https://github.com/rivtDocs/rivt)
+[<b>[rivt source code on GitHub]</b>](https://github.com/rivtDocs/rivt)
 
 ## **rivt** Overview
 

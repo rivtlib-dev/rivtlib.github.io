@@ -23,9 +23,12 @@ layout: default
 </tr>
 </tbody>
 </table>
-<p style="text-align:center; font-weight:bold"> Share Docs and Calcs Anywhere, Anytime </p>
 
 ---------------------------
+
+# Share Docs and Calcs Anywhere, Anytime 
+
+--------------------------
 
 [<b>[rivt source code on GitHub]</b>](https://github.com/rivtDocs/rivt)
 

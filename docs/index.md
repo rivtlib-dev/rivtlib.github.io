@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<table width="75%">
+<table style="width:75%">
 <colgroup>
   <col width="25%" />
   <col width="25%" />

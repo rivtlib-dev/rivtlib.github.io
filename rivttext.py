@@ -221,7 +221,7 @@
     rivt calculation example
     ============================================================================
 
-import rivt.rivtapi as rv
+import rivt.rivttext as rv
 
 rv.R("""section label | inter | 80#1
 

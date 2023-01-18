@@ -25,9 +25,7 @@ layout: default
 </table>
 
 ---------------------------
-
-## Share Docs and Calcs Anyone Can Edit and Check
-
+## Reuse Docs and Calcs Anywhere
 --------------------------
 
 [<b>[rivt source code on GitHub]</b>](https://github.com/rivtDocs/rivt)
@@ -41,9 +39,9 @@ Ouptut documents include UTF8, HTML and PDF from the same **rivtText** file.
 
 The program design prioritizes three principles:
 
-- **Cut and Paste** - docs are plain text
-- **Integration** - Python libraries connect broadly with numerous data sources
-- **Legibility** - rivtText syntax is defined by less than 30 intuitive terms
+- **Cut and Paste Anything** - **rivt** docs are plain text
+- **Integration** - **rivt** is built on Python which connects almost everywhere
+- **Legibility** - **rivtText** uses less than 30 intuitive terms and commands
 
 The **rivt** API uses fixed file and folder conventions for input and output to
 simplify formatting, navigation, and report assembly. Folder names are shown in

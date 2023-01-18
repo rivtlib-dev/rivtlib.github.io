@@ -373,10 +373,10 @@ import rivt.tags as tagM
 import rivt.commands as cmdM
 
 try:
-    # print("argv1", sys.argv[1])
+    print("argv1", sys.argv[1])
     docfileS = sys.argv[1]
 except:
-    # print("argv0", sys.argv[0])
+    print("argv0", sys.argv[0])
     docfileS = sys.argv[0]
 if ".py" not in docfileS:
     import __main__
@@ -386,7 +386,8 @@ if ".py" not in docfileS:
 # files and paths
 docfileP = Path(docfileS)
 cwdP = Path(os.getcwd())
-docbaseS = docfileP.name  # calc file basename
+docbaseS = docfileP.name  # file basename
+print(docbaseS)
 docfolderP = Path(os.path.dirname(docfileP))
 docP = docfolderP.parent  # calc folder path
 rivtprojectP = docfolderP.parent.parent  # rivt project folder path

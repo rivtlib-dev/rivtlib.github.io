@@ -1,0 +1,5 @@
+01-18 15:37 root         INFO     rivt file path : rivt_test01\text\rv0101_div\r0101_test.py
+01-18 15:37 root         INFO     binary path: rivt_test01\binary\b01
+01-18 15:37 root         INFO     doc short path: text\rv0101_div
+01-18 15:37 root         INFO     log short path: binary\b00
+01-18 15:37 root         INFO     rivt file read and backed up to text folder

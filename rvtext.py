@@ -373,12 +373,14 @@ import rivt.tags as tagM
 import rivt.commands as cmdM
 
 try:
-    print("argv1", sys.argv[1])
     docfileS = sys.argv[1]
 except:
-    print("argv0", sys.argv[0])
     docfileS = sys.argv[0]
-if ".py" not in docfileS:
+if Path(docfileS).name == "rvtext.py":
+    docfileS = "./rivt_test01/text/rv0101_div/r0101_test.py"
+elif Path(docfileS).name == "-o":
+    docfileS = "./rivt_test01/text/rv0101_div/r0101_test.py"
+elif ".py" not in docfileS:
     import __main__
     docfileS = __main__.__file__
     # print(dir(__main__))
@@ -387,18 +389,18 @@ if ".py" not in docfileS:
 docfileP = Path(docfileS)
 cwdP = Path(os.getcwd())
 docbaseS = docfileP.name  # file basename
-print(docbaseS)
 docfolderP = Path(os.path.dirname(docfileP))
 docP = docfolderP.parent  # calc folder path
+
 rivtprojectP = docfolderP.parent.parent  # rivt project folder path
 docbakP = docfolderP / ".".join((docbaseS, "bak"))
 descripS = docbaseS.split("_")[1]
-docconfigP = docP / "rv0000"
+docconfigP = docP / "rv0000"  # doc config
 
 binfolderS = "b" + str(docbaseS[1:3])
 binaryP = rivtprojectP / "binary"  # binary folder path
 binfolderP = binaryP / binfolderS  # binary source folder
-binconfigP = binaryP / "b00"  # file config folder
+binconfigP = binaryP / "b00"  # log and report config folder
 
 siteP = rivtprojectP / "site"  # site folder path
 reportP = rivtprojectP / "reports"  # report folder path
@@ -433,12 +435,12 @@ tagcountD = {
     "subsvalsB": False,  # substitute values
     "savevalsB": False  # save values to file
 }
-# run backups and logging
+# logging
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
     datefmt="%m-%d %H:%M",
-    filename=docconfigP / "error_log.txt",
+    filename=binconfigP / "error_log.txt",
     filemode="w",
 )
 logconsole = logging.StreamHandler()
@@ -463,7 +465,7 @@ else:
 logging.info(f"""doc short path: {dshortP}""")
 logging.info(f"""log short path: {lshortP}""")
 
-# read calc file and write backup
+# backup doc file
 with open(docfileP, "r") as f2:
     rivtS = f2.read()
     rivtL = f2.readlines()

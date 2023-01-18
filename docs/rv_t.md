@@ -75,36 +75,6 @@ None
 
                 tmethL = [self._itext, self._itable, self._iimage]
 
-                ttagL = [
-
-                    "[page]_",
-
-                    "[line]_",
-
-                    "[link]_",
-
-                    "[literal]_",
-
-                    "[foot]_",
-
-                    "[s]",
-
-                    "[x]",
-
-                    "[r]_",
-
-                    "[c]_",
-
-                    "[e]_",
-
-                    "[t]_",
-
-                    "[f]_",
-
-                    "[#]_",
-
-                ]
-
         
 
                 self._parseUTF("table", tcmdL, tmethL, ttagL)
@@ -170,36 +140,6 @@ Return:
                 tcmdL = ["text", "table", "image"]
 
                 tmethL = [self._itext, self._itable, self._iimage]
-
-                ttagL = [
-
-                    "[page]_",
-
-                    "[line]_",
-
-                    "[link]_",
-
-                    "[literal]_",
-
-                    "[foot]_",
-
-                    "[s]",
-
-                    "[x]",
-
-                    "[r]_",
-
-                    "[c]_",
-
-                    "[e]_",
-
-                    "[t]_",
-
-                    "[f]_",
-
-                    "[#]_",
-
-                ]
 
         
 

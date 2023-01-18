@@ -26,7 +26,7 @@ layout: default
 
 ---------------------------
 
-# Share Docs and Calcs Anywhere, Anytime 
+# Share Docs and Calcs Anyone Can Edit and Check
 
 --------------------------
 

@@ -25,7 +25,7 @@ layout: default
 </table>
 
 ---------------------------
-## Reuse Docs and Calcs Anywhere
+### Reuse Docs and Calcs Anywhere
 --------------------------
 
 [<b>[rivt source code on GitHub]</b>](https://github.com/rivtDocs/rivt)

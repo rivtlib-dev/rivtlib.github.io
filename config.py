@@ -1,4 +1,4 @@
 #! python
-"""global variables for rivtapi"""
+"""global variables for rvtext"""
 
 global utfS, rstS, valuexS, rivtvalD, foldersD, tagcountD, genrestB, pubS

@@ -1,7 +1,7 @@
 #! python
-'''rivtapi
+'''rvtext
 
-    *rivtapi* is a module in *rivt*, a Python package designed to facilitate
+    *rvtext* is a module in *rivt*, a Python package designed to facilitate
     sharing and templating engineering calculation documents. It is imported at
     the beginning of a rivt calculation and includes four methods:
 
@@ -207,7 +207,7 @@
     [time]               insert time: tim
     [track]              insert time spent in VSCode [tra]
 
-    By convention the first line of a rivt file is *import rivtapi as rv*. The
+    By convention the first line of a rivt file is *import rvtext as rv*. The
     import statement must precede Repo method R(rs) which occurs once and is
     the first method. It may be followed by any of the other four methods in
     any number or order. R(rs) sets options for repository, report and calc
@@ -221,7 +221,7 @@
     rivt calculation example
     ============================================================================
 
-import rivt.rivttext as rv
+import rivt.rvtext as rv
 
 rv.R("""section label | inter | 80#1
 
@@ -401,7 +401,7 @@ binconfigP = binaryP / "b00"  # file config folder
 
 siteP = rivtprojectP / "site"  # site folder path
 reportP = rivtprojectP / "reports"  # report folder path
-rivtcalcP = Path("rivt.rivtapi.py").parent  # rivt package path
+rivtcalcP = Path("rivt.rvtext.py").parent  # rivt package path
 # initialize strings
 utfS = """"""  # utf accumulating string
 rstS = """"""  # reST accumulating string

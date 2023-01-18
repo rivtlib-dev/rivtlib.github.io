@@ -1,4 +1,4 @@
-import rivt.rivtapi as rv
+import rivt.rvtext as rv
 
 rv.R("""calc title | utf | 1
     

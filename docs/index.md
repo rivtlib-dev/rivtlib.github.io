@@ -110,7 +110,7 @@ binary files such as images, pdf attachments and proprietary data (e.g. client
 contact information and costs). This folder and file structure makes it easy to
 share and assert version control on the primary calculation inputs. 
 
-A rivt file is a Python file that imports rivtapi and calls one of four
+A rivt file is a Python file that imports the rivt API (rivttext) and calls one of four
 functions on rivt-strings. Rivt-strings are free-form plain text strings
 enclosed in triple quotes that include commands and tags defining the
 calculation and formatting. rvddnn_docname.py is the file name where dd is the
@@ -118,4 +118,4 @@ division number, nn is the subdivision number and ddnn is the document number.
 The text folder includes all of the plain text input files and output doc
 files.
 
-Refer to the [rivt user manual.](https://rivtmanual.net)
+Refer to the [rivtDocs user manual.](https://rivtmanual.net)

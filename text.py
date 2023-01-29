@@ -1,7 +1,7 @@
 #! python
-'''rvtext
+'''text
 
-    *rvtext* is a module in *rivt*, a Python package designed to facilitate
+    *text* is a module in *rivt*, a Python package designed to facilitate
     sharing and templating engineering calculation documents. It is imported at
     the beginning of a rivt calculation and includes four methods:
 
@@ -55,7 +55,7 @@
      name              method, settings, snippet prefix
     ======= ===================================================================
 
-    repo    rv.R("""label | folder;default | utf;pdf;html;int | width#n
+    repo    rv.R("""label | folder;default | int;utf;pdf;html;both | width#n
     rvr
                  ||text ||table ||github ||project
 
@@ -106,6 +106,9 @@
     || append | file_name | ./docfolder; default / resize;default      R
         app      .pdf; .txt | pdf folder / rescale to page size
 
+    || readme                                                          R
+    || end       define text block for README file in project folder     
+    
     || list | file_name  | [:];[x:y]                                      V
         lis       .csv;.syk;.txt;.py | rows to import
 
@@ -131,44 +134,43 @@
       rivt tag syntax                       description: snippet prefix
     =====================  =====================================================
 
-                            Line Tags (one tag per line)
-    First line format:
+                                  Line Tags (one tag per line)
+    First line formats:
     """label | ....               No hyphen denotes section title, autonumber
     """-label | ....              Single hyphen denotes paragraph heading
     """--label | ....             Double hyphen denotes non-printing label
 
-    Element format: 
+    Element formats: 
     caption _[f]                  figure caption, autonumber: _f
     title _[t]                    table title, autonumber: _t
     sympy eq _[s]                 format sympy equation: _s
     latex eq _[x]                 format LaTeX equation: _x
     label _[e]                    equation label, autonumber: _e
     
-    General format:    
-    text _[p]                   paragraph heading: _p
-    text _[l]                   literal text: _l
-    text _[i]                   italic: _i
-    text _[b]                   bold: _b
-    text _[r]                   right justify line of text: _r
-    text _[c]                   center line of text: _c
-    text _[-]                   horizontal line: _-
-    text _[#]                   footnote, autonumber: _#
-    text _[foot]                footnote description: _o
+    Text formats:    
+    text _[p]                     paragraph heading: _p
+    text _[l]                     literal text: _l
+    text _[i]                     italic: _i
+    text _[b]                     bold: _b
+    text _[r]                     right justify line of text: _r
+    text _[c]                     center line of text: _c
+    text _[-]                     horizontal line: _-
+    text _[#]                     footnote, autonumber: _#
+    text _[foot]                  footnote description: _o
 
     Link formats:
-    _[url]{address, label}      http://xyz, link label: _u
-    _[lnk]{label}               label is section, paragraph, title, caption: _k
-    _[new]                      new PDF page: _n
+    _[url]{address, label}        http://xyz, link label: _u
+    _[lnk]{label}                 section, paragraph, title, caption: _k
+    _[new]                        new PDF page: _n
+    _[date]                       insert date
+    _[time]                       insert time
 
     Values method:
     a = n | unit, alt | descrip   tag is =, units and description: _v
     a <= b + c | unit, alt | n,n  tag is <=, units and decimals: _=
 
-                            Block tags
-    Repo method:
-    _[[read]]                     write README.txt to *text* folder: _read
-
-    General formats:
+                                  Block tags - text between tag and _[[end]]
+    Text formats:
     _[[r]]                        right justify text block: _[[r
     _[[c]]                        center text block: _[[c
     _[[lit]]                      literal block: _[[l
@@ -177,7 +179,7 @@
     _[[end]]                      terminates block: _[[e
 
 
-    Additional  VSCode shortcut navigation keeys keys and [snippet prefix]
+    Additional VSCode shortcut navigation keys and snippet [prefix]
 
     ================== =========================================================
     shortcut                  description
@@ -188,49 +190,48 @@
     ctl+alt+f            fold code - rivt file
     ctl+alt+a            fold code - all levels
     ctl+alt+t            toggle local fold at cursor
-    ctl+alt+g            search accross GitHub rivt README [sgh]
+    ctl+alt+g            search all GitHub rivt READMEs
     ctl+alt+s            open URL under cursor in browser
-    ctl+alt+-            insert general tag snippet
+    ctl+alt+9            insert date
+    ctl+alt+8            insert time
 
-    ctl+8                toggle spell check
+    ctl+8                toggle explorer sort order
+    ctl+9                toggle spell check
     ctl+.                select correct spelling under cursor
-
     ctl+0                focus explorer
     ctl+1                focus editor 1
     ctl+2                focus editor 2
-    ctl+9                focus bookmark pane
 
     alt+q                wrap paragraph with hard line feeds
 
-
-    [date]               insert date: dat
-    [time]               insert time: tim
-    [track]              insert time spent in VSCode [tra]
-
-    By convention the first line of a rivt file is *import rvtext as rv*. The
-    import statement must precede Repo method R(rs) which occurs once and is
+    By convention the first line of a rivt file is *import rivt.text as rv*. The
+    import statement must precede the Repo method R(rs) which occurs once and is
     the first method. It may be followed by any of the other four methods in
     any number or order. R(rs) sets options for repository, report and calc
     output formats.
 
     File format conventions follow the Python formatter *pep8*. Method names
-    start in column 1 and all subsequent lines are indented 4 spaces to support
+    start in column 1. All other lines are indented 4 spaces to support
     section folding and navigation, bookmarking and improved legibility.
 
     ============================================================================
-    rivt calculation example
+    rivt calculation example with command examples
     ============================================================================
 
-import rivt.rvtext as rv
+import rivt.text as rv
 
-rv.R("""section label | inter | 80#1
+rv.R("""Introduction | inter | 80#1
 
+    || readme
     The Repo method (short for repository or report) is the first method in a
-    calc and specifies repository settings and output formats. It also typically
-    includes a calculation summary.
+    calc and specifies repository settings and general output formats. It also
+    typically includes a calculation summary that is written out to a README file.
 
     The setting line specifies the method, paragraph or section label, the calc
     title, the processing type and the starting page number for the output.
+    || end
+
+    The ||readme command defines the text block for the README file written to the project level folder.
 
     The ||github command specifies settings for updating a public rivt repo.
 
@@ -355,13 +356,8 @@ rv.X("""skip-string - can be anything.
 
 import os
 import sys
-import subprocess
-import time
 import logging
 import warnings
-import shutil
-import fnmatch
-import numpy as np
 from pathlib import Path
 from collections import deque
 import rivt.rv_r as rM
@@ -397,10 +393,10 @@ docbakP = docfolderP / ".".join((docbaseS, "bak"))
 descripS = docbaseS.split("_")[1]
 docconfigP = docP / "rv0000"  # doc config
 
-binfolderS = "b" + str(docbaseS[1:3])
-binaryP = rivtprojectP / "binary"  # binary folder path
-binfolderP = binaryP / binfolderS  # binary source folder
-binconfigP = binaryP / "b00"  # log and report config folder
+resourceS = "r" + str(docbaseS[1:3])
+resourceP = rivtprojectP / "resource"  # binary folder path
+resourcefolderP = resourceP / resourceS  # a binary source folder
+resourceconfigP = resourceP / "r00"  # log and report config folder
 
 siteP = rivtprojectP / "site"  # site folder path
 reportP = rivtprojectP / "reports"  # report folder path
@@ -440,7 +436,7 @@ logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
     datefmt="%m-%d %H:%M",
-    filename=binconfigP / "error_log.txt",
+    filename=resourceconfigP / "error_log.txt",
     filemode="w",
 )
 logconsole = logging.StreamHandler()
@@ -450,20 +446,20 @@ logconsole.setFormatter(formatter)
 logging.getLogger("").addHandler(logconsole)
 warnings.filterwarnings("ignore")
 dshortP = Path(*Path(docfolderP).parts[-2:])
-bshortP = Path(*Path(binfolderP).parts[-2:])
-lshortP = Path(*Path(binconfigP).parts[-2:])
+bshortP = Path(*Path(resourcefolderP).parts[-2:])
+lshortP = Path(*Path(resourceconfigP).parts[-2:])
 # check that calc and file directories exist
 if docfileP.exists():
     logging.info(f"""rivt file path : {docfileP}""")
 else:
     logging.info(f"""rivt file path not found: {docfileP}""")
 
-if binfolderP.exists:
-    logging.info(f"""binary path: {binfolderP}""")
+if resourcefolderP.exists:
+    logging.info(f"""resource path: {resourcefolderP}""")
 else:
-    logging.info(f"""binary path not found: {binfolderP}""")
-logging.info(f"""doc short path: {dshortP}""")
-logging.info(f"""log short path: {lshortP}""")
+    logging.info(f"""resource path not found: {resourcefolderP}""")
+logging.info(f"""text folder short path: {dshortP}""")
+logging.info(f"""log forlder short path: {lshortP}""")
 
 # backup doc file
 with open(docfileP, "r") as f2:
@@ -474,7 +470,7 @@ with open(docbakP, "w") as f3:
 logging.info("""rivt file read and backed up to text folder""")
 print(" ")
 # set some defaults
-typesL = ["inter", "utf", "pdf", "html"]
+typeL = ["inter", "utf", "pdf", "html", "both"]
 rest_typeL = ["pdf", "html"]
 typeS = "utf"
 methodS = "R"

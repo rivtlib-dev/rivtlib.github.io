@@ -48,6 +48,23 @@ def rvtags(typeS: str):
     return eval(str(tagD[typeS]))
 
 
+def refs(self, objnumI: int, typeS: str) -> str:
+    """reference label for equations, tables and figures
+
+    Args:
+        objnumI (int): equation, table or figure section number
+        typeS (str): label type
+
+    Returns:
+        refS (str): reference label
+    """
+
+    objnumS = str(objnumI).zfill(2)
+    cnumS = str(self.sectD["cnumS"])
+
+    return typeS + cnumS + "." + objnumS
+
+
 def e_utf(self) -> tuple:
     """parse eval-string
 

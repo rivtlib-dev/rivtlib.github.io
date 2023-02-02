@@ -610,7 +610,6 @@ class R2rst:
         ]
 
         self._parseRST("insert", icmdL, imethL, itagL)
-
         return self.restS, self.setsectD, self.setcmdD
 
     def v_rst(self) -> tuple:

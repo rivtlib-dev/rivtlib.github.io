@@ -222,7 +222,6 @@ import rivt.text as rv
 
 rv.R("""Introduction | inter | 80#1
 
-    
     The Repo method (short for repository or report) is the first method and
     specifies repository settings and output formats. 
 

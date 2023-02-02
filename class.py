@@ -6,7 +6,6 @@ import subprocess
 import tempfile
 import re
 import logging
-import time
 import numpy.linalg as la
 import pandas as pd
 import sympy as sp

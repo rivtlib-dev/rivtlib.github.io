@@ -57,13 +57,13 @@
 
     repo    rv.R("""label | folder;default | int;utf;pdf;html;both | width#n
     rvr
-                 ||text ||table ||github ||project
+                 ||text ||table ||github ||project ||append
 
                  """)
 
     insert  rv.I("""label | docs_folder;default
     rvi
-                 ||text ||table ||image ||image2 ||attach
+                 ||text ||table ||image ||image2 
 
                  """)
 
@@ -71,7 +71,7 @@
     rvv
                  = ||values ||lists ||import
 
-                 ||text ||table ||image ||image2 ||attach
+                 ||text ||table ||image ||image2 
 
                  """)
 
@@ -80,13 +80,13 @@
                  Python simple statements
                  (any valid expression or statment on a single line)
 
-                 ||text ||table ||image ||image2 ||attach
+                 ||text ||table ||image ||image2 
 
                  """)
 
     exclude rv.X("""  any text
 
-                 any commands
+                 any commands, used for comments and debugging
 
                  """)
 
@@ -100,16 +100,10 @@
     || project | file_name | /docsfolder; default                      R
         pro       .txt; rst; csv; syk; xls | project info folder
 
-    || report | report title | cover page | default; file folder       R
-        rep        .txt; rst; csv; syk; xls | project info folder
-
     || append | file_name | ./docfolder; default / resize;default      R
         app      .pdf; .txt | pdf folder / rescale to page size
-
-    || readme                                                          R
-    || end       define text block for README file in project folder     
     
-    || list | file_name  | [:];[x:y]                                      V
+    || list | file_name  | [:];[x:y]                                       V
         lis       .csv;.syk;.txt;.py | rows to import
 
     || values | file_name | [:];[x:y]                                      V
@@ -134,20 +128,14 @@
       rivt tag syntax                       description: snippet prefix
     =====================  =====================================================
 
-                                  Line Tags (one tag per line)
-    First line formats:
+                                  Line Tags (one tag at end of line)
+                                  ----------------------------------
+    Method format:
     """label | ....               No hyphen denotes section title, autonumber
     """-label | ....              Single hyphen denotes paragraph heading
     """--label | ....             Double hyphen denotes non-printing label
 
-    Element formats: 
-    caption _[f]                  figure caption, autonumber: _f
-    title _[t]                    table title, autonumber: _t
-    sympy eq _[s]                 format sympy equation: _s
-    latex eq _[x]                 format LaTeX equation: _x
-    label _[e]                    equation label, autonumber: _e
-    
-    Text formats:    
+    Text format:    
     text _[p]                     paragraph heading: _p
     text _[l]                     literal text: _l
     text _[i]                     italic: _i
@@ -158,55 +146,68 @@
     text _[#]                     footnote, autonumber: _#
     text _[foot]                  footnote description: _o
 
-    Link formats:
+    Element format: 
+    caption _[f]                  figure caption, autonumber: _f
+    title _[t]                    table title, autonumber: _t
+    sympy eq _[s]                 format sympy equation: _s
+    latex eq _[x]                 format LaTeX equation: _x
+    label _[e]                    equation label, autonumber: _e
+
+    Link format:
     _[url]{address, label}        http://xyz, link label: _u
     _[lnk]{label}                 section, paragraph, title, caption: _k
     _[new]                        new PDF page: _n
     _[date]                       insert date
     _[time]                       insert time
 
-    Values method:
+    Values-string evaluation:
     a = n | unit, alt | descrip   tag is =, units and description: _v
     a <= b + c | unit, alt | n,n  tag is <=, units and decimals: _=
 
-                                  Block tags - text between tag and _[[end]]
+
+                                  Block tags (tag on line preceding block)
+                                  ----------------------------------------
     Text formats:
     _[[r]]                        right justify text block: _[[r
     _[[c]]                        center text block: _[[c
     _[[lit]]                      literal block: _[[l
     _[[tex]]                      LateX block: _[[x
     _[[texm]]                     LaTeX math block: _[[m
+    _[[code]]                     * code text block: _[[o 
     _[[end]]                      terminates block: _[[e
 
-
-    Additional VSCode shortcut navigation keys and snippet [prefix]
-
     ================== =========================================================
-    shortcut                  description
+    shortcut                  Additional VSCode shortcuts 
     ================== =========================================================
+
+    alt+q                wrap paragraph with hard line feeds
+    alt+8                toggle explorer sort order
+    alt+9                toggle spell check
+    ctl+.                select correct spelling under cursor
 
     ctl+alt+x            reload window
-    ctl+alt+u            unfold code
-    ctl+alt+f            fold code - rivt file
+    ctl+alt+u            unfold all code
+    ctl+alt+f            fold code - rivt sections visible
     ctl+alt+a            fold code - all levels
     ctl+alt+t            toggle local fold at cursor
-    ctl+alt+g            search all GitHub rivt READMEs
+    ctl+alt+g            open GitHub rivt README search
     ctl+alt+s            open URL under cursor in browser
     ctl+alt+9            insert date
     ctl+alt+8            insert time
 
-    ctl+8                toggle explorer sort order
-    ctl+9                toggle spell check
-    ctl+.                select correct spelling under cursor
-    ctl+0                focus explorer
-    ctl+1                focus editor 1
-    ctl+2                focus editor 2
+    ctl+shift+e          focus on explorer pane
+    ctl+shift+g          focus on github pane
+    ctl+shift+a          commit all 
+    ctl+shift+z          commit current editor
+    ctl+shift+x          post to remote        
+    ctl+shift+1          focus on recent editor
+    ctl+shift+2          focus on next editor
+    ctl+shift+3          focus on previous editor
 
-    alt+q                wrap paragraph with hard line feeds
 
-    By convention the first line of a rivt file is *import rivt.text as rv*. The
-    import statement must precede the Repo method R(rs) which occurs once and is
-    the first method. It may be followed by any of the other four methods in
+    The first line of a rivt file is *import rivt.text as rv*. The import
+    statement must precede the Repo method R(rs) which is the first method and
+    occurs once, followed by any of the other three methods (or X method) in
     any number or order. R(rs) sets options for repository, report and calc
     output formats.
 

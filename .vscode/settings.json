@@ -19,5 +19,4 @@
     ],
     "fsdeploy.deployOnSave": true,
     "fsdeploy.deployWorkspaceOnSave": true,
-    "cSpell.enabled": false,
 }

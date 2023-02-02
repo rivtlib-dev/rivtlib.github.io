@@ -475,7 +475,7 @@ class RvTextUtf:
         self.cmdD = cmdD
 
 
-class RvTextRst:
+class RvTextRest:
     """convert rivt-strings to reST strings
 
     Args:

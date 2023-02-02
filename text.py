@@ -222,25 +222,27 @@ import rivt.text as rv
 
 rv.R("""Introduction | inter | 80#1
 
-    || readme
-    The Repo method (short for repository or report) is the first method in a
-    calc and specifies repository settings and general output formats. It also
-    typically includes a calculation summary that is written out to a README file.
+    
+    The Repo method (short for repository or report) is the first method and
+    specifies repository settings and output formats. 
 
     The setting line specifies the method, paragraph or section label, the calc
     title, the processing type and the starting page number for the output.
-    || end
+    
+    The ||github command defines the rivt-string to be written to the project level folder as a README file and other parameters for uploading to GitHub. It is included only once in a project,
 
-    The ||readme command defines the text block for the README file written to the project level folder.
-
-    The ||github command specifies settings for updating a public rivt repo.
-
-    || github  | param1 | param2
+    || github | params 
 
     The ||project command imports data from the docs folder containing
     proprietary project data.  Its format depends on the file type.
 
     || project | file | default
+
+    The ||append command appends pdf files to the end of the document.
+
+    || append | file | title
+
+
 
     """)
 
@@ -360,13 +362,10 @@ import logging
 import warnings
 from pathlib import Path
 from collections import deque
-import rivt.rv_r as rM
-import rivt.rv_i as iM
-import rivt.rv_v as vM
-import rivt.rv_t as tM
+import rivt.classes as clsM
+import rivt.tag as tagM
+import rivt.command as cmdM
 import rivt.write as wrtM
-import rivt.tags as tagM
-import rivt.commands as cmdM
 
 try:
     docfileS = sys.argv[1]
@@ -478,7 +477,7 @@ genrestB = False
 
 
 def method_heading(riv1L: list, methodS: str):
-    """format method headings - first line of string
+    """method heading settings
 
     Args:
         hdrS (str): section heading line
@@ -524,11 +523,12 @@ def method_heading(riv1L: list, methodS: str):
 
 
 def R(rvrS: str):
-    """processes a Repo string and sets output type
+    """processes a Repo string and specifies output type
 
-    R('''section lable | Calc title | utf;pdf;html;inter | page#
-        Repo string commands.
-        ||text, ||table, ||github, ||project, ||append, ||report
+    R('''section label | utf;pdf;html;inter | page#
+
+        ||text, ||table, ||project, ||append, ||report, ||github 
+
     ''')
 
     :param rvrS: triple quoted repo string

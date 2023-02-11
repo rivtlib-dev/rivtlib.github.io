@@ -24,7 +24,7 @@ rv.T(rs) - calculate tables and functions using Python statements
 A rivt document is made up of a collection of methods. The single argument,
 *rs*, is a *rivtText* triple quoted string. When running in an IDE (e.g.
 VSCode), each separate method can be run interactively using the standard cell
-decorator (# %%). Parameters in rv.R() can trigger generation of the document in UTF, PDF or HTML formats.
+decorator (# %%). Parameters in rv.R() will generate documents in UTF, PDF or HTML formats.
 
 Document input files are separated into folders labeled *text* and *resources*.
 Files in the *text* folder are shareable text files under version control that

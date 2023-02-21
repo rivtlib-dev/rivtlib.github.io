@@ -132,4 +132,4 @@ functions on rivt-strings - R(rs), I(rs), V(rs), T(rs). Rivt-strings (rs) are
 free-form plain text strings enclosed in triple quotes that include text and
 commands and tags defining the calculation and formatting.
 
-Refer to the [rivtDocs user manual.](https://rivtmanual.net)
+Refer to the [rivtDocs user manual.](https://rivtDocs.net)

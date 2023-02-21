@@ -56,7 +56,7 @@ rivt Folder Structure (folders in [])
 
 - [*rivt_*Design-Project] (user project / report name)
     - [*text*]
-        - [*rv00_*config] (calc configuration data)
+        - [*rv00_*config] (document configuration data)
             - units.py
             - config.py
         - [*rv01_*Overview-and-Loads]  (division name)

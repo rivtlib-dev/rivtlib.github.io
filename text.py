@@ -125,7 +125,7 @@ def method_heading(sectS, methodS):
 
     Args:
         :param hdrS: first line of method
-        :type hdrS: string
+        :type hdrS: str
     """
 
     global utfS, rstS, pubS, tagcountD, restL

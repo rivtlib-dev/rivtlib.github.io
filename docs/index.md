@@ -121,19 +121,11 @@ Other file names are user determined using the specified prefixes. Underscores
 that separate words in file and folder names are stripped out when used as
 document and division names in the report. The API is designed so that only
 files in the text folder are uploaded for version control and sharing. They are
-the essential core of the calculation - text, equations, functions, tables and
-image references. Files in the resource folder are not shared and are typically
-binary files such as images, pdf attachments and proprietary data (e.g. client
-contact information and costs). This folder and file structure makes it easy to
-share and assert version control on the primary calculation inputs. 
-
-The API is designed so that only files in the text folder are uploaded for
-version control and sharing. They are the essential core of the calculation -
-the text, equations, functions, tables and image references. Files in the
-resource folder are not shared and are typically binary and proprietary files
-such as images, pdf attachments and proprietary data (e.g. client contact
-information and costs). This folder and file structure makes it easy to share
-and apply version control on the primary calculation inputs.
+the essential core of the calculation. Files in the resource folder are not
+shared and are typically binary files such as images, pdf attachments and
+proprietary data (e.g. client contact information and costs). The folder and
+file structure makes it easy to share and assert version control on the primary
+calculation inputs.
 
 A rivt file is a Python file that imports the rivt API and calls one of four
 functions on rivt-strings - R(rs), I(rs), V(rs), T(rs). Rivt-strings (rs) are

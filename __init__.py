@@ -31,11 +31,10 @@ UTF, PDF or HTML formats.
 
 **rivt** is designed for single simple calculations as well as large, extensive
 reports. The **rivt** report folder structure shown below is designed to
-support both. Folder names are shown in brackets. Folder and file name prefixes
-that are fixed are shown italicized. The four top-level folder names (text,
-resource, report and site) are required verbatim. Other file names are
-combinations of specified prefixes and user titles. Folder and file names and
-prefixes that are fixed are shown as *name*. Underscores and hyphens that
+support both. Folder names are shown in brackets. The four top-level folder
+names (text, resource, report and site) are required verbatim. Other file names
+are combinations of specified prefixes and user titles. Folder and file names
+and prefixes that are fixed are shown as *name*. Underscores and hyphens that
 separate words in file and folder names are stripped out when used as document
 and division names in the document.
 
@@ -105,18 +104,13 @@ rivt Folder Structure (folders in [])
         - s0102_Seismic-Loads.html
         - s0201_Pile-Design.html
 
-The four top-level folder names (text, resource, report and site) are required.
-Other file names are combinations of specified prefixes and user titles.
-Underscores and hyphens that separate words in file and folder names are
-stripped out when used as document and division names in the report. The API is
-designed so that only files in the text folder are uploaded for version control
-and sharing. They are the essential core of the calculation - the text,
-equations, functions, tables and image references. Files in the resource folder
-are not shared and are typically binary and proprietary files such as images,
-pdf attachments and proprietary data (e.g. client contact information and
-costs). This folder and file structure makes it easy to share and apply
-version control on the primary calculation inputs.
-
+The API is designed so that only files in the text folder are uploaded for
+version control and sharing. They are the essential core of the calculation -
+the text, equations, functions, tables and image references. Files in the
+resource folder are not shared and are typically binary and proprietary files
+such as images, pdf attachments and proprietary data (e.g. client contact
+information and costs). This folder and file structure makes it easy to share
+and apply version control on the primary calculation inputs.
 
 Commands and Tags
 =================

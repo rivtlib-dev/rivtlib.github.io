@@ -40,7 +40,7 @@ The program prioritizes four design principles:
 - *Integration* - **rivt** is built on the highly integrated Python language
 - *Standardization* - **rivt** uses a standard folder structure for input and output
 
-**rivt** is designed for single simple calculations as well as large, extensive
+**rivt** is designed for simple, single calculations as well as large, extensive
 reports. The **rivt** report folder structure shown below is designed to
 support both. Folder names are shown in brackets. Folder and file name prefixes
 that are fixed are shown italicized. The four top-level folder names (text,

@@ -1,4 +1,4 @@
-"""check if rivt is run as script or interactively
+"""check if run as script or interactively and adjust initialization
 
 *rivt* may be run interactively from an IDE or from the command line. In an IDE
 the API calls can be grouped by the standard cell designation #%% and run

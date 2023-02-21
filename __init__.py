@@ -4,108 +4,109 @@
 Introduction
 ============
 
-*rivt* is a Python package that processes the markup language *rivtText*. It runs on any platform that supports Python 3.8 or later and prioritizes universal access and processing.
+*rivt* is a Python package that processes the plain text markup language
+*rivtText*. It runs on any platform that supports Python 3.8 or later and
+prioritizes universal access and processing.
 
 *rivtText* wraps and extends the markup language reStructuredText (reST)
-defined at https://docutils.sourceforge.io/rst.html. It was designed to
-simplify writing and sharing engineering calculation documents. The syntax
+defined at https://docutils.sourceforge.io/rst.html. It simplifies writing of
+engineering calculation documents that can be universally shared. Its syntax
 prioritizes clarity and brevity. A *rivtText" document begins with the import
 statement:
 
 **import rivt.text as rv** 
  
-which exposes four API methods:
+This Python module exposes four API methods:
     
-rv.R(rs) - specify repo and report information
+rv.R(rs) - specify repo and report information (occurs first and only once)
 rv.I(rs) - insert static text, images, tables and math
 rv.V(rs) - calculate values from equations
 rv.T(rs) - calculate tables and functions using Python statements 
 
-A rivt document is made up of a collection of methods. The single argument,
-*rs*, is a *rivtText* triple quoted string. When running in an IDE (e.g.
-VSCode), each separate method can be run interactively using the standard cell
-decorator (# %%). Parameters in rv.R() will generate documents in UTF, PDF or HTML formats.
+A rivt document is made up of an arbitrary collection of these four methods.
+Each method takes a single argument *rs* with the type string. When running in
+an IDE (e.g. VSCode), individual methods can be run interactively using the
+standard cell decorator (# %%). Parameters in rv.R() will generate documents in
+UTF, PDF or HTML formats.
 
-Document input files are separated into folders labeled *text* and *resources*.
-Files in the *text* folder are shareable text files under version control that
-contain the primary calculation information. The *resource* folder includes
-supporting binary files (images, pdf etc.) and other files that may include
-confidential project information or copyrights. The *resource* folder is not
-designed to share.
+Document input files are separated into folders labeled *text* and *resource*.
+Files in the *text* folder are shareable rivtText files that contain the
+primary calculation information. The *resource* folder includes supporting
+binary files (images, pdf etc.) and other files that may include confidential
+project information or copyrighted material. The *resource* folder is not
+designed to share or put under version control.
 
-Output files are written to three places. The UTF8 output is written to a
-*README.txt* file within the *text* folder. It is displayed and searchable on
-version control platforms like GitHub. PDF output is written to the *report*
-folder, and HTML output to the *website* folder.
+Output files are written to three folders, depending on the output type. The
+UTF8 output is written to a *README.txt* file within the *text* folder. It is
+displayed and searchable on version control platforms like GitHub. PDF output
+is written to the *report* folder, and HTML output to the *website* folder.
 
 rivt Folder Structure (**folders in []**)
 ========================================
 
-- **[*rivt_Design_Project]** (user report name after rivt)
-- **[text]**
-    README.txt (project description)
-    - **[*rv00_config*]** (doc configuration data)
-        - units.py
-        - config.py
-    - **[*rv0101*_Overview_and_Loads]**  (division name)
-        - *r0101*_Gravity_Loads.py (doc name) 
-        - README.txt (output file)
-        - data1.csv (source file)
-        - functions1.py (function file)
-    - **[*rv0102_seismic*]**  (folder label) 
-        - *r0102*_Seismic_Loads.py
-        - README.txt
-        - data2.csv 
-        - functions2.py 
-        - **[*rv0201*_Foundations]**  (division name)
-        - *r0201*_Pile_Design.py
-        - README.txt
-        - paragraph1.txt
-- **[resource]**
-    - **[r00]** (report configuration data)
-        - pdf_style.sty
-        - project_data.syk
-        - report.txt
-    - **[r01]** (division resources)
-        - image1.jpg
-    - **[r02]**
-        - image2.jpg
-        - attachment.pdf    
-- **[reference]**
-    - **[user_folders]** (files not directly used in docs)
-        - file1
-        - file2
-- **[report]** (pdf output files)
-    - r0101_Gravity_Loads.pdf
-    - r0102_Seismic_Loads.pdf
-    - r0201_Pile_Design.pdf
-    - Design_Project.pdf  (collated report)
-- **[site]** (html output files)
-    - **[resources]**
-        - image1.png
-        - image2.png
-    - index.html  (table of contents)
-    - r0101_Gravity_Loads.html
-    - r0102_Seismic_Loads.html
-    - r0201_Pile_Design.html
+- **[*rivt*_Design-Project]** (user project / report name)
+    - **[*text*]**
+        - **[*rv00*_config]** (calc configuration data)
+            - units.py
+            - config.py
+        - **[*rv01*_Overview-and-Loads]**  (division name)
+            - README.txt (output file)
+            - **[*r0101*_Gravity-Loads]**  (document name)
+                - *r0101.py* (file name) 
+                - README.txt (output file)
+                - data1.csv (source file)
+                - functions1.py (function file)
+            - **[*r0102_Seismic-Loads*]** (document name)
+                - *r0102.py*  
+                - README.txt
+                - data2.csv 
+                - functions2.py 
+         - **[*rv02*_Foundations]** (division name)
+             - README.txt
+             - **[*r0201*_Pile-Design]** (document name)
+                 - *r0201.py*
+                 - README.txt
+                 - paragraph1.txt
+                 - functions3.py 
+    - **[resource]**
+        - **[rv00]** (report configuration data)
+            - pdf_style.sty (LaTeX style override)
+            - project_data.syk
+            - report.txt
+        - **[rv01]**    (division resources)
+            - image1.jpg
+        - **[rv02]**    (division resources)
+            - image2.jpg
+            - attachment.pdf    
+    - **[report]** (PDF output files)
+        - report_gen.py (report generation file)
+        - r0101_Gravity-Loads.pdf
+        - r0102_Seismic-Loads.pdf
+        - r0201_Pile-Design.pdf
+        - Design-Project.pdf  (collated report)
+    - **[site]** (HTML output files)
+        - **[resources]** (HTML resource files)
+            - image1.png
+            - image2.png
+            - html_style.css (HTML style override)
+        - site_gen.py (site generation file)
+        - index.html  (table of contents)
+        - s0101_Gravity-Loads.html
+        - s0102_Seismic-Loads.html
+        - s0201_Pile-Design.html
 
-*rivtDoc* is an open source software stack for writing, sharing and
-publishing engineering documents and calculations in document and online
-formats. The generic stack includes:
+The four top-level folder names (text, resource, report and site) are required.
+Other file names are combinations of specified prefixes and user titles.
+Underscores and hyphens that separate words in file and folder names are
+stripped out when used as document and division names in the report. The API is
+designed so that only files in the text folder are uploaded for version control
+and sharing. They are the essential core of the calculation - the text,
+equations, functions, tables and image references. Files in the resource folder
+are not shared and are typically binary and proprietary files such as images,
+pdf attachments and proprietary data (e.g. client contact information and
+costs). This folder and file structure makes it easy to share and apply
+version control on the primary calculation inputs.
 
-- *Python 3.8* or greater with science and engineering libraries, 
-- an IDE
-- a LateX distribution
-- a version controlled distribution service
-
-The standard rivtDocs stack includes:
-
-- *Python 3.8* with science and engineering libraries, 
-- VSCode and extensions
-- Texlive
-- GitHub
-
-The standard stack is available as a portable system in a single zipped folder, a system level install, or as a remote service.
 
 Commands and Tags
 =================
@@ -200,16 +201,16 @@ exclude rv.X("""any text
     tag syntax                       description: snippet prefix
 ============================ ===========================================
 
-Method format:                applies only to first line of method
-"""section label | ....       No hyphen;denotes section title, autonumber
-"""-paragraph label | ....    Single hyphen; denotes paragraph heading
-"""--bookmark label | ....    Double hyphen; denotes non-printing label
+Methods Format:               Applies only to first line of all methods
+"""Section Label | ....       No hyphen denotes section title, autonumber
+"""-Paragraph Label | ....    Single hyphen denotes paragraph heading
+"""--reference label | ....   Double hyphen denotes non-printing label
 
-Values format:                applies only to Values rivt-string
-a = n | unit, alt | descrip   tag is =, units and description: _v
-a <= b + c | unit, alt | n,n  tag is <=, units and decimals: _=
+Values Format:                Applies only to Values rivt-string
+a = n | unit, alt | descrip   Tag is =; units and description: _v
+a <= b + c | unit, alt | n,n  tag is <=; units and decimals: _=
 
-Text format:                  applies to I,V and T methods
+Text Format:                  Applies to I,V and T methods
 text _[p]                     paragraph heading: _p
 text _[l]                     literal text: _l
 text _[i]                     italic: _i
@@ -220,14 +221,14 @@ text _[-]                     draw horizontal line: _-
 text _[#]                     insert footnote, autonumber: _#
 text _[foot]                  footnote description: _o
 
-Element format:               applies to I,V and T methods
+Element Format:               Applies to I,V and T methods
 caption _[f]                  figure caption, autonumber: _f
 title _[t]                    table title, autonumber: _t
 sympy equation _[s]           format sympy equation: _s
 latex equation _[x]           format LaTeX equation: _x
 label _[e]                    equation label, autonumber: _e
 
-Link format:                  applies to I,V and T methods
+Link Format:                  applies to I,V and T methods
 _[address, label              http://xyz, link label: _u
 _[lnk, user label             section, paragraph, title, caption: _k
 _[new]                        new PDF page: _n
@@ -248,10 +249,11 @@ _[[end]]                      terminates block: _[[e
 
 * within a Table string inserts Python code into doc (omitted by default)
 
-The first line of a rivt file is *import rivt.text as rv*. The import statement
-must precede the Repo method rv.R(rs) which is the first method and occurs
-once. rv.R is followed by any of the other three methods (or X method) in any
-number or order. rv.R(rs) sets options for repository and report output formats.
+The first line of a rivt file is always *import rivt.text as rv*. The import
+statement must precede the Repo method rv.R(rs) which is the first method and
+occurs once. rv.R is followed by any of the other three methods (or X method)
+in any number or order. rv.R(rs) sets options for repository and report output
+formats.
 
 File format conventions incorporate the Python formatter *pep8*. Method
 names start in column one. All other lines are indented 4 spaces to faciliate
@@ -396,7 +398,7 @@ with open('fileout.csv', 'w') as f: f.write(var)
 
 """)
 
-rv.X("""skip-string - can be anything.
+rv.X("""skip this string
 
 Skips evaluation of the string and is used for review comments, checking and editing.
 
@@ -429,4 +431,23 @@ ctl+shift+x          post to remote
 ctl+shift+1          focus on recent editor
 ctl+shift+2          focus on next editor
 ctl+shift+3          focus on previous editor
+
+rivtDocs
+========
+
+The minimum software needed to run **rivt** with plain text output is a Python
+installation and a plain text processor. **rivtDocs** is an installer that
+integrates five open source programs to provide a complete document production
+system:
+
+- Python 3.8 or higher (required)  
+- **rivt** + other Python libraries (required)
+- VSCode + extensions (recommended for efficiency)
+- LaTeX (recommended for output quality)
+- Github (recommended for collaboration and version control)
+
+**rivtDocs** installs as a system level program or portable folder, and is
+available for every OS platforms. It alos runs in the cloud using GitHub
+CodeSpaces or other cloud service providers. Installation details are provided
+in the [rivtDocs User Manual](https://www.rivtDocs.net>)
 '''

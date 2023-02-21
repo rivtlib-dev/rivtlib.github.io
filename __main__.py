@@ -34,7 +34,10 @@ from pathlib import Path
 
 __version__ = "0.9.1-beta.1"
 __author__ = "rholland@structurelabs.com"
-utfS = """"""  # rivtText string
+rvtS = """"""  # rivtText string
+utfS = """"""  # utf accumulating string
+rstS = """"""  # reST accumulating string
+valuexS = """"""  # values accumulating string
 calcfileP = ""  # calc file name
 
 
@@ -42,17 +45,18 @@ def cmdlinehelp():
     """command line help"""
 
     print()
-    print("Run rivt at the command line in the rivt document folder:   ")
+    print("Run rivt from the command line in the rivt document folder -")
     print()
     print("                 python -m rivt                             ")
     print()
-    print("If rivt file is not found, check that it has the form:      ")
-    print("rvddnn_some_name.py - where dd and nn are two digit integers")
+    print("If the rivt file is not found, check that it has the form - ")
     print()
-    print("The output files are written to:                ")
-    print("        dcoument folder:  README.txt            ")
-    print("        report folder:    rddnn_file.pdf        ")
-    print("        website folder:   rddnn_file.html       ")
+    print("rddnn.py - where dd and nn are two digit integers.          ")
+    print()
+    print("The output files are written to the following folders.      ")
+    print("    current document folder:  README.txt            ")
+    print("    report folder:            rddnn_file.pdf        ")
+    print("    site folder:              sddnn_file.html       ")
     print()
     print("User manual is at: https://rivtDocs.net         ")
 
@@ -67,7 +71,7 @@ if __name__ == "__main__":
     try:
         # get calc file name
         for fileS in os.listdir("."):
-            if fnmatch.fnmatch(fileS, "c[0-9][0-9][0-9][0-9]_*.py"):
+            if fnmatch.fnmatch(fileS, "r[0-9][0-9][0-9][0-9].py"):
                 for fileS in os.listdir("."):
                     if fnmatch.fnmatch(fileS, "c[0-9][0-9][0-9][0-9]_*.py"):
                         calcfileP = Path(os.getcwd(), fileS)

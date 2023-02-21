@@ -19,9 +19,9 @@ try:
 except:
     docfileS = sys.argv[0]
 if Path(docfileS).name == "rvtext.py":
-    docfileS = "./rivt_test01/text/rv0101_div/r0101_test.py"
+    docfileS = "./tests/rivt_test01/text/rv01_div/rv0101_test/r0101.py"
 elif Path(docfileS).name == "-o":
-    docfileS = "./rivt_test01/text/rv0101_div/r0101_test.py"
+    docfileS = "./tests/rivt_test01/text/rv01_div/r0101_test/r010.py"
 elif ".py" not in docfileS:
     import __main__
     docfileS = __main__.__file__
@@ -48,9 +48,10 @@ siteP = rivtprojectP / "site"  # site folder path
 reportP = rivtprojectP / "reports"  # report folder path
 rivtcalcP = Path("rivt.rvtext.py").parent  # rivt package path
 # initialize strings
+rvtS = """"""  # rivtText string
 utfS = """"""  # utf accumulating string
 rstS = """"""  # reST accumulating string
-valuexS = """"""  # export values accumulating string
+valuexS = """"""  # values accumulating string
 # initialize dicts
 rivtvalD = {}  # all persistent computed values
 foldersD = {}  # folders

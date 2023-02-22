@@ -53,13 +53,13 @@ Folder Structure Example (folders in [])
 
 - [*rivt_*Design-Project] (user project and report name)
     - [*text*]
-        - README.txt
-        - units.py
+        - README.txt                        (project abstract)
+        - units.py                          (units over-ride)
         - [*r0101_*Gravity-Loads]           (rivt document title)
             - *r0101.py*                    (file name) 
-            - README.txt                    (utf document output file)
-            - data1.csv                     (source file)
-            - functions1.py                 (function file)
+            - README.txt                    (utf output file)
+            - data1.csv                     (a source file)
+            - functions1.py                 (a function file)
         - [*r0102_*Seismic-Loads] 
             - *r0102.py*
             - README.txt
@@ -71,11 +71,11 @@ Folder Structure Example (folders in [])
             - paragraph1.txt
             - functions3.py 
     - [*resource*]
-            - report_gen.txt                (report generation file)
-            - site_gen.txt                  (website generation file)
+            - report_gen.txt                (report generation style)
+            - site_gen.txt                  (website generation style)
             - pdf_style.sty                 (LaTeX style override)
             - utf_style.txt                 (utf style override)
-            - project_data.syk              (project data)
+            - project_data.xls              (project data)
         - [*rv01_*Overview-and-Loads]       (division title)
             - image1.jpg
         - [*rv02_*Foundations]   

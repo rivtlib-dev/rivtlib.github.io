@@ -4,15 +4,13 @@
 Introduction
 ============
 
-rivt is a Python package that processes the plain text markup language
-rivtText. It runs on any platform that supports Python 3.8 or later and
-prioritizes universal access and processing.
+rivt is a Python package that processes a calculation oriented plain text
+markup language - rivtText. It runs on any platform that supports Python 3.8 or
+later and prioritizes simplicity, universal access and reports in its design.
 
-rivtText wraps and extends the markup language reStructuredText (reST)
-defined at https://docutils.sourceforge.io/rst.html. It simplifies writing of
-engineering calculation documents that can be universally shared. Its syntax
-prioritizes clarity and brevity. A rivtText" document begins with the import
-statement:
+rivtText wraps and extends the markup language reStructuredText (reST) defined
+at https://docutils.sourceforge.io/rst.html. A rivt document begins with
+the import statement:
 
 import rivt.text as rv 
  
@@ -23,14 +21,14 @@ rv.I(rs) - insert static text, images, tables and math
 rv.V(rs) - calculate values from equations
 rv.T(rs) - calculate tables and functions using Python statements 
 
-A rivt document is made up of an arbitrary collection of these four methods.
-Each method takes a single argument rs with the type string. When running in
-an IDE (e.g. VSCode), individual methods can be run interactively using the
-standard cell decorator (# %%). Parameters in rv.R() will generate documents in
-UTF, PDF or HTML formats.
+A rivt document is made up of an arbitrary collection of the four methods. Each
+method takes a single argument rs with type literal string. When running in an
+IDE (e.g. VSCode), methods can be run interactively using the standard cell
+decorator (# %%). Parameters in rv.R() will generate documents in UTF, PDF or
+HTML formats.
 
-**rivt** is designed for single simple calculations as well as large, extensive
-reports. The **rivt** report folder structure shown below is designed to
+rivt is designed for single simple calculations as well as large, extensive
+reports. The rivt report folder structure shown below is designed to
 support both. Folder names are shown in brackets. The four top-level folder
 names (text, resource, report and site) are required verbatim. Other file names
 are combinations of specified prefixes and user titles. Folder and file names
@@ -40,66 +38,60 @@ and division names in the document.
 
 Document input files are separated into folders labeled text and resource.
 Files in the text folder are shareable rivtText files that contain the primary
-calculation information. The resource folder includes supporting files (images,
-pdf etc.) and other files that may include confidential project information or
-copyrighted material. The resource folder often contains binary information and
-is not designed to share.
+calculation information. The resource folder includes supporting binary files
+(images, pdf etc.) and other files that may include confidential project
+information or copyrighted material. The resource folder is not designed to
+share.
 
 Output files are written to three folders, depending on the output type. The
 UTF8 output is written to a README.txt file within the text folder. It is
 displayed and searchable on version control platforms like GitHub. PDF output
-is written to the report folder, and HTML output to the website folder.
+is written to the report folder, and HTML output to the site folder.
 
-rivt Folder Structure (folders in [])
-=====================================
+Folder Structure Example (folders in [])
+========================================
 
-- [*rivt_*Design-Project] (user project / report name)
+- [*rivt_*Design-Project] (user project and report name)
     - [*text*]
-        - [*rv00_*config] (document configuration data)
-            - units.py
-            - config.py
-        - [*rv01_*Overview-and-Loads]  (division name)
-            - README.txt (output file)
-            - [*r0101_*Gravity-Loads]  (document name)
-                - *r0101.py* (file name) 
-                - README.txt (output file)
-                - data1.csv (source file)
-                - functions1.py (function file)
-            - [*r0102_*Seismic-Loads] (document name)
-                - *r0102.py*
-                - README.txt
-                - data2.csv 
-                - functions2.py 
-         - [*rv02_*Foundations] (division name)
-             - README.txt
-             - [*r0201_*Pile-Design] (document name)
-                 - *r0201.py*
-                 - README.txt
-                 - paragraph1.txt
-                 - functions3.py 
+        - README.txt
+        - units.py
+        - [*r0101_*Gravity-Loads]           (rivt document title)
+            - *r0101.py*                    (file name) 
+            - README.txt                    (utf document output file)
+            - data1.csv                     (source file)
+            - functions1.py                 (function file)
+        - [*r0102_*Seismic-Loads] 
+            - *r0102.py*
+            - README.txt
+            - data2.csv 
+            - functions2.py 
+        - [*r0201_*Pile-Design] 
+            - *r0201.py*
+            - README.txt
+            - paragraph1.txt
+            - functions3.py 
     - [*resource*]
-        - [*rv00*] (report configuration data)
-            - report_gen.py (report generation file)
-            - site_gen.py (site generation file)
-            - pdf_style.sty (LaTeX style override)
-            - project_data.syk
-            - report.txt
-        - [*rv01*]    (division resources)
+            - report_gen.txt                (report generation file)
+            - site_gen.txt                  (website generation file)
+            - pdf_style.sty                 (LaTeX style override)
+            - utf_style.txt                 (utf style override)
+            - project_data.syk              (project data)
+        - [*rv01_*Overview-and-Loads]       (division title)
             - image1.jpg
-        - [*rv02*]    (division resources)
+        - [*rv02_*Foundations]   
             - image2.jpg
             - attachment.pdf    
-    - [*report*] (PDF output files)
+    - [*report*]                            (PDF dcoument output files)
         - r0101_Gravity-Loads.pdf
         - r0102_Seismic-Loads.pdf
         - r0201_Pile-Design.pdf
-        - Design-Project.pdf  (collated report)
-    - [*site*] (HTML output files)
-        - [*resources*] (HTML resource files)
+        - Design-Project.pdf                (PDF collated report)
+    - [*site*]                              (HTML site)
+        - [*resources*]             
             - image1.png
             - image2.png
-            - html_style.css (HTML style override)
-        - index.html  (table of contents)
+            - html_style.css                (HTML style override)
+        - index.html                        (table of contents)
         - s0101_Gravity-Loads.html
         - s0102_Seismic-Loads.html
         - s0201_Pile-Design.html

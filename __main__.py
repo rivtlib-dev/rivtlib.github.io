@@ -65,33 +65,27 @@ if sys.version_info < (3, 8):
     sys.exit("rivtCalc requires Python version 3.8 or later")
 
 if __name__ == "__main__":
-    print("""
-    rivt is running from commmand line
-    """)
+    print("rivt is running from commmand line\n")
     try:
         # get calc file name
         for fileS in os.listdir("."):
             if fnmatch.fnmatch(fileS, "r[0-9][0-9][0-9][0-9].py"):
-                for fileS in os.listdir("."):
-                    if fnmatch.fnmatch(fileS, "c[0-9][0-9][0-9][0-9]_*.py"):
-                        calcfileP = Path(os.getcwd(), fileS)
-                calcnameS = os.path.basename(calcfileP)  # calc file
-                calcbaseS = calcnameS.split(".py")[0]  # calc file basename
-                calcfolderP = calcfileP.parent  # calc file basename
-            print("MAIN  current folder: ", calcfolderP)
-            print("MAIN  rivt file name: ", calcbaseS)
-            importlib.import_module(calcbaseS)
+                docfileS = fileS
+                docbaseS = docfileS.split(".py")[0]
+                docP = Path(os.getcwd(), fileS)
+                docfolderP = Path(os.getcwd())
+            print("MAIN  current folder: ", docfolderP)
+            print("MAIN  rivt file name: ", docfileS)
+            importlib.import_module(docbaseS)
     except ImportError as error:
-        print("error------------ rivt file not found ----------------------")
+        print("ERROR ------------ rivt file not found ----------------------")
         print(" ")
         cmdlinehelp()
         # test files and paths
         cwdP = Path(os.getcwd())
         print("current working directory:", cwdP)
-        calcfileS = "rv0101_test.py"
-        calcbaseS = "rv0101_test"
-        P = Path(cwdP / "rivt_test")
-        calcfileP = P / "text" / "rv0101_test" / calcfileS
-        calcnameS = os.path.basename(calcfileP)  # calc file
-        calcbaseS = str(calcnameS.split(".py")[0])  # calc file basename
-        sys.exit()
+        docfileS = "rv0101.py"
+        calcbaseS = "rv0101"
+        projP = Path(cwdP / "tests" / "rivt_test01")
+        docP = projP / "text" / "rv0101_test01_doc1" / "r0101.py"
+        # sys.exit()

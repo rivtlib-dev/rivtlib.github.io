@@ -10,18 +10,19 @@ import warnings
 from pathlib import Path
 from collections import deque
 import rivt.classes as clsM
-import rivt.tags as tagM
 import rivt.commands as cmdM
+import rivt.tags as tagM
 import rivt.write as wrtM
 
+print(f"sys.argv=")
 try:
     docfileS = sys.argv[1]
 except:
     docfileS = sys.argv[0]
-if Path(docfileS).name == "rvtext.py":
-    docfileS = "./tests/rivt_test01/text/rv01_div/rv0101_test/r0101.py"
+if Path(docfileS).name == "r0101.py":
+    docfileS = "./tests/rivt_test01/text/rv0101_test01/r0101.py"
 elif Path(docfileS).name == "-o":
-    docfileS = "./tests/rivt_test01/text/rv01_div/r0101_test/r010.py"
+    docfileS = "./tests/rivt_test01/text/rv0101_test01/r0101.py"
 elif ".py" not in docfileS:
     import __main__
     docfileS = __main__.__file__

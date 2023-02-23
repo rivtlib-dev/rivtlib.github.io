@@ -19,4 +19,5 @@
     ],
     "fsdeploy.deployOnSave": true,
     "fsdeploy.deployWorkspaceOnSave": true,
+    "debug.console.wordWrap": true,
 }

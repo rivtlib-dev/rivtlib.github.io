@@ -8,7 +8,7 @@
         ]
     },
     "new R method": {
-        "prefix": "rvR",
+        "prefix": "rvr",
         "description": "add new Repo method",
         "scope": "python",
         "body": [
@@ -20,7 +20,7 @@
         ]
     },
     "new I method": {
-        "prefix": "rvI",
+        "prefix": "rvi",
         "description": "add new Insert method",
         "scope": "python",
         "body": [
@@ -32,7 +32,7 @@
         ]
     },
     "new V method": {
-        "prefix": "rvV",
+        "prefix": "rvv",
         "description": "add new Value method",
         "scope": "python",
         "body": [
@@ -44,7 +44,7 @@
         ]
     },
     "new T method": {
-        "prefix": "rvT",
+        "prefix": "rvt",
         "description": "add new Table method",
         "scope": "python",
         "body": [
@@ -112,7 +112,7 @@
         ]
     },
     "github": {
-        "prefix": "|g",
+        "prefix": "git",
         "description": "push calcs folder to github",
         "scope": "python",
         "body": [

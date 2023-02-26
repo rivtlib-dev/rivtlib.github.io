@@ -162,6 +162,49 @@ def method_heading(hdrS, methodS, overrideB):
                 + "\n\n"
             )
 
+       rgx = r"\[\d\d\]"
+        nameSS = hdrS
+        snumSS = ""
+        cnumSS = ""
+        widthI = int(_setsectD["swidthI"])
+        headS = hdrS
+        if re.search(rgx, hdrS):
+            nameSS = _setsectD["snameS"] = hdrS[hdrS.find("]") + 2:].strip()
+            snumSS = _setsectD["snumS"] = hdrS[hdrS.find(
+                "[") + 1: hdrS.find("]")]
+            cnumSS = str(_sectD["cnumS"])
+            widthI = int(_setsectD["swidthI"])
+            if _rstB:
+                # draw horizontal line
+                headS = (
+                    ".. raw:: latex"
+                    + "\n\n"
+                    + "   ?x?vspace{.2in}"
+                    + "   ?x?textbf{"
+                    + nameSS
+                    + "}"
+                    + "   ?x?hfill?x?textbf{SECTION "
+                    + snumSS
+                    + "}\n"
+                    + "   ?x?newline"
+                    + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
+                    + "\n\n"
+                )
+                uS = headS
+            else:
+                headS = (
+                    " "
+                    + nameSS
+                    + (cnumSS + " " + ("[" + snumSS + "]")).rjust(
+                        widthI - len(nameSS) - 1
+                    )
+                )
+                bordrS = widthI * "_"
+                uS = headS + "\n" + bordrS + "\n"
+
+
+
+
     return hdS
 
 

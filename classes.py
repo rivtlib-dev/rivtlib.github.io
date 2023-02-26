@@ -23,91 +23,97 @@ try:
     from PIL import ImageOps as PImageOps
 except:
     pass
+from rivt import tags as Tags
+from rivt import commands as Cmds
 
 logging.getLogger("numexpr").setLevel(logging.WARNING)
 # tabulate.PRESERVE_WHITESPACE = True
 
 
-class RvTextUtf:
-    """convert rivt-string to UTF8 calc"""
+class RivtParse:
+    """process rivt-string"""
 
-    def __init__(self):
+    def __init__(self, strL, folderD, incrD):
+        """process rivt-string to UTF8 calc
 
-        # _rgx = r"\[([^\]]+)]_"  # find tags
-
-        a = 1
-
-    def r_utf(self, strL, folderD, incrD):
-        """process rivt string to utf
-
-        :param list strL: split rivt string
-        :param dict folderD: folder paths
-        :param dict incrD: format numbers that increment
-        :return string rvtS: utf string
+            :param list strL: split rivt string
+            :param dict folderD: folder paths
+            :param dict incrD: format numbers that increment
         """
 
         self.strL = strL
         self.folderD = folderD
         self.incrD = incrD
 
-        cmdL = ["project", "github", "append"]
-        tagL = ["_[new]", "_[url]", "_[[readme]]", "_[[end]]"]
+    def r_parse(self):
+        """process repo string
 
-        # get valid commands
-
-        for uS in self.strL:
-            if uS[0:2] == "##":
-                continue  # remove review comment
-            uS = uS[4:]  # remove indent
-            if len(uS) == 0:
-                print(" ")
-                self.calcS += "\n"
-                continue
-            try:
-                if uS[0] == "#":
-                    continue  # remove comment
-            except:
-                print(" ")  # if uS[0] throws error
-                self.calcS += "\n"
-                continue
-
-            self.utfS += uS.rstrip() + "\n"
-
-        return rvtS, self.calcS, self.incrD
-
-    def i_utf(self, strL, folderD, incrD):
-        """convert insert-string to UTF8 calc-string
-
-        Args:
-            strL (list): calc lines
-            folderD (dict): folder paths
-            cmdD (dict): command settings
-            sectD (dict): section settings
+            :return string rvtS: utf string
         """
 
-        self.utfS = """"""  # utf calc string
-        self.strL = strL
-        self.folderD = folderD
-        self.sectD = sectD
-        self.cmdD = cmdD
+        cmdL = ["project", "github", "append"]
+        tagL = ["new]", "url]", "[readme]]", "[end]]"]
+        rvtS = """"""
+        for uS in self.strL:
+            if uS[0:2] == "##": continue    # remove review comments
+            uS = uS[4:]                     # remove indent
+            if uS[0:2] == "||":             # check for command
+                usL = uS[2:].split("|")
+                cmdS = usL[0].strip()
+                if cmdS in cmdL:
+                    rvtS = Cmds.parse(usL, cmdS)
+                    rvtS += rvtS.rstrip() + "\n"
+                    continue
+            if "_[" in uS:               # check for tag
+                usL = uS.split("_[")
+                tagS = usL[1].strip()
+                if tagS in tagL:
+                    rvtS += Tags.parse(usL[0], tagS)
+                    rvtS += rvtS.rstrip() + "\n"
+                    continue
 
-    def v_utf(self, strL, folderD, incrD, localD):
-        """convert value-string to UTF8 calc-string
+        return rvtS, self.folderD, self.incrD
 
-        Args:
-            strL (list): calc lines
-            folderD (dict): folder paths
-            cmdD (dict): command settings
-            sectD (dict): section settings
-            vL (list): configuration parameters
+    def i_parse(self):
+        """convert insert string to UTF8 calc-string
+
+            :return string rvtS: utf string
+        """
+
+        cmdL = ["table", "text", "image1", "image2",]
+
+        tagL = ["new]", "line]", "link]", "lit]", "foot]", "url]", "lnk]",
+                "r]", "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]",
+                "[r]]", "[c]]", "[lit]]", "[tex]]", "[texm]]", "[end]]"]
+
+        rvtS = """"""
+        for uS in self.strL:
+            if uS[0:2] == "##": continue    # remove review comments
+            uS = uS[4:]                     # remove indent
+            if uS[0:2] == "||":             # check for command
+                usL = uS[2:].split("|")
+                cmdS = usL[0].strip()
+                if cmdS in cmdL:
+                    rvtS = Cmds.parse(usL, cmdS)
+                    rvtS += rvtS.rstrip() + "\n"
+                    continue
+            if "_[" in uS:                  # check for tag
+                usL = uS.split("_[")
+                tagS = usL[1].strip()
+                if tagS in tagL:
+                    rvtS += Tags.parse(usL[0], tagS)
+                    rvtS += rvtS.rstrip() + "\n"
+                    continue
+
+        return rvtS, self.folderD, self.incrD
+
+    def v_parse(self):
+        """convert value string to UTF8 calc-string
+
+            :return string rvtS: utf string
         """
 
         locals().update(self.rivtD)
-        self.utfS = """"""  # utf calc string
-        self.strL = strL
-        self.folderD = folderD
-        self.sectD = sectD
-        self.cmdD = cmdD
 
         if vL[1].strip() == "sub":
             self.setcmdD["subB"] = True
@@ -387,200 +393,53 @@ class RvTextUtf:
         except:
             pass
 
-    def t_utf(self,  trL, folderD, incrD, localD):
-        """convert table-string to UTF8 calc-string
-
-        Args:
-            strL (list): calc lines
-            folderD (dict): folder paths
-            cmdD (dict): command settings
-            sectD (dict): section settings
-        """
-
-        locals().update(self.rivtD)
-        self.utfS = """"""  # utf calc string
-        self.strL = strL
-        self.folderD = folderD
-        self.sectD = sectD
-        self.cmdD = cmdD
-
-
-class RvTextRest:
-    """convert rivt-strings to reST strings
-
-    Args:
-    exportS (str): stores values that are written to file
-    strL (list): calc rivt-strings
-    folderD (dict): folder paths
-    tagD (dict): tag dictionary
-
-
-    """
-
-    def __init__(self, strL: list, folderD: dict, tagD: dict):
-
-        self.restS = """"""  # restructured text string
-        self.strL = strL  # rivt-string list
-        self.folderD = folderD
-        self.tagD = tagD
-        strL: list,
-        folderD: dict,
-        setcmdD: dict,
-        setsectD: dict,
-        rivtD: dict,
-        exportS: str,
-        self.restS = """"""  # restructured text string
-        self.exportS = exportS  # value export string
-        self.strL = strL  # rivt-string list
-        self.valL = []  # value blocklist
-        self.folderD = folderD
-        self.setsectD = setsectD
-        self.setcmdD = setcmdD
-        self.rivtD = rivtD
-
-    def r_rst(self, typeS: str, cmdL: list, methL: list, tagL: list):
-        """parse rivt-string to reST
-
-        Args:
-            typeS (str): rivt-string type
-            cmdL (list): command list
-            methL (list): method list
-            tagL (list): tag list
-        """
-        locals().update(self.rivtD)
-        uL = []  # command arguments
-        indxI = -1  # method index
-        _rgx = r"\[([^\]]+)]_"  # find tags
-
-        for uS in self.strL:
-            if uS[0:2] == "##":
-                continue  # remove comment
-            uS = uS[4:]  # remove indent
-            if len(uS) == 0:
-                if len(self.valL) > 0:  # print value table
-                    fltfmtS = ""
-                    hdrL = ["variable", "value", "[value]", "description"]
-                    alignL = ["left", "right", "right", "left"]
-                    self._vtable(self.valL, hdrL, "rst", alignL, fltfmtS)
-                    self.valL = []
-                    self.restS += "\n\n"
-                    self.rivtvalD.update(locals())
-                    continue
-                else:
-                    # self.restS += "?x?vspace{7pt}"
-                    self.restS += "\n"
-                    continue
-            try:
-                if uS[0] == "#":
-                    continue  # remove comment
-            except:
-                self.restS += "\n"
-                continue
-            if uS.strip() == "[literal]_":
-                continue
-            if re.search(_rgx, uS):  # check for tag
-                utgS = self._tags(uS, tagL)
-                self.restS += utgS.rstrip() + "\n"
-                continue
-            if typeS == "values":  # chk for values
-                self.setcmdD["saveB"] = False
-                if "=" in uS and uS.strip()[-2] == "||":  # value to file
-                    uS = uS.replace("||", " ")
-                    self.setcmdD["saveB"] = True
-                if "=" in uS:  # assign value
-                    uL = uS.split("|")
-                    self._vassign(uL)
-                    continue
-            if typeS == "table":  # check for table
-                if uS[0:2] == "||":
-                    uL = uS[2:].split("|")
-                    indxI = cmdL.index(uL[0].strip())
-                    methL[indxI](uL)
-                    continue
-                else:
-                    exec(uS)  # exec table code
-                    continue
-            if uS[0:2] == "||":  # check for cmd
-                # print(f"{cmdL=}")
-                uL = uS[2:].split("|")
-                indxI = cmdL.index(uL[0].strip())
-                methL[indxI](uL)
-                continue  # call any cmd
-
+                    if typeS != "table":  # skip table print
+                print(uS)
+                self.calcS += uS.rstrip() + "\n"
             self.rivtD.update(locals())
-            if typeS != "table":  # skip table prnt
-                self.restS += uS.rstrip() + "\n"
 
-    def i_rst(self) -> tuple:
-        """parse insert-string
+                    if len(self.valL) > 0:  # print value table
+            hdrL = ["variable", "value", "[value]", "description"]
+            alignL = ["left", "right", "right", "left"]
+            self._vtable(self.valL, hdrL, "rst", alignL)
+            self.valL = []
+            print(uS.rstrip(" "))
+            self.calcS += " \n"
+            self.rivtD.update(locals())
+            continue
+        else:
+            print(" ")
+            self.calcS += "\n"
+            continue
 
-        Returns:
-            calcS (list): utf formatted calc-string (appended)
-            setsectD (dict): section settings
-            setcmdD (dict): command settings
-
-        convert rivt-strings to reST strings
-
-        Args:
-        :param exportS (str): stores values that are written to file
-        :param strL (list): calc rivt-strings
-        folderD (dict): folder paths
-        setcmdD (dict): command settings
-        setsectD (dict): section settings
-        rivtD (dict): global rivt dictionary
-
-        """
-
-        icmdL = ["text", "table", "image"]
-        imethL = [
-            self._itext,
-            self._itable,
-            self._iimage,
-        ]
-
-        self._parseRST("insert", icmdL, imethL, itagL)
-        return self.restS, self.setsectD, self.setcmdD
-
-    def v_rst(self) -> tuple:
-        """parse value-string and set method
-
-        Return:
-        calcS (list): utf formatted calc-string (appended)
-        setsectD (dict): section settings
-        setcmdD (dict): command settings
-        rivtD (list): calculation results
-        exportS (list): value strings for export
-        """
-
-        locals().update(self.rivtD)
-        vcmdL = ["config", "value", "data", "func", "text", "table", "image"]
-        vmethL = [
-            self._vconfig,
-            self._vvalue,
-            self._vdata,
-            self._vfunc,
-            self._itext,
-            self._itable,
-            self._iimage,
-        ]
+            if typeS == "values":
+        self.setcmdD["saveB"] = False
+        if "=" in uS and uS.strip()[-2] == "||":  # set save flag
+            uS = uS.replace("||", " ")
+            self.setcmdD["saveB"] = True
+        if "=" in uS:  # just assign value
+            uL = uS.split("|")
+            self._vassign(uL)
+            continue
+    if typeS == "table":
+        if uS[0:2] == "||":  # check for command
+            uL = uS[2:].split("|")
+            indxI = cmdL.index(uL[0].strip())
+            methL[indxI](uL)
+            continue
+        else:
+            exec(uS)  # otherwise exec Python code
+            continue
 
         self._parseRST("values", vcmdL, vmethL, vtagL)
         self.rivtD.update(locals())
         return self.restS, self.setsectD, self.setcmdD, self.rivtD, self.exportS
 
-    def t_rst(self) -> tuple:
-        """parse table-strings
+    def t_parse(self):
+        """convert table-string to UTF8 calc-string
 
-        Return:
-            calcS (list): utf formatted calc-string (appended)
-            setsectD (dict): section settings
-            setcmdD (dict): command settings
-            rivtD (list): calculation values
+            :return string rvtS: utf string
         """
 
-        tcmdL = ["text", "table", "image"]
-        tmethL = [self._itext, self._itable, self._iimage]
+        locals().update(self.rivtD)
 
-        self._parseUTF("table", tcmdL, tmethL, ttagL)
-
-        return self.calcS, self.setsectD, self.setcmdD, self.rivtD

@@ -16,13 +16,13 @@ import rivt.text as rv
  
 This Python module exposes four API methods:
     
-rv.R(rs) - specify repo and report information (occurs first and only once)
-rv.I(rs) - insert static text, images, tables and math
-rv.V(rs) - calculate values from equations
-rv.T(rs) - calculate tables and functions using Python statements 
+rv.R(rvtS) - specify repo and report information (occurs first and only once)
+rv.I(rvtS) - insert static text, images, tables and math
+rv.V(rvtS) - calculate values from equations
+rv.T(rvtS) - calculate tables and functions using Python statements 
 
 A rivt document is made up of an arbitrary collection of the four methods. Each
-method takes a single argument rs with type literal string. When running in an
+method takes a single literal string argument, rvtS. When running in an
 IDE (e.g. VSCode), methods can be run interactively using the standard cell
 decorator (# %%). Parameters in rv.R() will generate documents in UTF, PDF or
 HTML formats.
@@ -124,7 +124,7 @@ used for navigation (see tags for syntax).
  method             settings, snippet prefix
 ======= ===================================================================
 
-repo    rv.R("""label | folder;default | int;utf;pdf;html;both | width,n
+repo    rv.R("""label | folder;default | int;utf;pdf;html;both | width,page
 rvr
                 ||text ||table ||github ||project ||append
 

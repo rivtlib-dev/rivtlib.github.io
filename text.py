@@ -7,83 +7,85 @@ import os
 import sys
 import logging
 import warnings
+import fnmatch
 from pathlib import Path
 from collections import deque
-import rivt.classes as clsM
-import rivt.commands as cmdM
-import rivt.tags as tagM
-import rivt.write as wrtM
+import rivt.classes as Cls
+import rivt.commands as Cmd
+import rivt.tags as Tag
+import rivt.write as Wrt
 
 print(f"sys.argv=")
 try:
     docfileS = sys.argv[1]
 except:
     docfileS = sys.argv[0]
-if Path(docfileS).name == "r0101.py":
-    docfileS = "./tests/rivt_test01/text/rv0101_test01/r0101.py"
+if Path(docfileS).name == "r0101t.py":
+    docP = Path("./tests/rivt_test01/text/rv0101_test01/r0101t.py")
 elif Path(docfileS).name == "-o":
-    docfileS = "./tests/rivt_test01/text/rv0101_test01/r0101.py"
+    docP = Path("./tests/rivt_test01/text/rv0101_test01/r0101t.py")
 elif ".py" not in docfileS:
     import __main__
     docfileS = __main__.__file__
     # print(dir(__main__))
 
 # files and paths
-docfileP = Path(docfileS)
-cwdP = Path(os.getcwd())
-docbaseS = docfileP.name  # file basename
-docfolderP = Path(os.path.dirname(docfileP))
-docP = docfolderP.parent  # calc folder path
+docbaseS = docfileS.split(".py")[0]
+docP = Path(os.getcwd(), docfileS)
+projectP = docP.parent.parent.parent  # rivt project folder path
+bakP = docP.parent / ".".join((docbaseS, "bak"))
+siteP = projectP / "site"  # site folder path
+reportP = projectP / "report"  # report folder path
+rivtcalcP = Path("rivt.text.py").parent  # rivt package path
 
-rivtprojectP = docfolderP.parent.parent  # rivt project folder path
-docbakP = docfolderP / ".".join((docbaseS, "bak"))
-descripS = docbaseS.split("_")[1]
-docconfigP = docP / "rv0000"  # doc config
+prfxS = docbaseS[0:3]
+for fileS in os.listdir(projectP / "resource"):
+    if fnmatch.fnmatch(fileS, prfxS + "_*"):
+        resourceP = Path(fileS)  # resource folder path
+resourceL = (resourceP, "default")
+doctitleS = docbaseS.split("_")[1]
+doctitleS = doctitleS.replace("-", " ")
+divtitleS = resourceP.split("_", 1)[1]
+divtitleS = divtitleS.replace("-", " ")
 
-resourceS = "r" + str(docbaseS[1:3])
-resourceP = rivtprojectP / "resource"  # binary folder path
-resourcefolderP = resourceP / resourceS  # a binary source folder
-resourceconfigP = resourceP / "r00"  # log and report config folder
-
-siteP = rivtprojectP / "site"  # site folder path
-reportP = rivtprojectP / "reports"  # report folder path
-rivtcalcP = Path("rivt.rvtext.py").parent  # rivt package path
-# initialize strings
-rvtS = """"""  # rivtText string
-utfS = """"""  # utf accumulating string
-rstS = """"""  # reST accumulating string
-valuexS = """"""  # values accumulating string
-# initialize dicts
-rivtvalD = {}  # all persistent computed values
-foldersD = {}  # folders
-# folder names
-for item in ["docfileP", "docconfigP", "binfolderP", "binconfigP", "reportP", "siteP"]:
-    foldersD[item] = eval(item)
-# tag settings
-tagcountD = {
-    "divnumS": docbaseS[1:3],  # division number
-    "subnumS": docbaseS[3:5],  # subdivision number
+# globals
+folderD = {}  # folders
+for item in ["docP", "resourceP", "reportL", "siteP", "projectP"]:
+    folderD[item] = eval(item)
+incrD = {
     "docnumS": docbaseS[1:5],  # doc number
-    "doctitleS": "rivt Document",  # doc title
-    "methodtitleS": "rivt section",  # section title
+    "doctitleS": doctitleS,  # doc title
+    "divtitleS": divtitleS,  # section title
     "secnumI": 0,  # section number
-    "secwidthI": 80,  # utf section width
+    "widthI": 80,  # utf printing width
     "equI": 0,  # equation number
     "tableI": 0,  # table number
     "fignumI": 0,  # figure number
     "ftqueL": deque([1]),  # footnote number
     "countI": 0,  # footnote counter
-    "decvI": 2,  # decimals for variables
-    "decrI": 2,  # decimals for results
-    "subsvalsB": False,  # substitute values
-    "savevalsB": False  # save values to file
+    "deceI": 2,  # equation decimals
+    "decrI": 2,  # results decimals
+    "subB": False,  # substitute values
+    "saveB": False,  # save values to file
+    "pdf": (True, "pdf"),  # read file, write reST
+    "html": (True, "html"),
+    "both": (True, "both"),
+    "utf": (True, "utf"),
+    "inter": (False, "inter")
 }
+rvtS = """"""  # rivtText method string
+rvtfileS = """"""  # full rivt file input
+utfS = """"""  # utf output string
+rstS = """"""  # reST output string
+valS = """"""  # values string for export
+localD = {}  # local dictionary
+
 # logging
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
     datefmt="%m-%d %H:%M",
-    filename=resourceconfigP / "error_log.txt",
+    filename=resourceP.parent / "error_log.txt",
     filemode="w",
 )
 logconsole = logging.StreamHandler()
@@ -92,88 +94,87 @@ formatter = logging.Formatter("%(levelname)-8s %(message)s")
 logconsole.setFormatter(formatter)
 logging.getLogger("").addHandler(logconsole)
 warnings.filterwarnings("ignore")
-dshortP = Path(*Path(docfolderP).parts[-2:])
-bshortP = Path(*Path(resourcefolderP).parts[-2:])
-lshortP = Path(*Path(resourceconfigP).parts[-2:])
+dshortP = Path(*Path(docP).parts[-2:])
+rshortP = Path(*Path(resourceP).parts[-2:])
 # check that calc and file directories exist
-if docfileP.exists():
-    logging.info(f"""rivt file path : {docfileP}""")
+if docP.exists():
+    logging.info(f"""rivt file path : {docP}""")
 else:
-    logging.info(f"""rivt file path not found: {docfileP}""")
+    logging.info(f"""rivt file path not found: {docP}""")
 
-if resourcefolderP.exists:
-    logging.info(f"""resource path: {resourcefolderP}""")
+if resourceP.exists:
+    logging.info(f"""resource path: {resourceP}""")
 else:
-    logging.info(f"""resource path not found: {resourcefolderP}""")
+    logging.info(f"""resource path not found: {resourceP}""")
 logging.info(f"""text folder short path: {dshortP}""")
-logging.info(f"""log forlder short path: {lshortP}""")
+logging.info(f"""log folder short path: {rshortP.parent}""")
 
-# backup doc file
-with open(docfileP, "r") as f2:
+# write backup doc file
+with open(docP, "r") as f2:
     rivtS = f2.read()
     rivtL = f2.readlines()
-with open(docbakP, "w") as f3:
+with open(bakP, "w") as f3:
     f3.write(rivtS)
-logging.info("""rivt file read and backed up to text folder""")
+logging.info(f"""rivt file backup written: {rshortP / bakP}""")
 print(" ")
-# set some defaults
-restL = ["pdf", "html", "both"]
-pubS = "inter"
-methodS = "R"
 
 
-def method_heading(sectS, methodS):
-    """method heading settings
+def method_heading(hdrS, methodS, overrideB):
+    """set method heading
 
     Args:
         :param hdrS: first line of method
         :type hdrS: str
     """
 
-    global utfS, rstS, pubS, tagcountD, restL
+    global outputS, rvtfileS, rvtS, utfS, rstS, valS, localD, folderD, incrD
 
-    if sectS[0:2] == "--":
+    if hdrS[0:2] == "--":
         utfhS = "\n"
-    elif sectS[0:1] == "-":
-        headS = sectS[1:]
+    elif hdrS[0:1] == "-":
+        headS = hdrS[1:]
         utfhS = "\n" + headS + "\n"
     else:
-        snumI = tagcountD["secnumI"]+1
-        tagcountD["secnumI"] = snumI
+        snumI = incrD["secnumI"]+1
+        incrD["secnumI"] = snumI
         docnumS = "[" + tagcountD["docnumS"]+"]"
-        methodS = tagcountD["methodtitleS"]
+        methodS = incrD["methodtitleS"]
         compnumS = docnumS + " - " + str(snumI)
-        widthI = tagcountD["secwidthI"] - 3
+        widthI = incrD["secwidthI"] - 3
         headS = " " + methodS + compnumS.rjust(widthI - len(methodS))
-        bordrS = tagcountD["secwidthI"] * "_"
-        utfhS = "\n" + bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
-        utfS += utfhS
-        print(utfhS)
+        bordrS = incrD["secwidthI"] * "_"
+        hdS = "\n" + bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
 
-    if pubS in restL:
-        rsthS = (
-            ".. raw:: latex"
-            + "\n\n"
-            + "   ?x?vspace{.2in}"
-            + "   ?x?textbf{"
-            + methodS
-            + "}"
-            + "   ?x?hfill?x?textbf{SECTION "
-            + compnumS
-            + "}\n"
-            + "   ?x?newline"
-            + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
-            + "\n\n"
-        )
-        rstS += rsthS
+    if not overrideB:
+        if outputS[0]:
+            hdS = (
+                ".. raw:: latex"
+                + "\n\n"
+                + "   ?x?vspace{.2in}"
+                + "   ?x?textbf{"
+                + methodS
+                + "}"
+                + "   ?x?hfill?x?textbf{SECTION "
+                + compnumS
+                + "}\n"
+                + "   ?x?newline"
+                + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
+                + "\n\n"
+            )
+
+    return hdS
 
 
-def R(rvrS: str):
-    """process a Repo string and determine output type
+# set some defaults
+outputS = (False, "inter")
+
+
+def R(rS: str):
+    """process a Repo string and evaluate output type
 
     R('''section label | utf;pdf;html;inter | page#
 
-        ||text, ||table, ||project, ||append, ||github 
+        ||text, ||table, ||project, ||append, ||github
 
     ''')
 
@@ -183,49 +184,62 @@ def R(rvrS: str):
     :rtype: str
     """
 
-    global utfS, rstS, valuexS, rivtvalD, foldersD, tagcountD, pubS, restL
+    global outputS, rvtfileS, rvtS, utfS, rstS, valS, localD, folderD, incrD
 
-    rvr1L = [i.strip() for i in rvrS[0].split("|")]    # first line parameters
-    sectS = rvr1L[0].strip()
-    pubS = rvr1L[1].strip()
-    pageS = rvr1L[2].strip()
     methodS = "R"
-    cmdL = cmdM.rvcmds("R")                 # returns list of valid commands
-    tagL = tagM.rvtags("R")                 # returns list of valid tags
-    rvrL = rvrS.split("\n")                 # list of rivt string lines
+    outputL = ["pdf", "html", "inter", "utf", "both", "site", "report"]
 
-    hS = method_heading(sectS, methodS)     # get_heading
+    rL = rS.split()
+    r1L = [i.strip() for i in rL[0].split("|")]         # first line parameters
 
-    utfC = clsM.RvTextUtf()
-    for i in rvrL[1:]:
-        rS = utfC.rparseutf(i)
+    if r1L[1] != "default":                             # resource folders
+        folderD[resourceL][1] = r1L[1]
+    if incrD[r1L[2]] in outputL:
+        outputS = incrD[r1L[2]]
+    else:
+        outputS = (False, "utf")
+
+    incrD["widthI"] = int(r1L[3].split(",")[0])         # utf print width
+    pageS = r1L[3].split(",")[1]                        # starting page
+
+    utfC = Cls.RvTextUtf()                              # section to print utf
+    rvtS += method_heading(r1L, methodS, True)          # get_heading
+    for i in rL[1:]:
+        rS = utfC.r_utf(rL)
         utfS += rS
-    print(utfS)
+    print(rvtS)
 
-    if pubS != "inter":
-        utfoutP = Path(calcfileP / "README.txt")
+    if outputS[0]:                                      # file to utf (readme)
+        utfoutP = Path(docP.parent / "README.txt")
         with open(utfoutP, "wb") as f1:
             f1.write(utfS.encode("UTF-8"))
-        wrtM.gen_utf(rivtL)
+        Wrt.gen_utf(rivtL)
         logging.info("utf calc written, program complete")
         print(utfS)
         print("", flush=True)
         os.exit(1)
 
-    if pubS == "pdf" or pubS == "both":
+    if pubS == "pdf" or pubS == "both":                 # file to reST
         rcalc = init(rvS)
         rcalcS, _setsectD = rcalc.r_rst()
         rstcalcS += rcalcS
-        wrtM.gen_rst(rivtL)
+        Wrt.gen_rst(rivtL)
         print("exit")
         os.exit(1)
 
-    if pubS == "site" or pubS == "both":
+    if pubS == "pdf" or pubS == "both":                 # file to pdf
         rcalc = init(rvS)
-        rcalcS, setsectD = rcalc.r_rst()
-        wrtM.gen_rst(rivtL)
+        rcalcS, _setsectD = rcalc.r_rst()
         rstcalcS += rcalcS
-        os.exit(1)
+        Wrt.gen_rst(rivtL)
+        print("exit")
+
+    if pubS == "pdf" or pubS == "both":                 # file to html
+        rcalc = init(rvS)
+        rcalcS, _setsectD = rcalc.r_rst()
+        rstcalcS += rcalcS
+        Wrt.gen_rst(rivtL)
+        print("exit")
 
     return rS
 

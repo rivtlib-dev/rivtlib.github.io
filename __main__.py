@@ -73,9 +73,8 @@ if __name__ == "__main__":
                 docfileS = fileS
                 docbaseS = docfileS.split(".py")[0]
                 docP = Path(os.getcwd(), fileS)
-                docfolderP = Path(os.getcwd())
-            print("MAIN  current folder: ", docfolderP)
-            print("MAIN  rivt file name: ", docfileS)
+            print("MAIN  current folder: ", docP.parent)
+            print("MAIN  rivt file name: ", docP.name)
             importlib.import_module(docbaseS)
     except ImportError as error:
         print("ERROR ------------ rivt file not found ----------------------")

@@ -1,9 +1,4 @@
-import os
 import sys
-import csv
-import textwrap
-import subprocess
-import tempfile
 import re
 import logging
 import numpy.linalg as la
@@ -23,7 +18,6 @@ from tabulate import tabulate
 from pathlib import Path
 from IPython.display import display as _display
 from IPython.display import Image as _Image
-
 try:
     from PIL import Image as PImage
     from PIL import ImageOps as PImageOps
@@ -39,94 +33,28 @@ class RvTextUtf:
 
     def __init__(self):
 
-        locals().update(self.rivtD)
-        uL = []  # command arguments
-        indxI = -1  # method index
-        _rgx = r"\[([^\]]+)]_"  # find tags
+        # _rgx = r"\[([^\]]+)]_"  # find tags
 
-        for uS in self.strL:
-            if uS[0:2] == "##":
-                continue  # remove review comment
-            uS = uS[4:]  # remove indent
-            if len(uS) == 0:
-                if len(self.valL) > 0:  # print value table
-                    hdrL = ["variable", "value", "[value]", "description"]
-                    alignL = ["left", "right", "right", "left"]
-                    self._vtable(self.valL, hdrL, "rst", alignL)
-                    self.valL = []
-                    print(uS.rstrip(" "))
-                    self.calcS += " \n"
-                    self.rivtD.update(locals())
-                    continue
-                else:
-                    print(" ")
-                    self.calcS += "\n"
-                    continue
-            try:
-                if uS[0] == "#":
-                    continue  # remove comment
-            except:
-                print(" ")  # if uS[0] throws error
-                self.calcS += "\n"
-                continue
-            if re.search(_rgx, uS):  # check for tag
-                utgS = self._tags(uS, tagL)
-                print(utgS.rstrip())
-                self.calcS += utgS.rstrip() + "\n"
-                continue
-            if typeS == "values":
-                self.setcmdD["saveB"] = False
-                if "=" in uS and uS.strip()[-2] == "||":  # set save flag
-                    uS = uS.replace("||", " ")
-                    self.setcmdD["saveB"] = True
-                if "=" in uS:  # just assign value
-                    uL = uS.split("|")
-                    self._vassign(uL)
-                    continue
-            if typeS == "table":
-                if uS[0:2] == "||":  # check for command
-                    uL = uS[2:].split("|")
-                    indxI = cmdL.index(uL[0].strip())
-                    methL[indxI](uL)
-                    continue
-                else:
-                    exec(uS)  # otherwise exec Python code
-                    continue
-            if uS[0:2] == "||":  # check for command
-                uL = uS[2:].split("|")
-                indxI = cmdL.index(uL[0].strip())
-                methL[indxI](uL)
-                continue
+        a = 1
 
-            if typeS != "table":  # skip table print
-                print(uS)
-                self.calcS += uS.rstrip() + "\n"
-            self.rivtD.update(locals())
+    def r_utf(self, strL, folderD, incrD):
+        """process rivt string to utf
 
-    def r_utf(self, strL: list, folderD: dict, tagvalD: dict,
-              cmdD: dict, cmdL: list, methL: list):
-        """_summary_
-
-        :param list strL: _description_
-        :param dict folderD: _description_
-        :param dict tagD: _description_
-        :param list strL: _description_
-        :param dict cmdD: _description_
-        :param list cmdL: _description_
-        :param list methL: _description_
-        :return _type_: _description_
+        :param list strL: split rivt string
+        :param dict folderD: folder paths
+        :param dict incrD: format numbers that increment
+        :return string rvtS: utf string
         """
 
-        self.utfS = """"""  # utf calc string
         self.strL = strL
         self.folderD = folderD
-        self.tagD = tagD
-        self.valL = []  # value list
+        self.incrD = incrD
 
-        # get valid tags and commands
-        tagL = tagM.rvtags(typeS)
+        cmdL = ["project", "github", "append"]
+        tagL = ["_[new]", "_[url]", "_[[readme]]", "_[[end]]"]
 
         # get valid commands
+
         for uS in self.strL:
             if uS[0:2] == "##":
                 continue  # remove review comment
@@ -145,9 +73,9 @@ class RvTextUtf:
 
             self.utfS += uS.rstrip() + "\n"
 
-        return self.calcS, self.setsectD
+        return rvtS, self.calcS, self.incrD
 
-    def i_utf(self, strL: list, folderD, cmdD, sectD):
+    def i_utf(self, strL, folderD, incrD):
         """convert insert-string to UTF8 calc-string
 
         Args:
@@ -163,7 +91,7 @@ class RvTextUtf:
         self.sectD = sectD
         self.cmdD = cmdD
 
-    def v_utf(self, strL: list, vL: list, folderD, cmdD, sectD):
+    def v_utf(self, strL, folderD, incrD, localD):
         """convert value-string to UTF8 calc-string
 
         Args:
@@ -174,6 +102,7 @@ class RvTextUtf:
             vL (list): configuration parameters
         """
 
+        locals().update(self.rivtD)
         self.utfS = """"""  # utf calc string
         self.strL = strL
         self.folderD = folderD
@@ -458,7 +387,7 @@ class RvTextUtf:
         except:
             pass
 
-    def t_utf(self, strL: list, folderD, cmdD, sectD):
+    def t_utf(self,  trL, folderD, incrD, localD):
         """convert table-string to UTF8 calc-string
 
         Args:
@@ -468,6 +397,7 @@ class RvTextUtf:
             sectD (dict): section settings
         """
 
+        locals().update(self.rivtD)
         self.utfS = """"""  # utf calc string
         self.strL = strL
         self.folderD = folderD

@@ -11,9 +11,8 @@ import fnmatch
 from pathlib import Path
 from collections import deque
 import rivt.classes as Cls
-import rivt.commands as Cmd
-import rivt.tags as Tag
-import rivt.write as Wrt
+import rivt.cmd_utf as Cutf
+import rivt.cmd_rst as Crst
 
 print(f"sys.argv=")
 try:
@@ -162,7 +161,7 @@ def method_heading(hdrS, methodS, overrideB):
                 + "\n\n"
             )
 
-       rgx = r"\[\d\d\]"
+        rgx = r"\[\d\d\]"
         nameSS = hdrS
         snumSS = ""
         cnumSS = ""
@@ -201,9 +200,6 @@ def method_heading(hdrS, methodS, overrideB):
                 )
                 bordrS = widthI * "_"
                 uS = headS + "\n" + bordrS + "\n"
-
-
-
 
     return hdS
 

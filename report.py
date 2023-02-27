@@ -1,10 +1,17 @@
+#! python
+
+"""
+    Collate pdf docs into a report
+"""
+
 #!python
 """ rivt write methods for pdf and html files"""
 
+
+
+
 import os
 import time
-
-
 def write_utf(utfS):
     pass
 

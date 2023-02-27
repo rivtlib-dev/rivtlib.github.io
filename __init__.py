@@ -206,13 +206,14 @@ Values Format:                Applies only to Values rivt-string
 a = n | unit, alt | descrip   Tag is =; units and description: _v
 a <= b + c | unit, alt | n,n  tag is <=; units and decimals: _=
 
-Text Format:                  Applies to I,V and T methods
+Text Line Format:             Applies to I,V and T methods
 text _[p]                     paragraph heading: _p
 text _[l]                     literal text: _l
 text _[i]                     italic: _i
 text _[b]                     bold: _b
-text _[r]                     right justify line of text: _r
-text _[c]                     center line of text: _c
+text _[r]                     right justify text: _r
+text _[m]                     center text: _m
+text _[c]                     code: _c
 text _[-]                     draw horizontal line: _-
 text _[#]                     insert footnote, autonumber: _#
 text _[foot]                  footnote description: _o
@@ -233,7 +234,7 @@ _[time]                       insert time
 
 Blocks                        tag precedes first line of block
 ------                        ------------------------------------------
-Text format:                  applies to I,V and T method
+Text Block Format:            applies to I,V and T method
 _[[r]]                        right justify text block: _[[r
 _[[c]]                        center text block: _[[c
 _[[lit]]                      literal block: _[[l

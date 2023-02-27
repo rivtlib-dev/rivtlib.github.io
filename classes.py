@@ -62,7 +62,7 @@ class RivtParse:
         rstS = """"""
         for uS in self.strL:
             if uS[0:2] == "##":
-                continue    # remove review comments
+                continue                    # remove review comments
             uS = uS[4:]                     # remove indent
 
             if uS[0:2] == "||":             # check commands
@@ -103,7 +103,56 @@ class RivtParse:
         cmdL = ["table", "text", "image1", "image2",]
 
         tagL = ["new]", "line]", "link]", "lit]", "foot]", "url]", "lnk]",
-                "r]", "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]",
+                "r]", "m]", "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]",
+                "[r]]", "[c]]", "[lit]]", "[tex]]", "[texm]]", "[end]]"]
+
+        utfS = """"""
+        rstS = """"""
+        for uS in self.strL:
+            if uS[0:2] == "##":
+                continue                    # remove review comments
+            uS = uS[4:]                     # remove indent
+
+            if uS[0:2] == "||":             # check commands
+                usL = uS[2:].split("|")
+                cmdS = usL[0].strip()
+                if cmdS in cmdL:
+                    rvttS = cutf.parsecmd(usL, cmdS)
+                    utfS += rvttS + "\n"
+                    if self.outputS in self.outputL:
+                        rvttS = crst.parsecmd(usL, cmdS)
+                        rstS += rvttS + "\n"
+                    continue
+            rstS = uS
+            utfS = uS
+
+            if "_[" in uS:                  # check tags
+                usL = uS.split("_[")
+                tagS = usL[1].strip()
+                if tagS in tagL:
+                    rvttS = cutf.parsetag(usL[0], tagS)
+                    utfS += rvttS + "\n"
+                    if self.outputS in self.outputL:
+                        rvttS = crst.parsetag(usL[0], tagS)
+                        rstS += rvttS + "\n"
+                    continue
+            rstS = uS
+            utfS = uS
+
+            return utfS, rstS, self.folderD, self.incrD
+
+    def v_parse(self):
+        """process values string
+
+            :return string utfS: utf string
+            :return string rstS: reST string
+        """
+
+        cmdL = ["table", "text", "image1", "image2",
+                "value", "list", "function"]
+
+        tagL = ["new]", "line]", "link]", "lit]", "foot]", "url]", "lnk]",
+                "r]",  "m]", "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]",
                 "[r]]", "[c]]", "[lit]]", "[tex]]", "[texm]]", "[end]]"]
 
         utfS = """"""
@@ -139,20 +188,54 @@ class RivtParse:
             rstS = uS
             utfS = uS
 
-            return utfS, rstS, self.folderD, self.incrD
-
-    def v_parse(self):
-        """convert value string to UTF8 calc-string
-
-            :return string rvtS: utf string
-        """
-
         locals().update(self.rivtD)
+        return utfS, rstS, self.folderD, self.incrD
 
     def t_parse(self):
-        """convert table-string to UTF8 calc-string
+        """process table string
 
-            :return string rvtS: utf string
+            :return string utfS: utf string
+            :return string rstS: reST string
         """
 
+        cmdL = ["table", "text", "image1", "image2",]
+
+        tagL = ["new]", "line]", "link]", "lit]", "foot]", "url]", "lnk]",
+                "r]",  "m]", "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]",
+                "[r]]", "[c]]", "[lit]]", "[tex]]", "[texm]]", "[end]]"]
+
+        utfS = """"""
+        rstS = """"""
+        for uS in self.strL:
+            if uS[0:2] == "##":             # remove review comments
+                continue
+            uS = uS[4:]                     # remove indent
+
+            if uS[0:2] == "||":             # check commands
+                usL = uS[2:].split("|")
+                cmdS = usL[0].strip()
+                if cmdS in cmdL:
+                    rvttS = cutf.parsecmd(usL, cmdS)
+                    utfS += rvttS + "\n"
+                    if self.outputS in self.outputL:
+                        rvttS = crst.parsecmd(usL, cmdS)
+                        rstS += rvttS + "\n"
+                    continue
+            rstS = uS
+            utfS = uS
+
+            if "_[" in uS:                  # check tags
+                usL = uS.split("_[")
+                tagS = usL[1].strip()
+                if tagS in tagL:
+                    rvttS = cutf.parsetag(usL[0], tagS)
+                    utfS += rvttS + "\n"
+                    if self.outputS in self.outputL:
+                        rvttS = crst.parsetag(usL[0], tagS)
+                        rstS += rvttS + "\n"
+                    continue
+            rstS = uS
+            utfS = uS
+
         locals().update(self.rivtD)
+        return utfS, rstS, self.folderD, self.incrD

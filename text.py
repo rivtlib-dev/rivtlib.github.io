@@ -5,14 +5,15 @@
 
 import os
 import sys
+import re
 import logging
 import warnings
 import fnmatch
 from pathlib import Path
 from collections import deque
-import rivt.classes as Cls
-import rivt.cmd_utf as Cutf
-import rivt.cmd_rst as Crst
+import rivt.parse as par
+import rivt.cmd_utf as cutf
+import rivt.cmd_rst as crst
 
 print(f"sys.argv=")
 try:
@@ -42,15 +43,17 @@ for fileS in os.listdir(projectP / "resource"):
     if fnmatch.fnmatch(fileS, prfxS + "_*"):
         resourceP = Path(fileS)  # resource folder path
 resourceL = (resourceP, "default")
+docpdfP = resourceP / docbaseS + ".pdf"
 doctitleS = docbaseS.split("_")[1]
 doctitleS = doctitleS.replace("-", " ")
 divtitleS = resourceP.split("_", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
 
-# globals
-folderD = {}  # folders
+# global dicts and vars
+folderD = {}
 for item in ["docP", "resourceP", "reportL", "siteP", "projectP"]:
     folderD[item] = eval(item)
+
 incrD = {
     "docnumS": docbaseS[1:5],  # doc number
     "doctitleS": doctitleS,  # doc title
@@ -117,8 +120,12 @@ with open(bakP, "w") as f3:
 logging.info(f"""rivt file backup written: {rshortP / bakP}""")
 print(" ")
 
+# set defaults
+outputS = (False, "inter")
+outputL = ["pdf", "html", "inter", "utf", "both", "site", "report"]
 
-def method_heading(hdrS, methodS, overrideB):
+
+def func_head(hdrS, methodS, overrideB):
     """set method heading
 
     Args:
@@ -136,7 +143,7 @@ def method_heading(hdrS, methodS, overrideB):
     else:
         snumI = incrD["secnumI"]+1
         incrD["secnumI"] = snumI
-        docnumS = "[" + tagcountD["docnumS"]+"]"
+        docnumS = "[" + incrD["docnumS"]+"]"
         methodS = incrD["methodtitleS"]
         compnumS = docnumS + " - " + str(snumI)
         widthI = incrD["secwidthI"] - 3
@@ -161,72 +168,12 @@ def method_heading(hdrS, methodS, overrideB):
                 + "\n\n"
             )
 
-        rgx = r"\[\d\d\]"
-        nameSS = hdrS
-        snumSS = ""
-        cnumSS = ""
-        widthI = int(_setsectD["swidthI"])
-        headS = hdrS
-        if re.search(rgx, hdrS):
-            nameSS = _setsectD["snameS"] = hdrS[hdrS.find("]") + 2:].strip()
-            snumSS = _setsectD["snumS"] = hdrS[hdrS.find(
-                "[") + 1: hdrS.find("]")]
-            cnumSS = str(_sectD["cnumS"])
-            widthI = int(_setsectD["swidthI"])
-            if _rstB:
-                # draw horizontal line
-                headS = (
-                    ".. raw:: latex"
-                    + "\n\n"
-                    + "   ?x?vspace{.2in}"
-                    + "   ?x?textbf{"
-                    + nameSS
-                    + "}"
-                    + "   ?x?hfill?x?textbf{SECTION "
-                    + snumSS
-                    + "}\n"
-                    + "   ?x?newline"
-                    + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
-                    + "\n\n"
-                )
-                uS = headS
-            else:
-                headS = (
-                    " "
-                    + nameSS
-                    + (cnumSS + " " + ("[" + snumSS + "]")).rjust(
-                        widthI - len(nameSS) - 1
-                    )
-                )
-                bordrS = widthI * "_"
-                uS = headS + "\n" + bordrS + "\n"
-
     return hdS
 
 
-# set some defaults
-outputS = (False, "inter")
-
-
-def R(rS: str):
-    """process a Repo string and evaluate output type
-
-    R('''section label | utf;pdf;html;inter | page#
-
-        ||text, ||table, ||project, ||append, ||github
-
-    ''')
-
-    :param rvrS: triple quoted repo string
-    :type rvrS: str
-    :return: formatted utf string
-    :rtype: str
-    """
+def eval_str(rS, funcS):
 
     global outputS, rvtfileS, rvtS, utfS, rstS, valS, localD, folderD, incrD
-
-    methodS = "R"
-    outputL = ["pdf", "html", "inter", "utf", "both", "site", "report"]
 
     rL = rS.split()
     r1L = [i.strip() for i in rL[0].split("|")]         # first line parameters
@@ -241,156 +188,104 @@ def R(rS: str):
     incrD["widthI"] = int(r1L[3].split(",")[0])         # utf print width
     pageS = r1L[3].split(",")[1]                        # starting page
 
-    utfC = Cls.RvTextUtf()                              # section to print utf
-    rvtS += method_heading(r1L, methodS, True)          # get_heading
-    for i in rL[1:]:
-        rS = utfC.r_utf(rL)
-        utfS += rS
+    rvtS += func_head(r1L, funcS, True)          # get_heading
+    utfM = par.RivtParse(rL[1:], folderD, incrD, outputS, funcS)
+    rS = utfM.str_parse(rL[1:])
+    rvtS += rS
     print(rvtS)
 
-    if outputS[0]:                                      # file to utf (readme)
-        utfoutP = Path(docP.parent / "README.txt")
-        with open(utfoutP, "wb") as f1:
-            f1.write(utfS.encode("UTF-8"))
-        Wrt.gen_utf(rivtL)
+
+def R(rS: str):
+    """process a Repo string and set output type
+
+    :param rS: triple quoted repo string
+    :type rS: str
+    :return: formatted utf string
+    :type: str
+    """
+
+    global outputS, rvtfileS, rvtS, utfS, rstS, valS, localD, folderD, incrD
+
+    eval_str(rS, "R")                               # evaluate rivt string
+    if outputS[0]:                                  # write utf file (readme)
+        docutfP = Path(docP.parent / "README.txt")
+        with open(docP, "r") as f2:
+            rivtL = f2.readlines()
+            rivtS = rivtL[1:].join()
+            exec(rivtS)
+        with open(docutfP, "w") as f3:
+            f3.write(rivtS)
         logging.info("utf calc written, program complete")
         print(utfS)
         print("", flush=True)
         os.exit(1)
 
-    if pubS == "pdf" or pubS == "both":                 # file to reST
-        rcalc = init(rvS)
-        rcalcS, _setsectD = rcalc.r_rst()
-        rstcalcS += rcalcS
-        Wrt.gen_rst(rivtL)
-        print("exit")
-        os.exit(1)
-
-    if pubS == "pdf" or pubS == "both":                 # file to pdf
-        rcalc = init(rvS)
-        rcalcS, _setsectD = rcalc.r_rst()
-        rstcalcS += rcalcS
-        Wrt.gen_rst(rivtL)
-        print("exit")
-
-    if pubS == "pdf" or pubS == "both":                 # file to html
-        rcalc = init(rvS)
-        rcalcS, _setsectD = rcalc.r_rst()
-        rstcalcS += rcalcS
-        Wrt.gen_rst(rivtL)
-        print("exit")
-
-    return rS
+    if outputS == "pdf" or outputS == "HTML" or outputS == "both":   # reST file
+        docutfP = Path(docP.parent / "README.txt")
+        with open(docP, "r") as f2:
+            rivtL = f2.readlines()
+            rivtS = rivtL[1:].join()
+            exec(rivtS)
+        with open(docutfP, "w") as f3:
+            f3.write(rivtS)
+        logging.info("reST calc written")
+        print(utfS)
+        print("", flush=True)
 
 
-def I(rviS: str):
+"""         if outputS == "pdf" or outputS == "both":                 # pdf file
+            rcalc = init(rvS)
+            rcalcS, _setsectD = rcalc.r_rst()
+            rstcalcS += rcalcS
+            Wrt.gen_rst(rivtL)
+            print("exit")
+        if outputS == "html" or outputS == "both":                # html file
+            rcalc = init(rvS)
+            rcalcS, _setsectD = rcalc.r_rst()
+            rstcalcS += rcalcS
+            Wrt.gen_rst(rivtL)
+            print("exit") """
+
+
+def I(rS: str):
     """process an Insert string
 
-    I('''section label | file folder; default
-
-        ||text, ||table, ||image1, ||image2
-    ''')
-
-    :param rviS: triple quoted insert string
-    :type rviS: str
+    :param rS: triple quoted insert string
+    :type rS: str
     :return: formatted utf string
     :rtype: str
     """
 
-    global utfS, rstS, valuexS, rivtvalD, foldersD, tagcountD, pubS, restL
-
-    rvi1L = [i.strip() for i in rviS[0].split("|")]    # first line parameters
-    sectS = rvi1L[0].strip()
-    methodS = "I"
-    cmdL = cmdM.rvcmds("R")                 # returns list of valid commands
-    tagL = tagM.rvtags("R")                 # returns list of valid tags
-    rviL = rviS.split("\n")                 # list of rivt string lines
-
-    hS = method_heading(sectS, methodS)     # get_heading
-
-    utfC = clsM.RvTextUtf()
-    for i in rviL[1:]:
-        iS = utfC.iparseutf(i)
-        utfS += iS
-    print(utfS)
-
-    return iS
+    eval_str(rS, "I")
 
 
-def V(rvvS: str):
-    """processes a Value string
+def V(rS: str):
+    """process a Value string
 
-    V('''section label | file folder; default | sub; nosub | save; nosave
-
-        Value string commands.
-        ||text, ||table, ||image1, ||image2, || values, || list, || functions
-    ''')
-
-    :param rvvS: triple quoted values string
-    :type rvvS: str
+    :param rS: triple quoted values string
+    :type rS: str
     :return: formatted utf string
-    :rtype: str
+    :type: str
     """
 
-    global utfS, rstS, valuexS, rivtvalD, foldersD, tagcountD, pubS, restL
-
-    rvv1L = [i.strip() for i in rviS[0].split("|")]    # first line parameters
-    sectS = rvv1L[0].strip()
-    methodS = "V"
-    cmdL = cmdM.rvcmds("R")                 # returns list of valid commands
-    tagL = tagM.rvtags("R")                 # returns list of valid tags
-    rvvL = rvvS.split("\n")                 # list of rivt string lines
-
-    hS = method_heading(sectS, methodS)     # get_heading
-
-    utfC = clsM.RvTextUtf()
-    for i in rvvL[1:]:
-        vS = utfC.vparseutf(i)
-        utfS += vS
-    print(utfS)
-
-    return vS
+    eval_str(rS, "V")
 
 
-def T(rvtS: str):
-    """processes a Tables string
+def T(rS: str):
+    """process a Tables string
 
-    T('''section label | file folder; default
-        Table string commands
-        ||text, ||table, ||image1, ||image2,
-    ''')
-
-    :param rvtS: triple quoted insert string
-    :type rvtS: str
+    :param rS: triple quoted insert string
+    :type rS: str
     :return: formatted utf or reST string
-    :rtype: str
+    :type: str
 
     """
-    global utfS, rstS, rivtvalD, foldersD, tagL, cmdL, typeS, genrstB
-    cmdL = cmdM.rvcmds("T")  # returns list of valid commands
-    rvL = rvtS.split("\n")  # line list of rivt string
-    tC = tM._T2utf()
 
-    if doctypeS == "term":
-        utfS += _tagM.tags(rvL[0])
-        for i in rvL[1:]:
-            utL = _tagM.tags(i, False)
-            if utL[1]:
-                utfS += utL[0]
-                continue
-            else:
-                utfS += tC.t_utf(cmdL)
-        print(utfS)
+    eval_str(rS, "T")
 
 
-def X(rvxS: str):
-    """processes an Exclude string
-
-    X('''
-
-    An exclude string can be any triple quoted string. It is used for review
-    and debugging. To skip a rivt string processing, change the R,I,V,T to X.
-    ''')
+def X(rS: str):
+    """skip string processing
 
     :param rvxS: triple quoted string
     :type rvxS: str

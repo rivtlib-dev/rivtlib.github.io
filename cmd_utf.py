@@ -31,47 +31,98 @@ except:
     pass
 
 
-def rvtags(typeS: str):
+def parsetag(lineS, tagS):
+    '''
+    ============================ ============================================
+    tag syntax                       description: snippet prefix
+    ============================ ===========================================
 
-    tagL = [
-        "_[new]",
-        "_[line]",
-        "_[link]",
-        "_[lit]",
-        "_[foot]",
-        "_[r]",
-        "_[c]",
-        "_[e]",
-        "_[t]",
-        "_[f]",
-        "_[x]",
-        "_[s]"
-        "_[#]",
-        "_[-]",
-        "_[url]",
-        "_[lnk]",
-        "_[[r]]",
-        "_[[c]]",
-        "_[[lit]]",
-        "_[[tex]]",
-        "_[[texm]]",
-        "_[[end]]",
-    ]
+    Values Format:                Applies only to Values rivt-string
+    a = n | unit, alt | descrip   Tag is =; units and description: _v
+    a <= b + c | unit, alt | n,n  tag is <=; units and decimals: _=
 
-    tagvL = tagL.append("=")
-    tagrL = ["_[[read]]", "_[[end]]"]
+    Text Line Format:             Applies to I,V and T methods
+    text _[p]                     paragraph heading: _p
+    text _[l]                     literal text: _l
+    text _[i]                     italic: _i
+    text _[b]                     bold: _b
+    text _[r]                     right justify text: _r
+    text _[c]                     center text: _c
+    text _[-]                     draw horizontal line: _-
+    text _[#]                     insert footnote, autonumber: _#
+    text _[foot]                  footnote description: _o
 
-    tagD = {
-        "R": tagrL,
-        "I": tagL,
-        "V": tagvL,
-        "T": tagL,
-    }
+    Element Format:               Applies to I,V and T methods
+    caption _[f]                  figure caption, autonumber: _f
+    title _[t]                    table title, autonumber: _t
+    sympy equation _[s]           format sympy equation: _s
+    latex equation _[x]           format LaTeX equation: _x
+    label _[e]                    equation label, autonumber: _e
 
-    return eval(str(tagD[typeS]))
+    Link Format:                  applies to I,V and T methods
+    address, label _[url]         http://xyz, link label: _u
+    reference, label _[lnk]       section, paragraph, title, caption: _k
+    _[new]                        new PDF page: _n
+    _[date]                       insert date
+    _[time]                       insert time
+
+    Blocks                        tag precedes first line of block
+    ------                        ------------------------------------------
+    Text Block Format:            applies to I,V and T method
+    _[[r]]                        right justify text block: _[[r
+    _[[c]]                        center text block: _[[c
+    _[[lit]]                      literal block: _[[l
+    _[[tex]]                      LateX block: _[[x
+    _[[texm]]                     LaTeX math block: _[[m
+    _[[shade]]                    shade text block: _[[s
+    _[[code]]                     code text block: _[[o
+    _[[end]]                      terminates block: _[[e
+
+    '''
+
+    utfS = """"""
+
+    tagD = {"new]": "page", "-]": "line", "lnk]": "link", "url]": "url",
+            "lit]": "literal", "foot]": "footnote", "#]": "footnumber",
+            "r]": "right", "c]": "center",  "x]": "latex", "s]": "sympy",
+            "e]": "equation", "t]": "table", "f]": "figure",
+            "[r]]": "rightblk", "[c]]": "centerblk", "[lit]]": "literalblk",
+            "_tex]]": "latexblk", "[texm]]": "mathblk", "[code]]": "codeblk"}
+
+    func = globals()[tagD[tagS]]
+    utfS = func(lineS)
+
+    return utfS
 
 
-def refs(self, objnumI: int, typeS: str) -> str:
+def parsecmd(lineS, cmdS, strL):
+    """
+    =============================================================== ============
+        command syntax / snippet prefix and description                 methods
+    =============================================================== ============
+
+    || github | repo_name; none | readme; noneparam                        R
+    || project | file_name | /docsfolder; default                          R
+    || append | file_name | ./docfolder; default / resize;default          R
+    || list | file_name  | [:];[x:y]                                       V
+    || values | file_name | [:];[x:y]                                      V
+    || functions | file_name | docs; nodocs                                V
+    || image1 | file_name  | .50                                         I,V,T
+    || image2 | file_name  | .40 | file_name  | .40                      I,V,T
+    || text | file_name | shade; noshade                                 I,V,T
+    || table | file_name |  [:] | 60 r;l;c                               I,V,T
+
+   """
+
+    utfS = """"""
+
+    func = globals()[cmdS]
+    utfS = func(lineS)
+
+    return utfS
+
+
+def refs(self, objnumI, typeS):
     """reference label for equations, tables and figures
 
     Args:
@@ -83,12 +134,12 @@ def refs(self, objnumI: int, typeS: str) -> str:
     """
 
     objnumS = str(objnumI).zfill(2)
-    cnumS = str(self.sectD["cnumS"])
+    cnumS = str(self.incrD["cnumS"])
 
     return typeS + cnumS + "." + objnumS
 
 
-def e_utf(self) -> tuple:
+def equation(self) -> tuple:
     """parse eval-string
 
     Returns:
@@ -99,65 +150,10 @@ def e_utf(self) -> tuple:
 
     ecmdL = ["text", "table", "image"]
     emethL = [self._itext, self._itable, self._iimage]
-    etagL = [
-        "[page]_",
-        "[line]_",
-        "[link]_",
-        "[literal]_",
-        "[foot]_",
-        "[latex]_",
-        "[s]_",
-        "[x]_",
-        "[r]_",
-        "[c]_",
-        "[e]_",
-        "[t]_",
-        "[f]_",
-        "[#]_",
-    ]
 
     self._parseUTF("insert", icmdL, imethL, itagL)
 
     return self.calcS, self.setsectD, self.setcmdD
-
-
-def taglist(lineS: str) -> tuple:
-    """check for tags
-
-    Parameters:
-    lineS: line from rivt file
-
-    Returns:
-    (str, bool): tag or
-
-
-    """
-
-    tagL = [
-        "[page]_",
-        "[line]_",
-        "[link]_",
-        "[foot]_",
-        "[n]_",
-        "[s]_",
-        "[x]_",
-        "[r]_",
-        "[c]_",
-        "[e]_",
-        "[t]_",
-        "[f]_",
-        "[#]_",
-        "[math]__",
-        "[literal]__",
-        "[latex]__",
-        "[r]__",
-        "[c]__",
-    ]
-    try:
-        tag = list(set(tagL).intersection(lineS.split()))[0]
-        return (tag, True)
-    except:
-        return (lineS, False)
 
 
 def label(self, objnumI: int, tagD: dict, typeS: str) -> str:
@@ -181,6 +177,33 @@ def label(self, objnumI: int, tagD: dict, typeS: str) -> str:
         labelS = typeS + cnumSS + "." + objfillS
 
     return labelS
+
+
+def figure():
+    tagL = tagS.strip().split("[f]_")
+    fnumI = int(self.setsectD["fnumI"]) + 1
+    self.setsectD["fnumI"] = fnumI
+    refS = self._label(fnumI, "[ Fig: ") + " ]"
+    spcI = self.setsectD["swidthI"] - len(refS) - len(tagL[0].strip())
+    uS = tagL[0].strip() + " " * spcI + refS
+
+
+def equation():
+    tagL = tagS.strip().split("[e]_")
+    enumI = int(self.setsectD["enumI"]) + 1
+    self.setsectD["enumI"] = enumI
+    refS = self._label(enumI, "[ Equ: ") + " ]"
+    spcI = self.setsectD["swidthI"] - len(refS) - len(tagL[0].strip())
+    uS = tagL[0].strip() + " " * spcI + refS
+
+
+def table():
+    tagL = tagS.strip().split("[t]_")
+    tnumI = int(self.setsectD["tnumI"]) + 1
+    self.setsectD["tnumI"] = tnumI
+    refS = self._label(tnumI, "[Table: ") + " ]"
+    spcI = self.setsectD["swidthI"] - len(refS) - len(tagL[0].strip())
+    uS = tagL[0].strip() + " " * spcI + refS
 
 
 def tags(self, lineS: str, sectD: dict) -> tuple:
@@ -222,27 +245,7 @@ def tags(self, lineS: str, sectD: dict) -> tuple:
     elif tag == "[c]_":  # center text
         tagL = tagS.strip().split("[c]_")
         uS = (tagL[0].strip()).rjust(swidthII)
-    elif tag == "[f]_":  # figure caption
-        tagL = tagS.strip().split("[f]_")
-        fnumI = int(self.setsectD["fnumI"]) + 1
-        self.setsectD["fnumI"] = fnumI
-        refS = self._label(fnumI, "[ Fig: ") + " ]"
-        spcI = self.setsectD["swidthI"] - len(refS) - len(tagL[0].strip())
-        uS = tagL[0].strip() + " " * spcI + refS
-    elif tag == "[e]_":  # equation label
-        tagL = tagS.strip().split("[e]_")
-        enumI = int(self.setsectD["enumI"]) + 1
-        self.setsectD["enumI"] = enumI
-        refS = self._label(enumI, "[ Equ: ") + " ]"
-        spcI = self.setsectD["swidthI"] - len(refS) - len(tagL[0].strip())
-        uS = tagL[0].strip() + " " * spcI + refS
-    elif tag == "[t]_":  # table label
-        tagL = tagS.strip().split("[t]_")
-        tnumI = int(self.setsectD["tnumI"]) + 1
-        self.setsectD["tnumI"] = tnumI
-        refS = self._label(tnumI, "[Table: ") + " ]"
-        spcI = self.setsectD["swidthI"] - len(refS) - len(tagL[0].strip())
-        uS = tagL[0].strip() + " " * spcI + refS
+
     elif tag == "[x]_":  # format tex
         tagL = tagS.strip().split("[x]_")
         txS = tagL[0].strip()
@@ -317,19 +320,6 @@ def rvcmds(typeS: str):
     :param str methodS: _description_
     :return _type_: _description_
     """
-    cmdL = [
-        "project",
-        "report",
-        "github",
-        "append",
-        "table",
-        "text",
-        "image1",
-        "image2",
-        "values",
-        "list",
-        "functions"
-    ]
 
     cmdsetD = {
         "R": [0, 1, 2, 3, 4, 5],

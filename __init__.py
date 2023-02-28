@@ -199,7 +199,6 @@ exclude rv.X("""any text
 
 Methods Format:               Applies only to first line of all methods
 """Section Label | ....       No hyphen denotes section title, autonumber
-"""-Paragraph Label | ....    Single hyphen denotes paragraph heading
 """--reference label | ....   Double hyphen denotes non-printing label
 
 Values Format:                Applies only to Values rivt-string
@@ -212,8 +211,7 @@ text _[l]                     literal text: _l
 text _[i]                     italic: _i
 text _[b]                     bold: _b
 text _[r]                     right justify text: _r
-text _[m]                     center text: _m
-text _[c]                     code: _c
+text _[c]                     center text: _c
 text _[-]                     draw horizontal line: _-
 text _[#]                     insert footnote, autonumber: _#
 text _[foot]                  footnote description: _o
@@ -226,8 +224,8 @@ latex equation _[x]           format LaTeX equation: _x
 label _[e]                    equation label, autonumber: _e
 
 Link Format:                  applies to I,V and T methods
-_[address, label              http://xyz, link label: _u
-_[lnk, user label             section, paragraph, title, caption: _k
+address, label _[url]         http://xyz, link label: _u
+reference, label _[lnk]       section, paragraph, title, caption: _k
 _[new]                        new PDF page: _n
 _[date]                       insert date
 _[time]                       insert time
@@ -241,10 +239,8 @@ _[[lit]]                      literal block: _[[l
 _[[tex]]                      LateX block: _[[x
 _[[texm]]                     LaTeX math block: _[[m
 _[[shade]]                    shade text block: _[[s
-_[[code]]                      code text block: _[[o 
+_[[code]]                     code text block: _[[o 
 _[[end]]                      terminates block: _[[e
-
- within a Table string inserts Python code into doc (omitted by default)
 
 The first line of a rivt file is always import rivt.text as rv. The import
 statement must precede the Repo method rv.R(rs) which is the first method and

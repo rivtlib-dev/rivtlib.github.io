@@ -188,9 +188,9 @@ def eval_str(rS, funcS):
     incrD["widthI"] = int(r1L[3].split(",")[0])         # utf print width
     pageS = r1L[3].split(",")[1]                        # starting page
 
-    rvtS += func_head(r1L, funcS, True)          # get_heading
+    rvtS += func_head(r1L, funcS, True)                 # get_heading
     utfM = par.RivtParse(rL[1:], folderD, incrD, outputS, funcS)
-    rS = utfM.str_parse(rL[1:])
+    rS = utfM.str_parse()
     rvtS += rS
     print(rvtS)
 
@@ -207,44 +207,23 @@ def R(rS: str):
     global outputS, rvtfileS, rvtS, utfS, rstS, valS, localD, folderD, incrD
 
     eval_str(rS, "R")                               # evaluate rivt string
-    if outputS[0]:                                  # write utf file (readme)
+
+    if outputS("utf"):                              # write utf file (readme)
         docutfP = Path(docP.parent / "README.txt")
         with open(docP, "r") as f2:
             rivtL = f2.readlines()
             rivtS = rivtL[1:].join()
             exec(rivtS)
-        with open(docutfP, "w") as f3:
-            f3.write(rivtS)
         logging.info("utf calc written, program complete")
-        print(utfS)
-        print("", flush=True)
         os.exit(1)
 
-    if outputS == "pdf" or outputS == "HTML" or outputS == "both":   # reST file
-        docutfP = Path(docP.parent / "README.txt")
+    if outputS == "pdf" or outputS == "HTML" or outputS == "both":  # reST file
         with open(docP, "r") as f2:
             rivtL = f2.readlines()
             rivtS = rivtL[1:].join()
             exec(rivtS)
-        with open(docutfP, "w") as f3:
-            f3.write(rivtS)
-        logging.info("reST calc written")
-        print(utfS)
+        logging.info(outputS, " utf calc written")
         print("", flush=True)
-
-
-"""         if outputS == "pdf" or outputS == "both":                 # pdf file
-            rcalc = init(rvS)
-            rcalcS, _setsectD = rcalc.r_rst()
-            rstcalcS += rcalcS
-            Wrt.gen_rst(rivtL)
-            print("exit")
-        if outputS == "html" or outputS == "both":                # html file
-            rcalc = init(rvS)
-            rcalcS, _setsectD = rcalc.r_rst()
-            rstcalcS += rcalcS
-            Wrt.gen_rst(rivtL)
-            print("exit") """
 
 
 def I(rS: str):

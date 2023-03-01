@@ -54,20 +54,20 @@ class RivtParse:
             self.tagL = ["new]", "url]"]
             self.blockL = ["[readme]]"]
         elif funcS == "I":
-            self.cmdL = ["table", "text", "image1", "image2",]
-            self.tagL = ["new]", "line]", "link]", "lit]", "foot]", "url]", "lnk]",
-                         "r]", "m]", "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]"]
+            self.cmdL = ["table", "text", "image1", "image2"]
+            self.tagL = ["new]", "link]", "lit]", "foot]", "url]", "lnk]",
+                         "r]", "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]"]
             self.blockL = ["[r]]", "[c]]", "[lit]]", "[tex]]", "[texm]]"]
         elif funcS == "V":
             self.cmdL = ["table", "text", "image1", "image2",
                          "value", "list", "function", "=", "<="]
-            self.tagL = ["new]", "line]", "link]", "lit]", "foot]", "url]", "lnk]",
-                         "r]",  "m]", "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]"]
+            self.tagL = ["new]", "link]", "lit]", "foot]", "url]", "lnk]",
+                         "r]", "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]"]
             self.blockL = ["[r]]", "[c]]", "[lit]]", "[tex]]", "[texm]]"]
         elif funcS == "T":
-            self.cmdL = ["table", "text", "image1", "image2",]
-            self.tagL = ["new]", "line]", "link]", "lit]", "foot]", "url]", "lnk]",
-                         "r]",  "m]", "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]"]
+            self.cmdL = ["table", "text", "image1", "image2"]
+            self.tagL = ["new]", "link]", "lit]", "foot]", "url]", "lnk]",
+                         "r]",  "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]"]
             self.blockL = ["[r]]", "[c]]", "[lit]]", "[tex]]", "[texm]]"]
         else:
             pass
@@ -75,8 +75,14 @@ class RivtParse:
     def str_parse(self):
         """parse insert string
 
-            :return string utfS: utf string
-            :return string rstS: reST string
+            :return utfS: utf string
+            :type utfS: string
+            :return rstS: reST string
+            :type rstS: string
+            :return folderD: folder paths
+            :type folderD: dictionary
+            :return incrD: increment references
+            :type incrD: dictionary
         """
 
         utfS = """"""
@@ -111,10 +117,12 @@ class RivtParse:
                 lineS = usL[0]
                 tagS = usL[1].strip()
                 if tagS in self.tagL:
-                    rvttS = cutf.parsetag(lineS, tagS, self.strL)
+                    rvttS = cutf.parsetag(lineS, tagS,
+                                          self.folderD, self.incrD)
                     utfS += rvttS + "\n"
                     if self.outputS in self.outputL:
-                        rvttS = crst.parsetag(lineS, tagS, self.strL)
+                        rvttS = crst.parsetag(lineS, tagS,
+                                              self.folderD, self.incrD)
                         rstS += rvttS + "\n"
                 if tagS in self.blockL:
                     blockB = True

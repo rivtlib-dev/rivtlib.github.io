@@ -14,7 +14,7 @@ the import statement:
 
 import rivt.text as rv 
  
-This Python module exposes four API methods:
+This Python module exposes four API functions:
     
 rv.R(rvtS) - specify repo and report information (occurs first and only once)
 rv.I(rvtS) - insert static text, images, tables and math
@@ -205,7 +205,7 @@ Values Format:                Applies only to Values rivt-string
 a = n | unit, alt | descrip   Tag is =; units and description: _v
 a <= b + c | unit, alt | n,n  tag is <=; units and decimals: _=
 
-Text Line Format:             Applies to I,V and T methods
+Text Line Format:             Applies to all functions except R()
 text _[p]                     paragraph heading: _p
 text _[l]                     literal text: _l
 text _[i]                     italic: _i
@@ -216,30 +216,28 @@ text _[-]                     draw horizontal line: _-
 text _[#]                     insert footnote, autonumber: _#
 text _[foot]                  footnote description: _o
 
-Element Format:               Applies to I,V and T methods
+Element Format:               
 caption _[f]                  figure caption, autonumber: _f
 title _[t]                    table title, autonumber: _t
 sympy equation _[s]           format sympy equation: _s
 latex equation _[x]           format LaTeX equation: _x
 label _[e]                    equation label, autonumber: _e
 
-Link Format:                  applies to I,V and T methods
+Link Format:                  
 address, label _[url]         http://xyz, link label: _u
 reference, label _[lnk]       section, paragraph, title, caption: _k
-_[new]                        new PDF page: _n
-_[date]                       insert date
-_[time]                       insert time
+_[page]                       new PDF page: _n
+_[date]                       insert date: _d
+_[time]                       insert time: _m
 
 Blocks                        tag precedes first line of block
 ------                        ------------------------------------------
-Text Block Format:            applies to I,V and T method
-_[[r]]                        right justify text block: _[[r
+Text Block Format:            
 _[[c]]                        center text block: _[[c
+_[[code]]                     shaded code block: _[[o 
 _[[lit]]                      literal block: _[[l
 _[[tex]]                      LateX block: _[[x
 _[[texm]]                     LaTeX math block: _[[m
-_[[shade]]                    shade text block: _[[s
-_[[code]]                     code text block: _[[o 
 _[[end]]                      terminates block: _[[e
 
 The first line of a rivt file is always import rivt.text as rv. The import

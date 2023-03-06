@@ -31,60 +31,57 @@ except:
     pass
 
 
-def parsetag(lineS, tagS, folderD, incrD):
+def parse_tag(lineS, tagS, folderD, incrD):
     """
     ============================ ============================================
-    tag syntax                       description
+    tag syntax                      description (max of one tag per line)
     ============================ ============================================
 
-    Values Format:                Applies only to Values rivt-string
-    a = n | unit, alt | descrip   tag is =; units and description
-    a <= b + c | unit, alt | n,n  tag is <=; units and decimals
+    Values Only Formats: 
+    a = n | unit, alt | descrip   assign tag =; units and description
+    a := b + c | unit, alt | n,n  result tag :=; units and decimals
 
-    Format Line of Text:          Applies to I,V,T methods
-    text _[b]                     bold
-    text _[c]                     center text
-    text _[i]                     italic
-    text _[l]                     literal text
+    Format I,V,T Text: 
+    text _[b]                     bold line
+    text _[c]                     center line
+    _[date]                       date insert
+    text _[e]                     equation label, autonumber
+    text _[f]                     figure caption, autonumber
+    text <#>                      footnote, autonumber
+    text _[foot]                  footnote description 
+    _[-]                          horizontal divider insert
+    text _[i]                     italicize line
+    text _[l]                     literal line
+    <reference, label>            internal link, section etc
+    latex equation _[x]           LaTeX equation format
     text _[p]                     paragraph heading
-    text _[r]                     right justify text
-    text _[-]                     draw horizontal line
-    text _[#]                     insert footnote, autonumber
-    text _[foot]                  footnote description
-
-    Format Element:               Applies to I,V,T methods
-    label _[e]                    equation label, autonumber
-    caption _[f]                  figure caption, autonumber
-    sympy equation _[s]           format sympy equation
+    text _[r]                     right justify line
+    <sympy text>                  sympy equation (no commas)
+    _[page]                       new page (PDF)
+    _[time]                       time (insert)
     title _[t]                    table title, autonumber
-    latex equation _[x]           format LaTeX equation
+    <http: address, label>        url reference, http:\\xyz
 
-    Format Link:                  Applies to I,V,T methods
-    _[date]                       insert date
-    _[new]                        new PDF page
-    _[time]                       insert time
-    reference, label _[lnk]       section, paragraph, title, caption
-    address, label _[url]         http://xyz, link label
 
-    Format Block of Text:         Applies to I,V,T method
-    _[[code]]                     code text block
+    Format I,V,T Text Blocks:
     _[[c]]                        center text block
-    _[[end]]                      terminates block
-    _[[lit]]                      literal block
+    _[[o]]                        code text block
+    _[[e]]                        end of block
+    _[[l]]                        literal block
     _[[r]]                        right justify text block
-    _[[tex]]                      LateX block
-    _[[texm]]                     LaTeX math block
+    _[[x]]                        LateX block
+    _[[m]]                        LaTeX math block
 
     """
 
     tagD = {"b]": "bold", "c]": "center", "=": "equal",
             "#]": "footnumber", "foot]": "footnote", "i]": "italic",
             "l]": "literal", "-]": "line", "p]": "paragraph", "r]": "right",
-            "<=": "result", "date]": "date", "new]": "page",
-            "e]": "equation", "f]": "figure", "s]": "sympy", "t]": "table", "x]": "latex",
-            "lnk]": "link", "lit]": "literal", "url]": "url",
-            "[code]]": "codeblk", "[c]]": "centerblk", "[lit]]": "literalblk",
-            "[tex]]": "latexblk", "[texm]]": "mathblk", "[r]]": "rightblk"}
+            ":=": "result", "date]": "date", "page]": "page",
+            "e]": "equation", "f]": "figure", "sym]": "sympy", "t]": "table",
+            "x]": "latex", "lnk]": "link", "l]": "literal", "url]": "url",
+            "[o]]": "codeblk", "[c]]": "centerblk", "[l]]": "literalblk",
+            "[x]]": "latexblk", "[m]]": "mathblk", "[r]]": "rightblk"}
 
     utfS = """"""
     func = globals()[tagD[tagS]]
@@ -94,7 +91,7 @@ def parsetag(lineS, tagS, folderD, incrD):
     return utfL
 
 
-def label(self, objnumI, typeS, folderD, incrD):
+def update_label(self, objnumI, typeS, folderD, incrD):
     """labels for equations, tables and figures
 
         :objnumI (int): equation, table or figure numbers
@@ -150,100 +147,13 @@ def center(lineS, folderD, incrD):
     return lineS, folderD, incrD
 
 
-def equal(lineS, folderD, incrD):
-
-    return lineS, folderD, incrD
-
-
-def footnumber():
-
-    ftnumII = self.setsectD["ftqueL"][-1] + 1
-    self.setsectD["ftqueL"].append(ftnumII)
-    uS = tagS.replace("[x]_", "[" + str(ftnumII) + "]")
-
-
-def footnote():
-
-    tagS = tagS.strip("[foot]_").strip()
-    uS = self.setsectD["ftqueL"].popleft() + tagS
-
+def date(lineS, folderD, incrD):
     pass
 
 
-def italic(lineS, folderD, incrD):
-    """_summary_
-
-    :param lineS: _description_
-    :type lineS: _type_
-    :param folderD: _description_
-    :type folderD: _type_
-    :param incrD: _description_
-    :type incrD: _type_
-    :return: _description_
-    :rtype: _type_
-    """
+def equals(lineS, folderD, incrD):
 
     return lineS, folderD, incrD
-
-
-def literal(lineS, folderD, incrD):
-
-    return lineS, folderD, incrD
-
-
-def line(lineS, folderD, incrD):
-    """_summary_
-
-    :param lineS: _description_
-    :type lineS: _type_
-    """
-    uS = int(folderD["swidthI"]) * "-"
-
-
-def literal():
-    pass
-
-
-def new():
-    uS = int(self.setsectD["swidthI"]) * "."
-
-
-def paragraph():
-    pass
-
-
-def right():
-
-    tagL = tagS.strip().split("[r]_")
-    uS = (tagL[0].strip()).rjust(swidthII)
-    pass
-
-
-def sympy(lineS, folderD, incrD):
-
-    spS = tagL[0].strip()
-    spL = spS.split("=")
-    spS = "Eq(" + spL[0] + ",(" + spL[1] + "))"
-    # sps = sp.encode('unicode-escape').decode()
-    lineS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
-
-    return lineS, folderD, incrD
-
-
-def url():
-
-    tgS = tagS.strip("[link]_").strip()
-    tgL = tgS.split("|")
-    uS = tgL[0].strip() + " : " + tgL[1].strip()
-
-
-def latex():
-
-    tagL = tagS.strip().split("[x]_")
-    txS = tagL[0].strip()
-    # txS = txs.encode('unicode-escape').decode()
-    ptxS = sp.parse_latex(txS)
-    uS = sp.pretty(sp.sympify(ptxS, _clash2, evaluate=False))
 
 
 def equation(lineS, folderD, incrD):
@@ -268,6 +178,98 @@ def figure(lineS, folderD, incrD):
     return lineS, folderD, incrD
 
 
+def footnumber():
+
+    ftnumII = self.setsectD["ftqueL"][-1] + 1
+    self.setsectD["ftqueL"].append(ftnumII)
+    uS = tagS.replace("[x]_", "[" + str(ftnumII) + "]")
+
+
+def footnote():
+
+    tagS = tagS.strip("[foot]_").strip()
+    uS = self.setsectD["ftqueL"].popleft() + tagS
+
+    pass
+
+
+def horizontal(lineS, folderD, incrD):
+    """_summary_
+
+    :param lineS: _description_
+    :type lineS: _type_
+    """
+    uS = int(folderD["swidthI"]) * "-"
+
+
+def italic(lineS, folderD, incrD):
+    """_summary_
+
+    :param lineS: _description_
+    :type lineS: _type_
+    :param folderD: _description_
+    :type folderD: _type_
+    :param incrD: _description_
+    :type incrD: _type_
+    :return: _description_
+    :rtype: _type_
+    """
+
+    return lineS, folderD, incrD
+
+
+def literal(lineS, folderD, incrD):
+
+    return lineS, folderD, incrD
+
+
+def literal():
+    pass
+
+
+def latex():
+
+    tagL = tagS.strip().split("[x]_")
+    txS = tagL[0].strip()
+    # txS = txs.encode('unicode-escape').decode()
+    ptxS = sp.parse_latex(txS)
+    uS = sp.pretty(sp.sympify(ptxS, _clash2, evaluate=False))
+
+
+def link():
+    pass
+
+
+def page():
+    uS = int(self.setsectD["swidthI"]) * "."
+
+
+def paragraph():
+    pass
+
+
+def result():
+    pass
+
+
+def right():
+
+    tagL = tagS.strip().split("[r]_")
+    uS = (tagL[0].strip()).rjust(swidthII)
+    pass
+
+
+def sympy(lineS, folderD, incrD):
+
+    spS = tagL[0].strip()
+    spL = spS.split("=")
+    spS = "Eq(" + spL[0] + ",(" + spL[1] + "))"
+    # sps = sp.encode('unicode-escape').decode()
+    lineS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+
+    return lineS, folderD, incrD
+
+
 def table():
     tagL = tagS.strip().split("[t]_")
     tnumI = int(self.setsectD["tnumI"]) + 1
@@ -275,3 +277,38 @@ def table():
     refS = self._label(tnumI, "[Table: ") + " ]"
     spcI = self.setsectD["swidthI"] - len(refS) - len(tagL[0].strip())
     uS = tagL[0].strip() + " " * spcI + refS
+
+
+def url():
+
+    tgS = tagS.strip("[link]_").strip()
+    tgL = tgS.split("|")
+    uS = tgL[0].strip() + " : " + tgL[1].strip()
+
+
+def codeblk():
+    pass
+
+
+def centerblk():
+    pass
+
+
+def endblk():
+    pass
+
+
+def literalblk():
+    pass
+
+
+def latexblk():
+    pass
+
+
+def mathblk():
+    pass
+
+
+def rightblk():
+    pass

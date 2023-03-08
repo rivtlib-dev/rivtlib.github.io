@@ -48,6 +48,25 @@ class RivtParse:
         self.outputS = outputS  # output type
         self.outputL = ["pdf", "html", "both"]  # reST formats
 
+        self.restS = """"""  # restructured text string
+        self.strL = strL  # rivt-string list
+        self.folderD = folderD
+        self.tagD = tagD
+        strL: list
+        folderD: dict
+        setcmdD: dict
+        setsectD: dict
+        rivtD: dict
+        exportS: str
+        self.restS = """"""  # restructured text string
+        self.exportS = exportS  # value export string
+        self.strL = strL  # rivt-string list
+        self.valL = []  # value blocklist
+        self.folderD = folderD
+        self.setsectD = setsectD
+        self.setcmdD = setcmdD
+        self.rivtD = rivtD
+
         # valid commands and tags
         if funcS == "R":
             self.cmdL = ["project", "github", "append"]

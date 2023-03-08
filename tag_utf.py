@@ -218,15 +218,6 @@ def italic(lineS, folderD, incrD):
     return lineS, folderD, incrD
 
 
-def literal(lineS, folderD, incrD):
-
-    return lineS, folderD, incrD
-
-
-def literal():
-    pass
-
-
 def latex():
 
     tagL = tagS.strip().split("[x]_")
@@ -236,7 +227,16 @@ def latex():
     uS = sp.pretty(sp.sympify(ptxS, _clash2, evaluate=False))
 
 
+def literal(lineS, folderD, incrD):
+
+    return lineS, folderD, incrD
+
+
 def link():
+    pass
+
+
+def paragraph():
     pass
 
 
@@ -244,18 +244,14 @@ def page():
     uS = int(self.setsectD["swidthI"]) * "."
 
 
-def paragraph():
-    pass
-
-
-def result():
-    pass
-
-
 def right():
 
     tagL = tagS.strip().split("[r]_")
     uS = (tagL[0].strip()).rjust(swidthII)
+    pass
+
+
+def result():
     pass
 
 
@@ -277,6 +273,10 @@ def table():
     refS = self._label(tnumI, "[Table: ") + " ]"
     spcI = self.setsectD["swidthI"] - len(refS) - len(tagL[0].strip())
     uS = tagL[0].strip() + " " * spcI + refS
+
+
+def time():
+    pass
 
 
 def url():

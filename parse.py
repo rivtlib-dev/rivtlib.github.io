@@ -33,16 +33,17 @@ logging.getLogger("numexpr").setLevel(logging.WARNING)
 class RivtParse:
     """process rivt-string"""
 
-    def __init__(self, strL, folderD, incrD, outputS, funcS):
+    def __init__(self, strL, folderD, incrD,  funcS, outputS,):
         """process rivt-string to UTF8 calc
 
             :param list strL: split rivt string
             :param dict folderD: folder paths
             :param dict incrD: numbers that increment
             :param dict outputS: output type
+            :param dict outputS: output type
         """
 
-        self.strL = strL        # rvit string list
+        self.strL = strL        # rivt string list
         self.folderD = folderD  # folder paths
         self.incrD = incrD      # incrementing formats
         self.outputS = outputS  # output type
@@ -51,7 +52,6 @@ class RivtParse:
         self.restS = """"""  # restructured text string
         self.strL = strL  # rivt-string list
         self.folderD = folderD
-        self.tagD = tagD
         strL: list
         folderD: dict
         setcmdD: dict
@@ -75,33 +75,33 @@ class RivtParse:
         elif funcS == "I":
             self.cmdL = ["table", "text", "image1", "image2"]
             self.tagL = ["new]", "link]", "lit]", "foot]", "url]", "lnk]",
-                         "r]", "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]"]
-            self.blockL = ["[r]]", "[c]]", "[lit]]", "[tex]]", "[texm]]"]
+                         "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
+                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
         elif funcS == "V":
             self.cmdL = ["table", "text", "image1", "image2",
-                         "value", "list", "function", "=", "<="]
+                         "value", "list", "function", "=", ":="]
             self.tagL = ["new]", "link]", "lit]", "foot]", "url]", "lnk]",
-                         "r]", "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]"]
-            self.blockL = ["[r]]", "[c]]", "[lit]]", "[tex]]", "[texm]]"]
+                         "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
+                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
         elif funcS == "T":
             self.cmdL = ["table", "text", "image1", "image2"]
             self.tagL = ["new]", "link]", "lit]", "foot]", "url]", "lnk]",
-                         "r]",  "c]", "e]", "t]", "f]", "x]", "s]", "#]", "-]"]
-            self.blockL = ["[r]]", "[c]]", "[lit]]", "[tex]]", "[texm]]"]
+                         "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
+                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
         else:
             pass
 
     def str_parse(self):
         """parse insert string
 
-            :return utfS: utf string
-            :type utfS: string
-            :return rstS: reST string
-            :type rstS: string
-            :return folderD: folder paths
-            :type folderD: dictionary
+            :return utfS: utf formatted string
+            :return rstS: reST formatted string
             :return incrD: increment references
-            :type incrD: dictionary
+            :return folderD: folder paths
+            :rtype utfS: string
+            :rtype rstS: string
+            :rtype folderD: dictionary
+            :rtype incrD: dictionary
         """
 
         utfS = """"""
@@ -143,7 +143,7 @@ class RivtParse:
                         rvttS = crst.parsetag(lineS, tagS,
                                               self.folderD, self.incrD)
                         rstS += rvttS + "\n"
-                if tagS in self.blockL:
+                if tagS[0] == "[":
                     blockB = True
                 continue
             else:

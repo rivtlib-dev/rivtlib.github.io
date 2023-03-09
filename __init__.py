@@ -194,51 +194,41 @@ exclude rv.X("""any text
     tab      .csv;.rst file | rows | max col width, locate text
 
 ============================ ============================================
-    tag syntax                       description: snippet prefix
-============================ ===========================================
+    tag syntax                      description (one tag per line)
+============================ ============================================
 
-Methods Format:               Applies only to first line of all methods
-"""Section Label | ....       No hyphen denotes section title, autonumber
-"""--reference label | ....   Double hyphen denotes non-printing label
+Values Only Formats: 
+a = n | unit, alt | descrip   assign tag =; units and description
+a := b + c | unit, alt | n,n  result tag :=; units and decimals
 
-Values Format:                Applies only to Values rivt-string
-a = n | unit, alt | descrip   Tag is =; units and description: _v
-a <= b + c | unit, alt | n,n  tag is <=; units and decimals: _=
+Format I,V,T Text: 
+text _[c]                     center line
+_[date]                       date insert
+text _[e]                     equation label, autonumber
+text _[f]                     figure caption, autonumber
+text <#>                      footnote, autonumber
+text _[foot]                  footnote description 
+_[-]                          horizontal divider insert
+text _[i]                     italicize line
+<reference, label>            internal link, section etc
+latex equation _[x]           LaTeX equation format
+text _[r]                     right justify line
+text _[s]                     sympy equation
+<sympy text>                  sympy inline (no commas)
+_[page]                       new page (PDF)
+_[time]                       time (insert)
+title _[t]                    table title, autonumber
+<http: address, label>        url reference, http:\\xyz
 
-Text Line Format:             Applies to all functions except R()
-text _[p]                     paragraph heading: _p
-text _[l]                     literal text: _l
-text _[i]                     italic: _i
-text _[b]                     bold: _b
-text _[r]                     right justify text: _r
-text _[c]                     center text: _c
-text _[-]                     draw horizontal line: _-
-text _[#]                     insert footnote, autonumber: _#
-text _[foot]                  footnote description: _o
 
-Element Format:               
-caption _[f]                  figure caption, autonumber: _f
-title _[t]                    table title, autonumber: _t
-sympy equation _[s]           format sympy equation: _s
-latex equation _[x]           format LaTeX equation: _x
-label _[e]                    equation label, autonumber: _e
-
-Link Format:                  
-address, label _[url]         http://xyz, link label: _u
-reference, label _[lnk]       section, paragraph, title, caption: _k
-_[page]                       new PDF page: _n
-_[date]                       insert date: _d
-_[time]                       insert time: _m
-
-Blocks                        tag precedes first line of block
-------                        ------------------------------------------
-Text Block Format:            
-_[[c]]                        center text block: _[[c
-_[[code]]                     shaded code block: _[[o 
-_[[lit]]                      literal block: _[[l
-_[[tex]]                      LateX block: _[[x
-_[[texm]]                     LaTeX math block: _[[m
-_[[end]]                      terminates block: _[[e
+Format I,V,T Text Blocks:
+_[[c]]                        center text block
+_[[o]]                        code text block
+_[[e]]                        end of block
+_[[l]]                        literal block
+_[[r]]                        right justify text block
+_[[x]]                        LateX block
+_[[m]]                        LaTeX math block
 
 The first line of a rivt file is always import rivt.text as rv. The import
 statement must precede the Repo method rv.R(rs) which is the first method and

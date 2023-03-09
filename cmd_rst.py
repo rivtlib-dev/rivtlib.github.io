@@ -31,7 +31,7 @@ except:
     pass
 
 
-class RvTextRest:
+class CmdRST:
     """convert rivt-strings to reST strings
 
     Args:

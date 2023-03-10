@@ -43,7 +43,7 @@ class TagsUTF:
         a = n | unit, alt | descrip   assign tag =; units and description
         a := b + c | unit, alt | n,n  result tag :=; units and decimals
 
-        Format I,V,T Text: 
+        Format Line: 
         text _[c]                     center line
         _[date]                       date insert
         text _[e]                     equation label, autonumber
@@ -51,7 +51,6 @@ class TagsUTF:
         text <#>                      footnote, autonumber
         text _[foot]                  footnote description 
         _[-]                          horizontal divider insert
-        text _[i]                     italicize line
         <reference, label>            internal link, section etc
         latex equation _[x]           LaTeX equation format
         text _[r]                     right justify line
@@ -63,7 +62,7 @@ class TagsUTF:
         <http: address, label>        url reference, http:\\xyz
 
 
-        Format I,V,T Text Blocks:
+        Format Block:
         _[[c]]                        center text block
         _[[o]]                        code text block
         _[[e]]                        end of block
@@ -79,12 +78,13 @@ class TagsUTF:
         self.lineS = lineS
         self.swidthII = incrD["swidthI"] - 1
 
-        tagD = {"=": "assign", "c]": "center",  "#]": "footnumber", "foot]": "footnote",
-                "-]": "line", "r]": "right", ":=": "result", "date]": "date",
+        tagD = {"c]": "center",  "#]": "footnumber", "foot]": "footnote",
+                "-]": "line", "r]": "right",  "date]": "date",
                 "page]": "page", "e]": "equation", "f]": "figure", "sym]": "sympy",
                 "t]": "table", "x]": "latex", "lnk]": "link", "url]": "url",
                 "[o]]": "codeblk", "[c]]": "centerblk", "[x]]": "latexblk",
-                "[m]]": "mathblk", "[r]]": "rightblk"}
+                "[m]]": "mathblk", "[r]]": "rightblk",
+                "=": "assign", ":=": "result"}
 
         utfS = lineS
         if tagS in tagD:
@@ -93,14 +93,14 @@ class TagsUTF:
 
         return utfS
 
-    def label(self, objnumI, text):
+    def label(self, objI, text):
         """labels for equations, tables and figures
 
             :return labelS: formatted label
             :rtype: str
         """
 
-        objfillS = str(text).zfill(2)
+        objfillS = str(objI).zfill(2)
         if type(text) == int:
             sfillS = str(self.incrD["snumI"]).strip().zfill(2)
             labelS = sfillS
@@ -109,9 +109,6 @@ class TagsUTF:
             labelS = dnumSS + "." + objfillS
 
         return labelS
-
-    def assign(self):
-        pass
 
     def center(self):
         """center text in document width
@@ -136,32 +133,30 @@ class TagsUTF:
         return lineS
 
     def equation(self):
-        """format equation label
+        """formats equation label to reST
 
-        :return lineS: equation label
+        :return lineS: reST equation label
         :rtype: str
         """
 
         enumI = int(self.incrD["enumI"]) + 1
         self.incrD["enumI"] = enumI
-        refS = self.label(enumI, "[ Equ: ") + " ]"
-        spacI = self.incrD["widthI"] - len(refS) - len(self.lineS)
-        lineS = self.lineS + " " * spacI + refS
+        refS = self.label(enumI, "[ Equ: ") + "]"
+        lineS = "**" + refS + "**" + " ?x?hfill " + refS
 
         return lineS
 
     def figure(self):
-        """format figure caption
+        """formats figure caption to reST
 
         :return lineS: figure label
         :rtype: str
         """
 
-        fnumI = int(self.incrD["fnumI"]) + 1
+        fnumI = int(self.setsectD["fnumI"]) + 1
         self.incrD["fnumI"] = fnumI
         refS = self.label(fnumI, "[ Fig: ") + " ]"
-        spacI = self.incrD["widthI"] - len(refS) - len(self.lineS)
-        lineS = self.lineS + " " * spacI + refS
+        lineS = "\n\n**" + refS + "**" + " ?x?hfill " + refS + "\n\n"
 
         return lineS
 
@@ -171,6 +166,9 @@ class TagsUTF:
 
         ftnumI = self.incrD["ftqueL"][-1] + 1
         self.incrD["ftqueL"].append(ftnumI)
+        lineS = self.lineS.replace("[#]", "[" + str(ftnumI) + "]")
+
+        return lineS
 
     def footnote(self):
         """insert footnote
@@ -179,7 +177,7 @@ class TagsUTF:
         :rtype: str
         """
 
-        lineS = "[" + self.incrD["ftqueL"].popleft() + "]" + self.lineS
+        lineS = ".. [*] " + self.lineS
 
         return lineS
 
@@ -230,9 +228,6 @@ class TagsUTF:
 
         return lineS
 
-    def result():
-        pass
-
     def sympy(self):
         """format line of sympy
 
@@ -249,17 +244,16 @@ class TagsUTF:
         return lineS
 
     def table(self):
-        """format table title
+        """format table title to reST
 
-        :return lineS: figure label
+        :return lineS: reST figure caption
         :rtype: str
         """
 
-        fnumI = int(self.incrD["tnumI"]) + 1
-        self.incrD["fnumI"] = fnumI
-        refS = self.label(fnumI, "[ Table: ") + " ]"
-        spacI = self.incrD["widthI"] - len(refS) - len(self.lineS)
-        lineS = self.lineS + " " * spacI + refS
+        tnumI = int(self.incr["tnumI"]) + 1
+        self.incr["tnumI"] = tnumI
+        refS = self.label(tnumI, "[Table: ") + "]"
+        lineS = "**" + refS + "**" + " ?x?hfill  " + refS
 
         return lineS
 
@@ -274,23 +268,29 @@ class TagsUTF:
 
         return lineS
 
-    def url():
+    def url(self):
         pass
 
-    def codeblk():
+    def codeblk(self):
         pass
 
-    def centerblk():
+    def centerblk(self):
         pass
 
-    def endblk():
+    def endblk(self):
         pass
 
-    def latexblk():
+    def latexblk(self):
         pass
 
-    def mathblk():
+    def mathblk(self):
         pass
 
-    def rightblk():
+    def rightblk(self):
+        pass
+
+    def assign(self):
+        pass
+
+    def result(self):
         pass

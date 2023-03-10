@@ -81,7 +81,7 @@ Folder Structure Example (folders in [])
         - [*rv02_*Foundations]   
             - image2.jpg
             - attachment.pdf    
-    - [*report*]                            (PDF dcoument output files)
+    - [*report*]                            (PDF document output files)
         - r0101_Gravity-Loads.pdf
         - r0102_Seismic-Loads.pdf
         - r0201_Pile-Design.pdf
@@ -110,9 +110,9 @@ Commands and Tags
 rivtText syntax includes arbitrary text, commands, tags and simple (single
 line) Python statements. Commands read or write files in and out of the
 calculation and are denoted by || at the beginning of a line. Tags format a
-line of text and are generally denoted with _[tag] at the end of a line. The
-exceptions are method labels and value assignments. Block tags start the block
-of text with _[[tag]] and end with _[[end]].
+line of text and are generally denoted with _[tag] at the end of a line and
+<tag> for inline text. Block tags start the block of text with _[[tag]] and end
+with _[[end]].
 
 Command parameters are separated by |. In the summary below, user parameter
 options are separated by semi-colons for single value selections and commas for
@@ -121,23 +121,23 @@ for that rivt-string. The method label can be a section or paragraph title, or
 used for navigation (see tags for syntax).
 
 ======= ===================================================================
- method             settings, snippet prefix
+name                     API Functions (VSCode snippet prefix)
 ======= ===================================================================
 
 repo    rv.R("""label | folder;default | int;utf;pdf;html;both | width,page
-rvr
+(rvr)
                 ||text ||table ||github ||project ||append
 
                 """)
 
 insert  rv.I("""label | docs_folder;default
-rvi
+(rvi)
                 ||text ||table ||image ||image2 
 
                 """)
 
 values  rv.V("""label | docs_folder;default | sub;nosub | save;nosave
-rvv
+(rvv)
                 = ||value ||list ||function
 
                 ||text ||table ||image ||image2 
@@ -145,7 +145,7 @@ rvv
                 """)
 
 tables  rv.T("""label | docs_folder;default | show;noshow
-rvt
+(rvt)
                 Python simple statements
                 (any valid expression or statment on a single line)
 
@@ -155,80 +155,81 @@ rvt
 
 exclude rv.X("""any text
 
-                any commands, used for comments and debugging
+                used to modify a function for comments and debugging
 
                 """)
 
 =============================================================== ============
-    command syntax / snippet prefix and description                 methods
+    command syntax and description (VSCode snippets)                 API
 =============================================================== ============
 
-|| github | repo_name; none | readme; noneparam | R
-    git        github repo parameters
+|| github | repo_name; none | readme; noneparam |                      R 
+    (git)     github repo parameters
 
-|| project | file_name | /docsfolder; default                      R
-    pro       .txt; rst; csv; syk; xls | project info folder
+|| project | file_name | /docfolder; default                           R
+    (pro)    .txt; rst; csv; syk; xls | project info folder
 
-|| append | file_name | ./docfolder; default / resize;default      R
-    app      .pdf; .txt | pdf folder / rescale to page size
+|| append | file_name | ./docfolder; default / resize;default          R
+    (app)    .pdf; .txt | pdf folder / rescale to page size
 
 || list | file_name  | [:];[x:y]                                       V
-    lis       .csv;.syk;.txt;.py | rows to import
+   (lis)   .csv;.syk;.txt;.py | rows to import
 
 || values | file_name | [:];[x:y]                                      V
-    val       .csv; .syk; .txt; .py | rows to import
+   (val)    .csv; .syk; .txt; .py | rows to import
 
 || functions | file_name | docs; nodocs                                V
-    fun       .for; .py; .c; .c++; .jl | insert docstrings
+    (fun)      .for; .py; .c; .c++; .jl | insert docstrings
 
-|| image1 | file_name  | .50                                         I,V,T
-    im1       .png; .jpg |  page width fraction
+|| image  | file_name  | .50                                         I,V,T
+   (img)   .png; .jpg |  page width fraction
 
 || image2 | file_name  | .40 | file_name  | .40                      I,V,T
-    im2       side by side images
+   (img2)   side by side images
 
 || text | file_name | shade; noshade                                 I,V,T
-    tex      .txt; .py; .tex | shade background
+   (tex)   .txt; .py; .tex | shade background
 
 || table | file_name |  [:] | 60 r;l;c                               I,V,T
-    tab      .csv;.rst file | rows | max col width, locate text
+   (tab)   .csv;.rst file | rows | max col width, locate text
 
 ============================ ============================================
-    tag syntax                      description (one tag per line)
+ tag syntax (one per line)                     description 
 ============================ ============================================
 
-Values Only Formats: 
-a = n | unit, alt | descrip   assign tag =; units and description
-a := b + c | unit, alt | n,n  result tag :=; units and decimals
-
-Format I,V,T Text: 
-text _[c]                     center line
-_[date]                       date insert
-text _[e]                     equation label, autonumber
-text _[f]                     figure caption, autonumber
-text <#>                      footnote, autonumber
-text _[foot]                  footnote description 
-_[-]                          horizontal divider insert
-text _[i]                     italicize line
-<reference, label>            internal link, section etc
-latex equation _[x]           LaTeX equation format
-text _[r]                     right justify line
-text _[s]                     sympy equation
-<sympy text>                  sympy inline (no commas)
-_[page]                       new page (PDF)
-_[time]                       time (insert)
-title _[t]                    table title, autonumber
-<http: address, label>        url reference, http:\\xyz
+I,V,T Line Formats:
+text _[b]                       bold line 
+text _[c]                       center line
+_[date]                         date insert
+text _[e]                       equation label, autonumber
+text _[f]                       figure caption, autonumber
+text <#>                        footnote, autonumber
+text _[foot]                    footnote description 
+_[-]                            horizontal divider insert
+text _[i]                       italicize line
+<reference, opt. label>         internal link, section etc
+latex equation _[x]             LaTeX equation format
+text _[r]                       right justify line
+text _[s]                       sympy equation
+<sympy text>                    sympy inline (no commas)
+_[page]                         new page (PDF)
+_[time]                         time (insert)
+text _[t]                       table title, autonumber
+<http: address, opt. label>     url reference, http:\\xyz
 
 
-Format I,V,T Text Blocks:
-_[[c]]                        center text block
-_[[o]]                        code text block
-_[[e]]                        end of block
-_[[l]]                        literal block
-_[[r]]                        right justify text block
-_[[x]]                        LateX block
-_[[m]]                        LaTeX math block
+I,V,T Block Formats:
+_[[c]]                          center text block
+_[[o]]                          code text block
+_[[e]]                          end of block
+_[[l]]                          literal block
+_[[r]]                          right justify text block
+_[[x]]                          LateX block
+_[[m]]                          LaTeX math block
+
+V Formats: 
+a = n | unit, alt | descrip     assign tag =; units and description
+a := b + c | unit, alt | n,n    result tag :=; units and decimals
 
 The first line of a rivt file is always import rivt.text as rv. The import
 statement must precede the Repo method rv.R(rs) which is the first method and

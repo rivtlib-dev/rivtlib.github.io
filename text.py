@@ -32,6 +32,7 @@ elif ".py" not in docfileS:
 # files and paths
 docbaseS = docfileS.split(".py")[0]
 docP = Path(os.getcwd(), docfileS)
+dataP = Path(os.getcwd(), "data")
 projectP = docP.parent.parent.parent  # rivt project folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
 siteP = projectP / "site"  # site folder path
@@ -51,7 +52,7 @@ divtitleS = divtitleS.replace("-", " ")
 
 # global dicts and vars
 folderD = {}
-for item in ["docP", "resourceP", "reportL", "siteP", "projectP"]:
+for item in ["docP", "dataP", "resourceP", "reportL", "siteP", "projectP"]:
     folderD[item] = eval(item)
 
 incrD = {
@@ -125,7 +126,7 @@ outputS = (False, "inter")
 outputL = ["pdf", "html", "inter", "utf", "both", "site", "report"]
 
 
-def func_head(hdrS, methodS, overrideB):
+def str_head(hdrS, methodS, overrideB):
     """set method heading
 
     Args:
@@ -188,7 +189,7 @@ def eval_str(rS, funcS):
     incrD["widthI"] = int(r1L[3].split(",")[0])         # utf print width
     pageS = r1L[3].split(",")[1]                        # starting page
 
-    rvtS += func_head(r1L, funcS, True)                 # get_heading
+    rvtS += str_head(r1L, funcS, True)                 # get_heading
     utfM = par.RivtParse(rL[1:], folderD, incrD, outputS, funcS)
     rS = utfM.str_parse()
     rvtS += rS

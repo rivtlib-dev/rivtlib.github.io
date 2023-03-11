@@ -121,7 +121,7 @@ for that rivt-string. The method label can be a section or paragraph title, or
 used for navigation (see tags for syntax).
 
 ======= ===================================================================
-name                     API Functions (VSCode snippet prefix)
+ name                     API Functions (VSCode snippet prefix)
 ======= ===================================================================
 
 repo    rv.R("""label | folder;default | int;utf;pdf;html;both | width,page

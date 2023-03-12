@@ -33,57 +33,37 @@ logging.getLogger("numexpr").setLevel(logging.WARNING)
 class RivtParse:
     """process rivt-string"""
 
-    def __init__(self, strL, folderD, incrD,  funcS, outputS,):
+    def __init__(self, folderD, incrD,  outputS, methS):
         """process rivt-string to UTF8 calc
 
-            :param list strL: split rivt string
             :param dict folderD: folder paths
             :param dict incrD: numbers that increment
             :param dict outputS: output type
             :param dict outputS: output type
         """
 
-        self.strL = strL        # rivt string list
         self.folderD = folderD  # folder paths
         self.incrD = incrD      # incrementing formats
         self.outputS = outputS  # output type
         self.outputL = ["pdf", "html", "both"]  # reST formats
 
-        self.restS = """"""  # restructured text string
-        self.strL = strL  # rivt-string list
-        self.folderD = folderD
-        strL: list
-        folderD: dict
-        setcmdD: dict
-        setsectD: dict
-        rivtD: dict
-        exportS: str
-        self.restS = """"""  # restructured text string
-        self.exportS = exportS  # value export string
-        self.strL = strL  # rivt-string list
-        self.valL = []  # value blocklist
-        self.folderD = folderD
-        self.setsectD = setsectD
-        self.setcmdD = setcmdD
-        self.rivtD = rivtD
-
         # valid commands and tags
-        if funcS == "R":
+        if methS == "R":
             self.cmdL = ["project", "github", "append"]
             self.tagL = ["new]", "url]"]
             self.blockL = ["[readme]]"]
-        elif funcS == "I":
+        elif methS == "I":
             self.cmdL = ["table", "text", "image1", "image2"]
             self.tagL = ["new]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
                          "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
-        elif funcS == "V":
+        elif methS == "V":
             self.cmdL = ["table", "text", "image1", "image2",
                          "value", "list", "function", "=", ":="]
             self.tagL = ["new]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
                          "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
-        elif funcS == "T":
+        elif methS == "T":
             self.cmdL = ["table", "text", "image1", "image2"]
             self.tagL = ["new]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
@@ -91,9 +71,10 @@ class RivtParse:
         else:
             pass
 
-    def str_parse(self):
+    def str_parse(self, strL):
         """parse insert string
 
+            :param list strL: split rivt string
             :return utfS: utf formatted string
             :return rstS: reST formatted string
             :return incrD: increment references
@@ -106,7 +87,8 @@ class RivtParse:
 
         utfS = """"""
         rstS = """"""
-        for uS in self.strL:
+        blockB = False
+        for uS in strL:
             if uS[0:2] == "##":
                 continue                    # remove review comments
             uS = uS[4:]                     # remove indent

@@ -6,54 +6,76 @@
 import os
 import sys
 import re
+import time
 import logging
 import warnings
 import fnmatch
 from pathlib import Path
 from collections import deque
-import rivt.parse as par
-import rivt.cmd_utf as cutf
-import rivt.cmd_rst as crst
+from rivt import parse
 
 print(f"sys.argv=")
 try:
-    docfileS = sys.argv[1]
+    docfileS = Path(sys.argv[1]).name
 except:
-    docfileS = sys.argv[0]
+    docfileS = Path(sys.argv[0]).name
 if Path(docfileS).name == "r0101t.py":
-    docP = Path("./tests/rivt_test01/text/rv0101_test01/r0101t.py")
+    docP = Path(
+        "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/r0101t.py")
 elif Path(docfileS).name == "-o":
-    docP = Path("./tests/rivt_test01/text/rv0101_test01/r0101t.py")
-elif ".py" not in docfileS:
+    docP = Path(
+        "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/r0101t.py")
+else:
+    docP = Path(os.getcwd(), docfileS)
+
+if ".py" not in docfileS:
     import __main__
     docfileS = __main__.__file__
     # print(dir(__main__))
 
+
 # files and paths
 docbaseS = docfileS.split(".py")[0]
-docP = Path(os.getcwd(), docfileS)
 dataP = Path(os.getcwd(), "data")
-projectP = docP.parent.parent.parent  # rivt project folder path
+projP = docP.parent.parent.parent.parent  # rivt project folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
-siteP = projectP / "site"  # site folder path
-reportP = projectP / "report"  # report folder path
+siteP = projP / "site"  # site folder path
+reportP = projP / "report"  # report folder path
 rivtcalcP = Path("rivt.text.py").parent  # rivt package path
+# print(f"{docfileS=}")
+# print(f"{docP=}")
+# print(f"{projP=}")
 
-prfxS = docbaseS[0:3]
-for fileS in os.listdir(projectP / "resource"):
+prfxS = docbaseS[1:3]
+for fileS in os.listdir(projP / "resource"):
     if fnmatch.fnmatch(fileS, prfxS + "_*"):
         resourceP = Path(fileS)  # resource folder path
 resourceL = (resourceP, "default")
-docpdfP = resourceP / docbaseS + ".pdf"
-doctitleS = docbaseS.split("_")[1]
+docpdfP = Path(str(resourceP / docbaseS) + ".pdf")
+doctitleS = (docP.parent.name).split("_")[1]
 doctitleS = doctitleS.replace("-", " ")
-divtitleS = resourceP.split("_", 1)[1]
+divtitleS = (docP.parent.parent.name).split("_", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
 
 # global dicts and vars
+
+utfS = """\n"""             # utf output string
+rstS = """"""               # reST output string
+valS = """"""               # values string for export
+rvtfileS = """"""           # rivt file
+outputS = "utf"             # default output type
+xflagB = 0
+rstoutL = ["pdf", "html", "both"]  # reST formats
+outputL = ["utf", "pdf", "html", "both", "report", "site"]
+
+localD = {}                 # local rivt dictionary of values
+
 folderD = {}
-for item in ["docP", "dataP", "resourceP", "reportL", "siteP", "projectP"]:
+for item in ["docP", "dataP", "resourceP", "reportP", "siteP", "projP"]:
     folderD[item] = eval(item)
+
+outputD = {"pdf": True, "html": True, "both": True, "site": True,
+           "report": True, "inter": False, "utf": False}
 
 incrD = {
     "docnumS": docbaseS[1:5],  # doc number
@@ -74,21 +96,17 @@ incrD = {
     "html": (True, "html"),
     "both": (True, "both"),
     "utf": (True, "utf"),
-    "inter": (False, "inter")
+    "inter": (False, "inter"),
+    "pageI": 1  # starting page
 }
-rvtS = """"""  # rivtText method string
-rvtfileS = """"""  # full rivt file input
-utfS = """"""  # utf output string
-rstS = """"""  # reST output string
-valS = """"""  # values string for export
-localD = {}  # local dictionary
+
 
 # logging
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
     datefmt="%m-%d %H:%M",
-    filename=resourceP.parent / "error_log.txt",
+    filename=Path(projP / "resource" / "error_log.txt"),
     filemode="w",
 )
 logconsole = logging.StreamHandler()
@@ -97,7 +115,7 @@ formatter = logging.Formatter("%(levelname)-8s %(message)s")
 logconsole.setFormatter(formatter)
 logging.getLogger("").addHandler(logconsole)
 warnings.filterwarnings("ignore")
-dshortP = Path(*Path(docP).parts[-2:])
+dshortP = Path(*Path(docP.parent).parts[-2:])
 rshortP = Path(*Path(resourceP).parts[-2:])
 # check that calc and file directories exist
 if docP.exists():
@@ -121,83 +139,133 @@ with open(bakP, "w") as f3:
 logging.info(f"""rivt file backup written: {rshortP / bakP}""")
 print(" ")
 
-# set defaults
-outputS = (False, "inter")
-outputL = ["pdf", "html", "inter", "utf", "both", "site", "report"]
+with open(docP, "r") as f1:
+    rvtfileS = f1.read()
+    rvtfileS += rvtfileS + """\nsys.exit()\n"""
 
 
-def str_head(hdrS, methodS, overrideB):
-    """set method heading
+def str_head(hdrS):
+    """_summary_
 
-    Args:
-        :param hdrS: first line of method
-        :type hdrS: str
+    :param hdrS: _description_
+    :type hdrS: _type_
+    :return: _description_
+    :rtype: _type_
     """
 
-    global outputS, rvtfileS, rvtS, utfS, rstS, valS, localD, folderD, incrD
-
     if hdrS[0:2] == "--":
-        utfhS = "\n"
-    elif hdrS[0:1] == "-":
-        headS = hdrS[1:]
-        utfhS = "\n" + headS + "\n"
+        hdS = "\n"
     else:
+        hdS = hdrS
         snumI = incrD["secnumI"]+1
         incrD["secnumI"] = snumI
         docnumS = "[" + incrD["docnumS"]+"]"
-        methodS = incrD["methodtitleS"]
         compnumS = docnumS + " - " + str(snumI)
-        widthI = incrD["secwidthI"] - 3
-        headS = " " + methodS + compnumS.rjust(widthI - len(methodS))
-        bordrS = incrD["secwidthI"] * "_"
+        widthI = incrD["widthI"] - 3
+        headS = " " + hdS + compnumS.rjust(widthI - len(hdrS))
+        bordrS = incrD["widthI"] * "_"
         hdS = "\n" + bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
 
-    if not overrideB:
-        if outputS[0]:
-            hdS = (
-                ".. raw:: latex"
-                + "\n\n"
-                + "   ?x?vspace{.2in}"
-                + "   ?x?textbf{"
-                + methodS
-                + "}"
-                + "   ?x?hfill?x?textbf{SECTION "
-                + compnumS
-                + "}\n"
-                + "   ?x?newline"
-                + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
-                + "\n\n"
-            )
-
+    if outputD[outputS]:
+        hdS = (
+            ".. raw:: latex"
+            + "\n\n"
+            + "   ?x?vspace{.2in}"
+            + "   ?x?textbf{"
+            + hdS
+            + "}"
+            + "   ?x?hfill?x?textbf{SECTION "
+            + compnumS
+            + "}\n"
+            + "   ?x?newline"
+            + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
+            + "\n\n"
+        )
     return hdS
 
 
-def eval_str(rS, funcS):
+def eval_str(rS, methS):
+    """_summary_
 
-    global outputS, rvtfileS, rvtS, utfS, rstS, valS, localD, folderD, incrD
+    :param rS: _description_
+    :type rS: _type_
+    :param methS: _description_
+    :type methS: _type_
+    :return: _description_
+    :rtype: _type_
+    """
 
-    rL = rS.split()
-    r1L = [i.strip() for i in rL[0].split("|")]         # first line parameters
+    global utfS, rstS, outputS, incrD, folderD
 
-    if r1L[1] != "default":                             # resource folders
-        folderD[resourceL][1] = r1L[1]
-    if incrD[r1L[2]] in outputL:
-        outputS = incrD[r1L[2]]
+    rvtS = """"""
+    rL = rS.split("\n")
+    r1L = rL[0].split("|")
+    if r1L[1].strip() != "default":                     # resource folder
+        folderD[resourceP.parent] = r1L[1]
+
+    if methS == "R":
+        incrD["widthI"] = int(r1L[3].split(",")[0])     # utf print width
+        incrD["pageI"] = r1L[3].split(",")[1]           # starting page
+        if r1L[2].strip() in outputD:
+            outputS = r1L[2].strip()
+        else:
+            outputS = "utf"
+    elif methS == "I":
+        incrD["widthI"] = int(r1L[3].split(",")[0])     # utf print width
+        incrD["pageI"] = r1L[3].split(",")[1]           # starting page
+        if r1L[2].strip() in outputD:
+            outputS = rL[2].strip()
+        else:
+            outputS = "utf"
+    elif methS == "V":
+        incrD["widthI"] = int(r1L[3].split(",")[0])     # utf print width
+        incrD["pageI"] = r1L[3].split(",")[1]           # starting page
+        if rL[2].strip() in outputD:
+            outputS = rL[2].strip()
+        else:
+            outputS = "utf"
+    elif methS == "T":
+        incrD["widthI"] = int(r1L[3].split(",")[0])     # utf print width
+        incrD["pageI"] = r1L[3].split(",")[1]           # starting page
+        if rL[2].strip() in outputD:
+            outputS = rL[2].strip()
+        else:
+            outputS = "utf"
     else:
-        outputS = (False, "utf")
+        pass
 
-    incrD["widthI"] = int(r1L[3].split(",")[0])         # utf print width
-    pageS = r1L[3].split(",")[1]                        # starting page
+    hS = str_head(r1L[0].strip())                       # get_heading
+    utfT = parse.RivtParse(folderD, incrD, outputS, methS)
+    rS = utfT.str_parse(rL[1:],)
+    rvtS = hS + rS[0]
+    utfS += rvtS
+    rstS += rS[1]
 
-    rvtS += str_head(r1L, funcS, True)                 # get_heading
-    utfM = par.RivtParse(rL[1:], folderD, incrD, outputS, funcS)
-    rS = utfM.str_parse()
-    rvtS += rS
-    print(rvtS)
+    return rvtS, utfS, rstS
+
+
+def Write():
+    """_summary_
+    """
+
+    if outputS in outputL:
+        if outputS == "html":
+            exec(rvtfileS)
+        elif outputS == "pdf":
+            with open(docP, "r") as f2:
+                rvtfileS = f2.read()
+            logging.info(f"""write docs: """)
+            print("", flush=True)
+
+        # always write utf file
+        docutfP = Path(docP.parent / "README.txt")
+        with open(docutfP, "w") as f2:
+            f2.write(utfS)
+        logging.info(f"""write docs: {dshortP}\README.txt""")
 
 
 def R(rS: str):
-    """process a Repo string and set output type
+    """process a Repo string
 
     :param rS: triple quoted repo string
     :type rS: str
@@ -205,26 +273,11 @@ def R(rS: str):
     :type: str
     """
 
-    global outputS, rvtfileS, rvtS, utfS, rstS, valS, localD, folderD, incrD
+    global utfS, rstS, xflagB, outputS
 
-    eval_str(rS, "R")                               # evaluate rivt string
+    rvtS, utfS, rstS = eval_str(rS, "R")
 
-    if outputS("utf"):                              # write utf file (readme)
-        docutfP = Path(docP.parent / "README.txt")
-        with open(docP, "r") as f2:
-            rivtL = f2.readlines()
-            rivtS = rivtL[1:].join()
-            exec(rivtS)
-        logging.info("utf calc written, program complete")
-        os.exit(1)
-
-    if outputS == "pdf" or outputS == "HTML" or outputS == "both":  # reST file
-        with open(docP, "r") as f2:
-            rivtL = f2.readlines()
-            rivtS = rivtL[1:].join()
-            exec(rivtS)
-        logging.info(outputS, " utf calc written")
-        print("", flush=True)
+    print(rvtS)
 
 
 def I(rS: str):

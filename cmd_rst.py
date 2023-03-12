@@ -49,20 +49,6 @@ class CmdRST:
         self.strL = strL  # rivt-string list
         self.folderD = folderD
         self.tagD = tagD
-        strL: list,
-        folderD: dict,
-        setcmdD: dict,
-        setsectD: dict,
-        rivtD: dict,
-        exportS: str,
-        self.restS = """"""  # restructured text string
-        self.exportS = exportS  # value export string
-        self.strL = strL  # rivt-string list
-        self.valL = []  # value blocklist
-        self.folderD = folderD
-        self.setsectD = setsectD
-        self.setcmdD = setcmdD
-        self.rivtD = rivtD
 
     def r_rst(self, typeS: str, cmdL: list, methL: list, tagL: list):
         """parse rivt-string to reST

@@ -1,0 +1,6 @@
+03-11 21:57 root         INFO     rivt file path : tests\rivt_Example_Test_01\text\01_Division1\rv0101_Overview\r0101t.py
+03-11 21:57 root         INFO     resource path: 01_resource
+03-11 21:57 root         INFO     text folder short path: rv0101_Overview\r0101t.py
+03-11 21:57 root         INFO     log folder short path: .
+03-11 21:57 root         INFO     rivt file backup written: 01_resource\tests\rivt_Example_Test_01\text\01_Division1\rv0101_Overview\r0101t.bak
+03-11 21:57 root         INFO     write docs: rv0101_Overview\r0101t.py

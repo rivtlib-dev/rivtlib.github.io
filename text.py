@@ -14,7 +14,7 @@ from pathlib import Path
 from collections import deque
 from rivt import parse
 
-print(f"sys.argv=")
+# print(f"{sys.argv=}")
 try:
     docfileS = Path(sys.argv[1]).name
 except:
@@ -26,13 +26,16 @@ elif Path(docfileS).name == "-o":
     docP = Path(
         "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/r0101t.py")
 else:
-    docP = Path(os.getcwd(), docfileS)
+    docP = Path(docfileS).absolute()
 
 if ".py" not in docfileS:
     import __main__
     docfileS = __main__.__file__
     # print(dir(__main__))
 
+# print(f"{docfileS=}")
+# print(f"{docP=}")
+# print(os.getcwd())
 
 # files and paths
 docbaseS = docfileS.split(".py")[0]
@@ -42,15 +45,12 @@ bakP = docP.parent / ".".join((docbaseS, "bak"))
 siteP = projP / "site"  # site folder path
 reportP = projP / "report"  # report folder path
 rivtcalcP = Path("rivt.text.py").parent  # rivt package path
-# print(f"{docfileS=}")
-# print(f"{docP=}")
 # print(f"{projP=}")
 
-prfxS = docbaseS[1:3]
+prfxS = docbaseS[2:4]
 for fileS in os.listdir(projP / "resource"):
-    if fnmatch.fnmatch(fileS, prfxS + "_*"):
-        resourceP = Path(fileS)  # resource folder path
-resourceL = (resourceP, "default")
+    if fnmatch.fnmatch(fileS[2:5], prfxS + "_*"):
+        resourceP = Path(fileS).absolute()  # resource folder path
 docpdfP = Path(str(resourceP / docbaseS) + ".pdf")
 doctitleS = (docP.parent.name).split("_")[1]
 doctitleS = doctitleS.replace("-", " ")
@@ -78,7 +78,7 @@ outputD = {"pdf": True, "html": True, "both": True, "site": True,
            "report": True, "inter": False, "utf": False}
 
 incrD = {
-    "docnumS": docbaseS[1:5],  # doc number
+    "docnumS": docbaseS[2:6],  # doc number
     "doctitleS": doctitleS,  # doc title
     "divtitleS": divtitleS,  # section title
     "secnumI": 0,  # section number
@@ -92,15 +92,16 @@ incrD = {
     "decrI": 2,  # results decimals
     "subB": False,  # substitute values
     "saveB": False,  # save values to file
-    "pdf": (True, "pdf"),  # read file, write reST
-    "html": (True, "html"),
-    "both": (True, "both"),
-    "utf": (True, "utf"),
+    "pdf": (True, "pdf"),  # write reST
+    "html": (True, "html"),  # write reST
+    "both": (True, "both"),  # write reST
+    "utf": (False, "utf"),
     "inter": (False, "inter"),
-    "pageI": 1  # starting page
+    "pageI": 1  # starting page number
 }
 
-
+print("File Paths")
+print("---------- ")
 # logging
 logging.basicConfig(
     level=logging.DEBUG,
@@ -116,19 +117,19 @@ logconsole.setFormatter(formatter)
 logging.getLogger("").addHandler(logconsole)
 warnings.filterwarnings("ignore")
 dshortP = Path(*Path(docP.parent).parts[-2:])
+lshortP = Path(*Path(projP / "resource").parts[-2:])
 rshortP = Path(*Path(resourceP).parts[-2:])
 # check that calc and file directories exist
 if docP.exists():
-    logging.info(f"""rivt file path : {docP}""")
+    logging.info(f"""rivt file short path : {dshortP}""")
 else:
     logging.info(f"""rivt file path not found: {docP}""")
 
 if resourceP.exists:
-    logging.info(f"""resource path: {resourceP}""")
+    logging.info(f"""resource short path: {rshortP}""")
 else:
     logging.info(f"""resource path not found: {resourceP}""")
-logging.info(f"""text folder short path: {dshortP}""")
-logging.info(f"""log folder short path: {rshortP.parent}""")
+logging.info(f"""log folder short path: {lshortP}""")
 
 # write backup doc file
 with open(docP, "r") as f2:
@@ -136,7 +137,7 @@ with open(docP, "r") as f2:
     rivtL = f2.readlines()
 with open(bakP, "w") as f3:
     f3.write(rivtS)
-logging.info(f"""rivt file backup written: {rshortP / bakP}""")
+logging.info(f"""rivt file backup written: {dshortP}""")
 print(" ")
 
 with open(docP, "r") as f1:
@@ -202,6 +203,7 @@ def eval_str(rS, methS):
     r1L = rL[0].split("|")
     if r1L[1].strip() != "default":                     # resource folder
         folderD[resourceP.parent] = r1L[1]
+    hS = str_head(r1L[0].strip())                       # get_heading
 
     if methS == "R":
         incrD["widthI"] = int(r1L[3].split(",")[0])     # utf print width
@@ -211,12 +213,7 @@ def eval_str(rS, methS):
         else:
             outputS = "utf"
     elif methS == "I":
-        incrD["widthI"] = int(r1L[3].split(",")[0])     # utf print width
-        incrD["pageI"] = r1L[3].split(",")[1]           # starting page
-        if r1L[2].strip() in outputD:
-            outputS = rL[2].strip()
-        else:
-            outputS = "utf"
+        pass
     elif methS == "V":
         incrD["widthI"] = int(r1L[3].split(",")[0])     # utf print width
         incrD["pageI"] = r1L[3].split(",")[1]           # starting page
@@ -234,7 +231,6 @@ def eval_str(rS, methS):
     else:
         pass
 
-    hS = str_head(r1L[0].strip())                       # get_heading
     utfT = parse.RivtParse(folderD, incrD, outputS, methS)
     rS = utfT.str_parse(rL[1:],)
     rvtS = hS + rS[0]

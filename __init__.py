@@ -51,25 +51,30 @@ is written to the report folder, and HTML output to the site folder.
 Folder Structure Example (folders in [])
 ========================================
 
-- [*rivt_*Design-Project] (user project and report name)
+- [*rivt_*Design-Project] (project and report name)
     - [*text*]
         - README.txt                        (project abstract)
-        - units.py                          (units over-ride)
-        - [*r0101_*Gravity-Loads]           (rivt document title)
-            - *r0101.py*                    (file name) 
-            - README.txt                    (utf output file)
-            - data1.csv                     (a source file)
-            - functions1.py                 (a function file)
-        - [*r0102_*Seismic-Loads] 
-            - *r0102.py*
-            - README.txt
-            - data2.csv 
-            - functions2.py 
-        - [*r0201_*Pile-Design] 
-            - *r0201.py*
-            - README.txt
-            - paragraph1.txt
-            - functions3.py 
+        - units.py                          (units over ride)
+        - [*rv01_*Loads]                    (report division title)                
+            - [*rv0101_*Gravity-Loads]      (rivt document title)
+                -[*data*]      
+                    - data1.csv             (a data source file)
+                    - functions1.py         (a function file)
+                - *rv0101.py*               (rivt file name) 
+                - README.txt                (utf output file)
+            - [*rv0102_*Seismic-Loads] 
+                -[*data*]      
+                    - data2.csv 
+                    - functions2.py 
+                - *rv0102.py*
+                - README.txt
+        - [*rv02_*Design]                                            
+            - [*rv0201_*Pile-Design] 
+                -[*data*]                      
+                    - paragraph1.txt
+                    - functions3.py 
+                - *rv0201.py*
+                - README.txt
     - [*resource*]
             - report_gen.txt                (report generation style)
             - site_gen.txt                  (website generation style)
@@ -82,9 +87,9 @@ Folder Structure Example (folders in [])
             - image2.jpg
             - attachment.pdf    
     - [*report*]                            (PDF document output files)
-        - r0101_Gravity-Loads.pdf
-        - r0102_Seismic-Loads.pdf
-        - r0201_Pile-Design.pdf
+        - rv0101_Gravity-Loads.pdf
+        - rv0102_Seismic-Loads.pdf
+        - rv0201_Pile-Design.pdf
         - Design-Project.pdf                (PDF collated report)
     - [*site*]                              (HTML site)
         - [*resources*]             
@@ -92,9 +97,9 @@ Folder Structure Example (folders in [])
             - image2.png
             - html_style.css                (HTML style override)
         - index.html                        (table of contents)
-        - s0101_Gravity-Loads.html
-        - s0102_Seismic-Loads.html
-        - s0201_Pile-Design.html
+        - rv0101_Gravity-Loads.html
+        - rv0102_Seismic-Loads.html
+        - rv0201_Pile-Design.html
 
 The API is designed so that only files in the text folder are uploaded for
 version control and sharing. They are the essential core of the calculation -

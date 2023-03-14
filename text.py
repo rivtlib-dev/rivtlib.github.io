@@ -51,6 +51,8 @@ prfxS = docbaseS[2:4]
 for fileS in os.listdir(projP / "resource"):
     if fnmatch.fnmatch(fileS[2:5], prfxS + "_*"):
         resourceP = Path(fileS).absolute()  # resource folder path
+defaultP = resourceP
+rerootP = Path(projP / "resource")
 docpdfP = Path(str(resourceP / docbaseS) + ".pdf")
 doctitleS = (docP.parent.name).split("_")[1]
 doctitleS = doctitleS.replace("-", " ")
@@ -71,7 +73,8 @@ outputL = ["utf", "pdf", "html", "both", "report", "site"]
 localD = {}                 # local rivt dictionary of values
 
 folderD = {}
-for item in ["docP", "dataP", "resourceP", "reportP", "siteP", "projP"]:
+for item in ["docP", "dataP", "resourceP", "rerootP", "defaultP",
+             "reportP", "siteP", "projP"]:
     folderD[item] = eval(item)
 
 outputD = {"pdf": True, "html": True, "both": True, "site": True,
@@ -92,6 +95,7 @@ incrD = {
     "decrI": 2,  # results decimals
     "subB": False,  # substitute values
     "saveB": False,  # save values to file
+    "codeB": False,  # insert code strings in doc
     "pdf": (True, "pdf"),  # write reST
     "html": (True, "html"),  # write reST
     "both": (True, "both"),  # write reST
@@ -107,7 +111,7 @@ logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
     datefmt="%m-%d %H:%M",
-    filename=Path(projP / "resource" / "error_log.txt"),
+    filename=Path(rerootP / "error_log.txt"),
     filemode="w",
 )
 logconsole = logging.StreamHandler()
@@ -117,7 +121,7 @@ logconsole.setFormatter(formatter)
 logging.getLogger("").addHandler(logconsole)
 warnings.filterwarnings("ignore")
 dshortP = Path(*Path(docP.parent).parts[-2:])
-lshortP = Path(*Path(projP / "resource").parts[-2:])
+lshortP = Path(*rerootP.parts[-2:])
 rshortP = Path(*Path(resourceP).parts[-2:])
 # check that calc and file directories exist
 if docP.exists():
@@ -155,7 +159,7 @@ def str_head(hdrS):
     """
 
     if hdrS[0:2] == "--":
-        hdS = "\n"
+        return None
     else:
         hdS = hdrS
         snumI = incrD["secnumI"]+1
@@ -201,41 +205,65 @@ def eval_str(rS, methS):
     rvtS = """"""
     rL = rS.split("\n")
     r1L = rL[0].split("|")
-    if r1L[1].strip() != "default":                     # resource folder
-        folderD[resourceP.parent] = r1L[1]
-    hS = str_head(r1L[0].strip())                       # get_heading
+
+    print(f"{outputS=}")
 
     if methS == "R":
-        incrD["widthI"] = int(r1L[3].split(",")[0])     # utf print width
-        incrD["pageI"] = r1L[3].split(",")[1]           # starting page
+        if r1L[1] == "default":
+            folderD["resourceP"] = folderD["defaultP"]
+        else:
+            folderD[resourceP] = Path(rerootP / r1L[1].strip())
+
         if r1L[2].strip() in outputD:
             outputS = r1L[2].strip()
         else:
             outputS = "utf"
+
+        incrD["widthI"] = int(r1L[3].split(",")[0])     # utf print width
+        incrD["pageI"] = r1L[3].split(",")[1]           # starting page
+
     elif methS == "I":
-        pass
+        if r1L[1] == "default":
+            folderD["resourceP"] = folderD["defaultP"]
+        else:
+            folderD[resourceP] = Path(rerootP / r1L[1].strip())
+
     elif methS == "V":
-        incrD["widthI"] = int(r1L[3].split(",")[0])     # utf print width
-        incrD["pageI"] = r1L[3].split(",")[1]           # starting page
-        if rL[2].strip() in outputD:
-            outputS = rL[2].strip()
+        if r1L[1] == "default":
+            folderD["resourceP"] = folderD["defaultP"]
         else:
-            outputS = "utf"
+            folderD[resourceP] = Path(rerootP / r1L[1].strip())
+
+        if r1L[2] == "sub":
+            incrD["subB"] = True
+        else:
+            incrD["subB"] = False
+
+        if r1L[3] == "save":
+            incrD["saveB"] = True
+        else:
+            incrD["saveB"] = False
+
     elif methS == "T":
-        incrD["widthI"] = int(r1L[3].split(",")[0])     # utf print width
-        incrD["pageI"] = r1L[3].split(",")[1]           # starting page
-        if rL[2].strip() in outputD:
-            outputS = rL[2].strip()
+        if r1L[1] == "default":
+            folderD["resourceP"] = folderD["defaultP"]
         else:
-            outputS = "utf"
-    else:
-        pass
+            folderD[resourceP] = Path(rerootP / r1L[1].strip())
+
+        if r1L[2] == "code":
+            folderD["codeB"] = True
+        else:
+            folderD["codeB"] = False
 
     utfT = parse.RivtParse(folderD, incrD, outputS, methS)
     rS = utfT.str_parse(rL[1:],)
-    rvtS = hS + rS[0]
-    utfS += rvtS
-    rstS += rS[1]
+    hS = str_head(r1L[0].strip())               # get_heading
+    if hS == None:
+        rvtS = rS[0]
+    else:
+        rvtS = hS + rS[0]                       # utf string
+    utfS += rvtS                                # accumulate utf string
+    rstS += rS[1]                               # accumulate reST string
 
     return rvtS, utfS, rstS
 
@@ -253,11 +281,12 @@ def Write():
             logging.info(f"""write docs: """)
             print("", flush=True)
 
-        # always write utf file
-        docutfP = Path(docP.parent / "README.txt")
-        with open(docutfP, "w") as f2:
-            f2.write(utfS)
-        logging.info(f"""write docs: {dshortP}\README.txt""")
+        # always write utf file if not 'inter'
+        if outputS != "inter":
+            docutfP = Path(docP.parent / "README.txt")
+            with open(docutfP, "w") as f2:
+                f2.write(utfS)
+            logging.info(f"""write docs: {dshortP}\README.txt""")
 
 
 def R(rS: str):
@@ -285,7 +314,11 @@ def I(rS: str):
     :rtype: str
     """
 
-    eval_str(rS, "I")
+    global utfS, rstS, xflagB, outputS
+
+    rvtS, utfS, rstS = eval_str(rS, "I")
+
+    print(rvtS)
 
 
 def V(rS: str):
@@ -297,7 +330,11 @@ def V(rS: str):
     :type: str
     """
 
-    eval_str(rS, "V")
+    global utfS, rstS, xflagB, outputS
+
+    rvtS, utfS, rstS = eval_str(rS, "V")
+
+    print(rvtS)
 
 
 def T(rS: str):
@@ -310,7 +347,11 @@ def T(rS: str):
 
     """
 
-    eval_str(rS, "T")
+    global utfS, rstS, xflagB, outputS
+
+    rvtS, utfS, rstS = eval_str(rS, "T")
+
+    print(rvtS)
 
 
 def X(rS: str):

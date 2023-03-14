@@ -135,13 +135,13 @@ repo    rv.R("""label | folder;default | int;utf;pdf;html;both | width,page
 
                 """)
 
-insert  rv.I("""label | docs_folder;default
+insert  rv.I("""label | folder;default
 (rvi)
                 ||text ||table ||image ||image2 
 
                 """)
 
-values  rv.V("""label | docs_folder;default | sub;nosub | save;nosave
+values  rv.V("""label | folder;default | sub;nosub | save;nosave
 (rvv)
                 = ||value ||list ||function
 
@@ -149,7 +149,7 @@ values  rv.V("""label | docs_folder;default | sub;nosub | save;nosave
 
                 """)
 
-tables  rv.T("""label | docs_folder;default | show;noshow
+tables  rv.T("""label | folder;default | code;nocode
 (rvt)
                 Python simple statements
                 (any valid expression or statment on a single line)
@@ -163,6 +163,8 @@ exclude rv.X("""any text
                 used to modify a function for comments and debugging
 
                 """)
+
+write   rv.Write()
 
 =============================================================== ============
     command syntax and description (VSCode snippets)                 API

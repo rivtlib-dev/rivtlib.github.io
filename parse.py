@@ -98,10 +98,10 @@ class RivtParse:
             if blockB:                      # block accumulator
                 lineS += uS
             if blockB and uS.strip() == "[end]]":
-                rvttS = cutf.CmdUTF(lineS, tagS, self.strL)
+                rvttS = cutf.CmdUTF(lineS, tagS, strL)
                 utfS += rvttS + "\n"
                 if self.outputS in self.outputL:
-                    rvttS = crst.CmdRST(lineS, tagS, self.strL)
+                    rvttS = crst.CmdRST(lineS, tagS, strL)
                     rstS += rvttS + "\n"
                 blockB = False
             elif uS[0:2] == "||":            # find commands
@@ -109,10 +109,10 @@ class RivtParse:
                 paramL = usL[1:]
                 cmdS = usL[0].strip()
                 if cmdS in self.cmdL:
-                    rvttS = cutf.CmdUTF(paramL, cmdS, self.strL)
+                    rvttS = cutf.CmdUTF(cmdS, paramL, self.incrD, self.folderD)
                     utfS += rvttS + "\n"
                     if self.outputS in self.outputL:
-                        rvttS = crst.CmdRST(paramL, cmdS, self.strL)
+                        rvttS = crst.CmdRST(paramL, cmdS, strL)
                         rstS += rvttS + "\n"
                     continue
             elif "_[" in uS:                 # find tags

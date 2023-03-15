@@ -86,15 +86,14 @@ class TagsUTF:
                 "[m]]": "mathblk", "[r]]": "rightblk",
                 "=": "assign", ":=": "result"}
 
-        utfS = lineS
-        if tagS in tagD:
-            func = globals()[tagD[tagS]]
-            utfS = func(lineS)
+        xutfS = lineS
+        func = globals()[tagD[tagS]]
+        xutfS = func(lineS)
 
-        return utfS
+        return xutfS
 
     def label(self, objI, text):
-        """labels for equations, tables and figures
+        """format labels for equations, tables and figures
 
             :return labelS: formatted label
             :rtype: str

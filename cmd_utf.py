@@ -33,28 +33,33 @@ except:
 
 class CmdUTF:
 
-    def __init__():
-
-        pass
-
-    def parse_cmd(lineS, cmdS, strL):
+    def __init__(self, cmdS, paramL, incrD, folderD):
         """
-        =============================================================== ============
-            command syntax / snippet prefix and description                 methods
-        =============================================================== ============
+        ======================================================== ============
+            command syntax / snippet prefix and description        methods
+        ======================================================== ============
 
-        || append | file_name | ./docfolder; default / resize;default          R
-        || github | repo_name; none | readme; noneparam                        R
-        || project | file_name | /docsfolder; default                          R
-        || list | file_name  | [:];[x:y]                                       V
-        || functions | file_name | docs; nodocs                                V
-        || values | file_name | [:];[x:y]                                      V
-        || image1 | file_name  | .50                                         I,V,T
-        || image2 | file_name  | .40 | file_name  | .40                      I,V,T
-        || table | file_name |  [:] | 60 r;l;c                               I,V,T
-        || text | file_name | shade; noshade                                 I,V,T
+        || append | file_name | ./docfolder; default / resize;default   R
+        || github | repo_name; none | readme; noneparam                 R
+        || project | file_name | /docsfolder; default                   R
+        || list | file_name  | [:];[x:y]                                V
+        || functions | file_name | docs; nodocs                         V
+        || values | file_name | [:];[x:y]                               V
+        || image1 | file_name  | .50                                  I,V,T
+        || image2 | file_name  | .40 | file_name  | .40               I,V,T
+        || table | file_name |  [:] | 60 r;l;c                        I,V,T
+        || text | file_name | shade; noshade                          I,V,T
 
         """
+
+        self.folderD = folderD
+        self.incrD = incrD
+        self.swidthII = incrD["swidthI"] - 1
+
+        func = globals()[cmdS]
+        xutfS = func()
+
+        return xutfS
 
     def append(self, rsL):
         b = 5

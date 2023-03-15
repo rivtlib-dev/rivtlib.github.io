@@ -25,7 +25,8 @@ except:
     pass
 from rivt import cmd_rst as crst
 from rivt import cmd_utf as cutf
-
+from rivt import tag_rst as trst
+from rivt import tag_utf as tutf
 logging.getLogger("numexpr").setLevel(logging.WARNING)
 # tabulate.PRESERVE_WHITESPACE = True
 
@@ -89,6 +90,7 @@ class RivtParse:
         rstS = """"""
         blockB = False
         for uS in strL:
+            # print(f"{uS=}")
             if uS[0:2] == "##":
                 continue                    # remove review comments
             uS = uS[4:]                     # remove indent
@@ -96,10 +98,10 @@ class RivtParse:
             if blockB:                      # block accumulator
                 lineS += uS
             if blockB and uS.strip() == "[end]]":
-                rvttS = cutf.parsetag(lineS, tagS, self.strL)
+                rvttS = cutf.CmdUTF(lineS, tagS, self.strL)
                 utfS += rvttS + "\n"
                 if self.outputS in self.outputL:
-                    rvttS = crst.parsetag(lineS, tagS, self.strL)
+                    rvttS = crst.CmdRST(lineS, tagS, self.strL)
                     rstS += rvttS + "\n"
                 blockB = False
             elif uS[0:2] == "||":            # find commands
@@ -107,10 +109,10 @@ class RivtParse:
                 paramL = usL[1:]
                 cmdS = usL[0].strip()
                 if cmdS in self.cmdL:
-                    rvttS = cutf.parsecmd(paramL, cmdS, self.strL)
+                    rvttS = cutf.CmdUTF(paramL, cmdS, self.strL)
                     utfS += rvttS + "\n"
                     if self.outputS in self.outputL:
-                        rvttS = crst.parsecmd(paramL, cmdS, self.strL)
+                        rvttS = crst.CmdRST(paramL, cmdS, self.strL)
                         rstS += rvttS + "\n"
                     continue
             elif "_[" in uS:                 # find tags
@@ -118,12 +120,12 @@ class RivtParse:
                 lineS = usL[0]
                 tagS = usL[1].strip()
                 if tagS in self.tagL:
-                    rvttS = cutf.parsetag(lineS, tagS,
-                                          self.folderD, self.incrD)
+                    rvttS = tutf.TagsUTF(lineS, tagS,
+                                         self.folderD, self.incrD)
                     utfS += rvttS + "\n"
                     if self.outputS in self.outputL:
-                        rvttS = crst.parsetag(lineS, tagS,
-                                              self.folderD, self.incrD)
+                        rvttS = trst.TagsRST(lineS, tagS,
+                                             self.folderD, self.incrD)
                         rstS += rvttS + "\n"
                 if tagS[0] == "[":
                     blockB = True
@@ -132,4 +134,4 @@ class RivtParse:
                 rstS = uS
                 utfS = uS
 
-            return utfS, rstS, self.folderD, self.incrD
+        return utfS, rstS, self.folderD, self.incrD

@@ -158,26 +158,28 @@ def str_head(hdrS):
     :rtype: _type_
     """
 
+    hdrstS = """"""
+    hdutfS = """"""
+
     if hdrS[0:2] == "--":
-        return None
-    else:
-        hdS = hdrS
-        snumI = incrD["secnumI"]+1
-        incrD["secnumI"] = snumI
-        docnumS = "[" + incrD["docnumS"]+"]"
-        compnumS = docnumS + " - " + str(snumI)
-        widthI = incrD["widthI"] - 3
-        headS = " " + hdS + compnumS.rjust(widthI - len(hdrS))
-        bordrS = incrD["widthI"] * "_"
-        hdS = "\n" + bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
+        return None, None
+
+    snumI = incrD["secnumI"]+1
+    incrD["secnumI"] = snumI
+    docnumS = "[" + incrD["docnumS"]+"]"
+    compnumS = docnumS + " - " + str(snumI)
+    widthI = incrD["widthI"] - 3
+    headS = " " + hdrS + compnumS.rjust(widthI - len(hdrS))
+    bordrS = incrD["widthI"] * "_"
+    hdutfS = "\n" + bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
 
     if outputD[outputS]:
-        hdS = (
+        hdrstS = (
             ".. raw:: latex"
             + "\n\n"
             + "   ?x?vspace{.2in}"
             + "   ?x?textbf{"
-            + hdS
+            + hdrS
             + "}"
             + "   ?x?hfill?x?textbf{SECTION "
             + compnumS
@@ -186,10 +188,11 @@ def str_head(hdrS):
             + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
             + "\n\n"
         )
-    return hdS
+
+    return hdutfS, hdrstS
 
 
-def eval_str(rS, methS):
+def eval_head(rS, methS):
     """_summary_
 
     :param rS: _description_
@@ -202,11 +205,7 @@ def eval_str(rS, methS):
 
     global utfS, rstS, outputS, incrD, folderD
 
-    rvtS = """"""
-    rL = rS.split("\n")
-    r1L = rL[0].split("|")
-
-    print(f"{outputS=}")
+    r1L = rS.split("|")
 
     if methS == "R":
         if r1L[1] == "default":
@@ -255,17 +254,9 @@ def eval_str(rS, methS):
         else:
             folderD["codeB"] = False
 
-    utfT = parse.RivtParse(folderD, incrD, outputS, methS)
-    rS = utfT.str_parse(rL[1:],)
-    hS = str_head(r1L[0].strip())               # get_heading
-    if hS == None:
-        rvtS = rS[0]
-    else:
-        rvtS = hS + rS[0]                       # utf string
-    utfS += rvtS                                # accumulate utf string
-    rstS += rS[1]                               # accumulate reST string
+    hdutfS, hdrstS = str_head(r1L[0].strip())   # get_heading
 
-    return rvtS, utfS, rstS
+    return hdutfS, hdrstS
 
 
 def Write():
@@ -298,11 +289,21 @@ def R(rS: str):
     :type: str
     """
 
-    global utfS, rstS, xflagB, outputS
+    global utfS, rstS, xflagB, outputS, incrD, folderD
 
-    rvtS, utfS, rstS = eval_str(rS, "R")
+    xutfS = """"""
+    rL = rS.split("\n")
+    hutfS, hrstS = eval_head(rL[0], "R")
+    utfT = parse.RivtParse(folderD, incrD, outputS, "R")
+    xutfS, xrstS, folderD, incrD = utfT.str_parse(rL[1:])
+    #print(f"{xutfS=}", f"{rL[1:]=}")
+    if hutfS != None:
+        utfS += hutfS + utfS
+        xutfS += hutfS + xutfS                 # accumulate utf string
+        if outputD[outputS]:
+            rstS += hrstS + rstS               # accumulate reST string
 
-    print(rvtS)
+    print(xutfS)
 
 
 def I(rS: str):
@@ -314,11 +315,21 @@ def I(rS: str):
     :rtype: str
     """
 
-    global utfS, rstS, xflagB, outputS
+    global utfS, rstS, xflagB, outputS, incrD, folderD
 
-    rvtS, utfS, rstS = eval_str(rS, "I")
+    xutfS = """"""
+    rL = rS.split("\n")
+    hutfS, hrstS = eval_head(rL[0], "I")
+    utfT = parse.RivtParse(folderD, incrD, outputS, "I")
+    xutfS, rstS, folderD, incrD = utfT.str_parse(rL[1:])
+    #print(f"{xutfS=}", f"{rL[1:]=}")
+    if hutfS != None:
+        utfS += hutfS + utfS
+        xutfS += hutfS + xutfS                 # accumulate utf string
+        if outputD[outputS]:
+            rstS += hrstS + rstS               # accumulate reST string
 
-    print(rvtS)
+    print(xutfS)
 
 
 def V(rS: str):
@@ -330,11 +341,20 @@ def V(rS: str):
     :type: str
     """
 
-    global utfS, rstS, xflagB, outputS
+    global utfS, rstS, xflagB, outputS, incrD, folderD
 
-    rvtS, utfS, rstS = eval_str(rS, "V")
+    xutfS = """"""
+    rL = rS.split("\n")
+    hutfS, hrstS = eval_head(rL[0], "V")
+    utfT = parse.RivtParse(folderD, incrD, outputS, "V")
+    xutfS, rstS, folderD, incrD = utfT.str_parse(rL[1:])
+    if hutfS != None:
+        utfS += hutfS + utfS
+        xutfS += hutfS + xutfS                 # accumulate utf string
+        if outputD[outputS]:
+            rstS += hrstS + rstS               # accumulate reST string
 
-    print(rvtS)
+    print(xutfS)
 
 
 def T(rS: str):
@@ -346,12 +366,20 @@ def T(rS: str):
     :type: str
 
     """
+    global utfS, rstS, xflagB, outputS, incrD, folderD
 
-    global utfS, rstS, xflagB, outputS
+    xutfS = """"""
+    rL = rS.split("\n")
+    hutfS, hrstS = eval_head(rL[0], "T")
+    utfT = parse.RivtParse(folderD, incrD, outputS, "T")
+    xutfS, rstS, folderD, incrD = utfT.str_parse(rL[1:])
+    if hutfS != None:
+        utfS += hutfS + utfS
+        xutfS += hutfS + xutfS                 # accumulate utf string
+        if outputD[outputS]:
+            rstS += hrstS + rstS               # accumulate reST string
 
-    rvtS, utfS, rstS = eval_str(rS, "T")
-
-    print(rvtS)
+    print(xutfS)
 
 
 def X(rS: str):

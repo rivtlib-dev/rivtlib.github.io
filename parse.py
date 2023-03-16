@@ -23,10 +23,10 @@ try:
     from PIL import ImageOps as PImageOps
 except:
     pass
-from rivt import cmd_rst as crst
-from rivt import cmd_utf as cutf
-from rivt import tag_rst as trst
-from rivt import tag_utf as tutf
+from rivt import cmdrst as crst
+from rivt import cmdutf as cutf
+from rivt import tagrst as trst
+from rivt import tagutf as tutf
 logging.getLogger("numexpr").setLevel(logging.WARNING)
 # tabulate.PRESERVE_WHITESPACE = True
 
@@ -94,44 +94,46 @@ class RivtParse:
             if uS[0:2] == "##":
                 continue                    # remove review comments
             uS = uS[4:]                     # remove indent
-
             if blockB:                      # block accumulator
                 lineS += uS
             if blockB and uS.strip() == "[end]]":
-                rvttS = cutf.CmdUTF(lineS, tagS, strL)
-                utfS += rvttS + "\n"
+                rvtS = tutf.TagsUTF(lineS, tagS, strL)
+                utfS += rvtS + "\n"
                 if self.outputS in self.outputL:
-                    rvttS = crst.CmdRST(lineS, tagS, strL)
-                    rstS += rvttS + "\n"
+                    rvtS = trst.TagsRST(lineS, tagS, strL)
+                    rstS += rvtS + "\n"
                 blockB = False
             elif uS[0:2] == "||":            # find commands
                 usL = uS[2:].split("|")
-                paramL = usL[1:]
+                parL = usL[1:]
                 cmdS = usL[0].strip()
                 if cmdS in self.cmdL:
-                    rvttS = cutf.CmdUTF(cmdS, paramL, self.incrD, self.folderD)
-                    utfS += rvttS + "\n"
+                    rvtM = cutf.CmdUTF(parL, self.incrD, self.folderD)
+                    rvtS = rvtM.cmd_parse(cmdS)
+                    utfS += rvtS + "\n"
                     if self.outputS in self.outputL:
-                        rvttS = crst.CmdRST(paramL, cmdS, strL)
-                        rstS += rvttS + "\n"
+                        rvtM = crst.CmdRST(parL, self.incrD, self.folderD)
+                        rvtS = rvtM.cmd_parse(cmdS)
+                        rstS += rvtS + "\n"
                     continue
             elif "_[" in uS:                 # find tags
                 usL = uS.split("_[")
                 lineS = usL[0]
                 tagS = usL[1].strip()
                 if tagS in self.tagL:
-                    rvttS = tutf.TagsUTF(lineS, tagS,
-                                         self.folderD, self.incrD)
-                    utfS += rvttS + "\n"
+                    rvtM = tutf.TagsUTF(lineS, self.folderD, self.incrD)
+                    rvtS = rvtM.tag_parse(tagS)
+                    utfS += rvtS + "\n"
                     if self.outputS in self.outputL:
-                        rvttS = trst.TagsRST(lineS, tagS,
-                                             self.folderD, self.incrD)
-                        rstS += rvttS + "\n"
+                        rvtM = trst.TagsRST(lineS, self.folderD, self.incrD)
+                        rvtS = rvtM.tag_parse(tagS)
+                        rstS += rvtS + "\n"
                 if tagS[0] == "[":
                     blockB = True
                 continue
             else:
-                rstS = uS
-                utfS = uS
+                uS += uS + "\n"
 
+        print(f"{utfS=}")
+        utfS = rstS = uS
         return utfS, rstS, self.folderD, self.incrD

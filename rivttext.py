@@ -44,16 +44,17 @@ projP = docP.parent.parent.parent.parent  # rivt project folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
 siteP = projP / "site"  # site folder path
 reportP = projP / "report"  # report folder path
-rivtcalcP = Path("rivt.text.py").parent  # rivt package path
+rivtcalcP = Path("rivt.rivttext.py").parent  # rivt package path
 # print(f"{projP=}")
 
 prfxS = docbaseS[2:4]
 for fileS in os.listdir(projP / "resource"):
     if fnmatch.fnmatch(fileS[2:5], prfxS + "_*"):
-        resourceP = Path(fileS).absolute()  # resource folder path
-defaultP = resourceP
+        resourceP = Path(fileS)  # resource folder path
+        break
+defaultP = Path(projP / "resource" / resourceP)
 rerootP = Path(projP / "resource")
-docpdfP = Path(str(resourceP / docbaseS) + ".pdf")
+docpdfP = Path(rerootP / resourceP / (docbaseS + ".pdf"))
 doctitleS = (docP.parent.name).split("_")[1]
 doctitleS = doctitleS.replace("-", " ")
 divtitleS = (docP.parent.parent.name).split("_", 1)[1]
@@ -122,7 +123,7 @@ logging.getLogger("").addHandler(logconsole)
 warnings.filterwarnings("ignore")
 dshortP = Path(*Path(docP.parent).parts[-2:])
 lshortP = Path(*rerootP.parts[-2:])
-rshortP = Path(*Path(resourceP).parts[-2:])
+rshortP = Path(*Path(resourceP).parts[-1:])
 # check that calc and file directories exist
 if docP.exists():
     logging.info(f"""rivt file short path : {dshortP}""")
@@ -157,6 +158,8 @@ def str_head(hdrS):
     :return: _description_
     :rtype: _type_
     """
+
+    global outputS
 
     hdrstS = """"""
     hdutfS = """"""
@@ -208,48 +211,31 @@ def eval_head(rS, methS):
     r1L = rS.split("|")
 
     if methS == "R":
-        if r1L[1] == "default":
-            folderD["resourceP"] = folderD["defaultP"]
-        else:
-            folderD[resourceP] = Path(rerootP / r1L[1].strip())
 
-        if r1L[2].strip() in outputD:
-            outputS = r1L[2].strip()
+        if r1L[1].strip() in outputD:
+            outputS = r1L[1].strip()
         else:
             outputS = "utf"
 
-        incrD["widthI"] = int(r1L[3].split(",")[0])     # utf print width
-        incrD["pageI"] = r1L[3].split(",")[1]           # starting page
+        incrD["widthI"] = int(r1L[2].split(",")[0])     # utf print width
+        incrD["pageI"] = r1L[2].split(",")[1]           # starting page
 
     elif methS == "I":
-        if r1L[1] == "default":
-            folderD["resourceP"] = folderD["defaultP"]
-        else:
-            folderD[resourceP] = Path(rerootP / r1L[1].strip())
+        pass
 
     elif methS == "V":
-        if r1L[1] == "default":
-            folderD["resourceP"] = folderD["defaultP"]
-        else:
-            folderD[resourceP] = Path(rerootP / r1L[1].strip())
-
-        if r1L[2] == "sub":
+        if r1L[1] == "sub":
             incrD["subB"] = True
         else:
             incrD["subB"] = False
 
-        if r1L[3] == "save":
+        if r1L[2] == "save":
             incrD["saveB"] = True
         else:
             incrD["saveB"] = False
 
     elif methS == "T":
-        if r1L[1] == "default":
-            folderD["resourceP"] = folderD["defaultP"]
-        else:
-            folderD[resourceP] = Path(rerootP / r1L[1].strip())
-
-        if r1L[2] == "code":
+        if r1L[1] == "code":
             folderD["codeB"] = True
         else:
             folderD["codeB"] = False
@@ -298,10 +284,9 @@ def R(rS: str):
     xutfS, xrstS, folderD, incrD = utfT.str_parse(rL[1:])
     #print(f"{xutfS=}", f"{rL[1:]=}")
     if hutfS != None:
-        utfS += hutfS + utfS
-        xutfS += hutfS + xutfS                 # accumulate utf string
+        xutfS = hutfS + xutfS       # accumulate utf string
         if outputD[outputS]:
-            rstS += hrstS + rstS               # accumulate reST string
+            xrstS = hrstS + xrstS     # accumulate reST string
 
     print(xutfS)
 

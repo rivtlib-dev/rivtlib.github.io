@@ -43,12 +43,37 @@ class CmdRST:
 
     """
 
-    def __init__(self, strL: list, folderD: dict, tagD: dict):
+    def __init__(self, paramL, folderD, incrD):
+        """
+        ======================================================== ============
+            command syntax / snippet prefix and description        methods
+        ======================================================== ============
 
-        self.restS = """"""  # restructured text string
-        self.strL = strL  # rivt-string list
+        || append | file_name | ./docfolder; default / resize;default   R
+        || github | repo_name; none | readme; noneparam                 R
+        || project | file_name | /docsfolder; default                   R
+
+        || list | file_name  | [:];[x:y]                                V
+        || functions | file_name | docs; nodocs                         V
+        || values | file_name | [:];[x:y]                               V
+
+        || image1 | file_name  | .50                                  I,V,T
+        || image2 | file_name  | .40 | file_name  | .40               I,V,T
+        || table | file_name |  [:] | 60 r;l;c                        I,V,T
+        || text | file_name | shade; noshade                          I,V,T
+
+        """
+
         self.folderD = folderD
-        self.tagD = tagD
+        self.incrD = incrD
+        self.widthII = incrD["widthI"] - 1
+        self.rL = paramL
+
+    def cmd_parse(self, cmdS):
+        """_summary_
+        """
+
+        return eval("self." + cmdS + "()")
 
     def r_rst(self, typeS: str, cmdL: list, methL: list, tagL: list):
         """parse rivt-string to reST

@@ -129,19 +129,19 @@ used for navigation (see tags for syntax).
  name                     API Functions (VSCode snippet prefix)
 ======= ===================================================================
 
-repo    rv.R("""label | folder;default | int;utf;pdf;html;both | width,page
+repo    rv.R("""label | int;utf;pdf;html;both | width,page
 (rvr)
                 ||text ||table ||github ||project ||append
 
                 """)
 
-insert  rv.I("""label | folder;default
+insert  rv.I("""label 
 (rvi)
                 ||text ||table ||image ||image2 
 
                 """)
 
-values  rv.V("""label | folder;default | sub;nosub | save;nosave
+values  rv.V("""label | sub;nosub | save;nosave
 (rvv)
                 = ||value ||list ||function
 
@@ -149,7 +149,7 @@ values  rv.V("""label | folder;default | sub;nosub | save;nosave
 
                 """)
 
-tables  rv.T("""label | folder;default | code;nocode
+tables  rv.T("""label | hide;show
 (rvt)
                 Python simple statements
                 (any valid expression or statment on a single line)
@@ -176,7 +176,7 @@ write   rv.Write()
 || project | file_name | /docfolder; default                           R
     (pro)    .txt; rst; csv; syk; xls | project info folder
 
-|| append | file_name | ./docfolder; default / resize;default          R
+|| append | file_name | ./docfolder; default | resize;default          R
     (app)    .pdf; .txt | pdf folder / rescale to page size
 
 || list | file_name  | [:];[x:y]                                       V

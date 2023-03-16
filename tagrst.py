@@ -32,7 +32,7 @@ except:
 
 class TagsRST():
 
-    def __init__(self, lineS, tagS, folderD, incrD):
+    def __init__(self, lineS, folderD, incrD):
         """format tags to reST
 
         ============================ ============================================
@@ -78,22 +78,21 @@ class TagsRST():
         self.folderD = folderD
         self.incrD = incrD
         self.lineS = lineS
-        self.swidthII = incrD["swidthI"] - 1
+        self.swidthII = incrD["widthI"] - 1
 
-        tagD = {"b]": "bold", "c]": "center", "d]": "date", "i]": "italic",
-                "e]": "equation", "f]": "figure", "#]": "footnumber",
-                "foot]": "footnote", "-]": "line", "x]": "latex", "lnk]": "link",
-                "p]": "page", "r]": "right", "s]": "sympy", "t]": "table",
-                "url]": "url", "[o]]": "codeblk", "[c]]": "centerblk",
-                "[x]]": "latexblk", "[m]]": "mathblk", "[r]]": "rightblk",
-                "=": "assign", ":=": "result"}
+        self.tagD = {"b]": "bold", "c]": "center", "d]": "date", "i]": "italic",
+                     "e]": "equation", "f]": "figure", "#]": "footnumber",
+                     "foot]": "footnote", "-]": "line", "x]": "latex", "lnk]": "link",
+                     "p]": "page", "r]": "right", "s]": "sympy", "t]": "table",
+                     "url]": "url", "[o]]": "codeblk", "[c]]": "centerblk",
+                     "[x]]": "latexblk", "[m]]": "mathblk", "[r]]": "rightblk",
+                     "=": "assign", ":=": "result"}
 
-        utfS = lineS
-        if tagS in tagD:
-            func = getattr([tagD[tagS]])
-            utfS = func(lineS)
+    def tag_parse(self, tagS):
+        """_summary_
+        """
 
-        return utfS
+        return eval(self.tagD[tagS] + "()")
 
     def label(self, objI, text):
         """reST labels equations, tables and figures

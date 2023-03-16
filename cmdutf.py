@@ -33,7 +33,7 @@ except:
 
 class CmdUTF:
 
-    def __init__(self, cmdS, paramL, incrD, folderD):
+    def __init__(self, paramL, incrD, folderD):
         """
         ======================================================== ============
             command syntax / snippet prefix and description        methods
@@ -42,9 +42,11 @@ class CmdUTF:
         || append | file_name | ./docfolder; default / resize;default   R
         || github | repo_name; none | readme; noneparam                 R
         || project | file_name | /docsfolder; default                   R
+
         || list | file_name  | [:];[x:y]                                V
         || functions | file_name | docs; nodocs                         V
         || values | file_name | [:];[x:y]                               V
+
         || image1 | file_name  | .50                                  I,V,T
         || image2 | file_name  | .40 | file_name  | .40               I,V,T
         || table | file_name |  [:] | 60 r;l;c                        I,V,T
@@ -54,17 +56,19 @@ class CmdUTF:
 
         self.folderD = folderD
         self.incrD = incrD
-        self.swidthII = incrD["swidthI"] - 1
+        self.widthII = incrD["widthI"] - 1
+        self.rL = paramL
 
-        func = globals()[cmdS]
-        xutfS = func()
+    def cmd_parse(self, cmdS):
+        """_summary_
+        """
 
-        return xutfS
+        return eval("self." + cmdS + "()")
 
-    def append(self, rsL):
+    def append(self):
         b = 5
 
-    def project(self, rL):
+    def project(self):
         """insert tables or text from csv, xlsx or txt file
 
         Args:
@@ -74,45 +78,73 @@ class CmdUTF:
         The command is identical to itable except file is read from docs/info.
 
         """
+
         alignD = {"S": "", "D": "decimal",
                   "C": "center", "R": "right", "L": "left"}
 
-        if len(rL) < 4:
-            rL += [""] * (4 - len(rL))  # pad parameters
-        rstS = ""
-        contentL = []
-        sumL = []
-        fileS = rL[1].strip()
-        tfileS = Path(self.folderD["dpath0"] / fileS)
+        if len(self.rL) < 4:
+            self.rL += [""] * (4 - len(self.rL))  # pad parameters
+        rS = ""
+        fileS = self.rL[1].strip()
+        tfileS = Path(self.folderD["defaultP"] / fileS)
         extS = fileS.split(".")[1]
+
         if extS == "csv":
-            with open(tfileS, "r") as csvfile:  # read csv file
+            with open(tfileS, "r") as csvfile:          # read csv file
                 readL = list(csv.reader(csvfile))
         elif extS == "xlsx":
-            xDF = pd.read_excel(tfileS, header=None)
+            xDF = pd.read_excel(tfileS, header=None)    # read xlsx file
             readL = xDF.values.tolist()
+        elif extS == "txt":
+            with open(tfileS, "r") as txtfile:          # read txt file
+                readL = txtfile.readlines()
         else:
             return
+
+        rS = "\n".join(readL)
+
+        if extS != "txt":
+            outputS = self.colwidth(readL)
+            sys.stdout.flush()
+            old_stdout = sys.stdout
+            outputIO = StringIO()
+            taboutS = tabulate(
+                readL,
+                tablefmt="rst",
+                headers="firstrow",
+                numalign="decimal",
+                stralign=saS
+            )
+            outputIO.write(taboutS)
+            rS = outputIO.getvalue()
+            sys.stdout = old_stdout
+
+        return rS + "\n"
+
+    def colwidth(self, readL):
+        """_summary_
+        """
+
         incl_colL = list(range(len(readL[0])))
-        widthI = self.setcmdD["cwidthI"]
-        alignS = self.setcmdD["calignS"]
-        saS = alignD[alignS]
-        if rL[2].strip():
-            widthL = rL[2].split(",")  # new max col width
+        widthI = self.incrD["widthI"]
+        alignS = self.incrD["alignS"]
+        saS = self.incrD[alignS]
+        if self.rL[2].strip():
+            widthL = self.rL[2].split(",")  # new max col width
             widthI = int(widthL[0].strip())
             alignS = widthL[1].strip()
-            saS = alignD[alignS]  # new alignment
-            self.setcmdD.update({"cwidthI": widthI})
-            self.setcmdD.update({"calignS": alignS})
+            saS = self.incrD[alignS]  # new alignment
+            self.incrD.update({"widthI": widthI})
+            self.incrD.update({"alignS": alignS})
         totalL = [""] * len(incl_colL)
-        if rL[3].strip():  # columns
-            if rL[3].strip() == "[:]":
+        if self.rL[3].strip():  # columns
+            if self.rL[3].strip() == "[:]":
                 totalL = [""] * len(incl_colL)
             else:
                 incl_colL = eval(rL[3].strip())
                 totalL = [""] * len(incl_colL)
         ttitleS = readL[0][0].strip() + " [t]_"
-        rstgS = self._tags(ttitleS, rtagL)
+        rstgS = self._tags(ttitleS, self.rL)
         self.restS += rstgS.rstrip() + "\n\n"
         for row in readL[1:]:
             contentL.append([row[i] for i in incl_colL])
@@ -124,22 +156,6 @@ class CmdUTF:
                 templist = [i.replace("""\\n""", """\n""") for i in templist]
                 wrowL.append("""\n""".join(templist))
             wcontentL.append(wrowL)
-        sys.stdout.flush()
-        old_stdout = sys.stdout
-        output = StringIO()
-        output.write(
-            tabulate(
-                wcontentL,
-                tablefmt="rst",
-                headers="firstrow",
-                numalign="decimal",
-                stralign=saS,
-            )
-        )
-        rstS = output.getvalue()
-        sys.stdout = old_stdout
-
-        self.restS += rstS + "\n"
 
     def vsub(self, eqL: list, eqS: str):
         """substitute numbers for variables in printed output
@@ -264,7 +280,8 @@ class CmdUTF:
         output = StringIO()
         output.write(
             tabulate(
-                tbl, tablefmt=tblfmt, headers=hdrL, showindex=False, colalign=alignL
+                tbl, tablefmt=tblfmt, headers=hdrL,
+                showindex=False, colalign=alignL
             )
         )
         utfS = output.getvalue()
@@ -304,49 +321,54 @@ class CmdUTF:
         self._vtable(valL, hdrL, "rst", alignL)
         self.rivtD.update(locals())
 
-    def image(self, iL: list):
+    def image(self):
+        """insert one image from file
+
+        Args:
+            iL (list): image parameters
+        """
+        utfS = ""
+        iL = self.rL
+        scale1F = float(iL[2])
+        self.setcmdD.update({"scale1F": scale1F})
+        fileS = iL[1].split(",")
+        file1S = fileS[0].strip()
+        docpS = "d" + self.setsectD["cnumS"]
+        img1S = str(Path(self.folderD["dpathcur"] / file1S))
+        utfS += "Figure path: " + img1S + "\n"
+        try:
+            _display(_Image(img1S))
+        except:
+            pass
+
+        return utfS
+
+    def image2(self):
         """insert one or two images from file
 
         Args:
             iL (list): image parameters
         """
         utfS = ""
-        if "," in iL[1]:  # two images
-            scaleF = iL[2].split(",")
-            scale1F = float(scaleF[0])
-            scale2F = float(scaleF[1])
-            self.setcmdD.update({"scale1F": scale1F})
-            self.setcmdD.update({"scale2F": scale2F})
-            fileS = iL[1].split(",")
-            file1S = fileS[0].strip()
-            file2S = fileS[1].strip()
-            docpS = "d" + self.setsectD["cnumS"]
-            img1S = str(Path(self.folderD["dpathcur"] / file1S))
-            img2S = str(Path(self.folderD["dpathcur"] / file2S))
-            # pshrt1S = str(Path(*Path(img1S).parts[-4:]))
-            # pshrt2S = str(Path(*Path(img2S).parts[-4:]))
-            for fS in [img1S, img2S]:
-                utfS += "Figure path: " + fS + "\n"
-                try:
-                    _display(_Image(fS))
-                except:
-                    pass
-            print(utfS)
-            self.calcS += utfS + "\n"
-        else:  # one image
-            scale1F = float(iL[2])
-            self.setcmdD.update({"scale1F": scale1F})
-            fileS = iL[1].split(",")
-            file1S = fileS[0].strip()
-            docpS = "d" + self.setsectD["cnumS"]
-            img1S = str(Path(self.folderD["dpathcur"] / file1S))
-            utfS += "Figure path: " + img1S + "\n"
+        iL = self.rL
+        scale1F = float(iL[1])
+        scale2F = float(iL[3])
+        self.incrD.update({"scale1F": scale1F})
+        self.incrD.update({"scale2F": scale2F})
+        file1S = iL[0].strip()
+        file2S = iL[2].strip()
+        img1S = str(Path(self.folderD["defaultP"] / file1S))
+        img2S = str(Path(self.folderD["defaultP"] / file2S))
+        # pshrt1S = str(Path(*Path(img1S).parts[-4:]))
+        # pshrt2S = str(Path(*Path(img2S).parts[-4:]))
+        for fS in [img1S, img2S]:
+            utfS += "Figure path: " + fS + "\n"
             try:
-                _display(_Image(img1S))
+                _display(_Image(fS))
             except:
                 pass
-            print(utfS)
-            self.calcS += utfS + "\n"
+
+        return utfS
 
     def text(self, iL: list):
         """insert text from file

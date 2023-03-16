@@ -32,7 +32,7 @@ except:
 
 class TagsUTF:
 
-    def __init__(self, lineS, tagS, folderD, incrD):
+    def __init__(self, lineS, folderD, incrD):
         """format tags to utf
 
         ============================ ============================================
@@ -76,21 +76,21 @@ class TagsUTF:
         self.folderD = folderD
         self.incrD = incrD
         self.lineS = lineS
-        self.swidthII = incrD["swidthI"] - 1
+        self.swidthII = incrD["widthI"] - 1
 
-        tagD = {"c]": "center",  "#]": "footnumber", "foot]": "footnote",
-                "-]": "line", "r]": "right",  "date]": "date",
-                "page]": "page", "e]": "equation", "f]": "figure", "sym]": "sympy",
-                "t]": "table", "x]": "latex", "lnk]": "link", "url]": "url",
-                "[o]]": "codeblk", "[c]]": "centerblk", "[x]]": "latexblk",
-                "[m]]": "mathblk", "[r]]": "rightblk",
-                "=": "assign", ":=": "result"}
+        self.tagD = {"c]": "center",  "#]": "footnumber", "foot]": "footnote",
+                     "-]": "line", "r]": "right",  "date]": "date",
+                     "page]": "page", "e]": "equation", "f]": "figure", "sym]": "sympy",
+                     "t]": "table", "x]": "latex", "lnk]": "link", "url]": "url",
+                     "[o]]": "codeblk", "[c]]": "centerblk", "[x]]": "latexblk",
+                     "[m]]": "mathblk", "[r]]": "rightblk",
+                     "=": "assign", ":=": "result"}
 
-        xutfS = lineS
-        func = globals()[tagD[tagS]]
-        xutfS = func(lineS)
+    def tag_parse(self, tagS):
+        """_summary_
+        """
 
-        return xutfS
+        return eval(self.tagD[tagS] + "()")
 
     def label(self, objI, text):
         """format labels for equations, tables and figures
@@ -152,8 +152,8 @@ class TagsUTF:
         :rtype: str
         """
 
-        fnumI = int(self.setsectD["fnumI"]) + 1
-        self.incrD["fnumI"] = fnumI
+        fnumI = int(self.incrD["fignumI"]) + 1
+        self.incrD["fignumI"] = fnumI
         refS = self.label(fnumI, "[ Fig: ") + " ]"
         lineS = "\n\n**" + refS + "**" + " ?x?hfill " + refS + "\n\n"
 
@@ -186,7 +186,7 @@ class TagsUTF:
         :param lineS: _description_
         :type lineS: _type_
         """
-        lineS = int(folderD["swidthI"]) * "_"
+        lineS = int(folderD["widthI"]) * "_"
 
         return lineS
 

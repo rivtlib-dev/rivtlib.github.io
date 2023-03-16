@@ -174,7 +174,7 @@ def str_head(hdrS):
     widthI = incrD["widthI"] - 3
     headS = " " + hdrS + compnumS.rjust(widthI - len(hdrS))
     bordrS = incrD["widthI"] * "_"
-    hdutfS = "\n" + bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
+    hdutfS = bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
 
     if outputD[outputS]:
         hdrstS = (
@@ -275,20 +275,23 @@ def R(rS: str):
     :type: str
     """
 
-    global utfS, rstS, xflagB, outputS, incrD, folderD
+    global utfS, rstS, outputS, incrD, folderD
 
-    xutfS = """"""
+    xutfS = ""
+    xrstS = ""
     rL = rS.split("\n")
     hutfS, hrstS = eval_head(rL[0], "R")
     utfT = parse.RivtParse(folderD, incrD, outputS, "R")
     xutfS, xrstS, folderD, incrD = utfT.str_parse(rL[1:])
-    #print(f"{xutfS=}", f"{rL[1:]=}")
     if hutfS != None:
-        xutfS = hutfS + xutfS       # accumulate utf string
+        xutfS = hutfS + xutfS
         if outputD[outputS]:
-            xrstS = hrstS + xrstS     # accumulate reST string
+            xrstS = hrstS + xrstS
+    utfS += xutfS                    # accumulate utf string
+    rstS += xrstS                    # accumulate reST string
 
     print(xutfS)
+    xutfS = ""                       # reset local string
 
 
 def I(rS: str):
@@ -300,21 +303,23 @@ def I(rS: str):
     :rtype: str
     """
 
-    global utfS, rstS, xflagB, outputS, incrD, folderD
+    global utfS, rstS, outputS, incrD, folderD
 
-    xutfS = """"""
+    xutfS = ""
+    xrstS = ""
     rL = rS.split("\n")
     hutfS, hrstS = eval_head(rL[0], "I")
     utfT = parse.RivtParse(folderD, incrD, outputS, "I")
-    xutfS, rstS, folderD, incrD = utfT.str_parse(rL[1:])
-    #print(f"{xutfS=}", f"{rL[1:]=}")
+    xutfS, xrstS, folderD, incrD = utfT.str_parse(rL[1:])
     if hutfS != None:
-        utfS += hutfS + utfS
-        xutfS += hutfS + xutfS                 # accumulate utf string
+        xutfS = hutfS + xutfS
         if outputD[outputS]:
-            rstS += hrstS + rstS               # accumulate reST string
+            xrstS = hrstS + xrstS
+    utfS += xutfS
+    rstS += xrstS
 
     print(xutfS)
+    xutfS = ""
 
 
 def V(rS: str):
@@ -329,15 +334,18 @@ def V(rS: str):
     global utfS, rstS, xflagB, outputS, incrD, folderD
 
     xutfS = """"""
+    xrstS = """"""
     rL = rS.split("\n")
     hutfS, hrstS = eval_head(rL[0], "V")
     utfT = parse.RivtParse(folderD, incrD, outputS, "V")
-    xutfS, rstS, folderD, incrD = utfT.str_parse(rL[1:])
+    xutfS, xrstS, folderD, incrD = utfT.str_parse(rL[1:])
+    #print(f"{xutfS=}", f"{rL[1:]=}")
     if hutfS != None:
-        utfS += hutfS + utfS
-        xutfS += hutfS + xutfS                 # accumulate utf string
+        xutfS = hutfS + xutfS
         if outputD[outputS]:
-            rstS += hrstS + rstS               # accumulate reST string
+            xrstS = hrstS + xrstS
+    utfS += xutfS                    # accumulate utf string
+    rstS += xrstS                    # accumulate reST string
 
     print(xutfS)
 

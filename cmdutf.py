@@ -7,12 +7,14 @@ import subprocess
 import tempfile
 import re
 import logging
+import time
 import numpy.linalg as la
 import pandas as pd
 import sympy as sp
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import html2text as htm
+from io import StringIO
 from numpy import *
 from IPython.display import display as _display
 from IPython.display import Image as _Image
@@ -29,6 +31,10 @@ try:
     from PIL import ImageOps as PImageOps
 except:
     pass
+
+
+from io import StringIO  # Python 3
+import sys
 
 
 class CmdUTF:
@@ -68,6 +74,59 @@ class CmdUTF:
     def append(self):
         b = 5
 
+    def image(self):
+        """insert one image from file
+
+            :param iL (list): image parameters
+        """
+        utfS = ""
+        iL = self.rL
+        scale1F = float(iL[1])
+        self.incrD.update({"scale1F": scale1F})
+        file1S = iL[0].strip()
+        img1S = str(Path(self.folderD["defaultP"] / file1S))
+        # pshrt1S = str(Path(*Path(img1S).parts[-3:]))
+        # pshrt2S = str(Path(*Path(img2S).parts[-3:]))
+        for fS in [img1S]:
+            utfS += "Figure path: " + fS + "\n"
+            try:
+                _display(_Image(fS))
+            except:
+                pass
+
+        return utfS
+
+    def image2(self):
+        """insert one or two images from file
+
+            :param iL (list): image parameters
+        """
+        utfS = ""
+        iL = self.rL
+        scale1F = float(iL[1])
+        scale2F = float(iL[3])
+        self.incrD.update({"scale1F": scale1F})
+        self.incrD.update({"scale2F": scale2F})
+        file1S = iL[0].strip()
+        file2S = iL[2].strip()
+        img1S = str(Path(self.folderD["defaultP"] / file1S))
+        img2S = str(Path(self.folderD["defaultP"] / file2S))
+        pshrt1S = str(Path(*Path(img1S).parts[-3:]))
+        pshrt2S = str(Path(*Path(img2S).parts[-3:]))
+        temp_out = StringIO()
+        sys.stdout = temp_out
+        for fS in [pshrt1S, pshrt2S]:
+            utfS += "Figure path: " + fS + "\n"
+            try:
+                _display(_Image(fS))
+            except:
+                pass
+
+        sys.stdout = sys.__stdout__
+        return utfS
+
+    from io import StringIO  # Python 3
+
     def project(self):
         """insert tables or text from csv, xlsx or txt file
 
@@ -101,7 +160,7 @@ class CmdUTF:
         else:
             return
 
-        rS = "\n".join(readL)
+        rS = "".join(readL)
 
         if extS != "txt":
             outputS = self.colwidth(readL)
@@ -119,7 +178,7 @@ class CmdUTF:
             rS = outputIO.getvalue()
             sys.stdout = old_stdout
 
-        return rS + "\n"
+        return rS
 
     def colwidth(self, readL):
         """_summary_
@@ -321,55 +380,6 @@ class CmdUTF:
         self._vtable(valL, hdrL, "rst", alignL)
         self.rivtD.update(locals())
 
-    def image(self):
-        """insert one image from file
-
-        Args:
-            iL (list): image parameters
-        """
-        utfS = ""
-        iL = self.rL
-        scale1F = float(iL[2])
-        self.setcmdD.update({"scale1F": scale1F})
-        fileS = iL[1].split(",")
-        file1S = fileS[0].strip()
-        docpS = "d" + self.setsectD["cnumS"]
-        img1S = str(Path(self.folderD["dpathcur"] / file1S))
-        utfS += "Figure path: " + img1S + "\n"
-        try:
-            _display(_Image(img1S))
-        except:
-            pass
-
-        return utfS
-
-    def image2(self):
-        """insert one or two images from file
-
-        Args:
-            iL (list): image parameters
-        """
-        utfS = ""
-        iL = self.rL
-        scale1F = float(iL[1])
-        scale2F = float(iL[3])
-        self.incrD.update({"scale1F": scale1F})
-        self.incrD.update({"scale2F": scale2F})
-        file1S = iL[0].strip()
-        file2S = iL[2].strip()
-        img1S = str(Path(self.folderD["defaultP"] / file1S))
-        img2S = str(Path(self.folderD["defaultP"] / file2S))
-        # pshrt1S = str(Path(*Path(img1S).parts[-4:]))
-        # pshrt2S = str(Path(*Path(img2S).parts[-4:]))
-        for fS in [img1S, img2S]:
-            utfS += "Figure path: " + fS + "\n"
-            try:
-                _display(_Image(fS))
-            except:
-                pass
-
-        return utfS
-
     def text(self, iL: list):
         """insert text from file
 
@@ -422,7 +432,7 @@ class CmdUTF:
         print(uS)
         self.calcS += uS + "\n"
 
-    def table_utf(self, iL: list):
+    def table(self, iL: list):
         """insert table from csv or xlsx file
 
         Args:

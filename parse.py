@@ -88,6 +88,7 @@ class RivtParse:
 
         utfS = """"""
         rstS = """"""
+        uS = """"""
         blockB = False
         for uS in strL:
             # print(f"{uS=}")
@@ -132,8 +133,6 @@ class RivtParse:
                     blockB = True
                 continue
             else:
-                uS += uS + "\n"
+                utfS += uS + "\n"
 
-        print(f"{utfS=}")
-        utfS = rstS = uS
         return utfS, rstS, self.folderD, self.incrD

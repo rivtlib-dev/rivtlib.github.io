@@ -90,7 +90,7 @@ class TagsUTF:
         """_summary_
         """
 
-        return eval(self.tagD[tagS] + "()")
+        return eval("self." + self.tagD[tagS] + "()")
 
     def label(self, objI, text):
         """format labels for equations, tables and figures
@@ -102,10 +102,10 @@ class TagsUTF:
         objfillS = str(objI).zfill(2)
         if type(text) == int:
             sfillS = str(self.incrD["snumI"]).strip().zfill(2)
-            labelS = sfillS
+            labelS = text + sfillS
         else:
             dnumSS = str(self.incrD["docnumS"])
-            labelS = dnumSS + "." + objfillS
+            labelS = text + dnumSS + "." + objfillS
 
         return labelS
 
@@ -154,10 +154,11 @@ class TagsUTF:
 
         fnumI = int(self.incrD["fignumI"]) + 1
         self.incrD["fignumI"] = fnumI
-        refS = self.label(fnumI, "[ Fig: ") + " ]"
-        lineS = "\n\n**" + refS + "**" + " ?x?hfill " + refS + "\n\n"
+        refS = self.label(fnumI, " Fig. [ ") + " ]"
+        spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
+        utfS = self.lineS + " " * spcI + refS
 
-        return lineS
+        return utfS
 
     def footnumber(self):
         """increment footnote number

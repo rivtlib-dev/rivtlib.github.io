@@ -92,7 +92,7 @@ class TagsRST():
         """_summary_
         """
 
-        return eval(self.tagD[tagS] + "()")
+        return eval("self." + self.tagD[tagS] + "()")
 
     def label(self, objI, text):
         """reST labels equations, tables and figures

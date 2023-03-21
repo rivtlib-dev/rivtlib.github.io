@@ -30,6 +30,8 @@ try:
 except:
     pass
 
+from rivt.units import *
+
 
 class TagsUTF:
 
@@ -98,18 +100,12 @@ class TagsUTF:
             filemode="w",
         )
         # print(f"{modnameS=}")
-        logconsole = logging.StreamHandler()
-        logconsole.setLevel(logging.INFO)
-        formatter = logging.Formatter(
-            "%(levelname)-8s" + modnameS + "   %(message)s")
-        logconsole.setFormatter(formatter)
-        logging.getLogger("").addHandler(logconsole)
         warnings.filterwarnings("ignore")
 
     def tag_parse(self, tagS):
         """_summary_
         """
-        print(f"*****{self.tagD[tagS]=}")
+
         return eval("self." + self.tagD[tagS] + "()")
 
     def label(self, objI, text):
@@ -158,8 +154,8 @@ class TagsUTF:
         :rtype: str
         """
 
-        enumI = int(self.incrD["enumI"]) + 1
-        self.incrD["enumI"] = enumI
+        enumI = int(self.incrD["equI"]) + 1
+        self.incrD["equI"] = enumI
         refS = self.label(enumI, "[ Equ: ") + " ]"
         spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
         utfS = self.lineS + " " * spcI + refS
@@ -173,8 +169,8 @@ class TagsUTF:
         :rtype: str
         """
 
-        fnumI = int(self.incrD["fignumI"]) + 1
-        self.incrD["fignumI"] = fnumI
+        fnumI = int(self.incrD["figI"]) + 1
+        self.incrD["figI"] = fnumI
         refS = self.label(fnumI, " Fig. [ ") + " ]"
         spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
         utfS = self.lineS + " " * spcI + refS
@@ -272,9 +268,9 @@ class TagsUTF:
         :rtype: str
         """
 
-        enumI = int(self.incrD["tnumI"]) + 1
-        self.incrD["tnumI"] = enumI
-        refS = self.label(enumI, "[ Equ: ") + " ]"
+        tnumI = int(self.incrD["tableI"]) + 1
+        self.incrD["tableI"] = tnumI
+        refS = self.label(tnumI, "[ Table: ") + " ]"
         spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
         utfS = self.lineS + " " * spcI + refS
 

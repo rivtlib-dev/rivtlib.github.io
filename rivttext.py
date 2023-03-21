@@ -89,13 +89,13 @@ incrD = {
     "widthI": 80,  # utf printing width
     "equI": 0,  # equation number
     "tableI": 0,  # table number
-    "fignumI": 0,  # figure number
+    "figI": 0,  # figure number
     "ftqueL": deque([1]),  # footnote number
     "countI": 0,  # footnote counter
     "deceI": 2,  # equation decimals
     "decrI": 2,  # results decimals
     "subB": False,  # substitute values
-    "saveB": False,  # save values to file
+    "saveP": "file",  # save values to file
     "codeB": False,  # insert code strings in doc
     "pdf": (True, "pdf"),  # write reST
     "html": (True, "html"),  # write reST
@@ -228,15 +228,18 @@ def eval_head(rS, methS):
         pass
 
     elif methS == "V":
-        if r1L[1] == "sub":
+
+        folderD["saveP"] = Path(r1L[2].strip() + ".csv")
+
+        if r1L[1] == "data":
+            folderD["data"] = dataP
+        else:
+            folderD["dataP"] = dataP
+
+        if r1L[3] == "sub":
             incrD["subB"] = True
         else:
             incrD["subB"] = False
-
-        if r1L[2] == "save":
-            incrD["saveB"] = True
-        else:
-            incrD["saveB"] = False
 
     elif methS == "T":
         if r1L[1] == "code":

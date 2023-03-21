@@ -33,9 +33,9 @@ try:
 except:
     pass
 
-
 from io import StringIO  # Python 3
-import sys
+
+from rivt.units import *
 
 
 class CmdUTF:
@@ -74,11 +74,6 @@ class CmdUTF:
             filename=self.errlogP,
             filemode="w",
         )
-        logconsole = logging.StreamHandler()
-        logconsole.setLevel(logging.INFO)
-        formatter = logging.Formatter("%(levelname)-8s %(message)s")
-        logconsole.setFormatter(formatter)
-        logging.getLogger("").addHandler(logconsole)
         warnings.filterwarnings("ignore")
 
     def cmd_parse(self, cmdS):
@@ -336,6 +331,115 @@ class CmdUTF:
         print(uS)
         self.calcS += uS + "\n"
 
+    def vfunc(self, vL: list):
+        pass
+
+    def vlist(self, vL: list):
+        """import data from files
+
+        Args:
+            vL (list): data command arguments
+        """
+
+        locals().update(self.rivtD)
+        valL = []
+        if len(vL) < 5:
+            vL += [""] * (5 - len(vL))  # pad command
+        valL.append(["variable", "values"])
+        vfileS = Path(self.folderD["cpath"] / vL[2].strip())
+        vecL = eval(vL[3].strip())
+        with open(vfileS, "r") as csvF:
+            reader = csv.reader(csvF)
+        vL = list(reader)
+        for i in vL:
+            varS = i[0]
+            varL = array(i[1:])
+            cmdS = varS + "=" + str(varL)
+            exec(cmdS, globals(), locals())
+            if len(varL) > 4:
+                varL = str((varL[:2]).append(["..."]))
+            valL.append([varS, varL])
+        hdrL = ["variable", "values"]
+        alignL = ["left", "right"]
+        self._vtable(valL, hdrL, "rst", alignL)
+        self.rivtD.update(locals())
+
+    def values(self):
+        """import values from files
+
+        Args:
+            vL (list): value command arguments
+        """
+
+        # locals().update(self.rivtD)
+
+        plenI = 2
+        if len(self.paramL) != plenI:
+            logging.info(
+                f"{self.cmdS} command not evaluated: {plenI} parameters required")
+            return
+        if self.paramL[0] == "data":
+            folderP = Path(self.folderD["dataP"])
+        else:
+            folderP = Path(self.folderD["dataP"])
+        fileP = Path(self.paramL[1].strip())
+        pathP = Path(folderP / fileP)
+        valL = []
+        fltfmtS = ""
+        with open(pathP, "r") as csvfile:
+            readL = list(csv.reader(csvfile))
+        for vaL in readL[1:]:
+            if len(vaL) < 5:
+                vL = len(vaL)
+                vaL += [""] * (5 - len(vL))  # pad values
+            varS = vaL[0].strip()
+            valS = vaL[1].strip()
+            unit1S, unit2S = vaL[2].strip(), vaL[3].strip()
+            descripS = vaL[4].strip()
+            if not len(varS):
+                valL.append(["------", "------", "------", "------"])  # totals
+                continue
+            val1U = val2U = array(eval(valS))
+            if unit1S != "-":
+                if type(eval(valS)) == list:
+                    val1U = array(eval(valS)) * eval(unit1S)
+                    val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+                else:
+                    cmdS = varS + "= " + valS + "*" + unit1S
+                    exec(cmdS, globals(), locals())
+                    valU = eval(varS)
+                    val1U = str(valU.number()) + " " + str(valU.unit())
+                    val2U = valU.cast_unit(eval(unit2S))
+            valL.append([varS, val1U, val2U, descripS])
+        hdrL = ["variable", "value", "[value]", "description"]
+        alignL = ["left", "right", "right", "left"]
+        utfS = self.vtable(valL, hdrL, "rst", alignL)
+        # self.rivtD.update(locals())
+
+        return utfS
+
+    def vtable(self, tbl, hdrL, tblfmt, alignL):
+        """write value table"""
+
+        # locals().update(self.rivtD)
+        sys.stdout.flush()
+        old_stdout = sys.stdout
+        output = StringIO()
+        output.write(
+            tabulate(
+                tbl, headers=hdrL, tablefmt=tblfmt,
+                showindex=False, colalign=alignL
+            )
+        )
+        utfS = output.getvalue()
+        sys.stdout = old_stdout
+        sys.stdout.flush()
+
+        return utfS
+
+        # self.calcS += utfS + "\n"
+        # self.rivtD.update(locals())
+
     def vsub(self, eqL: list, eqS: str):
         """substitute numbers for variables in printed output
 
@@ -403,99 +507,3 @@ class CmdUTF:
             self._write_text(" ", 0, 0)
         except:
             pass
-
-    def values(self, vL: list):
-        """import values from files
-
-        Args:
-            vL (list): value command arguments
-        """
-
-        locals().update(self.rivtD)
-        valL = []
-        fltfmtS = ""
-        if len(vL) < 5:
-            vL += [""] * (5 - len(vL))  # pad command
-        calpS = self.setsectD["fnumS"]
-        vfileS = Path(self.folderD["cpath"] / calpS / vL[1].strip())
-        with open(vfileS, "r") as csvfile:
-            readL = list(csv.reader(csvfile))
-        for vaL in readL[1:]:
-            if len(vaL) < 5:
-                vaL += [""] * (5 - len(vL))  # pad values
-            varS = vaL[0].strip()
-            valS = vaL[1].strip()
-            unit1S, unit2S = vaL[2].strip(), vaL[3].strip()
-            descripS = vaL[4].strip()
-            if not len(varS):
-                valL.append(["------", "------", "------", "------"])  # totals
-                continue
-            val1U = val2U = array(eval(valS))
-            if unit1S != "-":
-                if type(eval(valS)) == list:
-                    val1U = array(eval(valS)) * eval(unit1S)
-                    val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
-                else:
-                    cmdS = varS + "= " + valS + "*" + unit1S
-                    exec(cmdS, globals(), locals())
-                    valU = eval(varS)
-                    val1U = str(valU.number()) + " " + str(valU.unit())
-                    val2U = valU.cast_unit(eval(unit2S))
-            valL.append([varS, val1U, val2U, descripS])
-        hdrL = ["variable", "value", "[value]", "description"]
-        alignL = ["left", "right", "right", "left"]
-        self._vtable(valL, hdrL, "rst", alignL, fltfmtS)
-        self.rivtD.update(locals())
-
-    def vfunc(self, vL: list):
-        pass
-
-    def vtable(self, tbl, hdrL, tblfmt, alignL):
-        """write value table"""
-
-        locals().update(self.rivtD)
-        sys.stdout.flush()
-        old_stdout = sys.stdout
-        output = StringIO()
-        output.write(
-            tabulate(
-                tbl, tablefmt=tblfmt, headers=hdrL,
-                showindex=False, colalign=alignL
-            )
-        )
-        utfS = output.getvalue()
-        sys.stdout = old_stdout
-        sys.stdout.flush()
-        print(utfS)
-        self.calcS += utfS + "\n"
-        self.rivtD.update(locals())
-
-    def vlist(self, vL: list):
-        """import data from files
-
-        Args:
-            vL (list): data command arguments
-        """
-
-        locals().update(self.rivtD)
-        valL = []
-        if len(vL) < 5:
-            vL += [""] * (5 - len(vL))  # pad command
-        valL.append(["variable", "values"])
-        vfileS = Path(self.folderD["cpath"] / vL[2].strip())
-        vecL = eval(vL[3].strip())
-        with open(vfileS, "r") as csvF:
-            reader = csv.reader(csvF)
-        vL = list(reader)
-        for i in vL:
-            varS = i[0]
-            varL = array(i[1:])
-            cmdS = varS + "=" + str(varL)
-            exec(cmdS, globals(), locals())
-            if len(varL) > 4:
-                varL = str((varL[:2]).append(["..."]))
-            valL.append([varS, varL])
-        hdrL = ["variable", "values"]
-        alignL = ["left", "right"]
-        self._vtable(valL, hdrL, "rst", alignL)
-        self.rivtD.update(locals())

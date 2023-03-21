@@ -61,7 +61,7 @@ class RivtParse:
                          "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
         elif methS == "V":
             self.cmdL = ["table", "text", "image1", "image2",
-                         "value", "list", "function", "=", ":="]
+                         "values", "list", "functions", "=", ":="]
             self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
                          "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]

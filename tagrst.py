@@ -7,6 +7,7 @@ import subprocess
 import tempfile
 import re
 import logging
+import warnings
 import numpy.linalg as la
 import pandas as pd
 import sympy as sp
@@ -87,6 +88,15 @@ class TagsRST():
                      "url]": "url", "[o]]": "codeblk", "[c]]": "centerblk",
                      "[x]]": "latexblk", "[m]]": "mathblk", "[r]]": "rightblk",
                      "=": "assign", ":=": "result"}
+
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s %(name)-8s %(levelname)-8s %(message)s",
+            datefmt="%m-%d %H:%M",
+            filename=self.errlogP,
+            filemode="w",
+        )
+        warnings.filterwarnings("ignore")
 
     def tag_parse(self, tagS):
         """_summary_

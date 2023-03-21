@@ -7,6 +7,7 @@ import subprocess
 import tempfile
 import re
 import logging
+import warnings
 import numpy.linalg as la
 import pandas as pd
 import sympy as sp
@@ -68,6 +69,15 @@ class CmdRST:
         self.incrD = incrD
         self.widthII = incrD["widthI"] - 1
         self.rL = paramL
+
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s %(name)-8s %(levelname)-8s %(message)s",
+            datefmt="%m-%d %H:%M",
+            filename=self.errlogP,
+            filemode="w",
+        )
+        warnings.filterwarnings("ignore")
 
     def cmd_parse(self, cmdS):
         """_summary_

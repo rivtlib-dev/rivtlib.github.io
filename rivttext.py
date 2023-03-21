@@ -14,28 +14,28 @@ from pathlib import Path
 from collections import deque
 from rivt import parse
 
-# print(f"{sys.argv=}")
-try:
-    docfileS = Path(sys.argv[1]).name
-except:
-    docfileS = Path(sys.argv[0]).name
-if Path(docfileS).name == "r0101t.py":
-    docP = Path(
-        "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/r0101t.py")
-elif Path(docfileS).name == "-o":
-    docP = Path(
-        "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/r0101t.py")
-else:
-    docP = Path(docfileS).absolute()
+docfileS = "x"
+docpathP = os.getcwd()
+docP = Path(docpathP)
+for fileS in os.listdir(docpathP):
+    if fnmatch.fnmatch(fileS, "rv????.py"):
+        docfileS = fileS
+        docP = Path(docP / docfileS)
+        break
+if docfileS == "x":
+    print("INFO     rivt doc file not found")
+    exit()
 
-if ".py" not in docfileS:
-    import __main__
-    docfileS = __main__.__file__
-    # print(dir(__main__))
+# run test files if this module is run directly
+if Path(docfileS).name == "rv0101t.py":
+    docP = Path(
+        "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/r0101t.py")
+if Path(docfileS).name == "-o":
+    docP = Path(
+        "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/r0101t.py")
 
 # print(f"{docfileS=}")
 # print(f"{docP=}")
-# print(os.getcwd())
 
 # files and paths
 docbaseS = docfileS.split(".py")[0]
@@ -48,17 +48,19 @@ rivtcalcP = Path("rivt.rivttext.py").parent  # rivt package path
 # print(f"{projP=}")
 
 prfxS = docbaseS[2:4]
+resourceP = Path(projP / "resource")
 for fileS in os.listdir(projP / "resource"):
     if fnmatch.fnmatch(fileS[2:5], prfxS + "_*"):
-        resourceP = Path(fileS)  # resource folder path
+        refileP = Path(fileS)  # resource folder path
         break
-defaultP = Path(projP / "resource" / resourceP)
+defaultP = Path(projP / "resource" / refileP)
 rerootP = Path(projP / "resource")
 docpdfP = Path(rerootP / resourceP / (docbaseS + ".pdf"))
 doctitleS = (docP.parent.name).split("_")[1]
 doctitleS = doctitleS.replace("-", " ")
 divtitleS = (docP.parent.parent.name).split("_", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
+errlogP = Path(rerootP / "error_log.txt")
 
 # global dicts and vars
 
@@ -75,7 +77,7 @@ localD = {}                 # local rivt dictionary of values
 
 folderD = {}
 for item in ["docP", "dataP", "resourceP", "rerootP", "defaultP",
-             "reportP", "siteP", "projP"]:
+             "reportP", "siteP", "projP", "errlogP"]:
     folderD[item] = eval(item)
 
 outputD = {"pdf": True, "html": True, "both": True, "site": True,
@@ -105,36 +107,40 @@ incrD = {
     "pageI": 1  # starting page number
 }
 
-print("File Paths")
-print("---------- ")
+print("\nFile Paths")
+print("---------- \n")
 # logging
+modnameS = __name__.split(".")[1]
 logging.basicConfig(
     level=logging.DEBUG,
-    format="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
+    format="%(asctime)-8s  " + modnameS + "   %(levelname)-8s %(message)s",
     datefmt="%m-%d %H:%M",
-    filename=Path(rerootP / "error_log.txt"),
+    filename=errlogP,
     filemode="w",
 )
+# print(f"{modnameS=}")
 logconsole = logging.StreamHandler()
 logconsole.setLevel(logging.INFO)
-formatter = logging.Formatter("%(levelname)-8s %(message)s")
+formatter = logging.Formatter("%(levelname)-8s" + modnameS + "   %(message)s")
 logconsole.setFormatter(formatter)
 logging.getLogger("").addHandler(logconsole)
 warnings.filterwarnings("ignore")
+
 dshortP = Path(*Path(docP.parent).parts[-2:])
 lshortP = Path(*rerootP.parts[-2:])
-rshortP = Path(*Path(resourceP).parts[-1:])
+rshortP = Path(*Path(resourceP).parts[-2:])
 # check that calc and file directories exist
 if docP.exists():
-    logging.info(f"""rivt file short path : {dshortP}""")
+    logging.info(f"""rivt file : [{docfileS}]""")
+    logging.info(f"""rivt short path : [{dshortP}]""")
 else:
     logging.info(f"""rivt file path not found: {docP}""")
 
 if resourceP.exists:
-    logging.info(f"""resource short path: {rshortP}""")
+    logging.info(f"""resource short path: [{rshortP}]""")
 else:
     logging.info(f"""resource path not found: {resourceP}""")
-logging.info(f"""log folder short path: {lshortP}""")
+logging.info(f"""log folder short path: [{lshortP}]""")
 
 # write backup doc file
 with open(docP, "r") as f2:
@@ -142,7 +148,7 @@ with open(docP, "r") as f2:
     rivtL = f2.readlines()
 with open(bakP, "w") as f3:
     f3.write(rivtS)
-logging.info(f"""rivt file backup written: {dshortP}""")
+logging.info(f"""rivt backup: [{dshortP}]""")
 print(" ")
 
 with open(docP, "r") as f1:

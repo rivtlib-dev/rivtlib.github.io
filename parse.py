@@ -1,6 +1,7 @@
 import sys
 import re
 import logging
+import warnings
 import numpy.linalg as la
 import pandas as pd
 import sympy as sp
@@ -23,11 +24,10 @@ try:
     from PIL import ImageOps as PImageOps
 except:
     pass
-from rivt import cmdrst as crst
-from rivt import cmdutf as cutf
-from rivt import tagrst as trst
-from rivt import tagutf as tutf
-logging.getLogger("numexpr").setLevel(logging.WARNING)
+from rivt import cmdrst
+from rivt import cmdutf
+from rivt import tagrst
+from rivt import tagutf
 # tabulate.PRESERVE_WHITESPACE = True
 
 
@@ -47,6 +47,7 @@ class RivtParse:
         self.incrD = incrD      # incrementing formats
         self.outputS = outputS  # output type
         self.outputL = ["pdf", "html", "both"]  # reST formats
+        self.errlogP = folderD["errlogP"]
 
         # valid commands and tags
         if methS == "R":
@@ -71,6 +72,24 @@ class RivtParse:
                          "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
         else:
             pass
+
+        modnameS = __name__.split(".")[1]
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)-8s  " + modnameS +
+            "   %(levelname)-8s %(message)s",
+            datefmt="%m-%d %H:%M",
+            filename=self.errlogP,
+            filemode="w",
+        )
+        # print(f"{modnameS=}")
+        logconsole = logging.StreamHandler()
+        logconsole.setLevel(logging.INFO)
+        formatter = logging.Formatter(
+            "%(levelname)-8s" + modnameS + "   %(message)s")
+        logconsole.setFormatter(formatter)
+        logging.getLogger("").addHandler(logconsole)
+        warnings.filterwarnings("ignore")
 
     def str_parse(self, strL):
         """parse insert string
@@ -98,22 +117,19 @@ class RivtParse:
             if blockB:                      # block accumulator
                 lineS += uS
             if blockB and uS.strip() == "[end]]":
-                rvtS = tutf.TagsUTF(lineS, tagS, strL)
+                rvtS = tagutf.TagsUTF(lineS, tagS, strL)
                 utfS += rvtS + "\n"
-                if self.outputS in self.outputL:
-                    rvtS = trst.TagsRST(lineS, tagS, strL)
-                    rstS += rvtS + "\n"
                 blockB = False
             elif uS[0:2] == "||":            # find commands
                 usL = uS[2:].split("|")
                 parL = usL[1:]
                 cmdS = usL[0].strip()
                 if cmdS in self.cmdL:
-                    rvtM = cutf.CmdUTF(parL, self.incrD, self.folderD)
+                    rvtM = cmdutf.CmdUTF(parL, self.incrD, self.folderD)
                     rvtS = rvtM.cmd_parse(cmdS)
                     utfS += rvtS + "\n"
                     if self.outputS in self.outputL:
-                        rvtM = crst.CmdRST(parL, self.incrD, self.folderD)
+                        rvtM = cmdrst.CmdRST(parL, self.incrD, self.folderD)
                         rvtS = rvtM.cmd_parse(cmdS)
                         rstS += rvtS + "\n"
                     continue
@@ -122,11 +138,11 @@ class RivtParse:
                 lineS = usL[0]
                 tagS = usL[1].strip()
                 if tagS in self.tagL:
-                    rvtM = tutf.TagsUTF(lineS, self.folderD, self.incrD)
+                    rvtM = tagutf.TagsUTF(lineS, self.folderD, self.incrD)
                     rvtS = rvtM.tag_parse(tagS)
                     utfS += rvtS + "\n"
                     if self.outputS in self.outputL:
-                        rvtM = trst.TagsRST(lineS, self.folderD, self.incrD)
+                        rvtM = tagrst.TagsRST(lineS, self.folderD, self.incrD)
                         rvtS = rvtM.tag_parse(tagS)
                         rstS += rvtS + "\n"
                 if tagS[0] == "[":

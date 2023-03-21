@@ -7,6 +7,7 @@ import subprocess
 import tempfile
 import re
 import logging
+import warnings
 import time
 import numpy.linalg as la
 import pandas as pd
@@ -63,13 +64,28 @@ class CmdUTF:
         self.folderD = folderD
         self.incrD = incrD
         self.widthII = incrD["widthI"] - 1
-        self.rL = paramL
+        self.paramL = paramL
+        self.errlogP = folderD["errlogP"]
+
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s %(name)-8s %(levelname)-8s %(message)s",
+            datefmt="%m-%d %H:%M",
+            filename=self.errlogP,
+            filemode="w",
+        )
+        logconsole = logging.StreamHandler()
+        logconsole.setLevel(logging.INFO)
+        formatter = logging.Formatter("%(levelname)-8s %(message)s")
+        logconsole.setFormatter(formatter)
+        logging.getLogger("").addHandler(logconsole)
+        warnings.filterwarnings("ignore")
 
     def cmd_parse(self, cmdS):
         """_summary_
         """
-
-        return eval("self." + cmdS + "()")
+        self.cmdS = cmdS
+        return eval("self." + cmdS+"()")
 
     def append(self):
         b = 5
@@ -127,6 +143,42 @@ class CmdUTF:
 
     from io import StringIO  # Python 3
 
+    def colwidth(self, readL):
+        """_summary_
+        """
+
+        incl_colL = list(range(len(readL[0])))
+        widthI = self.incrD["widthI"]
+        alignS = self.incrD["alignS"]
+        saS = self.incrD[alignS]
+        if self.rL[2].strip():
+            widthL = self.rL[2].split(",")  # new max col width
+            widthI = int(widthL[0].strip())
+            alignS = widthL[1].strip()
+            saS = self.incrD[alignS]  # new alignment
+            self.incrD.update({"widthI": widthI})
+            self.incrD.update({"alignS": alignS})
+        totalL = [""] * len(incl_colL)
+        if self.rL[3].strip():  # columns
+            if self.rL[3].strip() == "[:]":
+                totalL = [""] * len(incl_colL)
+            else:
+                incl_colL = eval(rL[3].strip())
+                totalL = [""] * len(incl_colL)
+        ttitleS = readL[0][0].strip() + " [t]_"
+        rstgS = self._tags(ttitleS, self.rL)
+        self.restS += rstgS.rstrip() + "\n\n"
+        for row in readL[1:]:
+            contentL.append([row[i] for i in incl_colL])
+        wcontentL = []
+        for rowL in contentL:
+            wrowL = []
+            for iS in rowL:
+                templist = textwrap.wrap(str(iS), int(widthI))
+                templist = [i.replace("""\\n""", """\n""") for i in templist]
+                wrowL.append("""\n""".join(templist))
+            wcontentL.append(wrowL)
+
     def project(self):
         """insert tables or text from csv, xlsx or txt file
 
@@ -180,41 +232,125 @@ class CmdUTF:
 
         return rS
 
-    def colwidth(self, readL):
-        """_summary_
+    def table(self):
+        """insert table from csv or xlsx file
+
+        Args:
+            paramL (list): parameter list
         """
 
-        incl_colL = list(range(len(readL[0])))
-        widthI = self.incrD["widthI"]
-        alignS = self.incrD["alignS"]
-        saS = self.incrD[alignS]
-        if self.rL[2].strip():
-            widthL = self.rL[2].split(",")  # new max col width
-            widthI = int(widthL[0].strip())
-            alignS = widthL[1].strip()
-            saS = self.incrD[alignS]  # new alignment
-            self.incrD.update({"widthI": widthI})
-            self.incrD.update({"alignS": alignS})
-        totalL = [""] * len(incl_colL)
-        if self.rL[3].strip():  # columns
-            if self.rL[3].strip() == "[:]":
-                totalL = [""] * len(incl_colL)
-            else:
-                incl_colL = eval(rL[3].strip())
-                totalL = [""] * len(incl_colL)
-        ttitleS = readL[0][0].strip() + " [t]_"
-        rstgS = self._tags(ttitleS, self.rL)
-        self.restS += rstgS.rstrip() + "\n\n"
-        for row in readL[1:]:
-            contentL.append([row[i] for i in incl_colL])
+        alignD = {"S": "", "D": "decimal",
+                  "C": "center", "R": "right", "L": "left"}
+        tableS = ""
+        plenI = 4
+        if len(self.paramL) != plenI:
+            logging.info(
+                f"{self.cmdS} command not evaluated: {plenI} parameters required")
+            return
+        if self.paramL[0] == "data":
+            folderP = Path(self.incrD[self.paramL("dataP")])
+        fileP = Path(self.paramL[1])
+        pathP = Path(folderP / fileP)                   # file path
+        maxwI = int(self.paramL[2].split(",")[0])       # max column width
+        alignS = alignD[self.paramL[2].split(",")[1]]   # column alignment
+        colS = self.paramL[3]                          # rows read
+        extS = pathP.suffix                             # file suffix
+        if extS == "csv":                               # read csv file
+            with open(pathP, "r") as csvfile:
+                readL = list(csv.reader(csvfile))
+        elif extS == "xlsx":                            # read xls file
+            pDF1 = pd.read_excel(pathP, header=None)
+            readL = pDF1.values.tolist()
+        else:
+            logging.info(
+                f"{self.cmdS} command not evaluated: {extS} files not processed")
+            return
+        incl_colL = list(range(len(readL[1])))
+        if colS == "[:]":
+            colL = [""] * len(incl_colL)
+        else:
+            incl_colL = eval(colS)
+            colL = eval(colS)
+
+        for row in readL[1:]:                           # select columns
+            colL.append([row[i] for i in incl_colL])
         wcontentL = []
-        for rowL in contentL:
+        for rowL in colL:                               # wrap columns
             wrowL = []
             for iS in rowL:
-                templist = textwrap.wrap(str(iS), int(widthI))
+                templist = textwrap.wrap(str(iS), int(maxwI))
                 templist = [i.replace("""\\n""", """\n""") for i in templist]
                 wrowL.append("""\n""".join(templist))
             wcontentL.append(wrowL)
+        sys.stdout.flush()
+        old_stdout = sys.stdout
+        output = StringIO()
+        output.write(
+            tabulate(
+                wcontentL,
+                tablefmt="rst",
+                headers="firstrow",
+                numalign="decimal",
+                stralign=alignS,
+            )
+        )
+        tableS = output.getvalue()
+        sys.stdout = old_stdout
+
+        logging.info(f"{self.cmdS} evaluated")
+        return tableS
+
+    def text(self, iL: list):
+        """insert text from file
+
+        Args:
+            iL (list): text command list
+
+        || text | (file.txt) | literal; indent; html
+
+        """
+
+        txtP = Path(self.folderD["cpathcur"] / iL[1].strip())
+        with open(txtP, "r", encoding="utf-8") as txtf1:
+            uL = txtf1.readlines()
+        if iL[2].strip() == "indent":
+            txtS = "".join(uL)
+            widthI = self.setcmdD["cwidth"]
+            inS = " " * 4
+            uL = textwrap.wrap(txtS, width=widthI)
+            uL = [inS + S1 + "\n" for S1 in uL]
+            uS = "".join(uL)
+        elif iL[2].strip() == "literal":
+            txtS = "  ".join(uL)
+            uS = "\n" + txtS
+        elif iL[2].strip() == "literalindent":
+            txtS = "\n\n::\n\n"
+            for iS in uL:
+                txtS += "   " + iS
+            uS = txtS + "\n\n"
+        elif iL[2].strip() == "html":
+            txtS = ""
+            flg = 0
+            for iS in uL:
+                if "src=" in iS:
+                    flg = 1
+                    continue
+                if flg == 1 and '"' in iS:
+                    flg = 0
+                    continue
+                if flg == 1:
+                    continue
+                txtS += iS
+            txtS = htm.html2text(txtS)
+            uS = txtS.replace("\n    \n", "")
+        else:
+            txtS = "".join(uL)
+            uS = "\n" + txtS
+
+        # print(str(txtP))
+        # self.calcS += str(txtP) + "\n"
+        print(uS)
+        self.calcS += uS + "\n"
 
     def vsub(self, eqL: list, eqS: str):
         """substitute numbers for variables in printed output
@@ -379,133 +515,3 @@ class CmdUTF:
         alignL = ["left", "right"]
         self._vtable(valL, hdrL, "rst", alignL)
         self.rivtD.update(locals())
-
-    def text(self, iL: list):
-        """insert text from file
-
-        Args:
-            iL (list): text command list
-
-        || text | (file.txt) | literal; indent; html
-
-        """
-
-        txtP = Path(self.folderD["cpathcur"] / iL[1].strip())
-        with open(txtP, "r", encoding="utf-8") as txtf1:
-            uL = txtf1.readlines()
-        if iL[2].strip() == "indent":
-            txtS = "".join(uL)
-            widthI = self.setcmdD["cwidth"]
-            inS = " " * 4
-            uL = textwrap.wrap(txtS, width=widthI)
-            uL = [inS + S1 + "\n" for S1 in uL]
-            uS = "".join(uL)
-        elif iL[2].strip() == "literal":
-            txtS = "  ".join(uL)
-            uS = "\n" + txtS
-        elif iL[2].strip() == "literalindent":
-            txtS = "\n\n::\n\n"
-            for iS in uL:
-                txtS += "   " + iS
-            uS = txtS + "\n\n"
-        elif iL[2].strip() == "html":
-            txtS = ""
-            flg = 0
-            for iS in uL:
-                if "src=" in iS:
-                    flg = 1
-                    continue
-                if flg == 1 and '"' in iS:
-                    flg = 0
-                    continue
-                if flg == 1:
-                    continue
-                txtS += iS
-            txtS = htm.html2text(txtS)
-            uS = txtS.replace("\n    \n", "")
-        else:
-            txtS = "".join(uL)
-            uS = "\n" + txtS
-
-        # print(str(txtP))
-        # self.calcS += str(txtP) + "\n"
-        print(uS)
-        self.calcS += uS + "\n"
-
-    def table(self, iL: list):
-        """insert table from csv or xlsx file
-
-        Args:
-            ipl (list): parameter list
-        """
-        alignD = {"S": "", "D": "decimal",
-                  "C": "center", "R": "right", "L": "left"}
-
-        if len(iL) < 4:
-            iL += [""] * (4 - len(iL))  # pad parameters
-        utfS = ""
-        contentL = []
-        sumL = []
-        fileS = iL[1].strip()
-        calpS = self.setsectD["fnumS"]
-        tfileS = Path(self.folderD["cpathcur"] / fileS)
-        extS = fileS.split(".")[1]
-        if extS == "csv":
-            with open(tfileS, "r") as csvfile:  # read csv file
-                readL = list(csv.reader(csvfile))
-        elif extS == "xlsx":
-            pDF1 = pd.read_excel(tfileS, header=None)
-            readL = pDF1.values.tolist()
-        else:
-            return
-        incl_colL = list(range(len(readL[1])))
-        widthI = self.setcmdD["cwidthI"]
-        alignS = self.setcmdD["calignS"]
-        saS = alignD[alignS]
-        if iL[2].strip():
-            widthL = iL[2].split(",")  # new max col width
-            widthI = int(widthL[0].strip())
-            alignS = widthL[1].strip()
-            saS = alignD[alignS]  # new align
-            self.setcmdD.update({"cwidthI": widthI})
-            self.setcmdD.update({"calignS": alignS})
-        totalL = [""] * len(incl_colL)
-        if iL[3].strip():  # columns
-            if iL[3].strip() == "[:]":
-                totalL = [""] * len(incl_colL)
-            else:
-                incl_colL = eval(iL[3].strip())
-                totalL = [""] * len(incl_colL)
-        ttitleS = readL[0][0].strip() + " [t]_"
-        utgS = self._tags(ttitleS, itagL)
-        print(utgS.rstrip() + "\n")
-        self.calcS += utgS.rstrip() + "\n\n"
-        for row in readL[1:]:
-            contentL.append([row[i] for i in incl_colL])
-        wcontentL = []
-        for rowL in contentL:  # wrap columns
-            wrowL = []
-            for iS in rowL:
-                templist = textwrap.wrap(str(iS), int(widthI))
-                templist = [i.replace("""\\n""", """\n""") for i in templist]
-                wrowL.append("""\n""".join(templist))
-            wcontentL.append(wrowL)
-        sys.stdout.flush()
-        old_stdout = sys.stdout
-        output = StringIO()
-        output.write(
-            tabulate(
-                wcontentL,
-                tablefmt="rst",
-                headers="firstrow",
-                numalign="decimal",
-                stralign=saS,
-            )
-        )
-        utfS = output.getvalue()
-        sys.stdout = old_stdout
-
-        print(str(tfileS))
-        print(utfS)
-        self.calcS += str(tfileS) + "\n"
-        self.calcS += utfS + "\n"

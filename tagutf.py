@@ -7,6 +7,7 @@ import subprocess
 import tempfile
 import re
 import logging
+import warnings
 import numpy.linalg as la
 import pandas as pd
 import sympy as sp
@@ -77,6 +78,7 @@ class TagsUTF:
         self.incrD = incrD
         self.lineS = lineS
         self.swidthII = incrD["widthI"] - 1
+        self.errlogP = folderD["errlogP"]
 
         self.tagD = {"c]": "center",  "#]": "footnumber", "foot]": "footnote",
                      "-]": "line", "r]": "right",  "date]": "date",
@@ -85,6 +87,24 @@ class TagsUTF:
                      "[o]]": "codeblk", "[c]]": "centerblk", "[x]]": "latexblk",
                      "[m]]": "mathblk", "[r]]": "rightblk",
                      "=": "assign", ":=": "result"}
+
+        modnameS = __name__.split(".")[1]
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)-8s  " + modnameS +
+            "   %(levelname)-8s %(message)s",
+            datefmt="%m-%d %H:%M",
+            filename=self.errlogP,
+            filemode="w",
+        )
+        # print(f"{modnameS=}")
+        logconsole = logging.StreamHandler()
+        logconsole.setLevel(logging.INFO)
+        formatter = logging.Formatter(
+            "%(levelname)-8s" + modnameS + "   %(message)s")
+        logconsole.setFormatter(formatter)
+        logging.getLogger("").addHandler(logconsole)
+        warnings.filterwarnings("ignore")
 
     def tag_parse(self, tagS):
         """_summary_
@@ -132,7 +152,7 @@ class TagsUTF:
         return lineS
 
     def equation(self):
-        """formats equation label to reST
+        """formats equation label to utf
 
         :return lineS: reST equation label
         :rtype: str
@@ -140,10 +160,11 @@ class TagsUTF:
 
         enumI = int(self.incrD["enumI"]) + 1
         self.incrD["enumI"] = enumI
-        refS = self.label(enumI, "[ Equ: ") + "]"
-        lineS = "**" + refS + "**" + " ?x?hfill " + refS
+        refS = self.label(enumI, "[ Equ: ") + " ]"
+        spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
+        utfS = self.lineS + " " * spcI + refS
 
-        return lineS
+        return utfS
 
     def figure(self):
         """formats figure caption to reST
@@ -244,18 +265,19 @@ class TagsUTF:
         return lineS
 
     def table(self):
-        """format table title to reST
+        """format table title to utf
 
-        :return lineS: reST figure caption
+        :return lineS: utf table title
         :rtype: str
         """
 
-        tnumI = int(self.incr["tnumI"]) + 1
-        self.incr["tnumI"] = tnumI
-        refS = self.label(tnumI, "[Table: ") + "]"
-        lineS = "**" + refS + "**" + " ?x?hfill  " + refS
+        enumI = int(self.incrD["tnumI"]) + 1
+        self.incrD["tnumI"] = enumI
+        refS = self.label(enumI, "[ Equ: ") + " ]"
+        spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
+        utfS = self.lineS + " " * spcI + refS
 
-        return lineS
+        return utfS
 
     def time(self):
         """insert date and time

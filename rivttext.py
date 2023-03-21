@@ -39,21 +39,19 @@ if Path(docfileS).name == "-o":
 
 # files and paths
 docbaseS = docfileS.split(".py")[0]
-dataP = Path(os.getcwd(), "data")
+dataP = Path(docP.parent / "data")
 projP = docP.parent.parent.parent.parent  # rivt project folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
 siteP = projP / "site"  # site folder path
 reportP = projP / "report"  # report folder path
 rivtcalcP = Path("rivt.rivttext.py").parent  # rivt package path
 # print(f"{projP=}")
-
 prfxS = docbaseS[2:4]
-resourceP = Path(projP / "resource")
 for fileS in os.listdir(projP / "resource"):
     if fnmatch.fnmatch(fileS[2:5], prfxS + "_*"):
         refileP = Path(fileS)  # resource folder path
         break
-defaultP = Path(projP / "resource" / refileP)
+resourceP = Path(projP / "resource" / refileP)
 rerootP = Path(projP / "resource")
 docpdfP = Path(rerootP / resourceP / (docbaseS + ".pdf"))
 doctitleS = (docP.parent.name).split("_")[1]
@@ -76,7 +74,7 @@ outputL = ["utf", "pdf", "html", "both", "report", "site"]
 localD = {}                 # local rivt dictionary of values
 
 folderD = {}
-for item in ["docP", "dataP", "resourceP", "rerootP", "defaultP",
+for item in ["docP", "dataP", "resourceP", "rerootP", "resourceP",
              "reportP", "siteP", "projP", "errlogP"]:
     folderD[item] = eval(item)
 

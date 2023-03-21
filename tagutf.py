@@ -109,7 +109,7 @@ class TagsUTF:
     def tag_parse(self, tagS):
         """_summary_
         """
-
+        print(f"*****{self.tagD[tagS]=}")
         return eval("self." + self.tagD[tagS] + "()")
 
     def label(self, objI, text):
@@ -225,7 +225,7 @@ class TagsUTF:
 
         return lineS
 
-    def link():
+    def link(self):
         pass
 
     def page(self):
@@ -234,7 +234,8 @@ class TagsUTF:
         :return lineS: page break line
         :rtype: str
         """
-        lineS = int((self.folderD["swidthI"])/3) * " - "
+
+        lineS = int((self.incrD["widthI"])/3) * " - "
 
         return lineS
 

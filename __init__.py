@@ -173,31 +173,31 @@ write   rv.Write()
 || github | repo_name; none | readme; noneparam |                      R 
     (git)     github repo parameters
 
-|| project | file_name | /docfolder; default                           R
+|| project | folder | file_name                                        R
     (pro)    .txt; rst; csv; syk; xls | project info folder
 
-|| append | file_name | ./docfolder; default | resize;default          R
-    (app)    .pdf; .txt | pdf folder / rescale to page size
+|| append | folder | file_name                                         R
+    (app)   pdf folder | .pdf; .txt  
 
-|| list | file_name  | [:];[x:y]                                       V
-   (lis)   .csv;.syk;.txt;.py | rows to import
+|| list | folder | file_name   
+   (lis)   .csv;.syk;.txt;.py 
 
-|| values | file_name | [:];[x:y]                                      V
-   (val)    .csv; .syk; .txt; .py | rows to import
+|| values | folder | file_name | [:];[x:y]                                      V
+   (val)    .csv; .txt; .xlsx; .py 
 
-|| functions | file_name | docs; nodocs                                V
+|| functions | folder | file_name | docs; nodocs                                V
     (fun)      .for; .py; .c; .c++; .jl | insert docstrings
 
-|| image  | file_name  | .50                                         I,V,T
+|| image  | folder | file_name  | .50                                         I,V,T
    (img)   .png; .jpg |  page width fraction
 
-|| image2 | file_name  | .40 | file_name  | .40                      I,V,T
+|| image2 | folder | file_name  | .40 | file_name  | .40                      I,V,T
    (img2)   side by side images
 
-|| text | file_name | shade; noshade                                 I,V,T
+|| text | folder | file_name | shade; noshade                                 I,V,T
    (tex)   .txt; .py; .tex | shade background
 
-|| table | file_name |  [:] | 60 r;l;c                               I,V,T
+|| table | folder | file_name |  [:] | 60 r;l;c                               I,V,T
    (tab)   .csv;.rst file | rows | max col width, locate text
 
 ============================ ============================================
@@ -293,9 +293,9 @@ tags.
 Tags _[t] and _[f] format and autonumber tables and figures.
 
 table title  _[t]
-|| table | file.csv | 60,r
+|| table | data | file.csv | 60,r
 
-|| image | f1.png | 50
+|| image | resource | f1.png | 50
 A figure caption _[f]
 
 Insert two images side by side:
@@ -341,24 +341,24 @@ printed decimal places in the equation and results. Decimal places are retained
 until changed.
 
 Example equation tag - Area of circle  _[e]
-a1 <= 3.14(d1/2)^2 | in^2, cm^2 | 2,2
+a1 := 3.14(d1/2)^2 | in^2, cm^2 | 2,2
 
 The ||value command imports values from a csv file, where each row
 includes the variable name, value, primary unit, secondary unit, description and equation where applicable.
 
-|| value | file | default | [:]
+|| value | folder | file | [:]
 
 The ||list command inserts lists from a csv, text or Python file where the
 first column is the variable name and the subsequent values make up a
 vector of values assigned to the variable.
 
-|| list | file | default | [:]
+|| list | folder | file | [:]
 
 The ||function command imports Python, Fortran, C or C++ functions in a
 file. The function signature and docstrings are inserted into the doc if
 specified.
 
-|| function | file | default | docs;nodocs
+|| function | folder|  file |  docs;nodocs
 
 """)
 

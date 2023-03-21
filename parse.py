@@ -51,23 +51,23 @@ class RivtParse:
 
         # valid commands and tags
         if methS == "R":
-            self.cmdL = ["project", "github", "append"]
-            self.tagL = ["new]", "url]"]
+            self.cmdL = ["project", "github", "append", "text"]
+            self.tagL = ["[literal]]"]
             self.blockL = ["[readme]]"]
         elif methS == "I":
             self.cmdL = ["table", "text", "image1", "image2"]
-            self.tagL = ["new]", "link]", "lit]", "foot]", "url]", "lnk]",
+            self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
                          "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
         elif methS == "V":
             self.cmdL = ["table", "text", "image1", "image2",
                          "value", "list", "function", "=", ":="]
-            self.tagL = ["new]", "link]", "lit]", "foot]", "url]", "lnk]",
+            self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
                          "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
         elif methS == "T":
             self.cmdL = ["table", "text", "image1", "image2"]
-            self.tagL = ["new]", "link]", "lit]", "foot]", "url]", "lnk]",
+            self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
                          "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
         else:

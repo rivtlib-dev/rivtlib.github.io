@@ -46,18 +46,18 @@ class CmdUTF:
             command syntax / snippet prefix and description        methods
         ======================================================== ============
 
-        || append | file_name | ./docfolder; default / resize;default   R
-        || github | repo_name; none | readme; noneparam                 R
-        || project | file_name | /docsfolder; default                   R
+        || append | folder | file_name                               R
+        || github | folder | repo_name                               R
+        || project | folder | file_name | max width,align            R
 
-        || list | file_name  | [:];[x:y]                                V
-        || functions | file_name | docs; nodocs                         V
-        || values | file_name | [:];[x:y]                               V
+        || list | folder | file_name                                 V
+        || functions | folder | file_name | code; nocode             V
+        || values | folder | file_name | [:];[x:y]                   V
 
-        || image1 | file_name  | .50                                  I,V,T
-        || image2 | file_name  | .40 | file_name  | .40               I,V,T
-        || table | file_name |  [:] | 60 r;l;c                        I,V,T
-        || text | file_name | shade; noshade                          I,V,T
+        || image1 | folder | file_name  | size                       I,V,T
+        || image2 | folder | file_name  | size | file_name  | size   I,V,T
+        || table | folder | file_name | max width, align | rows      I,V,T
+        || text | folder | file_name | shade; noshade                I,V,T
 
         """
 
@@ -91,9 +91,8 @@ class CmdUTF:
         b = 5
 
     def image(self):
-        """insert one image from file
+        """insert image from file
 
-            :param iL (list): image parameters
         """
         utfS = ""
         iL = self.rL
@@ -113,20 +112,26 @@ class CmdUTF:
         return utfS
 
     def image2(self):
-        """insert one or two images from file
+        """insert two images from file side by side
 
             :param iL (list): image parameters
         """
+
         utfS = ""
-        iL = self.rL
+        plenI = 4
+        if len(self.paramL) != plenI:
+            logging.info(
+                f"{self.cmdS} command not evaluated: {plenI} parameters required")
+            return
+        iL = self.paramL
         scale1F = float(iL[1])
         scale2F = float(iL[3])
         self.incrD.update({"scale1F": scale1F})
         self.incrD.update({"scale2F": scale2F})
         file1S = iL[0].strip()
         file2S = iL[2].strip()
-        img1S = str(Path(self.folderD["defaultP"] / file1S))
-        img2S = str(Path(self.folderD["defaultP"] / file2S))
+        img1S = str(Path(self.folderD["resourceP"] / file1S))
+        img2S = str(Path(self.folderD["resourceP"] / file2S))
         pshrt1S = str(Path(*Path(img1S).parts[-3:]))
         pshrt2S = str(Path(*Path(img2S).parts[-3:]))
         temp_out = StringIO()
@@ -143,100 +148,78 @@ class CmdUTF:
 
     from io import StringIO  # Python 3
 
-    def colwidth(self, readL):
-        """_summary_
-        """
-
-        incl_colL = list(range(len(readL[0])))
-        widthI = self.incrD["widthI"]
-        alignS = self.incrD["alignS"]
-        saS = self.incrD[alignS]
-        if self.rL[2].strip():
-            widthL = self.rL[2].split(",")  # new max col width
-            widthI = int(widthL[0].strip())
-            alignS = widthL[1].strip()
-            saS = self.incrD[alignS]  # new alignment
-            self.incrD.update({"widthI": widthI})
-            self.incrD.update({"alignS": alignS})
-        totalL = [""] * len(incl_colL)
-        if self.rL[3].strip():  # columns
-            if self.rL[3].strip() == "[:]":
-                totalL = [""] * len(incl_colL)
-            else:
-                incl_colL = eval(rL[3].strip())
-                totalL = [""] * len(incl_colL)
-        ttitleS = readL[0][0].strip() + " [t]_"
-        rstgS = self._tags(ttitleS, self.rL)
-        self.restS += rstgS.rstrip() + "\n\n"
-        for row in readL[1:]:
-            contentL.append([row[i] for i in incl_colL])
-        wcontentL = []
-        for rowL in contentL:
-            wrowL = []
-            for iS in rowL:
-                templist = textwrap.wrap(str(iS), int(widthI))
-                templist = [i.replace("""\\n""", """\n""") for i in templist]
-                wrowL.append("""\n""".join(templist))
-            wcontentL.append(wrowL)
-
     def project(self):
-        """insert tables or text from csv, xlsx or txt file
+        """insert project information from csv, xlsx or txt file
 
-        Args:
-            rL (list): parameter list
-
-        Files are read from resource folder
-        The command is identical to itable except file is read from docs/info.
-
+            :return lineS: utf table
+            :rtype: str
         """
 
         alignD = {"S": "", "D": "decimal",
                   "C": "center", "R": "right", "L": "left"}
-
-        if len(self.rL) < 4:
-            self.rL += [""] * (4 - len(self.rL))  # pad parameters
-        rS = ""
-        fileS = self.rL[1].strip()
-        tfileS = Path(self.folderD["defaultP"] / fileS)
-        extS = fileS.split(".")[1]
-
-        if extS == "csv":
-            with open(tfileS, "r") as csvfile:          # read csv file
-                readL = list(csv.reader(csvfile))
-        elif extS == "xlsx":
-            xDF = pd.read_excel(tfileS, header=None)    # read xlsx file
-            readL = xDF.values.tolist()
-        elif extS == "txt":
-            with open(tfileS, "r") as txtfile:          # read txt file
-                readL = txtfile.readlines()
+        tableS = ""
+        plenI = 3
+        if len(self.paramL) != plenI:
+            logging.info(
+                f"{self.cmdS} command not evaluated: {plenI} parameters required")
+            return
+        if self.paramL[0] == "resource":
+            folderP = Path(self.folderD["resourceP"])
         else:
+            folderP = Path(self.folderD["resourceP"])
+
+        fileP = Path(self.paramL[1].strip())
+        pathP = Path(folderP / fileP)                   # file path
+        maxwI = int(self.paramL[2].split(",")[0])       # max column width
+        alignS = alignD[self.paramL[2].split(",")[1].strip()]
+        extS = pathP.suffix
+
+        if extS == ".csv":                              # read csv file
+            with open(pathP, "r") as csvfile:
+                readL = list(csv.reader(csvfile))
+        elif extS == ".xlsx":                           # read xls file
+            pDF1 = pd.read_excel(pathP, header=None)
+            readL = pDF1.values.tolist()
+        elif extS == ".txt":                            # read txt file
+            with open(pathP, "r") as f:
+                txtfile = f.read()
+            return txtfile
+        else:
+            logging.info(
+                f"||{self.cmdS} not evaluated: [{extS}] file not processed")
             return
 
-        rS = "".join(readL)
-
-        if extS != "txt":
-            outputS = self.colwidth(readL)
-            sys.stdout.flush()
-            old_stdout = sys.stdout
-            outputIO = StringIO()
-            taboutS = tabulate(
-                readL,
+        wcontentL = []                                  # wrap columns
+        for rowL in readL:
+            wrowL = []
+            for iS in rowL:
+                templist = textwrap.wrap(str(iS), int(maxwI))
+                templist = [i.replace("""\\n""", """\n""") for i in templist]
+                wrowL.append("""\n""".join(templist))
+            wcontentL.append(wrowL)
+        sys.stdout.flush()
+        old_stdout = sys.stdout
+        output = StringIO()
+        output.write(
+            tabulate(
+                wcontentL,
                 tablefmt="rst",
                 headers="firstrow",
                 numalign="decimal",
-                stralign=saS
+                stralign=alignS,
             )
-            outputIO.write(taboutS)
-            rS = outputIO.getvalue()
-            sys.stdout = old_stdout
+        )
+        tableS = output.getvalue()
+        sys.stdout = old_stdout
 
-        return rS
+        logging.info(f"{self.cmdS} evaluated")
+        return tableS
 
     def table(self):
         """insert table from csv or xlsx file
 
-        Args:
-            paramL (list): parameter list
+            :return lineS: utf table
+            :rtype: str
         """
 
         alignD = {"S": "", "D": "decimal",
@@ -248,30 +231,32 @@ class CmdUTF:
                 f"{self.cmdS} command not evaluated: {plenI} parameters required")
             return
         if self.paramL[0] == "data":
-            folderP = Path(self.incrD[self.paramL("dataP")])
-        fileP = Path(self.paramL[1])
-        pathP = Path(folderP / fileP)                   # file path
-        maxwI = int(self.paramL[2].split(",")[0])       # max column width
-        alignS = alignD[self.paramL[2].split(",")[1]]   # column alignment
-        colS = self.paramL[3]                          # rows read
-        extS = pathP.suffix                             # file suffix
-        if extS == "csv":                               # read csv file
+            folderP = Path(self.folderD["dataP"])
+        else:
+            folderP = Path(self.folderD["dataP"])
+        fileP = Path(self.paramL[1].strip())
+        pathP = Path(folderP / fileP)                    # file path
+        maxwI = int(self.paramL[2].split(",")[0])        # max column width
+        alignS = alignD[self.paramL[2].split(",")[1].strip()]
+        colS = self.paramL[3].strip()                    # rows read
+        extS = (pathP.suffix).strip()                    # file suffix
+        if extS == ".csv":                               # read csv file
             with open(pathP, "r") as csvfile:
                 readL = list(csv.reader(csvfile))
-        elif extS == "xlsx":                            # read xls file
+        elif extS == ".xlsx":                            # read xls file
             pDF1 = pd.read_excel(pathP, header=None)
             readL = pDF1.values.tolist()
         else:
             logging.info(
                 f"{self.cmdS} command not evaluated: {extS} files not processed")
             return
+
         incl_colL = list(range(len(readL[1])))
         if colS == "[:]":
-            colL = [""] * len(incl_colL)
+            colL = [] * len(incl_colL)
         else:
             incl_colL = eval(colS)
             colL = eval(colS)
-
         for row in readL[1:]:                           # select columns
             colL.append([row[i] for i in incl_colL])
         wcontentL = []
@@ -297,7 +282,6 @@ class CmdUTF:
         tableS = output.getvalue()
         sys.stdout = old_stdout
 
-        logging.info(f"{self.cmdS} evaluated")
         return tableS
 
     def text(self, iL: list):

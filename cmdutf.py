@@ -185,7 +185,7 @@ class CmdUTF:
         Args:
             rL (list): parameter list
 
-        Files are read from /docs/docfolder
+        Files are read from resource folder
         The command is identical to itable except file is read from docs/info.
 
         """

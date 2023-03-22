@@ -26,13 +26,13 @@ if docfileS == "x":
     print("INFO     rivt doc file not found")
     exit()
 
-# run test files if this module is run directly
+# run test files if this module is run as __main__
 if Path(docfileS).name == "rv0101t.py":
     docP = Path(
-        "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/r0101t.py")
+        "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/rv0101t.py")
 if Path(docfileS).name == "-o":
     docP = Path(
-        "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/r0101t.py")
+        "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/rv0101t.py")
 
 # print(f"{docfileS=}")
 # print(f"{docP=}")
@@ -61,25 +61,19 @@ divtitleS = divtitleS.replace("-", " ")
 errlogP = Path(rerootP / "error_log.txt")
 
 # global dicts and vars
-
-utfS = """\n"""             # utf output string
-rstS = """"""               # reST output string
-valS = """"""               # values string for export
-rvtfileS = """"""           # rivt file
-outputS = "utf"             # default output type
+utfS = """\n"""                     # utf output string
+rstS = """\n"""                     # reST output string
+valS = """"""                       # values string for export
+rvtfileS = """"""                   # rivt input file
+outputS = "utf"                     # default output type
 xflagB = 0
-rstoutL = ["pdf", "html", "both"]  # reST formats
+rstoutL = ["pdf", "html", "both"]   # reST formats
 outputL = ["utf", "pdf", "html", "both", "report", "site"]
-
-localD = {}                 # local rivt dictionary of values
 
 folderD = {}
 for item in ["docP", "dataP", "resourceP", "rerootP", "resourceP",
              "reportP", "siteP", "projP", "errlogP"]:
     folderD[item] = eval(item)
-
-outputD = {"pdf": True, "html": True, "both": True, "site": True,
-           "report": True, "inter": False, "utf": False}
 
 incrD = {
     "docnumS": docbaseS[2:6],  # doc number
@@ -92,11 +86,11 @@ incrD = {
     "figI": 0,  # figure number
     "ftqueL": deque([1]),  # footnote number
     "countI": 0,  # footnote counter
-    "deceI": 2,  # equation decimals
-    "decrI": 2,  # results decimals
     "subB": False,  # substitute values
-    "saveP": "file",  # save values to file
-    "codeB": False,  # insert code strings in doc
+    "unitS": "M,M",  # units
+    "descS": "2,2",  # description or decimal places
+    "saveP": "Nosave",  # save values to file
+    "codeB": False,  # print code strings in doc
     "pdf": (True, "pdf"),  # write reST
     "html": (True, "html"),  # write reST
     "both": (True, "both"),  # write reST
@@ -104,6 +98,11 @@ incrD = {
     "inter": (False, "inter"),
     "pageI": 1  # starting page number
 }
+
+outputD = {"pdf": True, "html": True, "both": True, "site": True,
+           "report": True, "inter": False, "utf": False}
+
+localD = {}                         # local rivt dictionary of values
 
 print("\nFile Paths")
 print("---------- \n")
@@ -212,44 +211,49 @@ def eval_head(rS, methS):
 
     global utfS, rstS, outputS, incrD, folderD
 
-    r1L = rS.split("|")
+    rs1L = rS.split("|")
 
     if methS == "R":
 
-        if r1L[1].strip() in outputD:
-            outputS = r1L[1].strip()
+        if rs1L[1].strip() in outputD:
+            outputS = rs1L[1].strip()
         else:
             outputS = "utf"
 
-        incrD["widthI"] = int(r1L[2].split(",")[0])     # utf print width
-        incrD["pageI"] = r1L[2].split(",")[1]           # starting page
+        incrD["widthI"] = int(rs1L[2].split(",")[0])     # utf print width
+        incrD["pageI"] = rs1L[2].split(",")[1]           # starting page
 
     elif methS == "I":
         pass
 
     elif methS == "V":
 
-        folderD["saveP"] = Path(r1L[2].strip() + ".csv")
-
-        if r1L[1] == "data":
+        if rs1L[1].strip().casefold() == "data".casefold():
             folderD["data"] = dataP
         else:
             folderD["dataP"] = dataP
 
-        if r1L[3] == "sub":
+        if rs1L[2].strip().casefold() != "nosave".casefold():
+            incrD["saveP"] = Path(rs1L[2].strip() + ".csv")
+        else:
+            incrD["saveP"] = None
+
+        if rs1L[3].strip().casefold() == "sub".casefold():
             incrD["subB"] = True
         else:
             incrD["subB"] = False
 
     elif methS == "T":
-        if r1L[1] == "code":
+        if rs1L[1] == "code":
             folderD["codeB"] = True
         else:
             folderD["codeB"] = False
 
-    hdutfS, hdrstS = str_head(r1L[0].strip())   # get_heading
+    rs1S = rs1L[0].strip()
 
-    return hdutfS, hdrstS
+    if rs1S[0:2] != "--":
+        hdutfS, hdrstS = str_head(rs1L[0].strip())   # get_heading
+        return hdutfS, hdrstS
 
 
 def Write():

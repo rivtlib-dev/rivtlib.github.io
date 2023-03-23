@@ -18,7 +18,7 @@ docfileS = "x"
 docpathP = os.getcwd()
 docP = Path(docpathP)
 for fileS in os.listdir(docpathP):
-    if fnmatch.fnmatch(fileS, "rv????.py"):
+    if fnmatch.fnmatch(fileS, "r????.py"):
         docfileS = fileS
         docP = Path(docP / docfileS)
         break
@@ -40,23 +40,22 @@ if Path(docfileS).name == "-o":
 # files and paths
 docbaseS = docfileS.split(".py")[0]
 dataP = Path(docP.parent / "data")
-projP = docP.parent.parent.parent.parent  # rivt project folder path
+projP = docP.parent.parent.parent  # rivt project folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
 siteP = projP / "site"  # site folder path
 reportP = projP / "report"  # report folder path
 rivtcalcP = Path("rivt.rivttext.py").parent  # rivt package path
-# print(f"{projP=}")
-prfxS = docbaseS[2:4]
+prfxS = docbaseS[1:3]
 for fileS in os.listdir(projP / "resource"):
-    if fnmatch.fnmatch(fileS[2:5], prfxS + "_*"):
+    if fnmatch.fnmatch(fileS[2:5], prfxS + "-*"):
         refileP = Path(fileS)  # resource folder path
         break
 resourceP = Path(projP / "resource" / refileP)
 rerootP = Path(projP / "resource")
 docpdfP = Path(rerootP / resourceP / (docbaseS + ".pdf"))
-doctitleS = (docP.parent.name).split("_")[1]
+doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = doctitleS.replace("-", " ")
-divtitleS = (docP.parent.parent.name).split("_", 1)[1]
+divtitleS = (resourceP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
 errlogP = Path(rerootP / "error_log.txt")
 
@@ -90,6 +89,7 @@ incrD = {
     "unitS": "M,M",  # units
     "descS": "2,2",  # description or decimal places
     "saveP": "Nosave",  # save values to file
+    "equlabelS": "equation",  # last used equation label
     "codeB": False,  # print code strings in doc
     "pdf": (True, "pdf"),  # write reST
     "html": (True, "html"),  # write reST
@@ -233,8 +233,9 @@ def eval_head(rS, methS):
         else:
             folderD["dataP"] = dataP
 
-        if rs1L[2].strip().casefold() != "nosave".casefold():
-            incrD["saveP"] = Path(rs1L[2].strip() + ".csv")
+        if rs1L[2].strip().casefold() != "save".casefold():
+            tempfileS = docbaseS.replace("r", "v") + ".csv"
+            incrD["saveP"] = Path(tempfileS)
         else:
             incrD["saveP"] = None
 
@@ -286,13 +287,13 @@ def R(rS: str):
     :type: str
     """
 
-    global utfS, rstS, outputS, incrD, folderD
+    global utfS, rstS, outputS, incrD, folderD, localD
 
     xutfS = ""
     xrstS = ""
     rL = rS.split("\n")
     hutfS, hrstS = eval_head(rL[0], "R")
-    utfT = parse.RivtParse(folderD, incrD, outputS, "R")
+    utfT = parse.RivtParse(folderD, incrD, outputS, "R", localD)
     xutfS, xrstS, folderD, incrD = utfT.str_parse(rL[1:])
     if hutfS != None:
         xutfS = hutfS + xutfS
@@ -301,7 +302,6 @@ def R(rS: str):
     utfS += xutfS                    # accumulate utf string
     rstS += xrstS                    # accumulate reST string
 
-    print(xutfS)
     xutfS = ""                       # reset local string
 
 
@@ -314,13 +314,13 @@ def I(rS: str):
     :rtype: str
     """
 
-    global utfS, rstS, outputS, incrD, folderD
+    global utfS, rstS, outputS, incrD, folderD, localD
 
     xutfS = ""
     xrstS = ""
     rL = rS.split("\n")
     hutfS, hrstS = eval_head(rL[0], "I")
-    utfT = parse.RivtParse(folderD, incrD, outputS, "I")
+    utfT = parse.RivtParse(folderD, incrD, outputS, "I", localD)
     xutfS, xrstS, folderD, incrD = utfT.str_parse(rL[1:])
     if hutfS != None:
         xutfS = hutfS + xutfS
@@ -329,7 +329,6 @@ def I(rS: str):
     utfS += xutfS
     rstS += xrstS
 
-    print(xutfS)
     xutfS = ""
 
 
@@ -342,14 +341,14 @@ def V(rS: str):
     :type: str
     """
 
-    global utfS, rstS, xflagB, outputS, incrD, folderD
+    global utfS, rstS, xflagB, outputS, incrD, folderD, localD
 
     xutfS = """"""
     xrstS = """"""
     rL = rS.split("\n")
     hutfS, hrstS = eval_head(rL[0], "V")
-    utfT = parse.RivtParse(folderD, incrD, outputS, "V")
-    xutfS, xrstS, folderD, incrD = utfT.str_parse(rL[1:])
+    utfT = parse.RivtParse(folderD, incrD, outputS, "V", localD)
+    xutfS, xrstS, folderD, incrD, localD = utfT.str_parse(rL[1:])
     #print(f"{xutfS=}", f"{rL[1:]=}")
     if hutfS != None:
         xutfS = hutfS + xutfS
@@ -358,7 +357,7 @@ def V(rS: str):
     utfS += xutfS                    # accumulate utf string
     rstS += xrstS                    # accumulate reST string
 
-    print(xutfS)
+    xutfS = ""
 
 
 def T(rS: str):
@@ -370,20 +369,20 @@ def T(rS: str):
     :type: str
 
     """
-    global utfS, rstS, xflagB, outputS, incrD, folderD
+    global utfS, rstS, xflagB, outputS, incrD, folderD, localD
 
     xutfS = """"""
     rL = rS.split("\n")
     hutfS, hrstS = eval_head(rL[0], "T")
-    utfT = parse.RivtParse(folderD, incrD, outputS, "T")
-    xutfS, rstS, folderD, incrD = utfT.str_parse(rL[1:])
+    utfT = parse.RivtParse(folderD, incrD, outputS, "T", localD)
+    xutfS, rstS, folderD, incrD, localD = utfT.str_parse(rL[1:])
     if hutfS != None:
         utfS += hutfS + utfS
         xutfS += hutfS + xutfS                 # accumulate utf string
         if outputD[outputS]:
             rstS += hrstS + rstS               # accumulate reST string
 
-    print(xutfS)
+    xutfS = ""
 
 
 def X(rS: str):

@@ -27,84 +27,80 @@ IDE (e.g. VSCode), methods can be run interactively using the standard cell
 decorator (# %%). Parameters in rv.R() will generate documents in UTF, PDF or
 HTML formats.
 
-rivt is designed for single simple calculations as well as large, extensive
-reports. The rivt report folder structure shown below is designed to
-support both. Folder names are shown in brackets. The four top-level folder
-names (text, resource, report and site) are required verbatim. Other file names
-are combinations of specified prefixes and user titles. Folder and file names
-and prefixes that are fixed are shown as *name*. Underscores and hyphens that
-separate words in file and folder names are stripped out when used as document
-and division names in the document.
+rivt is designed for simple short calculations as well as large, extensive
+reports. The rivt folder structure shown below is designed to support both. A
+project with rivt documents requires four top level folders within the parent
+folder. The four top-level folder names are *rivt-*user-project-name,
+*resource*, *report* and *site*. Folder and file names and prefixes that are
+fixed are shown as *name*. Sub folders are combinations of specified prefixes
+and user titles. Hyphens that separate words in file and folder
+names are stripped out when used as document and division names in the
+document. Sentence case is also applied.
 
-Document input files are separated into folders labeled text and resource.
-Files in the text folder are shareable rivtText files that contain the primary
-calculation information. The resource folder includes supporting binary files
-(images, pdf etc.) and other files that may include confidential project
-information or copyrighted material. The resource folder is not designed to
-share.
+The *rivt-* folder contains most of the document input information as text
+files. The resource folder includes supporting binary files (images, pdf etc.)
+and other files that may include confidential project information or
+copyrighted material. The resource folder is not designed to share.
 
 Output files are written to three folders, depending on the output type. The
-UTF8 output is written to a README.txt file within the text folder. It is
+UTF8 output is written to a README.txt file within the rivt folder. It is
 displayed and searchable on version control platforms like GitHub. PDF output
 is written to the report folder, and HTML output to the site folder.
 
 Folder Structure Example (folders in [])
 ========================================
 
-- [*rivt_*Design-Project] (project and report name)
-    - [*text*]
-        - README.txt                        (project abstract)
-        - units.py                          (units over ride)
-        - [*rv01_*Loads]                    (report division title)                
-            - [*rv0101_*Gravity-Loads]      (rivt document title)
-                -[*data*]      
-                    - data1.csv             (a data source file)
-                    - functions1.py         (a function file)
-                - *rv0101.py*               (rivt file name) 
-                - README.txt                (utf output file)
-            - [*rv0102_*Seismic-Loads] 
-                -[*data*]      
-                    - data2.csv 
-                    - functions2.py 
-                - *rv0102.py*
-                - README.txt
-        - [*rv02_*Design]                                            
-            - [*rv0201_*Pile-Design] 
-                -[*data*]                      
-                    - paragraph1.txt
-                    - functions3.py 
-                - *rv0201.py*
-                - README.txt
+- [project-folder] (can contain arbitrary folders besides the required four)
+    - [*rivt-*project-name]
+        - README.txt                    (project table of contents)
+        - units.py                      (units over-ride)              
+        - [*rv0101-*gravity-loads]      (rivt document title)
+            -[*data*]      
+                - data1.csv             (a data source file)
+                - functions1.py         (a function file)
+            - *r0101.py*                (rivt file name) 
+            - README.txt                (utf output file)
+        - [*rv0102-*seismic-loads] 
+            -[*data*]      
+                - data2.csv 
+                - functions2.py 
+            - *r0102.py*
+            - README.txt
+        - [*rv0201-*pile-design] 
+            -[*data*]                      
+                - paragraph1.txt
+                - functions3.py 
+            - *r0201.py*
+            - README.txt
     - [*resource*]
-            - report_gen.txt                (report generation style)
-            - site_gen.txt                  (website generation style)
-            - pdf_style.sty                 (LaTeX style override)
-            - utf_style.txt                 (utf style override)
-            - project_data.xls              (project data)
-        - [*rv01_*Overview-and-Loads]       (division title)
+        - report_gen.txt                (report generation over-ride)
+        - site_gen.txt                  (website generation over-ride)
+        - pdf_style.sty                 (LaTeX style override)
+        - [*rv01-*overview-and-loads]   (division title)
             - image1.jpg
-        - [*rv02_*Foundations]   
+            - project_data.xls          (project data)
+        - [*rv02-*foundations]   
             - image2.jpg
             - attachment.pdf    
-    - [*report*]                            (PDF document output files)
-        - rv0101_Gravity-Loads.pdf
-        - rv0102_Seismic-Loads.pdf
-        - rv0201_Pile-Design.pdf
-        - Design-Project.pdf                (PDF collated report)
-    - [*site*]                              (HTML site)
+    - [*report*]                        (PDF document output files)
+        - rv0101-gravity-loads.pdf
+        - rv0102-seismic-loads.pdf
+        - rv0201-pile-design.pdf
+        - project-name.pdf              (PDF collated report)
+    - [*site*]                          (HTML site)
         - [*resources*]             
             - image1.png
             - image2.png
-            - html_style.css                (HTML style override)
-        - index.html                        (table of contents)
-        - rv0101_Gravity-Loads.html
-        - rv0102_Seismic-Loads.html
-        - rv0201_Pile-Design.html
+            - html-style.css            (HTML style over-ride)
+        - index.html                    (table of contents)
+        - rv0101-gravity-loads.html
+        - rv0102-seismic-loads.html
+        - rv0201-pile-design.html
 
 The API is designed so that only files in the text folder are uploaded for
 version control and sharing. They are the essential core of the calculation -
 the text, equations, functions, tables and image references. Files in the
-resource folder are not shared and are typically binary and proprietary files
+resource folder are not shared and are typically binary or proprietary files
 such as images, pdf attachments and proprietary data (e.g. client contact
 information and costs). This folder and file structure makes it easy to share
 and apply version control on the primary calculation inputs.

@@ -40,7 +40,7 @@ from rivt.units import *
 
 class CmdUTF:
 
-    def __init__(self, paramL, incrD, folderD):
+    def __init__(self, paramL, incrD, folderD, localD):
         """
         ======================================================== ============
             command syntax / snippet prefix and description        methods
@@ -61,6 +61,7 @@ class CmdUTF:
 
         """
 
+        self.localD = localD
         self.folderD = folderD
         self.incrD = incrD
         self.widthII = incrD["widthI"] - 1
@@ -372,7 +373,7 @@ class CmdUTF:
 
         """
 
-        # locals().update(self.rivtD)
+        locals().update(self.localD)
 
         hdrL = ["variable", "value", "[value]", "description"]
         alignL = ["left", "right", "right", "left"]
@@ -416,8 +417,10 @@ class CmdUTF:
             valL.append([varS, val1U, val2U, descripS])
 
         utfS = self.vtable(valL, hdrL, "rst", alignL)
-        # self.rivtD.update(locals())
+        locals().update(self.localD)
+        self.localD.update(locals())
 
+        print(utfS + "\n")
         return utfS
 
     def vtable(self, tbl, hdrL, tblfmt, alignL):

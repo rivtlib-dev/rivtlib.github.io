@@ -6,6 +6,7 @@ import textwrap
 import subprocess
 import tempfile
 import re
+import io
 import logging
 import warnings
 import numpy.linalg as la
@@ -35,7 +36,7 @@ from rivt.units import *
 
 class TagsUTF:
 
-    def __init__(self, lineS, folderD, incrD):
+    def __init__(self, lineS, folderD, incrD, localD):
         """format tags to utf
 
         ============================ ============================================
@@ -76,6 +77,7 @@ class TagsUTF:
 
         """
 
+        self.localD = localD
         self.folderD = folderD
         self.incrD = incrD
         self.lineS = lineS
@@ -155,6 +157,7 @@ class TagsUTF:
         :rtype: str
         """
 
+        self.incrD["equalabelS"] = self.lineS
         enumI = int(self.incrD["equI"]) + 1
         self.incrD["equI"] = enumI
         refS = self.label(enumI, "[ Equ: ") + " ]"
@@ -273,9 +276,9 @@ class TagsUTF:
         self.incrD["tableI"] = tnumI
         refS = self.label(tnumI, "[ Table: ") + " ]"
         spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
-        utfS = self.lineS + " " * spcI + refS
+        lineS = self.lineS + " " * spcI + refS
 
-        return utfS
+        return lineS
 
     def time(self):
         """insert date and time
@@ -313,94 +316,73 @@ class TagsUTF:
         """assign values to variables
 
         """
-        # locals().update(self.rivtD)
+        locals().update(self.localD)
+
         varS = str(self.lineS).split(":=")[0].strip()
         valS = str(self.lineS).split(":=")[1].strip()
         unit1S = str(self.incrD["unitS"]).split(",")[0]
         unit2S = str(self.incrD["unitS"]).split(",")[1]
         descripS = str(self.incrD["descS"])
 
-        return [varS, valS, unit1S, unit2S, descripS]
+        cmdS = varS + "= " + valS + "*" + unit1S
+        exec(cmdS, globals(), locals())
 
-        # locals().update(self.rivtD)
-        # self.rivtD.update(locals())
+        locals().update(self.localD)
+        self.localD.update(locals())
+
+        return [varS, valS, unit1S, unit2S, descripS]
 
     def result(self):
         """evaluate equations
 
         """
-        varS = str(self.lineS).split(":=")[0].strip()
-        valS = str(self.lineS).split(":=")[1].strip()
+        locals().update(self.localD)
+
+        varS = str(self.lineS).split("=")[0].strip()
+        valS = str(self.lineS).split("=")[1].strip()
         unit1S = str(self.incrD["unitS"]).split(",")[0]
         unit2S = str(self.incrD["unitS"]).split(",")[1]
-        descripS = str(self.incrD["descS"])
+        descS = str(self.incrD["equlabelS"])
         rprecS = str(self.incrD["descS"].split(",")[0])  # trim result
         eprecS = str(self.incrD["descS"].split(",")[1])  # trim equations
         exec("set_printoptions(precision=" + rprecS + ")")
         exec("Unum.set_format(value_format = '%." + eprecS + "f')")
         fltfmtS = "." + rprecS.strip() + "f"
-
-        hdrL = []
-        valL = []
-        hdrL.append(varS)
-        valL.append(str(val1U) + "  [" + str(val2U) + "]")
-        for sym in eqatom:
-            hdrL.append(str(sym))
-            symU = eval(str(sym))
-            valL.append(str(symU.simplify_unit()))
-        spS = "Eq(" + varS + ",(" + valS + "))"
-        utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
-        print("\n" + utfS + "\n")       # pretty print equation
-        self.calcS += "\n" + utfS + "\n"
-        eqS = sp.sympify(valS)
-        eqatom = eqS.atoms(sp.Symbol)
-
-        varS = vL[0].split("=")[0].strip()
-        valS = vL[0].split("=")[1].strip()
-        if vL[1].strip() != "DC" and vL[1].strip() != "":
-            unitL = vL[1].split(",")
-            unit1S, unit2S = unitL[0].strip(), unitL[1].strip()
-            val1U = val2U = array(eval(valS))
-            if type(eval(valS)) == list:
-                val1U = array(eval(valS)) * eval(unit1S)
-                val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
-            else:
-                cmdS = varS + "= " + valS
-                exec(cmdS, globals(), locals())
-                valU = eval(varS).cast_unit(eval(unit1S))
-                valdec = ("%." + str(rprecS) + "f") % valU.number()
-                val1U = str(valdec) + " " + str(valU.unit())
-                val2U = valU.cast_unit(eval(unit2S))
-        else:  # no units
-            cmdS = varS + "= " + "unum.as_unum(" + valS + ")"
+        if type(eval(valS)) == list:
+            val1U = array(eval(valS)) * eval(unit1S)
+            val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+        else:
+            cmdS = varS + "= " + valS
             exec(cmdS, globals(), locals())
-            # valU = eval(varS).cast_unit(eval(unit1S))
-            # valdec = ("%." + str(rprecS) + "f") % valU.number()
-            # val1U = str(valdec) + " " + str(valU.unit())
-            val1U = eval(varS)
-            val1U = val1U.simplify_unit()
-            val2U = val1U
-        utfS = vL[0]
+            valU = eval(varS).cast_unit(eval(unit1S))
+            valdec = ("%." + str(rprecS) + "f") % valU.number()
+            val1U = str(valdec) + " " + str(valU.unit())
+            val2U = valU.cast_unit(eval(unit2S))
         spS = "Eq(" + varS + ",(" + valS + "))"
         utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
         print("\n" + utfS + "\n")  # pretty print equation
-        self.calcS += "\n" + utfS + "\n"
+        utfS = "\n" + utfS + "\n"
         eqS = sp.sympify(valS)
         eqatom = eqS.atoms(sp.Symbol)
-        if self.setcmdD["subB"]:  # substitute into equation
-            self._vsub(vL)
-        else:  # write equation table
-            hdrL = []
-            valL = []
-            hdrL.append(varS)
-            valL.append(str(val1U) + "  [" + str(val2U) + "]")
-            for sym in eqatom:
-                hdrL.append(str(sym))
-                symU = eval(str(sym))
-                valL.append(str(symU.simplify_unit()))
-            alignL = ["center"] * len(valL)
+        # write equation table
+        # hdrL = []
+        # valL = []
+        # hdrL.append(varS)
+        # valL.append(str(val1U) + "  [" + str(val2U) + "]")
+        # for sym in eqatom:
+        #     hdrL.append(str(sym))
+        #     symU = eval(str(sym))
+        #     valL.append(str(symU.simplify_unit()))
+        # alignL = ["center"] * len(valL)
+        # self._vtable([valL], hdrL, "rst", alignL)
 
-            return [valL], hdrL, "rst", alignL
+        if self.incrD["subB"]:  # equations with numbers
+            self.vsub(self.lineS)
+
+        locals().update(self.localD)
+        self.localD.update(locals())
+
+        return utfS, [varS, valS, unit1S, unit2S, descS]
 
     def vsub(self, eqL: list, eqS: str):
         """substitute numbers for variables in printed output

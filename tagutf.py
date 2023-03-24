@@ -135,8 +135,9 @@ class TagsUTF:
         :rtype: str
         """
 
-        lineS = lineS.center(int(self.incrD["widthI"]))
+        lineS = self.lineS.center(int(self.incrD["widthI"]))
 
+        print(lineS)
         return lineS
 
     def date(self):
@@ -160,11 +161,12 @@ class TagsUTF:
         self.incrD["equalabelS"] = self.lineS
         enumI = int(self.incrD["equI"]) + 1
         self.incrD["equI"] = enumI
-        refS = self.label(enumI, "[ Equ: ") + " ]"
+        refS = self.label(enumI, " Equ: ") + " - " + str(self.incrD["secnumI"])
         spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
-        utfS = self.lineS + " " * spcI + refS
+        lineS = self.lineS + " " * spcI + refS
 
-        return utfS
+        print(lineS)
+        return lineS
 
     def figure(self):
         """formats figure caption to reST
@@ -177,9 +179,10 @@ class TagsUTF:
         self.incrD["figI"] = fnumI
         refS = self.label(fnumI, " Fig. [ ") + " ]"
         spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
-        utfS = self.lineS + " " * spcI + refS
+        lineS = self.lineS + " " * spcI + refS
 
-        return utfS
+        print(lineS)
+        return lineS
 
     def footnumber(self):
         """increment footnote number
@@ -210,6 +213,7 @@ class TagsUTF:
         """
         lineS = int(folderD["widthI"]) * "_"
 
+        print(lineS)
         return lineS
 
     def latex(self):
@@ -257,12 +261,15 @@ class TagsUTF:
         :rtype: str
         """
 
-        spS = self.lineS
-        spL = spS.split("=")
-        spS = "Eq(" + spL[0] + ",(" + spL[1] + "))"
-        # sps = sp.encode('unicode-escape').decode()
-        lineS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+        spS = self.lineS.strip()
+        try:
+            spL = spS.split("=")
+            spS = "Eq(" + spL[0] + ",(" + spL[1] + "))"
+            # sps = sp.encode('unicode-escape').decode()
+        except:
+            lineS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
 
+        print(lineS)
         return lineS
 
     def table(self):
@@ -272,12 +279,15 @@ class TagsUTF:
         :rtype: str
         """
 
+        self.incrD["equlabels"] = self.lineS
         tnumI = int(self.incrD["tableI"]) + 1
         self.incrD["tableI"] = tnumI
-        refS = self.label(tnumI, "[ Table: ") + " ]"
+        refS = self.label(tnumI, "Table: ") + " - " + \
+            str(self.incrD["secnumI"])
         spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
         lineS = self.lineS + " " * spcI + refS
 
+        print(lineS)
         return lineS
 
     def time(self):
@@ -347,7 +357,7 @@ class TagsUTF:
         eprecS = str(self.incrD["descS"].split(",")[1])  # trim equations
         exec("set_printoptions(precision=" + rprecS + ")")
         exec("Unum.set_format(value_format = '%." + eprecS + "f')")
-        fltfmtS = "." + rprecS.strip() + "f"
+        #fltfmtS = "." + rprecS.strip() + "f"
         if type(eval(valS)) == list:
             val1U = array(eval(valS)) * eval(unit1S)
             val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
@@ -360,8 +370,7 @@ class TagsUTF:
             val2U = valU.cast_unit(eval(unit2S))
         spS = "Eq(" + varS + ",(" + valS + "))"
         utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
-        print("\n" + utfS + "\n")  # pretty print equation
-        utfS = "\n" + utfS + "\n"
+        utfS = utfS + "\n"
         eqS = sp.sympify(valS)
         eqatom = eqS.atoms(sp.Symbol)
         # write equation table
@@ -382,7 +391,7 @@ class TagsUTF:
         locals().update(self.localD)
         self.localD.update(locals())
 
-        return utfS, [varS, valS, unit1S, unit2S, descS]
+        return [[varS, str(val1U), unit1S, unit2S, descS], utfS]
 
     def vsub(self, eqL: list, eqS: str):
         """substitute numbers for variables in printed output

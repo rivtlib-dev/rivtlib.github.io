@@ -75,7 +75,7 @@ for item in ["docP", "dataP", "resourceP", "rerootP", "resourceP",
     folderD[item] = eval(item)
 
 incrD = {
-    "docnumS": docbaseS[2:6],  # doc number
+    "docnumS": docbaseS[1:5],  # doc number
     "doctitleS": doctitleS,  # doc title
     "divtitleS": divtitleS,  # section title
     "secnumI": 0,  # section number
@@ -252,8 +252,11 @@ def eval_head(rS, methS):
 
     rs1S = rs1L[0].strip()
 
-    if rs1S[0:2] != "--":
+    if rs1S[0:2] == "--":
+        return "", ""
+    else:
         hdutfS, hdrstS = str_head(rs1L[0].strip())   # get_heading
+        print(hdutfS)
         return hdutfS, hdrstS
 
 
@@ -293,8 +296,8 @@ def R(rS: str):
     xrstS = ""
     rL = rS.split("\n")
     hutfS, hrstS = eval_head(rL[0], "R")
-    utfT = parse.RivtParse(folderD, incrD, outputS, "R", localD)
-    xutfS, xrstS, folderD, incrD = utfT.str_parse(rL[1:])
+    utfI = parse.RivtParse(folderD, incrD, outputS, "R", localD)
+    xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(rL[1:])
     if hutfS != None:
         xutfS = hutfS + xutfS
         if outputD[outputS]:
@@ -320,8 +323,8 @@ def I(rS: str):
     xrstS = ""
     rL = rS.split("\n")
     hutfS, hrstS = eval_head(rL[0], "I")
-    utfT = parse.RivtParse(folderD, incrD, outputS, "I", localD)
-    xutfS, xrstS, folderD, incrD = utfT.str_parse(rL[1:])
+    utfI = parse.RivtParse(folderD, incrD, outputS, "I", localD)
+    xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(rL[1:])
     if hutfS != None:
         xutfS = hutfS + xutfS
         if outputD[outputS]:
@@ -347,8 +350,8 @@ def V(rS: str):
     xrstS = """"""
     rL = rS.split("\n")
     hutfS, hrstS = eval_head(rL[0], "V")
-    utfT = parse.RivtParse(folderD, incrD, outputS, "V", localD)
-    xutfS, xrstS, folderD, incrD, localD = utfT.str_parse(rL[1:])
+    utfI = parse.RivtParse(folderD, incrD, outputS, "V", localD)
+    xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(rL[1:])
     #print(f"{xutfS=}", f"{rL[1:]=}")
     if hutfS != None:
         xutfS = hutfS + xutfS
@@ -374,8 +377,8 @@ def T(rS: str):
     xutfS = """"""
     rL = rS.split("\n")
     hutfS, hrstS = eval_head(rL[0], "T")
-    utfT = parse.RivtParse(folderD, incrD, outputS, "T", localD)
-    xutfS, rstS, folderD, incrD, localD = utfT.str_parse(rL[1:])
+    utfI = parse.RivtParse(folderD, incrD, outputS, "T", localD)
+    xutfS, rstS, folderD, incrD, localD = utfI.str_parse(rL[1:])
     if hutfS != None:
         utfS += hutfS + utfS
         xutfS += hutfS + xutfS                 # accumulate utf string

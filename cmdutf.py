@@ -19,7 +19,6 @@ from io import StringIO
 from numpy import *
 from IPython.display import display as _display
 from IPython.display import Image as _Image
-from io import StringIO
 from sympy.parsing.latex import parse_latex
 from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
@@ -32,9 +31,8 @@ try:
     from PIL import ImageOps as PImageOps
 except:
     pass
-
-from io import StringIO  # Python 3
-
+from TexSoup import TexSoup
+from rivt import parse
 from rivt.units import *
 
 
@@ -47,17 +45,15 @@ class CmdUTF:
         ======================================================== ============
 
         || append | folder | file_name                               R
-        || github | folder | repo_name                               R
-        || project | folder | file_name | max width,align            R
-
-        || list | folder | file_name                                 V
         || functions | folder | file_name | code; nocode             V
-        || values | folder | file_name | [:];[x:y]                   V
-
+        || github | folder | repo_name                               R
         || image1 | folder | file_name  | size                       I,V,T
         || image2 | folder | file_name  | size | file_name  | size   I,V,T
+        || list | folder | file_name                                 V
+        || project | folder | file_name | max width,align            R
         || table | folder | file_name | max width, align | rows      I,V,T
-        || text | folder | file_name | shade; noshade                I,V,T
+        || text | folder | file_name | text type |shade; noshade     I,V,T
+        || values | folder | file_name | [:];[x:y]                   V
 
         """
 
@@ -84,6 +80,9 @@ class CmdUTF:
         return eval("self." + cmdS+"()")
 
     def append(self):
+        pass
+
+    def func(self):
         pass
 
     def github(self):
@@ -145,7 +144,35 @@ class CmdUTF:
         sys.stdout = sys.__stdout__
         return utfS
 
-    from io import StringIO  # Python 3
+    def list(self):
+        """import data from files
+
+        Args:
+            vL (list): data command arguments
+        """
+
+        locals().update(self.rivtD)
+        valL = []
+        if len(vL) < 5:
+            vL += [""] * (5 - len(vL))  # pad command
+        valL.append(["variable", "values"])
+        vfileS = Path(self.folderD["cpath"] / vL[2].strip())
+        vecL = eval(vL[3].strip())
+        with open(vfileS, "r") as csvF:
+            reader = csv.reader(csvF)
+        vL = list(reader)
+        for i in vL:
+            varS = i[0]
+            varL = array(i[1:])
+            cmdS = varS + "=" + str(varL)
+            exec(cmdS, globals(), locals())
+            if len(varL) > 4:
+                varL = str((varL[:2]).append(["..."]))
+            valL.append([varS, varL])
+        hdrL = ["variable", "values"]
+        alignL = ["left", "right"]
+        self._vtable(valL, hdrL, "rst", alignL)
+        self.rivtD.update(locals())
 
     def project(self):
         """insert project information from csv, xlsx or txt file
@@ -283,90 +310,103 @@ class CmdUTF:
 
         return tableS
 
-    def text(self, iL: list):
+    def text(self):
         """insert text from file
 
-        Args:
-            iL (list): text command list
-
-        || text | (file.txt) | literal; indent; html
+        || text | folder | file | type | shade
 
         """
 
-        txtP = Path(self.folderD["cpathcur"] / iL[1].strip())
-        with open(txtP, "r", encoding="utf-8") as txtf1:
-            uL = txtf1.readlines()
-        if iL[2].strip() == "indent":
-            txtS = "".join(uL)
-            widthI = self.setcmdD["cwidth"]
-            inS = " " * 4
-            uL = textwrap.wrap(txtS, width=widthI)
-            uL = [inS + S1 + "\n" for S1 in uL]
-            uS = "".join(uL)
-        elif iL[2].strip() == "literal":
-            txtS = "  ".join(uL)
-            uS = "\n" + txtS
-        elif iL[2].strip() == "literalindent":
-            txtS = "\n\n::\n\n"
-            for iS in uL:
-                txtS += "   " + iS
-            uS = txtS + "\n\n"
-        elif iL[2].strip() == "html":
-            txtS = ""
-            flg = 0
-            for iS in uL:
-                if "src=" in iS:
-                    flg = 1
-                    continue
-                if flg == 1 and '"' in iS:
-                    flg = 0
-                    continue
-                if flg == 1:
-                    continue
-                txtS += iS
-            txtS = htm.html2text(txtS)
-            uS = txtS.replace("\n    \n", "")
+        alignD = {"S": "", "D": "decimal",
+                  "C": "center", "R": "right", "L": "left"}
+        textS = ""
+        plenI = 4
+        if len(self.paramL) != plenI:
+            logging.info(
+                f"{self.cmdS} command not evaluated: {plenI} parameters required")
+            return
+        if self.paramL[0] == "data":
+            folderP = Path(self.folderD["dataP"])
         else:
-            txtS = "".join(uL)
-            uS = "\n" + txtS
+            folderP = Path(self.folderD["dataP"])
 
-        # print(str(txtP))
-        # self.calcS += str(txtP) + "\n"
-        print(uS)
-        self.calcS += uS + "\n"
+        fileP = Path(self.paramL[1].strip())
+        pathP = Path(folderP / fileP)
+        txttypeS = self.paramL[2].strip()
+        extS = pathP.suffix
 
-    def vfunc(self, vL: list):
-        pass
+        with open(pathP, "r", encoding="utf-8") as f:
+            txtfileS = f.read()
+            txtfileL = f.readlines()
 
-    def vlist(self, vL: list):
-        """import data from files
-
-        Args:
-            vL (list): data command arguments
-        """
-
-        locals().update(self.rivtD)
-        valL = []
-        if len(vL) < 5:
-            vL += [""] * (5 - len(vL))  # pad command
-        valL.append(["variable", "values"])
-        vfileS = Path(self.folderD["cpath"] / vL[2].strip())
-        vecL = eval(vL[3].strip())
-        with open(vfileS, "r") as csvF:
-            reader = csv.reader(csvF)
-        vL = list(reader)
-        for i in vL:
-            varS = i[0]
-            varL = array(i[1:])
-            cmdS = varS + "=" + str(varL)
-            exec(cmdS, globals(), locals())
-            if len(varL) > 4:
-                varL = str((varL[:2]).append(["..."]))
-            valL.append([varS, varL])
-        hdrL = ["variable", "values"]
-        alignL = ["left", "right"]
-        self._vtable(valL, hdrL, "rst", alignL)
-        self.rivtD.update(locals())
+        if extS == ".txt":
+            j = ""
+            for i in txtfileL:
+                if txttypeS == "literal":
+                    j += " "*4 + i
+                elif txttypeS == "sympy":
+                    try:
+                        spL = i.split("=")
+                        spS = "Eq(" + spL[0] + ",(" + spL[1] + "))"
+                        # sps = sp.encode('unicode-escape').decode()
+                        lineS = sp.pretty(sp.sympify(
+                            spS, _clash2, evaluate=False))
+                        j += lineS
+                    except:
+                        lineS = sp.pretty(sp.sympify(
+                            spS, _clash2, evaluate=False))
+                        j += lineS
+                elif txttypeS == "wrap" or txttypeS == "indent":
+                    if txttypeS == "wrap":
+                        inS = " " * 4
+                    else:
+                        inS = " " * 8
+                    txtS = txtfileS
+                    widthI = self.incrD["widthI"]
+                    uL = textwrap.wrap(txtS, width=widthI)
+                    inS = " " * 8
+                    uL = [inS + s + "\n" for s in uL]
+                    j = "".join(uL)
+                    print(j)
+                    return j
+                elif txttypeS == "itag":
+                    utfI = parse.RivtParse(folderD, incrD,
+                                           txtfileS, "itag", localD)
+                    xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(
+                        txtfileS)
+                elif extS == ".html":
+                    txtS = ""
+                    flg = 0
+                    for iS in uL:
+                        if "src=" in iS:
+                            flg = 1
+                            continue
+                        if flg == 1 and '"' in iS:
+                            flg = 0
+                            continue
+                        if flg == 1:
+                            continue
+                        txtS += iS
+                    txtS = htm.html2text(txtS)
+                    uS = txtS.replace("\n    \n", "")
+                else:
+                    j += " "*4 + i
+            print(j)
+            return j
+        elif extS == ".tex":
+            soup = TexSoup(txtfileS)
+            soupL = list(soup.text)
+            soupS = "".join(soupL)
+            if txttypeS == "math":
+                latexS = sp.pretty(sp.parse_latex(i))
+                print(latexS)
+                return latexS
+            elif txttypeS == "raw":
+                print(soupS)
+                return soupS
+            else:
+                print(soupS)
+                return soupS
 
     def values(self):
         """import values from files

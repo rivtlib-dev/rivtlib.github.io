@@ -371,8 +371,8 @@ class TagsUTF:
         spS = "Eq(" + varS + ",(" + valS + "))"
         utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
         utfS = utfS + "\n"
-        eqS = sp.sympify(valS)
-        eqatom = eqS.atoms(sp.Symbol)
+        #eqS = sp.sympify(valS)
+        #eqatom = eqS.atoms(sp.Symbol)
         # write equation table
         # hdrL = []
         # valL = []
@@ -385,7 +385,7 @@ class TagsUTF:
         # alignL = ["center"] * len(valL)
         # self._vtable([valL], hdrL, "rst", alignL)
 
-        if self.incrD["subB"]:  # equations with numbers
+        if self.incrD["subB"]:              # replace variables with numbers
             self.vsub(self.lineS)
 
         locals().update(self.localD)

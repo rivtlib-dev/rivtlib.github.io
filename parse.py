@@ -75,6 +75,11 @@ class RivtParse:
             self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
                          "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
+        elif methS == "itag":
+            self.cmdL = []
+            self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
+                         "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
+                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
         else:
             pass
 

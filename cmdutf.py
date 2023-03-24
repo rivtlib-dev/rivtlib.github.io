@@ -317,13 +317,11 @@ class CmdUTF:
 
         """
 
-        alignD = {"S": "", "D": "decimal",
-                  "C": "center", "R": "right", "L": "left"}
-        textS = ""
         plenI = 4
         if len(self.paramL) != plenI:
             logging.info(
-                f"{self.cmdS} command not evaluated: {plenI} parameters required")
+                f"{self.cmdS} command not evaluated:  \
+                                    {plenI} parameters required")
             return
         if self.paramL[0] == "data":
             folderP = Path(self.folderD["dataP"])
@@ -337,9 +335,11 @@ class CmdUTF:
 
         with open(pathP, "r", encoding="utf-8") as f:
             txtfileS = f.read()
+        with open(pathP, "r", encoding="utf-8") as f:
             txtfileL = f.readlines()
 
         if extS == ".txt":
+            # print(f"{txttypeS=}")
             j = ""
             for i in txtfileL:
                 if txttypeS == "literal":
@@ -364,16 +364,17 @@ class CmdUTF:
                     txtS = txtfileS
                     widthI = self.incrD["widthI"]
                     uL = textwrap.wrap(txtS, width=widthI)
-                    inS = " " * 8
                     uL = [inS + s + "\n" for s in uL]
-                    j = "".join(uL)
-                    print(j)
-                    return j
+                    utfS = "".join(uL)
+                    print(utfS)
+                    return utfS
                 elif txttypeS == "itag":
                     utfI = parse.RivtParse(folderD, incrD,
                                            txtfileS, "itag", localD)
                     xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(
                         txtfileS)
+                    print(xutfS)
+                    return xutfS
                 elif extS == ".html":
                     txtS = ""
                     flg = 0
@@ -386,9 +387,11 @@ class CmdUTF:
                             continue
                         if flg == 1:
                             continue
-                        txtS += iS
+                        txtS += " "*4 + iS
                     txtS = htm.html2text(txtS)
-                    uS = txtS.replace("\n    \n", "")
+                    utfS = txtS.replace("\n    \n", "")
+                    print(utfS)
+                    return (utfS)
                 else:
                     j += " "*4 + i
             print(j)

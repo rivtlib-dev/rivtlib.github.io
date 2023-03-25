@@ -19,7 +19,7 @@ from numpy import *
 from IPython.display import display as _display
 from IPython.display import Image as _Image
 from io import StringIO
-from sympy.parsing.latex import parse_latex
+from sympy.parsing.latex import parse_latex as parsx
 from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
 from tabulate import tabulate
@@ -177,7 +177,7 @@ class TagsUTF:
 
         fnumI = int(self.incrD["figI"]) + 1
         self.incrD["figI"] = fnumI
-        refS = self.label(fnumI, " Fig. [ ") + " ]"
+        refS = self.label(fnumI, " Fig. ") + " - " + str(self.incrD["secnumI"])
         spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
         lineS = self.lineS + " " * spcI + refS
 
@@ -302,7 +302,16 @@ class TagsUTF:
         return lineS
 
     def url(self):
-        pass
+        """_summary_
+
+        :return: _description_
+        :rtype: _type_
+        """
+
+        lineL = lineS.split(",")
+        lineS = ".. _" + lineL[0] + ": " + lineL[1]
+
+        return lineS
 
     def codeblk(self):
         pass
@@ -357,7 +366,7 @@ class TagsUTF:
         eprecS = str(self.incrD["descS"].split(",")[1])  # trim equations
         exec("set_printoptions(precision=" + rprecS + ")")
         exec("Unum.set_format(value_format = '%." + eprecS + "f')")
-        #fltfmtS = "." + rprecS.strip() + "f"
+        # fltfmtS = "." + rprecS.strip() + "f"
         if type(eval(valS)) == list:
             val1U = array(eval(valS)) * eval(unit1S)
             val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
@@ -371,8 +380,8 @@ class TagsUTF:
         spS = "Eq(" + varS + ",(" + valS + "))"
         utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
         utfS = utfS + "\n"
-        #eqS = sp.sympify(valS)
-        #eqatom = eqS.atoms(sp.Symbol)
+        # eqS = sp.sympify(valS)
+        # eqatom = eqS.atoms(sp.Symbol)
         # write equation table
         # hdrL = []
         # valL = []

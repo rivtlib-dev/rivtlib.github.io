@@ -11,8 +11,8 @@
     "inline-bookmarks.view.showVisibleFilesOnly": false,
     "fsdeploy.nodes": [
         {
-            "source": "/git/rivt/",
-            "target": "C:/Users/rodhh/AppData/Roaming/Python/Python38/site-packages/rivt",
+            "source": "C:/git/rivt/",
+            "target": "c:/Python38/Lib/site-packages/rivt",
             "include": "**/*.*",
             "deleteTargetOnDeploy": true,
         }

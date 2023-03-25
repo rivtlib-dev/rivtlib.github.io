@@ -401,14 +401,18 @@ class CmdUTF:
             soupL = list(soup.text)
             soupS = "".join(soupL)
             if txttypeS == "math":
-                latexL = sp.pretty(sp.parse_latex(i))
+                latexL = sp.pretty(parse_latex(txtfileS))
                 latexS = "\n".join(latexL)
                 print(latexS)
                 return latexS
             elif txttypeS == "raw":
                 soupS = soupS.replace("\\\\", "\n")
                 soupL = soupS.split("\n")
-                soupL = [s.split(">") for s in soupL]
+                if "&" in soupL[10]:
+                    soupL = [s.split("&") for s in soupL]
+                else:
+                    if ">" in soupL[10]:
+                        soupL = [s.split(">") for s in soupL]
                 for s in soupL:
                     try:
                         s[1] = s[1].replace("\\", " ")
@@ -418,7 +422,7 @@ class CmdUTF:
                 soup1L = []
                 for s in soupL:
                     try:
-                        soup1L.append(s[0].ljust(8)+s[1]+"\n")
+                        soup1L.append(s[0].ljust(10) + s[1]+"\n")
                     except:
                         soup1L.append(s[0]+"\n")
                 soupS = "".join(soup1L)

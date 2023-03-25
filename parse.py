@@ -1,3 +1,4 @@
+from rivt.units import *
 import csv
 import sys
 import re
@@ -18,8 +19,6 @@ from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
 from tabulate import tabulate
 from pathlib import Path
-from IPython.display import display as _display
-from IPython.display import Image as _Image
 try:
     from PIL import Image as PImage
     from PIL import ImageOps as PImageOps
@@ -30,7 +29,6 @@ from rivt import cmdrst
 from rivt import tagutf
 from rivt import tagrst
 
-from rivt.units import *
 # tabulate.PRESERVE_WHITESPACE = True
 
 
@@ -277,7 +275,7 @@ class RivtParse:
         valS = vaL[1].strip()
         valS = valS.split(" ")[0]
         unit1S, unit2S = vaL[2], vaL[3]
-        #descripS = vaL[4].strip()
+        # descripS = vaL[4].strip()
         val1U = val2U = array(eval(valS))
         if unit1S != "-":
             if type(eval(valS)) == list:

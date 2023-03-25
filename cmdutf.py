@@ -401,10 +401,27 @@ class CmdUTF:
             soupL = list(soup.text)
             soupS = "".join(soupL)
             if txttypeS == "math":
-                latexS = sp.pretty(sp.parse_latex(i))
+                latexL = sp.pretty(sp.parse_latex(i))
+                latexS = "\n".join(latexL)
                 print(latexS)
                 return latexS
             elif txttypeS == "raw":
+                soupS = soupS.replace("\\\\", "\n")
+                soupL = soupS.split("\n")
+                soupL = [s.split(">") for s in soupL]
+                for s in soupL:
+                    try:
+                        s[1] = s[1].replace("\\", " ")
+                        s[0] = s[0].replace("\\", " ")
+                    except:
+                        s[0] = s[0].replace("\\", " ")
+                soup1L = []
+                for s in soupL:
+                    try:
+                        soup1L.append(s[0].ljust(8)+s[1]+"\n")
+                    except:
+                        soup1L.append(s[0]+"\n")
+                soupS = "".join(soup1L)
                 print(soupS)
                 return soupS
             else:

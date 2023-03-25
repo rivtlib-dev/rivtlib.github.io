@@ -40,20 +40,18 @@ def cmdlinehelp():
     """command line help"""
 
     print()
-    print("Run rivt from the command line in the rivt document folder -")
+    print("Run command in rivt document folder ")
     print()
     print("                 python -m rivt                             ")
     print()
-    print("If the rivt file is not found, check that it has the form - ")
+    print("file is rddnn.py - where dd and nn are two digit integers.  ")
     print()
-    print("rvddnn.py - where dd and nn are two digit integers.          ")
+    print("Output files are written to:      ")
+    print("    current document folder:  README.txt       ")
+    print("    report folder:            rvddnn_file.pdf  ")
+    print("    site folder:              rvdnn_file.html  ")
     print()
-    print("The output files are written to the following folders.      ")
-    print("    current document folder:  README.txt            ")
-    print("    report folder:            rvddnn_file.pdf        ")
-    print("    site folder:              rvdnn_file.html       ")
-    print()
-    print("User manual is at: https://rivtDocs.net         ")
+    print("User manual is at: https://rivtDocs.net        ")
 
 
 if sys.version_info < (3, 8):

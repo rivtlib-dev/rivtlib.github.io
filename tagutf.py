@@ -43,30 +43,33 @@ class TagsUTF:
         tag syntax                      description (one tag per line)
         ============================ ============================================
 
+
         Values Only Formats:
-        a = n | unit, alt | descrip   assign tag =; units and description
-        a := b + c | unit, alt | n,n  result tag :=; units and decimals
+        a := n | unit, alt | descrip   declare tag =; units and description
+        a = b + c | unit, alt | n,n    assign tag :=; units and decimals
 
-        Format Line:
-        text _[c]                     center line
-        _[date]                       date insert
-        text _[e]                     equation label, autonumber
-        text _[f]                     figure caption, autonumber
-        text <#>                      footnote, autonumber
-        text _[foot]                  footnote description
-        _[-]                          horizontal divider insert
-        <reference, label>            internal link, section etc
-        latex equation _[x]           LaTeX equation format
-        text _[r]                     right justify line
-        text _[s]                     sympy equation
-        <sympy text>                  sympy inline (no commas)
-        _[page]                       new page (PDF)
-        _[time]                       time (insert)
+        Line Format:
+        text  _[b]                     bold line
+        text  _[c]                     center line
+            <date>                     date inline
+        <datetime>                     date and time inline
+        text  _[e]                     equation label
+        text  _[f]                     figure caption
+        text   <#>                     footnote
+        text  _[n]                     footnote description
+              _[-]                     horizontal divider insert
+        text  _[i]                     italicize line
+        <ref, label>                  internal link inline
+        latex _[x]                    LaTeX equation
+        <latex equ>                   inline equation (no commas)  
+        text  _[r]                     right justify line
+        sympy _[s]                    sympy equation
+           _[page]                    new page (PDF)
         title _[t]                    table title, autonumber
-        <http: address, label>        url reference, http:\\xyz
+        <url, label>                  url reference
 
 
-        Format Block:
+        Block Format:
         _[[c]]                        center text block
         _[[o]]                        code text block
         _[[e]]                        end of block
@@ -81,7 +84,7 @@ class TagsUTF:
         self.folderD = folderD
         self.incrD = incrD
         self.lineS = lineS
-        self.swidthII = incrD["widthI"] - 1
+        self.swidth1I = incrD["widthI"] - 1
         self.errlogP = folderD["errlogP"]
         self.valL = []                          # accumulate values
 
@@ -91,7 +94,7 @@ class TagsUTF:
                      "t]": "table", "x]": "latex", "lnk]": "link", "url]": "url",
                      "[o]]": "codeblk", "[c]]": "centerblk", "[x]]": "latexblk",
                      "[m]]": "mathblk", "[r]]": "rightblk",
-                     ":=": "assign", "=": "result"}
+                     ":=": "declare", "=": "assign"}
 
         modnameS = __name__.split(".")[1]
         logging.basicConfig(
@@ -111,7 +114,7 @@ class TagsUTF:
 
         return eval("self." + self.tagD[tagS] + "()")
 
-    def label(self, objI, text):
+    def label(self, objI, sectS, text):
         """format labels for equations, tables and figures
 
             :return labelS: formatted label
@@ -119,12 +122,9 @@ class TagsUTF:
         """
 
         objfillS = str(objI).zfill(2)
-        if type(text) == int:
-            sfillS = str(self.incrD["snumI"]).strip().zfill(2)
-            labelS = text + sfillS
-        else:
-            dnumSS = str(self.incrD["docnumS"])
-            labelS = text + dnumSS + "." + objfillS
+
+        labelS = "[" + str(self.incrD["secnumI"]).zfill(2) + \
+            "]" + text + objfillS
 
         return labelS
 
@@ -158,12 +158,12 @@ class TagsUTF:
         :rtype: str
         """
 
-        self.incrD["equalabelS"] = self.lineS
         enumI = int(self.incrD["equI"]) + 1
         self.incrD["equI"] = enumI
-        refS = self.label(enumI, " Equ: ") + " - " + str(self.incrD["secnumI"])
+        refS = self.label(enumI, str(self.incrD["secnumI"]), " Equ. ")
         spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
         lineS = self.lineS + " " * spcI + refS
+        self.incrD["eqlabelS"] = self.lineS + " [" + str(enumI).zfill(2) + "]"
 
         print(lineS)
         return lineS
@@ -177,7 +177,7 @@ class TagsUTF:
 
         fnumI = int(self.incrD["figI"]) + 1
         self.incrD["figI"] = fnumI
-        refS = self.label(fnumI, " Fig. ") + " - " + str(self.incrD["secnumI"])
+        refS = self.label(fnumI, str(self.incrD["secnumI"]), " Fig. ")
         spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
         lineS = self.lineS + " " * spcI + refS
 
@@ -279,13 +279,12 @@ class TagsUTF:
         :rtype: str
         """
 
-        self.incrD["equlabels"] = self.lineS
+        self.incrD["eqlabels"] = self.lineS
         tnumI = int(self.incrD["tableI"]) + 1
         self.incrD["tableI"] = tnumI
-        refS = self.label(tnumI, "Table: ") + " - " + \
-            str(self.incrD["secnumI"])
+        refS = self.label(tnumI, str(self.incrD["secnumI"]), " Table: ")
         spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
-        lineS = self.lineS + " " * spcI + refS
+        lineS = self.lineS + " " * spcI + refS + "\n"
 
         print(lineS)
         return lineS
@@ -332,27 +331,7 @@ class TagsUTF:
         pass
 
     def assign(self):
-        """assign values to variables
-
-        """
-        locals().update(self.localD)
-
-        varS = str(self.lineS).split(":=")[0].strip()
-        valS = str(self.lineS).split(":=")[1].strip()
-        unit1S = str(self.incrD["unitS"]).split(",")[0]
-        unit2S = str(self.incrD["unitS"]).split(",")[1]
-        descripS = str(self.incrD["descS"])
-
-        cmdS = varS + "= " + valS + "*" + unit1S
-        exec(cmdS, globals(), locals())
-
-        locals().update(self.localD)
-        self.localD.update(locals())
-
-        return [varS, valS, unit1S, unit2S, descripS]
-
-    def result(self):
-        """evaluate equations
+        """assign result to equation
 
         """
         locals().update(self.localD)
@@ -361,7 +340,7 @@ class TagsUTF:
         valS = str(self.lineS).split("=")[1].strip()
         unit1S = str(self.incrD["unitS"]).split(",")[0]
         unit2S = str(self.incrD["unitS"]).split(",")[1]
-        descS = str(self.incrD["equlabelS"])
+        descS = str(self.incrD["eqlabelS"])
         rprecS = str(self.incrD["descS"].split(",")[0])  # trim result
         eprecS = str(self.incrD["descS"].split(",")[1])  # trim equations
         exec("set_printoptions(precision=" + rprecS + ")")
@@ -376,10 +355,11 @@ class TagsUTF:
             valU = eval(varS).cast_unit(eval(unit1S))
             valdec = ("%." + str(rprecS) + "f") % valU.number()
             val1U = str(valdec) + " " + str(valU.unit())
+            valtS = str(valdec)
             val2U = valU.cast_unit(eval(unit2S))
         spS = "Eq(" + varS + ",(" + valS + "))"
         utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
-        utfS = utfS + "\n"
+        utfS = "\n" + utfS + "\n"
         # eqS = sp.sympify(valS)
         # eqatom = eqS.atoms(sp.Symbol)
         # write equation table
@@ -400,7 +380,27 @@ class TagsUTF:
         locals().update(self.localD)
         self.localD.update(locals())
 
-        return [[varS, str(val1U), unit1S, unit2S, descS], utfS]
+        return [[varS, valtS, unit1S, unit2S, descS], utfS]
+
+    def declare(self):
+        """declare value for variable
+
+        """
+        locals().update(self.localD)
+
+        varS = str(self.lineS).split(":=")[0].strip()
+        valS = str(self.lineS).split(":=")[1].strip()
+        unit1S = str(self.incrD["unitS"]).split(",")[0]
+        unit2S = str(self.incrD["unitS"]).split(",")[1]
+        descripS = str(self.incrD["descS"])
+
+        cmdS = varS + "= " + valS + "*" + unit1S
+        exec(cmdS, globals(), locals())
+
+        locals().update(self.localD)
+        self.localD.update(locals())
+
+        return [varS, valS, unit1S, unit2S, descripS]
 
     def vsub(self, eqL: list, eqS: str):
         """substitute numbers for variables in printed output

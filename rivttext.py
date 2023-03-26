@@ -88,8 +88,8 @@ incrD = {
     "subB": False,  # substitute values
     "unitS": "M,M",  # units
     "descS": "2,2",  # description or decimal places
-    "saveP": "Nosave",  # save values to file
-    "equlabelS": "equation",  # last used equation label
+    "saveP": "nosave",  # save values to file
+    "eqlabelS": "equation",  # last used equation label
     "codeB": False,  # print code strings in doc
     "pdf": (True, "pdf"),  # write reST
     "html": (True, "html"),  # write reST
@@ -166,9 +166,6 @@ def str_head(hdrS):
 
     hdrstS = """"""
     hdutfS = """"""
-
-    if hdrS[0:2] == "--":
-        return None, None
 
     snumI = incrD["secnumI"]+1
     incrD["secnumI"] = snumI
@@ -252,10 +249,10 @@ def eval_head(rS, methS):
 
     rs1S = rs1L[0].strip()
 
-    if rs1S[0:2] == "--":
-        return "", ""
+    if rs1S.strip()[0:2] == "--":
+        return "\n", "\n"                           # skip heading
     else:
-        hdutfS, hdrstS = str_head(rs1L[0].strip())   # get_heading
+        hdutfS, hdrstS = str_head(rs1L[0].strip())  # get_heading
         print(hdutfS)
         return hdutfS, hdrstS
 
@@ -352,7 +349,7 @@ def V(rS: str):
     hutfS, hrstS = eval_head(rL[0], "V")
     utfI = parse.RivtParse(folderD, incrD, outputS, "V", localD)
     xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(rL[1:])
-    #print(f"{xutfS=}", f"{rL[1:]=}")
+    # print(f"{xutfS=}", f"{rL[1:]=}")
     if hutfS != None:
         xutfS = hutfS + xutfS
         if outputD[outputS]:

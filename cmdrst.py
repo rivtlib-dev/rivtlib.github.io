@@ -50,18 +50,16 @@ class CmdRST:
             command syntax / snippet prefix and description        methods
         ======================================================== ============
 
-        || append | file_name | ./docfolder; default / resize;default   R
-        || github | repo_name; none | readme; noneparam                 R
-        || project | file_name | /docsfolder; default                   R
-
-        || list | file_name  | [:];[x:y]                                V
-        || functions | file_name | docs; nodocs                         V
-        || values | file_name | [:];[x:y]                               V
-
-        || image1 | file_name  | .50                                  I,V,T
-        || image2 | file_name  | .40 | file_name  | .40               I,V,T
-        || table | file_name |  [:] | 60 r;l;c                        I,V,T
-        || text | file_name | shade; noshade                          I,V,T
+        || append | folder | file_name                               R
+        || functions | folder | file_name | code; nocode             V
+        || github | folder | repo_name                               R
+        || image1 | folder | file_name  | size                       I,V,T
+        || image2 | folder | file_name  | size | file_name  | size   I,V,T
+        || list | folder | file_name                                 V
+        || project | folder | file_name | max width,align            R
+        || table | folder | file_name | max width, align | rows      I,V,T
+        || text | folder | file_name | text type |shade; noshade     I,V,T
+        || values | folder | file_name | [:];[x:y]                   V
 
         """
 
@@ -84,133 +82,6 @@ class CmdRST:
         """
 
         return eval("self." + cmdS + "()")
-
-    def r_rst(self, typeS: str, cmdL: list, methL: list, tagL: list):
-        """parse rivt-string to reST
-
-        Args:
-            typeS (str): rivt-string type
-            cmdL (list): command list
-            methL (list): method list
-            tagL (list): tag list
-        """
-        locals().update(self.rivtD)
-        uL = []  # command arguments
-        indxI = -1  # method index
-        _rgx = r"\[([^\]]+)]_"  # find tags
-
-        for uS in self.strL:
-            uS = uS[4:]  # remove indent
-            try:
-                if uS[0] == "#":
-                    continue  # remove comment
-            except:
-                self.restS += "\n"
-                continue
-            if uS.strip() == "[literal]_":
-                continue
-            if re.search(_rgx, uS):  # check for tag
-                utgS = self._tags(uS, tagL)
-                self.restS += utgS.rstrip() + "\n"
-                continue
-            if typeS == "values":  # chk for values
-                self.setcmdD["saveB"] = False
-                if "=" in uS and uS.strip()[-2] == "||":  # value to file
-                    uS = uS.replace("||", " ")
-                    self.setcmdD["saveB"] = True
-                if "=" in uS:  # assign value
-                    uL = uS.split("|")
-                    self._vassign(uL)
-                    continue
-            if typeS == "table":  # check for table
-                if uS[0:2] == "||":
-                    uL = uS[2:].split("|")
-                    indxI = cmdL.index(uL[0].strip())
-                    methL[indxI](uL)
-                    continue
-                else:
-                    exec(uS)  # exec table code
-                    continue
-            if uS[0:2] == "||":  # check for cmd
-                # print(f"{cmdL=}")
-                uL = uS[2:].split("|")
-                indxI = cmdL.index(uL[0].strip())
-                methL[indxI](uL)
-                continue  # call any cmd
-
-            self.rivtD.update(locals())
-            if typeS != "table":  # skip table prnt
-                self.restS += uS.rstrip() + "\n"
-
-    def i_rst(self) -> tuple:
-        """parse insert-string
-
-        Returns:
-            calcS (list): utf formatted calc-string (appended)
-            setsectD (dict): section settings
-            setcmdD (dict): command settings
-
-        convert rivt-strings to reST strings
-
-        Args:
-        :param exportS (str): stores values that are written to file
-        :param strL (list): calc rivt-strings
-        folderD (dict): folder paths
-        setcmdD (dict): command settings
-        setsectD (dict): section settings
-        rivtD (dict): global rivt dictionary
-
-        """
-
-        icmdL = ["text", "table", "image"]
-        imethL = [
-            self._itext,
-            self._itable,
-            self._iimage,
-        ]
-
-        self._parseRST("insert", icmdL, imethL, itagL)
-        return self.restS, self.setsectD, self.setcmdD
-
-    def v_rst(self) -> tuple:
-        """parse value-string and set method
-
-        Return:
-        calcS (list): utf formatted calc-string (appended)
-        setsectD (dict): section settings
-        setcmdD (dict): command settings
-        rivtD (list): calculation results
-        exportS (list): value strings for export
-        """
-
-        locals().update(self.rivtD)
-        vcmdL = ["config", "value", "data", "func", "text", "table", "image"]
-        vmethL = [
-            self._vconfig,
-            self._vvalue,
-            self._vdata,
-            self._vfunc,
-            self._itext,
-            self._itable,
-            self._iimage,
-        ]
-
-    def t_rst(self) -> tuple:
-        """parse table-strings
-
-        Return:
-            calcS (list): utf formatted calc-string (appended)
-            setsectD (dict): section settings
-            setcmdD (dict): command settings
-            rivtD (list): calculation values
-        """
-
-        tcmdL = ["text", "table", "image"]
-        tmethL = [self._itext, self._itable, self._iimage]
-
-        self._parseUTF("table", tcmdL, tmethL, ttagL)
-
-        return self.calcS, self.setsectD, self.setcmdD, self.rivtD
 
 
 def text_rst(self, iL: list):

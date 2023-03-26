@@ -343,7 +343,8 @@ class CmdUTF:
             j = ""
             for i in txtfileL:
                 if txttypeS == "literal":
-                    j += " "*4 + i
+                    j += i
+                    # j += " "*4 + i
                 elif txttypeS == "sympy":
                     try:
                         spL = i.split("=")

@@ -122,11 +122,12 @@ class RivtParse:
         ttypeS = "rst"
         hdrvL = ["variable", "value", "[value]", "description"]
         alignvL = ["left", "right", "right", "left"]
-        hdreL = ["variable", "value", "[value]"]
-        aligneL = ["left", "right", "right"]
-        blockassignL = []
-        blockassignB = False
-        vtableL = []
+        hdreL = ["variable", "value", "[value]", "description [eq. number]"]
+        aligneL = ["left", "right", "right", "left"]
+        blockevalL = []     # current value table
+        blockevalB = False  # stop accumulation of values
+        vtableL = []        # value table export
+        eqL = []            # equation result table
         for uS in strL:
             # print(f"{blockassignB=}")
             # print(f"{uS=}")
@@ -139,14 +140,19 @@ class RivtParse:
                 rvtS = tagutf.TagsUTF(lineS, tagS, strL)
                 utfS += rvtS + "\n"
                 blockB = False
-            if blockassignB and len(uS.strip()) < 2:   # pause assign block
-                vtableL += blockassignL
-                utfS += self.vtable(blockassignL, hdrvL,
-                                    ttypeS, alignvL) + "\n\n"
-                blockassignL = []
-                blockassignB = False
+            if blockevalB and len(uS.strip()) < 2:   # write value table
+                vtableL += blockevalL
+                if tfS == "declare":
+                    utfS += self.vtable(blockevalL, hdrvL,
+                                        ttypeS, alignvL) + "\n\n"
+                if tfS == "assign":
+                    resultS = self.etable(blockevalL, hdreL,
+                                          ttypeS, aligneL) + "\n\n"
+                    utfS += resultS
+                blockevalL = []
+                blockevalB = False
                 continue
-            if uS[0:2] == "||":                        # process commands
+            if uS[0:2] == "||":              # process commands
                 usL = uS[2:].split("|")
                 parL = usL[1:]
                 cmdS = usL[0].strip()
@@ -160,7 +166,7 @@ class RivtParse:
                     #     rvtS = rvtM.cmd_parse(cmdS)
                     #     rstS += rvtS + "\n"
                 continue
-            if "_[" in uS:                        # process tags
+            if "_[" in uS:                  # process end line tags
                 usL = uS.split("_[")
                 lineS = usL[0]
                 tagS = usL[1].strip()
@@ -176,19 +182,19 @@ class RivtParse:
                     #     rvtS = rvtM.tag_parse(tagS)
                     #     rstS += rvtS + "\n"
                 continue
-            if "=" in uS:                   # process assign and result tags
+            if "=" in uS:                   # process assign and declare tags
                 # print(f"{uS=}")
                 if "=" in self.tagL:
                     usL = uS.split("|")
                     lineS = usL[0]
                     self.incrD["unitS"] = usL[1].strip()
                     self.incrD["descS"] = usL[2].strip()
+                    rvtM = tagutf.TagsUTF(
+                        lineS, self.folderD, self.incrD, self.localD)
                     if ":=" in uS:
-                        rvtM = tagutf.TagsUTF(lineS, self.folderD,
-                                              self.incrD, self.localD)
-                        blockassignL.append(rvtM.tag_parse(":="))
-                        blockassignB = True
-                        # write table in main parse block
+                        tfS = "declare"
+                        blockevalL.append(rvtM.tag_parse(":="))
+                        blockevalB = True
                         # if self.outputS in self.outputL:
                         #     rvtM = tagrst.TagsRST(
                         #         lineS, self.folderD, self.incrD)
@@ -196,12 +202,12 @@ class RivtParse:
                         #     rstS += rvtS + "\n"
                         continue
                     else:
-                        rvtM = tagutf.TagsUTF(lineS, self.folderD,
-                                              self.incrD, self.localD)
+                        tfS = "assign"
                         eqL = rvtM.tag_parse("=")
-                        vtableL.append(eqL[0])
-                        utfS += self.etable(eqL[0], hdreL,
-                                            ttypeS, aligneL, eqL[1]) + "\n\n"
+                        blockevalL.append(eqL[0])
+                        blockevalB = True
+                        utfS += eqL[1]
+                        print(eqL[1])
                         # if self.outputS in self.outputL:
                         #     rvtM = tagrst.TagsRST(
                         #         lineS, self.folderD, self.incrD)
@@ -212,7 +218,7 @@ class RivtParse:
                 print(uS)
                 utfS += uS + "\n"
 
-        if self.incrD["saveP"] != None:
+        if self.incrD["saveP"] != None:                 # save values
             valP = Path(self.folderD["dataP"] / self.incrD["saveP"])
             with open(valP, "w", newline="") as f:
                 writecsv = csv.writer(f)
@@ -220,6 +226,49 @@ class RivtParse:
                 writecsv.writerows(vtableL)
 
         return utfS, rstS, self.folderD, self.incrD, self.localD
+
+    def etable(self, tblL, hdreL, tblfmt, aligneL):
+        """write equation table"""
+
+        locals().update(self.localD)
+
+        valL = []
+        for vaL in tblL:
+            varS = vaL[0].strip()
+            valS = vaL[1].strip()
+            unit1S, unit2S = vaL[2], vaL[3]
+            descripS = vaL[4].strip()
+            val1U = val2U = array(eval(valS))
+            if unit1S != "-":
+                if type(eval(valS)) == list:
+                    val1U = array(eval(valS)) * eval(unit1S)
+                    val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+                else:
+                    cmdS = varS + "= " + valS + "*" + unit1S
+                    exec(cmdS, globals(), locals())
+                    valU = eval(varS)
+                    val1U = str(valU.number()) + " " + str(valU.unit())
+                    val2U = valU.cast_unit(eval(unit2S))
+            valL.append([varS, val1U, val2U, descripS])
+
+        sys.stdout.flush()
+        old_stdout = sys.stdout
+        output = StringIO()
+        output.write(
+            tabulate(
+                valL, tablefmt=tblfmt, headers=hdreL,
+                showindex=False, colalign=aligneL
+            )
+        )
+        utfS = output.getvalue()
+        sys.stdout = old_stdout
+        sys.stdout.flush()
+
+        locals().update(self.localD)
+        self.localD.update(locals())
+
+        print(utfS+"\n")
+        return utfS
 
     def vtable(self, tblL, hdrvL, tblfmt, alignvL):
         """write value table"""
@@ -262,49 +311,4 @@ class RivtParse:
         self.localD.update(locals())
 
         print(utfS+"\n")
-        return utfS
-
-    def etable(self, tblL, hdreL, tblfmt, aligneL, eqS):
-        """write equation table"""
-
-        locals().update(self.localD)
-
-        valL = []
-        vaL = tblL
-        varS = vaL[0].strip()
-        valS = vaL[1].strip()
-        valS = valS.split(" ")[0]
-        unit1S, unit2S = vaL[2], vaL[3]
-        # descripS = vaL[4].strip()
-        val1U = val2U = array(eval(valS))
-        if unit1S != "-":
-            if type(eval(valS)) == list:
-                val1U = array(eval(valS)) * eval(unit1S)
-                val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
-            else:
-                cmdS = varS + "= " + valS + "*" + unit1S
-                exec(cmdS, globals(), locals())
-                valU = eval(varS)
-                val1U = str(valU.number()) + " " + str(valU.unit())
-                val2U = valU.cast_unit(eval(unit2S))
-        valL.append([varS, val1U, val2U])
-
-        sys.stdout.flush()
-        old_stdout = sys.stdout
-        output = StringIO()
-        output.write(
-            tabulate(
-                valL, tablefmt=tblfmt, headers=hdreL,
-                showindex=False, colalign=aligneL
-            )
-        )
-        utfS = output.getvalue()
-        sys.stdout = old_stdout
-        sys.stdout.flush()
-
-        locals().update(self.localD)
-        self.localD.update(locals())
-
-        utfS = "\n" + eqS + "\n" + utfS + "\n"
-        print(utfS)
         return utfS

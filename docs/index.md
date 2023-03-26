@@ -11,20 +11,20 @@ layout: default
 <thead>
 <tr class="header">
   <th style="text-align: center;border:none"><a href="https://rivtdocs.net"><b>rivtDocs (installer)</b></a></th>
-  <th style="text-align: center;border:none;background-color:#959396"><a href="https://rivtcode.net"><b>rivt (code)</b></a></th>
+  <th style="text-align: center;border:none"><a href="https://rivtcode.net"><b>rivt (code)</b></a></th>
   <th style="text-align: center;border:none"><a href="https://rivtdocs.net/search"><b>rivtSearch (GitHub)</b></a></th>
 </tr>
 </thead>
 <tbody>
 <tr>
   <td style="text-align:center;border:none"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="95" height="70" /></a></td>
-  <td style="text-align: center;border:none"><a href="https://rivtcode.net"><img src="./assets/img/rivt03.png" width="100" height="75"/></a></td>
+  <td style="text-align: center;border:none;background-color:#a6a6a6"><a href="https://rivtcode.net"><img src="./assets/img/rivt03.png" width="100" height="75"/></a></td>
   <td style="text-align: center;border:none"><a href="https://rivtdocs.net/search"><img src="./assets/img/search03.png" width="105" height="80" /></a></td>
 </tr>
 </tbody>
 </table>
 
-### Universally Shared Calculation Documents [<b>[rivt source code on GitHub]</b>](https://github.com/rivtDocs/rivt)
+### Simplified Writing and Sharing for Engineering Documents  [<b>[rivt source code on GitHub]</b>](https://github.com/rivtDocs/rivt)
 
 ## **rivt** Overview
 

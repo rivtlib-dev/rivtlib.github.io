@@ -24,7 +24,7 @@ layout: default
 </tbody>
 </table>
 
-### Universally Shared Calculation Documents [<b>[rivt source code on GitHub]</b>](https://github.com/rivtDocs/rivt)
+### Simplified Engineering Document Writing and Sharing [<b>[rivt source code on GitHub]</b>](https://github.com/rivtDocs/rivt)
 
 ## **rivt** Overview
 

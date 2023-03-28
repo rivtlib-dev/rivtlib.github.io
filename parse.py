@@ -53,7 +53,7 @@ class RivtParse:
 
         # valid commands and tags
         if methS == "R":
-            self.cmdL = ["project", "github", "append", "text"]
+            self.cmdL = ["project", "github", "append", "page"]
             self.tagL = ["[literal]]"]
             self.blockL = ["[readme]]"]
         elif methS == "I":

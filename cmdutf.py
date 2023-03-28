@@ -26,6 +26,7 @@ from tabulate import tabulate
 from pathlib import Path
 from IPython.display import display as _display
 from IPython.display import Image as _Image
+from datetime import datetime
 try:
     from PIL import Image as PImage
     from PIL import ImageOps as PImageOps
@@ -147,8 +148,9 @@ class CmdUTF:
     def list(self):
         """import data from files
 
-        Args:
-            vL (list): data command arguments
+
+            :return lineS: utf table
+            :rtype: str
         """
 
         locals().update(self.rivtD)
@@ -173,6 +175,57 @@ class CmdUTF:
         alignL = ["left", "right"]
         self._vtable(valL, hdrL, "rst", alignL)
         self.rivtD.update(locals())
+
+    def page(self):
+        """format  project header or footer
+
+            :return lineS: header or footer
+            :rtype: str
+        """
+        plenI = 4
+        if len(self.paramL) != plenI:
+            logging.info(
+                f"{self.cmdS} command not evaluated:  \
+                                    {plenI} parameters required")
+            return
+        if self.paramL[0] == "head":
+            locationS = "top"
+
+        if self.paramL[1] == "date":
+            line1S = datetime.today().strftime('%Y-%m-%d')
+
+        elif self.paramL[1] == "datetime":
+            line1S = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+        elif self.paramL[1] == "page":
+            line1S = "page  "
+        else:
+            line1S = self.paramL[1]
+
+        if self.paramL[2] == "date":
+            line2S = datetime.today().strftime('%Y-%m-%d')
+        elif self.paramL[2] == "datetime":
+            line2S = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+        elif self.paramL[2] == "page":
+            line2S = "page  "
+        else:
+            line2S = self.paramL[2]
+
+        if self.paramL[3] == "date":
+            line3S = datetime.today().strftime('%Y-%m-%d')
+        elif self.paramL[3] == "datetime":
+            line3S = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+        elif self.paramL[3] == "page":
+            line3S = "page  "
+        else:
+            line3S = self.paramL[3]
+
+        wI = int(self.incrD["widthI"])
+        l1I = len(line1S)
+        l2I = len(line2S)
+        l3I = len(line3S)
+        spS = int((wI - l1I - l3I - l2I)/2) * " "
+        lineT = (line1S, line2S, line3S)
+        return lineT
 
     def project(self):
         """insert project information from csv, xlsx or txt file
@@ -239,6 +292,7 @@ class CmdUTF:
         sys.stdout = old_stdout
 
         logging.info(f"{self.cmdS} evaluated")
+        print(tableS)
         return tableS
 
     def table(self):
@@ -308,6 +362,7 @@ class CmdUTF:
         tableS = output.getvalue()
         sys.stdout = old_stdout
 
+        print(tableS)
         return tableS
 
     def text(self):

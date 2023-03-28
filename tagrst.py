@@ -48,22 +48,20 @@ class TagsRST():
         Line Format:
         text  _[b]                     bold line
         text  _[c]                     center line
-            <date>                     date inline
-        <datetime>                     date and time inline
         text  _[e]                     equation label
         text  _[f]                     figure caption
         text   <#>                     footnote
         text  _[n]                     footnote description
               _[-]                     horizontal divider insert
         text  _[i]                     italicize line
-        <ref, label>                  internal link inline
-        latex _[x]                    LaTeX equation
-        <latex equ>                   inline equation (no commas)  
+        <ref, label>                   internal link inline
+        latex _[x]                     LaTeX equation
+        <latex equ>                    inline equation (no commas)  
         text  _[r]                     right justify line
-        sympy _[s]                    sympy equation
-           _[page]                    new page (PDF)
-        title _[t]                    table title, autonumber
-        <url, label>                  url reference
+        sympy _[s]                     sympy equation
+           _[page]                     new page (PDF)
+        title _[t]                     table title, autonumber
+        <url, label>                   url reference
 
 
         Block Format:

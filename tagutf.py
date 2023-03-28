@@ -24,7 +24,6 @@ from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
 from tabulate import tabulate
 from pathlib import Path
-from datetime import datetime
 try:
     from PIL import Image as PImage
     from PIL import ImageOps as PImageOps
@@ -51,7 +50,6 @@ class TagsUTF:
         Line Format:
         text  _[b]                     bold line
         text  _[c]                     center line
-            <date>                     date inline
         <datetime>                     date and time inline
         text  _[e]                     equation label
         text  _[f]                     figure caption
@@ -88,9 +86,9 @@ class TagsUTF:
         self.errlogP = folderD["errlogP"]
         self.valL = []                          # accumulate values
 
-        self.tagD = {"c]": "center",  "#]": "footnumber", "foot]": "footnote",
-                     "-]": "line", "r]": "right",  "date]": "date",
-                     "page]": "page", "e]": "equation", "f]": "figure", "sym]": "sympy",
+        self.tagD = {"c]": "center", "e]": "equation", "f]": "figure",
+                     "#]": "footnumber", "foot]": "footnote", "-]": "line",
+                     "page]": "page", "r]": "right", "sym]": "sympy",
                      "t]": "table", "x]": "latex", "lnk]": "link", "url]": "url",
                      "[o]]": "codeblk", "[c]]": "centerblk", "[x]]": "latexblk",
                      "[m]]": "mathblk", "[r]]": "rightblk",
@@ -138,17 +136,6 @@ class TagsUTF:
         lineS = self.lineS.center(int(self.incrD["widthI"]))
 
         print(lineS)
-        return lineS
-
-    def date(self):
-        """insert date
-
-        :return lineS: date string
-        :rtype: str
-        """
-
-        lineS = datetime.today().strftime('%Y-%m-%d')
-
         return lineS
 
     def equation(self):
@@ -205,13 +192,13 @@ class TagsUTF:
 
         return lineS
 
-    def line(lineS, folderD, incrD):
+    def line(lineS):
         """_summary_
 
         :param lineS: _description_
         :type lineS: _type_
         """
-        lineS = int(folderD["widthI"]) * "_"
+        lineS = int(self.incrD["widthI"]) * "_"
 
         print(lineS)
         return lineS
@@ -287,17 +274,6 @@ class TagsUTF:
         lineS = self.lineS + " " * spcI + refS + "\n"
 
         print(lineS)
-        return lineS
-
-    def time(self):
-        """insert date and time
-
-        :return lineS: centered line
-        :rtype: str
-        """
-
-        lineS = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-
         return lineS
 
     def url(self):

@@ -46,6 +46,7 @@ siteP = projP / "site"  # site folder path
 reportP = projP / "report"  # report folder path
 rivtcalcP = Path("rivt.rivttext.py").parent  # rivt package path
 prfxS = docbaseS[1:3]
+configP = Path(docP.parent.parent / "rv0000")
 for fileS in os.listdir(projP / "resource"):
     if fnmatch.fnmatch(fileS[2:5], prfxS + "-*"):
         refileP = Path(fileS)  # resource folder path
@@ -71,7 +72,7 @@ outputL = ["utf", "pdf", "html", "both", "report", "site"]
 
 folderD = {}
 for item in ["docP", "dataP", "resourceP", "rerootP", "resourceP",
-             "reportP", "siteP", "projP", "errlogP"]:
+             "reportP", "siteP", "projP", "errlogP", "configP"]:
     folderD[item] = eval(item)
 
 incrD = {
@@ -218,8 +219,7 @@ def eval_head(rS, methS):
         else:
             outputS = "utf"
 
-        incrD["widthI"] = int(rs1L[2].split(",")[0])     # utf print width
-        incrD["pageI"] = rs1L[2].split(",")[1]           # starting page
+        incrD["widthI"] = int(rs1L[2])     # utf print width
 
     elif methS == "I":
         pass

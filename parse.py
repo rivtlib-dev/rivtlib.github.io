@@ -162,14 +162,16 @@ class RivtParse:
                     rvtS = rvtM.cmd_parse(cmdS)
                     if cmdS == "page":              # header or footer
                         rvt1S = rvtS[0] + rvtS[4] + rvtS[1] + rvtS[4] + rvtS[2]
-                        self.incrD["headerS"] = rvt1S
+                        self.incrD["headerS"] = rvt1S + "\n"
                         if "page" in rvtS:
                             rvt1S = self.apage(rvt1S)
-                        utfS += rvt1S + "\n"
                     # if self.outputS in self.outputL:
                     #     rvtM = cmdrst.CmdRST(parL, self.incrD, self.folderD)
                     #     rvtS = rvtM.cmd_parse(cmdS)
                     #     rstS += rvtS + "\n"
+                        utfS = utfS + rvt1S
+                        continue
+                utfS += rvtS
                 continue
             if "_[" in uS:                  # process end line tags
                 usL = uS.split("_[")
@@ -243,10 +245,8 @@ class RivtParse:
         pagenoS = str(self.incrD["pageI"])
         rvt2S = w1 + rvt1S.replace("page", "page " + pagenoS) + w1
         self.incrD["pageI"] = int(pagenoS)+1
-        utfS = rvt2S + utfS
 
-        print(rvt2S + "\n")
-        return utfS + "\n"
+        return rvt2S
 
     def etable(self, tblL, hdreL, tblfmt, aligneL):
         """write equation table"""

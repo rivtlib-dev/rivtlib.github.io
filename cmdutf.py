@@ -182,51 +182,58 @@ class CmdUTF:
             :return lineS: header or footer
             :rtype: str
         """
-        plenI = 4
+
+        plenI = 3
+
+        if self.paramL[2] == "head":
+            locationS = "top"
+        else:
+            locationS = "bottom"
+
         if len(self.paramL) != plenI:
             logging.info(
                 f"{self.cmdS} command not evaluated:  \
                                     {plenI} parameters required")
             return
-        if self.paramL[0] == "head":
-            locationS = "top"
-        else:
-            locationS = "bottom"
 
-        if self.paramL[1] == "date":
+        fileP = Path(self.folderD["configP"], self.paramL[1].strip())
+        with open(fileP, "r") as f2:
+            pageL = f2.readlines()
+
+        if pageL[0].strip() == "date":
             line1S = datetime.today().strftime('%Y-%m-%d')
 
-        elif self.paramL[1] == "datetime":
+        elif pageL[0].strip() == "datetime":
             line1S = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-        elif self.paramL[1] == "page":
+        elif pageL[0].strip() == "page":
             line1S = "page"
         else:
-            line1S = self.paramL[1]
+            line1S = pageL[0].strip()
 
-        if self.paramL[2] == "date":
+        if pageL[1].strip() == "date":
             line2S = datetime.today().strftime('%Y-%m-%d')
-        elif self.paramL[2] == "datetime":
+        elif pageL[1].strip() == "datetime":
             line2S = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-        elif self.paramL[2] == "page":
+        elif pageL[1].strip() == "page":
             line2S = "page"
         else:
-            line2S = self.paramL[2]
+            line2S = pageL[1].strip()
 
-        if self.paramL[3] == "date":
+        if pageL[2].strip() == "date":
             line3S = datetime.today().strftime('%Y-%m-%d')
-        elif self.paramL[3] == "datetime":
+        elif pageL[2].strip() == "datetime":
             line3S = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-        elif self.paramL[3] == "page":
+        elif pageL[2].strip() == "page":
             line3S = "page"
         else:
-            line3S = self.paramL[3]
+            line3S = pageL[2].strip()
 
         wI = int(self.incrD["widthI"])
         sepS = wI * "-" "\n"
         l1I = len(line1S)
         l2I = len(line2S)
         l3I = len(line3S)
-        spS = int((wI - l1I - l3I - l2I)/2) * " "
+        spS = (int((wI - l1I - l3I - l2I)/2) - 1) * " "
         lineT = (line1S, line2S, line3S, locationS, spS, sepS)
         return lineT
 

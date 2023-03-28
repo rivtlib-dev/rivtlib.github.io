@@ -152,7 +152,7 @@ class RivtParse:
                 blockevalL = []
                 blockevalB = False
                 continue
-            if uS[0:2] == "||":              # process commands
+            if uS[0:2] == "||":                       # process commands
                 usL = uS[2:].split("|")
                 parL = usL[1:]
                 cmdS = usL[0].strip()
@@ -160,7 +160,12 @@ class RivtParse:
                     rvtM = cmdutf.CmdUTF(parL, self.incrD, self.folderD,
                                          self.localD)
                     rvtS = rvtM.cmd_parse(cmdS)
-                    utfS += rvtS + "\n"
+                    if cmdS == "page":              # header or footer
+                        rvt1S = rvtS[0] + rvtS[4] + rvtS[1] + rvtS[4] + rvtS[2]
+                        self.incrD["headerS"] = rvt1S
+                        if "page" in rvtS:
+                            rvt1S = self.apage(rvt1S)
+                        utfS += rvt1S + "\n"
                     # if self.outputS in self.outputL:
                     #     rvtM = cmdrst.CmdRST(parL, self.incrD, self.folderD)
                     #     rvtS = rvtM.cmd_parse(cmdS)
@@ -226,6 +231,22 @@ class RivtParse:
                 writecsv.writerows(vtableL)
 
         return utfS, rstS, self.folderD, self.incrD, self.localD
+
+    def apage(self, rvt1S):
+        """
+
+        :param paramT: _description_
+        :type paramT: _type_
+        """
+
+        w1 = self.incrD["widthI"]*"-" + "\n"
+        pagenoS = str(self.incrD["pageI"])
+        rvt2S = w1 + rvt1S.replace("page", "page " + pagenoS) + w1
+        self.incrD["pageI"] = int(pagenoS)+1
+        utfS = rvt2S + utfS
+
+        print(rvt2S + "\n")
+        return utfS + "\n"
 
     def etable(self, tblL, hdreL, tblfmt, aligneL):
         """write equation table"""

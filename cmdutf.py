@@ -190,6 +190,8 @@ class CmdUTF:
             return
         if self.paramL[0] == "head":
             locationS = "top"
+        else:
+            locationS = "bottom"
 
         if self.paramL[1] == "date":
             line1S = datetime.today().strftime('%Y-%m-%d')
@@ -197,7 +199,7 @@ class CmdUTF:
         elif self.paramL[1] == "datetime":
             line1S = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
         elif self.paramL[1] == "page":
-            line1S = "page  "
+            line1S = "page"
         else:
             line1S = self.paramL[1]
 
@@ -206,7 +208,7 @@ class CmdUTF:
         elif self.paramL[2] == "datetime":
             line2S = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
         elif self.paramL[2] == "page":
-            line2S = "page  "
+            line2S = "page"
         else:
             line2S = self.paramL[2]
 
@@ -215,16 +217,17 @@ class CmdUTF:
         elif self.paramL[3] == "datetime":
             line3S = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
         elif self.paramL[3] == "page":
-            line3S = "page  "
+            line3S = "page"
         else:
             line3S = self.paramL[3]
 
         wI = int(self.incrD["widthI"])
+        sepS = wI * "-" "\n"
         l1I = len(line1S)
         l2I = len(line2S)
         l3I = len(line3S)
         spS = int((wI - l1I - l3I - l2I)/2) * " "
-        lineT = (line1S, line2S, line3S)
+        lineT = (line1S, line2S, line3S, locationS, spS, sepS)
         return lineT
 
     def project(self):

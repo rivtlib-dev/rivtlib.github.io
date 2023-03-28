@@ -96,7 +96,8 @@ incrD = {
     "both": (True, "both"),  # write reST
     "utf": (False, "utf"),
     "inter": (False, "inter"),
-    "pageI": 1  # starting page number
+    "pageI": 1,  # starting page number
+    "headerS": "-------------------"
 }
 
 outputD = {"pdf": True, "html": True, "both": True, "site": True,

@@ -220,11 +220,31 @@ class TagsUTF:
         pass
 
     def page(self):
-        """insert page break line
+        """insert page header 
 
-        :return lineS: page break line
+        :return lineS: page header
         :rtype: str
         """
+
+        w1 = self.incrD["widthI"]*"-" + "\n"
+        pagenoS = str(self.incrD["pageI"])
+        rvtS = w1 + \
+            self.incrD["header"].replace("page", "page " + pagenoS) + w1
+        self.incrD["pageI"] = int(pagenoS)+1
+        utfS = rvtS + utfS
+
+        print(rvtS + "\n")
+        return utfS + "\n"
+
+        rvtS = rvtM.cmd_parse(cmdS)
+        if cmdS == "page":              # header or footer
+            rvt1S = rvtS[0] + rvtS[4] + rvtS[1] + rvtS[4] + rvtS[2]
+            if "page" in rvtS:
+                pagenoS = str(self.incrD["pageI"])
+                rvt2S = rvtS.replace("page", "page " + pagenoS)
+                rvt1S = rvt2S[0] + rvt2S[4] + rvt2S[1] +  \
+                    rvt2S[4] + rvt2S[2]
+                self.incrD["pageI"] = str(int(pagenoS)+1)
 
         lineS = int((self.incrD["widthI"])/3) * " - "
 
@@ -239,6 +259,7 @@ class TagsUTF:
 
         lineS = lineS.rjust(int(self.incrD["widthI"]))
 
+        print(lineS)
         return lineS
 
     def sympy(self):

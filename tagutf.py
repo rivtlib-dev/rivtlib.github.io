@@ -226,14 +226,12 @@ class TagsUTF:
         :rtype: str
         """
 
-        w1 = self.incrD["widthI"]*"-" + "\n"
         pagenoS = str(self.incrD["pageI"])
-        rvtS = w1 + \
-            self.incrD["headerS"].replace("page", "page " + pagenoS) + w1
+        rvtS = self.incrD["headS"].replace("page", "page " + pagenoS)
         self.incrD["pageI"] = int(pagenoS)+1
 
-        print(rvtS + "\n")
-        return rvtS + "\n"
+        print("\n" + rvtS + "\n")
+        return "\n" + rvtS + "\n"
 
     def right(self):
         """right justify text

@@ -35,7 +35,7 @@ from rivt import tagrst
 class RivtParse:
     """process rivt-string"""
 
-    def __init__(self, folderD, incrD,  outputS, methS, localD):
+    def __init__(self, folderD, incrD, methS, localD):
         """process rivt-string to UTF8 calc
 
             :param dict folderD: folder paths
@@ -47,13 +47,12 @@ class RivtParse:
         self.localD = localD
         self.folderD = folderD  # folder paths
         self.incrD = incrD      # incrementing formats
-        self.outputS = outputS  # output type
-        self.outputL = ["pdf", "html", "both"]  # reST formats
         self.errlogP = folderD["errlogP"]
+        self.methS = methS
 
         # valid commands and tags
         if methS == "R":
-            self.cmdL = ["project", "github", "append", "page"]
+            self.cmdL = ["project", "github", "append", "pages"]
             self.tagL = ["[literal]]"]
             self.blockL = ["[readme]]"]
         elif methS == "I":
@@ -117,6 +116,7 @@ class RivtParse:
 
         utfS = """"""
         rstS = """"""
+        rvtuS = rvtrS = ""
         uS = """"""
         blockB = False
         ttypeS = "rst"
@@ -140,7 +140,7 @@ class RivtParse:
                 rvtS = tagutf.TagsUTF(lineS, tagS, strL)
                 utfS += rvtS + "\n"
                 blockB = False
-            if blockevalB and len(uS.strip()) < 2:   # write value table
+            if blockevalB and len(uS.strip()) < 2:     # write value table
                 vtableL += blockevalL
                 if tfS == "declare":
                     utfS += self.vtable(blockevalL, hdrvL,
@@ -152,7 +152,7 @@ class RivtParse:
                 blockevalL = []
                 blockevalB = False
                 continue
-            if uS[0:2] == "||":                       # process commands
+            if uS[0:2] == "||":                         # process commands
                 usL = uS[2:].split("|")
                 parL = usL[1:]
                 cmdS = usL[0].strip()
@@ -160,17 +160,18 @@ class RivtParse:
                     rvtM = cmdutf.CmdUTF(parL, self.incrD, self.folderD,
                                          self.localD)
                     rvtS = rvtM.cmd_parse(cmdS)
-                    if cmdS == "page":              # header or footer
-                        rvt1S = rvtS[0] + rvtS[4] + rvtS[1] + rvtS[4] + rvtS[2]
-                        self.incrD["headerS"] = rvt1S
+                    if cmdS == "pages":                 # utf header, footer
+                        rvtuS = rvtS = self.incrD["headS"]
+                        pagenoS = str(self.incrD["pageI"])
+                        self.incrD["pageI"] = int(pagenoS)+1
                         if "page" in rvtS:
-                            rvt1S = self.apage(rvt1S)
+                            rvtuS = rvtS.replace(
+                                "page", "page " + pagenoS)
+                        continue
                     # if self.outputS in self.outputL:
                     #     rvtM = cmdrst.CmdRST(parL, self.incrD, self.folderD)
                     #     rvtS = rvtM.cmd_parse(cmdS)
                     #     rstS += rvtS + "\n"
-                        utfS = utfS + rvt1S
-                        continue
                 utfS += rvtS
                 continue
             if "_[" in uS:                  # process end line tags
@@ -222,7 +223,8 @@ class RivtParse:
                         #     rstS += rvtS + "\n"
                     continue
             else:
-                print(uS)
+                if self.methS != "R":
+                    print(uS)
                 utfS += uS + "\n"
 
         if self.incrD["saveP"] != None:                 # save values
@@ -232,21 +234,7 @@ class RivtParse:
                 writecsv.writerow(hdrvL)
                 writecsv.writerows(vtableL)
 
-        return utfS, rstS, self.folderD, self.incrD, self.localD
-
-    def apage(self, rvt1S):
-        """
-
-        :param paramT: _description_
-        :type paramT: _type_
-        """
-
-        w1 = self.incrD["widthI"]*"_" + "\n"
-        pagenoS = str(self.incrD["pageI"])
-        rvt2S = w1 + rvt1S.replace("page", "page " + pagenoS) + w1
-        self.incrD["pageI"] = int(pagenoS)+1
-
-        return rvt2S
+        return (utfS, rvtuS), (rstS, rvtrS), self.folderD, self.incrD, self.localD
 
     def etable(self, tblL, hdreL, tblfmt, aligneL):
         """write equation table"""

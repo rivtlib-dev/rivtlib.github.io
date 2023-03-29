@@ -86,70 +86,6 @@ class CmdUTF:
     def func(self):
         pass
 
-    def pages(self):
-        """write head or foot format line to dictionary
-
-            :return lineS: header or footer
-            :rtype: str
-        """
-
-        plenI = 3
-
-        if len(self.paramL) != plenI:
-            logging.info(
-                f"{self.cmdS} command not evaluated:  \
-                                    {plenI} parameters required")
-            return
-
-        fileP = Path(self.folderD["configP"], self.paramL[1].strip())
-        with open(fileP, "r") as f2:
-            pageL = f2.readlines()
-
-        if pageL[0].strip() == "date":
-            line1S = datetime.today().strftime('%Y-%m-%d')
-
-        elif pageL[0].strip() == "datetime":
-            line1S = datetime.today().strftime('%Y-%m-%d %H:%M')
-        elif pageL[0].strip() == "page":
-            line1S = "page"
-        else:
-            line1S = pageL[0].strip()
-
-        if pageL[1].strip() == "date":
-            line2S = datetime.today().strftime('%Y-%m-%d')
-        elif pageL[1].strip() == "datetime":
-            line2S = datetime.today().strftime('%Y-%m-%d %H:%M')
-        elif pageL[1].strip() == "page":
-            line2S = "page"
-        else:
-            line2S = pageL[1].strip()
-
-        if pageL[2].strip() == "date":
-            line3S = datetime.today().strftime('%Y-%m-%d')
-        elif pageL[2].strip() == "datetime":
-            line3S = datetime.today().strftime('%Y-%m-%d %H:%M')
-        elif pageL[2].strip() == "page":
-            line3S = "page"
-        else:
-            line3S = pageL[2].strip()
-
-        wI = int(self.incrD["widthI"])
-        sepS = wI * "-" "\n"
-        l1I = len(line1S)
-        l2I = len(line2S)
-        l3I = len(line3S)
-        spS = (int((wI - l1I - l3I - l2I)/2) - 1) * " "
-
-        if self.paramL[2].strip() == "head":
-            locationS = "top"
-        elif self.paramL[2].strip() == "foot":
-            locationS = "top"
-        else:
-            locationS = "top"
-
-        lineT = (line1S, line2S, line3S, locationS, spS, sepS)
-        return lineT
-
     def image(self):
         """insert image from file
 
@@ -178,20 +114,25 @@ class CmdUTF:
         """
 
         utfS = ""
-        plenI = 4
+        plenI = 5
         if len(self.paramL) != plenI:
             logging.info(
                 f"{self.cmdS} command not evaluated: {plenI} parameters required")
             return
         iL = self.paramL
-        scale1F = float(iL[1])
-        scale2F = float(iL[3])
+        scale1F = float(iL[2])
+        scale2F = float(iL[4])
         self.incrD.update({"scale1F": scale1F})
         self.incrD.update({"scale2F": scale2F})
-        file1S = iL[0].strip()
-        file2S = iL[2].strip()
-        img1S = str(Path(self.folderD["resourceP"] / file1S))
-        img2S = str(Path(self.folderD["resourceP"] / file2S))
+        file1S = iL[1].strip()
+        file2S = iL[3].strip()
+        if iL[0].strip() == "resource":
+            img1S = str(Path(self.folderD["resourceP"] / file1S))
+            img2S = str(Path(self.folderD["resourceP"] / file2S))
+        else:
+            img1S = str(Path(self.folderD["resourceP"] / file1S))
+            img2S = str(Path(self.folderD["resourceP"] / file2S))
+
         pshrt1S = str(Path(*Path(img1S).parts[-3:]))
         pshrt2S = str(Path(*Path(img2S).parts[-3:]))
         temp_out = StringIO()
@@ -204,6 +145,7 @@ class CmdUTF:
                 pass
 
         sys.stdout = sys.__stdout__
+
         return utfS
 
     def list(self):
@@ -236,6 +178,54 @@ class CmdUTF:
         alignL = ["left", "right"]
         self._vtable(valL, hdrL, "rst", alignL)
         self.rivtD.update(locals())
+
+        return
+
+    def pages(self):
+        """write head or foot format line to dictionary
+
+            :return lineS: header or footer
+            :rtype: str
+        """
+
+        plenI = 3
+
+        if len(self.paramL) != plenI:
+            logging.info(
+                f"{self.cmdS} command not evaluated:  \
+                                    {plenI} parameters required")
+            return
+
+        fileP = Path(self.folderD["configP"], "data", self.paramL[1].strip())
+        with open(fileP, "r") as f2:
+            pageL = f2.readlines()
+
+        lineL = ["-", "-", "-"]
+        for i in range(3):
+            if "<date>" in pageL[i]:
+                lineL[i] = datetime.today().strftime('%Y-%m-%d')
+            elif "<datetime>" in pageL[i]:
+                lineL[i] = datetime.today().strftime('%Y-%m-%d %H:%M')
+            elif "<page>" in pageL[i]:
+                lineL[i] = "page"
+            else:
+                lineL[i] = pageL[i].strip()
+
+        l1I = len(lineL[0])
+        l2I = len(lineL[1])
+        l3I = len(lineL[2])
+        wI = int(self.incrD["widthI"])
+        spS = (int((wI - l1I - l3I - l2I)/2) - 2) * " "
+        sepS = wI * "_" + 2*"\n"
+
+        if self.paramL[2].strip() == "head":
+            self.incrD["headS"] = lineL[0] + spS + \
+                lineL[1] + spS + lineL[2] + "\n" + sepS
+        if self.paramL[2].strip() == "foot":
+            self.incrD["footS"] = lineL[0] + spS + \
+                lineL[1] + spS + lineL[2] + "\n" + sepS
+
+        return "None"
 
     def project(self):
         """insert project information from csv, xlsx or txt file

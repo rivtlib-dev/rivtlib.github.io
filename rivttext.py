@@ -158,7 +158,7 @@ with open(docP, "r") as f1:
     rvtfileS += rvtfileS + """\nsys.exit()\n"""
 
 
-def str_head(hdrS):
+def str_title(hdrS):
     """_summary_
 
     :param hdrS: _description_
@@ -200,7 +200,7 @@ def str_head(hdrS):
     return hdutfS, hdrstS
 
 
-def banner(rS, methS):
+def str_set(rS, methS):
     """_summary_
 
     :param rS: _description_
@@ -216,28 +216,22 @@ def banner(rS, methS):
     rs1L = rS.split("|")
 
     if methS == "R":
-
         incrD["widthI"] = int(rs1L[1])     # utf print width
         incrD["pageI"] = int(rs1L[2])      # initial page number
-
     elif methS == "V":
-
         if rs1L[1].strip().casefold() == "data".casefold():
             folderD["data"] = dataP
         else:
             folderD["dataP"] = dataP
-
         if rs1L[2].strip().casefold() != "save".casefold():
             tempfileS = docbaseS.replace("r", "v") + ".csv"
             incrD["saveP"] = Path(folderD["dataP"], tempfileS)
         else:
             incrD["saveP"] = None
-
         if rs1L[3].strip().casefold() == "sub".casefold():
             incrD["subB"] = True
         else:
             incrD["subB"] = False
-
     elif methS == "T":
         if rs1L[1] == "code":
             folderD["codeB"] = True
@@ -247,51 +241,56 @@ def banner(rS, methS):
     rs1S = rs1L[0].strip()
 
     if rs1S.strip()[0:2] == "--":
-        return "\n", "\n"                           # skip heading
+        return "\n", "\n"                            # skip heading
     else:
-        hdutfS, hdrstS = str_head(rs1L[0].strip())  # get_heading
-        print(hdutfS)
+        hdutfS, hdrstS = str_title(rs1L[0].strip())  # get_heading
         return hdutfS, hdrstS
 
 
-def Write(formatS):
+def write(formatS):
     """write output files
 
-    :param formatS: _description_
-    :type formatS: _type_
+    :param formatS: output type string, comma separated
+    :type formatS: str
     """
+
+    global utfS, rstS, outputS, incrD, folderD
 
     formatL = formatS.split(",")
 
     for i in formatL:
         if "utf" in i.strip():
-            docutfP = Path(docP.parent / "README.txt")
-            with open(docutfP, "w") as f2:
+            docP = Path(docP.parent / "README.txt")
+            with open(docP, "w") as f2:
                 f2.write(utfS)
             print("", flush=True)
-            logging.info(f"""doc written: {dshortP}\README.txt""")
+            logging.info(f"""utf doc written: {dshortP}\README.txt""")
         if "pdf" in i.strip():
-            docutfP = Path(docP.parent / "README.txt")
-            with open(docutfP, "w") as f2:
-                f2.write(utfS)
-            logging.info(f"""doc written: {dshortP}\README.txt""")
+            pdffileS = report(rstS)
+            docP = folderD["reportP"]
+            with open(docP, "w") as f2:
+                f2.write(pdffileS)
+            print("", flush=True)
+            logging.info(f"""pdf doc written: {docpdfS}""")
         if "site" in i.strip():
-            docutfP = Path(docP.parent / "README.txt")
-            with open(docutfP, "w") as f2:
-                f2.write(utfS)
-            logging.info(f"""doc written: {dshortP}\README.txt""")
+            htmlfileS = site(rstS)
+            docP = folderD["siteP"]
+            with open(docP, "w") as f2:
+                f2.write(htmlfileS)
+            print("", flush=True)
+            logging.info(f"""html doc written: {dochtmlS}""")
 
 
-def Report(fileS):
+def report(fileS):
     pass
 
 
-def Site(fileS):
+def site(fileS):
     pass
 
 
 def R(rS: str):
-    """process a Repo string
+    """process Repo string
 
     :param rS: triple quoted repo string
     :type rS: str
@@ -299,26 +298,25 @@ def R(rS: str):
     :type: str
     """
 
-    global utfS, rstS, outputS, incrD, folderD, localD
+    global utfS, rstS, incrD, folderD, localD
 
     xutfS = ""
     xrstS = ""
     rL = rS.split("\n")
-    hutfS, hrstS = banner(rL[0], "R")
-    utfI = parse.RivtParse(folderD, incrD, outputS, "R", localD)
-    xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(rL[1:])
+    hutfS, hrstS = str_set(rL[0], "R")
+    utfC = parse.RivtParse(folderD, incrD, "R", localD)
+    xutfL, xrstL, folderD, incrD, localD = utfC.str_parse(rL[1:])
     if hutfS != None:
-        xutfS = hutfS + xutfS
-        if outputD[outputS]:
-            xrstS = hrstS + xrstS
+        xutfS = xutfL[1] + hutfS + xutfL[0]
+        xrstS = xrstL[1] + hrstS + xrstL[0]
     utfS += xutfS                    # accumulate utf string
     rstS += xrstS                    # accumulate reST string
-
+    print(utfS)
     xutfS = ""                       # reset local string
 
 
 def I(rS: str):
-    """process an Insert string
+    """process Insert string
 
     :param rS: triple quoted insert string
     :type rS: str
@@ -326,18 +324,18 @@ def I(rS: str):
     :rtype: str
     """
 
-    global utfS, rstS, outputS, incrD, folderD, localD
+    global utfS, rstS, incrD, folderD, localD
 
     xutfS = ""
     xrstS = ""
     rL = rS.split("\n")
-    hutfS, hrstS = banner(rL[0], "I")
-    utfI = parse.RivtParse(folderD, incrD, outputS, "I", localD)
-    xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(rL[1:])
+    hutfS, hrstS = str_set(rL[0], "I")
+    print(hutfS)
+    utfC = parse.RivtParse(folderD, incrD, "I", localD)
+    xutfL, xrstL, folderD, incrD, localD = utfC.str_parse(rL[1:])
     if hutfS != None:
-        xutfS = hutfS + xutfS
-        if outputD[outputS]:
-            xrstS = hrstS + xrstS
+        xutfS = hutfS + xutfL[0]
+        xrstS = hrstS + xrstL[0]
     utfS += xutfS
     rstS += xrstS
 
@@ -345,7 +343,7 @@ def I(rS: str):
 
 
 def V(rS: str):
-    """process a Value string
+    """process Value string
 
     :param rS: triple quoted values string
     :type rS: str
@@ -353,19 +351,18 @@ def V(rS: str):
     :type: str
     """
 
-    global utfS, rstS, xflagB, outputS, incrD, folderD, localD
+    global utfS, rstS, incrD, folderD, localD
 
     xutfS = """"""
     xrstS = """"""
     rL = rS.split("\n")
-    hutfS, hrstS = banner(rL[0], "V")
-    utfI = parse.RivtParse(folderD, incrD, outputS, "V", localD)
-    xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(rL[1:])
+    hutfS, hrstS = str_set(rL[0], "V")
+    utfC = parse.RivtParse(folderD, incrD, "V", localD)
+    xutfL, xrstL, folderD, incrD, localD = utfC.str_parse(rL[1:])
     # print(f"{xutfS=}", f"{rL[1:]=}")
     if hutfS != None:
-        xutfS = hutfS + xutfS
-        if outputD[outputS]:
-            xrstS = hrstS + xrstS
+        xutfS = hutfS + xutfL[0]
+        xrstS = hrstS + xrstL[0]
     utfS += xutfS                    # accumulate utf string
     rstS += xrstS                    # accumulate reST string
 
@@ -373,7 +370,7 @@ def V(rS: str):
 
 
 def T(rS: str):
-    """process a Tables string
+    """process Tables string
 
     :param rS: triple quoted insert string
     :type rS: str
@@ -381,18 +378,18 @@ def T(rS: str):
     :type: str
 
     """
-    global utfS, rstS, xflagB, outputS, incrD, folderD, localD
+    global utfS, rstS, incrD, folderD, localD
 
     xutfS = """"""
     rL = rS.split("\n")
-    hutfS, hrstS = banner(rL[0], "T")
-    utfI = parse.RivtParse(folderD, incrD, outputS, "T", localD)
-    xutfS, rstS, folderD, incrD, localD = utfI.str_parse(rL[1:])
+    hutfS, hrstS = str_set(rL[0], "T")
+    utfC = parse.RivtParse(folderD, incrD, outputS, "T", localD)
+    xutfL, rstL, folderD, incrD, localD = utfC.str_parse(rL[1:])
     if hutfS != None:
-        utfS += hutfS + utfS
-        xutfS += hutfS + xutfS                 # accumulate utf string
-        if outputD[outputS]:
-            rstS += hrstS + rstS               # accumulate reST string
+        xutfS = hutfS + xutfL[0]
+        xrstS = hrstS + xrstL[0]
+    utfS += xutfS                    # accumulate utf string
+    rstS += xrstS                    # accumulate reST string
 
     xutfS = ""
 

@@ -42,8 +42,6 @@ docbaseS = docfileS.split(".py")[0]
 dataP = Path(docP.parent / "data")
 projP = docP.parent.parent.parent  # rivt project folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
-siteP = projP / "site"  # site folder path
-reportP = projP / "report"  # report folder path
 rivtcalcP = Path("rivt.rivttext.py").parent  # rivt package path
 prfxS = docbaseS[1:3]
 configP = Path(docP.parent.parent / "rv0000")
@@ -53,12 +51,16 @@ for fileS in os.listdir(projP / "resource"):
         break
 resourceP = Path(projP / "resource" / refileP)
 rerootP = Path(projP / "resource")
-docpdfP = Path(rerootP / resourceP / (docbaseS + ".pdf"))
 doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = doctitleS.replace("-", " ")
 divtitleS = (resourceP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
 errlogP = Path(rerootP / "error_log.txt")
+siteP = projP / "site"  # site folder path
+docpdfS = docbaseS + ".pdf"
+dochtmlS = docbaseS + ".html"
+reportP = Path(projP / "report" / docpdfS)  # report folder path
+siteP = Path(projP / "site" / dochtmlS)  # site folder path
 
 # global dicts and vars
 utfS = """\n"""                     # utf output string
@@ -98,7 +100,8 @@ incrD = {
     "utf": (False, "utf"),
     "inter": (False, "inter"),
     "pageI": 1,  # starting page number
-    "headerS": "-------------------"
+    "headS": "",
+    "footS": ""
 }
 
 outputD = {"pdf": True, "html": True, "both": True, "site": True,
@@ -175,8 +178,8 @@ def str_head(hdrS):
     compnumS = docnumS + " - " + str(snumI)
     widthI = incrD["widthI"] - 3
     headS = " " + hdrS + compnumS.rjust(widthI - len(hdrS))
-    bordrS = incrD["widthI"] * "_"
-    hdutfS = bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
+    bordrS = incrD["widthI"] * "-"
+    hdutfS = bordrS + "\n" + headS + "\n" + bordrS + "\n"
 
     if outputD[outputS]:
         hdrstS = (
@@ -197,7 +200,7 @@ def str_head(hdrS):
     return hdutfS, hdrstS
 
 
-def eval_head(rS, methS):
+def banner(rS, methS):
     """_summary_
 
     :param rS: _description_
@@ -214,15 +217,8 @@ def eval_head(rS, methS):
 
     if methS == "R":
 
-        if rs1L[1].strip() in outputD:
-            outputS = rs1L[1].strip()
-        else:
-            outputS = "utf"
-
-        incrD["widthI"] = int(rs1L[2])     # utf print width
-
-    elif methS == "I":
-        pass
+        incrD["widthI"] = int(rs1L[1])     # utf print width
+        incrD["pageI"] = int(rs1L[2])      # initial page number
 
     elif methS == "V":
 
@@ -233,7 +229,7 @@ def eval_head(rS, methS):
 
         if rs1L[2].strip().casefold() != "save".casefold():
             tempfileS = docbaseS.replace("r", "v") + ".csv"
-            incrD["saveP"] = Path(tempfileS)
+            incrD["saveP"] = Path(folderD["dataP"], tempfileS)
         else:
             incrD["saveP"] = None
 
@@ -258,25 +254,40 @@ def eval_head(rS, methS):
         return hdutfS, hdrstS
 
 
-def Write():
-    """_summary_
+def Write(formatS):
+    """write output files
+
+    :param formatS: _description_
+    :type formatS: _type_
     """
 
-    if outputS in outputL:
-        if outputS == "html":
-            exec(rvtfileS)
-        elif outputS == "pdf":
-            with open(docP, "r") as f2:
-                rvtfileS = f2.read()
-            logging.info(f"""write docs: """)
-            print("", flush=True)
+    formatL = formatS.split(",")
 
-        # always write utf file if not 'inter'
-        if outputS != "inter":
+    for i in formatL:
+        if "utf" in i.strip():
             docutfP = Path(docP.parent / "README.txt")
             with open(docutfP, "w") as f2:
                 f2.write(utfS)
-            logging.info(f"""write docs: {dshortP}\README.txt""")
+            print("", flush=True)
+            logging.info(f"""doc written: {dshortP}\README.txt""")
+        if "pdf" in i.strip():
+            docutfP = Path(docP.parent / "README.txt")
+            with open(docutfP, "w") as f2:
+                f2.write(utfS)
+            logging.info(f"""doc written: {dshortP}\README.txt""")
+        if "site" in i.strip():
+            docutfP = Path(docP.parent / "README.txt")
+            with open(docutfP, "w") as f2:
+                f2.write(utfS)
+            logging.info(f"""doc written: {dshortP}\README.txt""")
+
+
+def Report(fileS):
+    pass
+
+
+def Site(fileS):
+    pass
 
 
 def R(rS: str):
@@ -293,7 +304,7 @@ def R(rS: str):
     xutfS = ""
     xrstS = ""
     rL = rS.split("\n")
-    hutfS, hrstS = eval_head(rL[0], "R")
+    hutfS, hrstS = banner(rL[0], "R")
     utfI = parse.RivtParse(folderD, incrD, outputS, "R", localD)
     xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(rL[1:])
     if hutfS != None:
@@ -320,7 +331,7 @@ def I(rS: str):
     xutfS = ""
     xrstS = ""
     rL = rS.split("\n")
-    hutfS, hrstS = eval_head(rL[0], "I")
+    hutfS, hrstS = banner(rL[0], "I")
     utfI = parse.RivtParse(folderD, incrD, outputS, "I", localD)
     xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(rL[1:])
     if hutfS != None:
@@ -347,7 +358,7 @@ def V(rS: str):
     xutfS = """"""
     xrstS = """"""
     rL = rS.split("\n")
-    hutfS, hrstS = eval_head(rL[0], "V")
+    hutfS, hrstS = banner(rL[0], "V")
     utfI = parse.RivtParse(folderD, incrD, outputS, "V", localD)
     xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(rL[1:])
     # print(f"{xutfS=}", f"{rL[1:]=}")
@@ -374,7 +385,7 @@ def T(rS: str):
 
     xutfS = """"""
     rL = rS.split("\n")
-    hutfS, hrstS = eval_head(rL[0], "T")
+    hutfS, hrstS = banner(rL[0], "T")
     utfI = parse.RivtParse(folderD, incrD, outputS, "T", localD)
     xutfS, rstS, folderD, incrD, localD = utfI.str_parse(rL[1:])
     if hutfS != None:

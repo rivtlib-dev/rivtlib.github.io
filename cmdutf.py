@@ -47,12 +47,12 @@ class CmdUTF:
 
         || append | folder | file_name                               R
         || functions | folder | file_name | code; nocode             V
-        || github | folder | repo_name                               R
         || image1 | folder | file_name  | size                       I,V,T
         || image2 | folder | file_name  | size | file_name  | size   I,V,T
         || list | folder | file_name                                 V
-        || project | folder | file_name | max width,align            R
-        || table | folder | file_name | max width, align | rows      I,V,T
+        || pages | folder | file_name | head;foot                    R
+        || project | folder | file_name | max width | align          R
+        || table | folder | file_name | max width | rows             I,V,T
         || text | folder | file_name | text type |shade; noshade     I,V,T
         || values | folder | file_name | [:];[x:y]                   V
 
@@ -86,8 +86,69 @@ class CmdUTF:
     def func(self):
         pass
 
-    def github(self):
-        pass
+    def pages(self):
+        """write head or foot format line to dictionary
+
+            :return lineS: header or footer
+            :rtype: str
+        """
+
+        plenI = 3
+
+        if len(self.paramL) != plenI:
+            logging.info(
+                f"{self.cmdS} command not evaluated:  \
+                                    {plenI} parameters required")
+            return
+
+        fileP = Path(self.folderD["configP"], self.paramL[1].strip())
+        with open(fileP, "r") as f2:
+            pageL = f2.readlines()
+
+        if pageL[0].strip() == "date":
+            line1S = datetime.today().strftime('%Y-%m-%d')
+
+        elif pageL[0].strip() == "datetime":
+            line1S = datetime.today().strftime('%Y-%m-%d %H:%M')
+        elif pageL[0].strip() == "page":
+            line1S = "page"
+        else:
+            line1S = pageL[0].strip()
+
+        if pageL[1].strip() == "date":
+            line2S = datetime.today().strftime('%Y-%m-%d')
+        elif pageL[1].strip() == "datetime":
+            line2S = datetime.today().strftime('%Y-%m-%d %H:%M')
+        elif pageL[1].strip() == "page":
+            line2S = "page"
+        else:
+            line2S = pageL[1].strip()
+
+        if pageL[2].strip() == "date":
+            line3S = datetime.today().strftime('%Y-%m-%d')
+        elif pageL[2].strip() == "datetime":
+            line3S = datetime.today().strftime('%Y-%m-%d %H:%M')
+        elif pageL[2].strip() == "page":
+            line3S = "page"
+        else:
+            line3S = pageL[2].strip()
+
+        wI = int(self.incrD["widthI"])
+        sepS = wI * "-" "\n"
+        l1I = len(line1S)
+        l2I = len(line2S)
+        l3I = len(line3S)
+        spS = (int((wI - l1I - l3I - l2I)/2) - 1) * " "
+
+        if self.paramL[2].strip() == "head":
+            locationS = "top"
+        elif self.paramL[2].strip() == "foot":
+            locationS = "top"
+        else:
+            locationS = "top"
+
+        lineT = (line1S, line2S, line3S, locationS, spS, sepS)
+        return lineT
 
     def image(self):
         """insert image from file
@@ -175,67 +236,6 @@ class CmdUTF:
         alignL = ["left", "right"]
         self._vtable(valL, hdrL, "rst", alignL)
         self.rivtD.update(locals())
-
-    def page(self):
-        """format  project header or footer
-
-            :return lineS: header or footer
-            :rtype: str
-        """
-
-        plenI = 3
-
-        if self.paramL[2] == "head":
-            locationS = "top"
-        else:
-            locationS = "bottom"
-
-        if len(self.paramL) != plenI:
-            logging.info(
-                f"{self.cmdS} command not evaluated:  \
-                                    {plenI} parameters required")
-            return
-
-        fileP = Path(self.folderD["configP"], self.paramL[1].strip())
-        with open(fileP, "r") as f2:
-            pageL = f2.readlines()
-
-        if pageL[0].strip() == "date":
-            line1S = datetime.today().strftime('%Y-%m-%d')
-
-        elif pageL[0].strip() == "datetime":
-            line1S = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-        elif pageL[0].strip() == "page":
-            line1S = "page"
-        else:
-            line1S = pageL[0].strip()
-
-        if pageL[1].strip() == "date":
-            line2S = datetime.today().strftime('%Y-%m-%d')
-        elif pageL[1].strip() == "datetime":
-            line2S = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-        elif pageL[1].strip() == "page":
-            line2S = "page"
-        else:
-            line2S = pageL[1].strip()
-
-        if pageL[2].strip() == "date":
-            line3S = datetime.today().strftime('%Y-%m-%d')
-        elif pageL[2].strip() == "datetime":
-            line3S = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-        elif pageL[2].strip() == "page":
-            line3S = "page"
-        else:
-            line3S = pageL[2].strip()
-
-        wI = int(self.incrD["widthI"])
-        sepS = wI * "-" "\n"
-        l1I = len(line1S)
-        l2I = len(line2S)
-        l3I = len(line3S)
-        spS = (int((wI - l1I - l3I - l2I)/2) - 1) * " "
-        lineT = (line1S, line2S, line3S, locationS, spS, sepS)
-        return lineT
 
     def project(self):
         """insert project information from csv, xlsx or txt file

@@ -162,7 +162,7 @@ class RivtParse:
                     rvtS = rvtM.cmd_parse(cmdS)
                     if cmdS == "page":              # header or footer
                         rvt1S = rvtS[0] + rvtS[4] + rvtS[1] + rvtS[4] + rvtS[2]
-                        self.incrD["headerS"] = rvt1S + "\n"
+                        self.incrD["headerS"] = rvt1S
                         if "page" in rvtS:
                             rvt1S = self.apage(rvt1S)
                     # if self.outputS in self.outputL:
@@ -241,7 +241,7 @@ class RivtParse:
         :type paramT: _type_
         """
 
-        w1 = self.incrD["widthI"]*"-" + "\n"
+        w1 = self.incrD["widthI"]*"_" + "\n"
         pagenoS = str(self.incrD["pageI"])
         rvt2S = w1 + rvt1S.replace("page", "page " + pagenoS) + w1
         self.incrD["pageI"] = int(pagenoS)+1

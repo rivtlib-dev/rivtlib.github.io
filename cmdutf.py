@@ -3,12 +3,8 @@ import os
 import sys
 import csv
 import textwrap
-import subprocess
-import tempfile
-import re
 import logging
 import warnings
-import time
 import numpy.linalg as la
 import pandas as pd
 import sympy as sp
@@ -38,23 +34,31 @@ from rivt.units import *
 
 
 class CmdUTF:
+    """translate rivt-strings to utf strings
+
+    param:exportS (str): stores values that are written to file
+    strL (list): calc rivt-strings
+    folderD (dict): folder paths
+    tagD (dict): tag dictionary
+
+    """
 
     def __init__(self, paramL, incrD, folderD, localD):
         """
         ======================================================== ============
-            command syntax / snippet prefix and description        methods
+                        command syntax                              methods
         ======================================================== ============
 
-        || append | folder | file_name                               R
-        || functions | folder | file_name | code; nocode             V
-        || image1 | folder | file_name  | size                       I,V,T
-        || image2 | folder | file_name  | size | file_name  | size   I,V,T
-        || list | folder | file_name                                 V
-        || pages | folder | file_name | head;foot                    R
-        || project | folder | file_name | max width | align          R
-        || table | folder | file_name | max width | rows             I,V,T
-        || text | folder | file_name | text type |shade; noshade     I,V,T
-        || values | folder | file_name | [:];[x:y]                   V
+        1- || append | folder | file_name                               R
+        2- || functions | folder | file_name | code; nocode             V
+        3- || image1 | folder | file_name  | size                       I,V,T
+        4- || image2 | folder | file_name  | size | file_name  | size   I,V,T
+        5- || list | folder | file_name                                 V
+        6- || pages | folder | file_name | head;foot                    R
+        7- || project | folder | file_name | max width | align          R
+        8- || table | folder | file_name | max width | rows             I,V,T
+        9- || text | folder | file_name | text type |shade; noshade     I,V,T
+        10-|| values | folder | file_name | [:];[x:y]                   V
 
         """
 
@@ -81,13 +85,17 @@ class CmdUTF:
         return eval("self." + cmdS+"()")
 
     def append(self):
+        """1 _summary_
+        """
         pass
 
     def func(self):
+        """2 _summary_
+        """
         pass
 
     def image(self):
-        """insert image from file
+        """3 insert image from file
 
         """
         utfS = ""
@@ -108,7 +116,7 @@ class CmdUTF:
         return utfS
 
     def image2(self):
-        """insert two images from file side by side
+        """4 insert two images from file side by side
 
             :param iL (list): image parameters
         """
@@ -149,7 +157,7 @@ class CmdUTF:
         return utfS
 
     def list(self):
-        """import data from files
+        """5 import data from files
 
 
             :return lineS: utf table
@@ -176,20 +184,19 @@ class CmdUTF:
             valL.append([varS, varL])
         hdrL = ["variable", "values"]
         alignL = ["left", "right"]
-        self._vtable(valL, hdrL, "rst", alignL)
+        self.vtable(valL, hdrL, "rst", alignL)
         self.rivtD.update(locals())
 
         return
 
     def pages(self):
-        """write head or foot format line to dictionary
+        """6 write head or foot format line to dictionary
 
             :return lineS: header or footer
             :rtype: str
         """
 
         plenI = 3
-
         if len(self.paramL) != plenI:
             logging.info(
                 f"{self.cmdS} command not evaluated:  \
@@ -228,7 +235,7 @@ class CmdUTF:
         return "None"
 
     def project(self):
-        """insert project information from csv, xlsx or txt file
+        """7 insert project information from csv, xlsx or txt file
 
             :return lineS: utf table
             :rtype: str
@@ -296,7 +303,7 @@ class CmdUTF:
         return tableS
 
     def table(self):
-        """insert table from csv or xlsx file
+        """8 insert table from csv or xlsx file
 
             :return lineS: utf table
             :rtype: str
@@ -366,7 +373,7 @@ class CmdUTF:
         return tableS
 
     def text(self):
-        """insert text from file
+        """9 insert text from file
 
         || text | folder | file | type | shade
 
@@ -481,7 +488,9 @@ class CmdUTF:
                         soup1L.append(s[0].ljust(10) + s[1]+"\n")
                     except:
                         soup1L.append(s[0]+"\n")
+
                 soupS = "".join(soup1L)
+
                 print(soupS)
                 return soupS
             else:
@@ -489,7 +498,7 @@ class CmdUTF:
                 return soupS
 
     def values(self):
-        """import values from files
+        """10 import values from files
 
         """
 

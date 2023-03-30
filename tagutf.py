@@ -6,7 +6,6 @@ import textwrap
 import subprocess
 import tempfile
 import re
-import io
 import logging
 import warnings
 import numpy.linalg as la
@@ -16,14 +15,14 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import html2text as htm
 from numpy import *
-from IPython.display import display as _display
-from IPython.display import Image as _Image
 from io import StringIO
 from sympy.parsing.latex import parse_latex as parsx
 from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
 from tabulate import tabulate
 from pathlib import Path
+from IPython.display import display as _display
+from IPython.display import Image as _Image
 try:
     from PIL import Image as PImage
     from PIL import ImageOps as PImageOps
@@ -39,42 +38,40 @@ class TagsUTF:
         """format tags to utf
 
         ============================ ============================================
-        tag syntax                      description (one tag per line)
+        tag syntax                      description (one tag at end of line)
         ============================ ============================================
 
-
-        Values Only Formats:
-        a := n | unit, alt | descrip   declare tag =; units and description
-        a = b + c | unit, alt | n,n    assign tag :=; units and decimals
-
         Line Format:
-        text  _[b]                     bold line
-        text  _[c]                     center line
-        <datetime>                     date and time inline
-        text  _[e]                     equation label
-        text  _[f]                     figure caption
-        text   <#>                     footnote
-        text  _[n]                     footnote description
-              _[-]                     horizontal divider insert
-        text  _[i]                     italicize line
-        <ref, label>                  internal link inline
-        latex _[x]                    LaTeX equation
-        <latex equ>                   inline equation (no commas)  
-        text  _[r]                     right justify line
-        sympy _[s]                    sympy equation
-           _[page]                    new page (PDF)
-        title _[t]                    table title, autonumber
-        <url, label>                  url reference
+        1  text  _[b]                    bold
+        2  text  _[c]                    center
+        3  text  _[d]                    description for footnote
+        4  text  _[e]                    equation label
+        5  text  _[f]                    figure label
+        6  text  _[#]                    foot number
+        7  text  _[i]                    italicize
+        8        _[-]                    line 
+        9  latex _[l]                    LaTeX equation
+        10 text  _[p]                    plain literal
+        11    _[page]                    new page
+        12 text  _[r]                    right justify line
+        13 sympy _[s]                    sympy equation
 
+        14 text  _[t]                    table label
+        15 <url, label>                  url or internal link inline
 
         Block Format:
-        _[[c]]                        center text block
-        _[[o]]                        code text block
-        _[[e]]                        end of block
-        _[[l]]                        literal block
-        _[[r]]                        right justify text block
-        _[[x]]                        LateX block
-        _[[m]]                        LaTeX math block
+        16 _[[c]]                        center block
+        17 _[[e]]                        end block
+        18 _[[l]]                        LateX block
+        19 _[[m]]                        LaTeX math block
+        20 _[[o]]                        code block
+        21 _[[p]]                        plain literal block
+        22 _[[r]]                        right justify block
+        23 _[[t]]                        block with tags
+
+        Values Only Formats:
+        24 a := n | unit, alt | descrip   = declare tag
+        25 a = b + c | unit, alt | n,n    := assign tag
 
         """
 
@@ -86,13 +83,13 @@ class TagsUTF:
         self.errlogP = folderD["errlogP"]
         self.valL = []                          # accumulate values
 
-        self.tagD = {"c]": "center", "e]": "equation", "f]": "figure",
-                     "#]": "footnumber", "foot]": "footnote", "-]": "line",
-                     "page]": "page", "r]": "right", "sym]": "sympy",
-                     "t]": "table", "x]": "latex", "lnk]": "link", "url]": "url",
-                     "[o]]": "codeblk", "[c]]": "centerblk", "[x]]": "latexblk",
-                     "[m]]": "mathblk", "[r]]": "rightblk",
-                     ":=": "declare", "=": "assign"}
+        self.tagD = {"c]": "center", "d]": "footnote", "e]": "equation",
+                     "f]": "figure", "#]": "footnumber", "i]": "italic",
+                     "l]": "latex", "-]": "line", "page]": "page",
+                     "r]": "right", "s]": "sympy", "t]": "table",
+                     "[c]]": "centerblk", "[e]]": "endblk", "[l]]": "latexblk",
+                     "[m]]": "mathblk", "[o]]": "codeblk", "[p]]": "plainblk",
+                     "[r]]": "rightblk", ":=": "declare", "=": "assign"}
 
         modnameS = __name__.split(".")[1]
         logging.basicConfig(
@@ -126,8 +123,19 @@ class TagsUTF:
 
         return labelS
 
+    def bold(self):
+        """1 bold text _[b]
+
+        :return lineS: centered line
+        :rtype: str
+        """
+
+        lineS = self.lineS
+        print(lineS)
+        return lineS
+
     def center(self):
-        """center text in document width
+        """2 center text in document width _[c]
 
         :return lineS: centered line
         :rtype: str
@@ -138,8 +146,19 @@ class TagsUTF:
         print(lineS)
         return lineS
 
+    def footnote(self):
+        """3 footnote description _[d]
+
+        :return lineS: footnote
+        :rtype: str
+        """
+
+        lineS = ".. [*] " + self.lineS
+
+        return lineS
+
     def equation(self):
-        """formats equation label to utf
+        """4 formats equation label to utf _[e]
 
         :return lineS: reST equation label
         :rtype: str
@@ -156,7 +175,7 @@ class TagsUTF:
         return lineS
 
     def figure(self):
-        """formats figure caption to reST
+        """5 figure caption _[f]
 
         :return lineS: figure label
         :rtype: str
@@ -172,7 +191,7 @@ class TagsUTF:
         return lineS
 
     def footnumber(self):
-        """increment footnote number
+        """6 footnote number _[#]
         """
 
         ftnumI = self.incrD["ftqueL"][-1] + 1
@@ -181,30 +200,16 @@ class TagsUTF:
 
         return lineS
 
-    def footnote(self):
-        """insert footnote
-
-        :return lineS: footnote
-        :rtype: str
+    def italic(self):
+        """7 italicize line
         """
 
-        lineS = ".. [*] " + self.lineS
+        lineS = self.lineS
 
-        return lineS
-
-    def line(lineS):
-        """_summary_
-
-        :param lineS: _description_
-        :type lineS: _type_
-        """
-        lineS = int(self.incrD["widthI"]) * "_"
-
-        print(lineS)
         return lineS
 
     def latex(self):
-        """format line of sympy
+        """8 format latex
 
         :return lineS: formatted latex
         :rtype: str
@@ -216,11 +221,28 @@ class TagsUTF:
 
         return lineS
 
-    def link(self):
+    def line(lineS):
+        """9 insert horizontal line _[-]
+
+        :param lineS: _description_
+        :type lineS: _type_
+        """
+        lineS = int(self.incrD["widthI"]) * "_"
+
+        print(lineS)
+        return lineS
+
+    def plain(self):
+        """10 format plain literal text _[p]
+
+        :param lineS: _description_
+        :type lineS: _type_        
+        """
+
         pass
 
     def page(self):
-        """insert page header 
+        """11 insert new page header _[page]
 
         :return lineS: page header
         :rtype: str
@@ -230,11 +252,11 @@ class TagsUTF:
         rvtS = self.incrD["headS"].replace("page", "page " + pagenoS)
         self.incrD["pageI"] = int(pagenoS)+1
 
-        print("\n" + rvtS + "\n")
-        return "\n" + rvtS + "\n"
+        print("\n" + rvtS)
+        return "\n" + rvtS
 
     def right(self):
-        """right justify text
+        """12 right justify text _[r]
 
         :return lineS: right justified text
         :rtype: str
@@ -246,7 +268,7 @@ class TagsUTF:
         return lineS
 
     def sympy(self):
-        """format line of sympy
+        """13 format line of sympy _[s]
 
         :return lineS: formatted sympy
         :rtype: str
@@ -264,7 +286,7 @@ class TagsUTF:
         return lineS
 
     def table(self):
-        """format table title to utf
+        """14 format table title  _[t]
 
         :return lineS: utf table title
         :rtype: str
@@ -281,7 +303,7 @@ class TagsUTF:
         return lineS
 
     def url(self):
-        """_summary_
+        """15 format url or internal link
 
         :return: _description_
         :rtype: _type_
@@ -291,9 +313,6 @@ class TagsUTF:
         lineS = ".. _" + lineL[0] + ": " + lineL[1]
 
         return lineS
-
-    def codeblk(self):
-        pass
 
     def centerblk(self):
         pass
@@ -307,7 +326,13 @@ class TagsUTF:
     def mathblk(self):
         pass
 
+    def codeblk(self):
+        pass
+
     def rightblk(self):
+        pass
+
+    def tagblk(self):
         pass
 
     def assign(self):
@@ -357,7 +382,6 @@ class TagsUTF:
         if self.incrD["subB"]:              # replace variables with numbers
             self.vsub(self.lineS)
 
-        locals().update(self.localD)
         self.localD.update(locals())
 
         return [[varS, valtS, unit1S, unit2S, descS], utfS]
@@ -377,7 +401,6 @@ class TagsUTF:
         cmdS = varS + "= " + valS + "*" + unit1S
         exec(cmdS, globals(), locals())
 
-        locals().update(self.localD)
         self.localD.update(locals())
 
         return [varS, valS, unit1S, unit2S, descripS]

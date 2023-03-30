@@ -94,14 +94,11 @@ incrD = {
     "saveP": "nosave",  # save values to file
     "eqlabelS": "equation",  # last used equation label
     "codeB": False,  # print code strings in doc
-    "pdf": (True, "pdf"),  # write reST
-    "html": (True, "html"),  # write reST
-    "both": (True, "both"),  # write reST
-    "utf": (False, "utf"),
-    "inter": (False, "inter"),
     "pageI": 1,  # starting page number
-    "headS": "",
-    "footS": ""
+    "headuS": "",
+    "footuS": "",
+    "headrS": "",
+    "footrS": ""\
 }
 
 outputD = {"pdf": True, "html": True, "both": True, "site": True,
@@ -158,7 +155,7 @@ with open(docP, "r") as f1:
     rvtfileS += rvtfileS + """\nsys.exit()\n"""
 
 
-def str_title(hdrS):
+def _str_title(hdrS):
     """_summary_
 
     :param hdrS: _description_
@@ -200,7 +197,7 @@ def str_title(hdrS):
     return hdutfS, hdrstS
 
 
-def str_set(rS, methS):
+def _str_set(rS, methS):
     """_summary_
 
     :param rS: _description_
@@ -218,20 +215,18 @@ def str_set(rS, methS):
     if methS == "R":
         incrD["widthI"] = int(rs1L[1])     # utf print width
         incrD["pageI"] = int(rs1L[2])      # initial page number
+
     elif methS == "V":
-        if rs1L[1].strip().casefold() == "data".casefold():
-            folderD["data"] = dataP
-        else:
-            folderD["dataP"] = dataP
-        if rs1L[2].strip().casefold() != "save".casefold():
+        if rs1L[1].strip().casefold() != "save".casefold():
             tempfileS = docbaseS.replace("r", "v") + ".csv"
             incrD["saveP"] = Path(folderD["dataP"], tempfileS)
         else:
             incrD["saveP"] = None
-        if rs1L[3].strip().casefold() == "sub".casefold():
+        if rs1L[2].strip().casefold() == "sub".casefold():
             incrD["subB"] = True
         else:
             incrD["subB"] = False
+
     elif methS == "T":
         if rs1L[1] == "code":
             folderD["codeB"] = True
@@ -243,8 +238,187 @@ def str_set(rS, methS):
     if rs1S.strip()[0:2] == "--":
         return "\n", "\n"                            # skip heading
     else:
-        hdutfS, hdrstS = str_title(rs1L[0].strip())  # get_heading
+        hdutfS, hdrstS = _str_title(rs1L[0].strip())  # get_heading
         return hdutfS, hdrstS
+
+
+def _report(fileS):
+    """_summary_
+
+    :param fileS: _description_
+    :type fileS: _type_
+    """
+
+    f1 = open(_cfull, "r")
+    utfcalcL = f1.readlines()
+    f1.close()
+    print("INFO calc file read: " + str(_cfull))
+
+    indx = 0  # skip D() in calc list - avoid recursion
+    for iS in enumerate(utfcalcL):
+        if "rv.D" in iS[1]:
+            indx = int(iS[0])
+            break
+    rstcalcL = utfcalcL = utfcalcL[0:indx] + utfcalcL[indx + 1:]
+    cmdS = "".join(utfcalcL)
+
+    exprtfile = Path(_cpathcur / ".".join([_cnameS, "csv"]))
+    str1 = """header string\n"""  # write values file
+    str1 = str1 + exportS
+    with open(exprtfile, "w") as expF:
+        expF.write(str1)
+    print("INFO  values file written to calc folder", flush=True)
+
+    if doctypeS == "utf8":
+        gen_utf8(cmdS, stylefileS, calctitleS)
+
+    pdfD = {
+        "cpdfP": Path(_dpath0 / ".".join([_cnameS, "pdf"])),
+        "chtml": Path(_dpath0 / ".".join([_cnameS, "html"])),
+        "trst": Path(_dpath0 / ".".join([_cnameS, "rst"])),
+        "ttex1": Path(_dpath0 / ".".join([_cnameS, "tex"])),
+        "auxfile": Path(_dpath0 / ".".join([_cnameS, ".aux"])),
+        "outfile": Path(_dpath0 / ".".join([_cnameS, ".out"])),
+        "texmak2": Path(_dpath0 / ".".join([_cnameS, ".fls"])),
+        "texmak3": Path(_dpath0 / ".".join([_cnameS, ".fdb_latexmk"])),
+    }
+    os.chdir(_dpath0)
+    tmpS = os.getcwd()
+    if tmpS == str(_dpath0):
+        for f in fileL:
+            try:
+                os.remove(f)
+            except:
+                pass
+        time.sleep(1)
+    print("INFO: temporary Tex files deleted \n", flush=True)
+    gen_rst(cmdS, doctypeS, stylefileS, calctitleS, startpageS)
+
+    if stylefileS == "default":
+        stylefileS = "pdf_style.sty"
+    else:
+        stylefileS == stylefileS.strip()
+    style_path = Path(_dpath0 / stylefileS)
+    print("INFO: style sheet " + str(style_path))
+    pythoncallS = "python "
+    if sys.platform == "linux":
+        pythoncallS = "python3 "
+    elif sys.platform == "darwin":
+        pythoncallS = "python3 "
+
+    rst2xeP = Path(rivpath / "scripts" / "rst2xetex.py")
+    texfileP = pdfD["ttex1"]
+    tex1S = "".join(
+        [
+            pythoncallS,
+            str(rst2xeP),
+            " --embed-stylesheet ",
+            " --documentclass=report ",
+            " --documentoptions=12pt,notitle,letterpaper ",
+            " --stylesheet=",
+            str(style_path) + " ",
+            str(_rstfile) + " ",
+            str(texfileP),
+        ]
+    )
+
+    os.chdir(_dpath0)
+    os.system(tex1S)
+    print("INFO: tex file written " + str(texfileP))
+
+    # fix escape sequences
+    fnumS = _setsectD["fnumS"]
+    with open(texfileP, "r", encoding="utf-8", errors="ignore") as texin:
+        texf = texin.read()
+    texf = texf.replace("?x?", """\\""")
+    texf = texf.replace(
+        """fancyhead[L]{\leftmark}""",
+        """fancyhead[L]{\\normalsize  """ + calctitleS + "}",
+    )
+    texf = texf.replace("x*x*x", fnumS)
+    texf = texf.replace("""\\begin{tabular}""", "%% ")
+    texf = texf.replace("""\\end{tabular}""", "%% ")
+    texf = texf.replace(
+        """\\begin{document}""",
+        """\\begin{document}\n\\setcounter{page}{""" + startpageS + "}\n",
+    )
+
+    # texf = texf.replace(
+    #     """\\begin{document}""",
+    #     """\\renewcommand{\contentsname}{"""
+    #     + self.calctitle
+    #     + "}\n"
+    #     + """\\begin{document}"""
+    #     + "\n"
+    #     + """\\makeatletter"""
+    #     + """\\renewcommand\@dotsep{10000}"""
+    #     + """\\makeatother"""
+    #     + """\\tableofcontents"""
+    #     + """\\listoftables"""
+    #     + """\\listoffigures"""
+    # )
+
+    time.sleep(1)
+    with open(texfileP, "w", encoding="utf-8") as texout:
+        texout.write(texf)
+    print("INFO: tex file updated")
+
+    if doctypeS == "pdf":
+        gen_pdf(texfileP)
+
+    os._exit(1)
+
+    rstcalcS = """"""
+    exec(cmdS, globals(), locals())
+    docdir = os.getcwd()
+    with open(_rstfile, "wb") as f1:
+        f1.write(rstcalcS.encode("UTF-8"))
+    print("INFO: rst calc written ", docdir, flush=True)
+
+    f1 = open(_rstfile, "r", encoding="utf-8", errors="ignore")
+    rstcalcL = f1.readlines()
+    f1.close()
+    print("INFO: rst file read: " + str(_rstfile))
+
+    if doctypeS == "tex" or doctypeS == "pdf":
+        gen_tex(doctypeS, stylefileS, calctitleS, startpageS)
+    elif doctypeS == "html":
+        gen_html()
+    else:
+        print("INFO: doc type not recognized")
+
+    os._exit(1)
+
+    try:
+        filen1 = os.path.join(self.rpath, "reportmerge.txt")
+        print(filen1)
+        file1 = open(filen1, 'r')
+        mergelist = file1.readlines()
+        file1.close()
+        mergelist2 = mergelist[:]
+    except OSError:
+        print('< reportmerge.txt file not found in reprt folder >')
+        return
+    calnum1 = self.pdffile[0:5]
+    file2 = open(filen1, 'w')
+    newstr1 = 'c | ' + self.pdffile + ' | ' + self.calctitle
+    for itm1 in mergelist:
+        if calnum1 in itm1:
+            indx1 = mergelist2.index(itm1)
+            mergelist2[indx1] = newstr1
+            for j1 in mergelist2:
+                file2.write(j1)
+            file2.close()
+            return
+    mergelist2.append("\n" + newstr1)
+    for j1 in mergelist2:
+        file2.write(j1)
+    file2.close()
+    return
+
+
+def _site(fileS):
+    pass
 
 
 def write(formatS):
@@ -281,14 +455,6 @@ def write(formatS):
             logging.info(f"""html doc written: {dochtmlS}""")
 
 
-def report(fileS):
-    pass
-
-
-def site(fileS):
-    pass
-
-
 def R(rS: str):
     """process Repo string
 
@@ -303,7 +469,7 @@ def R(rS: str):
     xutfS = ""
     xrstS = ""
     rL = rS.split("\n")
-    hutfS, hrstS = str_set(rL[0], "R")
+    hutfS, hrstS = _str_set(rL[0], "R")
     utfC = parse.RivtParse(folderD, incrD, "R", localD)
     xutfL, xrstL, folderD, incrD, localD = utfC.str_parse(rL[1:])
     if hutfS != None:

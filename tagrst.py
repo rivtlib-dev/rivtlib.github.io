@@ -36,42 +36,43 @@ class TagsRST():
     def __init__(self, lineS, folderD, incrD, localD):
         """format tags to reST
 
+
         ============================ ============================================
         tag syntax                      description (one tag per line)
         ============================ ============================================
 
-
-        Values Only Formats:
-        a := n | unit, alt | descrip   declare tag =; units and description
-        a = b + c | unit, alt | n,n    assign tag :=; units and decimals
-
         Line Format:
-        text  _[b]                     bold line
-        text  _[c]                     center line
-        text  _[e]                     equation label
-        text  _[f]                     figure caption
-        text   <#>                     footnote
-        text  _[n]                     footnote description
-              _[-]                     horizontal divider insert
-        text  _[i]                     italicize line
-        <ref, label>                   internal link inline
-        latex _[x]                     LaTeX equation
-        <latex equ>                    inline equation (no commas)  
-        text  _[r]                     right justify line
-        sympy _[s]                     sympy equation
-           _[page]                     new page (PDF)
-        title _[t]                     table title, autonumber
-        <url, label>                   url reference
+        1  text  _[b]                    bold
+        2  text  _[c]                    center
+        3  text  _[d]                    description for footnote
+        4  text  _[e]                    equation label
+        5  text  _[f]                    figure label
+        6  text  _[#]                    foot number
+        7  text  _[i]                    italicize
+        8        _[-]                    line 
+        9  latex _[l]                    LaTeX equation
+        10 text  _[p]                    plain literal
+        11    _[page]                    new page
+        12 text  _[r]                    right justify line
+        13 sympy _[s]                    sympy equation
 
+        14 text  _[t]                    table label
+        15 <url, label>                  url or internal link inline
 
         Block Format:
-        _[[c]]                        center text block
-        _[[o]]                        code text block
-        _[[e]]                        end of block
-        _[[l]]                        literal block
-        _[[r]]                        right justify text block
-        _[[x]]                        LateX block
-        _[[m]]                        LaTeX math block
+        16 _[[c]]                        center block
+        17 _[[e]]                        end block
+        18 _[[l]]                        LateX block
+        19 _[[m]]                        LaTeX math block
+        20 _[[o]]                        code block
+        21 _[[p]]                        plain literal block
+        22 _[[r]]                        right justify block
+        23 _[[t]]                        block with tags
+
+        Values Only Formats:
+        24 a := n | unit, alt | descrip   = declare tag
+        25 a = b + c | unit, alt | n,n    := assign tag
+
 
         """
 
@@ -83,13 +84,13 @@ class TagsRST():
         self.errlogP = folderD["errlogP"]
         self.valL = []                          # accumulate values
 
-        self.tagD = {"c]": "center",  "#]": "footnumber", "foot]": "footnote",
-                     "-]": "line", "r]": "right",  "date]": "date",
-                     "page]": "page", "e]": "equation", "f]": "figure", "sym]": "sympy",
-                     "t]": "table", "x]": "latex", "lnk]": "link", "url]": "url",
-                     "[o]]": "codeblk", "[c]]": "centerblk", "[x]]": "latexblk",
-                     "[m]]": "mathblk", "[r]]": "rightblk",
-                     ":=": "declare", "=": "assign"}
+        self.tagD = {"c]": "center", "d]": "footnote", "e]": "equation",
+                     "f]": "figure", "#]": "footnumber", "i]": "italic",
+                     "l]": "latex", "-]": "line", "page]": "page",
+                     "r]": "right", "s]": "sympy", "t]": "table",
+                     "[c]]": "centerblk", "[e]]": "endblk", "[l]]": "latexblk",
+                     "[m]]": "mathblk", "[o]]": "codeblk", "[p]]": "plainblk",
+                     "[r]]": "rightblk", ":=": "declare", "=": "assign"}
 
         modnameS = __name__.split(".")[1]
         logging.basicConfig(
@@ -127,7 +128,7 @@ class TagsRST():
         return labelS
 
     def bold(self):
-        """reST formats line to bold
+        """1 bold text _[b]
 
         :return lineS: bold line of text
         :rtype: str
@@ -138,7 +139,7 @@ class TagsRST():
         return lineS
 
     def center(self):
-        """reST formats text to center of document width
+        """2 center text _[c]
 
         :return lineS: centered line
         :rtype: str
@@ -148,19 +149,19 @@ class TagsRST():
 
         return lineS
 
-    def date(self):
-        """insert reST date and time
+    def footnote(self):
+        """3 insert footnote _[d]
 
-        :return lineS: date reST string
+        :return lineS: footnote
         :rtype: str
         """
 
-        lineS = datetime.today().strftime('%Y-%m-%d')
+        lineS = ".. [*] " + self.lineS
 
         return lineS
 
     def equation(self):
-        """format equation label
+        """4 equation label _[e]
 
         :return lineS: equation label
         :rtype: str
@@ -175,7 +176,7 @@ class TagsRST():
         return lineS
 
     def figure(self):
-        """format figure caption
+        """5 figure label _[f]
 
         :return lineS: figure label
         :rtype: str
@@ -189,25 +190,14 @@ class TagsRST():
         return lineS
 
     def footnumber(self):
-        """increment footnote number
+        """6 increment footnote number _[#]
         """
 
         ftnumI = self.incrD["ftqueL"][-1] + 1
         self.incrD["ftqueL"].append(ftnumI)
 
-    def footnote(self):
-        """insert footnote
-
-        :return lineS: footnote
-        :rtype: str
-        """
-
-        lineS = ".. [*] " + self.lineS
-
-        return lineS
-
     def italic(self):
-        """italicizes line
+        """7 italicizes line _[i]
 
         :return lineS: italicized line
         :rtype: str
@@ -218,7 +208,7 @@ class TagsRST():
         return lineS
 
     def line(self):
-        """_summary_
+        """8 insert line _[-]
 
         :param lineS: _description_
         :type lineS: _type_
@@ -229,7 +219,7 @@ class TagsRST():
         return lineS
 
     def latex(self):
-        """format line of latex
+        """9 format latex _[l]
 
         :return lineS: reST formatted latex
         :rtype: str
@@ -239,11 +229,18 @@ class TagsRST():
 
         return lineS
 
-    def link(self):
-        pass
+    def plain(self):
+        """10 format plain literal _[p]
+
+        :return lineS: page break line
+        :rtype: str
+        """
+        lineS = ".. raw:: latex \n\n ?x?newpage \n"
+
+        return lineS
 
     def page(self):
-        """insert page break line
+        """11 insert page break _[page]
 
         :return lineS: page break line
         :rtype: str
@@ -253,7 +250,7 @@ class TagsRST():
         return lineS
 
     def right(self):
-        """right justify text
+        """12 right justify text _[r]
 
         :return lineS: right justified text
         :rtype: str
@@ -264,7 +261,7 @@ class TagsRST():
         return lineS
 
     def sympy(self):
-        """reST format line of sympy
+        """13 reST format line of sympy _[s]
 
         :return lineS: formatted sympy
         :rtype: str
@@ -277,7 +274,7 @@ class TagsRST():
         return lineS
 
     def table(self):
-        """format table title to reST
+        """14 table label _[t]
 
         :return lineS: figure label
         :rtype: str
@@ -290,19 +287,8 @@ class TagsRST():
 
         return lineS
 
-    def time(self):
-        """insert reST date and time
-
-        :return lineS: date and time reST string
-        :rtype: str
-        """
-
-        lineS = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-
-        return lineS
-
     def url(self):
-        """_summary_
+        """15 url or internal link
 
         :return: _description_
         :rtype: _type_
@@ -313,8 +299,29 @@ class TagsRST():
 
         return lineS
 
+    def centerblk(self):
+        pass
+
+    def endblk(self):
+        pass
+
+    def latexblk(self):
+        pass
+
+    def mathblk(self):
+        pass
+
+    def codeblk(self):
+        pass
+
+    def rightblk(self):
+        pass
+
+    def tagblk(self):
+        pass
+
     def declare(self):
-        """declare variable value
+        """declare variable value :=
 
         """
         locals().update(self.localD)
@@ -334,7 +341,7 @@ class TagsRST():
         return [varS, valS, unit1S, unit2S, descripS]
 
     def assign(self):
-        """assign result to equation
+        """assign result to equation =
 
         """
         locals().update(self.localD)

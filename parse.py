@@ -131,8 +131,8 @@ class RivtParse:
         for uS in strL:
             # print(f"{blockassignB=}")
             # print(f"{uS=}")
-            if uS[0:2] == "##":
-                continue                               # remove review comments
+            if uS[0:2] == "##":                        # remove comments
+                continue
             uS = uS[4:]                                # remove indent
             if blockB:                                 # accumulate block
                 lineS += uS
@@ -140,7 +140,7 @@ class RivtParse:
                 rvtS = tagutf.TagsUTF(lineS, tagS, strL)
                 utfS += rvtS + "\n"
                 blockB = False
-            if blockevalB and len(uS.strip()) < 2:     # write value table
+            if blockevalB and len(uS.strip()) < 2:     # compose value table
                 vtableL += blockevalL
                 if tfS == "declare":
                     utfS += self.vtable(blockevalL, hdrvL,
@@ -151,8 +151,7 @@ class RivtParse:
                     utfS += resultS
                 blockevalL = []
                 blockevalB = False
-                continue
-            if uS[0:2] == "||":                         # process commands
+            elif uS[0:2] == "||":                         # command
                 usL = uS[2:].split("|")
                 parL = usL[1:]
                 cmdS = usL[0].strip()
@@ -160,21 +159,23 @@ class RivtParse:
                     rvtM = cmdutf.CmdUTF(parL, self.incrD, self.folderD,
                                          self.localD)
                     rvtS = rvtM.cmd_parse(cmdS)
-                    if cmdS == "pages":                 # utf header, footer
-                        rvtuS = rvtS = self.incrD["headS"]
+                    if cmdS == "pages":                 # header page number
+                        rvtuS = self.incrD["headuS"]
+                        rvtrS = self.incrD["headrS"]
                         pagenoS = str(self.incrD["pageI"])
-                        self.incrD["pageI"] = int(pagenoS)+1
                         if "page" in rvtS:
-                            rvtuS = rvtS.replace(
+                            rvtuS = rvtuS.replace(
                                 "page", "page " + pagenoS)
+                            rvtrS = rvtrS.replace(
+                                "page", "page " + pagenoS)
+                        self.incrD["pageI"] = int(pagenoS) + 1
                         continue
-                    # if self.outputS in self.outputL:
-                    #     rvtM = cmdrst.CmdRST(parL, self.incrD, self.folderD)
-                    #     rvtS = rvtM.cmd_parse(cmdS)
-                    #     rstS += rvtS + "\n"
+                    rvtM = cmdrst.CmdRST(parL, self.incrD, self.folderD,
+                                         self.localD)   # rst *********
+                    rvtS = rvtM.cmd_parse(cmdS)
+                    rstS += rvtS
                 utfS += rvtS
-                continue
-            if "_[" in uS:                  # process end line tags
+            elif "_[" in uS:                              # end of line tag
                 usL = uS.split("_[")
                 lineS = usL[0]
                 tagS = usL[1].strip()
@@ -184,13 +185,12 @@ class RivtParse:
                     rvtM = tagutf.TagsUTF(lineS, self.folderD, self.incrD,
                                           self.localD)
                     rvtS = rvtM.tag_parse(tagS)
-                    utfS += rvtS + "\n"
-                    # if self.outputS in self.outputL:
-                    #     rvtM = tagrst.TagsRST(lineS, self.folderD, self.incrD)
-                    #     rvtS = rvtM.tag_parse(tagS)
-                    #     rstS += rvtS + "\n"
-                continue
-            if "=" in uS:                   # process assign and declare tags
+                    utfS += rvtS + "\n"                 # rst ********
+                    rvtM = tagrst.TagsRST(lineS, self.folderD, self.incrD,
+                                          self.localD)
+                    rvtS = rvtM.tag_parse(tagS)
+                    rstS += rvtS
+            elif "=" in uS:                               # assign tag
                 # print(f"{uS=}")
                 if "=" in self.tagL:
                     usL = uS.split("|")
@@ -202,12 +202,11 @@ class RivtParse:
                     if ":=" in uS:
                         tfS = "declare"
                         blockevalL.append(rvtM.tag_parse(":="))
-                        blockevalB = True
-                        # if self.outputS in self.outputL:
-                        #     rvtM = tagrst.TagsRST(
-                        #         lineS, self.folderD, self.incrD)
-                        #     rvtS = rvtM.tag_parse(":=")
-                        #     rstS += rvtS + "\n"
+                        blockevalB = True               # rst ********
+                        rvtM = tagrst.TagsRST(lineS, self.folderD, self.incrD,
+                                              self.localD)
+                        rvtS = rvtM.tag_parse(":=")
+                        rstS += rvtS
                         continue
                     else:
                         tfS = "assign"
@@ -216,18 +215,17 @@ class RivtParse:
                         blockevalB = True
                         utfS += eqL[1]
                         print(eqL[1])
-                        # if self.outputS in self.outputL:
-                        #     rvtM = tagrst.TagsRST(
-                        #         lineS, self.folderD, self.incrD)
-                        #     rvtS = rvtM.tag_parse(tagS)
-                        #     rstS += rvtS + "\n"
-                    continue
-            else:
+                        if self.outputS in self.outputL:
+                            rvtM = tagrst.TagsRST(
+                                lineS, self.folderD, self.incrD)
+                            rvtS = rvtM.tag_parse(tagS)
+                            rstS += rvtS + "\n"
+            else:                                           # delay R str title
                 if self.methS != "R":
                     print(uS)
                 utfS += uS + "\n"
 
-        if self.incrD["saveP"] != None:                 # save values
+        if self.incrD["saveP"] != None:                     # write saved values
             valP = Path(self.folderD["dataP"] / self.incrD["saveP"])
             with open(valP, "w", newline="") as f:
                 writecsv = csv.writer(f)

@@ -29,11 +29,12 @@ try:
     from PIL import ImageOps as PImageOps
 except:
     pass
+from rivt.units import *
 
 
 class TagsRST():
 
-    def __init__(self, lineS, folderD, incrD, localD):
+    def __init__(self, lineS, incrD, folderD,  localD):
         """format tags to reST
 
 
@@ -80,7 +81,7 @@ class TagsRST():
         self.folderD = folderD
         self.incrD = incrD
         self.lineS = lineS
-        self.swidth1I = incrD["widthI"] - 1
+        self.widthI = incrD["widthI"]
         self.errlogP = folderD["errlogP"]
         self.valL = []                          # accumulate values
 
@@ -118,12 +119,9 @@ class TagsRST():
         """
 
         objfillS = str(objI).zfill(2)
-        if type(text) == int:
-            sfillS = str(self.incrD["snumI"]).strip().zfill(2)
-            labelS = sfillS
-        else:
-            dnumSS = str(self.incrD["docnumS"])
-            labelS = dnumSS + "." + objfillS
+
+        labelS = "[" + str(self.incrD["secnumI"]).zfill(2) + \
+            "]" + text + objfillS
 
         return labelS
 
@@ -150,7 +148,7 @@ class TagsRST():
         return lineS
 
     def footnote(self):
-        """3 insert footnote _[d]
+        """4 footnote description _[d]
 
         :return lineS: footnote
         :rtype: str
@@ -161,16 +159,15 @@ class TagsRST():
         return lineS
 
     def equation(self):
-        """4 equation label _[e]
+        """3 reST equation label _[e]
 
-        :return lineS: equation label
+        :return lineS: reST equation label
         :rtype: str
         """
 
-        self.incrD["equalabelS"] = self.lineS
         enumI = int(self.incrD["equI"]) + 1
         self.incrD["equI"] = enumI
-        refS = self.label(enumI, " Equ: ") + " - " + str(self.incrD["secnumI"])
+        refS = self.label(enumI, " Equ. ")
         lineS = "**" + self.lineS + "**" + " ?x?hfill " + refS
 
         return lineS
@@ -190,11 +187,17 @@ class TagsRST():
         return lineS
 
     def footnumber(self):
-        """6 increment footnote number _[#]
+        """6 insert footnote number _[#]
         """
 
-        ftnumI = self.incrD["ftqueL"][-1] + 1
-        self.incrD["ftqueL"].append(ftnumI)
+        ftnumI = self.incrD["footL"].pop(0)
+        self.incrD["noteL"].append(ftnumI + 1)
+        self.incrD["footL"].append(ftnumI + 1)
+
+        lineS = "".join(self.lineS)
+        lineS = lineS.replace("*]", "[*]_ ")
+
+        return lineS
 
     def italic(self):
         """7 italicizes line _[i]
@@ -214,7 +217,7 @@ class TagsRST():
         :type lineS: _type_
         """
 
-        lineS = int(self.incrD["swidthI"]) * "-"
+        lineS = self.widthI * "-"
 
         return lineS
 
@@ -280,9 +283,11 @@ class TagsRST():
         :rtype: str
         """
 
-        tnumI = int(self.incrD["tnumI"]) + 1
-        self.incrD["tnumI"] = tnumI
-        refS = self.label(tnumI, "[Table: ") + "]"
+        self.incrD["eqlabels"] = self.lineS
+        tnumI = int(self.incrD["tableI"]) + 1
+        self.incrD["tableI"] = tnumI
+        refS = self.label(tnumI, " Table: ")
+        spcI = self.widthI - len(refS) - len(self.lineS)
         lineS = "**" + refS + "**" + " ?x?hfill  " + refS
 
         return lineS
@@ -319,26 +324,6 @@ class TagsRST():
 
     def tagblk(self):
         pass
-
-    def declare(self):
-        """declare variable value :=
-
-        """
-        locals().update(self.localD)
-
-        varS = str(self.lineS).split(":=")[0].strip()
-        valS = str(self.lineS).split(":=")[1].strip()
-        unit1S = str(self.incrD["unitS"]).split(",")[0]
-        unit2S = str(self.incrD["unitS"]).split(",")[1]
-        descripS = str(self.incrD["descS"])
-
-        cmdS = varS + "= " + valS + "*" + unit1S
-        exec(cmdS, globals(), locals())
-
-        locals().update(self.localD)
-        self.localD.update(locals())
-
-        return [varS, valS, unit1S, unit2S, descripS]
 
     def assign(self):
         """assign result to equation =
@@ -390,6 +375,25 @@ class TagsRST():
         self.localD.update(locals())
 
         return [[varS, str(val1U), unit1S, unit2S, descS], utfS]
+
+    def declare(self):
+        """declare variable value :=
+
+        """
+        locals().update(self.localD)
+
+        varS = str(self.lineS).split(":=")[0].strip()
+        valS = str(self.lineS).split(":=")[1].strip()
+        unit1S = str(self.incrD["unitS"]).split(",")[0]
+        unit2S = str(self.incrD["unitS"]).split(",")[1]
+        descripS = str(self.incrD["descS"])
+
+        cmdS = varS + "= " + valS + "*" + unit1S
+        exec(cmdS, globals(), locals())
+
+        self.localD.update(locals())
+
+        return [varS, valS, unit1S, unit2S, descripS]
 
     def vsub(self, eqL: list, eqS: str):
         """substitute numbers for variables in printed output

@@ -52,7 +52,7 @@ class CmdUTF:
 
         1- || append | folder | file_name                               R
         2- || functions | folder | file_name | code; nocode             V
-        3- || image1 | folder | file_name  | size                       I,V,T
+        3- || image | folder | file_name  | size                       I,V,T
         4- || image2 | folder | file_name  | size | file_name  | size   I,V,T
         5- || list | folder | file_name                                 V
         6- || pages | folder | file_name | head;foot                    R
@@ -102,20 +102,31 @@ class CmdUTF:
         """3 insert image from file
 
         """
+
         utfS = ""
-        iL = self.rL
-        scale1F = float(iL[1])
-        self.incrD.update({"scale1F": scale1F})
-        file1S = iL[0].strip()
-        img1S = str(Path(self.folderD["defaultP"] / file1S))
-        # pshrt1S = str(Path(*Path(img1S).parts[-3:]))
-        # pshrt2S = str(Path(*Path(img2S).parts[-3:]))
-        for fS in [img1S]:
+        plenI = 3
+        if len(self.paramL) != plenI:
+            logging.info(
+                f"{self.cmdS} command not evaluated: {plenI} parameters required")
+            return
+        iL = self.paramL
+        file1S = iL[1].strip()
+        if iL[0].strip() == "resource":
+            img1S = str(Path(self.folderD["resourceP"] / file1S))
+        else:
+            img1S = str(Path(self.folderD["resourceP"] / file1S))
+
+        pshrt1S = str(Path(*Path(img1S).parts[-3:]))
+        temp_out = StringIO()
+        sys.stdout = temp_out
+        for fS in [pshrt1S]:
             utfS += "Figure path: " + fS + "\n"
             try:
                 _display(_Image(fS))
             except:
                 pass
+
+        sys.stdout = sys.__stdout__
 
         return utfS
 
@@ -132,10 +143,6 @@ class CmdUTF:
                 f"{self.cmdS} command not evaluated: {plenI} parameters required")
             return
         iL = self.paramL
-        scale1F = float(iL[2])
-        scale2F = float(iL[4])
-        self.incrD.update({"scale1F": scale1F})
-        self.incrD.update({"scale2F": scale2F})
         file1S = iL[1].strip()
         file2S = iL[3].strip()
         if iL[0].strip() == "resource":
@@ -207,7 +214,8 @@ class CmdUTF:
                                     {plenI} parameters required")
             return
 
-        fileP = Path(self.folderD["rvconfigP"], "data", self.paramL[1].strip())
+        self.incrD["titleS"] = self.paramL[1].strip()
+        fileP = Path(self.folderD["rvconfigP"], "data", self.incrD["titleS"])
         with open(fileP, "r") as f2:
             pageL = f2.readlines()
 
@@ -411,7 +419,6 @@ class CmdUTF:
             if txttypeS == "literal":
                 j = txtfileS
                 # j += " "*4 + i
-                return j
             elif txttypeS == "literalindent":
                 for iS in txtfileL:
                     txtS += "   " + iS

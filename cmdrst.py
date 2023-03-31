@@ -113,15 +113,16 @@ class CmdRST:
         scale1S = iL[2]
         file1S = iL[1].strip()
         if iL[0].strip() == "resource":
-            img1S = str(Path(self.folderD["resourceP"] / file1S))
+            img1S = str(Path(self.folderD["resourceP"], file1S))
         else:
-            img1S = str(Path(self.folderD["resourceP"] / file1S))
-        rstS = (" image:: "
-                + img1S
-                + "\n"
-                + "   :width: "
-                + scale1S
-                + "\n"
+            img1S = str(Path(self.folderD["resourceP"], file1S))
+        img1S = img1S.replace("\\", "/")
+        rstS = ("\n.. image:: "
+                + img1S + "\n"
+                + "   :scale: "
+                + scale1S + "%" + "\n"
+                + "   :align: center"
+                + "\n\n"
                 )
 
         return rstS
@@ -139,30 +140,32 @@ class CmdRST:
             logging.info(
                 f"{self.cmdS} command not evaluated: {plenI} parameters required")
             return
+
         iL = self.paramL
         scale1S = iL[2]
         scale2S = iL[4]
         file1S = iL[1].strip()
         file2S = iL[3].strip()
         if iL[0].strip() == "resource":
-            img1S = str(Path(self.folderD["resourceP"] / file1S))
-            img2S = str(Path(self.folderD["resourceP"] / file2S))
+            img1S = str(Path(self.folderD["resourceP"], file1S))
+            img2S = str(Path(self.folderD["resourceP"], file2S))
         else:
-            img1S = str(Path(self.folderD["resourceP"] / file1S))
-            img2S = str(Path(self.folderD["resourceP"] / file2S))
-        rstS = (" image:: "
-                + img1S
-                + "\n"
-                + "   :width: "
-                + scale1S
+            img1S = str(Path(self.folderD["resourceP"], file1S))
+            img2S = str(Path(self.folderD["resourceP"], file2S))
+        img1S = img1S.replace("\\", "/")
+        img2S = img2S.replace("\\", "/")
+        rstS = ("|L| . |R|"
                 + "\n\n"
-                + ".. "
-                + " image:: "
-                + img2S
-                + "\n"
+                + ".. |L| image:: "
+                + img1S + "\n"
                 + "   :width: "
-                + scale2S
-                + "\n"
+                + scale1S + "%"
+                + "\n\n"
+                + ".. |R| image:: "
+                + img2S + "\n"
+                + "   :width: "
+                + scale2S + "%"
+                + "\n\n"
                 )
 
         return rstS
@@ -279,7 +282,8 @@ class CmdRST:
             readL = pDF1.values.tolist()
         elif extS == ".txt":                            # read txt file
             with open(pathP, "r") as f:
-                txtfile = f.read()
+                txtfile = f.readlines()
+                txtfile = "\n".join(txtfile)
             return txtfile
         else:
             logging.info(

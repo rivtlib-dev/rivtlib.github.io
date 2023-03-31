@@ -1,15 +1,16 @@
 #! python
-'''text
+'''rivt API
 
 '''
-
 import os
 import sys
 import re
 import time
+import datetime
 import logging
 import warnings
 import fnmatch
+import shutil
 from pathlib import Path
 from rivt import parse
 
@@ -28,10 +29,10 @@ if docfileS == "x":
 # run test files if this module is run as __main__
 if Path(docfileS).name == "rv0101t.py":
     docP = Path(
-        "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/rv0101t.py")
+        "./tests/rivt_Example_Test_01/text/rv0101_Overview/rv0101t.py")
 if Path(docfileS).name == "-o":
     docP = Path(
-        "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/rv0101t.py")
+        "./tests/rivt_Example_Test_01/text/rv0101_Overview/rv0101t.py")
 modnameS = __name__.split(".")[1]
 print(f"{modnameS=}")
 
@@ -46,23 +47,23 @@ projP = docP.parent.parent.parent  # rivt project folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
 rvconfigP = Path(docP.parent.parent / "rv0000-config")
 reconfigP = Path(projP / "resource" / "rv00-config")
-rivtcalcP = Path("rivt.rivttext.py").parent  # rivt package path
 for fileS in os.listdir(projP / "resource"):
     if fnmatch.fnmatch(fileS[2:5], prfxS + "-*"):
         refileP = Path(fileS)  # resource folder path
         break
-resourceP = Path(projP / "resource" / refileP)
-rerootP = Path(projP / "resource")
+resourceP = Path(projP, "resource", refileP)
+rerootP = Path(projP, "resource")
 doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = doctitleS.replace("-", " ")
 divtitleS = (resourceP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
 errlogP = Path(reconfigP / "temp" / "rivt_log.txt")
 siteP = projP / "site"  # site folder path
-docpdfS = docbaseS + ".pdf"
-dochtmlS = docbaseS + ".html"
-reportP = Path(projP / "report" / docpdfS)  # report folder path
-siteP = Path(projP / "site" / dochtmlS)  # site folder path
+reportP = Path(projP / "report")  # report folder path
+siteP = Path(projP / "site")  # site folder path
+rivtP = Path("rivttext.py").parent  # rivt package path
+pypath = os.path.dirname(sys.executable)
+rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
 
 # global dicts and vars
 utfS = """\n"""                     # utf output string
@@ -97,6 +98,7 @@ incrD = {
     "eqlabelS": "equation",  # last used equation label
     "codeB": False,  # print code strings in doc
     "pageI": 1,  # starting page number
+    "titleS": "rivtdoc",
     "headuS": "",
     "footuS": "",
     "headrS": "",
@@ -118,14 +120,14 @@ logging.basicConfig(
 dshortP = Path(*Path(docP.parent).parts[-2:])
 lshortP = Path(*rerootP.parts[-2:])
 rshortP = Path(*Path(resourceP).parts[-2:])
-logging.info(f"""------- start rivt file -------""")
-print("------- start rivt file -------\n")
+
+print(f"\n-------- start rivt file : [{docfileS}] ---------")
+
 if docP.exists():
-    logging.info(f"""rivt file : [{docfileS}]""")
+    logging.info(f"""start rivt file : [{docfileS}]""")
     logging.info(f"""rivt short path : [{dshortP}]""")
 else:
     logging.info(f"""rivt file path not found: {docP}""")
-
 if resourceP.exists:
     logging.info(f"""resource short path: [{rshortP}]""")
 else:
@@ -319,10 +321,166 @@ def T(rS: str):
 
 
 def X(rS: str):
-    """skip string processing: param rvxS: triple quoted string: type rvxS: str: return: None
+    """skip string - not processed
+
     """
 
     pass
+
+
+def _rest2tex(rstfileS):
+    """convert reST to tex file
+
+    0. insert [i] data into model (see _genxmodel())
+    1. read the expanded model
+    2. build the operations ordered dictionary
+    3. execute the dictionary and write the utf-8 calc and Python file
+    4. if the pdf flag is set re-execute xmodel and write the PDF calc
+    5. write variable summary to stdout
+
+    :param pdffileS: _description_
+    :type pdffileS: _type_
+    """
+    style_path = Path(reconfigP, "pdf_style.sty")
+    f2 = open(style_path)
+    f2.close
+
+    pythoncallS = "python "
+    if sys.platform == "linux":
+        pythoncallS = "python3 "
+    elif sys.platform == "darwin":
+        pythoncallS = "python3 "
+
+    rst2texP = Path(rivtP, "scripts", "rst2xetex.py")
+    print(f"{str(rst2texP)=}")
+    texfileP = Path(reconfigP, "temp", docbaseS + ".tex")
+    rstfileP = Path(reconfigP, "temp", docbaseS + ".rst")
+    texP = Path(reconfigP, "temp")
+
+    with open(rstfileP, "w") as f2:
+        f2.write(rstS)
+
+    tex1S = "".join(
+        [
+            pythoncallS,
+            str(rst2texP),
+            " --embed-stylesheet ",
+            " --documentclass=report ",
+            " --documentoptions=12pt,notitle,letterpaper ",
+            " --stylesheet=",
+            str(style_path) + " ",
+            str(rstfileP) + " ",
+            str(texfileP),
+        ]
+    )
+    logging.info(f"tex call:{tex1S=}")
+    os.chdir(texP)
+    try:
+        os.system(tex1S)
+        time.sleep(1)
+        logging.info(f"tex file written: {texfileP=}")
+    except SystemExit as e:
+        logging.exception('tex file not written')
+        logging.error(str(e))
+        sys.exit("tex file write failed")
+
+    return1S = _mod_tex(texfileP)
+
+    return2S = _gen_pdf(texfileP)
+
+    return texfileP
+
+
+def _mod_tex(tfileP):
+    """Modify TeX file to avoid problems with escapes:
+
+        -  Replace marker "aaxbb " inserted by rivt with
+            \\hfill because it is not handled by reST).
+        - Delete inputenc package
+        - Modify section title and add table of contents
+
+    """
+    startS = str(incrD["pageI"])
+
+    fileP = Path(folderD["rvconfigP"], "data", incrD["titleS"])
+    with open(fileP, "r") as f2:
+        pageL = f2.readlines()
+
+    doctitleS = "rivt doc"
+    for i in range(3):
+        if "<date>" in pageL[i]:
+            continue
+        elif "<datetime>" in pageL[i]:
+            continue
+        elif "<page>" in pageL[i]:
+            continue
+        else:
+            doctitleS = pageL[i].strip()
+
+    with open(tfileP, "r", encoding="utf-8", errors="ignore") as f2:
+        texf = f2.read()
+
+    texf = texf.replace("""inputenc""", """ """)
+    texf = texf.replace("aaxbb ", """\\hfill""")
+    texf = texf.replace("""\\begin{document}""",
+                        """\\renewcommand{\contentsname}{""" + doctitleS + "}\n" +
+                        """\\begin{document}"""+"\n" +
+                        """\\makeatletter""" +
+                        """\\renewcommand\@dotsep{10000}""" +
+                        """\\makeatother""" +
+                        """\\tableofcontents""" +
+                        """\\listoftables""" +
+                        """\\listoffigures""")
+
+    texf = texf.replace("?x?", """\\""")
+    texf = texf.replace(
+        """fancyhead[L]{\leftmark}""",
+        """fancyhead[L]{\\normalsize  """ + doctitleS + "}",
+    )
+    texf = texf.replace("x*x*x", "[" + incrD["docnumS"] + "]")
+    texf = texf.replace("""\\begin{tabular}""", "%% ")
+    texf = texf.replace("""\\end{tabular}""", "%% ")
+    texf = texf.replace(
+        """\\begin{document}""",
+        """\\begin{document}\n\\setcounter{page}{""" + startS + "}\n",
+    )
+
+    with open(tfileP, "w", encoding="utf-8") as f2:
+        f2.write(texf)
+
+    # with open(tfileP, 'w') as texout:
+    #    print(texf, file=texout)
+
+    return "INFO: tex file updated"
+
+
+def _gen_pdf(self):
+    """Write PDF file from TEX file
+
+    """
+
+    pdfD = {
+        "xpdfP": Path(reconfigP, "temp", docbaseS + ".pdf"),
+        "xhtmlP": Path(reconfigP, "temp", docbaseS + ".html"),
+        "xrstP": Path(reconfigP, "temp", docbaseS + ".rst"),
+        "xtexP": Path(reconfigP, "temp", docbaseS + ".tex"),
+        "xauxP": Path(reconfigP, "temp", docbaseS + ".aux"),
+        "xoutP": Path(reconfigP, "temp", docbaseS + ".out"),
+        "xflsP": Path(reconfigP, "temp", docbaseS + ".fls"),
+        "xtexmakP": Path(reconfigP, "temp", docbaseS + ".fdb_latexmk"),
+    }
+
+    os.system('latex --version')
+    os.chdir(Path(reconfigP, "temp"))
+
+    pdf1 = 'latexmk -xelatex -quiet -f ' + str(pdfD["xtexP"])
+    # print(f"{pdf1=}"")
+    os.system(pdf1)
+    srcS = ".".join([docbaseS, "pdf"])
+    dstS = str(Path(reportP, srcS))
+    shutil.copy(srcS, dstS)
+
+    return pdfD["xpdfP"]
 
 
 def writedoc(formatS):
@@ -335,43 +493,35 @@ def writedoc(formatS):
     global utfS, rstS, outputS, incrD, folderD
 
     formatL = [i.strip() for i in formatS.split(",")]
-    docutfP = Path(docP.parent / "README.txt")
-    rstfileP = Path(reconfigP, "temp", docbaseS + ".rst")
-    eshortP = Path(*Path(rstfileP).parts[-3:])
     # print(f"{formatL=}")
+
+    docutfP = Path(docP.parent / "README.txt")
+    rstfileP = Path(docP.parent, docbaseS + ".rst")
+    eshortP = Path(*Path(rstfileP).parts[-3:])
+
+    logging.info(f"""end rivt file: [{docfileS}]""")
+    print(f" -------- end rivt file: [{docfileS}] --------- ")
 
     print("", flush=True)
     if "utf" in formatL:                          # save utf file
         with open(docutfP, "w", encoding='utf-8') as f1:
             f1.write(utfS)
+            # with open(_rstfile, "wb") as f1:
+            #   f1.write(rstcalcS.encode("UTF-8"))
+            # f1 = open(_rstfile, "r", encoding="utf-8", errors="ignore")
         logging.info(f"""utf doc written: {dshortP}\README.txt""")
-
+        print(f"utf doc written: {dshortP}\README.txt")
     print("", flush=True)
-    if "pdf" in formatL or "html" in formatL:           # save rst file
+    if "pdf" in formatL or "html" in formatL:      # save rst file
         with open(rstfileP, "w") as f2:
             f2.write(rstS)
-        logging.info(f"""reST file written: {eshortP}""")
-
-    logging.info(f"""------- end rivt file -------""")
-    print("------- end rivt file -------")
+        logging.info(f"""reST file written: {rstfileP}""")
+        print(f"reST file written: {rstfileP}")
+    print("", flush=True)
+    if "pdf" in formatL:
+        pdffileP = _rest2tex(rstS)
+        logging.info(f"PDF doc written: {pdffileP}")
     sys.exit()
-
-    # if "pdf" in i:
-    #     with open(docP, "w") as f2:
-    #         f2.write(pdffileS)
-    #     pdffileS = report(rstS)
-    #     docP = folderD["reportP"]
-    #     with open(docP, "w") as f2:
-    #         f2.write(pdffileS)
-    #     print("", flush=True)
-    #     logging.info(f"""pdf doc written: {docpdfS}""")
-    # if "html" in i:
-    #     htmlfileS = site(rstS)
-    #     docP = folderD["siteP"]
-    #     with open(docP, "w") as f2:
-    #         f2.write(htmlfileS)
-    #     print("", flush=True)
-    #     logging.info(f"""html doc written: {dochtmlS}""")
 
 
 def writereport(fileS):
@@ -380,138 +530,6 @@ def writereport(fileS):
     :param fileS: _description_
     :type fileS: _type_
     """
-
-    f1 = open(_cfull, "r")
-    utfcalcL = f1.readlines()
-    f1.close()
-    print("INFO calc file read: " + str(_cfull))
-
-    indx = 0  # skip D() in calc list - avoid recursion
-    for iS in enumerate(utfcalcL):
-        if "rv.D" in iS[1]:
-            indx = int(iS[0])
-            break
-    rstcalcL = utfcalcL = utfcalcL[0:indx] + utfcalcL[indx + 1:]
-    cmdS = "".join(utfcalcL)
-
-    exprtfile = Path(_cpathcur / ".".join([_cnameS, "csv"]))
-    str1 = """header string\n"""  # write values file
-    str1 = str1 + exportS
-    with open(exprtfile, "w") as expF:
-        expF.write(str1)
-    print("INFO  values file written to calc folder", flush=True)
-
-    if doctypeS == "utf8":
-        gen_utf8(cmdS, stylefileS, calctitleS)
-
-    pdfD = {
-        "cpdfP": Path(_dpath0 / ".".join([_cnameS, "pdf"])),
-        "chtml": Path(_dpath0 / ".".join([_cnameS, "html"])),
-        "trst": Path(_dpath0 / ".".join([_cnameS, "rst"])),
-        "ttex1": Path(_dpath0 / ".".join([_cnameS, "tex"])),
-        "auxfile": Path(_dpath0 / ".".join([_cnameS, ".aux"])),
-        "outfile": Path(_dpath0 / ".".join([_cnameS, ".out"])),
-        "texmak2": Path(_dpath0 / ".".join([_cnameS, ".fls"])),
-        "texmak3": Path(_dpath0 / ".".join([_cnameS, ".fdb_latexmk"])),
-    }
-    os.chdir(_dpath0)
-    tmpS = os.getcwd()
-    if tmpS == str(_dpath0):
-        for f in fileL:
-            try:
-                os.remove(f)
-            except:
-                pass
-        time.sleep(1)
-    print("INFO: temporary Tex files deleted \n", flush=True)
-    gen_rst(cmdS, doctypeS, stylefileS, calctitleS, startpageS)
-
-    if stylefileS == "default":
-        stylefileS = "pdf_style.sty"
-    else:
-        stylefileS == stylefileS.strip()
-    style_path = Path(_dpath0 / stylefileS)
-    print("INFO: style sheet " + str(style_path))
-    pythoncallS = "python "
-    if sys.platform == "linux":
-        pythoncallS = "python3 "
-    elif sys.platform == "darwin":
-        pythoncallS = "python3 "
-
-    rst2xeP = Path(rivpath / "scripts" / "rst2xetex.py")
-    texfileP = pdfD["ttex1"]
-    tex1S = "".join(
-        [
-            pythoncallS,
-            str(rst2xeP),
-            " --embed-stylesheet ",
-            " --documentclass=report ",
-            " --documentoptions=12pt,notitle,letterpaper ",
-            " --stylesheet=",
-            str(style_path) + " ",
-            str(_rstfile) + " ",
-            str(texfileP),
-        ]
-    )
-    os.chdir(_dpath0)
-    os.system(tex1S)
-    print("INFO: tex file written " + str(texfileP))
-
-    # fix escape sequences
-    fnumS = _setsectD["fnumS"]
-    with open(texfileP, "r", encoding="utf-8", errors="ignore") as texin:
-        texf = texin.read()
-    texf = texf.replace("?x?", """\\""")
-    texf = texf.replace(
-        """fancyhead[L]{\leftmark}""",
-        """fancyhead[L]{\\normalsize  """ + calctitleS + "}",
-    )
-    texf = texf.replace("x*x*x", fnumS)
-    texf = texf.replace("""\\begin{tabular}""", "%% ")
-    texf = texf.replace("""\\end{tabular}""", "%% ")
-    texf = texf.replace(
-        """\\begin{document}""",
-        """\\begin{document}\n\\setcounter{page}{""" + startpageS + "}\n",
-    )
-
-    # texf = texf.replace(
-    #     """\\begin{document}""",
-    #     """\\renewcommand{\contentsname}{"""
-    #     + self.calctitle
-    #     + "}\n"
-    #     + """\\begin{document}"""
-    #     + "\n"
-    #     + """\\makeatletter"""
-    #     + """\\renewcommand\@dotsep{10000}"""
-    #     + """\\makeatother"""
-    #     + """\\tableofcontents"""
-    #     + """\\listoftables"""
-    #     + """\\listoffigures"""
-    # )
-
-    time.sleep(1)
-    with open(texfileP, "w", encoding="utf-8") as texout:
-        texout.write(texf)
-    print("INFO: tex file updated")
-
-    rstcalcS = """"""
-    exec(cmdS, globals(), locals())
-    docdir = os.getcwd()
-    with open(_rstfile, "wb") as f1:
-        f1.write(rstcalcS.encode("UTF-8"))
-    print("INFO: rst calc written ", docdir, flush=True)
-
-    f1 = open(_rstfile, "r", encoding="utf-8", errors="ignore")
-    rstcalcL = f1.readlines()
-    f1.close()
-    print("INFO: rst file read: " + str(_rstfile))
-
-    if doctypeS == "tex" or doctypeS == "pdf":
-        gen_tex(doctypeS, stylefileS, calctitleS, startpageS)
-    elif doctypeS == "html":
-        gen_html()
-    else:
-        print("INFO: doc type not recognized")
 
     try:
         filen1 = os.path.join(self.rpath, "reportmerge.txt")
@@ -539,8 +557,42 @@ def writereport(fileS):
         file2.write(j1)
     file2.close()
 
-    os._exit(1)
+    try:
+        filen1 = os.path.join(self.rpath, "reportmerge.txt")
+        print(filen1)
+        file1 = open(filen1, 'r')
+        mergelist = file1.readlines()
+        file1.close()
+        mergelist2 = mergelist[:]
+    except OSError:
+        print('< reportmerge.txt file not found in reprt folder >')
+        return
+    calnum1 = self.pdffile[0:5]
+    file2 = open(filen1, 'w')
+    newstr1 = 'c | ' + self.pdffile + ' | ' + self.calctitle
+    for itm1 in mergelist:
+        if calnum1 in itm1:
+            indx1 = mergelist2.index(itm1)
+            mergelist2[indx1] = newstr1
+            for j1 in mergelist2:
+                file2.write(j1)
+            file2.close()
+            return
+    mergelist2.append("\n" + newstr1)
+    for j1 in mergelist2:
+        file2.write(j1)
+    file2.close()
+    return
 
 
 def writesite(fileS):
+
+    # if "html" in i:
+    #     htmlfileS = site(rstS)
+    #     docP = folderD["siteP"]
+    #     with open(docP, "w") as f2:
+    #         f2.write(htmlfileS)
+    #     print("", flush=True)
+    #     logging.info(f"""html doc written: {dochtmlS}""")
+
     pass

@@ -80,7 +80,7 @@ class TagsRST():
         self.localD = localD
         self.folderD = folderD
         self.incrD = incrD
-        self.lineS = lineS
+        self.lineS = lineS.strip()
         self.widthI = incrD["widthI"]
         self.errlogP = folderD["errlogP"]
         self.valL = []                          # accumulate values
@@ -119,9 +119,8 @@ class TagsRST():
         """
 
         objfillS = str(objI).zfill(2)
-
-        labelS = "[" + str(self.incrD["secnumI"]).zfill(2) + \
-            "]" + text + objfillS
+        labelS = text + objfillS + \
+            " [" + str(self.incrD["secnumI"]).zfill(2) + "]"
 
         return labelS
 
@@ -168,7 +167,7 @@ class TagsRST():
         enumI = int(self.incrD["equI"]) + 1
         self.incrD["equI"] = enumI
         refS = self.label(enumI, " Equ. ")
-        lineS = "**" + self.lineS + "**" + " ?x?hfill " + refS
+        lineS = "**" + self.lineS + "**" + " ?x?hfill " + refS + "\n"
 
         return lineS
 
@@ -181,7 +180,7 @@ class TagsRST():
 
         fnumI = int(self.incrD["figI"]) + 1
         self.incrD["figI"] = fnumI
-        refS = self.label(fnumI, " Fig. ") + " - " + str(self.incrD["secnumI"])
+        refS = self.label(fnumI, " Fig. ")
         lineS = "**" + self.lineS + "**" + " ?x?hfill " + refS
 
         return lineS
@@ -189,10 +188,6 @@ class TagsRST():
     def footnumber(self):
         """6 insert footnote number _[#]
         """
-
-        ftnumI = self.incrD["footL"].pop(0)
-        self.incrD["noteL"].append(ftnumI + 1)
-        self.incrD["footL"].append(ftnumI + 1)
 
         lineS = "".join(self.lineS)
         lineS = lineS.replace("*]", "[*]_ ")

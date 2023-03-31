@@ -56,19 +56,19 @@ class RivtParse:
             self.tagL = ["[literal]]"]
             self.blockL = ["[readme]]"]
         elif methS == "I":
-            self.cmdL = ["table", "text", "image1", "image2"]
+            self.cmdL = ["table", "text", "image", "image2"]
             self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
                          "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
         elif methS == "V":
-            self.cmdL = ["table", "text", "image1", "image2",
+            self.cmdL = ["table", "text", "image", "image2",
                          "values", "list", "functions"]
             self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
                          "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]",
                          "=", ":="]
         elif methS == "T":
-            self.cmdL = ["table", "text", "image1", "image2"]
+            self.cmdL = ["table", "text", "image", "image2"]
             self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
                          "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
@@ -151,12 +151,12 @@ class RivtParse:
                 if cmdS in self.cmdL:
                     rvtM = cmdutf.CmdUTF(parL, self.incrD, self.folderD,
                                          self.localD)
-                    rvtS = rvtM.cmd_parse(cmdS)
+                    utS = rvtM.cmd_parse(cmdS)
                     if cmdS == "pages":                 # header page number
                         rvtuS = self.incrD["headuS"]
                         rvtrS = self.incrD["headrS"]
                         pagenoS = str(self.incrD["pageI"])
-                        if "page" in rvtS:
+                        if "page" in utS:
                             rvtuS = rvtuS.replace(
                                 "page", "page " + pagenoS)
                             rvtrS = rvtrS.replace(
@@ -165,9 +165,9 @@ class RivtParse:
                         continue
                     rvtM = cmdrst.CmdRST(parL, self.incrD, self.folderD,
                                          self.localD)   # rst *********
-                    rvtS = rvtM.cmd_parse(cmdS)
-                    rstS += rvtS
-                utfS += rvtS
+                    retS = rvtM.cmd_parse(cmdS)
+                    rstS += retS
+                utfS += utS
             elif "_[" in uS:                              # end of line tag
                 usL = uS.split("_[")
                 lineS = usL[0]
@@ -179,12 +179,12 @@ class RivtParse:
                 if tagS in self.tagL:
                     rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
                                           self.localD)
-                    rvtS = rvtM.tag_parse(tagS)
-                    utfS += rvtS + "\n"                 # rst ********
+                    utS = rvtM.tag_parse(tagS)
+                    utfS += utS + "\n"                 # rst ********
                     rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
                                           self.localD)
-                    rvtS = rvtM.tag_parse(tagS)
-                    rstS += rvtS
+                    reS = rvtM.tag_parse(tagS)
+                    rstS += reS + "\n"
             elif "=" in uS:                               # assign tag
                 # print(f"{uS=}")
                 if "=" in self.tagL:
@@ -220,6 +220,7 @@ class RivtParse:
                 if self.methS != "R":
                     print(uS)
                 utfS += uS + "\n"
+                rstS += uS + "\n"
 
         if self.incrD["saveP"] != None:                     # write saved values
             valP = Path(self.folderD["dataP"] / self.incrD["saveP"])

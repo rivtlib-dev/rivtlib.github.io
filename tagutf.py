@@ -115,9 +115,8 @@ class TagsUTF:
         """
 
         objfillS = str(objI).zfill(2)
-
-        labelS = "[" + str(self.incrD["secnumI"]).zfill(2) + \
-            "]" + text + objfillS
+        labelS = text + objfillS + \
+            " [" + str(self.incrD["secnumI"]).zfill(2) + "]"
 
         # store for equation table
         self.incrD["eqlabelS"] = self.lineS + " [" + str(objI).zfill(2) + "]"

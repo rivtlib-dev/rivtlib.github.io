@@ -23,12 +23,13 @@ from pathlib import Path
 from IPython.display import display as _display
 from IPython.display import Image as _Image
 from datetime import datetime
+from TexSoup import TexSoup
 try:
     from PIL import Image as PImage
     from PIL import ImageOps as PImageOps
 except:
     pass
-from TexSoup import TexSoup
+
 from rivt import parse
 from rivt.units import *
 
@@ -69,9 +70,12 @@ class CmdUTF:
         self.paramL = paramL
         self.errlogP = folderD["errlogP"]
 
+        modnameS = __name__.split(".")[1]
+        # print(f"{modnameS=}")
         logging.basicConfig(
             level=logging.DEBUG,
-            format="%(asctime)s %(name)-8s %(levelname)-8s %(message)s",
+            format="%(asctime)-8s  " + modnameS +
+            "   %(levelname)-8s %(message)s",
             datefmt="%m-%d %H:%M",
             filename=self.errlogP,
             filemode="w",
@@ -203,7 +207,7 @@ class CmdUTF:
                                     {plenI} parameters required")
             return
 
-        fileP = Path(self.folderD["configP"], "data", self.paramL[1].strip())
+        fileP = Path(self.folderD["rvconfigP"], "data", self.paramL[1].strip())
         with open(fileP, "r") as f2:
             pageL = f2.readlines()
 
@@ -311,6 +315,7 @@ class CmdUTF:
 
         alignD = {"S": "", "D": "decimal",
                   "C": "center", "R": "right", "L": "left"}
+
         tableS = ""
         plenI = 4
         if len(self.paramL) != plenI:
@@ -395,21 +400,26 @@ class CmdUTF:
         txttypeS = self.paramL[2].strip()
         extS = pathP.suffix
 
-        with open(pathP, "r", encoding="utf-8") as f:
-            txtfileS = f.read()
-        with open(pathP, "r", encoding="utf-8") as f:
-            txtfileL = f.readlines()
+        with open(pathP, "r", encoding="utf-8") as f1:
+            txtfileS = f1.read()
+        with open(pathP, "r", encoding="utf-8") as f2:
+            txtfileL = f2.readlines()
 
+        j = ""
         if extS == ".txt":
             # print(f"{txttypeS=}")
-            j = ""
-            for i in txtfileL:
-                if txttypeS == "literal":
-                    j += i
-                    # j += " "*4 + i
-                elif txttypeS == "sympy":
+            if txttypeS == "literal":
+                j = txtfileS
+                # j += " "*4 + i
+                return j
+            elif txttypeS == "literalindent":
+                for iS in txtfileL:
+                    txtS += "   " + iS
+                j = txtS + "\n"
+            elif txttypeS == "sympy":
+                for iS in txtfileL:
                     try:
-                        spL = i.split("=")
+                        spL = iS.split("=")
                         spS = "Eq(" + spL[0] + ",(" + spL[1] + "))"
                         # sps = sp.encode('unicode-escape').decode()
                         lineS = sp.pretty(sp.sympify(
@@ -419,46 +429,46 @@ class CmdUTF:
                         lineS = sp.pretty(sp.sympify(
                             spS, _clash2, evaluate=False))
                         j += lineS
-                elif txttypeS == "wrap" or txttypeS == "indent":
-                    if txttypeS == "wrap":
-                        inS = " " * 4
-                    else:
-                        inS = " " * 8
-                    txtS = txtfileS
-                    widthI = self.incrD["widthI"]
-                    uL = textwrap.wrap(txtS, width=widthI)
-                    uL = [inS + s + "\n" for s in uL]
-                    utfS = "".join(uL)
-                    print(utfS)
-                    return utfS
-                elif txttypeS == "itag":
-                    utfI = parse.RivtParse(folderD, incrD,
-                                           txtfileS, "itag", localD)
-                    xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(
-                        txtfileS)
-                    print(xutfS)
-                    return xutfS
-                elif extS == ".html":
-                    txtS = ""
-                    flg = 0
-                    for iS in uL:
-                        if "src=" in iS:
-                            flg = 1
-                            continue
-                        if flg == 1 and '"' in iS:
-                            flg = 0
-                            continue
-                        if flg == 1:
-                            continue
-                        txtS += " "*4 + iS
-                    txtS = htm.html2text(txtS)
-                    utfS = txtS.replace("\n    \n", "")
-                    print(utfS)
-                    return (utfS)
+            elif txttypeS == "wrap" or txttypeS == "indent":
+                if txttypeS == "wrap":
+                    inS = " " * 4
                 else:
-                    j += " "*4 + i
+                    inS = " " * 8
+                txtS = txtfileS
+                widthI = self.incrD["widthI"]
+                uL = textwrap.wrap(txtS, width=widthI)
+                uL = [inS + s + "\n" for s in uL]
+                utfS = "".join(uL)
+                print(utfS)
+                return utfS
+            elif txttypeS == "itag":
+                utfI = parse.RivtParse(folderD, incrD,
+                                       txtfileS, "itag", localD)
+                xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(
+                    txtfileS)
+                print(xutfS)
+                return xutfS
+            else:
+                j += " "*4 + i
             print(j)
             return j
+        elif extS == ".html":
+            txtS = ""
+            flg = 0
+            for iS in txtfileL:
+                if "src=" in iS:
+                    flg = 1
+                    continue
+                if flg == 1 and '"' in iS:
+                    flg = 0
+                    continue
+                if flg == 1:
+                    continue
+                txtS += " "*4 + iS
+                txtS = htm.html2text(txtS)
+                utfS = txtS.replace("\n    \n", "")
+                print(utfS)
+                return (utfS)
         elif extS == ".tex":
             soup = TexSoup(txtfileS)
             soupL = list(soup.text)

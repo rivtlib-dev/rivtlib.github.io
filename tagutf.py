@@ -28,36 +28,34 @@ try:
     from PIL import ImageOps as PImageOps
 except:
     pass
-
 from rivt.units import *
 
 
 class TagsUTF:
 
-    def __init__(self, lineS, folderD, incrD, localD):
+    def __init__(self, lineS, incrD, folderD,  localD):
         """format tags to utf
 
         ============================ ============================================
-        tag syntax                      description (one tag at end of line)
+        tag syntax                      description 
         ============================ ============================================
 
         Line Format:
-        1  text  _[b]                    bold
-        2  text  _[c]                    center
+        1  text  _[b]                    bold - line
+        2  text  _[c]                    center - line
         3  text  _[d]                    description for footnote
-        4  text  _[e]                    equation label
-        5  text  _[f]                    figure label
-        6  text  _[#]                    foot number
-        7  text  _[i]                    italicize
-        8        _[-]                    line 
-        9  latex _[l]                    LaTeX equation
-        10 text  _[p]                    plain literal
-        11    _[page]                    new page
-        12 text  _[r]                    right justify line
-        13 sympy _[s]                    sympy equation
-
-        14 text  _[t]                    table label
-        15 <url, label>                  url or internal link inline
+        4  text  _[e]                    equation label - line
+        5  text  _[f]                    figure label -line
+        6  text  _[#]                    foot number - inline
+        7  text  _[i]                    italicize - line
+        8        _[-]                    line - line
+        9  text  _[l]                    LaTeX equation - line
+        10 text  _[p]                    plain literal - line
+        11    _[page]                    new page - line
+        12 text  _[r]                    right justify line - line
+        13 text  _[s]                    sympy equation - line
+        14 text  _[t]                    table label - line
+        15 ref, label _[u]               url or internal link - line
 
         Block Format:
         16 _[[c]]                        center block
@@ -79,7 +77,7 @@ class TagsUTF:
         self.folderD = folderD
         self.incrD = incrD
         self.lineS = lineS
-        self.swidth1I = incrD["widthI"] - 1
+        self.widthI = incrD["widthI"]
         self.errlogP = folderD["errlogP"]
         self.valL = []                          # accumulate values
 
@@ -92,6 +90,7 @@ class TagsUTF:
                      "[r]]": "rightblk", ":=": "declare", "=": "assign"}
 
         modnameS = __name__.split(".")[1]
+        # print(f"{modnameS=}")
         logging.basicConfig(
             level=logging.DEBUG,
             format="%(asctime)-8s  " + modnameS +
@@ -100,7 +99,6 @@ class TagsUTF:
             filename=self.errlogP,
             filemode="w",
         )
-        # print(f"{modnameS=}")
         warnings.filterwarnings("ignore")
 
     def tag_parse(self, tagS):
@@ -109,7 +107,7 @@ class TagsUTF:
 
         return eval("self." + self.tagD[tagS] + "()")
 
-    def label(self, objI, sectS, text):
+    def label(self, objI, text):
         """format labels for equations, tables and figures
 
             :return labelS: formatted label
@@ -121,6 +119,9 @@ class TagsUTF:
         labelS = "[" + str(self.incrD["secnumI"]).zfill(2) + \
             "]" + text + objfillS
 
+        # store for equation table
+        self.incrD["eqlabelS"] = self.lineS + " [" + str(objI).zfill(2) + "]"
+
         return labelS
 
     def bold(self):
@@ -131,45 +132,47 @@ class TagsUTF:
         """
 
         lineS = self.lineS
+
         print(lineS)
         return lineS
 
     def center(self):
-        """2 center text in document width _[c]
+        """2 center text _[c]
 
         :return lineS: centered line
         :rtype: str
         """
 
-        lineS = self.lineS.center(int(self.incrD["widthI"]))
+        lineS = self.lineS.center(int(self.widthI))
 
         print(lineS)
         return lineS
 
     def footnote(self):
-        """3 footnote description _[d]
+        """4 footnote description _[d]
 
         :return lineS: footnote
         :rtype: str
         """
 
-        lineS = ".. [*] " + self.lineS
+        ftnumI = self.incrD["noteL"].pop(0)
+        lineS = "[" + str(ftnumI) + "] " + self.lineS
 
+        print(lineS)
         return lineS
 
     def equation(self):
-        """4 formats equation label to utf _[e]
+        """3 utf equation label _[e]
 
-        :return lineS: reST equation label
+        :return lineS: utf equation label
         :rtype: str
         """
 
         enumI = int(self.incrD["equI"]) + 1
         self.incrD["equI"] = enumI
-        refS = self.label(enumI, str(self.incrD["secnumI"]), " Equ. ")
-        spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
+        refS = self.label(enumI, " Equ. ")
+        spcI = self.widthI - len(refS) - len(self.lineS)
         lineS = self.lineS + " " * spcI + refS
-        self.incrD["eqlabelS"] = self.lineS + " [" + str(enumI).zfill(2) + "]"
 
         print(lineS)
         return lineS
@@ -183,7 +186,7 @@ class TagsUTF:
 
         fnumI = int(self.incrD["figI"]) + 1
         self.incrD["figI"] = fnumI
-        refS = self.label(fnumI, str(self.incrD["secnumI"]), " Fig. ")
+        refS = self.label(fnumI, " Fig. ")
         spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
         lineS = self.lineS + " " * spcI + refS
 
@@ -194,10 +197,12 @@ class TagsUTF:
         """6 footnote number _[#]
         """
 
-        ftnumI = self.incrD["ftqueL"][-1] + 1
-        self.incrD["ftqueL"].append(ftnumI)
-        lineS = self.lineS.replace("[#]", "[" + str(ftnumI) + "]")
+        ftnumI = self.incrD["footL"].pop(0)
+        self.incrD["noteL"].append(ftnumI + 1)
+        self.incrD["footL"].append(ftnumI + 1)
+        lineS = self.lineS.replace("*]", "[" + str(ftnumI) + "]")
 
+        print(lineS)
         return lineS
 
     def italic(self):
@@ -221,13 +226,13 @@ class TagsUTF:
 
         return lineS
 
-    def line(lineS):
+    def line(self):
         """9 insert horizontal line _[-]
 
         :param lineS: _description_
         :type lineS: _type_
         """
-        lineS = int(self.incrD["widthI"]) * "_"
+        lineS = self.widthI * "_"
 
         print(lineS)
         return lineS
@@ -262,7 +267,7 @@ class TagsUTF:
         :rtype: str
         """
 
-        lineS = lineS.rjust(int(self.incrD["widthI"]))
+        lineS = lineS.rjust(int(self.widthI))
 
         print(lineS)
         return lineS
@@ -295,8 +300,8 @@ class TagsUTF:
         self.incrD["eqlabels"] = self.lineS
         tnumI = int(self.incrD["tableI"]) + 1
         self.incrD["tableI"] = tnumI
-        refS = self.label(tnumI, str(self.incrD["secnumI"]), " Table: ")
-        spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
+        refS = self.label(tnumI, " Table: ")
+        spcI = self.widthI - len(refS) - len(self.lineS)
         lineS = self.lineS + " " * spcI + refS + "\n"
 
         print(lineS)
@@ -387,7 +392,7 @@ class TagsUTF:
         return [[varS, valtS, unit1S, unit2S, descS], utfS]
 
     def declare(self):
-        """declare value for variable
+        """declare variable value :=
 
         """
         locals().update(self.localD)

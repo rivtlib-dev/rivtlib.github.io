@@ -81,6 +81,7 @@ class RivtParse:
             pass
 
         modnameS = __name__.split(".")[1]
+        # print(f"{modnameS=}")
         logging.basicConfig(
             level=logging.DEBUG,
             format="%(asctime)-8s  " + modnameS +
@@ -89,15 +90,7 @@ class RivtParse:
             filename=self.errlogP,
             filemode="w",
         )
-        # print(f"{modnameS=}")
-        logconsole = logging.StreamHandler()
-        logconsole.setLevel(logging.INFO)
-        formatter = logging.Formatter(
-            "%(levelname)-8s" + modnameS + "   %(message)s")
-        logconsole.setFormatter(formatter)
-        logging.getLogger("").addHandler(logconsole)
         warnings.filterwarnings("ignore")
-
         # self.rivtD.update(locals())
 
     def str_parse(self, strL):
@@ -179,14 +172,16 @@ class RivtParse:
                 usL = uS.split("_[")
                 lineS = usL[0]
                 tagS = usL[1].strip()
-                if tagS[0] == "[":
+                if tagS[0] == "[":                        # block tag
                     blockB = True
+                if tagS == "*]":
+                    lineS = usL                           # inline tag
                 if tagS in self.tagL:
-                    rvtM = tagutf.TagsUTF(lineS, self.folderD, self.incrD,
+                    rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
                                           self.localD)
                     rvtS = rvtM.tag_parse(tagS)
                     utfS += rvtS + "\n"                 # rst ********
-                    rvtM = tagrst.TagsRST(lineS, self.folderD, self.incrD,
+                    rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
                                           self.localD)
                     rvtS = rvtM.tag_parse(tagS)
                     rstS += rvtS
@@ -197,16 +192,17 @@ class RivtParse:
                     lineS = usL[0]
                     self.incrD["unitS"] = usL[1].strip()
                     self.incrD["descS"] = usL[2].strip()
-                    rvtM = tagutf.TagsUTF(
-                        lineS, self.folderD, self.incrD, self.localD)
+                    rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
+                                          self.localD)
                     if ":=" in uS:
                         tfS = "declare"
                         blockevalL.append(rvtM.tag_parse(":="))
-                        blockevalB = True               # rst ********
-                        rvtM = tagrst.TagsRST(lineS, self.folderD, self.incrD,
+                        # rst ********
+                        rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
                                               self.localD)
                         rvtS = rvtM.tag_parse(":=")
-                        rstS += rvtS
+                        blockevalL.append(rvtM.tag_parse(":="))
+                        blockevalB = True
                         continue
                     else:
                         tfS = "assign"
@@ -215,11 +211,11 @@ class RivtParse:
                         blockevalB = True
                         utfS += eqL[1]
                         print(eqL[1])
-                        if self.outputS in self.outputL:
-                            rvtM = tagrst.TagsRST(
-                                lineS, self.folderD, self.incrD)
-                            rvtS = rvtM.tag_parse(tagS)
-                            rstS += rvtS + "\n"
+                        # rst ********
+                        rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
+                                              self.localD)
+                        rvtS = rvtM.tag_parse(tagS)
+                        rstS += rvtS + "\n"
             else:                                           # delay R str title
                 if self.methS != "R":
                     print(uS)
@@ -232,7 +228,7 @@ class RivtParse:
                 writecsv.writerow(hdrvL)
                 writecsv.writerows(vtableL)
 
-        return (utfS, rvtuS), (rstS, rvtrS), self.folderD, self.incrD, self.localD
+        return (utfS, rvtuS), (rstS, rvtrS),  self.incrD, self.folderD, self.localD
 
     def etable(self, tblL, hdreL, tblfmt, aligneL):
         """write equation table"""

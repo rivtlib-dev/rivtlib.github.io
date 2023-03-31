@@ -23,6 +23,7 @@ from tabulate import tabulate
 from pathlib import Path
 from IPython.display import display as _display
 from IPython.display import Image as _Image
+from TexSoup import TexSoup
 try:
     from PIL import Image as PImage
     from PIL import ImageOps as PImageOps
@@ -42,7 +43,7 @@ class CmdRST:
 
     """
 
-    def __init__(self, paramL, folderD, incrD, localD):
+    def __init__(self, paramL, incrD, folderD,  localD):
         """
         ======================================================== ============
                         command syntax                              methods
@@ -68,9 +69,12 @@ class CmdRST:
         self.paramL = paramL
         self.errlogP = folderD["errlogP"]
 
+        modnameS = __name__.split(".")[1]
+        # print(f"{modnameS=}")
         logging.basicConfig(
             level=logging.DEBUG,
-            format="%(asctime)s %(name)-8s %(levelname)-8s %(message)s",
+            format="%(asctime)-8s  " + modnameS +
+            "   %(levelname)-8s %(message)s",
             datefmt="%m-%d %H:%M",
             filename=self.errlogP,
             filemode="w",
@@ -94,35 +98,40 @@ class CmdRST:
         pass
 
     def image(self):
-        """3 insert one or two images from file
+        """3 insert an image from file
 
         Args:
             il (list): image parameters
         """
         rstS = ""
-        iL = self.rL
-        scale1F = float(iL[1])
-        self.incrD.update({"scale1F": scale1F})
-        file1S = iL[0].strip()
-        img1S = str(Path(self.folderD["defaultP"] / file1S))
-        rstS += (
-            ".. image:: "
-            + img1S
-            + "\n"
-            + "   :width: "
-            + scale1S
-            + "\n"
-            + "   :align: left \n"
-        )
+        plenI = 3
+        if len(self.paramL) != plenI:
+            logging.info(
+                f"{self.cmdS} command not evaluated: {plenI} parameters required")
+            return
+        iL = self.paramL
+        scale1S = iL[2]
+        file1S = iL[1].strip()
+        if iL[0].strip() == "resource":
+            img1S = str(Path(self.folderD["resourceP"] / file1S))
+        else:
+            img1S = str(Path(self.folderD["resourceP"] / file1S))
+        rstS = (" image:: "
+                + img1S
+                + "\n"
+                + "   :width: "
+                + scale1S
+                + "\n"
+                )
 
-        self.restS += rstS + "\n"
-        time.sleep(1)
+        return rstS
 
     def image2(self):
-        """4 insert one or two images from file
+        """4 insert two images from file
 
-        Args:
-            il (list): image parameters
+            :return rstS: image string
+            :rtype: str
+
         """
         rstS = ""
         plenI = 5
@@ -131,10 +140,8 @@ class CmdRST:
                 f"{self.cmdS} command not evaluated: {plenI} parameters required")
             return
         iL = self.paramL
-        scale1F = float(iL[2])
-        scale2F = float(iL[4])
-        self.incrD.update({"scale1F": scale1F})
-        self.incrD.update({"scale2F": scale2F})
+        scale1S = iL[2]
+        scale2S = iL[4]
         file1S = iL[1].strip()
         file2S = iL[3].strip()
         if iL[0].strip() == "resource":
@@ -143,31 +150,22 @@ class CmdRST:
         else:
             img1S = str(Path(self.folderD["resourceP"] / file1S))
             img2S = str(Path(self.folderD["resourceP"] / file2S))
-        rstS += (
-            pic1S
-            + "  ____  "
-            + pic2S
-            + "\n\n"
-            + ".. "
-            + pic1S
-            + " image:: "
-            + img1S
-            + "\n"
-            + "   :width: "
-            + scale1S
-            + "\n\n"
-            + ".. "
-            + pic2S
-            + " image:: "
-            + img2S
-            + "\n"
-            + "   :width: "
-            + scale2S
-            + "\n"
-        )
+        rstS = (" image:: "
+                + img1S
+                + "\n"
+                + "   :width: "
+                + scale1S
+                + "\n\n"
+                + ".. "
+                + " image:: "
+                + img2S
+                + "\n"
+                + "   :width: "
+                + scale2S
+                + "\n"
+                )
 
-        self.restS += rstS + "\n"
-        time.sleep(1)
+        return rstS
 
     def list(self):
         """5 import data from files
@@ -216,7 +214,7 @@ class CmdRST:
                                     {plenI} parameters required")
             return
 
-        fileP = Path(self.folderD["configP"], "data", self.paramL[1].strip())
+        fileP = Path(self.folderD["rvconfigP"], "data", self.paramL[1].strip())
         with open(fileP, "r") as f2:
             pageL = f2.readlines()
 
@@ -315,7 +313,7 @@ class CmdRST:
         print(tableS)
         return tableS
 
-    def table(self, iL: list):
+    def table(self):
         """8 insert table from csv or xlsx file
 
         Args:
@@ -324,127 +322,152 @@ class CmdRST:
         alignD = {"S": "", "D": "decimal",
                   "C": "center", "R": "right", "L": "left"}
 
-        if len(iL) < 4:
-            iL += [""] * (4 - len(iL))  # pad parameters
-        utfS = ""
-        contentL = []
-        sumL = []
-        fileS = iL[1].strip()
-        calpS = self.setsectD["fnumS"]
-        tfileS = Path(self.folderD["cpathcur"] / fileS)
-        extS = fileS.split(".")[1]
-        if extS == "csv":
-            with open(tfileS, "r") as csvfile:  # read csv file
-                readL = list(csv.reader(csvfile))
-        elif extS == "xlsx":
-            tDF1 = pd.read_excel(tfileS, header=None)
-            readL = tDF1.values.tolist()
-        else:
+        tableS = ""
+        plenI = 4
+        if len(self.paramL) != plenI:
+            logging.info(
+                f"{self.cmdS} command not evaluated: {plenI} parameters required")
             return
+        if self.paramL[0] == "data":
+            folderP = Path(self.folderD["dataP"])
+        else:
+            folderP = Path(self.folderD["dataP"])
+        fileP = Path(self.paramL[1].strip())
+        pathP = Path(folderP / fileP)                    # file path
+        maxwI = int(self.paramL[2].split(",")[0])        # max column width
+        alignS = alignD[self.paramL[2].split(",")[1].strip()]
+        colS = self.paramL[3].strip()                    # rows read
+        extS = (pathP.suffix).strip()                    # file suffix
+        if extS == ".csv":                               # read csv file
+            with open(pathP, "r") as csvfile:
+                readL = list(csv.reader(csvfile))
+        elif extS == ".xlsx":                            # read xls file
+            pDF1 = pd.read_excel(pathP, header=None)
+            readL = pDF1.values.tolist()
+        else:
+            logging.info(
+                f"{self.cmdS} command not evaluated: {extS} files not processed")
+            return
+
         incl_colL = list(range(len(readL[1])))
-        widthI = self.setcmdD["cwidthI"]
-        alignS = self.setcmdD["calignS"]
-        saS = alignD[alignS]
-        if iL[2].strip():
-            widthL = iL[2].split(",")  # new max col width
-            widthI = int(widthL[0].strip())
-            alignS = widthL[1].strip()
-            self.setcmdD.update({"cwidthI": widthI})
-            self.setcmdD.update({"calignS": alignS})
-            saS = alignD[alignS]  # new align
-        totalL = [""] * len(incl_colL)
-        if iL[3].strip():  # columns
-            if iL[3].strip() == "[:]":
-                totalL = [""] * len(incl_colL)
-            else:
-                incl_colL = eval(iL[3].strip())
-                totalL = [""] * len(incl_colL)
-        ttitleS = readL[0][0].strip() + " [t]_"
-        utgS = self._tags(ttitleS, itagL)
-        self.restS += utgS.rstrip() + "\n\n"
-        for row in readL[1:]:
-            contentL.append([row[i] for i in incl_colL])
+        if colS == "[:]":
+            colL = [] * len(incl_colL)
+        else:
+            incl_colL = eval(colS)
+            colL = eval(colS)
+        for row in readL[1:]:                           # select columns
+            colL.append([row[i] for i in incl_colL])
+        wcontentL = []
+        for rowL in colL:                               # wrap columns
+            wrowL = []
+            for iS in rowL:
+                templist = textwrap.wrap(str(iS), int(maxwI))
+                templist = [i.replace("""\\n""", """\n""") for i in templist]
+                wrowL.append("""\n""".join(templist))
+            wcontentL.append(wrowL)
         sys.stdout.flush()
         old_stdout = sys.stdout
         output = StringIO()
         output.write(
             tabulate(
-                contentL,
+                wcontentL,
                 tablefmt="latex",
                 headers="firstrow",
                 numalign="decimal",
-                stralign=saS,
+                stralign=alignS,
             )
         )
         rstS = output.getvalue()
         sys.stdout = old_stdout
 
-        # print(rstS)
-        cS = 0
-        self.restS += ".. raw:: latex" + "\n\n"
+        restS = ".. raw:: latex" + "\n\n"       # align cells
         for i in rstS.split("\n"):
             counter = i.count("&")
             if counter > 0:
                 cS = "{" + alignS * (counter + 1) + "}"
                 continue
-        # self.restS += "  \\vspace{-.1in}"
-        self.restS += "  \\begin{tabulary}{1.0\\textwidth}" + cS + "\n"
+        # restS += "  \\vspace{-.1in}"
+        restS += "   \\begin{tabulary}{1.0\\textwidth}" + cS + "\n"
         inrstS = ""
         for i in rstS.split("\n"):
             inrstS += "  " + i + "\n"
-        self.restS += inrstS
-        self.restS += "  \\end{tabulary}\n"
-        self.restS += "  \\vspace{.15in}\n"
+        restS = restS + inrstS
+        restS += "  \\end{tabulary}\n"
+        restS += "  \\vspace{.15in}\n"
+
+        return restS
 
     def text(self):
         """9 insert text from file
 
-        Args:
-            iL (list): text command list
-        """
-        txapath = Path(self.folderD["cpathcur"] / iL[1].strip())
-        with open(txapath, "r", encoding="utf-8") as txtf1:
-            rstL = txtf1.readlines()
-        if iL[2].strip() == "indent":
-            txtS = "".join(rstL)
-            widthI = self.setcmdD["cwidth"]
-            inS = " " * 4
-            rstL = textwrap.wrap(txtS, width=widthI)
-            rstL = [inS + S1 + "\n" for S1 in rstL]
-            rstS = "".join(rstL)
-        elif iL[2].strip() == "literal":
-            txtS = " ".join(rstL)
-            rstS = "\n\n::\n\n" + txtS + "\n\n"
-        elif iL[2].strip() == "literalindent":
-            txtS = "\n\n::\n\n"
-            for iS in iL:
-                txtS += "   " + iS
-            rstS = txtS + "\n\n"
-        elif iL[2].strip() == "html":
-            txtS = ""
-            flg = 0
-            for iS in rstL:
-                if "src=" in iS:
-                    flg = 1
-                    continue
-                if flg == 1 and '"' in iS:
-                    flg = 0
-                    continue
-                if flg == 1:
-                    continue
-                txtS += iS
-            txtS = htm.html2text(txtS)
-            txtS = "   " + txtS.replace("\n    \n", "")
-            rstL = txtS.split("\n")
-            for num, iS in enumerate(rstL):
-                rstL[num] = "   " + iS
-            rstS = "\n".join(rstL[1:])
-            rstS = "\n\n::\n\n" + rstS + "\n\n"
-        else:
-            txtS = "".join(rstL)
-            rstS = "\n" + txtS
+        || text | folder | file | type | shade
 
-        self.restS += rstS + "\n"
+        """
+
+        plenI = 4
+        if len(self.paramL) != plenI:
+            logging.info(
+                f"{self.cmdS} command not evaluated:  \
+                                    {plenI} parameters required")
+            return
+        if self.paramL[0] == "data":
+            folderP = Path(self.folderD["dataP"])
+        else:
+            folderP = Path(self.folderD["dataP"])
+
+        fileP = Path(self.paramL[1].strip())
+        pathP = Path(folderP / fileP)
+        txttypeS = self.paramL[2].strip()
+        extS = pathP.suffix
+
+        with open(pathP, "r", encoding="utf-8") as f:
+            txtfileS = f.read()
+        with open(pathP, "r", encoding="utf-8") as f:
+            txtfileL = f.readlines()
+
+        j = ""
+        if extS == ".txt":
+            # print(f"{txttypeS=}")
+            if txttypeS == "literal":
+                for iS in txtfileL:
+                    j += "   " + iS
+                return "\n\n::\n\n" + j + "\n\n"
+            elif txttypeS == "literalindent":
+                txtS = "\n\n::\n\n"
+                for iS in txtfileL:
+                    j += "   " + iS
+                return txtS + j + "\n\n"
+            elif txttypeS == "sympy":
+                for iS in txtfileL:
+                    try:
+                        spL = i.split("=")
+                        spS = "Eq(" + spL[0] + ",(" + spL[1] + "))"
+                        # sps = sp.encode('unicode-escape').decode()
+                        lineS = sp.pretty(sp.sympify(
+                            spS, _clash2, evaluate=False))
+                        j += lineS
+                    except:
+                        lineS = sp.pretty(sp.sympify(
+                            spS, _clash2, evaluate=False))
+                        j += lineS
+            elif txttypeS == "itag":
+                utfI = parse.RivtParse(folderD, incrD,
+                                       txtfileS, "itag", localD)
+                xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(
+                    txtfileS)
+                return xutfS, xrstS
+            else:
+                pass
+        elif extS == ".html":
+            txtS = ".. raw:: html" + "\n\n"
+            for iS in txtfileL:
+                j += "   " + iS
+            return txtS + j + "\n\n"
+        elif extS == ".tex":
+            txtS = ".. raw:: latex" + "\n\n"
+            for iS in txtfileL:
+                j += "   " + iS
+            return txtS + j + "\n\n"
 
     def values(self):
         """10 import values from files

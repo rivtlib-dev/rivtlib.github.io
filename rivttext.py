@@ -11,7 +11,6 @@ import logging
 import warnings
 import fnmatch
 from pathlib import Path
-from collections import deque
 from rivt import parse
 
 docfileS = "x"
@@ -33,18 +32,21 @@ if Path(docfileS).name == "rv0101t.py":
 if Path(docfileS).name == "-o":
     docP = Path(
         "./tests/rivt_Example_Test_01/text/01_Division1/rv0101_Overview/rv0101t.py")
+modnameS = __name__.split(".")[1]
+print(f"{modnameS=}")
 
 # print(f"{docfileS=}")
 # print(f"{docP=}")
 
 # files and paths
 docbaseS = docfileS.split(".py")[0]
+prfxS = docbaseS[1:3]
 dataP = Path(docP.parent / "data")
 projP = docP.parent.parent.parent  # rivt project folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
+rvconfigP = Path(docP.parent.parent / "rv0000-config")
+reconfigP = Path(projP / "resource" / "rv00-config")
 rivtcalcP = Path("rivt.rivttext.py").parent  # rivt package path
-prfxS = docbaseS[1:3]
-configP = Path(docP.parent.parent / "rv0000")
 for fileS in os.listdir(projP / "resource"):
     if fnmatch.fnmatch(fileS[2:5], prfxS + "-*"):
         refileP = Path(fileS)  # resource folder path
@@ -55,7 +57,7 @@ doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = doctitleS.replace("-", " ")
 divtitleS = (resourceP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
-errlogP = Path(rerootP / "error_log.txt")
+errlogP = Path(reconfigP / "temp" / "rivt_log.txt")
 siteP = projP / "site"  # site folder path
 docpdfS = docbaseS + ".pdf"
 dochtmlS = docbaseS + ".html"
@@ -73,8 +75,8 @@ rstoutL = ["pdf", "html", "both"]   # reST formats
 outputL = ["utf", "pdf", "html", "both", "report", "site"]
 
 folderD = {}
-for item in ["docP", "dataP", "resourceP", "rerootP", "resourceP",
-             "reportP", "siteP", "projP", "errlogP", "configP"]:
+for item in ["docP", "dataP", "resourceP", "rerootP", "resourceP", "projP",
+             "reportP", "siteP", "rvconfigP", "reconfigP", "errlogP"]:
     folderD[item] = eval(item)
 
 incrD = {
@@ -86,9 +88,9 @@ incrD = {
     "equI": 0,  # equation number
     "tableI": 0,  # table number
     "figI": 0,  # figure number
-    "ftqueL": deque([1]),  # footnote number
-    "countI": 0,  # footnote counter
-    "subB": False,  # substitute values
+    "noteL": [0],  # footnote counter
+    "footL": [1],  # foot counter
+    "subvB": False,  # substitute values
     "unitS": "M,M",  # units
     "descS": "2,2",  # description or decimal places
     "saveP": "nosave",  # save values to file
@@ -106,10 +108,6 @@ outputD = {"pdf": True, "html": True, "both": True, "site": True,
 
 localD = {}                         # local rivt dictionary of values
 
-print("\nFile Paths")
-print("---------- \n")
-# logging
-modnameS = __name__.split(".")[1]
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)-8s  " + modnameS + "   %(levelname)-8s %(message)s",
@@ -117,18 +115,11 @@ logging.basicConfig(
     filename=errlogP,
     filemode="w",
 )
-# print(f"{modnameS=}")
-logconsole = logging.StreamHandler()
-logconsole.setLevel(logging.INFO)
-formatter = logging.Formatter("%(levelname)-8s" + modnameS + "   %(message)s")
-logconsole.setFormatter(formatter)
-logging.getLogger("").addHandler(logconsole)
-warnings.filterwarnings("ignore")
-
 dshortP = Path(*Path(docP.parent).parts[-2:])
 lshortP = Path(*rerootP.parts[-2:])
 rshortP = Path(*Path(resourceP).parts[-2:])
-# check that calc and file directories exist
+logging.info(f"""------- start rivt file -------""")
+print("------- start rivt file -------\n")
 if docP.exists():
     logging.info(f"""rivt file : [{docfileS}]""")
     logging.info(f"""rivt short path : [{dshortP}]""")
@@ -141,8 +132,8 @@ else:
     logging.info(f"""resource path not found: {resourceP}""")
 logging.info(f"""log folder short path: [{lshortP}]""")
 
-# write backup doc file
-with open(docP, "r") as f2:
+
+with open(docP, "r") as f2:                 # write backup doc file
     rivtS = f2.read()
     rivtL = f2.readlines()
 with open(bakP, "w") as f3:
@@ -242,7 +233,148 @@ def _str_set(rS, methS):
         return hdutfS, hdrstS
 
 
-def _report(fileS):
+def R(rS: str):
+    """process Repo string: param rS: triple quoted repo string: type rS: str: return: formatted utf string: type: str
+    """
+
+    global utfS, rstS, incrD, folderD, localD
+
+    xutfS = ""
+    xrstS = ""
+    rL = rS.split("\n")
+    hutfS, hrstS = _str_set(rL[0], "R")
+    utfC = parse.RivtParse(folderD, incrD, "R", localD)
+    xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
+    if hutfS != None:
+        xutfS = xutfL[1] + hutfS + xutfL[0]
+        xrstS = xrstL[1] + hrstS + xrstL[0]
+    utfS += xutfS                    # accumulate utf string
+    rstS += xrstS                    # accumulate reST string
+    print(utfS)
+    xutfS = ""                       # reset local string
+
+
+def I(rS: str):
+    """process Insert string: param rS: triple quoted insert string: type rS: str: return: formatted utf string: rtype: str
+    """
+
+    global utfS, rstS, incrD, folderD, localD
+
+    xutfS = ""
+    xrstS = ""
+    rL = rS.split("\n")
+    hutfS, hrstS = _str_set(rL[0], "I")
+    print(hutfS)
+    utfC = parse.RivtParse(folderD, incrD, "I", localD)
+    xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
+    if hutfS != None:
+        xutfS = hutfS + xutfL[0]
+        xrstS = hrstS + xrstL[0]
+    utfS += xutfS
+    rstS += xrstS
+
+    xutfS = ""
+
+
+def V(rS: str):
+    """process Value string: param rS: triple quoted values string: type rS: str: return: formatted utf string: type: str
+    """
+
+    global utfS, rstS, incrD, folderD, localD
+
+    xutfS = """"""
+    xrstS = """"""
+    rL = rS.split("\n")
+    hutfS, hrstS = _str_set(rL[0], "V")
+    utfC = parse.RivtParse(folderD, incrD, "V", localD)
+    xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
+    # print(f"{xutfS=}", f"{rL[1:]=}")
+    if hutfS != None:
+        xutfS = hutfS + xutfL[0]
+        xrstS = hrstS + xrstL[0]
+    utfS += xutfS                    # accumulate utf string
+    rstS += xrstS                    # accumulate reST string
+
+    xutfS = ""
+
+
+def T(rS: str):
+    """process Tables string: param rS: triple quoted insert string: type rS: str: return: formatted utf or reST string: type: str
+
+    """
+    global utfS, rstS, incrD, folderD, localD
+
+    xutfS = """"""
+    rL = rS.split("\n")
+    hutfS, hrstS = _str_set(rL[0], "T")
+    utfC = parse.RivtParse(folderD, incrD, outputS, "T", localD)
+    xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
+    if hutfS != None:
+        xutfS = hutfS + xutfL[0]
+        xrstS = hrstS + xrstL[0]
+    utfS += xutfS                    # accumulate utf string
+    rstS += xrstS                    # accumulate reST string
+
+    xutfS = ""
+
+
+def X(rS: str):
+    """skip string processing: param rvxS: triple quoted string: type rvxS: str: return: None
+    """
+
+    pass
+
+
+def writedoc(formatS):
+    """write output files
+
+    :param formatS: comma separated output types
+    :type formatS: str
+    """
+
+    global utfS, rstS, outputS, incrD, folderD
+
+    formatL = [i.strip() for i in formatS.split(",")]
+    docutfP = Path(docP.parent / "README.txt")
+    rstfileP = Path(reconfigP, "temp", docbaseS + ".rst")
+    eshortP = Path(*Path(rstfileP).parts[-3:])
+    # print(f"{formatL=}")
+
+    print("", flush=True)
+    if "utf" in formatL:                          # save utf file
+        with open(docutfP, "w", encoding='utf-8') as f1:
+            f1.write(utfS)
+        logging.info(f"""utf doc written: {dshortP}\README.txt""")
+
+    print("", flush=True)
+    if "pdf" in formatL or "html" in formatL:           # save rst file
+        with open(rstfileP, "w") as f2:
+            f2.write(rstS)
+        logging.info(f"""reST file written: {eshortP}""")
+
+    logging.info(f"""------- end rivt file -------""")
+    print("------- end rivt file -------")
+    sys.exit()
+
+    # if "pdf" in i:
+    #     with open(docP, "w") as f2:
+    #         f2.write(pdffileS)
+    #     pdffileS = report(rstS)
+    #     docP = folderD["reportP"]
+    #     with open(docP, "w") as f2:
+    #         f2.write(pdffileS)
+    #     print("", flush=True)
+    #     logging.info(f"""pdf doc written: {docpdfS}""")
+    # if "html" in i:
+    #     htmlfileS = site(rstS)
+    #     docP = folderD["siteP"]
+    #     with open(docP, "w") as f2:
+    #         f2.write(htmlfileS)
+    #     print("", flush=True)
+    #     logging.info(f"""html doc written: {dochtmlS}""")
+
+
+def writereport(fileS):
     """_summary_
 
     :param fileS: _description_
@@ -321,7 +453,6 @@ def _report(fileS):
             str(texfileP),
         ]
     )
-
     os.chdir(_dpath0)
     os.system(tex1S)
     print("INFO: tex file written " + str(texfileP))
@@ -363,11 +494,6 @@ def _report(fileS):
         texout.write(texf)
     print("INFO: tex file updated")
 
-    if doctypeS == "pdf":
-        gen_pdf(texfileP)
-
-    os._exit(1)
-
     rstcalcS = """"""
     exec(cmdS, globals(), locals())
     docdir = os.getcwd()
@@ -386,8 +512,6 @@ def _report(fileS):
         gen_html()
     else:
         print("INFO: doc type not recognized")
-
-    os._exit(1)
 
     try:
         filen1 = os.path.join(self.rpath, "reportmerge.txt")
@@ -414,158 +538,9 @@ def _report(fileS):
     for j1 in mergelist2:
         file2.write(j1)
     file2.close()
-    return
+
+    os._exit(1)
 
 
-def _site(fileS):
-    pass
-
-
-def write(formatS):
-    """write output files
-
-    :param formatS: output type string, comma separated
-    :type formatS: str
-    """
-
-    global utfS, rstS, outputS, incrD, folderD
-
-    formatL = formatS.split(",")
-
-    for i in formatL:
-        if "utf" in i.strip():
-            docP = Path(docP.parent / "README.txt")
-            with open(docP, "w") as f2:
-                f2.write(utfS)
-            print("", flush=True)
-            logging.info(f"""utf doc written: {dshortP}\README.txt""")
-        if "pdf" in i.strip():
-            pdffileS = report(rstS)
-            docP = folderD["reportP"]
-            with open(docP, "w") as f2:
-                f2.write(pdffileS)
-            print("", flush=True)
-            logging.info(f"""pdf doc written: {docpdfS}""")
-        if "site" in i.strip():
-            htmlfileS = site(rstS)
-            docP = folderD["siteP"]
-            with open(docP, "w") as f2:
-                f2.write(htmlfileS)
-            print("", flush=True)
-            logging.info(f"""html doc written: {dochtmlS}""")
-
-
-def R(rS: str):
-    """process Repo string
-
-    :param rS: triple quoted repo string
-    :type rS: str
-    :return: formatted utf string
-    :type: str
-    """
-
-    global utfS, rstS, incrD, folderD, localD
-
-    xutfS = ""
-    xrstS = ""
-    rL = rS.split("\n")
-    hutfS, hrstS = _str_set(rL[0], "R")
-    utfC = parse.RivtParse(folderD, incrD, "R", localD)
-    xutfL, xrstL, folderD, incrD, localD = utfC.str_parse(rL[1:])
-    if hutfS != None:
-        xutfS = xutfL[1] + hutfS + xutfL[0]
-        xrstS = xrstL[1] + hrstS + xrstL[0]
-    utfS += xutfS                    # accumulate utf string
-    rstS += xrstS                    # accumulate reST string
-    print(utfS)
-    xutfS = ""                       # reset local string
-
-
-def I(rS: str):
-    """process Insert string
-
-    :param rS: triple quoted insert string
-    :type rS: str
-    :return: formatted utf string
-    :rtype: str
-    """
-
-    global utfS, rstS, incrD, folderD, localD
-
-    xutfS = ""
-    xrstS = ""
-    rL = rS.split("\n")
-    hutfS, hrstS = str_set(rL[0], "I")
-    print(hutfS)
-    utfC = parse.RivtParse(folderD, incrD, "I", localD)
-    xutfL, xrstL, folderD, incrD, localD = utfC.str_parse(rL[1:])
-    if hutfS != None:
-        xutfS = hutfS + xutfL[0]
-        xrstS = hrstS + xrstL[0]
-    utfS += xutfS
-    rstS += xrstS
-
-    xutfS = ""
-
-
-def V(rS: str):
-    """process Value string
-
-    :param rS: triple quoted values string
-    :type rS: str
-    :return: formatted utf string
-    :type: str
-    """
-
-    global utfS, rstS, incrD, folderD, localD
-
-    xutfS = """"""
-    xrstS = """"""
-    rL = rS.split("\n")
-    hutfS, hrstS = str_set(rL[0], "V")
-    utfC = parse.RivtParse(folderD, incrD, "V", localD)
-    xutfL, xrstL, folderD, incrD, localD = utfC.str_parse(rL[1:])
-    # print(f"{xutfS=}", f"{rL[1:]=}")
-    if hutfS != None:
-        xutfS = hutfS + xutfL[0]
-        xrstS = hrstS + xrstL[0]
-    utfS += xutfS                    # accumulate utf string
-    rstS += xrstS                    # accumulate reST string
-
-    xutfS = ""
-
-
-def T(rS: str):
-    """process Tables string
-
-    :param rS: triple quoted insert string
-    :type rS: str
-    :return: formatted utf or reST string
-    :type: str
-
-    """
-    global utfS, rstS, incrD, folderD, localD
-
-    xutfS = """"""
-    rL = rS.split("\n")
-    hutfS, hrstS = str_set(rL[0], "T")
-    utfC = parse.RivtParse(folderD, incrD, outputS, "T", localD)
-    xutfL, rstL, folderD, incrD, localD = utfC.str_parse(rL[1:])
-    if hutfS != None:
-        xutfS = hutfS + xutfL[0]
-        xrstS = hrstS + xrstL[0]
-    utfS += xutfS                    # accumulate utf string
-    rstS += xrstS                    # accumulate reST string
-
-    xutfS = ""
-
-
-def X(rS: str):
-    """skip string processing
-
-    :param rvxS: triple quoted string
-    :type rvxS: str
-    :return: None
-    """
-
+def writesite(fileS):
     pass

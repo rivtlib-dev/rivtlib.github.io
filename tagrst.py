@@ -94,6 +94,7 @@ class TagsRST():
                      "[r]]": "rightblk", ":=": "declare", "=": "assign"}
 
         modnameS = __name__.split(".")[1]
+        # print(f"{modnameS=}")
         logging.basicConfig(
             level=logging.DEBUG,
             format="%(asctime)-8s  " + modnameS +
@@ -102,7 +103,6 @@ class TagsRST():
             filename=self.errlogP,
             filemode="w",
         )
-        # print(f"{modnameS=}")
         warnings.filterwarnings("ignore")
 
     def tag_parse(self, tagS):

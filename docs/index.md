@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<p style= "font-size: 1.25em !important;"> Software for Composing and Sharing Engineering Documents </p>
+<p style= "font-size: 1.25em !important;"> Open Source Software for Composing and Sharing Engineering Documents </p>
 <br>
 <span style="text-align: left; vertical-align: middle;"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="75" height="75" /></a></span>
 <br>

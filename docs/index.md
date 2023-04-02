@@ -12,7 +12,7 @@ layout: default
 <br>
 <span style="vertical-align: middle;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://rivtcode.net"><b>rivt</b></a></span>
 <br>
-<span style="text-align: left;vertical-align: middle;"><a href="https://rivtcode.net/search"><img src="./assets/img/search03.png" width="85" height="85"/></a></span>
+<span style="text-align: left;vertical-align: middle;"><a href="https://rivtdocs.net/search"><img src="./assets/img/search03.png" width="85" height="85"/></a></span>
 <br>
 <span style="vertical-align: middle">&nbsp;&nbsp;<a href="https://rivtdocs.net/search">rivtSearch</a></span>
 

@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<span style="text-align: left; vertical-align: middle;"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="75" height="75" /></a></span>
+<span style="text-align: left; vertical-align: middle;"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="70" height="70" /></a></span>
 <span style="text-align: left; vertical-align: middle;font-size: 1.3em !important;"> 
 &nbsp; &nbsp; Software for Composing and Sharing Engineering Documents </span>
 <br>

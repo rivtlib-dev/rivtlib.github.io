@@ -2,21 +2,20 @@
 layout: default
 ---
 
-<span style="text-align: left; vertical-align: middle;"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="70" height="70" /></a></span>
-<span style="text-align: left; vertical-align: middle;font-size: 1.3em !important;"> 
-&nbsp; &nbsp; Software for Composing and Sharing Engineering Documents </span>
+<p style= "font-size: 1.25em !important;"> Software for Composing and Sharing Engineering Documents </p>
 <br>
-<span style="vertical-align: middle;">&nbsp;&nbsp;<a href="https://rivtdocs.net">rivtDocs</a></span>
+<span style="text-align: left; vertical-align: middle;"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="75" height="75" /></a></span>
+<br>
+<span style="vertical-align: middle;">&nbsp;&nbsp;<a href="https://rivtdocs.net"><b>rivtDocs</b></a></span>
 <br>
 <span style="text-align: left;vertical-align: middle;"><a href="https://rivtcode.net"><img src="./assets/img/rivt03.png" width="75" height="75"/></a></span>
 <br>
-<span style="vertical-align: middle;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://rivtcode.net"><b>rivt</b></a></span>
+<span style="vertical-align: middle;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://rivtcode.net">rivt</a></span>
 <br>
 <span style="text-align: left;vertical-align: middle;"><a href="https://rivtdocs.net/search"><img src="./assets/img/search03.png" width="85" height="85"/></a></span>
 <br>
 <span style="vertical-align: middle">&nbsp;&nbsp;<a href="https://rivtdocs.net/search">rivtSearch</a></span>
 
-### Simplified Writing and Sharing for Engineering Documents  [<b>[rivt source code on GitHub]</b>](https://github.com/rivtDocs/rivt)
 
 ## **rivt** Overview
 

@@ -6,11 +6,11 @@ layout: default
 <br>
 <span style="text-align: left; vertical-align: middle;"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="75" height="75" /></a></span>
 <br>
-<span style="vertical-align: middle;">&nbsp;&nbsp;<a href="https://rivtdocs.net"><b>rivtDocs</b></a></span>
+<span style="vertical-align: middle;">&nbsp;&nbsp;<a href="https://rivtdocs.net">rivtDocs</a></span>
 <br>
 <span style="text-align: left;vertical-align: middle;"><a href="https://rivtcode.net"><img src="./assets/img/rivt03.png" width="75" height="75"/></a></span>
 <br>
-<span style="vertical-align: middle;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://rivtcode.net">rivt</a></span>
+<span style="vertical-align: middle;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://rivtcode.net"><b>rivt</b></a></span>
 <br>
 <span style="text-align: left;vertical-align: middle;"><a href="https://rivtdocs.net/search"><img src="./assets/img/search03.png" width="85" height="85"/></a></span>
 <br>

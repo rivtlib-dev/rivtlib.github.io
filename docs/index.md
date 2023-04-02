@@ -2,27 +2,19 @@
 layout: default
 ---
 
-<table style="width:75%">
-<colgroup>
-  <col width="25%" />
-  <col width="25%" />
-  <col width="25%" />
-</colgroup>
-<thead>
-<tr class="header">
-  <th style="text-align: center;border:none"><a href="https://rivtdocs.net"><b>rivtDocs (installer)</b></a></th>
-  <th style="text-align: center;border:none"><a href="https://rivtcode.net"><b>rivt (code)</b></a></th>
-  <th style="text-align: center;border:none"><a href="https://rivtdocs.net/search"><b>rivtSearch (GitHub)</b></a></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:center;border:none"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="95" height="70" /></a></td>
-  <td style="text-align: center;border:none;background-color:#a6a6a6"><a href="https://rivtcode.net"><img src="./assets/img/rivt03.png" width="100" height="75"/></a></td>
-  <td style="text-align: center;border:none"><a href="https://rivtdocs.net/search"><img src="./assets/img/search03.png" width="105" height="80" /></a></td>
-</tr>
-</tbody>
-</table>
+<span style="text-align: left; vertical-align: middle;"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="75" height="75" /></a></span>
+<span style="text-align: left; vertical-align: middle;font-size: 1.3em !important;"> 
+&nbsp; &nbsp; Software for Composing and Sharing Engineering Documents </span>
+<br>
+<span style="vertical-align: middle;">&nbsp;&nbsp;<a href="https://rivtdocs.net">rivtDocs</a></span>
+<br>
+<span style="text-align: left;vertical-align: middle;"><a href="https://rivtcode.net"><img src="./assets/img/rivt03.png" width="75" height="75"/></a></span>
+<br>
+<span style="vertical-align: middle;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://rivtcode.net"><b>rivt</b></a></span>
+<br>
+<span style="text-align: left;vertical-align: middle;"><a href="https://rivtcode.net/search"><img src="./assets/img/search03.png" width="85" height="85"/></a></span>
+<br>
+<span style="vertical-align: middle">&nbsp;&nbsp;<a href="https://rivtdocs.net/search">rivtSearch</a></span>
 
 ### Simplified Writing and Sharing for Engineering Documents  [<b>[rivt source code on GitHub]</b>](https://github.com/rivtDocs/rivt)
 

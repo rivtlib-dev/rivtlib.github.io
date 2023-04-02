@@ -431,12 +431,10 @@ def _mod_tex(tfileP):
                         """\\tableofcontents""" +
                         """\\listoftables""" +
                         """\\listoffigures""")
-
     texf = texf.replace("?x?", """\\""")
     texf = texf.replace(
         """fancyhead[L]{\leftmark}""",
-        """fancyhead[L]{\\normalsize  """ + doctitleS + "}",
-    )
+        """fancyhead[L]{\\normalsize  """ + doctitleS + "}")
     texf = texf.replace("x*x*x", "[" + incrD["docnumS"] + "]")
     texf = texf.replace("""\\begin{tabular}""", "%% ")
     texf = texf.replace("""\\end{tabular}""", "%% ")

@@ -2,12 +2,26 @@
 layout: default
 ---
 
-<p style= "font-size: 1.35em !important;"> Open Source Software for Composing and Sharing Engineering Documents </p>
-<span style="text-align: left; vertical-align: middle;"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="75" height="75" /></a><a href="https://rivtdocs.net">rivtDocs</a></span>
-<br>
-<span style="text-align: left;vertical-align: middle;"><a href="https://rivtcode.net"><img src="./assets/img/rivt03.png" width="75" height="75"/></a><a href="https://rivtcode.net"><b>rivt</b></a></span>
-<br>
-<span style="text-align: left;vertical-align: middle;"><a href="https://rivtdocs.net/search"><img src="./assets/img/search03.png" width="75" height="75"/></a><a href="https://rivtdocs.net/search">rivtSearch</a></span>
+<p style= "font-size: 1.3em !important;"> Open Source Software for Composing and Sharing Engineering Documents </p>
+
+<hr>
+
+<div id="banner" style="overflow: visible; display: flex; justify-content:space-around;">
+<div>
+<a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="75" height="75" /></a><a href="https://rivtdocs.net">rivtDocs</a>
+</div>
+
+<div>
+<a href="https://rivtcode.net"><img src="./assets/img/rivt03.png" width="75" height="75"/></a><a href="https://rivtcode.net"><b>rivt</b></a>
+</div>
+
+<div>
+<a href="https://rivtdocs.net/search"><img src="./assets/img/search03.png" width="75" height="75"/></a><a href="https://rivtdocs.net/search">rivtSearch</a>
+</div>
+</div>
+
+<hr>
+
 
 
 ## **rivt** Overview

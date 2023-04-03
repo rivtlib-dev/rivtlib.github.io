@@ -107,19 +107,18 @@ class TagsUTF:
 
         return eval("self." + self.tagD[tagS] + "()")
 
-    def label(self, objI, text):
+    def label(self, labelS, numI):
         """format labels for equations, tables and figures
 
             :return labelS: formatted label
             :rtype: str
         """
 
-        objfillS = str(objI).zfill(2)
-        labelS = text + objfillS + \
-            " [" + str(self.incrD["secnumI"]).zfill(2) + "]"
+        secS = str(self.incrD["secnumI"]).zfill(2)
+        labelS = labelS + fillS + " - " + secS
 
         # store for equation table
-        self.incrD["eqlabelS"] = self.lineS + " [" + str(objI).zfill(2) + "]"
+        self.incrD["eqlabelS"] = self.lineS + " [" + str(numI).zfill(2) + "]"
 
         return labelS
 
@@ -167,11 +166,13 @@ class TagsUTF:
         :rtype: str
         """
 
+        fillS = str(enumI).zfill(2)
         enumI = int(self.incrD["equI"]) + 1
         self.incrD["equI"] = enumI
-        refS = self.label(enumI, " Equ. ")
-        spcI = self.widthI - len(refS) - len(self.lineS)
-        lineS = self.lineS + " " * spcI + refS
+        wI = self.incrD["widthI"]
+        refS = self.label("E", enumI)
+        # spcI = self.widthI - len(refS) - len(self.lineS)
+        lineS = "Equ. " + fillS + " - " + self.lineS + refS.rjust(wI)
 
         print(lineS)
         return lineS
@@ -183,11 +184,13 @@ class TagsUTF:
         :rtype: str
         """
 
+        fillS = str(fnumI).zfill(2)
         fnumI = int(self.incrD["figI"]) + 1
         self.incrD["figI"] = fnumI
-        refS = self.label(fnumI, " Fig. ")
-        spcI = self.incrD["widthI"] - len(refS) - len(self.lineS)
-        lineS = self.lineS + " " * spcI + refS
+        wI = self.incrD["widthI"]
+        refS = self.label("F", fnumI)
+        # spcI = self.widthI - len(refS) - len(self.lineS)
+        lineS = "Fig. " + fillS + " - " + self.lineS + refS.rjust(wI)
 
         print(lineS)
         return lineS
@@ -302,6 +305,14 @@ class TagsUTF:
         refS = self.label(tnumI, " Table: ")
         spcI = self.widthI - len(refS) - len(self.lineS)
         lineS = self.lineS + " " * spcI + refS + "\n"
+
+        fillS = str(tnumI).zfill(2)
+        tnumI = int(self.incrD["tableI"]) + 1
+        self.incrD["tableI"] = tnumI
+        wI = self.incrD["widthI"]
+        refS = self.label("T", tnumI)
+        # spcI = self.widthI - len(refS) - len(self.lineS)
+        lineS = "Table " + fillS + " - " + self.lineS + refS.rjust(wI)
 
         print(lineS)
         return lineS

@@ -11,6 +11,7 @@ import sympy as sp
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import html2text as htm
+import configparser
 from io import StringIO
 from numpy import *
 from IPython.display import display as _display

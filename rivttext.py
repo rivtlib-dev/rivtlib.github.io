@@ -207,7 +207,6 @@ def _str_set(rS, methS):
 
     if methS == "R":
         incrD["widthI"] = int(rs1L[1])     # utf print width
-        incrD["pageI"] = int(rs1L[2])      # initial page number
 
     elif methS == "V":
         if rs1L[1].strip().casefold() != "save".casefold():

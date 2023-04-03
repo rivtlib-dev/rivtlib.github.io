@@ -12,6 +12,7 @@ import warnings
 import fnmatch
 import shutil
 from pathlib import Path
+import configparser
 from rivt import parse
 
 docfileS = "x"
@@ -45,8 +46,6 @@ prfxS = docbaseS[1:3]
 dataP = Path(docP.parent / "data")
 projP = docP.parent.parent.parent  # rivt project folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
-rvconfigP = Path(docP.parent.parent / "rv0000-config")
-reconfigP = Path(projP / "resource" / "rv00-config")
 for fileS in os.listdir(projP / "resource"):
     if fnmatch.fnmatch(fileS[2:5], prfxS + "-*"):
         refileP = Path(fileS)  # resource folder path
@@ -57,13 +56,16 @@ doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = doctitleS.replace("-", " ")
 divtitleS = (resourceP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
-errlogP = Path(reconfigP / "temp" / "rivt_log.txt")
 siteP = projP / "site"  # site folder path
 reportP = Path(projP / "report")  # report folder path
 siteP = Path(projP / "site")  # site folder path
+rvconfigP = Path(docP.parent.parent / "rv0000-config")
+retempP = Path(projP / "resource" / "rv00-temp")
 rivtP = Path("rivttext.py").parent  # rivt package path
 pypath = os.path.dirname(sys.executable)
 rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
+errlogP = Path(retempP / "rivt-log.txt")
+styleP = resourceP
 
 # global dicts and vars
 utfS = """\n"""                     # utf output string
@@ -77,7 +79,7 @@ outputL = ["utf", "pdf", "html", "both", "report", "site"]
 
 folderD = {}
 for item in ["docP", "dataP", "resourceP", "rerootP", "resourceP", "projP",
-             "reportP", "siteP", "rvconfigP", "reconfigP", "errlogP"]:
+             "reportP", "siteP", "rvconfigP", "retempP", "errlogP", "styleP"]:
     folderD[item] = eval(item)
 
 incrD = {
@@ -86,9 +88,9 @@ incrD = {
     "divtitleS": divtitleS,  # section title
     "secnumI": 0,  # section number
     "widthI": 80,  # utf printing width
-    "equI": 0,  # equation number
-    "tableI": 0,  # table number
-    "figI": 0,  # figure number
+    "equI": 1,  # equation number
+    "tableI": 1,  # table number
+    "figI": 1,  # figure number
     "noteL": [0],  # footnote counter
     "footL": [1],  # foot counter
     "subvB": False,  # substitute values
@@ -235,7 +237,12 @@ def _str_set(rS, methS):
 
 
 def R(rS: str):
-    """process Repo string: param rS: triple quoted repo string: type rS: str: return: formatted utf string: type: str
+    """format Repo string
+
+        : param rS: triple quoted repo string
+        : type rS: str
+        : return: formatted utf string
+        : type: str
     """
 
     global utfS, rstS, incrD, folderD, localD
@@ -252,6 +259,7 @@ def R(rS: str):
     utfS += xutfS                    # accumulate utf string
     rstS += xrstS                    # accumulate reST string
     print(utfS)
+    print("**************", folderD["styleP"])
     xutfS = ""                       # reset local string
 
 
@@ -300,7 +308,10 @@ def V(rS: str):
 
 
 def T(rS: str):
-    """process Tables string: param rS: triple quoted insert string: type rS: str: return: formatted utf or reST string: type: str
+    """process Tables string
+
+    : param rS: triple quoted insert string
+    : type rS: str: return: formatted utf or reST string: type: str
 
     """
     global utfS, rstS, incrD, folderD, localD
@@ -340,7 +351,11 @@ def _rest2tex(rstfileS):
     :param pdffileS: _description_
     :type pdffileS: _type_
     """
-    style_path = Path(reconfigP, "pdf_style.sty")
+
+    global folderD
+
+    style_path = folderD["styleP"]
+    print("*****", style_path)
     f2 = open(style_path)
     f2.close
 
@@ -352,9 +367,9 @@ def _rest2tex(rstfileS):
 
     rst2texP = Path(rivtP, "scripts", "rst2xetex.py")
     print(f"{str(rst2texP)=}")
-    texfileP = Path(reconfigP, "temp", docbaseS + ".tex")
-    rstfileP = Path(reconfigP, "temp", docbaseS + ".rst")
-    texP = Path(reconfigP, "temp")
+    texfileP = Path(retempP, docbaseS + ".tex")
+    rstfileP = Path(retempP, docbaseS + ".rst")
+    texP = retempP
 
     with open(rstfileP, "w") as f2:
         f2.write(rstS)
@@ -401,20 +416,7 @@ def _mod_tex(tfileP):
     """
     startS = str(incrD["pageI"])
 
-    fileP = Path(folderD["rvconfigP"], "data", incrD["titleS"])
-    with open(fileP, "r") as f2:
-        pageL = f2.readlines()
-
     doctitleS = "rivt doc"
-    for i in range(3):
-        if "<date>" in pageL[i]:
-            continue
-        elif "<datetime>" in pageL[i]:
-            continue
-        elif "<page>" in pageL[i]:
-            continue
-        else:
-            doctitleS = pageL[i].strip()
 
     with open(tfileP, "r", encoding="utf-8", errors="ignore") as f2:
         texf = f2.read()
@@ -457,18 +459,18 @@ def _gen_pdf(self):
     """
 
     pdfD = {
-        "xpdfP": Path(reconfigP, "temp", docbaseS + ".pdf"),
-        "xhtmlP": Path(reconfigP, "temp", docbaseS + ".html"),
-        "xrstP": Path(reconfigP, "temp", docbaseS + ".rst"),
-        "xtexP": Path(reconfigP, "temp", docbaseS + ".tex"),
-        "xauxP": Path(reconfigP, "temp", docbaseS + ".aux"),
-        "xoutP": Path(reconfigP, "temp", docbaseS + ".out"),
-        "xflsP": Path(reconfigP, "temp", docbaseS + ".fls"),
-        "xtexmakP": Path(reconfigP, "temp", docbaseS + ".fdb_latexmk"),
+        "xpdfP": Path(retempP, docbaseS + ".pdf"),
+        "xhtmlP": Path(retempP, docbaseS + ".html"),
+        "xrstP": Path(retempP, docbaseS + ".rst"),
+        "xtexP": Path(retempP, docbaseS + ".tex"),
+        "xauxP": Path(retempP, docbaseS + ".aux"),
+        "xoutP": Path(retempP, docbaseS + ".out"),
+        "xflsP": Path(retempP, docbaseS + ".fls"),
+        "xtexmakP": Path(retempP, docbaseS + ".fdb_latexmk"),
     }
 
     os.system('latex --version')
-    os.chdir(Path(reconfigP, "temp"))
+    os.chdir(retempP)
 
     pdf1 = 'latexmk -xelatex -quiet -f ' + str(pdfD["xtexP"])
     # print(f"{pdf1=}"")
@@ -478,47 +480,6 @@ def _gen_pdf(self):
     shutil.copy(srcS, dstS)
 
     return pdfD["xpdfP"]
-
-
-def writedoc(formatS):
-    """write output files
-
-    :param formatS: comma separated output types
-    :type formatS: str
-    """
-
-    global utfS, rstS, outputS, incrD, folderD
-
-    formatL = [i.strip() for i in formatS.split(",")]
-    # print(f"{formatL=}")
-
-    docutfP = Path(docP.parent / "README.txt")
-    rstfileP = Path(docP.parent, docbaseS + ".rst")
-    eshortP = Path(*Path(rstfileP).parts[-3:])
-
-    logging.info(f"""end rivt file: [{docfileS}]""")
-    print(f" -------- end rivt file: [{docfileS}] --------- ")
-
-    print("", flush=True)
-    if "utf" in formatL:                          # save utf file
-        with open(docutfP, "w", encoding='utf-8') as f1:
-            f1.write(utfS)
-            # with open(_rstfile, "wb") as f1:
-            #   f1.write(rstcalcS.encode("UTF-8"))
-            # f1 = open(_rstfile, "r", encoding="utf-8", errors="ignore")
-        logging.info(f"""utf doc written: {dshortP}\README.txt""")
-        print(f"utf doc written: {dshortP}\README.txt")
-    print("", flush=True)
-    if "pdf" in formatL or "html" in formatL:      # save rst file
-        with open(rstfileP, "w") as f2:
-            f2.write(rstS)
-        logging.info(f"""reST file written: {rstfileP}""")
-        print(f"reST file written: {rstfileP}")
-    print("", flush=True)
-    if "pdf" in formatL:
-        pdffileP = _rest2tex(rstS)
-        logging.info(f"PDF doc written: {pdffileP}")
-    sys.exit()
 
 
 def writereport(fileS):
@@ -593,3 +554,44 @@ def writesite(fileS):
     #     logging.info(f"""html doc written: {dochtmlS}""")
 
     pass
+
+
+def writedoc(formatS):
+    """write output files
+
+    :param formatS: comma separated output types
+    :type formatS: str
+    """
+
+    global utfS, rstS, outputS, incrD, folderD
+
+    formatL = [i.strip() for i in formatS.split(",")]
+    # print(f"{formatL=}")
+
+    docutfP = Path(docP.parent / "README.txt")
+    rstfileP = Path(docP.parent, docbaseS + ".rst")
+    eshortP = Path(*Path(rstfileP).parts[-3:])
+
+    logging.info(f"""end rivt file: [{docfileS}]""")
+    print(f" -------- end rivt file: [{docfileS}] --------- ")
+
+    print("", flush=True)
+    if "utf" in formatL:                          # save utf file
+        with open(docutfP, "w", encoding='utf-8') as f1:
+            f1.write(utfS)
+            # with open(_rstfile, "wb") as f1:
+            #   f1.write(rstcalcS.encode("UTF-8"))
+            # f1 = open(_rstfile, "r", encoding="utf-8", errors="ignore")
+        logging.info(f"""utf doc written: {dshortP}\README.txt""")
+        print(f"utf doc written: {dshortP}\README.txt")
+    print("", flush=True)
+    if "pdf" in formatL or "html" in formatL:      # save rst file
+        with open(rstfileP, "w") as f2:
+            f2.write(rstS)
+        logging.info(f"""reST file written: {rstfileP}""")
+        print(f"reST file written: {rstfileP}")
+    print("", flush=True)
+    if "pdf" in formatL:
+        pdffileP = _rest2tex(rstS)
+        logging.info(f"PDF doc written: {pdffileP}")
+    sys.exit()

@@ -85,7 +85,7 @@ class TagsRST():
         self.errlogP = folderD["errlogP"]
         self.valL = []                          # accumulate values
 
-        self.tagD = {"c]": "center", "d]": "footnote", "e]": "equation",
+        self.tagD = {"c]": "center", "d]": "description", "e]": "equation",
                      "f]": "figure", "#]": "footnumber", "i]": "italic",
                      "l]": "latex", "-]": "line", "page]": "page",
                      "r]": "right", "s]": "sympy", "t]": "table",
@@ -111,16 +111,15 @@ class TagsRST():
 
         return eval("self." + self.tagD[tagS] + "()")
 
-    def label(self, objI, text):
-        """reST labels equations, tables and figures
+    def label(self, labelS, numS):
+        """format labels for equations, tables and figures
 
             :return labelS: formatted label
             :rtype: str
         """
 
-        objfillS = str(objI).zfill(2)
-        labelS = text + objfillS + \
-            " [" + str(self.incrD["secnumI"]).zfill(2) + "]"
+        secS = str(self.incrD["secnumI"]).zfill(2)
+        labelS = labelS + numS + " - " + secS
 
         return labelS
 
@@ -146,7 +145,7 @@ class TagsRST():
 
         return lineS
 
-    def footnote(self):
+    def description(self):
         """4 footnote description _[d]
 
         :return lineS: footnote
@@ -164,10 +163,11 @@ class TagsRST():
         :rtype: str
         """
 
-        enumI = int(self.incrD["equI"]) + 1
-        self.incrD["equI"] = enumI
-        refS = self.label(enumI, " Equ. ")
-        lineS = "**" + self.lineS + "**" + " ?x?hfill " + refS + "\n"
+        enumI = int(self.incrD["equI"])
+        fillS = str(enumI).zfill(2)
+        refS = self.label("E", fillS)
+        lineS = "**" + "Equ. " + fillS + " - " + "**" + \
+            self.lineS + " ?x?hfill " + refS + "\n"
 
         return lineS
 
@@ -178,10 +178,11 @@ class TagsRST():
         :rtype: str
         """
 
-        fnumI = int(self.incrD["figI"]) + 1
-        self.incrD["figI"] = fnumI
-        refS = self.label(fnumI, " Fig. ")
-        lineS = "**" + self.lineS + "**" + " ?x?hfill " + refS
+        fnumI = int(self.incrD["figI"])
+        fillS = str(fnumI).zfill(2)
+        refS = self.label("F", fillS)
+        lineS = "**" + "Fig. " + fillS + " - " + "**" + \
+            self.lineS + " ?x?hfill " + refS + "\n"
 
         return lineS
 
@@ -278,12 +279,12 @@ class TagsRST():
         :rtype: str
         """
 
-        self.incrD["eqlabels"] = self.lineS
-        tnumI = int(self.incrD["tableI"]) + 1
-        self.incrD["tableI"] = tnumI
-        refS = self.label(tnumI, " Table: ")
-        spcI = self.widthI - len(refS) - len(self.lineS)
+        tnumI = int(self.incrD["tableI"])
+        fillS = str(tnumI).zfill(2)
+        refS = self.label("T", fillS)
         lineS = "**" + refS + "**" + " ?x?hfill  " + refS
+        lineS = "**" + "Table " + fillS + " - " + "**" + \
+            self.lineS + " ?x?hfill " + refS + "\n"
 
         return lineS
 

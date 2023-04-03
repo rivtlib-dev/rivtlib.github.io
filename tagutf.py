@@ -81,7 +81,7 @@ class TagsUTF:
         self.errlogP = folderD["errlogP"]
         self.valL = []                          # accumulate values
 
-        self.tagD = {"c]": "center", "d]": "footnote", "e]": "equation",
+        self.tagD = {"c]": "center", "d]": "description", "e]": "equation",
                      "f]": "figure", "#]": "footnumber", "i]": "italic",
                      "l]": "latex", "-]": "line", "page]": "page",
                      "r]": "right", "s]": "sympy", "t]": "table",
@@ -107,7 +107,7 @@ class TagsUTF:
 
         return eval("self." + self.tagD[tagS] + "()")
 
-    def label(self, labelS, numI):
+    def label(self, labelS, numS):
         """format labels for equations, tables and figures
 
             :return labelS: formatted label
@@ -115,10 +115,10 @@ class TagsUTF:
         """
 
         secS = str(self.incrD["secnumI"]).zfill(2)
-        labelS = labelS + fillS + " - " + secS
+        labelS = labelS + numS + " - " + secS
 
         # store for equation table
-        self.incrD["eqlabelS"] = self.lineS + " [" + str(numI).zfill(2) + "]"
+        self.incrD["eqlabelS"] = self.lineS + " [" + numS.zfill(2) + "]"
 
         return labelS
 
@@ -146,7 +146,7 @@ class TagsUTF:
         print(lineS)
         return lineS
 
-    def footnote(self):
+    def description(self):
         """4 footnote description _[d]
 
         :return lineS: footnote
@@ -166,13 +166,14 @@ class TagsUTF:
         :rtype: str
         """
 
+        enumI = int(self.incrD["equI"])
+        self.incrD["equI"] = enumI + 1
         fillS = str(enumI).zfill(2)
-        enumI = int(self.incrD["equI"]) + 1
-        self.incrD["equI"] = enumI
         wI = self.incrD["widthI"]
-        refS = self.label("E", enumI)
-        # spcI = self.widthI - len(refS) - len(self.lineS)
-        lineS = "Equ. " + fillS + " - " + self.lineS + refS.rjust(wI)
+        refS = self.label("E", fillS)
+        spcI = len("Fig. " + fillS + " - " + self.lineS.strip())
+        lineS = "Equ. " + fillS + " - " + self.lineS.strip() \
+            + refS.rjust(wI-spcI)
 
         print(lineS)
         return lineS
@@ -184,13 +185,14 @@ class TagsUTF:
         :rtype: str
         """
 
+        fnumI = int(self.incrD["figI"])
+        self.incrD["figI"] = fnumI + 1
         fillS = str(fnumI).zfill(2)
-        fnumI = int(self.incrD["figI"]) + 1
-        self.incrD["figI"] = fnumI
         wI = self.incrD["widthI"]
-        refS = self.label("F", fnumI)
-        # spcI = self.widthI - len(refS) - len(self.lineS)
-        lineS = "Fig. " + fillS + " - " + self.lineS + refS.rjust(wI)
+        refS = self.label("F", fillS)
+        spcI = len("Table " + fillS + " - " + self.lineS.strip())
+        lineS = "Fig. " + fillS + " - " + self.lineS.strip() \
+            + refS.rjust(wI-spcI)
 
         print(lineS)
         return lineS
@@ -256,7 +258,7 @@ class TagsUTF:
         """
 
         pagenoS = str(self.incrD["pageI"])
-        rvtS = self.incrD["headS"].replace("page", "page " + pagenoS)
+        rvtS = self.incrD["headuS"].replace("p##", pagenoS)
         self.incrD["pageI"] = int(pagenoS)+1
 
         print("\n" + rvtS)
@@ -299,20 +301,14 @@ class TagsUTF:
         :rtype: str
         """
 
-        self.incrD["eqlabels"] = self.lineS
-        tnumI = int(self.incrD["tableI"]) + 1
-        self.incrD["tableI"] = tnumI
-        refS = self.label(tnumI, " Table: ")
-        spcI = self.widthI - len(refS) - len(self.lineS)
-        lineS = self.lineS + " " * spcI + refS + "\n"
-
+        tnumI = int(self.incrD["tableI"])
+        self.incrD["tableI"] = tnumI + 1
         fillS = str(tnumI).zfill(2)
-        tnumI = int(self.incrD["tableI"]) + 1
-        self.incrD["tableI"] = tnumI
         wI = self.incrD["widthI"]
-        refS = self.label("T", tnumI)
-        # spcI = self.widthI - len(refS) - len(self.lineS)
-        lineS = "Table " + fillS + " - " + self.lineS + refS.rjust(wI)
+        refS = self.label("T", fillS)
+        spcI = len("Table " + fillS + " - " + self.lineS.strip())
+        lineS = "Table " + fillS + " - " + self.lineS.strip() \
+            + refS.rjust(wI-spcI)
 
         print(lineS)
         return lineS

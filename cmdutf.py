@@ -56,7 +56,7 @@ class CmdUTF:
         3- || image | folder | file_name  | size                       I,V,T
         4- || image2 | folder | file_name  | size | file_name  | size   I,V,T
         5- || list | folder | file_name                                 V
-        6- || pages | folder | file_name | head;foot                    R
+        6- || pages | folder | file_name | file_name | page             R
         7- || project | folder | file_name | max width | align          R
         8- || table | folder | file_name | max width | rows             I,V,T
         9- || text | folder | file_name | text type |shade; noshade     I,V,T
@@ -208,29 +208,46 @@ class CmdUTF:
             :rtype: str
         """
 
-        plenI = 3
+        plenI = 4
         if len(self.paramL) != plenI:
             logging.info(
-                f"{self.cmdS} command not evaluated:  \
-                                    {plenI} parameters required")
+                f"{self.cmdS} command skipped: {plenI} parameters required"
+            )
             return
 
-        self.incrD["titleS"] = self.paramL[1].strip()
-        fileP = Path(self.folderD["rvconfigP"], "data", self.incrD["titleS"])
-        with open(fileP, "r") as f2:
-            pageL = f2.readlines()
+        iL = self.paramL
+        iD = self.folderD["styleP"]
+        if iL[0].strip() == "config":
+            iniP = Path(self.folderD["rvconfigP"], self.paramL[1].strip())
+            styP = Path(self.folderD["rvconfigP"], self.paramL[2].strip())
+        elif iL[0].strip() == "data":
+            iniP = Path(self.folderD["dataP"], self.paramL[1].strip())
+            styD = Path(self.folderD["dataP"], self.paramL[2].strip())
+        elif iL[0].strip() == "resource":
+            iniP = Path(self.folderD["resourceP"], self.paramL[1].strip())
+            styP = Path(self.folderD["resourceP"], self.paramL[2].strip())
+        else:
+            iniP = Path(self.folderD["dataP"], self.paramL[1].strip())
+            styP = Path(self.folderD["resourceP"], self.paramL[2].strip())
 
-        lineL = ["-", "-", "-"]
-        for i in range(3):
-            if "<date>" in pageL[i]:
-                lineL[i] = datetime.today().strftime('%Y-%m-%d')
-            elif "<datetime>" in pageL[i]:
-                lineL[i] = datetime.today().strftime('%Y-%m-%d %H:%M')
-            elif "<page>" in pageL[i]:
-                lineL[i] = "page"
-            else:
-                lineL[i] = pageL[i].strip()
+        self.folderD["styleP"] = styP
+        configC = configparser.ConfigParser()
+        configC.read(iniP)
+        headS = configC["utf-page"]["head1"]
 
+        lineL = headS.split()
+
+        if "<date>" in headS:
+            headS = headS.replace("<date>",
+                                  datetime.today().strftime('%Y-%m-%d'))
+        if "<datetime>" in headS:
+            headS = headS.replace("<datetime>",
+                                  datetime.today().strftime('%Y-%m-%d %H:%M'))
+        if "<page>" in headS:
+            headS = headS.replace("<page>", "p##")
+
+        self.incrD["pageI"] = int(self.paramL[3])
+        lineL = headS.split("|")
         l1I = len(lineL[0])
         l2I = len(lineL[1])
         l3I = len(lineL[2])
@@ -245,7 +262,7 @@ class CmdUTF:
             self.incrD["footS"] = lineL[0] + spS + \
                 lineL[1] + spS + lineL[2] + "\n" + sepS
 
-        return "None"
+        return self.folderD["styleP"]
 
     def project(self):
         """7 insert project information from csv, xlsx or txt file
@@ -564,7 +581,7 @@ class CmdUTF:
             valL.append([varS, val1U, val2U, descripS])
 
         utfS = self.vtable(valL, hdrL, "rst", alignL)
-        locals().update(self.localD)
+
         self.localD.update(locals())
 
         print(utfS + "\n")

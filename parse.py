@@ -153,14 +153,10 @@ class RivtParse:
                                          self.localD)
                     utS = rvtM.cmd_parse(cmdS)
                     if cmdS == "pages":                 # header page number
+                        self.folderD["styleP"] == utS
                         rvtuS = self.incrD["headuS"]
-                        rvtrS = self.incrD["headrS"]
                         pagenoS = str(self.incrD["pageI"])
-                        if "page" in utS:
-                            rvtuS = rvtuS.replace(
-                                "page", "page " + pagenoS)
-                            rvtrS = rvtrS.replace(
-                                "page", "page " + pagenoS)
+                        rvtuS = rvtuS.replace("p##", pagenoS)
                         self.incrD["pageI"] = int(pagenoS) + 1
                         continue
                     rvtM = cmdrst.CmdRST(parL, self.incrD, self.folderD,

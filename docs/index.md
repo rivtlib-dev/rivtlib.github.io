@@ -3,9 +3,9 @@ layout: default
 ---
 
 <p style= "font-size: 1.35em !important;"> Open Source Software for Composing and Sharing Engineering Documents </p>
-<span style="text-align: left; vertical-align: middle;"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="75" height="75" /></a><a href="https://rivtdocs.net"><b>rivtDocs</b></a></span>
+<span style="text-align: left; vertical-align: middle;"><a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="75" height="75" /></a><a href="https://rivtdocs.net">rivtDocs</a></span>
 <br>
-<span style="text-align: left;vertical-align: middle;"><a href="https://rivtcode.net"><img src="./assets/img/rivt03.png" width="75" height="75"/></a><a href="https://rivtcode.net">rivt</a></span>
+<span style="text-align: left;vertical-align: middle;"><a href="https://rivtcode.net"><img src="./assets/img/rivt03.png" width="75" height="75"/></a><a href="https://rivtcode.net"><b>rivt</b></a></span>
 <br>
 <span style="text-align: left;vertical-align: middle;"><a href="https://rivtdocs.net/search"><img src="./assets/img/search03.png" width="75" height="75"/></a><a href="https://rivtdocs.net/search">rivtSearch</a></span>
 

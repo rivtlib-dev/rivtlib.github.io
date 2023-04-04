@@ -88,9 +88,9 @@ incrD = {
     "divtitleS": divtitleS,  # section title
     "secnumI": 0,  # section number
     "widthI": 80,  # utf printing width
-    "equI": 1,  # equation number
-    "tableI": 1,  # table number
-    "figI": 1,  # figure number
+    "equI": 0,  # equation number
+    "tableI": 0,  # table number
+    "figI": 0,  # figure number
     "noteL": [0],  # footnote counter
     "footL": [1],  # foot counter
     "subvB": False,  # substitute values
@@ -164,7 +164,7 @@ def _str_title(hdrS):
     hdrstS = """"""
     hdutfS = """"""
 
-    snumI = incrD["secnumI"]+1
+    snumI = incrD["secnumI"] + 1
     incrD["secnumI"] = snumI
     docnumS = "[" + incrD["docnumS"]+"]"
     compnumS = docnumS + " - " + str(snumI)
@@ -173,21 +173,28 @@ def _str_title(hdrS):
     bordrS = incrD["widthI"] * "-"
     hdutfS = bordrS + "\n" + headS + "\n" + bordrS + "\n"
 
-    if outputD[outputS]:
+    if snumI > 1:
         hdrstS = (
             ".. raw:: latex"
             + "\n\n"
-            + "   ?x?vspace{.2in}"
-            + "   ?x?textbf{"
-            + hdrS
-            + "}"
-            + "   ?x?hfill?x?textbf{SECTION "
-            + compnumS
-            + "}\n"
-            + "   ?x?newline"
-            + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
+            + "   \\pagebreak"
             + "\n\n"
         )
+
+    hdrstS += (
+        ".. raw:: latex"
+        + "\n\n"
+        + "   ?x?vspace{.2in}"
+        + "   ?x?textbf{"
+        + hdrS
+        + "}"
+        + "   ?x?hfill?x?textbf{SECTION "
+        + compnumS
+        + "}\n"
+        + "   ?x?newline"
+        + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
+        + "\n\n"
+    )
 
     return hdutfS, hdrstS
 
@@ -258,8 +265,6 @@ def R(rS: str):
         xrstS = xrstL[1] + hrstS + xrstL[0]
     utfS += xutfS                    # accumulate utf string
     rstS += xrstS                    # accumulate reST string
-    print(utfS)
-    print("**************", folderD["styleP"])
     xutfS = ""                       # reset local string
 
 
@@ -281,7 +286,6 @@ def I(rS: str):
         xrstS = hrstS + xrstL[0]
     utfS += xutfS
     rstS += xrstS
-
     xutfS = ""
 
 
@@ -303,7 +307,6 @@ def V(rS: str):
         xrstS = hrstS + xrstL[0]
     utfS += xutfS                    # accumulate utf string
     rstS += xrstS                    # accumulate reST string
-
     xutfS = ""
 
 
@@ -416,22 +419,32 @@ def _mod_tex(tfileP):
     """
     startS = str(incrD["pageI"])
 
-    doctitleS = "rivt doc"
+    doctitleS = "Solar Canopy - Larkspur, California"
 
     with open(tfileP, "r", encoding="utf-8", errors="ignore") as f2:
         texf = f2.read()
 
+    texf = texf.replace("""\\begin{document}""",
+                        """\\renewcommand{\contentsname}{""" + doctitleS
+                        + "}\n" +
+                        """\\begin{document}\n""" +
+                        """\\makeatletter\n""" +
+                        """\\renewcommand\@dotsep{10000}""" +
+                        """\\makeatother\n""")
+
+    # texf = texf.replace("""\\begin{document}""",
+    #                     """\\renewcommand{\contentsname}{""" + doctitleS
+    #                     + "}\n" +
+    #                     """\\begin{document}\n""" +
+    #                     """\\makeatletter\n""" +
+    #                     """\\renewcommand\@dotsep{10000}""" +
+    #                     """\\makeatother\n""" +
+    #                     """\\tableofcontents\n""" +
+    #                     """\\listoftables\n""" +
+    #                     """\\listoffigures\n""")
+
     texf = texf.replace("""inputenc""", """ """)
     texf = texf.replace("aaxbb ", """\\hfill""")
-    texf = texf.replace("""\\begin{document}""",
-                        """\\renewcommand{\contentsname}{""" + doctitleS + "}\n" +
-                        """\\begin{document}"""+"\n" +
-                        """\\makeatletter""" +
-                        """\\renewcommand\@dotsep{10000}""" +
-                        """\\makeatother""" +
-                        """\\tableofcontents""" +
-                        """\\listoftables""" +
-                        """\\listoffigures""")
     texf = texf.replace("?x?", """\\""")
     texf = texf.replace(
         """fancyhead[L]{\leftmark}""",

@@ -166,8 +166,7 @@ class TagsUTF:
         :rtype: str
         """
 
-        enumI = int(self.incrD["equI"])
-        self.incrD["equI"] = enumI + 1
+        enumI = int(self.incrD["equI"]) + 1
         fillS = str(enumI).zfill(2)
         wI = self.incrD["widthI"]
         refS = self.label("E", fillS)
@@ -175,6 +174,7 @@ class TagsUTF:
         lineS = "Equ. " + fillS + " - " + self.lineS.strip() \
             + refS.rjust(wI-spcI)
 
+        self.incrD["equI"] = enumI
         print(lineS)
         return lineS
 
@@ -186,7 +186,6 @@ class TagsUTF:
         """
 
         fnumI = int(self.incrD["figI"])
-        self.incrD["figI"] = fnumI + 1
         fillS = str(fnumI).zfill(2)
         wI = self.incrD["widthI"]
         refS = self.label("F", fillS)
@@ -194,6 +193,7 @@ class TagsUTF:
         lineS = "Fig. " + fillS + " - " + self.lineS.strip() \
             + refS.rjust(wI-spcI)
 
+        self.incrD["figI"] = fnumI + 1
         print(lineS)
         return lineS
 
@@ -302,7 +302,6 @@ class TagsUTF:
         """
 
         tnumI = int(self.incrD["tableI"])
-        self.incrD["tableI"] = tnumI + 1
         fillS = str(tnumI).zfill(2)
         wI = self.incrD["widthI"]
         refS = self.label("T", fillS)
@@ -310,6 +309,7 @@ class TagsUTF:
         lineS = "Table " + fillS + " - " + self.lineS.strip() \
             + refS.rjust(wI-spcI)
 
+        self.incrD["tableI"] = tnumI + 1
         print(lineS)
         return lineS
 

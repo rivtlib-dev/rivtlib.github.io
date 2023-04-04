@@ -166,7 +166,7 @@ class TagsRST():
         enumI = int(self.incrD["equI"])
         fillS = str(enumI).zfill(2)
         refS = self.label("E", fillS)
-        lineS = "**" + "Equ. " + fillS + " - " + "**" + \
+        lineS = "\n| \n\n" + "**" + "Eq. " + str(enumI) + "** " + \
             self.lineS + " ?x?hfill " + refS + "\n"
 
         return lineS
@@ -181,7 +181,7 @@ class TagsRST():
         fnumI = int(self.incrD["figI"])
         fillS = str(fnumI).zfill(2)
         refS = self.label("F", fillS)
-        lineS = "**" + "Fig. " + fillS + " - " + "**" + \
+        lineS = "\n| \n\n" + "**" + "Figure " + str(fnumI) + "** " + \
             self.lineS + " ?x?hfill " + refS + "\n"
 
         return lineS
@@ -283,7 +283,7 @@ class TagsRST():
         fillS = str(tnumI).zfill(2)
         refS = self.label("T", fillS)
         lineS = "**" + refS + "**" + " ?x?hfill  " + refS
-        lineS = "**" + "Table " + fillS + " - " + "**" + \
+        lineS = "\n| \n\n" + "**" + "Table " + fillS + "** " + \
             self.lineS + " ?x?hfill " + refS + "\n"
 
         return lineS

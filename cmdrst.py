@@ -323,8 +323,8 @@ class CmdRST:
         Args:
             ipl (list): parameter list
         """
-        alignD = {"S": "", "D": "decimal",
-                  "C": "center", "R": "right", "L": "left"}
+        alignD = {"s": "", "d": "decimal",
+                  "c": "center", "r": "right", "l": "left"}
 
         tableS = ""
         plenI = 4
@@ -340,65 +340,43 @@ class CmdRST:
         pathP = Path(folderP / fileP)                    # file path
         maxwI = int(self.paramL[2].split(",")[0])        # max column width
         alignS = alignD[self.paramL[2].split(",")[1].strip()]
+        align2S = self.paramL[2].split(",")[1].strip()
         colS = self.paramL[3].strip()                    # rows read
         extS = (pathP.suffix).strip()                    # file suffix
         if extS == ".csv":                               # read csv file
             with open(pathP, "r") as csvfile:
                 readL = list(csv.reader(csvfile))
         elif extS == ".xlsx":                            # read xls file
-            pDF1 = pd.read_excel(pathP, header=None)
-            readL = pDF1.values.tolist()
+            pdfO = pd.read_excel(pathP, header=None)
+            readL = pdfO.values.tolist()
         else:
             logging.info(
                 f"{self.cmdS} command not evaluated: {extS} files not processed")
             return
-
-        incl_colL = list(range(len(readL[1])))
-        if colS == "[:]":
-            colL = [] * len(incl_colL)
-        else:
-            incl_colL = eval(colS)
-            colL = eval(colS)
-        for row in readL[1:]:                           # select columns
-            colL.append([row[i] for i in incl_colL])
-        wcontentL = []
-        for rowL in colL:                               # wrap columns
-            wrowL = []
-            for iS in rowL:
-                templist = textwrap.wrap(str(iS), int(maxwI))
-                templist = [i.replace("""\\n""", """\n""") for i in templist]
-                wrowL.append("""\n""".join(templist))
-            wcontentL.append(wrowL)
         sys.stdout.flush()
         old_stdout = sys.stdout
+
         output = StringIO()
-        output.write(
-            tabulate(
-                wcontentL,
-                tablefmt="latex",
-                headers="firstrow",
-                numalign="decimal",
-                stralign=alignS,
-            )
-        )
+        output.write(tabulate(readL, tablefmt="rst", maxcolwidths=maxwI,
+                              headers="firstrow", numalign="decimal"))
         rstS = output.getvalue()
         sys.stdout = old_stdout
 
-        restS = ".. raw:: latex" + "\n\n"       # align cells
-        for i in rstS.split("\n"):
-            counter = i.count("&")
-            if counter > 0:
-                cS = "{" + alignS * (counter + 1) + "}"
-                continue
-        # restS += "  \\vspace{-.1in}"
-        restS += "   \\begin{tabulary}{1.0\\textwidth}" + cS + "\n"
-        inrstS = ""
-        for i in rstS.split("\n"):
-            inrstS += "  " + i + "\n"
-        restS = restS + inrstS
-        restS += "  \\end{tabulary}\n"
-        restS += "  \\vspace{.15in}\n"
+        # restS = ".. raw:: latex" + "\n\n"       # align cells
+        # # for i in rstS.split("\n"):
+        # #     counter = i.count("&")
+        # #     if counter > 0:
+        # #         cS = "{|" + (align2S + "|") * (counter + 1) + "}"
+        # #         cS = "{" + align2S * (counter + 1) + "}"
+        # #         continue
+        # restS += "  \\vspace{.15in}" + "\n"
+        # inrstS = ""
+        # for i in rstS.split("\n"):
+        #     inrstS += "  " + i + "\n\n"
+        # restS = restS + inrstS
+        # restS += "  \\vspace{.15in}\n"
 
+        restS = "\n" + rstS + "\n"
         return restS
 
     def text(self):
@@ -473,12 +451,32 @@ class CmdRST:
                 j += "   " + iS
             return txtS + j + "\n\n"
 
+    def vtable(self, tbL, hdrL, tblfmt, alignL):
+        """write value table"""
+
+        # locals().update(self.rivtD)
+        sys.stdout.flush()
+        old_stdout = sys.stdout
+        output = StringIO()
+        output.write(
+            tabulate(
+                tbL, headers=hdrL, tablefmt=tblfmt,
+                showindex=False, colalign=alignL
+            )
+        )
+        rstS = output.getvalue()
+        sys.stdout = old_stdout
+        sys.stdout.flush()
+
+        return rstS
+
+        # self.calcS += utfS + "\n"
+        # self.rivtD.update(locals())
+
     def values(self):
         """10 import values from files
 
         """
-
-        locals().update(self.localD)
 
         hdrL = ["variable", "value", "[value]", "description"]
         alignL = ["left", "right", "right", "left"]
@@ -506,7 +504,7 @@ class CmdRST:
             unit1S, unit2S = vaL[2].strip(), vaL[3].strip()
             descripS = vaL[4].strip()
             if not len(varS):
-                valL.append(["------", "------", "------", "------"])  # totals
+                valL.append(["_ _", "_ _", "_ _", "Total"])  # totals
                 continue
             val1U = val2U = array(eval(valS))
             if unit1S != "-":
@@ -521,31 +519,7 @@ class CmdRST:
                     val2U = valU.cast_unit(eval(unit2S))
             valL.append([varS, val1U, val2U, descripS])
 
-        utfS = self.vtable(valL, hdrL, "rst", alignL)
-        locals().update(self.localD)
-        self.localD.update(locals())
+        rstS = self.vtable(valL, hdrL, "rst", alignL)
 
-        print(utfS + "\n")
-        return utfS
-
-    def vtable(self, tbl, hdrL, tblfmt, alignL):
-        """write value table"""
-
-        # locals().update(self.rivtD)
-        sys.stdout.flush()
-        old_stdout = sys.stdout
-        output = StringIO()
-        output.write(
-            tabulate(
-                tbl, headers=hdrL, tablefmt=tblfmt,
-                showindex=False, colalign=alignL
-            )
-        )
-        utfS = output.getvalue()
-        sys.stdout = old_stdout
-        sys.stdout.flush()
-
-        return utfS
-
-        # self.calcS += utfS + "\n"
-        # self.rivtD.update(locals())
+        # print(utfS + "\n")
+        return rstS

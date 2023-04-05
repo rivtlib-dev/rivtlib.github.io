@@ -14,6 +14,8 @@ import shutil
 from pathlib import Path
 import configparser
 from rivt import parse
+from rivt.units import *
+
 
 docfileS = "x"
 docpathP = os.getcwd()
@@ -66,6 +68,9 @@ pypath = os.path.dirname(sys.executable)
 rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
 errlogP = Path(retempP / "rivt-log.txt")
 styleP = resourceP
+tempfileS = docbaseS.replace("r", "v") + ".csv"
+saveP = Path(dataP, tempfileS)
+
 
 # global dicts and vars
 utfS = """\n"""                     # utf output string
@@ -79,7 +84,8 @@ outputL = ["utf", "pdf", "html", "both", "report", "site"]
 
 folderD = {}
 for item in ["docP", "dataP", "resourceP", "rerootP", "resourceP", "projP",
-             "reportP", "siteP", "rvconfigP", "retempP", "errlogP", "styleP"]:
+             "reportP", "siteP", "rvconfigP", "retempP",
+             "errlogP", "styleP", "saveP"]:
     folderD[item] = eval(item)
 
 incrD = {
@@ -106,9 +112,6 @@ incrD = {
     "headrS": "",
     "footrS": ""\
 }
-
-outputD = {"pdf": True, "html": True, "both": True, "site": True,
-           "report": True, "inter": False, "utf": False}
 
 localD = {}                         # local rivt dictionary of values
 
@@ -173,24 +176,26 @@ def _str_title(hdrS):
     bordrS = incrD["widthI"] * "-"
     hdutfS = bordrS + "\n" + headS + "\n" + bordrS + "\n"
 
-    if snumI > 1:
-        hdrstS = (
-            ".. raw:: latex"
-            + "\n\n"
-            + "   \\pagebreak"
-            + "\n\n"
-        )
+    # if snumI > 1:
+    #     hdrstS = (
+    #         ".. raw:: latex\n"
+    #         + "\n"
+    #         + "   \\clearpage \n"
+    #         + "   \\pagebreak \n"
+    #         + "   \\newpage \n"
+    #         + "\n"
+    #     )
 
     hdrstS += (
         ".. raw:: latex"
         + "\n\n"
         + "   ?x?vspace{.2in}"
-        + "   ?x?textbf{"
+        + "   ?x?textbf{ "
         + hdrS
         + "}"
         + "   ?x?hfill?x?textbf{SECTION "
         + compnumS
-        + "}\n"
+        + " }\n"
         + "   ?x?newline"
         + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
         + "\n\n"
@@ -218,12 +223,7 @@ def _str_set(rS, methS):
         incrD["widthI"] = int(rs1L[1])     # utf print width
 
     elif methS == "V":
-        if rs1L[1].strip().casefold() != "save".casefold():
-            tempfileS = docbaseS.replace("r", "v") + ".csv"
-            incrD["saveP"] = Path(folderD["dataP"], tempfileS)
-        else:
-            incrD["saveP"] = None
-        if rs1L[2].strip().casefold() == "sub".casefold():
+        if rs1L[1].strip().casefold() == "sub".casefold():
             incrD["subB"] = True
         else:
             incrD["subB"] = False
@@ -295,6 +295,8 @@ def V(rS: str):
 
     global utfS, rstS, incrD, folderD, localD
 
+    locals().update(localD)
+
     xutfS = """"""
     xrstS = """"""
     rL = rS.split("\n")
@@ -308,6 +310,8 @@ def V(rS: str):
     utfS += xutfS                    # accumulate utf string
     rstS += xrstS                    # accumulate reST string
     xutfS = ""
+
+    localD.update(locals())
 
 
 def T(rS: str):
@@ -374,7 +378,7 @@ def _rest2tex(rstfileS):
     rstfileP = Path(retempP, docbaseS + ".rst")
     texP = retempP
 
-    with open(rstfileP, "w") as f2:
+    with open(rstfileP, "w", encoding='utf-8') as f2:
         f2.write(rstS)
 
     tex1S = "".join(
@@ -599,7 +603,7 @@ def writedoc(formatS):
         print(f"utf doc written: {dshortP}\README.txt")
     print("", flush=True)
     if "pdf" in formatL or "html" in formatL:      # save rst file
-        with open(rstfileP, "w") as f2:
+        with open(rstfileP, "w", encoding='utf-8') as f2:
             f2.write(rstS)
         logging.info(f"""reST file written: {rstfileP}""")
         print(f"reST file written: {rstfileP}")

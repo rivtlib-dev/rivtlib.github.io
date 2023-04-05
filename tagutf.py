@@ -37,7 +37,7 @@ class TagsUTF:
         """format tags to utf
 
         ============================ ============================================
-        tag syntax                      description 
+        tag syntax                      description
         ============================ ============================================
 
         Line Format:
@@ -115,7 +115,7 @@ class TagsUTF:
         """
 
         secS = str(self.incrD["secnumI"]).zfill(2)
-        labelS = labelS + numS + " - " + secS
+        labelS = secS + " - " + labelS + numS
 
         # store for equation table
         self.incrD["eqlabelS"] = self.lineS + " [" + numS.zfill(2) + "]"
@@ -245,7 +245,7 @@ class TagsUTF:
         """10 format plain literal text _[p]
 
         :param lineS: _description_
-        :type lineS: _type_        
+        :type lineS: _type_
         """
 
         pass
@@ -346,12 +346,29 @@ class TagsUTF:
     def tagblk(self):
         pass
 
-    def assign(self):
-        """assign result to equation
+    def declare(self):
+        """ := declare variable value
 
         """
         locals().update(self.localD)
 
+        varS = str(self.lineS).split(":=")[0].strip()
+        valS = str(self.lineS).split(":=")[1].strip()
+        unit1S = str(self.incrD["unitS"]).split(",")[0]
+        unit2S = str(self.incrD["unitS"]).split(",")[1]
+        descripS = str(self.incrD["descS"])
+        cmdS = varS + "= " + valS + "*" + unit1S
+        exec(cmdS, globals(), locals())
+
+        self.localD.update(locals())
+
+        return [varS, valS, unit1S, unit2S, descripS]
+
+    def assign(self):
+        """ = assign result to equation
+
+        """
+        locals().update(self.localD)
         varS = str(self.lineS).split("=")[0].strip()
         valS = str(self.lineS).split("=")[1].strip()
         unit1S = str(self.incrD["unitS"]).split(",")[0]
@@ -362,6 +379,7 @@ class TagsUTF:
         exec("set_printoptions(precision=" + rprecS + ")")
         exec("Unum.set_format(value_format = '%." + eprecS + "f')")
         # fltfmtS = "." + rprecS.strip() + "f"
+
         if type(eval(valS)) == list:
             val1U = array(eval(valS)) * eval(unit1S)
             val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
@@ -376,110 +394,71 @@ class TagsUTF:
         spS = "Eq(" + varS + ",(" + valS + "))"
         utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
         utfS = "\n" + utfS + "\n"
-        # eqS = sp.sympify(valS)
-        # eqatom = eqS.atoms(sp.Symbol)
-        # write equation table
-        # hdrL = []
-        # valL = []
-        # hdrL.append(varS)
-        # valL.append(str(val1U) + "  [" + str(val2U) + "]")
-        # for sym in eqatom:
-        #     hdrL.append(str(sym))
-        #     symU = eval(str(sym))
-        #     valL.append(str(symU.simplify_unit()))
-        # alignL = ["center"] * len(valL)
-        # self._vtable([valL], hdrL, "rst", alignL)
+        eqL = [varS, valS, unit1S, unit2S, descS]
 
+        self.localD.update(locals())
+
+        subS = "\n"
         if self.incrD["subB"]:              # replace variables with numbers
-            self.vsub(self.lineS)
+            subS = self.vsub(eqL)
 
-        self.localD.update(locals())
+        return [eqL, utfS + "\n" + subS + "\n\n"]
 
-        return [[varS, valtS, unit1S, unit2S, descS], utfS]
-
-    def declare(self):
-        """declare variable value :=
-
-        """
-        locals().update(self.localD)
-
-        varS = str(self.lineS).split(":=")[0].strip()
-        valS = str(self.lineS).split(":=")[1].strip()
-        unit1S = str(self.incrD["unitS"]).split(",")[0]
-        unit2S = str(self.incrD["unitS"]).split(",")[1]
-        descripS = str(self.incrD["descS"])
-
-        cmdS = varS + "= " + valS + "*" + unit1S
-        exec(cmdS, globals(), locals())
-
-        self.localD.update(locals())
-
-        return [varS, valS, unit1S, unit2S, descripS]
-
-    def vsub(self, eqL: list, eqS: str):
+    def vsub(self, eqL):
         """substitute numbers for variables in printed output
 
         Args:
             epL (list): equation and units
             epS (str): [description]
         """
-
-        locals().update(self.rivtd)
+        locals().update(self.localD)
 
         eformat = ""
-        utfS = eqL[0].strip()
-        descripS = eqL[3]
-        parD = dict(eqL[1])
+        utfS = eqL[0] + " = " + eqL[1]
         varS = utfS.split("=")
-        resultS = vars[0].strip() + " = " + str(eval(vars[1]))
-        try:
-            eqS = "Eq(" + eqL[0] + ",(" + eqL[1] + "))"
-            # sps = sps.encode('unicode-escape').decode()
-            utfs = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
-            print(utfs)
-            self.calcl.append(utfs)
-        except:
-            print(utfs)
-            self.calcl.append(utfs)
-        try:
-            symeq = sp.sympify(eqS.strip())  # substitute
-            symat = symeq.atoms(sp.Symbol)
-            for _n2 in symat:
-                evlen = len((eval(_n2.__str__())).__str__())  # get var length
-                new_var = str(_n2).rjust(evlen, "~")
-                new_var = new_var.replace("_", "|")
-                symeq1 = symeq.subs(_n2, sp.Symbols(new_var))
-            out2 = sp.pretty(symeq1, wrap_line=False)
-            # print('out2a\n', out2)
-            symat1 = symeq1.atoms(sp.Symbol)  # adjust character length
-            for _n1 in symat1:
-                orig_var = str(_n1).replace("~", "")
-                orig_var = orig_var.replace("|", "_")
+        # resultS = vars[0].strip() + " = " + str(eval(vars[1]))
+        # sps = sps.encode('unicode-escape').decode()
+        eqS = "Eq(" + eqL[0] + ",(" + eqL[1] + "))"
+        # utfs = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
+        symeq = sp.sympify(eqS.strip())
+        symat = symeq.atoms(sp.Symbol)
+        for n2 in symat:
+            evlen = len((eval(n2.__str__())).__str__())  # get var length
+            new_var = str(n2).rjust(evlen, "~")
+            new_var = new_var.replace("_", "|")
+            symeq = symeq.subs(n2, sp.Symbol(new_var))
+        out2 = sp.pretty(symeq, wrap_line=False)
+        # print('out2a\n', out2)
+        symat1 = symeq.atoms(sp.Symbol)  # adjust character length
+        for n1 in symat1:
+            orig_var = str(n1).replace("~", "")
+            orig_var = orig_var.replace("|", "_")
+            expr = eval(varS[1])
+            if type(expr) == float:
+                form = "{:." + eformat + "f}"
+                symeval1 = form.format(eval(str(expr)))
+            else:
                 try:
-                    expr = eval((self.odict[orig_var][1]).split("=")[1])
-                    if type(expr) == float:
-                        form = "{:." + eformat + "f}"
-                        symeval1 = form.format(eval(str(expr)))
-                    else:
-                        symeval1 = eval(orig_var.__str__()).__str__()
+                    symeval1 = eval(
+                        orig_var.__str__()).__str__()
                 except:
                     symeval1 = eval(orig_var.__str__()).__str__()
-                out2 = out2.replace(_n1.__str__(), symeval1)
-            # print('out2b\n', out2)
-            out3 = out2  # clean up unicode
-            out3.replace("*", "\\u22C5")
-            # print('out3a\n', out3)
-            _cnt = 0
-            for _m in out3:
-                if _m == "-":
-                    _cnt += 1
-                    continue
-                else:
-                    if _cnt > 1:
-                        out3 = out3.replace("-" * _cnt, "\u2014" * _cnt)
-                    _cnt = 0
-            # print('out3b \n', out3)
-            self._write_text(out3, 1, 0)  # print substituted form
-            self._write_text(" ", 0, 0)
-        except:
-            pass
+            out2 = out2.replace(n1.__str__(), symeval1)   # substitute
+        # print('out2b\n', out2)
+        out3 = out2  # clean up unicode
+        out3 = out3.replace("*", "\\u22C5")
+        # print('out3a\n', out3)
+        _cnt = 0
+        for _m in out3:
+            if _m == "-":
+                _cnt += 1
+                continue
+            else:
+                if _cnt > 1:
+                    out3 = out3.replace("-" * _cnt, "\u2014" * _cnt)
+                _cnt = 0
+
+        self.localD.update(locals())
+
+        utfS = out3
+        return utfS

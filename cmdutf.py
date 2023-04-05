@@ -339,15 +339,16 @@ class CmdUTF:
             :rtype: str
         """
 
-        alignD = {"S": "", "D": "decimal",
-                  "C": "center", "R": "right", "L": "left"}
+        alignD = {"s": "", "d": "decimal",
+                  "c": "center", "r": "right", "l": "left"}
 
         tableS = ""
         plenI = 4
         if len(self.paramL) != plenI:
             logging.info(
-                f"{self.cmdS} command not evaluated: {plenI} parameters required")
+                f"{self.cmdS} not evaluated: {plenI} parameters required")
             return
+
         if self.paramL[0] == "data":
             folderP = Path(self.folderD["dataP"])
         else:
@@ -357,7 +358,7 @@ class CmdUTF:
         maxwI = int(self.paramL[2].split(",")[0])        # max column width
         alignS = alignD[self.paramL[2].split(",")[1].strip()]
         colS = self.paramL[3].strip()                    # rows read
-        extS = (pathP.suffix).strip()                    # file suffix
+        extS = (pathP.suffix).strip()
         if extS == ".csv":                               # read csv file
             with open(pathP, "r") as csvfile:
                 readL = list(csv.reader(csvfile))
@@ -366,7 +367,7 @@ class CmdUTF:
             readL = pDF1.values.tolist()
         else:
             logging.info(
-                f"{self.cmdS} command not evaluated: {extS} files not processed")
+                f"{self.cmdS} not evaluated: {extS} file not processed")
             return
 
         incl_colL = list(range(len(readL[1])))
@@ -402,6 +403,73 @@ class CmdUTF:
 
         print(tableS)
         return tableS
+
+    def txthtml(self, txtfileL):
+        """9a _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """
+        txtS = ""
+        flg = 0
+        for iS in txtfileL:
+            if "src=" in iS:
+                flg = 1
+                continue
+            if flg == 1 and '"' in iS:
+                flg = 0
+                continue
+            if flg == 1:
+                continue
+            txtS += " "*4 + iS
+            txtS = htm.html2text(txtS)
+            utfS = txtS.replace("\n    \n", "")
+            print(utfS)
+            return utfS
+
+    def txttex(self, txtfileS, txttypeS):
+        """9b _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """
+
+        soup = TexSoup(txtfileS)
+        soupL = list(soup.text)
+        soupS = "".join(soupL)
+        if txttypeS == "math":
+            latexL = sp.pretty(parse_latex(txtfileS))
+            latexS = "\n".join(latexL)
+            print(latexS)
+            return latexS
+        elif txttypeS == "raw":
+            soupS = soupS.replace("\\\\", "\n")
+            soupL = soupS.split("\n")
+            if "&" in soupL[10]:
+                soupL = [s.split("&") for s in soupL]
+            else:
+                if ">" in soupL[10]:
+                    soupL = [s.split(">") for s in soupL]
+            for s in soupL:
+                try:
+                    s[1] = s[1].replace("\\", " ")
+                    s[0] = s[0].replace("\\", " ")
+                except:
+                    s[0] = s[0].replace("\\", " ")
+            soup1L = []
+            for s in soupL:
+                try:
+                    soup1L.append(s[0].ljust(10) + s[1]+"\n")
+                except:
+                    soup1L.append(s[0]+"\n")
+
+            soupS = "".join(soup1L)
+
+            print(soupS)
+            return soupS
+        else:
+            print(soupS)
+            return soupS
 
     def text(self):
         """9 insert text from file
@@ -477,60 +545,36 @@ class CmdUTF:
                 j += " "*4 + i
             print(j)
             return j
+
         elif extS == ".html":
-            txtS = ""
-            flg = 0
-            for iS in txtfileL:
-                if "src=" in iS:
-                    flg = 1
-                    continue
-                if flg == 1 and '"' in iS:
-                    flg = 0
-                    continue
-                if flg == 1:
-                    continue
-                txtS += " "*4 + iS
-                txtS = htm.html2text(txtS)
-                utfS = txtS.replace("\n    \n", "")
-                print(utfS)
-                return (utfS)
+            utfS = self.txthtml(txtfileL)
+            return utfS
+
         elif extS == ".tex":
-            soup = TexSoup(txtfileS)
-            soupL = list(soup.text)
-            soupS = "".join(soupL)
-            if txttypeS == "math":
-                latexL = sp.pretty(parse_latex(txtfileS))
-                latexS = "\n".join(latexL)
-                print(latexS)
-                return latexS
-            elif txttypeS == "raw":
-                soupS = soupS.replace("\\\\", "\n")
-                soupL = soupS.split("\n")
-                if "&" in soupL[10]:
-                    soupL = [s.split("&") for s in soupL]
-                else:
-                    if ">" in soupL[10]:
-                        soupL = [s.split(">") for s in soupL]
-                for s in soupL:
-                    try:
-                        s[1] = s[1].replace("\\", " ")
-                        s[0] = s[0].replace("\\", " ")
-                    except:
-                        s[0] = s[0].replace("\\", " ")
-                soup1L = []
-                for s in soupL:
-                    try:
-                        soup1L.append(s[0].ljust(10) + s[1]+"\n")
-                    except:
-                        soup1L.append(s[0]+"\n")
+            soupS = self.txttex(txtfileS, txttypeS)
+            return soupS
 
-                soupS = "".join(soup1L)
+    def vtable(self, tbL, hdrL, tblfmt, alignL):
+        """write value table"""
 
-                print(soupS)
-                return soupS
-            else:
-                print(soupS)
-                return soupS
+        # locals().update(self.rivtD)
+        sys.stdout.flush()
+        old_stdout = sys.stdout
+        output = StringIO()
+        output.write(
+            tabulate(
+                tbL, headers=hdrL, tablefmt=tblfmt,
+                showindex=False, colalign=alignL
+            )
+        )
+        utfS = output.getvalue()
+        sys.stdout = old_stdout
+        sys.stdout.flush()
+
+        return utfS
+
+        # self.calcS += utfS + "\n"
+        # self.rivtD.update(locals())
 
     def values(self):
         """10 import values from files
@@ -559,13 +603,13 @@ class CmdUTF:
         for vaL in readL[1:]:
             if len(vaL) < 5:
                 vL = len(vaL)
-                vaL += [""] * (5 - len(vL))  # pad values
+                vaL += [" "] * (5 - len(vL))  # pad values
             varS = vaL[0].strip()
             valS = vaL[1].strip()
             unit1S, unit2S = vaL[2].strip(), vaL[3].strip()
             descripS = vaL[4].strip()
             if not len(varS):
-                valL.append(["------", "------", "------", "------"])  # totals
+                valL.append(["-", "-", "-", "Total"])  # totals
                 continue
             val1U = val2U = array(eval(valS))
             if unit1S != "-":
@@ -586,25 +630,3 @@ class CmdUTF:
 
         print(utfS + "\n")
         return utfS
-
-    def vtable(self, tbl, hdrL, tblfmt, alignL):
-        """write value table"""
-
-        # locals().update(self.rivtD)
-        sys.stdout.flush()
-        old_stdout = sys.stdout
-        output = StringIO()
-        output.write(
-            tabulate(
-                tbl, headers=hdrL, tablefmt=tblfmt,
-                showindex=False, colalign=alignL
-            )
-        )
-        utfS = output.getvalue()
-        sys.stdout = old_stdout
-        sys.stdout.flush()
-
-        return utfS
-
-        # self.calcS += utfS + "\n"
-        # self.rivtD.update(locals())

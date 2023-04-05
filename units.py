@@ -4,6 +4,10 @@
 """
 
 
+from rivt.unum.utils import uarray
+from rivt.unum.core import Unum
+from rivt.unum.utils import *
+from rivt.unum.core import *
 import os
 import sys
 import importlib.util
@@ -16,11 +20,6 @@ unumpath = Path(rivpath, "unum")
 sys.path.append(str(rivpath))
 sys.path.append(str(unumpath))
 
-from unum.core import *
-from unum.utils import *
-from unum.core import Unum
-from unum.utils import uarray
-
 # print(sys.path)
 
 Unum.set_format(
@@ -30,7 +29,9 @@ Unum.set_format(
     value_format="%.2f",
     unitless="",  # hide empty
     superscript=False,
+    auto_norm=True
 )
+
 # print(dir())
 # standard SI units ==== DO NOT MODIFY BETWEEN DOUBLE LINES  ===================
 # temperature conversion is relative degree size, not offset ------------

@@ -19,14 +19,17 @@ from rivt.units import *
 
 docfileS = "x"
 docpathP = os.getcwd()
+print("***", docpathP)
 docP = Path(docpathP)
 for fileS in os.listdir(docpathP):
+    print(fileS)
     if fnmatch.fnmatch(fileS, "r????.py"):
         docfileS = fileS
         docP = Path(docP / docfileS)
+        print(docP)
         break
 if docfileS == "x":
-    print("INFO     rivt doc file not found")
+    print("INFO     rivt file not found")
     exit()
 
 # run test files if this module is run as __main__
@@ -48,7 +51,9 @@ prfxS = docbaseS[1:3]
 dataP = Path(docP.parent / "data")
 projP = docP.parent.parent.parent  # rivt project folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
+print(projP)
 for fileS in os.listdir(projP / "resource"):
+    print(fileS)
     if fnmatch.fnmatch(fileS[2:5], prfxS + "-*"):
         refileP = Path(fileS)  # resource folder path
         break

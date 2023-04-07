@@ -99,7 +99,8 @@ class TagsRST():
                      "r]": "right", "s]": "sympy", "t]": "table",
                      "[c]]": "centerblk", "[e]]": "endblk", "[l]]": "latexblk",
                      "[m]]": "mathblk", "[o]]": "codeblk", "[p]]": "plainblk",
-                     "[r]]": "rightblk", ":=": "declare", "=": "assign"}
+                     "[r]]": "rightblk", "[q]]": "shadeblk", "[s]]": "quitblk",
+                     ":=": "declare", "=": "assign"}
 
         modnameS = __name__.split(".")[1]
         # print(f"{modnameS=}")

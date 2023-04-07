@@ -73,9 +73,9 @@ doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = doctitleS.replace("-", " ")
 divtitleS = (refileP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
-siteP = projP / "site"  # site folder path
-reportP = Path(projP / "report")  # report folder path
-siteP = Path(projP / "site")  # site folder path
+siteP = Path(rvtlocalP / "site")  # site folder path
+reportP = Path(rvtlocalP / "report")  # report folder path
+siteP = Path(rvtlocalP / "site")  # site folder path
 rvconfigP = Path(rvttxtP.parent / "rv0000-config")
 retempP = Path(rerootP / "rv00-temp")
 rivtP = Path("rivttext.py").parent  # rivt package path
@@ -377,7 +377,7 @@ def _rest2tex(rstfileS):
     global folderD
 
     style_path = folderD["styleP"]
-    print("*****", style_path)
+    print(f"{style_path=}")
     f2 = open(style_path)
     f2.close
 

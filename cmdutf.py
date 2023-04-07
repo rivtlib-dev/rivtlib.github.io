@@ -33,6 +33,7 @@ except:
 
 from rivt import parse
 from rivt.units import *
+from rivt import tagutf
 
 
 class CmdUTF:
@@ -480,6 +481,8 @@ class CmdUTF:
 
         || text | folder | file | type | shade
 
+        :param lineS: string block
+
         """
 
         plenI = 4
@@ -506,57 +509,54 @@ class CmdUTF:
         j = ""
         if extS == ".txt":
             # print(f"{txttypeS=}")
-            if txttypeS == "literal":
+            if txttypeS == "plain":
                 j = txtfileS
                 # j += " "*4 + i
-            elif txttypeS == "literalindent":
+            elif txttypeS == "indent":
                 for iS in txtfileL:
                     txtS += "   " + iS
                 j = txtS + "\n"
-            elif txttypeS == "sympy":
-                for iS in txtfileL:
-                    try:
-                        spL = iS.split("=")
-                        spS = "Eq(" + spL[0] + ",(" + spL[1] + "))"
-                        # sps = sp.encode('unicode-escape').decode()
-                        lineS = sp.pretty(sp.sympify(
-                            spS, _clash2, evaluate=False))
-                        j += lineS
-                    except:
-                        lineS = sp.pretty(sp.sympify(
-                            spS, _clash2, evaluate=False))
-                        j += lineS
-            elif txttypeS == "wrap" or txttypeS == "indent":
                 if txttypeS == "wrap":
                     inS = " " * 4
-                else:
-                    inS = " " * 8
-                txtS = txtfileS
-                widthI = self.incrD["widthI"]
-                uL = textwrap.wrap(txtS, width=widthI)
-                uL = [inS + s + "\n" for s in uL]
-                utfS = "".join(uL)
-                print(utfS)
-                return utfS
-            elif txttypeS == "itag":
+                    txtS = txtfileS
+                    widthI = self.incrD["widthI"]
+                    uL = textwrap.wrap(txtS, width=widthI)
+                    uL = [inS + s + "\n" for s in uL]
+                    utfS = "".join(uL)
+                    print(utfS)
+                    return utfS
+            elif txttypeS == "tag":
+                for i in self.lineS:
+
+                    usL = i.split("_[")
+                    lineS = usL[0]
+                    tagS = usL[1].strip()
+                    if tagS[0] == "[":                        # block tag
+                        blockB = True
+                    if tagS in self.tagL:
+                        rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
+                                              self.localD)
+                        utS = rvtM.tag_parse(tagS)
+                        utfS += utS + "\n"
+
                 utfI = parse.RivtParse(folderD, incrD,
-                                       txtfileS, "itag", localD)
+                                       txtfileS, "tag", localD)
                 xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(
                     txtfileS)
                 print(xutfS)
                 return xutfS
             else:
-                j += " "*4 + i
+                pass
             print(j)
             return j
-
         elif extS == ".html":
             utfS = self.txthtml(txtfileL)
             return utfS
-
         elif extS == ".tex":
             soupS = self.txttex(txtfileS, txttypeS)
             return soupS
+        elif extS == ".py":
+            pass
 
     def vtable(self, tbL, hdrL, tblfmt, alignL):
         """write value table"""

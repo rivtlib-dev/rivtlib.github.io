@@ -52,31 +52,35 @@ class RivtParse:
 
         # valid commands and tags
         if methS == "R":
-            self.cmdL = ["project", "github", "append", "pages"]
-            self.tagL = ["[literal]]"]
-            self.blockL = ["[readme]]"]
+            self.cmdL = ["append", "github", "pages", "project"]
+            self.tagL = ["none"]
+
         elif methS == "I":
             self.cmdL = ["table", "text", "image", "image2"]
             self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
-                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
+                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]",
+                         "[s]]", "[q]]", "[x]]", "[m]]"]
         elif methS == "V":
             self.cmdL = ["table", "text", "image", "image2",
                          "values", "list", "functions"]
             self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
-                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]",
-                         "=", ":="]
+                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[s]]", "[q]]",
+                         "[x]]", "[m]]", "=", ":="]
         elif methS == "T":
             self.cmdL = ["table", "text", "image", "image2"]
             self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
-                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
+                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]",
+                         "[s]]", "[q]]", "[x]]", "[m]]"]
+
         elif methS == "itag":
             self.cmdL = []
             self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
                          "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
-                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[x]]", "[m]]"]
+                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]",
+                         "[s]]", "[q]]", "[x]]", "[m]]"]
         else:
             pass
 
@@ -123,15 +127,17 @@ class RivtParse:
         eqL = []            # equation result table
         for uS in strL:
             # print(f"{blockassignB=}")
-            print(f"{uS=}")
+            # print(f"{uS=}")
             if uS[0:2] == "##":                        # remove comments
                 continue
             uS = uS[4:]                                # remove indent
             if blockB:                                 # accumulate block
                 lineS += uS
-            if blockB and uS.strip() == "[end]]":
+                continue
+            if blockB and uS.strip() == "[e]]":
                 rvtS = tagutf.TagsUTF(lineS, tagS, strL)
                 utfS += rvtS + "\n"
+                rvtS = tagrst.TagsRST(lineS, tagS, strL)
                 rstS += rvtS + "\n"
                 blockB = False
             if blockevalB and len(uS.strip()) < 2:     # compose value table
@@ -168,15 +174,12 @@ class RivtParse:
                                          self.localD)   # rst
                     reS = rvtM.cmd_parse(cmdS)
                     rstS += reS
-
             elif "_[" in uS:                              # end of line tag
                 usL = uS.split("_[")
                 lineS = usL[0]
                 tagS = usL[1].strip()
                 if tagS[0] == "[":                        # block tag
                     blockB = True
-                if tagS == "*]":
-                    lineS = usL                           # inline tag
                 if tagS in self.tagL:
                     rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
                                           self.localD)

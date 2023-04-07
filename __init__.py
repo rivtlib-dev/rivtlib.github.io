@@ -182,7 +182,7 @@ write   rv.Write()
    (val)    .csv; .txt; .xlsx; .py 
 
 || functions | folder | file_name | docs; nodocs                                V
-    (fun)      .for; .py; .c; .c++; .jl | insert docstrings
+    (fun)      .for; .py; .c; .c++; .jl | insert docstrngs
 
 || image  | folder | file_name  | .50                                         I,V,T
    (img)   .png; .jpg |  page width fraction
@@ -190,8 +190,8 @@ write   rv.Write()
 || image2 | folder | file_name  | .40 | file_name  | .40                      I,V,T
    (img2)   side by side images
 
-|| text | folder | file_name | shade; noshade                                 I,V,T
-   (tex)   .txt; .py; .tex | literal; rivt
+|| text | folder | file_name | text type 
+   (tex)   .txt; .py; .tex; .html | plain; tag; code; indent
 
 || table | folder | file_name | 60,r;l;c | [:]                    I,V,T
    (tab)   .csv; syk; xls  | max col width, locate | rows
@@ -225,9 +225,11 @@ I,V,T Block Formats:
 _[[c]]                          center text block
 _[[o]]                          code text block
 _[[e]]                          end of block
-_[[l]]                          literal block
+_[[p]]                          plain text block
 _[[r]]                          right justify text block
-_[[x]]                          LateX block
+_[[s]]                          shade background start
+_[[q]]                          shade background quit
+_[[l]]                          LateX block
 _[[m]]                          LaTeX math block
 
 V Formats: 

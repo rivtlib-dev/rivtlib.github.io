@@ -87,7 +87,8 @@ class TagsUTF:
                      "r]": "right", "s]": "sympy", "t]": "table",
                      "[c]]": "centerblk", "[e]]": "endblk", "[l]]": "latexblk",
                      "[m]]": "mathblk", "[o]]": "codeblk", "[p]]": "plainblk",
-                     "[r]]": "rightblk", ":=": "declare", "=": "assign"}
+                     "[r]]": "rightblk", "[q]]": "shadeblk", "[s]]": "quitblk",
+                     ":=": "declare", "=": "assign"}
 
         modnameS = __name__.split(".")[1]
         # print(f"{modnameS=}")
@@ -349,6 +350,28 @@ class TagsUTF:
 
     def rightblk(self):
         pass
+
+    def shadeblk(self):
+        """ start shade block _[[s]]
+
+        :param lineS: _description_
+        :type lineS: _type_
+        """
+        lineS = self.widthI * "_   "
+
+        print(lineS)
+        return lineS
+
+    def quitblock(self):
+        """ quit shade block _[[q]]
+
+        :param lineS: _description_
+        :type lineS: _type_
+        """
+        lineS = self.widthI * "_   "
+
+        print(lineS)
+        return lineS
 
     def tagblk(self):
         pass

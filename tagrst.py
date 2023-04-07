@@ -149,7 +149,9 @@ class TagsRST():
         : rtype: str
         """
 
-        lineS = "?x?begin{center} " + self.lineS + "?x?end{center}"
+        lineS = ".. raw:: latex \n\n" \
+            + "   ?x?begin{center} " + self.lineS + " ?x?end{center}" \
+            + "\n\n"
 
         return lineS
 
@@ -283,10 +285,13 @@ class TagsRST():
         return lineS
 
     def centerblk(self):
-        pass
+        """_summary_
+        """
 
-    def endblk(self):
-        pass
+        lineS = ".. raw:: latex \n\n" \
+            + "   ?x?begin{center} + ?x?parbox{5cm}" \
+            + self.lineS + " ?x?end{center}" \
+            + "\n\n"
 
     def latexblk(self):
         pass

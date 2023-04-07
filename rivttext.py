@@ -18,14 +18,12 @@ from rivt.units import *
 
 
 docfileS = "x"
-docpathP = os.getcwd()
-print("***", docpathP)
-docP = Path(docpathP)
+docpathP = Path(os.getcwd())
 for fileS in os.listdir(docpathP):
     print(fileS)
     if fnmatch.fnmatch(fileS, "r????.py"):
         docfileS = fileS
-        docP = Path(docP / docfileS)
+        docP = Path(docpathP / docfileS)
         print(docP)
         break
 if docfileS == "x":
@@ -42,32 +40,44 @@ if Path(docfileS).name == "-o":
 modnameS = __name__.split(".")[1]
 print(f"{modnameS=}")
 
-# print(f"{docfileS=}")
-# print(f"{docP=}")
+print(f"{docfileS=}")
+print(f"{docP=}")
 
 # files and paths
 docbaseS = docfileS.split(".py")[0]
 prfxS = docbaseS[1:3]
-dataP = Path(docP.parent / "data")
+rvttxtP = docP.parent
+dataP = Path(rvttxtP / "data")
 projP = docP.parent.parent.parent  # rivt project folder path
-bakP = docP.parent / ".".join((docbaseS, "bak"))
-print(projP)
-for fileS in os.listdir(projP / "resource"):
-    print(fileS)
+bakP = rvttxtP / ".".join((docbaseS, "bak"))
+print(f"{projP=}")
+rvtlocalP = " "
+fileS = " "
+refileP = " "
+for fileS in os.listdir(projP):
+    print(f"{fileS[0:5]=}")
+    print(f"{fileS[-6:]=}")
+    if fnmatch.fnmatch(fileS[0:5], "rivt-"):
+        if fnmatch.fnmatch(fileS[-6:], "-local"):
+            rvtlocalP = Path(projP/fileS)  # resource folder path
+            break
+print(f"{rvtlocalP=}")
+for fileS in os.listdir(Path(rvtlocalP, "resource")):
     if fnmatch.fnmatch(fileS[2:5], prfxS + "-*"):
         refileP = Path(fileS)  # resource folder path
         break
-resourceP = Path(projP, "resource", refileP)
-rerootP = Path(projP, "resource")
+print(f"{refileP=}")
+resourceP = Path(rvtlocalP, "resource", refileP)
+rerootP = Path(rvtlocalP, "resource")
 doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = doctitleS.replace("-", " ")
-divtitleS = (resourceP.name).split("-", 1)[1]
+divtitleS = (refileP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
 siteP = projP / "site"  # site folder path
 reportP = Path(projP / "report")  # report folder path
 siteP = Path(projP / "site")  # site folder path
-rvconfigP = Path(docP.parent.parent / "rv0000-config")
-retempP = Path(projP / "resource" / "rv00-temp")
+rvconfigP = Path(rvttxtP.parent / "rv0000-config")
+retempP = Path(rerootP / "rv00-temp")
 rivtP = Path("rivttext.py").parent  # rivt package path
 pypath = os.path.dirname(sys.executable)
 rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")

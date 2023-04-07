@@ -265,48 +265,53 @@ class CmdUTF:
         return self.folderD["styleP"]
 
     def project(self):
-        """7 insert project information from csv, xlsx or txt file
+        """7 insert project information from csv, xlsx or syk
 
             :return lineS: utf table
             :rtype: str
         """
 
-        alignD = {"S": "", "D": "decimal",
-                  "C": "center", "R": "right", "L": "left"}
+        alignD = {"s": "", "d": "decimal",
+                  "c": "center", "r": "right", "l": "left"}
+
         tableS = ""
-        plenI = 3
+        plenI = 4
         if len(self.paramL) != plenI:
             logging.info(
-                f"{self.cmdS} command not evaluated: {plenI} parameters required")
+                f"{self.cmdS} not evaluated: {plenI} parameters required")
             return
-        if self.paramL[0] == "resource":
+
+        if self.paramL[0].strip() == "resource":
             folderP = Path(self.folderD["resourceP"])
         else:
             folderP = Path(self.folderD["resourceP"])
-
         fileP = Path(self.paramL[1].strip())
-        pathP = Path(folderP / fileP)                   # file path
-        maxwI = int(self.paramL[2].split(",")[0])       # max column width
+        pathP = Path(folderP / fileP)                    # file path
+        maxwI = int(self.paramL[2].split(",")[0])        # max column width
         alignS = alignD[self.paramL[2].split(",")[1].strip()]
-        extS = pathP.suffix
-
-        if extS == ".csv":                              # read csv file
+        colS = self.paramL[3].strip()                    # rows read
+        extS = (pathP.suffix).strip()
+        if extS == ".csv":                               # read csv file
             with open(pathP, "r") as csvfile:
                 readL = list(csv.reader(csvfile))
-        elif extS == ".xlsx":                           # read xls file
+        elif extS == ".xlsx":                            # read xls file
             pDF1 = pd.read_excel(pathP, header=None)
             readL = pDF1.values.tolist()
-        elif extS == ".txt":                            # read txt file
-            with open(pathP, "r") as f:
-                txtfile = f.read()
-            return txtfile
         else:
             logging.info(
-                f"||{self.cmdS} not evaluated: [{extS}] file not processed")
+                f"{self.cmdS} not evaluated: {extS} file not processed")
             return
 
-        wcontentL = []                                  # wrap columns
-        for rowL in readL:
+        incl_colL = list(range(len(readL[1])))
+        if colS == "[:]":
+            colL = [] * len(incl_colL)
+        else:
+            incl_colL = eval(colS)
+            colL = eval(colS)
+        for row in readL[1:]:                           # select columns
+            colL.append([row[i] for i in incl_colL])
+        wcontentL = []
+        for rowL in colL:                               # wrap columns
             wrowL = []
             for iS in rowL:
                 templist = textwrap.wrap(str(iS), int(maxwI))
@@ -328,8 +333,7 @@ class CmdUTF:
         tableS = output.getvalue()
         sys.stdout = old_stdout
 
-        logging.info(f"{self.cmdS} evaluated")
-        print(tableS)
+        # print(tableS)
         return tableS
 
     def table(self):

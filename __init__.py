@@ -125,7 +125,7 @@ used for navigation (see tags for syntax).
  name                     API Functions (VSCode snippet prefix)
 ======= ===================================================================
 
-repo    rv.R("""label | int;utf;pdf;html;both | width,page
+repo    rv.R("""label | utf width
 (rvr)
                 ||text ||table ||github ||project ||append
 
@@ -137,7 +137,7 @@ insert  rv.I("""label
 
                 """)
 
-values  rv.V("""label | sub;nosub | save;nosave
+values  rv.V("""label | sub;nosub 
 (rvv)
                 = ||value ||list ||function
 
@@ -169,8 +169,8 @@ write   rv.Write()
 || github | repo_name; none | readme; noneparam |                      R 
     (git)     github repo parameters
 
-|| project | folder | file_name                                        R
-    (pro)    .txt; rst; csv; syk; xls | project info folder
+|| project | folder | file_name  | 60,r;l;c | [:]                                     R
+    (pro)    .txt; csv; syk; xls 
 
 || append | folder | file_name                                         R
     (app)   pdf folder | .pdf; .txt  
@@ -191,10 +191,10 @@ write   rv.Write()
    (img2)   side by side images
 
 || text | folder | file_name | shade; noshade                                 I,V,T
-   (tex)   .txt; .py; .tex | shade background
+   (tex)   .txt; .py; .tex | literal; rivt
 
-|| table | folder | file_name |  [:] | 60 r;l;c                               I,V,T
-   (tab)   .csv;.rst file | rows | max col width, locate text
+|| table | folder | file_name | 60,r;l;c | [:]                    I,V,T
+   (tab)   .csv; syk; xls  | max col width, locate | rows
 
 ============================ ============================================
  tag syntax (one per line)                     description 

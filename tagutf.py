@@ -326,10 +326,17 @@ class TagsUTF:
         return lineS
 
     def centerblk(self):
-        pass
+        """_summary_
+        """
 
-    def endblk(self):
-        pass
+        lineS = self.lineS.center(int(self.widthI))
+
+    def centerblk(self):
+        """
+
+        """
+        for i in self.lineS:
+            lineS += i.center(int(self.widthI))
 
     def latexblk(self):
         pass

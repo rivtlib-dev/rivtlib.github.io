@@ -145,7 +145,7 @@ values  rv.V("""label | sub;nosub
 
                 """)
 
-tables  rv.T("""label | hide;show
+tools  rv.T("""label | hide;show
 (rvt)
                 Python simple statements
                 (any valid expression or statment on a single line)
@@ -163,91 +163,81 @@ exclude rv.X("""any text
 write   rv.Write()
 
 =============================================================== ============
-    command syntax and description (VSCode snippets)                 API
+    command syntax and description (VSCode snippets)             API Method
 =============================================================== ============
-
-|| github | repo_name; none | readme; noneparam |                      R 
-    (git)     github repo parameters
-
-|| project | folder | file_name  | 60,r;l;c | [:]                                     R
-    (pro)    .txt; csv; syk; xls 
 
 || append | folder | file_name                                         R
     (app)   pdf folder | .pdf; .txt  
 
-|| list | folder | file_name   
-   (lis)   .csv;.syk;.txt;.py 
+|| page | folder | utf_file_name  | reST_file_name | start_page        R
+    (pag)    .txt; csv; syk; xls 
 
-|| values | folder | file_name | [:];[x:y]                                      V
-   (val)    .csv; .txt; .xlsx; .py 
+|| project | folder | file_name  | 60,r;l;c | [:]                      R
+    (pro)    .txt; csv; syk; xls 
 
-|| functions | folder | file_name | docs; nodocs                                V
+|| text | folder | file_name | text type                               I
+   (tex)   .txt; .py; .tex; .html | plain; tag; code; indent
+   
+|| values | folder | file_name | type                                  V
+   (val)    .csv; .txt; .xlsx;  | rivt, list, array
+
+|| functions | folder | file_name | docs; nodocs                       V
     (fun)      .for; .py; .c; .c++; .jl | insert docstrngs
 
-|| image  | folder | file_name  | .50                                         I,V,T
+|| image  | folder | file_name  | .50                                I,V,T
    (img)   .png; .jpg |  page width fraction
 
-|| image2 | folder | file_name  | .40 | file_name  | .40                      I,V,T
+|| image2 | folder | file_name  | .40 | file_name  | .40             I,V,T
    (img2)   side by side images
 
-|| text | folder | file_name | text type 
-   (tex)   .txt; .py; .tex; .html | plain; tag; code; indent
-
-|| table | folder | file_name | 60,r;l;c | [:]                    I,V,T
+|| table | folder | file_name | 60,r;l;c | [:]                       I,V,T
    (tab)   .csv; syk; xls  | max col width, locate | rows
 
 ============================ ============================================
  tag syntax (one per line)                     description 
 ============================ ============================================
 
-I,V,T Line Formats:
-text _[b]                       bold line 
-text _[c]                       center line
-_[date]                         date insert
+I,V,T line formats:
+---- can be combined 
+text _[b]                       bold 
+text _[c]                       center
+text _[i]                       italicize  
+text _[r]                       right justify 
+text _[l]                       latex 
+text _[s]                       sympy
+--------------------
 text _[e]                       equation label, autonumber
 text _[f]                       figure caption, autonumber
-text <#>                        footnote, autonumber
-text _[foot]                    footnote description 
-_[-]                            horizontal divider insert
-text _[i]                       italicize line
-<reference, opt. label>         internal link, section etc
-latex equation _[x]             LaTeX equation format
-text _[r]                       right justify line
-text _[s]                       sympy equation
-<sympy text>                    sympy inline (no commas)
-_[page]                         new page (PDF)
-_[time]                         time (insert)
 text _[t]                       table title, autonumber
-<http: address, opt. label>     url reference, http:\\xyz
+text _[#]                       footnote, autonumber
+text _[d]                       footnote description 
+_[line]                         horizontal line
+_[page]                         new page
+_[link] address, label          url or internal reference
 
+I,V,T block formats:
+_[[c]]                          center 
+_[[l]]                          LateX 
+_[[m]]                          LaTeX math 
+_[[p]]                          plain 
+_[[q]]                          quit block
+_[[s]]                          shade background
 
-I,V,T Block Formats:
-_[[c]]                          center text block
-_[[o]]                          code text block
-_[[e]]                          end of block
-_[[p]]                          plain text block
-_[[r]]                          right justify text block
-_[[s]]                          shade background start
-_[[q]]                          shade background quit
-_[[l]]                          LateX block
-_[[m]]                          LaTeX math block
+V calculation formats: 
+a := n | unit, alt | descrip    declare = ; units, description
+a := b + c | unit, alt | n,n    assign := ; units, decimals
 
-V Formats: 
-a = n | unit, alt | descrip     assign tag =; units and description
-a := b + c | unit, alt | n,n    result tag :=; units and decimals
+The first line of a rivt file is always import rivt.rivttext as rv followed by
+the Repo method rv.R(rvtxt) which occurs once. rv.R is followed by any of the
+other three methods in any number or order. rv.R(rvtxt) sets options for
+repository and report output formats.
 
-The first line of a rivt file is always import rivt.text as rv. The import
-statement must precede the Repo method rv.R(rs) which is the first method and
-occurs once. rv.R is followed by any of the other three methods (or X method)
-in any number or order. rv.R(rs) sets options for repository and report output
-formats.
-
-File format conventions incorporate the Python formatter pep8. Method
-names start in column one. All other lines are indented 4 spaces to faciliate
-section folding, bookmarking and legibility.
+File format conventions follow the Python formatter pep8. Method names start in
+column one. All other lines must be indented 4 spaces to faciliate section
+folding, bookmarks and legibility.
 
 ============================================================================
-rivt calculation example
+rivt example
 ============================================================================
 
 import rivt.text as rv

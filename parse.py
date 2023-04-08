@@ -33,10 +33,10 @@ from rivt import tagrst
 
 
 class RivtParse:
-    """process rivt-string"""
+    """process rivt-text"""
 
-    def __init__(self, folderD, incrD, methS, localD):
-        """process rivt-string to UTF8 calc
+    def __init__(self, methS, folderD, incrD,  localD):
+        """process rivt-text to UTF8 or reST string
 
             :param dict folderD: folder paths
             :param dict incrD: numbers that increment
@@ -56,31 +56,23 @@ class RivtParse:
             self.tagL = ["none"]
 
         elif methS == "I":
-            self.cmdL = ["table", "text", "image", "image2"]
-            self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
-                         "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
-                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]",
-                         "[s]]", "[q]]", "[x]]", "[m]]"]
+            self.cmdL = ["image", "image2", "table", "text", ]
+            self.tagL = ["page]", "lit]", "foot]", "url]", "lnk]",
+                         "b]", "c]", "e]", "t]", "f]", "l]", "r]", "s]", "#]",
+                         "[c]]", "[e]]", "[p]]", "[o]]", "[r]]", "[s]]",
+                         "[q]]", "[x]]", "[m]]"]
         elif methS == "V":
-            self.cmdL = ["table", "text", "image", "image2",
-                         "values", "list", "functions"]
-            self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
-                         "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
-                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[s]]", "[q]]",
-                         "[x]]", "[m]]", "=", ":="]
+            self.cmdL = ["image", "image2", "table", "values", "functions"]
+            self.tagL = ["-]", "page]", "link]", "lit]", "foot]", "url]", "lnk]",
+                         "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]",
+                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]", "[s]]",
+                         "[q]]", "[x]]", "[m]]", "=", ":="]
         elif methS == "T":
-            self.cmdL = ["table", "text", "image", "image2"]
-            self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
-                         "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
-                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]",
-                         "[s]]", "[q]]", "[x]]", "[m]]"]
-
-        elif methS == "itag":
-            self.cmdL = []
-            self.tagL = ["page]", "link]", "lit]", "foot]", "url]", "lnk]",
-                         "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]", "-]",
-                         "[c]]", "[e]]", "[l]]", "[o]]", "[r]]",
-                         "[s]]", "[q]]", "[x]]", "[m]]"]
+            self.cmdL = ["image", "image2", "table"]
+            self.tagL = ["-]", "page]", "link]", "lit]", "foot]", "url]", "lnk]",
+                         "b]", "c]", "e]", "t]", "f]", "x]", "r]", "s]", "#]",
+                         "[c]]", "[e]]", "[p]]", "[o]]", "[r]]",
+                         "[s]]", "[q]]", "[l]]", "[m]]"]
         else:
             pass
 
@@ -116,7 +108,6 @@ class RivtParse:
         rvtuS = rvtrS = ""
         uS = """"""
         blockB = False
-        ttypeS = "rst"
         hdrvL = ["variable", "value", "[value]", "description"]
         alignvL = ["left", "right", "right", "left"]
         hdreL = ["variable", "value", "[value]", "description [eq. number]"]
@@ -140,16 +131,16 @@ class RivtParse:
                 rvtS = tagrst.TagsRST(lineS, tagS, strL)
                 rstS += rvtS + "\n"
                 blockB = False
-            if blockevalB and len(uS.strip()) < 2:     # compose value table
+            if blockevalB and len(uS.strip()) < 2:     # compose reST table
                 vtableL += blockevalL
                 if tfS == "declare":
                     vS = self.dtable(blockevalL, hdrvL,
-                                     ttypeS, alignvL) + "\n\n"
+                                     "rst", alignvL) + "\n\n"
                     utfS += vS
                     rstS += vS
                 if tfS == "assign":
                     resultS = self.etable(blockevalL, hdreL,
-                                          ttypeS, aligneL) + "\n\n"
+                                          "rst", aligneL) + "\n\n"
                     utfS += resultS
                     rstS += resultS
                 blockevalL = []
@@ -311,3 +302,96 @@ class RivtParse:
 
         print("\n" + utfS+"\n")
         return utfS
+
+
+class RivtParseTag:
+    """process rivt-text tags from external txt file"""
+
+    def __init__(self, tagS, folderD, incrD,  localD):
+        """process rivt-text tags called from text command
+
+            :param dict folderD: folder paths
+            :param dict incrD: numbers that increment
+            :param dict outputS: output type
+            :param dict outputS: output type
+        """
+
+        self.localD = localD
+        self.folderD = folderD  # folder paths
+        self.incrD = incrD      # incrementing formats
+        self.errlogP = folderD["errlogP"]
+        self.tagS = tagS
+
+        # valid commands and tags
+        self.tagL = ["page]", "lit]", "foot]", "url]", "lnk]",
+                     "b]", "c]", "e]", "t]", "f]", "l]", "r]", "s]", "#]",
+                     "[c]]", "[e]]", "[p]]", "[o]]", "[r]]", "[s]]",
+                     "[q]]", "[x]]", "[m]]"]
+
+        modnameS = __name__.split(".")[1]
+        # print(f"{modnameS=}")
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)-8s  " + modnameS +
+            "   %(levelname)-8s %(message)s",
+            datefmt="%m-%d %H:%M",
+            filename=self.errlogP,
+            filemode="w",
+        )
+        warnings.filterwarnings("ignore")
+        # self.rivtD.update(locals())
+
+    def str_parse(self, strL):
+        """parse insert string
+
+            :param list strL: split rivt string
+            :return utfS: utf formatted string
+            :return rstS: reST formatted string
+            :return incrD: increment references
+            :return folderD: folder paths
+            :rtype utfS: string
+            :rtype rstS: string
+            :rtype folderD: dictionary
+            :rtype incrD: dictionary
+        """
+
+        utfS = """"""
+        rstS = """"""
+        rvtuS = rvtrS = ""
+        uS = """"""
+        blockB = False
+        ttypeS = "rst"
+        vtableL = []        # value table export
+        eqL = []            # equation result table
+        for uS in strL:
+            # print(f"{blockassignB=}")
+            # print(f"{uS=}")
+            if uS[0:2] == "##":                        # remove comments
+                continue
+            uS = uS[4:]                                # remove indent
+            if blockB:                                 # accumulate block
+                lineS += uS
+                continue
+            if blockB and uS.strip() == "[e]]":
+                rvtS = tagutf.TagsUTF(lineS, tagS, strL)
+                utfS += rvtS + "\n"
+                rvtS = tagrst.TagsRST(lineS, tagS, strL)
+                rstS += rvtS + "\n"
+                blockB = False
+            elif "_[" in uS:                              # end of line tag
+                usL = uS.split("_[")
+                lineS = usL[0]
+                tagS = usL[1].strip()
+                if tagS[0] == "[":                        # block tag
+                    blockB = True
+                if tagS in self.tagL:
+                    rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
+                                          self.localD)
+                    utS = rvtM.tag_parse(tagS)
+                    utfS += utS + "\n"                 # rst ********
+                    rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
+                                          self.localD)
+                    reS = rvtM.tag_parse(tagS)
+                    rstS += reS + "\n"
+
+        return (utfS, rvtuS), (rstS, rvtrS),  self.incrD, self.folderD, self.localD

@@ -273,7 +273,7 @@ def R(rS: str):
     xrstS = ""
     rL = rS.split("\n")
     hutfS, hrstS = _str_set(rL[0], "R")
-    utfC = parse.RivtParse(folderD, incrD, "R", localD)
+    utfC = parse.RivtParse("R", folderD, incrD,  localD)
     xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
     if hutfS != None:
         xutfS = xutfL[1] + hutfS + xutfL[0]
@@ -294,7 +294,7 @@ def I(rS: str):
     rL = rS.split("\n")
     hutfS, hrstS = _str_set(rL[0], "I")
     print(hutfS)
-    utfC = parse.RivtParse(folderD, incrD, "I", localD)
+    utfC = parse.RivtParse("I", folderD, incrD,  localD)
     xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
     if hutfS != None:
         xutfS = hutfS + xutfL[0]
@@ -316,7 +316,7 @@ def V(rS: str):
     xrstS = """"""
     rL = rS.split("\n")
     hutfS, hrstS = _str_set(rL[0], "V")
-    utfC = parse.RivtParse(folderD, incrD, "V", localD)
+    utfC = parse.RivtParse("V", folderD, incrD, localD)
     xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
     # print(f"{xutfS=}", f"{rL[1:]=}")
     if hutfS != None:
@@ -341,7 +341,7 @@ def T(rS: str):
     xutfS = """"""
     rL = rS.split("\n")
     hutfS, hrstS = _str_set(rL[0], "T")
-    utfC = parse.RivtParse(folderD, incrD, outputS, "T", localD)
+    utfC = parse.RivtParse("T", folderD, incrD, localD)
     xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
     if hutfS != None:
         xutfS = hutfS + xutfL[0]

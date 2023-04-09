@@ -395,8 +395,7 @@ class CmdRST:
         || text | folder | file | type | shade
 
         """
-
-        plenI = 4
+        plenI = 3
         if len(self.paramL) != plenI:
             logging.info(
                 f"{self.cmdS} command not evaluated:  \
@@ -406,60 +405,45 @@ class CmdRST:
             folderP = Path(self.folderD["dataP"])
         else:
             folderP = Path(self.folderD["dataP"])
-
         fileP = Path(self.paramL[1].strip())
         pathP = Path(folderP / fileP)
         txttypeS = self.paramL[2].strip()
         extS = pathP.suffix
-
-        with open(pathP, "r", encoding="utf-8") as f:
-            txtfileS = f.read()
-        with open(pathP, "r", encoding="utf-8") as f:
-            txtfileL = f.readlines()
-
+        with open(pathP, "r", encoding="utf-8") as f1:
+            txtfileS = f1.read()
+        with open(pathP, "r", encoding="utf-8") as f2:
+            txtfileL = f2.readlines()
         j = ""
         if extS == ".txt":
             # print(f"{txttypeS=}")
-            if txttypeS == "literal":
+            if txttypeS == "plain":
                 for iS in txtfileL:
                     j += "   " + iS
                 return "\n\n::\n\n" + j + "\n\n"
-            elif txttypeS == "literalindent":
-                txtS = "\n\n::\n\n"
-                for iS in txtfileL:
-                    j += "   " + iS
-                return txtS + j + "\n\n"
-            elif txttypeS == "sympy":
-                for iS in txtfileL:
-                    try:
-                        spL = i.split("=")
-                        spS = "Eq(" + spL[0] + ",(" + spL[1] + "))"
-                        # sps = sp.encode('unicode-escape').decode()
-                        lineS = sp.pretty(sp.sympify(
-                            spS, _clash2, evaluate=False))
-                        j += lineS
-                    except:
-                        lineS = sp.pretty(sp.sympify(
-                            spS, _clash2, evaluate=False))
-                        j += lineS
-            elif txttypeS == "itag":
-                utfI = parse.RivtParse(folderD, incrD,
-                                       txtfileS, "itag", localD)
-                xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(
-                    txtfileS)
-                return xutfS, xrstS
-            else:
+            elif txttypeS == "code":
                 pass
+            elif txttypeS == "tags":
+                xtagC = parse.RivtParseTag(
+                    self.folderD, self.incrD,  self.localD)
+                xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
+                    txtfileL)
+                return xrstS
         elif extS == ".html":
             txtS = ".. raw:: html" + "\n\n"
             for iS in txtfileL:
                 j += "   " + iS
             return txtS + j + "\n\n"
         elif extS == ".tex":
-            txtS = ".. raw:: latex" + "\n\n"
-            for iS in txtfileL:
-                j += "   " + iS
-            return txtS + j + "\n\n"
+            if txttypeS == "plain":
+                txtS = ".. raw:: latex" + "\n\n"
+                for iS in txtfileL:
+                    j += "   " + iS
+                return txtS + j + "\n\n"
+            if txttypeS == "math":
+                txtS = ".. raw:: latex" + "\n\n"
+                for iS in txtfileL:
+                    j += "   " + iS
+                return txtS + j + "\n\n"
 
     def vtable(self, tbL, hdrL, tblfmt, alignL):
         """write value table"""

@@ -57,10 +57,9 @@ refileP = " "
 for fileS in os.listdir(projP):
     print(f"{fileS[0:5]=}")
     print(f"{fileS[-6:]=}")
-    if fnmatch.fnmatch(fileS[0:5], "rivt-"):
-        if fnmatch.fnmatch(fileS[-6:], "-local"):
-            rvtlocalP = Path(projP/fileS)  # resource folder path
-            break
+    if fnmatch.fnmatch(fileS[0:10], "rivtlocal-"):
+        rvtlocalP = Path(projP/fileS)  # resource folder path
+        break
 print(f"{rvtlocalP=}")
 for fileS in os.listdir(Path(rvtlocalP, "resource")):
     if fnmatch.fnmatch(fileS[2:5], prfxS + "-*"):

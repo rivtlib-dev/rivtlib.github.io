@@ -176,13 +176,13 @@ write   rv.Write()
     (pro)    .txt; csv; syk; xls 
 
 || text | folder | file_name | text type                               I
-   (tex)   .txt; .py; .tex; .html | plain; tag; code; indent
-   
+   (tex)   .txt; .tex; .html | plain; tags; code; math
+
 || values | folder | file_name | type                                  V
-   (val)    .csv; .txt; .xlsx;  | rivt, list, array
+   (val)    .csv; .txt; .xlsx;  | values, list, array
 
 || functions | folder | file_name | docs; nodocs                       V
-    (fun)      .for; .py; .c; .c++; .jl | insert docstrngs
+    (fun)  .for; .py; .c; .c++; .jl; .mat; .xlxs | docstrings
 
 || image  | folder | file_name  | .50                                I,V,T
    (img)   .png; .jpg |  page width fraction
@@ -203,9 +203,9 @@ text _[b]                       bold
 text _[c]                       center
 text _[i]                       italicize  
 text _[r]                       right justify 
-text _[l]                       latex 
+---------
+text _[m]                       LaTeX math
 text _[s]                       sympy
---------------------
 text _[e]                       equation label, autonumber
 text _[f]                       figure caption, autonumber
 text _[t]                       table title, autonumber
@@ -213,15 +213,19 @@ text _[#]                       footnote, autonumber
 text _[d]                       footnote description 
 _[line]                         horizontal line
 _[page]                         new page
-_[link] address, label          url or internal reference
+address, label _[link]          url or internal reference
 
 I,V,T block formats:
-_[[c]]                          center 
-_[[l]]                          LateX 
-_[[m]]                          LaTeX math 
-_[[p]]                          plain 
+---- can be combined 
+_[[b]]                          bold
+_[[c]]                          center
+_[[i]]                          italic
+_[[p]]                          plain  
+_[[s]]                          shade 
+-------
+_[[l]]                          LateX
+_[[h]]                          HTML 
 _[[q]]                          quit block
-_[[s]]                          shade background
 
 V calculation formats: 
 a := n | unit, alt | descrip    declare = ; units, description

@@ -429,7 +429,7 @@ class CmdUTF:
             txtS += " "*4 + iS
             txtS = htm.html2text(txtS)
             utfS = txtS.replace("\n    \n", "")
-            print(utfS)
+
             return utfS
 
     def txttex(self, txtfileS, txttypeS):
@@ -442,12 +442,7 @@ class CmdUTF:
         soup = TexSoup(txtfileS)
         soupL = list(soup.text)
         soupS = "".join(soupL)
-        if txttypeS == "math":
-            latexL = sp.pretty(parse_latex(txtfileS))
-            latexS = "\n".join(latexL)
-            print(latexS)
-            return latexS
-        elif txttypeS == "raw":
+        if txttypeS == "plain" or txttypeS == "math":
             soupS = soupS.replace("\\\\", "\n")
             soupL = soupS.split("\n")
             if "&" in soupL[10]:
@@ -469,23 +464,19 @@ class CmdUTF:
                     soup1L.append(s[0]+"\n")
 
             soupS = "".join(soup1L)
-
-            print(soupS)
             return soupS
         else:
-            print(soupS)
             return soupS
 
     def text(self):
         """9 insert text from file
 
-        || text | folder | file | type | shade
+        || text | folder | file | type 
 
         :param lineS: string block
 
         """
-
-        plenI = 4
+        plenI = 3
         if len(self.paramL) != plenI:
             logging.info(
                 f"{self.cmdS} command not evaluated:  \
@@ -495,65 +486,35 @@ class CmdUTF:
             folderP = Path(self.folderD["dataP"])
         else:
             folderP = Path(self.folderD["dataP"])
-
         fileP = Path(self.paramL[1].strip())
         pathP = Path(folderP / fileP)
         txttypeS = self.paramL[2].strip()
         extS = pathP.suffix
-
         with open(pathP, "r", encoding="utf-8") as f1:
             txtfileS = f1.read()
         with open(pathP, "r", encoding="utf-8") as f2:
             txtfileL = f2.readlines()
-
         j = ""
         if extS == ".txt":
             # print(f"{txttypeS=}")
             if txttypeS == "plain":
-                j = txtfileS
-                # j += " "*4 + i
-            elif txttypeS == "indent":
-                for iS in txtfileL:
-                    txtS += "   " + iS
-                j = txtS + "\n"
-                if txttypeS == "wrap":
-                    inS = " " * 4
-                    txtS = txtfileS
-                    widthI = self.incrD["widthI"]
-                    uL = textwrap.wrap(txtS, width=widthI)
-                    uL = [inS + s + "\n" for s in uL]
-                    utfS = "".join(uL)
-                    print(utfS)
-                    return utfS
-            elif txttypeS == "tag":
-                for i in self.lineS:
-
-                    usL = i.split("_[")
-                    lineS = usL[0]
-                    tagS = usL[1].strip()
-                    if tagS[0] == "[":                        # block tag
-                        blockB = True
-                    if tagS in self.tagL:
-                        rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
-                                              self.localD)
-                        utS = rvtM.tag_parse(tagS)
-                        utfS += utS + "\n"
-
-                utfI = parse.RivtParse(folderD, incrD,
-                                       txtfileS, "tag", localD)
-                xutfS, xrstS, folderD, incrD, localD = utfI.str_parse(
-                    txtfileS)
-                print(xutfS)
-                return xutfS
-            else:
+                print(txtfileS)
+                return txtfileS
+            elif txttypeS == "code":
                 pass
-            print(j)
-            return j
+            elif txttypeS == "tags":
+                xtagC = parse.RivtParseTag(
+                    self.folderD, self.incrD,  self.localD)
+                xutfS, self.incrD, self.folderD, self.localD = xtagC.utf_parse(
+                    txtfileL)
+                return xutfS
         elif extS == ".html":
             utfS = self.txthtml(txtfileL)
+            print(utfS)
             return utfS
         elif extS == ".tex":
             soupS = self.txttex(txtfileS, txttypeS)
+            print(soupS)
             return soupS
         elif extS == ".py":
             pass

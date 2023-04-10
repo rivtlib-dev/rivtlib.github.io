@@ -440,7 +440,7 @@ class CmdRST:
                     j += "   " + iS
                 return txtS + j + "\n\n"
             if txttypeS == "math":
-                txtS = ".. raw:: latex" + "\n\n"
+                txtS = ".. math:: " + "\n\n"
                 for iS in txtfileL:
                     j += "   " + iS
                 return txtS + j + "\n\n"

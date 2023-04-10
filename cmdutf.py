@@ -113,94 +113,27 @@ class CmdUTF:
             return
         iL = self.paramL
         file1S = iL[1].strip()
+        imgL = file1S.split(",")
+        imgcountI = len(file1L)
         if iL[0].strip() == "resource":
-            img1S = str(Path(self.folderD["resourceP"] / file1S))
+            imgP = Path(self.folderD["resourceP"])
+        elif iL[0].strip() == "data":
+            imgP = Path(self.folderD["data"])
         else:
-            img1S = str(Path(self.folderD["resourceP"] / file1S))
-
-        pshrt1S = str(Path(*Path(img1S).parts[-3:]))
+            imgP = Path(self.folderD["resourceP"])
         temp_out = StringIO()
         sys.stdout = temp_out
-        for fS in [pshrt1S]:
-            utfS += "Figure path: " + fS + "\n"
+        for i in imgL:
+            imgS = Path(imgP, i)
+            shrt1S = str(Path(*Path(imgS).parts[-3:]))
+            utfS += "Figure path: " + shrt1S + "\n"
             try:
-                _display(_Image(fS))
+                _display(_Image(imgS))
             except:
                 pass
-
         sys.stdout = sys.__stdout__
 
         return utfS
-
-    def image2(self):
-        """4 insert two images from file side by side
-
-            :param iL (list): image parameters
-        """
-
-        utfS = ""
-        plenI = 5
-        if len(self.paramL) != plenI:
-            logging.info(
-                f"{self.cmdS} command not evaluated: {plenI} parameters required")
-            return
-        iL = self.paramL
-        file1S = iL[1].strip()
-        file2S = iL[3].strip()
-        if iL[0].strip() == "resource":
-            img1S = str(Path(self.folderD["resourceP"] / file1S))
-            img2S = str(Path(self.folderD["resourceP"] / file2S))
-        else:
-            img1S = str(Path(self.folderD["resourceP"] / file1S))
-            img2S = str(Path(self.folderD["resourceP"] / file2S))
-
-        pshrt1S = str(Path(*Path(img1S).parts[-3:]))
-        pshrt2S = str(Path(*Path(img2S).parts[-3:]))
-        temp_out = StringIO()
-        sys.stdout = temp_out
-        for fS in [pshrt1S, pshrt2S]:
-            utfS += "Figure path: " + fS + "\n"
-            try:
-                _display(_Image(fS))
-            except:
-                pass
-
-        sys.stdout = sys.__stdout__
-
-        return utfS
-
-    def list(self):
-        """5 import data from files
-
-
-            :return lineS: utf table
-            :rtype: str
-        """
-
-        locals().update(self.rivtD)
-        valL = []
-        if len(vL) < 5:
-            vL += [""] * (5 - len(vL))  # pad command
-        valL.append(["variable", "values"])
-        vfileS = Path(self.folderD["cpath"] / vL[2].strip())
-        vecL = eval(vL[3].strip())
-        with open(vfileS, "r") as csvF:
-            reader = csv.reader(csvF)
-        vL = list(reader)
-        for i in vL:
-            varS = i[0]
-            varL = array(i[1:])
-            cmdS = varS + "=" + str(varL)
-            exec(cmdS, globals(), locals())
-            if len(varL) > 4:
-                varL = str((varL[:2]).append(["..."]))
-            valL.append([varS, varL])
-        hdrL = ["variable", "values"]
-        alignL = ["left", "right"]
-        self.vtable(valL, hdrL, "rst", alignL)
-        self.rivtD.update(locals())
-
-        return
 
     def pages(self):
         """6 write head or foot format line to dictionary
@@ -442,31 +375,20 @@ class CmdUTF:
         soup = TexSoup(txtfileS)
         soupL = list(soup.text)
         soupS = "".join(soupL)
-        if txttypeS == "plain" or txttypeS == "math":
-            soupS = soupS.replace("\\\\", "\n")
-            soupL = soupS.split("\n")
-            if "&" in soupL[10]:
-                soupL = [s.split("&") for s in soupL]
-            else:
-                if ">" in soupL[10]:
-                    soupL = [s.split(">") for s in soupL]
-            for s in soupL:
-                try:
-                    s[1] = s[1].replace("\\", " ")
-                    s[0] = s[0].replace("\\", " ")
-                except:
-                    s[0] = s[0].replace("\\", " ")
-            soup1L = []
-            for s in soupL:
-                try:
-                    soup1L.append(s[0].ljust(10) + s[1]+"\n")
-                except:
-                    soup1L.append(s[0]+"\n")
+        soup1L = []
+        soupS = soupS.replace("\\\\", "\n")
+        soupL = soupS.split("\n")
+        for s in soupL:
+            sL = s.split("&")
+            sL = s.split(">")
+            try:
+                soup1L.append(sL[0].ljust(10) + sL[1])
+            except:
+                soup1L.append(s)
+        soupS = [s.replace("\\", " ") for s in soup1L]
+        soupS = "\n".join(soup1L)
 
-            soupS = "".join(soup1L)
-            return soupS
-        else:
-            return soupS
+        return soupS
 
     def text(self):
         """9 insert text from file
@@ -595,3 +517,36 @@ class CmdUTF:
 
         print(utfS + "\n")
         return utfS
+
+    def list(self):
+        """5 import data from files
+
+
+            :return lineS: utf table
+            :rtype: str
+        """
+
+        locals().update(self.rivtD)
+        valL = []
+        if len(vL) < 5:
+            vL += [""] * (5 - len(vL))  # pad command
+        valL.append(["variable", "values"])
+        vfileS = Path(self.folderD["cpath"] / vL[2].strip())
+        vecL = eval(vL[3].strip())
+        with open(vfileS, "r") as csvF:
+            reader = csv.reader(csvF)
+        vL = list(reader)
+        for i in vL:
+            varS = i[0]
+            varL = array(i[1:])
+            cmdS = varS + "=" + str(varL)
+            exec(cmdS, globals(), locals())
+            if len(varL) > 4:
+                varL = str((varL[:2]).append(["..."]))
+            valL.append([varS, varL])
+        hdrL = ["variable", "values"]
+        alignL = ["left", "right"]
+        self.vtable(valL, hdrL, "rst", alignL)
+        self.rivtD.update(locals())
+
+        return

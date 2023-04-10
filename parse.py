@@ -53,24 +53,16 @@ class RivtParse:
         # valid commands and tags
         if methS == "R":
             self.cmdL = ["append", "github", "pages", "project"]
-            self.tagL = ["none"]
 
         elif methS == "I":
-            self.cmdL = ["image", "image2", "table", "text", ]
-            self.tagL = ["page]", "line]", "link]", "b]", "c]", "i]", "r]",
-                         "#]", "d]", "e]",  "f]", "m]", "s]", "t]", "[s]]",
-                         "[b]]", "[c]]", "[i]]",  "[p]]", "[h]]", "[l]]"]
+            self.cmdL = ["image", "table", "text", ]
+
         elif methS == "V":
-            self.cmdL = ["image", "image2", "table", "values", "functions"]
-            self.tagL = ["page]", "line]", "link]", "b]", "c]", "i]", "r]",
-                         "#]", "d]", "e]",  "f]", "m]", "s]", "t]",  "[s]]",
-                         "[b]]", "[c]]", "[i]]",  "[p]]", "[h]]", "[l]]",
-                         "=", ":="]
+            self.cmdL = ["image", "table", "values", "functions"]
+
         elif methS == "T":
-            self.cmdL = ["image", "image2", "table"]
-            self.tagL = ["page]", "line]", "link]", "b]", "c]", "i]", "r]",
-                         "#]", "d]", "e]",  "f]", "m]", "s]", "t]", "[s]]",
-                         "[b]]", "[c]]", "[i]]",  "[p]]", "[h]]", "[l]]"]
+            self.cmdL = ["image", "table"]
+
         else:
             pass
 
@@ -108,8 +100,8 @@ class RivtParse:
         blockB = False
         hdrvL = ["variable", "value", "[value]", "description"]
         alignvL = ["left", "right", "right", "left"]
-        hdreL = ["variable", "value", "[value]", "description [eq. number]"]
-        aligneL = ["left", "right", "right", "left"]
+        hdraL = ["variable", "value", "[value]", "description [eq. number]"]
+        alignaL = ["left", "right", "right", "left"]
         blockevalL = []     # current value table
         blockevalB = False  # stop accumulation of values
         vtableL = []        # value table export
@@ -129,7 +121,7 @@ class RivtParse:
                 rvtS = tagrst.TagsRST(lineS, tagS, strL)
                 rstS += rvtS + "\n"
                 blockB = False
-            if blockevalB and len(uS.strip()) < 2:     # compose reST table
+            if blockevalB and len(uS.strip()) < 2:     # values table
                 vtableL += blockevalL
                 if tfS == "declare":
                     vS = self.dtable(blockevalL, hdrvL,
@@ -137,21 +129,21 @@ class RivtParse:
                     utfS += vS
                     rstS += vS
                 if tfS == "assign":
-                    resultS = self.etable(blockevalL, hdreL,
-                                          "rst", aligneL) + "\n\n"
+                    resultS = self.atable(blockevalL, hdraL,
+                                          "rst", alignaL) + "\n\n"
                     utfS += resultS
                     rstS += resultS
                 blockevalL = []
                 blockevalB = False
-            elif uS[0:2] == "||":                        # command
+            elif uS[0:2] == "||":                      # command
                 usL = uS[2:].split("|")
                 parL = usL[1:]
                 cmdS = usL[0].strip()
                 if cmdS in self.cmdL:
                     rvtM = cmdutf.CmdUTF(parL, self.incrD, self.folderD,
-                                         self.localD)   # utf cmd ******
+                                         self.localD)  # utf cmd ******
                     utS = rvtM.cmd_parse(cmdS)
-                    if cmdS == "pages":                  # header page
+                    if cmdS == "pages":                 # header page
                         self.folderD["styleP"] == utS
                         rvtuS = self.incrD["headuS"]
                         pagenoS = str(self.incrD["pageI"])
@@ -160,25 +152,24 @@ class RivtParse:
                         continue
                     utfS += utS
                     rvtM = cmdrst.CmdRST(parL, self.incrD, self.folderD,
-                                         self.localD)    # rst cmd ******
+                                         self.localD)  # rst cmd ******
                     reS = rvtM.cmd_parse(cmdS)
                     rstS += reS
-            elif "_[" in uS:                             # end of line tag
+            elif "_[" in uS:                          # end of line tag
                 usL = uS.split("_[")
                 lineS = usL[0]
                 tagS = usL[1].strip()
-                if tagS[0] == "[":                       # block tag
+                if tagS[0] == "[":                     # block tag
                     blockB = True
-                if tagS in self.tagL:
-                    rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
-                                          self.localD)    # utf tag ******
-                    utS = rvtM.tag_parse(tagS)
-                    utfS += utS + "\n"                    # rst tag ******
-                    rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
-                                          self.localD)
-                    reS = rvtM.tag_parse(tagS)
-                    rstS += reS + "\n"
-            elif "=" in uS:                               # assign tag
+                rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
+                                      self.localD)     # utf tag ******
+                utS = rvtM.tag_parse(tagS)
+                utfS += utS + "\n"                     # rst tag ******
+                rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
+                                      self.localD)
+                reS = rvtM.tag_parse(tagS)
+                rstS += reS + "\n"
+            elif "=" in uS:                             # assign tag
                 # print(f"{uS=}")
                 if "=" in self.tagL:
                     usL = uS.split("|")
@@ -208,13 +199,13 @@ class RivtParse:
                         rstS += eqL[1]
                         blockevalB = True
                         continue
-            else:                                           # delay R str title
+            else:                                 # delay R str title
                 if self.methS != "R":
                     print(uS)
                 utfS += uS + "\n"
                 rstS += uS + "\n"
 
-        if self.incrD["saveP"] != None:                     # write saved values
+        if self.incrD["saveP"] != None:            # write saved values
             valP = Path(self.folderD["dataP"] / self.incrD["saveP"])
             with open(valP, "w", newline="") as f:
                 writecsv = csv.writer(f)
@@ -223,8 +214,8 @@ class RivtParse:
 
         return (utfS, rvtuS), (rstS, rvtrS),  self.incrD, self.folderD, self.localD
 
-    def etable(self, tblL, hdreL, tblfmt, aligneL):
-        """write equation table"""
+    def atable(self, tblL, hdreL, tblfmt, aligneL):
+        """write assign values table"""
 
         locals().update(self.localD)
 
@@ -263,7 +254,7 @@ class RivtParse:
         return utfS
 
     def dtable(self, tblL, hdrvL, tblfmt, alignvL):
-        """write declare table"""
+        """write declare values table"""
 
         locals().update(self.localD)
 

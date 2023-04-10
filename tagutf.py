@@ -35,41 +35,44 @@ class TagsUTF:
 
     def __init__(self, lineS, incrD, folderD,  localD):
         """format tags to utf
+            ============================ ======================================
+            tags                                   description 
+            ============================ ======================================
 
-        ============================ ============================================
-        tag syntax                      description
-        ============================ ============================================
+            I,V,T line formats:               one at the end of a line
+            ---- can be combined 
+            1 text _[b]                       bold 
+            2 text _[c]                       center
+            3 text _[i]                       italicize
+            4 text _[u]                       underline   
+            5 text _[r]                       right justify
+            ---------
+            6 text _[m]                       LaTeX math
+            7 text _[s]                       sympy math
+            8 text _[e]                       equation label, autonumber
+            9 text _[f]                       figure caption, autonumber
+            10 text _[t]                      table title, autonumber
+            11 text _[#]                      footnote, autonumber
+            12 text _[d]                      footnote description 
+            13 _[line]                        horizontal line
+            14 _[page]                        new page
+            15 address, label _[link]         url or internal reference
 
-        Line Format:
-        1  text  _[b]                    bold - line
-        2  text  _[c]                    center - line
-        3  text  _[d]                    description for footnote
-        4  text  _[e]                    equation label - line
-        5  text  _[f]                    figure label -line
-        6  text  _[#]                    foot number - inline
-        7  text  _[i]                    italicize - line
-        8        _[-]                    line - line
-        9  text  _[l]                    LaTeX equation - line
-        10 text  _[p]                    plain literal - line
-        11    _[page]                    new page - line
-        12 text  _[r]                    right justify line - line
-        13 text  _[s]                    sympy equation - line
-        14 text  _[t]                    table label - line
-        15 ref, label _[u]               url or internal link - line
+            I,V,T block formats:              one at the start and end of block
+            ---- can be combined 
+            16 _[[b]]                        bold
+            17 _[[c]]                        center
+            18 _[[i]]                        italic
+            19 _[[p]]                        plain  
+            20 _[[s]]                        shade 
+            -------
+            21 _[[l]]                        LateX
+            22 _[[h]]                        HTML 
+            23 _[[q]]                        quit block
 
-        Block Format:
-        16 _[[c]]                        center block
-        17 _[[e]]                        end block
-        18 _[[l]]                        LateX block
-        19 _[[m]]                        LaTeX math block
-        20 _[[o]]                        code block
-        21 _[[p]]                        plain literal block
-        22 _[[r]]                        right justify block
-        23 _[[t]]                        block with tags
-
-        Values Only Formats:
-        24 a := n | unit, alt | descrip   = declare tag
-        25 a = b + c | unit, alt | n,n    := assign tag
+            V calculation formats: 
+            24 a := n | unit, alt | descrip    declare = ; units, description
+            25 a := b + c | unit, alt | n,n    assign := ; units, decimals
 
         """
 
@@ -79,16 +82,20 @@ class TagsUTF:
         self.lineS = lineS
         self.widthI = incrD["widthI"]
         self.errlogP = folderD["errlogP"]
-        self.valL = []                          # accumulate values
+        self.valL = []                          # accumulated values
 
-        self.tagD = {"c]": "center", "d]": "description", "e]": "equation",
-                     "f]": "figure", "#]": "footnumber", "i]": "italic",
-                     "l]": "latex", "-]": "line", "page]": "page",
-                     "r]": "right", "s]": "sympy", "t]": "table",
-                     "[c]]": "centerblk", "[e]]": "endblk", "[l]]": "latexblk",
-                     "[m]]": "mathblk", "[o]]": "codeblk", "[p]]": "plainblk",
-                     "[r]]": "rightblk", "[q]]": "shadeblk", "[s]]": "quitblk",
-                     ":=": "declare", "=": "assign"}
+        self.multiD = {"b": "bold", "c": "center", "i": "italic", "r": "right",
+                       "u": "underline", }
+
+        self.singleD = {"d]": "description", "e]": "equation", "f]": "figure",
+                        "#]": "footnumber", "l]": "latex", "s]": "sympy",
+                        "t]": "table", ":=": "declare", "=": "assign"}
+
+        self.wordD = {"link]": "line", "line]": "line", "page]": "page", }
+
+        self.blockD = {"[c]]": "centerblk", "[e]]": "endblk", "[l]]": "latexblk",
+                       "[m]]": "mathblk", "[o]]": "codeblk", "[p]]": "plainblk",
+                       "[r]]": "rightblk", "[q]]": "shadeblk", "[s]]": "quitblk"}
 
         modnameS = __name__.split(".")[1]
         # print(f"{modnameS=}")
@@ -105,8 +112,23 @@ class TagsUTF:
     def tag_parse(self, tagS):
         """_summary_
         """
+        if tagS in self.wordD:
+            return eval("self." + self.tagD[tagS] + "()")
 
-        return eval("self." + self.tagD[tagS] + "()")
+        if tagS in self.singleD:
+            return eval("self." + self.tagD[tagS] + "()")
+
+        if tagS in self.blockD:
+            return eval("self." + self.tagD[tagS] + "()")
+
+        cmdL = []
+        xutfS = ""
+        for s in tagS:
+            if s in self.multiD:
+                cmdL.append("self." + self.multiD[tagS] + "()")
+
+        for j in cmdL:
+            return eval(j)
 
     def label(self, labelS, numS):
         """format labels for equations, tables and figures

@@ -184,28 +184,26 @@ write   rv.Write()
 || functions | folder | file_name | docs; nodocs                       V
     (fun)  .for; .py; .c; .c++; .jl; .mat; .xlxs | docstrings
 
-|| image  | folder | file_name  | .50                                I,V,T
+|| image  | folder | file_name, ...  | .50, ...                      I,V,T
    (img)   .png; .jpg |  page width fraction
-
-|| image2 | folder | file_name  | .40 | file_name  | .40             I,V,T
-   (img2)   side by side images
 
 || table | folder | file_name | 60,r;l;c | [:]                       I,V,T
    (tab)   .csv; syk; xls  | max col width, locate | rows
 
 ============================ ============================================
- tag syntax (one per line)                     description 
+ tags                                   description 
 ============================ ============================================
 
-I,V,T line formats:
+I,V,T line formats:             one at the end of a line
 ---- can be combined 
 text _[b]                       bold 
 text _[c]                       center
-text _[i]                       italicize  
-text _[r]                       right justify 
+text _[i]                       italicize
+text _[u]                       underline   
+text _[r]                       right justify
 ---------
 text _[m]                       LaTeX math
-text _[s]                       sympy
+text _[s]                       sympy math
 text _[e]                       equation label, autonumber
 text _[f]                       figure caption, autonumber
 text _[t]                       table title, autonumber
@@ -215,7 +213,7 @@ _[line]                         horizontal line
 _[page]                         new page
 address, label _[link]          url or internal reference
 
-I,V,T block formats:
+I,V,T block formats:            one at the start and end of block
 ---- can be combined 
 _[[b]]                          bold
 _[[c]]                          center

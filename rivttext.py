@@ -50,7 +50,7 @@ rvttxtP = docP.parent
 dataP = Path(rvttxtP / "data")
 projP = docP.parent.parent.parent  # rivt project folder path
 bakP = rvttxtP / ".".join((docbaseS, "bak"))
-print(f"{projP=}")
+# print(f"{projP=}")
 rvtlocalP = " "
 fileS = " "
 refileP = " "
@@ -60,14 +60,13 @@ for fileS in os.listdir(projP):
     if fnmatch.fnmatch(fileS[0:10], "rivtlocal-"):
         rvtlocalP = Path(projP/fileS)  # resource folder path
         break
-print(f"{rvtlocalP=}")
-for fileS in os.listdir(Path(rvtlocalP, "resource")):
+# print(f"{rvtlocalP=}")
+for fileS in os.listdir(rvtlocalP):
     if fnmatch.fnmatch(fileS[2:5], prfxS + "-*"):
         refileP = Path(fileS)  # resource folder path
         break
-print(f"{refileP=}")
-resourceP = Path(rvtlocalP, "resource", refileP)
-rerootP = Path(rvtlocalP, "resource")
+# print(f"{refileP=}")
+resourceP = Path(rvtlocalP, refileP)
 doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = doctitleS.replace("-", " ")
 divtitleS = (refileP.name).split("-", 1)[1]
@@ -76,7 +75,7 @@ siteP = Path(rvtlocalP / "site")  # site folder path
 reportP = Path(rvtlocalP / "report")  # report folder path
 siteP = Path(rvtlocalP / "site")  # site folder path
 rvconfigP = Path(rvttxtP.parent / "rv0000-config")
-retempP = Path(rerootP / "rv00-temp")
+retempP = Path(rvtlocalP / "rv00-temp")
 rivtP = Path("rivttext.py").parent  # rivt package path
 pypath = os.path.dirname(sys.executable)
 rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
@@ -97,7 +96,7 @@ rstoutL = ["pdf", "html", "both"]   # reST formats
 outputL = ["utf", "pdf", "html", "both", "report", "site"]
 
 folderD = {}
-for item in ["docP", "dataP", "resourceP", "rerootP", "resourceP", "projP",
+for item in ["docP", "dataP", "resourceP", "rvtlocalP", "resourceP", "projP",
              "reportP", "siteP", "rvconfigP", "retempP",
              "errlogP", "styleP", "saveP"]:
     folderD[item] = eval(item)
@@ -137,7 +136,7 @@ logging.basicConfig(
     filemode="w",
 )
 dshortP = Path(*Path(docP.parent).parts[-2:])
-lshortP = Path(*rerootP.parts[-2:])
+lshortP = Path(*rvtlocalP.parts[-2:])
 rshortP = Path(*Path(resourceP).parts[-2:])
 
 print(f"\n-------- start rivt file : [{docfileS}] ---------")
@@ -419,9 +418,9 @@ def _rest2tex(rstfileS):
         logging.error(str(e))
         sys.exit("tex file write failed")
 
-    return1S = _mod_tex(texfileP)
+    _mod_tex(texfileP)
 
-    return2S = _gen_pdf(texfileP)
+    _gen_pdf(texfileP)
 
     return texfileP
 
@@ -442,6 +441,7 @@ def _mod_tex(tfileP):
     with open(tfileP, "r", encoding="utf-8", errors="ignore") as f2:
         texf = f2.read()
 
+    # modify "at" command
     texf = texf.replace("""\\begin{document}""",
                         """\\renewcommand{\contentsname}{""" + doctitleS
                         + "}\n" +
@@ -450,6 +450,7 @@ def _mod_tex(tfileP):
                         """\\renewcommand\@dotsep{10000}""" +
                         """\\makeatother\n""")
 
+    # add table of contents, figures and tables
     # texf = texf.replace("""\\begin{document}""",
     #                     """\\renewcommand{\contentsname}{""" + doctitleS
     #                     + "}\n" +
@@ -472,8 +473,7 @@ def _mod_tex(tfileP):
     texf = texf.replace("""\\end{tabular}""", "%% ")
     texf = texf.replace(
         """\\begin{document}""",
-        """\\begin{document}\n\\setcounter{page}{""" + startS + "}\n",
-    )
+        """\\begin{document}\n\\setcounter{page}{""" + startS + "}\n")
 
     with open(tfileP, "w", encoding="utf-8") as f2:
         f2.write(texf)
@@ -481,7 +481,7 @@ def _mod_tex(tfileP):
     # with open(tfileP, 'w') as texout:
     #    print(texf, file=texout)
 
-    return "INFO: tex file updated"
+    return
 
 
 def _gen_pdf(self):
@@ -499,10 +499,8 @@ def _gen_pdf(self):
         "xflsP": Path(retempP, docbaseS + ".fls"),
         "xtexmakP": Path(retempP, docbaseS + ".fdb_latexmk"),
     }
-
     os.system('latex --version')
     os.chdir(retempP)
-
     pdf1 = 'latexmk -xelatex -quiet -f ' + str(pdfD["xtexP"])
     # print(f"{pdf1=}"")
     os.system(pdf1)
@@ -510,7 +508,52 @@ def _gen_pdf(self):
     dstS = str(Path(reportP, srcS))
     shutil.copy(srcS, dstS)
 
-    return pdfD["xpdfP"]
+    return
+
+
+def writedoc(formatS):
+    """write output files
+
+    :param formatS: comma separated output types
+    :type formatS: str
+    """
+
+    global utfS, rstS, outputS, incrD, folderD
+
+    formatL = [i.strip() for i in formatS.split(",")]
+    # print(f"{formatL=}")
+
+    docutfP = Path(docP.parent / "README.txt")
+    rstfileP = Path(docP.parent, docbaseS + ".rst")
+    eshortP = Path(*Path(rstfileP).parts[-3:])
+
+    logging.info(f"""end rivt file: [{docfileS}]""")
+    print(f" -------- end rivt file: [{docfileS}] --------- ")
+
+    print("", flush=True)
+    if "utf" in formatL:                          # save utf file
+        with open(docutfP, "w", encoding='utf-8') as f1:
+            f1.write(utfS)
+            # with open(_rstfile, "wb") as f1:
+            #   f1.write(rstcalcS.encode("UTF-8"))
+            # f1 = open(_rstfile, "r", encoding="utf-8", errors="ignore")
+        logging.info(f"""utf doc written: {dshortP}\README.txt""")
+        print(f"utf doc written: {dshortP}\README.txt")
+    print("", flush=True)
+    if "pdf" in formatL or "html" in formatL:      # save rst file
+        with open(rstfileP, "w", encoding='utf-8') as f2:
+            f2.write(rstS)
+        logging.info(f"""reST file written: {rstfileP}""")
+        print(f"reST file written: {rstfileP}")
+    print("", flush=True)
+    if "pdf" in formatL:
+        pdffileP = _rest2tex(rstS)
+        logging.info(f"PDF doc written: {pdffileP}")
+    print("", flush=True)
+    # if "html" in formatL:
+    #     pdffileP = _rest2html(rstS)
+    #     logging.info(f"HTML doc written: {pdffileP}")
+    sys.exit()
 
 
 def writereport(fileS):
@@ -572,57 +615,3 @@ def writereport(fileS):
         file2.write(j1)
     file2.close()
     return
-
-
-def writesite(fileS):
-
-    # if "html" in i:
-    #     htmlfileS = site(rstS)
-    #     docP = folderD["siteP"]
-    #     with open(docP, "w") as f2:
-    #         f2.write(htmlfileS)
-    #     print("", flush=True)
-    #     logging.info(f"""html doc written: {dochtmlS}""")
-
-    pass
-
-
-def writedoc(formatS):
-    """write output files
-
-    :param formatS: comma separated output types
-    :type formatS: str
-    """
-
-    global utfS, rstS, outputS, incrD, folderD
-
-    formatL = [i.strip() for i in formatS.split(",")]
-    # print(f"{formatL=}")
-
-    docutfP = Path(docP.parent / "README.txt")
-    rstfileP = Path(docP.parent, docbaseS + ".rst")
-    eshortP = Path(*Path(rstfileP).parts[-3:])
-
-    logging.info(f"""end rivt file: [{docfileS}]""")
-    print(f" -------- end rivt file: [{docfileS}] --------- ")
-
-    print("", flush=True)
-    if "utf" in formatL:                          # save utf file
-        with open(docutfP, "w", encoding='utf-8') as f1:
-            f1.write(utfS)
-            # with open(_rstfile, "wb") as f1:
-            #   f1.write(rstcalcS.encode("UTF-8"))
-            # f1 = open(_rstfile, "r", encoding="utf-8", errors="ignore")
-        logging.info(f"""utf doc written: {dshortP}\README.txt""")
-        print(f"utf doc written: {dshortP}\README.txt")
-    print("", flush=True)
-    if "pdf" in formatL or "html" in formatL:      # save rst file
-        with open(rstfileP, "w", encoding='utf-8') as f2:
-            f2.write(rstS)
-        logging.info(f"""reST file written: {rstfileP}""")
-        print(f"reST file written: {rstfileP}")
-    print("", flush=True)
-    if "pdf" in formatL:
-        pdffileP = _rest2tex(rstS)
-        logging.info(f"PDF doc written: {pdffileP}")
-    sys.exit()

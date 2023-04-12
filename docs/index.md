@@ -2,13 +2,13 @@
 layout: default
 ---
 
-<p style= "font-size: 1.3em !important;"> Open Source Software for Composing and Sharing Engineering Documents </p>
+<p style= "font-size: 1.3em !important;"> Open Source Software for Sharing and Composing Engineering Documents </p>
 
 <hr>
 
 <div id="banner" style="overflow: visible; display: flex; justify-content:space-around;">
 <div>
-<a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="75" height="75" /></a><a href="https://rivtdoc.net">rivt-doc</a>
+<a href="https://rivtdoc.net"><img src="./assets/img/rivtdocs03.png" width="75" height="75" /></a><a href="https://rivtdoc.net">rivt-doc</a>
 </div>
 
 <div>
@@ -16,7 +16,7 @@ layout: default
 </div>
 
 <div>
-<a href="https://rivtdoc.net/search"><img src="./assets/img/search03.png" width="75" height="75"/></a><a href="https://rivtdocs.net/search">rivt-search</a>
+<a href="https://rivtdoc.net/search"><img src="./assets/img/search03.png" width="75" height="75"/></a><a href="https://rivtdoc.net/search">rivt-search</a>
 </div>
 </div>
 

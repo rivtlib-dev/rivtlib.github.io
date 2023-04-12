@@ -17,7 +17,7 @@ from rivt import parse
 from rivt.units import *
 
 
-docfileS = "x"
+docfileS = "xx"
 docpathP = Path(os.getcwd())
 for fileS in os.listdir(docpathP):
     print(fileS)

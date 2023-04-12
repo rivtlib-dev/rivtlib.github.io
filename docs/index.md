@@ -8,7 +8,7 @@ layout: default
 
 <div id="banner" style="overflow: visible; display: flex; justify-content:space-around;">
 <div>
-<a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="75" height="75" /></a><a href="https://rivtdocs.net">rivtDocs</a>
+<a href="https://rivtdocs.net"><img src="./assets/img/rivtdocs03.png" width="75" height="75" /></a><a href="https://rivtdoc.net">rivt-doc</a>
 </div>
 
 <div>
@@ -16,7 +16,7 @@ layout: default
 </div>
 
 <div>
-<a href="https://rivtdocs.net/search"><img src="./assets/img/search03.png" width="75" height="75"/></a><a href="https://rivtdocs.net/search">rivtSearch</a>
+<a href="https://rivtdoc.net/search"><img src="./assets/img/search03.png" width="75" height="75"/></a><a href="https://rivtdocs.net/search">rivt-search</a>
 </div>
 </div>
 

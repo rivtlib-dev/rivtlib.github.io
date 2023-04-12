@@ -44,9 +44,9 @@ class TagsUTF:
             1 text _[b]                       bold 
             2 text _[c]                       center
             3 text _[i]                       italicize
-            4 text _[u]                       underline   
-            5 text _[r]                       right justify
+            4 text _[r]                       right justify
             ---------
+            5 text _[u]                       underline   
             6 text _[m]                       LaTeX math
             7 text _[s]                       sympy math
             8 text _[e]                       equation label, autonumber
@@ -58,21 +58,18 @@ class TagsUTF:
             14 _[page]                        new page
             15 address, label _[link]         url or internal reference
 
-            I,V,T block formats:              one at the start and end of block
+            I,V,T block formats:             blocks end with quit block
             ---- can be combined 
-            16 _[[b]]                        bold
-            17 _[[c]]                        center
-            18 _[[i]]                        italic
-            19 _[[p]]                        plain  
-            20 _[[s]]                        shade 
+            16 _[[p]]                        plain  
+            17 _[[s]]                        shade 
             -------
-            21 _[[l]]                        LateX
-            22 _[[h]]                        HTML 
-            23 _[[q]]                        quit block
+            18 _[[l]]                        LateX
+            19 _[[h]]                        HTML 
+            20 _[[q]]                        quit block
 
             V calculation formats: 
-            24 a := n | unit, alt | descrip    declare = ; units, description
-            25 a := b + c | unit, alt | n,n    assign := ; units, decimals
+            21 a := n | unit, alt | descrip    declare = ; units, description
+            22 a := b + c | unit, alt | n,n    assign := ; units, decimals
 
         """
 
@@ -82,20 +79,16 @@ class TagsUTF:
         self.lineS = lineS
         self.widthI = incrD["widthI"]
         self.errlogP = folderD["errlogP"]
-        self.valL = []                          # accumulated values
+        self.valL = []                         # accumulate values in list
 
-        self.multiD = {"b": "bold", "c": "center", "i": "italic", "r": "right",
-                       "u": "underline", }
-
-        self.singleD = {"d]": "description", "e]": "equation", "f]": "figure",
-                        "#]": "footnumber", "l]": "latex", "s]": "sympy",
-                        "t]": "table", ":=": "declare", "=": "assign"}
-
-        self.wordD = {"link]": "line", "line]": "line", "page]": "page", }
-
-        self.blockD = {"[c]]": "centerblk", "[e]]": "endblk", "[l]]": "latexblk",
-                       "[m]]": "mathblk", "[o]]": "codeblk", "[p]]": "plainblk",
-                       "[r]]": "rightblk", "[q]]": "shadeblk", "[s]]": "quitblk"}
+        self.tagsD = {"b]": "bold", "i]": "italic", "c]": "center", "r]": "right",
+                      "d]": "description", "e]": "equation", "f]": "figure",
+                      "#]": "foot", "l]": "latex", "s]": "sympy", "t]": "table",
+                      "u]": "underline", ":=": "declare",  "=": "assign",
+                      "link]": "link", "line]": "line", "page]": "page",
+                      "[c]]": "centerblk", "[e]]": "endblk", "[l]]": "latexblk",
+                      "[m]]": "mathblk", "[o]]": "codeblk", "[p]]": "plainblk",
+                      "[q]]": "quitblk", "[s]]": "shadeblk"}
 
         modnameS = __name__.split(".")[1]
         # print(f"{modnameS=}")
@@ -112,23 +105,105 @@ class TagsUTF:
     def tag_parse(self, tagS):
         """_summary_
         """
-        if tagS in self.wordD:
-            return eval("self." + self.tagD[tagS] + "()")
+        if tagS in self.tagsD:
+            return eval("self." + self.tagsD[tagS] + "()")
 
-        if tagS in self.singleD:
-            return eval("self." + self.tagD[tagS] + "()")
+        if "b" in tagS and "c" in tagS:
+            return self.boldcenter()
+        if "b" in tagS and "r" in tagS:
+            return self.boldright()
+        if "i" in tagS and "c" in tagS:
+            return self.italiccenter()
+        if "i" in tagS and "r" in tagS:
+            return self.italicright()
 
-        if tagS in self.blockD:
-            return eval("self." + self.tagD[tagS] + "()")
+    def bold(self):
+        """bold text _[b]
 
-        cmdL = []
-        xutfS = ""
-        for s in tagS:
-            if s in self.multiD:
-                cmdL.append("self." + self.multiD[tagS] + "()")
+        :return lineS: bold line
+        :rtype: str
+        """
 
-        for j in cmdL:
-            return eval(j)
+        return self.lineS
+
+    def center(self):
+        """center text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        """
+
+        lineS = self.lineS.center(int(self.widthI))
+
+        return lineS
+
+    def italic(self):
+        """italicize text _[i]
+
+        :return lineS: centered line
+        :rtype: str
+        """
+
+        return self.lineS
+
+    def right(self):
+        """right justify text _[r]
+
+        :return lineS: right justified text
+        :rtype: str
+        """
+
+        lineS = self.lineS.rjust(int(self.widthI))
+
+        return lineS
+
+    def boldcenter(self):
+        """center text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        """
+
+        lineS = self.lineS.center(int(self.widthI))
+
+        print(lineS)
+        return lineS
+
+    def boldright(self):
+        """center text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        """
+
+        lineS = self.lineS.rjust(int(self.widthI))
+
+        print(lineS)
+        return lineS
+
+    def italiccenter(self):
+        """center text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        """
+
+        lineS = self.lineS.center(int(self.widthI))
+
+        print(lineS)
+        return lineS
+
+    def italicright(self):
+        """center text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        """
+
+        lineS = self.lineS.rjust(int(self.widthI))
+
+        print(lineS)
+        return lineS
 
     def label(self, labelS, numS):
         """format labels for equations, tables and figures
@@ -144,30 +219,6 @@ class TagsUTF:
         self.incrD["eqlabelS"] = self.lineS + " [" + numS.zfill(2) + "]"
 
         return labelS
-
-    def bold(self):
-        """1 bold text _[b]
-
-        :return lineS: centered line
-        :rtype: str
-        """
-
-        lineS = self.lineS
-
-        print(lineS)
-        return lineS
-
-    def center(self):
-        """2 center text _[c]
-
-        :return lineS: centered line
-        :rtype: str
-        """
-
-        lineS = self.lineS.center(int(self.widthI))
-
-        print(lineS)
-        return lineS
 
     def description(self):
         """4 footnote description _[d]
@@ -220,8 +271,8 @@ class TagsUTF:
         print(lineS)
         return lineS
 
-    def footnumber(self):
-        """6 footnote number _[#]
+    def foot(self):
+        """footnote number _[#]
         """
 
         ftnumI = self.incrD["footL"].pop(0)
@@ -253,19 +304,8 @@ class TagsUTF:
 
         return lineS
 
-    def line(self):
-        """9 insert horizontal line _[-]
-
-        :param lineS: _description_
-        :type lineS: _type_
-        """
-        lineS = self.widthI * "_"
-
-        print(lineS)
-        return lineS
-
     def plain(self):
-        """10 format plain literal text _[p]
+        """format plain literal text _[p]
 
         :param lineS: _description_
         :type lineS: _type_
@@ -273,34 +313,8 @@ class TagsUTF:
 
         pass
 
-    def page(self):
-        """11 insert new page header _[page]
-
-        :return lineS: page header
-        :rtype: str
-        """
-
-        pagenoS = str(self.incrD["pageI"])
-        rvtS = self.incrD["headuS"].replace("p##", pagenoS)
-        self.incrD["pageI"] = int(pagenoS)+1
-
-        print("\n" + rvtS)
-        return "\n" + rvtS
-
-    def right(self):
-        """12 right justify text _[r]
-
-        :return lineS: right justified text
-        :rtype: str
-        """
-
-        lineS = lineS.rjust(int(self.widthI))
-
-        print(lineS)
-        return lineS
-
     def sympy(self):
-        """13 format line of sympy _[s]
+        """format line of sympy _[s]
 
         :return lineS: formatted sympy
         :rtype: str
@@ -318,7 +332,7 @@ class TagsUTF:
         return lineS
 
     def table(self):
-        """14 format table title  _[t]
+        """format table title  _[t]
 
         :return lineS: utf table title
         :rtype: str
@@ -336,8 +350,19 @@ class TagsUTF:
         print(lineS)
         return lineS
 
-    def url(self):
-        """15 format url or internal link
+    def line(self):
+        """insert horizontal line _[line]
+
+        :param lineS: _description_
+        :type lineS: _type_
+        """
+        lineS = self.widthI * "_"
+
+        print(lineS)
+        return lineS
+
+    def link(self):
+        """format url or internal link _[link]
 
         :return: _description_
         :rtype: _type_
@@ -345,6 +370,31 @@ class TagsUTF:
 
         lineL = lineS.split(",")
         lineS = ".. _" + lineL[0] + ": " + lineL[1]
+
+        return lineS
+
+    def page(self):
+        """insert new page header _[page]
+
+        :return lineS: page header
+        :rtype: str
+        """
+
+        pagenoS = str(self.incrD["pageI"])
+        rvtS = self.incrD["headuS"].replace("p##", pagenoS)
+        self.incrD["pageI"] = int(pagenoS)+1
+
+        print("\n" + rvtS)
+        return "\n" + rvtS
+
+    def underline(self):
+        """underline _[u]
+
+        :return lineS: underline
+        :rtype: str
+        """
+
+        lineS = self.lineS
 
         return lineS
 
@@ -452,11 +502,11 @@ class TagsUTF:
 
         subS = "\n"
         if self.incrD["subB"]:              # replace variables with numbers
-            subS = self.vsub(eqL)
+            subS = self.vsub(eqL, rprecS, eprecS)
 
         return [eqL, utfS + "\n" + subS + "\n\n"]
 
-    def vsub(self, eqL):
+    def vsub(self, eqL, rprecS, eprecS):
         """substitute numbers for variables in printed output
 
         Args:
@@ -465,13 +515,11 @@ class TagsUTF:
         """
         locals().update(self.localD)
 
-        eformat = ""
         utfS = eqL[0] + " = " + eqL[1]
         varS = utfS.split("=")
         # resultS = vars[0].strip() + " = " + str(eval(vars[1]))
         # sps = sps.encode('unicode-escape').decode()
         eqS = "Eq(" + eqL[0] + ",(" + eqL[1] + "))"
-        # utfs = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
         symeq = sp.sympify(eqS.strip())
         symat = symeq.atoms(sp.Symbol)
         for n2 in symat:
@@ -487,7 +535,7 @@ class TagsUTF:
             orig_var = orig_var.replace("|", "_")
             expr = eval(varS[1])
             if type(expr) == float:
-                form = "{:." + eformat + "f}"
+                form = "{:." + eprecS + "f}"
                 symeval1 = form.format(eval(str(expr)))
             else:
                 try:

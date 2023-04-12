@@ -52,7 +52,7 @@ class RivtParse:
 
         # valid commands and tags
         if methS == "R":
-            self.cmdL = ["append", "github", "pages", "project"]
+            self.cmdL = ["append", "pages", "project"]
 
         elif methS == "I":
             self.cmdL = ["image", "table", "text", ]
@@ -171,34 +171,33 @@ class RivtParse:
                 rstS += reS + "\n"
             elif "=" in uS:                             # assign tag
                 # print(f"{uS=}")
-                if "=" in self.tagL:
-                    usL = uS.split("|")
-                    lineS = usL[0]
-                    self.incrD["unitS"] = usL[1].strip()
-                    self.incrD["descS"] = usL[2].strip()
-                    rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
+                usL = uS.split("|")
+                lineS = usL[0]
+                self.incrD["unitS"] = usL[1].strip()
+                self.incrD["descS"] = usL[2].strip()
+                rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
+                                      self.localD)
+                if ":=" in uS:
+                    tfS = "declare"
+                    blockevalL.append(rvtM.tag_parse(":="))
+                    rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
                                           self.localD)
-                    if ":=" in uS:
-                        tfS = "declare"
-                        blockevalL.append(rvtM.tag_parse(":="))
-                        rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
-                                              self.localD)
-                        eqL = rvtM.tag_parse(":=")
-                        blockevalB = True
-                        continue
-                    else:
-                        tfS = "assign"
-                        eqL = rvtM.tag_parse("=")
-                        utfS += eqL[1]
-                        print(eqL[1])
-                        blockevalL.append(eqL[0])
+                    eqL = rvtM.tag_parse(":=")
+                    blockevalB = True
+                    continue
+                else:
+                    tfS = "assign"
+                    eqL = rvtM.tag_parse("=")
+                    utfS += eqL[1]
+                    print(eqL[1])
+                    blockevalL.append(eqL[0])
 
-                        rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
-                                              self.localD)
-                        eqL = rvtM.tag_parse("=")
-                        rstS += eqL[1]
-                        blockevalB = True
-                        continue
+                    rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
+                                          self.localD)
+                    eqL = rvtM.tag_parse("=")
+                    rstS += eqL[1]
+                    blockevalB = True
+                    continue
             else:                                 # delay R str title
                 if self.methS != "R":
                     print(uS)

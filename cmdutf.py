@@ -114,7 +114,6 @@ class CmdUTF:
         iL = self.paramL
         file1S = iL[1].strip()
         imgL = file1S.split(",")
-        imgcountI = len(file1L)
         if iL[0].strip() == "resource":
             imgP = Path(self.folderD["resourceP"])
         elif iL[0].strip() == "data":
@@ -136,7 +135,7 @@ class CmdUTF:
         return utfS
 
     def pages(self):
-        """6 write head or foot format line to dictionary
+        """write head or foot format line to dictionary
 
             :return lineS: header or footer
             :rtype: str

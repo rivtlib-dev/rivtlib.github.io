@@ -36,54 +36,60 @@ class TagsRST():
 
     def __init__(self, lineS, incrD, folderD,  localD):
         """format tags to reST
+            ============================ ======================================
+            tags                                   description 
+            ============================ ======================================
 
+            I,V,T line formats:               one at the end of a line
+            ---- can be combined 
+            1 text _[b]                       bold 
+            2 text _[c]                       center
+            3 text _[i]                       italicize
+            4 text _[r]                       right justify
+            ---------
+            5 text _[u]                       underline   
+            6 text _[m]                       LaTeX math
+            7 text _[s]                       sympy math
+            8 text _[e]                       equation label, autonumber
+            9 text _[f]                       figure caption, autonumber
+            10 text _[t]                      table title, autonumber
+            11 text _[#]                      footnote, autonumber
+            12 text _[d]                      footnote description 
+            13 _[line]                        horizontal line
+            14 _[page]                        new page
+            15 address, label _[link]         url or internal reference
 
-        ============================ ============================================
-        tag syntax                      description (one tag per line)
-        ============================ ============================================
+            I,V,T block formats:             blocks end with quit block
+            ---- can be combined 
+            16 _[[p]]                        plain  
+            17 _[[s]]                        shade 
+            -------
+            18 _[[l]]                        LateX
+            19 _[[h]]                        HTML 
+            20 _[[q]]                        quit block
 
-        Line Format:
-        1  text  _[b]                    bold
-        2  text  _[c]                    center
-        3  text  _[d]                    description for footnote
-        4  text  _[e]                    equation label
-        5  text  _[f]                    figure label
-        6  text  _[#]                    foot number
-        7  text  _[i]                    italicize
-        8        _[-]                    line
-        9  latex _[l]                    LaTeX equation
-        10 text  _[p]                    plain literal
-        11    _[page]                    new page
-        12 text  _[r]                    right justify line
-        13 sympy _[s]                    sympy equation
-
-        14 text  _[t]                    table label
-        15 <url, label>                  url or internal link inline
-
-        Block Format:
-        16 _[[c]]                        center block
-        17 _[[e]]                        end block
-        18 _[[l]]                        LateX block
-        19 _[[m]]                        LaTeX math block
-        20 _[[o]]                        code block
-        21 _[[p]]                        plain literal block
-        22 _[[r]]                        right justify block
-        23 _[[t]]                        block with tags
-
-        Values Only Formats:
-        24 a := n | unit, alt | descrip   = declare tag
-        25 a = b + c | unit, alt | n,n    := assign tag
-
+            V calculation formats: 
+            21 a := n | unit, alt | descrip    declare = ; units, description
+            22 a := b + c | unit, alt | n,n    assign := ; units, decimals
 
         """
 
         self.localD = localD
         self.folderD = folderD
         self.incrD = incrD
-        self.lineS = lineS.strip()
+        self.lineS = lineS
         self.widthI = incrD["widthI"]
         self.errlogP = folderD["errlogP"]
-        self.valL = []                          # accumulate values
+        self.valL = []                          # accumulated values
+
+        self.tagsD = {"b]": "bold", "i]": "italic", "c]": "center", "r]": "right",
+                      "d]": "description", "e]": "equation", "f]": "figure",
+                      "#]": "foot", "l]": "latex", "s]": "sympy", "t]": "table",
+                      "u]": "underline", ":=": "declare",  "=": "assign",
+                      "link]": "link", "line]": "line", "page]": "page",
+                      "[c]]": "centerblk", "[e]]": "endblk", "[l]]": "latexblk",
+                      "[m]]": "mathblk", "[o]]": "codeblk", "[p]]": "plainblk",
+                      "[q]]": "quitblk", "[s]]": "shadeblk"}
 
         self.vgap = (
             "\n\n" +
@@ -92,15 +98,6 @@ class TagsRST():
             + "   ?x?vspace{.05in}"
             + "\n\n"
         )
-
-        self.tagD = {"c]": "center", "d]": "description", "e]": "equation",
-                     "f]": "figure", "#]": "footnumber", "i]": "italic",
-                     "l]": "latex", "-]": "line", "page]": "page",
-                     "r]": "right", "s]": "sympy", "t]": "table",
-                     "[c]]": "centerblk", "[e]]": "endblk", "[l]]": "latexblk",
-                     "[m]]": "mathblk", "[o]]": "codeblk", "[p]]": "plainblk",
-                     "[r]]": "rightblk", "[q]]": "shadeblk", "[s]]": "quitblk",
-                     ":=": "declare", "=": "assign"}
 
         modnameS = __name__.split(".")[1]
         # print(f"{modnameS=}")
@@ -117,8 +114,111 @@ class TagsRST():
     def tag_parse(self, tagS):
         """_summary_
         """
+        if tagS in self.tagsD:
+            return eval("self." + self.tagsD[tagS] + "()")
 
-        return eval("self." + self.tagD[tagS] + "()")
+        if "b" in tagS and "c" in tagS:
+            return self.boldcenter()
+        if "b" in tagS and "r" in tagS:
+            return self.boldright()
+        if "i" in tagS and "c" in tagS:
+            return self.italiccenter()
+        if "i" in tagS and "r" in tagS:
+            return self.italicright()
+
+    def bold(self):
+        """bold text _[b]
+
+        :return lineS: bold line
+        :rtype: str
+        """
+
+        lineS = "**" + self.lineS.strip() + "**"
+
+        return lineS
+
+    def center(self):
+        """center text _[c]
+
+        : return lineS: centered line
+        : rtype: str
+        """
+
+        lineS = ".. raw:: latex \n\n" \
+            + "   ?x?begin{center} " + self.lineS + " ?x?end{center}" \
+            + "\n"
+
+        return lineS
+
+    def italic(self):
+        """italicize text _[i]
+
+        :return lineS: centered line
+        :rtype: str
+        """
+
+        lineS = "*" + self.lineS.strip() + "*"
+
+        return lineS
+
+    def right(self):
+        """right justify text _[r]:return lineS: right justified text:rtype: str
+        """
+
+        lineS = "?x?hfill " + lineS
+
+        return lineS
+
+    def boldcenter(self):
+        """bold center text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        """
+
+        lineS = ".. raw:: latex \n\n" \
+            + "   ?x?begin{center} ?x?textbf{" + self.lineS + "} ?x?end{center}" \
+            + "\n"
+
+        return lineS
+
+    def boldright(self):
+        """bold right text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        """
+        lineS = ".. raw:: latex \n\n" \
+            + "?x?hfill ?x?textbf{" + self.lineS + "}" \
+            + "\n"
+
+        return lineS
+
+    def italiccenter(self):
+        """italic center text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        """
+
+        lineS = ".. raw:: latex \n\n" \
+            + "   ?x?begin{center} ?x?textit{" + self.lineS + "} ?x?end{center}" \
+            + "\n"
+
+        return lineS
+
+    def italicright(self):
+        """italic right text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        """
+
+        lineS = ".. raw:: latex \n\n" \
+            + "?x?hfill ?x?textit{" + self.lineS + "}" \
+            + "\n"
+
+        return lineS
 
     def label(self, labelS, numS):
         """format labels for equations, tables and figures
@@ -132,32 +232,8 @@ class TagsRST():
 
         return labelS
 
-    def bold(self):
-        """1 bold text _[b]
-
-        : return lineS: bold line of text
-        : rtype: str
-        """
-
-        lineS = "**"+lineS+"**"
-
-        return lineS
-
-    def center(self):
-        """2 center text _[c]
-
-        : return lineS: centered line
-        : rtype: str
-        """
-
-        lineS = ".. raw:: latex \n\n" \
-            + "   ?x?begin{center} " + self.lineS + " ?x?end{center}" \
-            + "\n\n"
-
-        return lineS
-
     def description(self):
-        """4 footnote description _[d]
+        """footnote description _[d]
 
         : return lineS: footnote
         : rtype: str
@@ -168,7 +244,7 @@ class TagsRST():
         return lineS
 
     def equation(self):
-        """3 reST equation label _[e]
+        """reST equation label _[e]
 
         : return lineS: reST equation label
         : rtype: str
@@ -183,7 +259,7 @@ class TagsRST():
         return lineS
 
     def figure(self):
-        """5 figure label _[f]
+        """figure label _[f]
 
         : return lineS: figure label
         : rtype: str
@@ -199,7 +275,7 @@ class TagsRST():
         return lineS
 
     def footnumber(self):
-        """6 insert footnote number _[  # ]
+        """insert footnote number _[  # ]
         """
 
         lineS = "".join(self.lineS)
@@ -207,24 +283,8 @@ class TagsRST():
 
         return lineS
 
-    def italic(self):
-        """7 italicizes line _[i]:return lineS: italicized line:rtype: str
-        """
-
-        lineS = "*"+lineS+"*"
-
-        return lineS
-
-    def line(self):
-        """8 insert line _[-]:param lineS: _description_:type lineS: _type_
-        """
-
-        lineS = self.widthI * "-"
-
-        return lineS
-
     def latex(self):
-        """9 format latex _[l]:return lineS: reST formatted latex:rtype: str
+        """format latex _[l]:return lineS: reST formatted latex:rtype: str
         """
 
         lineS = ".. raw:: math\n\n   " + self.lineS + "\n"
@@ -238,21 +298,6 @@ class TagsRST():
 
         return lineS
 
-    def page(self):
-        """11 insert page break _[page]:return lineS: page break line:rtype: str
-        """
-        lineS = ".. raw:: latex \n\n ?x?newpage \n"
-
-        return lineS
-
-    def right(self):
-        """12 right justify text _[r]:return lineS: right justified text:rtype: str
-        """
-
-        lineS = "?x?hfill " + lineS
-
-        return lineS
-
     def sympy(self):
         """13 reST format line of sympy _[s]:return lineS: formatted sympy:rtype: str
         """
@@ -260,6 +305,44 @@ class TagsRST():
         spS = self.lineS
         txS = sp.latex(S(spS))
         lineS = ".. raw:: math\n\n   " + txS + "\n"
+
+        return lineS
+
+    def underline(self):
+        """underline _[u]
+
+        :return lineS: underline
+        :rtype: str
+        """
+
+        lineS = ":math: `?x?text?x?underline{" + self.lineS.strip() + "}"
+
+        return lineS
+
+    def page(self):
+        """11 insert page break _[page]:return lineS: page break line:rtype: str
+        """
+        lineS = ".. raw:: latex \n\n ?x?newpage \n"
+
+        return lineS
+
+    def link(self):
+        """15 url or internal link:return: _description_:rtype: _type_
+        """
+
+        lineL = lineS.split(",")
+        lineS = ".. _" + lineL[0] + ": " + lineL[1]
+
+        return lineS
+
+    def line(self):
+        """insert line _[line]:
+
+        param lineS: _description_
+        :type lineS: _type_
+        """
+
+        lineS = self.widthI * "-"
 
         return lineS
 
@@ -273,15 +356,6 @@ class TagsRST():
         lineS = "\n" + "**" + "Table " + fillS + "** " + \
             self.lineS + " ?x?hfill " + refS + "\n"
         lineS = self.vgap + lineS + self.vgap + " ?x?nopagebreak \n"
-
-        return lineS
-
-    def url(self):
-        """15 url or internal link:return: _description_:rtype: _type_
-        """
-
-        lineL = lineS.split(",")
-        lineS = ".. _" + lineL[0] + ": " + lineL[1]
 
         return lineS
 

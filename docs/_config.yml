@@ -1,6 +1,6 @@
-title: rivt API
+title: rivt API for sharing and composing engineering documents
 logo: /assets/img/rivt_home.png
-description: rivtText to document
+description: rivt API 
 show_downloads: true
 google_analytics:
 remote_theme: just-the-docs/just-the-docs

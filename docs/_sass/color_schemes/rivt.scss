@@ -13,7 +13,7 @@ $body-heading-line-height: 1.25 !default;
 
 $font-size-1: 9px !default;
 $font-size-1-sm: 10px !default;
-$font-size-2: 11px !default; // h4 - uppercased!, h6 not uppercased, text-small
+$font-size-2: 12px !default; // h4 - uppercased!, h6 not uppercased, text-small
 $font-size-3: 12px !default; // h5
 $font-size-4: 14px !default;
 $font-size-5: 16px !default; // h3
@@ -31,7 +31,7 @@ $grey-dk-000: #959396 !default;
 $grey-dk-100: #5c5962 !default;
 $grey-dk-200: #44434d !default;
 $grey-dk-250: #302d36 !default;
-$grey-dk-300: #27262b !default;
+$grey-dk-300: #2e303d !default;
 $grey-lt-000: #f5f6fa !default;
 $grey-lt-100: #eeebee !default;
 $grey-lt-200: #ecebed !default;
@@ -42,8 +42,8 @@ $purple-200: #4e26af !default;
 $purple-300: #381885 !default;
 $blue-000: #2c84fa !default;
 $blue-100: #2869e6 !default;
-$blue-200: #264caf !default;
-$blue-300: #183385 !default;
+$blue-200: #212753 !default;
+$blue-300: #212753 !default;
 $green-000: #41d693 !default;
 $green-100: #11b584 !default;
 $green-200: #009c7b !default;
@@ -56,18 +56,18 @@ $red-000: #f77e7e !default;
 $red-100: #f96e65 !default;
 $red-200: #e94c4c !default;
 $red-300: #dd2e2e !default;
-$body-background-color: $white;
-$sidebar-color: $white;
-$search-background-color: $white;
+$body-background-color: $grey-dk-300;
+$sidebar-color: #3d577c;
+$search-background-color: #3d577c;
 $table-background-color: $white;
-$code-background-color: $white;
-$feedback-color: darken($sidebar-color, 3%);
-$body-text-color: $grey-dk-100;
-$body-heading-color: $grey-dk-300;
-$search-result-preview-color: $grey-dk-000;
-$nav-child-link-color: #751d1d;
-$link-color: $blue-300;
-$btn-primary-color: $blue-100;
+$code-background-color: $grey-dk-200;
+$feedback-color: darken($sidebar-color, 10%);
+$body-text-color: $white;
+$body-heading-color: $white;
+$search-result-preview-color: $white;
+$nav-child-link-color: $white;
+$link-color: $white;
+$btn-primary-color: $grey-dk-000;
 $base-button-color: $white;
 
 // Spacing
@@ -100,8 +100,8 @@ $sp-10: map-get($spacers, sp-10) !default; // 4  rem == 64px
 
 // Borders
 
-$border: 1px solid;
-$border-radius: 2px;
+$border: 0px solid;
+$border-radius: 0px;
 $border-color: $grey-dk-300;
 
 // Grid system
@@ -110,7 +110,7 @@ $gutter-spacing: $sp-6 !default;
 $gutter-spacing-sm: $sp-4 !default;
 $nav-width: 250px;
 $nav-width-md: 250px;
-$nav-list-item-height: $sp-8;
+$nav-list-item-height: $sp-10;
 $nav-list-item-height-sm: $sp-9;
 $nav-list-expander-right: true;
 $content-width: 800px;

@@ -23,15 +23,16 @@ layout: default
 
 ## **rivt** Overview
 
-**rivt** is a Python package providing an API for **rivtText**, a simple,
-readable document markup language designed for calculations. **rivtText** wraps
-and extends [reStructuredText (reST)](https://docutils.sourceforge.io/rst.html). 
-Ouptut documents include UTF8, HTML and PDF from the same **rivtText** file.
+**rivt** is a Python package providing an API for **rivt-text**, a simple,
+readable document markup and template language designed for calculation
+documents. **rivt-text** wraps and extends [reStructuredText
+(reST)](https://docutils.sourceforge.io/rst.html). Ouptut documents include
+UTF8, HTML and PDF from the same **rivt-text** file.
 
 The program prioritizes four design principles:
 
-- *Cut and Paste Everything* - **rivtText** content is plain text
-- *Short Learning Curve* - **rivtText** uses less than 30 intuitive terms
+- *Cut and Paste Everything* - **rivt-text** content is plain text
+- *Short Learning Curve* - **rivt-text** uses less than 30 intuitive terms
 - *Integration* - **rivt** is built on the highly integrated Python language
 - *Standardization* - **rivt** uses a standard folder structure for input and output
 

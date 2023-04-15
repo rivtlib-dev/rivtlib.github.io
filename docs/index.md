@@ -18,7 +18,7 @@ layout: default
     </div>
 </div>
 
-<p style= "font-size: .2em !important;text-align:center; color:#3d577c; background-color:#fff">------------------------------------------ </p>
+<p style= "font-size: .1em !important;text-align:center; color:#3d577c; background-color:#fff">------------------------------------------ </p>
 <br>
 
 ## **rivt** Overview

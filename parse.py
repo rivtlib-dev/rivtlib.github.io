@@ -273,6 +273,12 @@ class RivtParse:
                     valU = eval(varS)
                     val1U = str(valU.cast_unit(eval(unit1S)))
                     val2U = str(valU.cast_unit(eval(unit2S)))
+            else:
+                cmdS = varS + "= " + valS
+                exec(cmdS, globals(), locals())
+                valU = eval(varS)
+                val1U = str(valU)
+                val2U = str(valU)
             valL.append([varS, val1U, val2U, descripS])
 
         sys.stdout.flush()

@@ -395,7 +395,11 @@ class TagsRST():
         unit2S = str(self.incrD["unitS"]).split(",")[1]
         descripS = str(self.incrD["descS"])
 
-        cmdS = varS + "= " + valS + "*" + unit1S
+        if unit1S.strip() != "-":
+            cmdS = varS + "= " + valS + "*" + unit1S
+        else:
+            cmdS = varS + "= as_unum(" + valS + ")"
+
         exec(cmdS, globals(), locals())
 
         self.localD.update(locals())
@@ -417,15 +421,23 @@ class TagsRST():
         eprecS = str(self.incrD["descS"].split(",")[1])  # trim equations
         exec("set_printoptions(precision=" + rprecS + ")")
         exec("Unum.set_format(value_format = '%." + eprecS + "f')")
-        # fltfmtS = "." + rprecS.strip() + "f"
-        if type(eval(valS)) == list:
-            val1U = array(eval(valS)) * eval(unit1S)
-            val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+        fltfmtS = "%." + rprecS.strip() + "f"
+        if unit1S.strip() != "-":
+            if type(eval(valS)) == list:
+                val1U = array(eval(valS)) * eval(unit1S)
+                val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+            else:
+                cmdS = varS + "= " + valS
+                exec(cmdS, globals(), locals())
+                valU = eval(varS).cast_unit(eval(unit1S))
+                valdec = fltfmtS % valU.number()
+                val1U = str(valdec) + " " + str(valU.unit())
+                val2U = valU.cast_unit(eval(unit2S))
         else:
-            cmdS = varS + "= " + valS
+            cmdS = varS + "= as_unum(" + valS + ")"
             exec(cmdS, globals(), locals())
             valU = eval(varS).cast_unit(eval(unit1S))
-            valdec = ("%." + str(rprecS) + "f") % valU.number()
+            valdec = fltfmtS % valU.number()
             val1U = str(valdec) + " " + str(valU.unit())
             val2U = valU.cast_unit(eval(unit2S))
         spS = "Eq(" + varS + ",(" + valS + "))"

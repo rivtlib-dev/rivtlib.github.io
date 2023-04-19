@@ -16,7 +16,6 @@ import configparser
 from rivt import parse
 from rivt.units import *
 
-
 docfileS = "xx"
 docpathP = Path(os.getcwd())
 for fileS in os.listdir(docpathP):
@@ -71,9 +70,8 @@ doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = titleS + " [ " + doctitleS.replace("-", " ") + " ] "
 divtitleS = (refileP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
-siteP = Path(rvtlocalP / "site")  # site folder path
-reportP = Path(rvtlocalP / "report")  # report folder path
 siteP = Path(rvtlocalP / "website")  # site folder path
+reportP = Path(rvtlocalP / "report")  # report folder path
 rvconfigP = Path(docP.parent.parent / "rv0000-config")
 retempP = Path(rvtlocalP / "rv00-temp")
 rivtP = Path("rivttext.py").parent  # rivt package path
@@ -282,7 +280,12 @@ def R(rS: str):
 
 
 def I(rS: str):
-    """process Insert string: param rS: triple quoted insert string: type rS: str: return: formatted utf string: rtype: str
+    """process Insert string
+
+        : param rS: triple quoted insert string
+        : type rS: str
+        : return: formatted utf string
+        : rtype: str
     """
 
     global utfS, rstS, incrD, folderD, localD
@@ -303,17 +306,22 @@ def I(rS: str):
 
 
 def V(rS: str):
-    """process Value string: param rS: triple quoted values string: type rS: str: return: formatted utf string: type: str
+    """process Value string
+
+        :param rS: triple quoted values string
+        :type rS: str: return
+        :formatted utf string: type: str
     """
 
     global utfS, rstS, incrD, folderD, localD
 
     locals().update(localD)
 
-    xutfS = """"""
-    xrstS = """"""
+    xutfS = ""
+    xrstS = ""
     rL = rS.split("\n")
     hutfS, hrstS = _str_set(rL[0], "V")
+    print(hutfS)
     utfC = parse.RivtParse("V", folderD, incrD, localD)
     xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
     # print(f"{xutfS=}", f"{rL[1:]=}")
@@ -336,7 +344,8 @@ def T(rS: str):
     """
     global utfS, rstS, incrD, folderD, localD
 
-    xutfS = """"""
+    xutfS = ""
+    xrstS = ""
     rL = rS.split("\n")
     hutfS, hrstS = _str_set(rL[0], "T")
     utfC = parse.RivtParse("T", folderD, incrD, localD)
@@ -356,73 +365,6 @@ def X(rS: str):
     """
 
     pass
-
-
-def _rest2tex(rstfileS):
-    """convert reST to tex file
-
-    0. insert [i] data into model (see _genxmodel())
-    1. read the expanded model
-    2. build the operations ordered dictionary
-    3. execute the dictionary and write the utf-8 calc and Python file
-    4. if the pdf flag is set re-execute xmodel and write the PDF calc
-    5. write variable summary to stdout
-
-    :param pdffileS: _description_
-    :type pdffileS: _type_
-    """
-
-    global folderD
-
-    style_path = folderD["styleP"]
-    print(f"{style_path=}")
-    f2 = open(style_path)
-    f2.close
-
-    pythoncallS = "python "
-    if sys.platform == "linux":
-        pythoncallS = "python3 "
-    elif sys.platform == "darwin":
-        pythoncallS = "python3 "
-
-    rst2texP = Path(rivtP, "scripts", "rst2xetex.py")
-    print(f"{str(rst2texP)=}")
-    texfileP = Path(retempP, docbaseS + ".tex")
-    rstfileP = Path(retempP, docbaseS + ".rst")
-    texP = retempP
-
-    with open(rstfileP, "w", encoding='utf-8') as f2:
-        f2.write(rstS)
-
-    tex1S = "".join(
-        [
-            pythoncallS,
-            str(rst2texP),
-            " --embed-stylesheet ",
-            " --documentclass=report ",
-            " --documentoptions=12pt,notitle,letterpaper ",
-            " --stylesheet=",
-            str(style_path) + " ",
-            str(rstfileP) + " ",
-            str(texfileP),
-        ]
-    )
-    logging.info(f"tex call:{tex1S=}")
-    os.chdir(texP)
-    try:
-        os.system(tex1S)
-        time.sleep(1)
-        logging.info(f"tex file written: {texfileP=}")
-    except SystemExit as e:
-        logging.exception('tex file not written')
-        logging.error(str(e))
-        sys.exit("tex file write failed")
-
-    _mod_tex(texfileP)
-
-    _gen_pdf(texfileP)
-
-    return texfileP
 
 
 def _mod_tex(tfileP):
@@ -507,6 +449,73 @@ def _gen_pdf(self):
     shutil.copy(srcS, dstS)
 
     return
+
+
+def _rest2tex(rstfileS):
+    """convert reST to tex file
+
+    0. insert [i] data into model (see _genxmodel())
+    1. read the expanded model
+    2. build the operations ordered dictionary
+    3. execute the dictionary and write the utf-8 calc and Python file
+    4. if the pdf flag is set re-execute xmodel and write the PDF calc
+    5. write variable summary to stdout
+
+    :param pdffileS: _description_
+    :type pdffileS: _type_
+    """
+
+    global folderD
+
+    style_path = folderD["styleP"]
+    print(f"{style_path=}")
+    f2 = open(style_path)
+    f2.close
+
+    pythoncallS = "python "
+    if sys.platform == "linux":
+        pythoncallS = "python3 "
+    elif sys.platform == "darwin":
+        pythoncallS = "python3 "
+
+    rst2texP = Path(rivtP, "scripts", "rst2xetex.py")
+    print(f"{str(rst2texP)=}")
+    texfileP = Path(retempP, docbaseS + ".tex")
+    rstfileP = Path(retempP, docbaseS + ".rst")
+    texP = retempP
+
+    with open(rstfileP, "w", encoding='utf-8') as f2:
+        f2.write(rstS)
+
+    tex1S = "".join(
+        [
+            pythoncallS,
+            str(rst2texP),
+            " --embed-stylesheet ",
+            " --documentclass=report ",
+            " --documentoptions=12pt,notitle,letterpaper ",
+            " --stylesheet=",
+            str(style_path) + " ",
+            str(rstfileP) + " ",
+            str(texfileP),
+        ]
+    )
+    logging.info(f"tex call:{tex1S=}")
+    os.chdir(texP)
+    try:
+        os.system(tex1S)
+        time.sleep(1)
+        logging.info(f"tex file written: {texfileP=}")
+    except SystemExit as e:
+        logging.exception('tex file not written')
+        logging.error(str(e))
+        sys.exit("tex file write failed")
+
+    _mod_tex(texfileP)
+
+    _gen_pdf(texfileP)
+
+    return texfileP
 
 
 def writedoc(formatS):

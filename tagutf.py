@@ -459,7 +459,11 @@ class TagsUTF:
         unit1S = str(self.incrD["unitS"]).split(",")[0]
         unit2S = str(self.incrD["unitS"]).split(",")[1]
         descripS = str(self.incrD["descS"])
-        cmdS = varS + "= " + valS + "*" + unit1S
+        if unit1S.strip() != "-":
+            cmdS = varS + "= " + valS + "*" + unit1S
+        else:
+            cmdS = varS + "= as_unum(" + valS + ")"
+
         exec(cmdS, globals(), locals())
 
         self.localD.update(locals())
@@ -478,21 +482,26 @@ class TagsUTF:
         descS = str(self.incrD["eqlabelS"])
         rprecS = str(self.incrD["descS"].split(",")[0])  # trim result
         eprecS = str(self.incrD["descS"].split(",")[1])  # trim equations
+        fltfmtS = "%." + rprecS.strip() + "f"
         exec("set_printoptions(precision=" + rprecS + ")")
         exec("Unum.set_format(value_format = '%." + eprecS + "f')")
-        # fltfmtS = "." + rprecS.strip() + "f"
-
-        if type(eval(valS)) == list:
-            val1U = array(eval(valS)) * eval(unit1S)
-            val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+        if unit1S.strip() != "-":
+            if type(eval(valS)) == list:
+                val1U = array(eval(valS)) * eval(unit1S)
+                val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+            else:
+                cmdS = varS + "= " + valS
+                exec(cmdS, globals(), locals())
+                valU = eval(varS).cast_unit(eval(unit1S))
+                valdec = fltfmtS % valU.number()
+                val1U = str(valdec) + " " + str(valU.unit())
+                val2U = valU.cast_unit(eval(unit2S))
         else:
-            cmdS = varS + "= " + valS
+            cmdS = varS + "= as_unum(" + valS + ")"
             exec(cmdS, globals(), locals())
-            valU = eval(varS).cast_unit(eval(unit1S))
-            valdec = ("%." + str(rprecS) + "f") % valU.number()
-            val1U = str(valdec) + " " + str(valU.unit())
-            valtS = str(valdec)
-            val2U = valU.cast_unit(eval(unit2S))
+            valU = eval(varS)
+            valdec = fltfmtS % valU.number()
+            val1U = val2U = str(valdec)
         spS = "Eq(" + varS + ",(" + valS + "))"
         utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
         utfS = "\n" + utfS + "\n"
@@ -500,7 +509,7 @@ class TagsUTF:
 
         self.localD.update(locals())
 
-        subS = "\n"
+        subS = " "
         if self.incrD["subB"]:              # replace variables with numbers
             subS = self.vsub(eqL, rprecS, eprecS)
 
@@ -510,7 +519,7 @@ class TagsUTF:
         """substitute numbers for variables in printed output
 
         Args:
-            epL (list): equation and units
+            eqL (list): equation and units
             epS (str): [description]
         """
         locals().update(self.localD)

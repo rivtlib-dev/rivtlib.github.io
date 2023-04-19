@@ -48,7 +48,7 @@ docbaseS = docfileS.split(".py")[0]
 prfxS = docbaseS[1:3]
 rvttxtP = docP.parent
 dataP = Path(rvttxtP / "data")
-projP = docP.parent.parent.parent  # rivt project folder path
+projP = docPxxx.parent.parent.parent  # rivt project folder path
 bakP = rvttxtP / ".".join((docbaseS, "bak"))
 # print(f"{projP=}")
 rvtlocalP = " "
@@ -66,14 +66,15 @@ for fileS in os.listdir(rvtlocalP):
         refileP = Path(fileS)  # resource folder path
         break
 # print(f"{refileP=}")
+titleS = "Solar Canopy - Larkspur, California"
 resourceP = Path(rvtlocalP, refileP)
 doctitleS = (docP.parent.name).split("-", 1)[1]
-doctitleS = doctitleS.replace("-", " ")
+doctitleS = titleS + " [ " + doctitleS.replace("-", " ") + " ] "
 divtitleS = (refileP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
 siteP = Path(rvtlocalP / "site")  # site folder path
 reportP = Path(rvtlocalP / "report")  # report folder path
-siteP = Path(rvtlocalP / "site")  # site folder path
+siteP = Path(rvtlocalP / "website")  # site folder path
 rvconfigP = Path(rvttxtP.parent / "rv0000-config")
 retempP = Path(rvtlocalP / "rv00-temp")
 rivtP = Path("rivttext.py").parent  # rivt package path
@@ -435,8 +436,6 @@ def _mod_tex(tfileP):
 
     """
     startS = str(incrD["pageI"])
-
-    doctitleS = "Solar Canopy - Larkspur, California"
 
     with open(tfileP, "r", encoding="utf-8", errors="ignore") as f2:
         texf = f2.read()

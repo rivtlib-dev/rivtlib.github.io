@@ -230,7 +230,7 @@ class RivtParse:
                     val1U = array(eval(valS)) * eval(unit1S)
                     val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
                 else:
-                    cmdS = varS + "= " + valS + " * " + unit1S
+                    cmdS = varS + "= " + valS
                     exec(cmdS, globals(), locals())
                     valU = eval(varS)
                     val1U = str(valU.cast_unit(eval(unit1S)))

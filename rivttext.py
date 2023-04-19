@@ -469,8 +469,8 @@ def _rest2tex(rstfileS):
 
     style_path = folderD["styleP"]
     print(f"{style_path=}")
-    f2 = open(style_path)
-    f2.close
+    # f2 = open(style_path)
+    # f2.close
 
     pythoncallS = "python "
     if sys.platform == "linux":

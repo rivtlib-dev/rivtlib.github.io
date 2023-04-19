@@ -436,10 +436,9 @@ class TagsRST():
         else:
             cmdS = varS + "= as_unum(" + valS + ")"
             exec(cmdS, globals(), locals())
-            valU = eval(varS).cast_unit(eval(unit1S))
+            valU = eval(varS)
             valdec = fltfmtS % valU.number()
-            val1U = str(valdec) + " " + str(valU.unit())
-            val2U = valU.cast_unit(eval(unit2S))
+            val1U = val2U = str(valdec)
         spS = "Eq(" + varS + ",(" + valS + "))"
         symeq = sp.sympify(spS, _clash2, evaluate=False)
         eqltxS = sp.latex(symeq, mul_symbol="dot")
@@ -465,7 +464,8 @@ class TagsRST():
 
         locals().update(self.localD)
 
-        eformat = ""
+        rprecS = str(self.incrD["descS"].split(",")[0])  # trim result
+        eprecS = str(self.incrD["descS"].split(",")[1])  # trim equations
         utfS = eqL[0] + " = " + eqL[1]
         varS = utfS.split("=")
         # resultS = vars[0].strip() + " = " + str(eval(vars[1]))
@@ -490,7 +490,7 @@ class TagsRST():
             orig_var = orig_var.replace("|", "_")
             expr = eval(varS[1])
             if type(expr) == float:
-                form = "{:." + eformat + "f}"
+                form = "{:." + eprecS + "f}"
                 symeval1 = form.format(eval(str(expr)))
             else:
                 try:

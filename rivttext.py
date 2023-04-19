@@ -78,7 +78,7 @@ rivtP = Path("rivttext.py").parent  # rivt package path
 pypath = os.path.dirname(sys.executable)
 rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
 errlogP = Path(retempP / "rivt-log.txt")
-styleP = resourceP
+styleP = rvconfigP
 tempfileS = docbaseS.replace("r", "v") + ".csv"
 saveP = Path(dataP, tempfileS)
 

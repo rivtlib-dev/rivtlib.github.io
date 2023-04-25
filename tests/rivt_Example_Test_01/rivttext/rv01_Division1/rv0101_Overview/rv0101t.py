@@ -1,4 +1,4 @@
-import rivt.rivttext as rv
+import rivt.rivtapi as rv
 
 rv.R("""Introduction | default | utf | 80,1
     

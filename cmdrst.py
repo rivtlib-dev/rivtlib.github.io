@@ -1,8 +1,6 @@
 #
-import os
 import sys
 import csv
-import time
 import textwrap
 import logging
 import warnings
@@ -23,7 +21,6 @@ from tabulate import tabulate
 from pathlib import Path
 from IPython.display import display as _display
 from IPython.display import Image as _Image
-from TexSoup import TexSoup
 try:
     from PIL import Image as PImage
     from PIL import ImageOps as PImageOps
@@ -49,16 +46,15 @@ class CmdRST:
                         command syntax                              methods
         ======================================================== ============
 
-        1- || append | folder | file_name                               R
-        2- || functions | folder | file_name | code; nocode             V
-        3- || image1 | folder | file_name  | size                       I,V,T
-        4- || image2 | folder | file_name  | size | file_name  | size   I,V,T
-        5- || list | folder | file_name                                 V
-        6- || pages | folder | file_name | head;foot                    R
-        7- || project | folder | file_name | max width | align          R
-        8- || table | folder | file_name | max width | rows             I,V,T
-        9- || text | folder | file_name | text type |shade; noshade     I,V,T
-        10-|| values | folder | file_name | [:];[x:y]                   V
+        1 || append | folder | file_name                                 R
+        2 || functions | folder | file_name | code; nocode               V
+        3 || image | folder | file_name  | size                        I,V,T
+        4 || image2 | folder | file_name  | size | file_name  | size   I,V,T
+        5 || list | folder | file_name                                   V
+        6 || project | folder | style file | proj file | [:] wid, algn   R
+        7 || table | folder | file_name | max width | rows             I,V,T
+        8 || text | folder | file_name | text type |shade; noshade     I,V,T
+        9 || values | folder | file_name | [:];[x:y]                     V
 
         """
 
@@ -104,70 +100,49 @@ class CmdRST:
             il (list): image parameters
         """
         rstS = ""
-        plenI = 3
-        if len(self.paramL) != plenI:
-            logging.info(
-                f"{self.cmdS} command not evaluated: {plenI} parameters required")
-            return
         iL = self.paramL
-        scale1S = iL[2]
-        file1S = iL[1].strip()
-        if iL[0].strip() == "resource":
-            img1S = str(Path(self.folderD["resourceP"], file1S))
-        else:
-            img1S = str(Path(self.folderD["resourceP"], file1S))
-        img1S = img1S.replace("\\", "/")
-        rstS = ("\n.. image:: "
-                + img1S + "\n"
-                + "   :scale: "
-                + scale1S + "%" + "\n"
-                + "   :align: center"
-                + "\n\n"
-                )
-
-        return rstS
-
-    def image2(self):
-        """4 insert two images from file
-
-            :return rstS: image string
-            :rtype: str
-
-        """
-        rstS = ""
-        plenI = 5
-        if len(self.paramL) != plenI:
-            logging.info(
-                f"{self.cmdS} command not evaluated: {plenI} parameters required")
-            return
-
-        iL = self.paramL
-        scale1S = iL[2]
-        scale2S = iL[4]
-        file1S = iL[1].strip()
-        file2S = iL[3].strip()
-        if iL[0].strip() == "resource":
-            img1S = str(Path(self.folderD["resourceP"], file1S))
-            img2S = str(Path(self.folderD["resourceP"], file2S))
-        else:
-            img1S = str(Path(self.folderD["resourceP"], file1S))
-            img2S = str(Path(self.folderD["resourceP"], file2S))
-        img1S = img1S.replace("\\", "/")
-        img2S = img2S.replace("\\", "/")
-        rstS = ("|L| . |R|"
-                + "\n\n"
-                + ".. |L| image:: "
-                + img1S + "\n"
-                + "   :width: "
-                + scale1S + "%"
-                + "\n\n"
-                + ".. |R| image:: "
-                + img2S + "\n"
-                + "   :width: "
-                + scale2S + "%"
-                + "\n\n"
-                )
-
+        if len(iL[1].split(",")) == 1:
+            scale1S = iL[2]
+            file1S = iL[1].strip()
+            if iL[0].strip() == "resource":
+                img1S = str(Path(self.folderD["resourceP"], file1S))
+            else:
+                img1S = str(Path(self.folderD["resourceP"], file1S))
+            img1S = img1S.replace("\\", "/")
+            rstS = ("\n.. image:: "
+                    + img1S + "\n"
+                    + "   :scale: "
+                    + scale1S + "%" + "\n"
+                    + "   :align: center"
+                    + "\n\n"
+                    )
+        elif len(iL[1].split(",")) == 2:
+            iL = self.paramL
+            scale1S = iL[2]
+            scale2S = iL[4]
+            file1S = iL[1].strip()
+            file2S = iL[3].strip()
+            if iL[0].strip() == "resource":
+                img1S = str(Path(self.folderD["resourceP"], file1S))
+                img2S = str(Path(self.folderD["resourceP"], file2S))
+            else:
+                img1S = str(Path(self.folderD["resourceP"], file1S))
+                img2S = str(Path(self.folderD["resourceP"], file2S))
+            img1S = img1S.replace("\\", "/")
+            img2S = img2S.replace("\\", "/")
+            rstS = ("|L| . |R|"
+                    + "\n\n"
+                    + ".. |L| image:: "
+                    + img1S + "\n"
+                    + "   :width: "
+                    + scale1S + "%"
+                    + "\n\n"
+                    + ".. |R| image:: "
+                    + img2S + "\n"
+                    + "   :width: "
+                    + scale2S + "%"
+                    + "\n\n"
+                    )
         return rstS
 
     def list(self):
@@ -203,60 +178,8 @@ class CmdRST:
 
         return
 
-    def pages(self):
-        """6 write head or foot format line to dictionary
-
-            :return lineS: header or footer
-            :rtype: str
-        """
-
-        plenI = 3
-        if len(self.paramL) != plenI:
-            logging.info(
-                f"{self.cmdS} command not evaluated:  \
-                                    {plenI} parameters required")
-            return
-
-        fileP = Path(self.folderD["rvconfigP"], "data", self.paramL[1].strip())
-        with open(fileP, "r") as f2:
-            pageL = f2.readlines()
-
-        lineL = ["-", "-", "-"]
-        for i in range(3):
-            if "<date>" in pageL[i]:
-                lineL[i] = datetime.today().strftime('%Y-%m-%d')
-            elif "<datetime>" in pageL[i]:
-                lineL[i] = datetime.today().strftime('%Y-%m-%d %H:%M')
-            elif "<page>" in pageL[i]:
-                lineL[i] = "page"
-            else:
-                lineL[i] = pageL[i].strip()
-
-        l1I = len(lineL[0])
-        l2I = len(lineL[1])
-        l3I = len(lineL[2])
-        wI = int(self.incrD["widthI"])
-        spS = (int((wI - l1I - l3I - l2I)/2) - 2) * " "
-        sepS = wI * "_" + 2*"\n"
-
-        if self.paramL[2].strip() == "head":
-            self.incrD["headS"] = lineL[0] + spS + \
-                lineL[1] + spS + lineL[2] + "\n" + sepS
-        if self.paramL[2].strip() == "foot":
-            self.incrD["footS"] = lineL[0] + spS + \
-                lineL[1] + spS + lineL[2] + "\n" + sepS
-
-        return "None"
-
     def project(self):
-        """7 insert project information from csv, xlsx or txt file
-
-            :return lineS: utf table
-            :rtype: str
-        """
-
-    def project(self):
-        """7 insert project information from csv, xlsx or syk
+        """insert project information from csv, xlsx or syk
 
             :return lineS: utf table
             :rtype: str
@@ -321,14 +244,13 @@ class CmdRST:
                 stralign=alignS,
             )
         )
-        tableS = output.getvalue()
+        tableS = output.getvalue() + "\n\n"
         sys.stdout = old_stdout
 
-        # print(tableS)
         return tableS
 
     def table(self):
-        """8 insert table from csv or xlsx file
+        """insert table from csv or xlsx file
 
         Args:
             ipl (list): parameter list
@@ -386,11 +308,11 @@ class CmdRST:
         # restS = restS + inrstS
         # restS += "  \\vspace{.15in}\n"
 
-        restS = "\n" + rstS + "\n"
+        restS = "\n" + rstS + "\n\n"
         return restS
 
     def text(self):
-        """9 insert text from file
+        """insert text from file
 
         || text | folder | file | type | shade
 

@@ -11,7 +11,7 @@ rvtext
     V(rs) - calculated values
     T(rs) - calculated tables and single line Python code
 
-    where *rs* is a *rivtText* string. When running in an IDE (e.g. VSCode),
+    where *rs* is a *rivtapi* string. When running in an IDE (e.g. VSCode),
     each method can be run interactively using the standard cell decorator (#
     %%). If parameters are set in the file, or the entire calculation file is
     run from the command line, the formatted output is written to a utf8, PDF,
@@ -29,12 +29,12 @@ rvtext
     displayed on source control platforms like GitHub. PDF output is written to
     *report*, and HTML output to the *site* folder.
 
-    *rivtText* is a superset of the markup language reStructuredText (reST)
+    *rivtapi* is a superset of the markup language reStructuredText (reST)
     defined at https://docutils.sourceforge.io/rst.html. It is designed for
     clarity, brevity and general platform reading and writing and processing.
     It runs on any platform that supports Python.
 
-    The *rivtText* superset includes commands, tags and single line Python
+    The *rivtapi* superset includes commands, tags and single line Python
     statements. Commands read or write files into and out of the calculation
     and start the line with ||. Tags format text and end a line with _[tag].
     Block tags start the block with [[tag]] and end with an [[end]] tag.
@@ -377,7 +377,7 @@ rv.X("""skip-string - can be anything.
 
         
 
-            where *rs* is a *rivtText* string. When running in an IDE (e.g. VSCode),
+            where *rs* is a *rivtapi* string. When running in an IDE (e.g. VSCode),
 
             each method can be run interactively using the standard cell decorator (#
 
@@ -413,7 +413,7 @@ rv.X("""skip-string - can be anything.
 
         
 
-            *rivtText* is a superset of the markup language reStructuredText (reST)
+            *rivtapi* is a superset of the markup language reStructuredText (reST)
 
             defined at https://docutils.sourceforge.io/rst.html. It is designed for
 
@@ -423,7 +423,7 @@ rv.X("""skip-string - can be anything.
 
         
 
-            The *rivtText* superset includes commands, tags and single line Python
+            The *rivtapi* superset includes commands, tags and single line Python
 
             statements. Commands read or write files into and out of the calculation
 

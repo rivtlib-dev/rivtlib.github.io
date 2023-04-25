@@ -46,7 +46,7 @@ that separate words in file and folder names are stripped out when used as
 document and division names in the document.
 
 Document input files are separated into folders labeled text and resource.
-Files in the text folder are shareable rivtText files that contain the primary
+Files in the text folder are shareable rivtapi files that contain the primary
 calculation information. The resource folder includes supporting files (images,
 pdf etc.) and other files that may include confidential project information or
 copyrighted material. The resource folder often contains binary information and

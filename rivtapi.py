@@ -2,19 +2,20 @@
 '''rivt API
 
 '''
-import os
-import sys
-import re
-import time
-import datetime
-import logging
-import warnings
-import fnmatch
-import shutil
-from pathlib import Path
-import configparser
-from rivt import parse
 from rivt.units import *
+from rivt import parse
+from configparser import ConfigParser
+from pathlib import Path
+import shutil
+import fnmatch
+import logging
+import datetime
+import time
+import sys
+import os
+import warnings
+warnings.simplefilter(action="ignore", category=FutureWarning)
+
 
 docfileS = "xx"
 docpathP = Path(os.getcwd())
@@ -48,37 +49,36 @@ prfxS = docbaseS[1:3]
 dataP = Path(docP.parent / "data")
 projP = docP.parent.parent.parent  # rivt project folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
-# print(f"{projP=}")
+rvconfigP = Path(docP.parent.parent / "rv0000-config")
+
 rvtlocalP = " "
-fileS = " "
-refileP = " "
-for fileS in os.listdir(projP):
-    print(f"{fileS[0:5]=}")
-    print(f"{fileS[-6:]=}")
-    if fnmatch.fnmatch(fileS[0:10], "rivtlocal-"):
-        rvtlocalP = Path(projP/fileS)  # resource folder path
-        break
+config = ConfigParser()
+config.read(Path(rvconfigP, "rivt-config.ini"))
+rvtlocalP = config.get('project', 'resource')
+titleS = config.get('report', 'title')
+headS = config.get('utf', 'head')
+footS = config.get('utf', 'foot')
+# print(f"{rvconfigP=}")
 # print(f"{rvtlocalP=}")
+
 for fileS in os.listdir(rvtlocalP):
     if fnmatch.fnmatch(fileS[2:5], prfxS + "-*"):
-        refileP = Path(fileS)  # resource folder path
+        refileP = Path(fileS)  # resource folder
         break
-# print(f"{refileP=}")
-titleS = "Solar Canopy - Larkspur, California"
+
 resourceP = Path(rvtlocalP, refileP)
 doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = titleS + " [ " + doctitleS.replace("-", " ") + " ] "
 divtitleS = (refileP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
-siteP = Path(rvtlocalP / "website")  # site folder path
-reportP = Path(rvtlocalP / "report")  # report folder path
-rvconfigP = Path(docP.parent.parent / "rv0000-config")
-retempP = Path(rvtlocalP / "rv00-temp")
-rivtP = Path("rivttext.py").parent  # rivt package path
+siteP = Path(rvtlocalP, "website")  # site folder path
+reportP = Path(rvtlocalP, "report")  # report folder path
+retempP = Path(rvtlocalP, "rv00-temp")
+rivtP = Path("rivtapi.py").parent  # rivt package path
 pypath = os.path.dirname(sys.executable)
 rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
-errlogP = Path(retempP / "rivt-log.txt")
-styleP = rvconfigP
+errlogP = Path(retempP, "rivt-log.txt")
+styleP = Path   # file name added at runtime
 tempfileS = docbaseS.replace("r", "v") + ".csv"
 saveP = Path(dataP, tempfileS)
 
@@ -118,10 +118,10 @@ incrD = {
     "codeB": False,  # print code strings in doc
     "pageI": 1,  # starting page number
     "titleS": "rivtdoc",
-    "headuS": "",
+    "headuS": headS,
     "footuS": "",
     "headrS": "",
-    "footrS": ""\
+    "footrS": ""
 }
 
 localD = {}                         # local rivt dictionary of values
@@ -134,7 +134,7 @@ logging.basicConfig(
     filemode="w",
 )
 dshortP = Path(*Path(docP.parent).parts[-2:])
-lshortP = Path(*rvtlocalP.parts[-2:])
+lshortP = Path(*Path(rvtlocalP).parts[-2:])
 rshortP = Path(*Path(resourceP).parts[-2:])
 
 print(f"\n-------- start rivt file : [{docfileS}] ---------")
@@ -162,6 +162,40 @@ print(" ")
 with open(docP, "r") as f1:
     rvtfileS = f1.read()
     rvtfileS += rvtfileS + """\nsys.exit()\n"""
+
+
+def _pages(headS, footS):
+    """write head or foot format line to dictionary
+
+        :return lineS: header or footer
+        :rtype: str
+    """
+
+    pageS = str(incrD["pageI"])
+    if "<date>" in headS:
+        headS = headS.replace("<date>",
+                              datetime.date.today().strftime('%Y-%m-%d'))
+    if "<datetime>" in headS:
+        headS = headS.replace("<datetime>",
+                              datetime.date.today().strftime('%Y-%m-%d %H:%M'))
+    if "<page>" in headS:
+        headS = headS.replace("<page>", pageS)
+
+    headL = headS.split("|")
+    # footL = footS.split("|")
+
+    l1I = len(headL[0])
+    l2I = len(headL[1])
+    l3I = len(headL[2])
+    wI = int(incrD["widthI"])
+    spS = (int((wI - l1I - l3I - l2I)/2) - 2) * " "
+    sepS = wI * "_" + 2*"\n"
+
+    incrD["headuS"] = sepS + headL[0] + spS + \
+        headL[1] + spS + headL[2] + "\n" + sepS
+    # incrD["footS"] = lineL[0] + spS + lineL[1] + spS + lineL[2] + "\n" + sepS
+
+    print(incrD["headuS"])
 
 
 def _str_title(hdrS):
@@ -232,6 +266,7 @@ def _str_set(rS, methS):
 
     if methS == "R":
         incrD["widthI"] = int(rs1L[1])     # utf print width
+        incrD["pageI"] = int(rs1L[2])      # start page
 
     elif methS == "V":
         if rs1L[1].strip().casefold() == "sub".casefold():
@@ -248,7 +283,7 @@ def _str_set(rS, methS):
     rs1S = rs1L[0].strip()
 
     if rs1S.strip()[0:2] == "--":
-        return "\n", "\n"                            # skip heading
+        return "\n", "\n"                             # skip heading
     else:
         hdutfS, hdrstS = _str_title(rs1L[0].strip())  # get_heading
         return hdutfS, hdrstS
@@ -265,10 +300,13 @@ def R(rS: str):
 
     global utfS, rstS, incrD, folderD, localD
 
+    _pages(incrD["headuS"], incrD["footuS"])   # header, footer for utf pages
+
     xutfS = ""
     xrstS = ""
     rL = rS.split("\n")
     hutfS, hrstS = _str_set(rL[0], "R")
+    print(hutfS)
     utfC = parse.RivtParse("R", folderD, incrD,  localD)
     xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
     if hutfS != None:
@@ -439,16 +477,18 @@ def _gen_pdf(self):
         "xflsP": Path(retempP, docbaseS + ".fls"),
         "xtexmakP": Path(retempP, docbaseS + ".fdb_latexmk"),
     }
-    os.system('latex --version')
+    # os.system('latex --version')
     os.chdir(retempP)
-    pdf1 = 'latexmk -xelatex -quiet -f ' + str(pdfD["xtexP"])
+    texfS = str(pdfD["xtexP"])
+    # pdf1 = 'latexmk -xelatex -quiet -f ' + texfS + " > latex-log.txt"
+    pdf1 = 'xelatex -interaction=batchmode ' + texfS
     # print(f"{pdf1=}"")
     os.system(pdf1)
     srcS = ".".join([docbaseS, "pdf"])
     dstS = str(Path(reportP, srcS))
     shutil.copy(srcS, dstS)
 
-    return
+    return dstS
 
 
 def _rest2tex(rstfileS):
@@ -468,7 +508,7 @@ def _rest2tex(rstfileS):
     global folderD
 
     style_path = folderD["styleP"]
-    print(f"{style_path=}")
+    # print(f"{style_path=}")
     # f2 = open(style_path)
     # f2.close
 
@@ -478,11 +518,10 @@ def _rest2tex(rstfileS):
     elif sys.platform == "darwin":
         pythoncallS = "python3 "
 
-    rst2texP = Path(rivtP, "scripts", "rst2xetex.py")
-    print(f"{str(rst2texP)=}")
+    rst2texP = Path(rivtP, "scripts", "rst2latex.py")
+    # print(f"{str(rst2texP)=}")
     texfileP = Path(retempP, docbaseS + ".tex")
     rstfileP = Path(retempP, docbaseS + ".rst")
-    texP = retempP
 
     with open(rstfileP, "w", encoding='utf-8') as f2:
         f2.write(rstS)
@@ -501,11 +540,12 @@ def _rest2tex(rstfileS):
         ]
     )
     logging.info(f"tex call:{tex1S=}")
-    os.chdir(texP)
+    os.chdir(retempP)
     try:
         os.system(tex1S)
         time.sleep(1)
         logging.info(f"tex file written: {texfileP=}")
+        print(f"tex file written: {texfileP=}")
     except SystemExit as e:
         logging.exception('tex file not written')
         logging.error(str(e))
@@ -513,9 +553,9 @@ def _rest2tex(rstfileS):
 
     _mod_tex(texfileP)
 
-    _gen_pdf(texfileP)
+    pdfS = _gen_pdf(texfileP)
 
-    return texfileP
+    return pdfS
 
 
 def writedoc(formatS):
@@ -528,8 +568,6 @@ def writedoc(formatS):
     global utfS, rstS, outputS, incrD, folderD
 
     formatL = [i.strip() for i in formatS.split(",")]
-    # print(f"{formatL=}")
-
     docutfP = Path(docP.parent / "README.txt")
     rstfileP = Path(docP.parent, docbaseS + ".rst")
     eshortP = Path(*Path(rstfileP).parts[-3:])
@@ -547,16 +585,25 @@ def writedoc(formatS):
         logging.info(f"""utf doc written: {dshortP}\README.txt""")
         print(f"utf doc written: {dshortP}\README.txt")
     print("", flush=True)
-    if "pdf" in formatL or "html" in formatL:      # save rst file
+    if "pdf" in formatS or "html" in formatS:      # save rst file
         with open(rstfileP, "w", encoding='utf-8') as f2:
             f2.write(rstS)
-        logging.info(f"""reST file written: {rstfileP}""")
+        logging.info(f"reST file written: {rstfileP}")
         print(f"reST file written: {rstfileP}")
-    print("", flush=True)
-    if "pdf" in formatL:
+    for i in formatL:
+        if "pdf" not in i:
+            continue
+        else:
+            logging.info(f"start PDF file process: {rstfileP}")
+            print("start PDF file process: {rstfileP}")
+            pdfstyleS = i.split(":")[1].strip()
+            styleP = Path(rvconfigP, pdfstyleS)
+            folderD["styleP"] = styleP
+            logging.info(f"PDF style file: {styleP}")
+            print(f"PDF style file: {styleP}")
         pdffileP = _rest2tex(rstS)
         logging.info(f"PDF doc written: {pdffileP}")
-    print("", flush=True)
+        print(f"PDF doc written: {pdffileP}")
     # if "html" in formatL:
     #     pdffileP = _rest2html(rstS)
     #     logging.info(f"HTML doc written: {pdffileP}")

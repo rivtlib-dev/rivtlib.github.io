@@ -143,13 +143,7 @@ class RivtParse:
                     rvtM = cmdutf.CmdUTF(parL, self.incrD, self.folderD,
                                          self.localD)  # utf cmd ******
                     utS = rvtM.cmd_parse(cmdS)
-                    if cmdS == "pages":                 # header page
-                        self.folderD["styleP"] == utS
-                        rvtuS = self.incrD["headuS"]
-                        pagenoS = str(self.incrD["pageI"])
-                        rvtuS = rvtuS.replace("p##", pagenoS)
-                        self.incrD["pageI"] = int(pagenoS) + 1
-                        continue
+                    # print(f"{utS=}")
                     utfS += utS
                     rvtM = cmdrst.CmdRST(parL, self.incrD, self.folderD,
                                          self.localD)  # rst cmd ******
@@ -198,11 +192,8 @@ class RivtParse:
                     rstS += eqL[1]
                     blockevalB = True
                     continue
-            else:                                 # delay R str title
-                if self.methS != "R":
-                    print(uS)
-                utfS += uS + "\n"
-                rstS += uS + "\n"
+            else:
+                print(uS)
 
         if self.incrD["saveP"] != None:            # write saved values
             valP = Path(self.folderD["dataP"] / self.incrD["saveP"])

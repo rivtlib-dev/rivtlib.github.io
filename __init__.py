@@ -5,10 +5,10 @@ Introduction
 ============
 
 rivt is a Python package that processes a calculation oriented plain text
-markup language - rivtText. It runs on any platform that supports Python 3.8 or
+markup language - rivtapi. It runs on any platform that supports Python 3.8 or
 later and prioritizes simplicity, universal access and reports in its design.
 
-rivtText wraps and extends the markup language reStructuredText (reST) defined
+rivtapi wraps and extends the markup language reStructuredText (reST) defined
 at https://docutils.sourceforge.io/rst.html. A rivt document begins with
 the import statement:
 
@@ -108,7 +108,7 @@ and apply version control on the primary calculation inputs.
 Commands and Tags
 =================
 
-rivtText syntax includes arbitrary text, commands, tags and simple (single
+rivtapi syntax includes arbitrary text, commands, tags and simple (single
 line) Python statements. Commands read or write files in and out of the
 calculation and are denoted by || at the beginning of a line. Tags format a
 line of text and are generally denoted with _[tag] at the end of a line and
@@ -169,10 +169,7 @@ write   rv.Write()
 || append | folder | file_name                                         R
     (app)   pdf folder | .pdf; .txt  
 
-|| page | folder | utf_file_name  | reST_file_name | start_page        R
-    (pag)    .txt; csv; syk; xls 
-
-|| project | folder | file_name  | 60,r;l;c | [:]                      R
+|| project | folder | pdfstyle file | project file  | 60,r;l;c | [:]   R
     (pro)    .txt; csv; syk; xls 
 
 || text | folder | file_name | text type                               I
@@ -194,14 +191,14 @@ write   rv.Write()
  tags                                   description 
 ============================ ============================================
 
-I,V,T line formats:             one at the end of a line
+I,V,T line formats:             at the end of a line
 ---- can be combined 
 text _[b]                       bold 
 text _[c]                       center
-text _[i]                       italicize
-text _[u]                       underline   
+text _[i]                       italic
 text _[r]                       right justify
 ---------
+text _[u]                       underline   
 text _[m]                       LaTeX math
 text _[s]                       sympy math
 text _[e]                       equation label, autonumber
@@ -213,14 +210,14 @@ _[line]                         horizontal line
 _[page]                         new page
 address, label _[link]          url or internal reference
 
-I,V,T block formats:            one at the start and end of block
+I,V,T block formats:            at the start and end of block
 ---- can be combined 
 _[[b]]                          bold
 _[[c]]                          center
 _[[i]]                          italic
 _[[p]]                          plain  
-_[[s]]                          shade 
 -------
+_[[s]]                          shade 
 _[[l]]                          LateX
 _[[h]]                          HTML 
 _[[q]]                          quit block
@@ -229,7 +226,7 @@ V calculation formats:
 a := n | unit, alt | descrip    declare = ; units, description
 a := b + c | unit, alt | n,n    assign := ; units, decimals
 
-The first line of a rivt file is always import rivt.rivttext as rv followed by
+The first line of a rivt file is always import rivt.rivtapi as rv followed by
 the Repo method rv.R(rvtxt) which occurs once. rv.R is followed by any of the
 other three methods in any number or order. rv.R(rvtxt) sets options for
 repository and report output formats.

@@ -1,5 +1,4 @@
 #
-import os
 import sys
 import csv
 import textwrap
@@ -30,10 +29,8 @@ try:
     from PIL import ImageOps as PImageOps
 except:
     pass
-
 from rivt import parse
 from rivt.units import *
-from rivt import tagutf
 
 
 class CmdUTF:
@@ -52,16 +49,15 @@ class CmdUTF:
                         command syntax                              methods
         ======================================================== ============
 
-        1- || append | folder | file_name                               R
-        2- || functions | folder | file_name | code; nocode             V
-        3- || image | folder | file_name  | size                       I,V,T
-        4- || image2 | folder | file_name  | size | file_name  | size   I,V,T
-        5- || list | folder | file_name                                 V
-        6- || pages | folder | file_name | file_name | page             R
-        7- || project | folder | file_name | max width | align          R
-        8- || table | folder | file_name | max width | rows             I,V,T
-        9- || text | folder | file_name | text type |shade; noshade     I,V,T
-        10-|| values | folder | file_name | [:];[x:y]                   V
+        1 || append | folder | file_name                                 R
+        2 || functions | folder | file_name | code; nocode               V
+        3 || image | folder | file_name  | size                        I,V,T
+        4 || image2 | folder | file_name  | size | file_name  | size   I,V,T
+        5 || list | folder | file_name                                   V
+        6 || project | folder | style file | proj file | [:] wid, algn   R
+        7 || table | folder | file_name | max width | rows             I,V,T
+        8 || text | folder | file_name | text type |shade; noshade     I,V,T
+        9 || values | folder | file_name | [:];[x:y]                     V
 
         """
 
@@ -91,26 +87,21 @@ class CmdUTF:
         return eval("self." + cmdS+"()")
 
     def append(self):
-        """1 _summary_
+        """_summary_
         """
         pass
 
     def func(self):
-        """2 _summary_
+        """_summary_
         """
         pass
 
     def image(self):
-        """3 insert image from file
+        """insert image from file
 
         """
 
         utfS = ""
-        plenI = 3
-        if len(self.paramL) != plenI:
-            logging.info(
-                f"{self.cmdS} command not evaluated: {plenI} parameters required")
-            return
         iL = self.paramL
         file1S = iL[1].strip()
         imgL = file1S.split(",")
@@ -134,71 +125,8 @@ class CmdUTF:
 
         return utfS
 
-    def pages(self):
-        """write head or foot format line to dictionary
-
-            :return lineS: header or footer
-            :rtype: str
-        """
-
-        plenI = 4
-        if len(self.paramL) != plenI:
-            logging.info(
-                f"{self.cmdS} command skipped: {plenI} parameters required"
-            )
-            return
-
-        iL = self.paramL
-        iD = self.folderD["styleP"]
-        if iL[0].strip() == "config":
-            iniP = Path(self.folderD["rvconfigP"], self.paramL[1].strip())
-            styP = Path(self.folderD["rvconfigP"], self.paramL[2].strip())
-        elif iL[0].strip() == "data":
-            iniP = Path(self.folderD["dataP"], self.paramL[1].strip())
-            styD = Path(self.folderD["dataP"], self.paramL[2].strip())
-        elif iL[0].strip() == "resource":
-            iniP = Path(self.folderD["resourceP"], self.paramL[1].strip())
-            styP = Path(self.folderD["resourceP"], self.paramL[2].strip())
-        else:
-            iniP = Path(self.folderD["dataP"], self.paramL[1].strip())
-            styP = Path(self.folderD["resourceP"], self.paramL[2].strip())
-
-        self.folderD["styleP"] = styP
-        configC = configparser.ConfigParser()
-        configC.read(iniP)
-        headS = configC["utf-page"]["head1"]
-
-        lineL = headS.split()
-
-        if "<date>" in headS:
-            headS = headS.replace("<date>",
-                                  datetime.today().strftime('%Y-%m-%d'))
-        if "<datetime>" in headS:
-            headS = headS.replace("<datetime>",
-                                  datetime.today().strftime('%Y-%m-%d %H:%M'))
-        if "<page>" in headS:
-            headS = headS.replace("<page>", "p##")
-
-        self.incrD["pageI"] = int(self.paramL[3])
-        lineL = headS.split("|")
-        l1I = len(lineL[0])
-        l2I = len(lineL[1])
-        l3I = len(lineL[2])
-        wI = int(self.incrD["widthI"])
-        spS = (int((wI - l1I - l3I - l2I)/2) - 2) * " "
-        sepS = wI * "_" + 2*"\n"
-
-        if self.paramL[2].strip() == "head":
-            self.incrD["headS"] = lineL[0] + spS + \
-                lineL[1] + spS + lineL[2] + "\n" + sepS
-        if self.paramL[2].strip() == "foot":
-            self.incrD["footS"] = lineL[0] + spS + \
-                lineL[1] + spS + lineL[2] + "\n" + sepS
-
-        return self.folderD["styleP"]
-
     def project(self):
-        """7 insert project information from csv, xlsx or syk
+        """insert project information from csv, xlsx or syk
 
             :return lineS: utf table
             :rtype: str
@@ -266,11 +194,11 @@ class CmdUTF:
         tableS = output.getvalue()
         sys.stdout = old_stdout
 
-        # print(tableS)
+        print(tableS)
         return tableS
 
     def table(self):
-        """8 insert table from csv or xlsx file
+        """insert table from csv or xlsx file
 
             :return lineS: utf table
             :rtype: str
@@ -306,7 +234,6 @@ class CmdUTF:
             logging.info(
                 f"{self.cmdS} not evaluated: {extS} file not processed")
             return
-
         incl_colL = list(range(len(readL[1])))
         if colS == "[:]":
             colL = [] * len(incl_colL)

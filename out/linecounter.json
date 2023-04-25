@@ -490,7 +490,7 @@
                     "blank": 73,
                     "code": 264,
                     "comment": 57,
-                    "filename": "rivttext.py"
+                    "filename": "rivtapi.py"
                 },
                 {
                     "blank": 3,
@@ -634,55 +634,55 @@
                     "blank": 0,
                     "code": 5,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\README.txt"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\README.txt"
                 },
                 {
                     "blank": 2,
                     "code": 3,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0101_Overview\\r0101t.bak"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0101_Overview\\r0101t.bak"
                 },
                 {
                     "blank": 3,
                     "code": 3,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0101_Overview\\README.txt"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0101_Overview\\README.txt"
                 },
                 {
                     "blank": 2,
                     "code": 3,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0101_Overview\\rv0101t.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0101_Overview\\rv0101t.py"
                 },
                 {
                     "blank": 3,
                     "code": 6,
                     "comment": 2,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0102_Simple\\data\\test1.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0102_Simple\\data\\test1.py"
                 },
                 {
                     "blank": 0,
                     "code": 1,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0102_Simple\\rv0102.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0102_Simple\\rv0102.py"
                 },
                 {
                     "blank": 0,
                     "code": 0,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv02_Division2\\r0201.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv02_Division2\\r0201.py"
                 },
                 {
                     "blank": 0,
                     "code": 1,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv02_Division2\\README.txt"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv02_Division2\\README.txt"
                 },
                 {
                     "blank": 0,
                     "code": 0,
                     "comment": 1,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\units.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\units.py"
                 },
                 {
                     "blank": 0,
@@ -1323,7 +1323,7 @@
                     "blank": 72,
                     "code": 264,
                     "comment": 58,
-                    "filename": "rivttext.py"
+                    "filename": "rivtapi.py"
                 },
                 {
                     "blank": 3,
@@ -1467,55 +1467,55 @@
                     "blank": 0,
                     "code": 5,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\README.txt"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\README.txt"
                 },
                 {
                     "blank": 2,
                     "code": 3,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0101_Overview\\r0101t.bak"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0101_Overview\\r0101t.bak"
                 },
                 {
                     "blank": 3,
                     "code": 3,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0101_Overview\\README.txt"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0101_Overview\\README.txt"
                 },
                 {
                     "blank": 2,
                     "code": 3,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0101_Overview\\rv0101t.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0101_Overview\\rv0101t.py"
                 },
                 {
                     "blank": 3,
                     "code": 6,
                     "comment": 2,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0102_Simple\\data\\test1.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0102_Simple\\data\\test1.py"
                 },
                 {
                     "blank": 0,
                     "code": 1,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0102_Simple\\rv0102.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0102_Simple\\rv0102.py"
                 },
                 {
                     "blank": 0,
                     "code": 0,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv02_Division2\\r0201.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv02_Division2\\r0201.py"
                 },
                 {
                     "blank": 0,
                     "code": 1,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv02_Division2\\README.txt"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv02_Division2\\README.txt"
                 },
                 {
                     "blank": 0,
                     "code": 0,
                     "comment": 1,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\units.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\units.py"
                 },
                 {
                     "blank": 0,
@@ -2156,7 +2156,7 @@
                     "blank": 89,
                     "code": 401,
                     "comment": 72,
-                    "filename": "rivttext.py"
+                    "filename": "rivtapi.py"
                 },
                 {
                     "blank": 3,
@@ -2300,55 +2300,55 @@
                     "blank": 0,
                     "code": 5,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\README.txt"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\README.txt"
                 },
                 {
                     "blank": 2,
                     "code": 3,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0101_Overview\\r0101t.bak"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0101_Overview\\r0101t.bak"
                 },
                 {
                     "blank": 3,
                     "code": 3,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0101_Overview\\README.txt"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0101_Overview\\README.txt"
                 },
                 {
                     "blank": 2,
                     "code": 3,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0101_Overview\\rv0101t.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0101_Overview\\rv0101t.py"
                 },
                 {
                     "blank": 3,
                     "code": 6,
                     "comment": 2,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0102_Simple\\data\\test1.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0102_Simple\\data\\test1.py"
                 },
                 {
                     "blank": 0,
                     "code": 1,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv01_Division1\\rv0102_Simple\\rv0102.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv01_Division1\\rv0102_Simple\\rv0102.py"
                 },
                 {
                     "blank": 0,
                     "code": 0,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv02_Division2\\r0201.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv02_Division2\\r0201.py"
                 },
                 {
                     "blank": 0,
                     "code": 1,
                     "comment": 0,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\rv02_Division2\\README.txt"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\rv02_Division2\\README.txt"
                 },
                 {
                     "blank": 0,
                     "code": 0,
                     "comment": 1,
-                    "filename": "tests\\rivt_Example_Test_01\\rivttext\\units.py"
+                    "filename": "tests\\rivt_Example_Test_01\\rivtapi\\units.py"
                 },
                 {
                     "blank": 0,

@@ -1,35 +1,35 @@
-#
-import os
-import sys
-import csv
-import textwrap
-import subprocess
-import tempfile
-import re
-import logging
-import warnings
-import numpy.linalg as la
-import pandas as pd
-import sympy as sp
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-import html2text as htm
-from numpy import *
-from io import StringIO
-from sympy.parsing.latex import parse_latex
-from sympy.abc import _clash2
-from sympy.core.alphabets import greeks
-from tabulate import tabulate
-from pathlib import Path
-from datetime import datetime
-from IPython.display import display as _display
+from rivt.units import *
 from IPython.display import Image as _Image
+from IPython.display import display as _display
+from datetime import datetime
+from pathlib import Path
+from tabulate import tabulate
+from sympy.core.alphabets import greeks
+from sympy.abc import _clash2
+from sympy.parsing.latex import parse_latex
+from io import StringIO
+from numpy import *
+import html2text as htm
+import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
+import sympy as sp
+import pandas as pd
+import numpy.linalg as la
+import warnings
+import logging
+import re
+import tempfile
+import subprocess
+import textwrap
+import csv
+import sys
+import os
+
 try:
     from PIL import Image as PImage
     from PIL import ImageOps as PImageOps
 except:
     pass
-from rivt.units import *
 
 
 class TagsRST():

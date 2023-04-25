@@ -59,6 +59,6 @@ if sys.version_info < (3, 8):
 
 if __name__ == "__main__":
     try:
-        import rivt.rivttext
+        import rivt.rivtapi
     except:
         cmdlinehelp()

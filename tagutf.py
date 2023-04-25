@@ -158,7 +158,7 @@ class TagsUTF:
         return lineS
 
     def boldcenter(self):
-        """center text _[c]
+        """center text _[bc]
 
         :return lineS: centered line
         :rtype: str

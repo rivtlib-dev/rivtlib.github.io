@@ -2,18 +2,20 @@
 '''rivt API
 
 '''
-from rivt.units import *
-from rivt import parse
-from configparser import ConfigParser
-from pathlib import Path
-import shutil
+import datetime
 import fnmatch
 import logging
-import datetime
-import time
-import sys
 import os
+import shutil
+import sys
+import time
 import warnings
+from configparser import ConfigParser
+from pathlib import Path
+
+from rivt import parse
+from rivt.units import *
+
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 

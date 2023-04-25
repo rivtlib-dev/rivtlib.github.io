@@ -4,14 +4,15 @@
 """
 
 
-from rivt.unum.utils import uarray
-from rivt.unum.core import Unum
-from rivt.unum.utils import *
-from rivt.unum.core import *
+import importlib.util
 import os
 import sys
-import importlib.util
 from pathlib import Path, PurePath
+
+from rivt.unum.core import *
+from rivt.unum.core import Unum
+from rivt.unum.utils import *
+from rivt.unum.utils import uarray
 
 # rivtcalc path information - comment out for more general
 path1 = importlib.util.find_spec("rivt")

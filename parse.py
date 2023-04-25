@@ -1,33 +1,33 @@
-from rivt.units import *
 import csv
-import sys
-import re
 import logging
+import re
+import sys
 import warnings
+from io import StringIO
+from pathlib import Path
+
+import html2text as htm
+import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
 import numpy.linalg as la
 import pandas as pd
 import sympy as sp
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-import html2text as htm
-from numpy import *
-from IPython.display import display as _display
 from IPython.display import Image as _Image
-from io import StringIO
-from sympy.parsing.latex import parse_latex
+from IPython.display import display as _display
+from numpy import *
 from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
+from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
-from pathlib import Path
+
+from rivt.units import *
+
 try:
     from PIL import Image as PImage
     from PIL import ImageOps as PImageOps
 except:
     pass
-from rivt import cmdutf
-from rivt import cmdrst
-from rivt import tagutf
-from rivt import tagrst
+from rivt import cmdrst, cmdutf, tagrst, tagutf
 
 # tabulate.PRESERVE_WHITESPACE = True
 

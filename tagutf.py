@@ -1,28 +1,30 @@
 #
-import os
-import sys
 import csv
-import textwrap
-import subprocess
-import tempfile
-import re
 import logging
+import os
+import re
+import subprocess
+import sys
+import tempfile
+import textwrap
 import warnings
+from io import StringIO
+from pathlib import Path
+
+import html2text as htm
+import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
 import numpy.linalg as la
 import pandas as pd
 import sympy as sp
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-import html2text as htm
+from IPython.display import Image as _Image
+from IPython.display import display as _display
 from numpy import *
-from io import StringIO
-from sympy.parsing.latex import parse_latex as parsx
 from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
+from sympy.parsing.latex import parse_latex as parsx
 from tabulate import tabulate
-from pathlib import Path
-from IPython.display import display as _display
-from IPython.display import Image as _Image
+
 try:
     from PIL import Image as PImage
     from PIL import ImageOps as PImageOps

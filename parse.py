@@ -140,14 +140,14 @@ class RivtParse:
                 parL = usL[1:]
                 cmdS = usL[0].strip()
                 if cmdS in self.cmdL:
-                    rvtM = cmdutf.CmdUTF(parL, self.incrD, self.folderD,
+                    rvtC = cmdutf.CmdUTF(parL, self.incrD, self.folderD,
                                          self.localD)  # utf cmd ******
-                    utS = rvtM.cmd_parse(cmdS)
+                    utS = rvtC.cmd_parse(cmdS)
                     # print(f"{utS=}")
                     utfS += utS
-                    rvtM = cmdrst.CmdRST(parL, self.incrD, self.folderD,
+                    rvtC = cmdrst.CmdRST(parL, self.incrD, self.folderD,
                                          self.localD)  # rst cmd ******
-                    reS = rvtM.cmd_parse(cmdS)
+                    reS = rvtC.cmd_parse(cmdS)
                     rstS += reS
             elif "_[" in uS:                          # end of line tag
                 usL = uS.split("_[")
@@ -155,40 +155,40 @@ class RivtParse:
                 tagS = usL[1].strip()
                 if tagS[0] == "[":                     # block tag
                     blockB = True
-                rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
+                rvtC = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
                                       self.localD)     # utf tag ******
-                utS = rvtM.tag_parse(tagS)
+                utS = rvtC.tag_parse(tagS)
                 utfS += utS + "\n"                     # rst tag ******
-                rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
+                rvtC = tagrst.TagsRST(lineS, self.incrD, self.folderD,
                                       self.localD)
-                reS = rvtM.tag_parse(tagS)
+                reS = rvtC.tag_parse(tagS)
                 rstS += reS + "\n"
-            elif "=" in uS:                             # assign tag
+            elif "=" in uS:                             # equation tag
                 # print(f"{uS=}")
                 usL = uS.split("|")
                 lineS = usL[0]
                 self.incrD["unitS"] = usL[1].strip()
                 self.incrD["descS"] = usL[2].strip()
-                rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
+                rvtC = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
                                       self.localD)
-                if ":=" in uS:
+                if ":=" in uS:                          # declare tag
                     tfS = "declare"
-                    blockevalL.append(rvtM.tag_parse(":="))
-                    rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
+                    blockevalL.append(rvtC.tag_parse(":="))
+
+                    rvtC = tagrst.TagsRST(lineS, self.incrD, self.folderD,
                                           self.localD)
-                    eqL = rvtM.tag_parse(":=")
+                    eqL = rvtC.tag_parse(":=")
                     blockevalB = True
                     continue
                 else:
-                    tfS = "assign"
-                    eqL = rvtM.tag_parse("=")
+                    tfS = "assign"                      # assign tag
+                    eqL = rvtC.tag_parse("=")
                     utfS += eqL[1]
-                    print(eqL[1])
                     blockevalL.append(eqL[0])
 
-                    rvtM = tagrst.TagsRST(lineS, self.incrD, self.folderD,
+                    rvtC = tagrst.TagsRST(lineS, self.incrD, self.folderD,
                                           self.localD)
-                    eqL = rvtM.tag_parse("=")
+                    eqL = rvtC.tag_parse("=")
                     rstS += eqL[1]
                     blockevalB = True
                     continue

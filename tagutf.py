@@ -41,7 +41,7 @@ class TagsUTF:
             tags                                   description 
             ============================ ======================================
 
-            I,V,T line formats:               one at the end of a line
+            I,V,T line formats:               place at end of a line
             ---- can be combined 
             1 text _[b]                       bold 
             2 text _[c]                       center
@@ -60,14 +60,14 @@ class TagsUTF:
             14 _[page]                        new page
             15 address, label _[link]         url or internal reference
 
-            I,V,T block formats:             blocks end with quit block
+            I,V,T block formats:             end block with quit 
             ---- can be combined 
             16 _[[p]]                        plain  
             17 _[[s]]                        shade 
             -------
             18 _[[l]]                        LateX
             19 _[[h]]                        HTML 
-            20 _[[q]]                        quit block
+            20 _[[q]]                        quit
 
             V calculation formats: 
             21 a := n | unit, alt | descrip    declare = ; units, description
@@ -125,7 +125,7 @@ class TagsUTF:
         :return lineS: bold line
         :rtype: str
         """
-
+        print(self.lineS)
         return self.lineS
 
     def center(self):
@@ -134,9 +134,8 @@ class TagsUTF:
         :return lineS: centered line
         :rtype: str
         """
-
         lineS = self.lineS.center(int(self.widthI))
-
+        print(lineS)
         return lineS
 
     def italic(self):
@@ -145,7 +144,7 @@ class TagsUTF:
         :return lineS: centered line
         :rtype: str
         """
-
+        print(self.lineS)
         return self.lineS
 
     def right(self):
@@ -189,9 +188,7 @@ class TagsUTF:
         :return lineS: centered line
         :rtype: str
         """
-
         lineS = self.lineS.center(int(self.widthI))
-
         print(lineS)
         return lineS
 
@@ -201,9 +198,7 @@ class TagsUTF:
         :return lineS: centered line
         :rtype: str
         """
-
         lineS = self.lineS.rjust(int(self.widthI))
-
         print(lineS)
         return lineS
 
@@ -213,13 +208,10 @@ class TagsUTF:
             :return labelS: formatted label
             :rtype: str
         """
-
         secS = str(self.incrD["secnumI"]).zfill(2)
         labelS = secS + " - " + labelS + numS
-
         # store for equation table
         self.incrD["eqlabelS"] = self.lineS + " [" + numS.zfill(2) + "]"
-
         return labelS
 
     def description(self):
@@ -228,10 +220,8 @@ class TagsUTF:
         :return lineS: footnote
         :rtype: str
         """
-
         ftnumI = self.incrD["noteL"].pop(0)
         lineS = "[" + str(ftnumI) + "] " + self.lineS
-
         print(lineS)
         return lineS
 
@@ -249,7 +239,6 @@ class TagsUTF:
         spcI = len("Fig. " + fillS + " - " + self.lineS.strip())
         lineS = "Equ. " + fillS + " - " + self.lineS.strip() \
             + refS.rjust(wI-spcI)
-
         self.incrD["equI"] = enumI
         print(lineS)
         return lineS
@@ -268,33 +257,24 @@ class TagsUTF:
         spcI = len("Table " + fillS + " - " + self.lineS.strip())
         lineS = "Fig. " + fillS + " - " + self.lineS.strip() \
             + refS.rjust(wI-spcI)
-
         self.incrD["figI"] = fnumI + 1
         print(lineS)
         return lineS
 
     def foot(self):
         """footnote number _[#]
-        """
 
+
+        """
         ftnumI = self.incrD["footL"].pop(0)
         self.incrD["noteL"].append(ftnumI + 1)
         self.incrD["footL"].append(ftnumI + 1)
         lineS = self.lineS.replace("*]", "[" + str(ftnumI) + "]")
-
         print(lineS)
         return lineS
 
-    def italic(self):
-        """7 italicize line
-        """
-
-        lineS = self.lineS
-
-        return lineS
-
     def latex(self):
-        """8 format latex
+        """format latex
 
         :return lineS: formatted latex
         :rtype: str
@@ -303,7 +283,7 @@ class TagsUTF:
         # txS = txs.encode('unicode-escape').decode()
         ptxS = sp.parse_latex(txS)
         lineS = sp.pretty(sp.sympify(ptxS, _clash2, evaluate=False))
-
+        print(lineS)
         return lineS
 
     def plain(self):
@@ -312,8 +292,8 @@ class TagsUTF:
         :param lineS: _description_
         :type lineS: _type_
         """
-
-        pass
+        print(self.lineS)
+        return self.lineS
 
     def sympy(self):
         """format line of sympy _[s]
@@ -323,13 +303,12 @@ class TagsUTF:
         """
 
         spS = self.lineS.strip()
-        try:
-            spL = spS.split("=")
-            spS = "Eq(" + spL[0] + ",(" + spL[1] + "))"
-            # sps = sp.encode('unicode-escape').decode()
-        except:
-            lineS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
-
+        # try:
+        #     spL = spS.split("=")
+        #     spS = "Eq(" + spL[0] + ",(" + spL[1] + "))"
+        #     # sps = sp.encode('unicode-escape').decode()
+        # except:
+        lineS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
         print(lineS)
         return lineS
 
@@ -339,7 +318,6 @@ class TagsUTF:
         :return lineS: utf table title
         :rtype: str
         """
-
         tnumI = int(self.incrD["tableI"])
         fillS = str(tnumI).zfill(2)
         wI = self.incrD["widthI"]
@@ -347,7 +325,6 @@ class TagsUTF:
         spcI = len("Table " + fillS + " - " + self.lineS.strip())
         lineS = "Table " + fillS + " - " + self.lineS.strip() \
             + refS.rjust(wI-spcI)
-
         self.incrD["tableI"] = tnumI + 1
         print(lineS)
         return lineS
@@ -359,7 +336,6 @@ class TagsUTF:
         :type lineS: _type_
         """
         lineS = self.widthI * "_"
-
         print(lineS)
         return lineS
 
@@ -369,10 +345,9 @@ class TagsUTF:
         :return: _description_
         :rtype: _type_
         """
-
-        lineL = lineS.split(",")
+        lineL = self.lineS.split(",")
         lineS = ".. _" + lineL[0] + ": " + lineL[1]
-
+        print(lineS)
         return lineS
 
     def page(self):
@@ -381,11 +356,10 @@ class TagsUTF:
         :return lineS: page header
         :rtype: str
         """
-
         pagenoS = str(self.incrD["pageI"])
         rvtS = self.incrD["headuS"].replace("p##", pagenoS)
         self.incrD["pageI"] = int(pagenoS)+1
-
+        print("_" * self.incrD["widthI"])
         print("\n" + rvtS)
         return "\n" + rvtS
 
@@ -455,7 +429,6 @@ class TagsUTF:
 
         """
         locals().update(self.localD)
-
         varS = str(self.lineS).split(":=")[0].strip()
         valS = str(self.lineS).split(":=")[1].strip()
         unit1S = str(self.incrD["unitS"]).split(",")[0]
@@ -482,11 +455,8 @@ class TagsUTF:
         unit1S = str(self.incrD["unitS"]).split(",")[0]
         unit2S = str(self.incrD["unitS"]).split(",")[1]
         descS = str(self.incrD["eqlabelS"])
-        rprecS = str(self.incrD["descS"].split(",")[0])  # trim result
-        eprecS = str(self.incrD["descS"].split(",")[1])  # trim equations
-        fltfmtS = "%." + rprecS.strip() + "f"
-        exec("set_printoptions(precision=" + rprecS + ")")
-        exec("Unum.set_format(value_format = '%." + eprecS + "f')")
+        precI = int(self.incrD["descS"])  # trim result
+        fmtS = "%." + str(precI) + "f"
         if unit1S.strip() != "-":
             if type(eval(valS)) == list:
                 val1U = array(eval(valS)) * eval(unit1S)
@@ -494,30 +464,32 @@ class TagsUTF:
             else:
                 cmdS = varS + "= " + valS
                 exec(cmdS, globals(), locals())
-                valU = eval(varS).cast_unit(eval(unit1S))
-                valdec = fltfmtS % valU.number()
-                val1U = str(valdec) + " " + str(valU.unit())
-                val2U = valU.cast_unit(eval(unit2S))
+                val1U = eval(varS).cast_unit(eval(unit1S))
+                # print(f"{val1U=}")
+                val1U.set_format(value_format=fmtS, auto_norm=True)
+                # print(f"{val1U=}")
+                val2U = val1U.cast_unit(eval(unit2S))
         else:
             cmdS = varS + "= as_unum(" + valS + ")"
             exec(cmdS, globals(), locals())
             valU = eval(varS)
-            valdec = fltfmtS % valU.number()
+            valdec = round(valU.number(), precI)
             val1U = val2U = str(valdec)
         spS = "Eq(" + varS + ",(" + valS + "))"
         utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
         utfS = "\n" + utfS + "\n"
         eqL = [varS, valS, unit1S, unit2S, descS]
-
         self.localD.update(locals())
+
+        print(utfS)
 
         subS = " "
         if self.incrD["subB"]:              # replace variables with numbers
-            subS = self.vsub(eqL, rprecS, eprecS)
+            subS = self.vsub(eqL, precI, varS, val1U)
 
         return [eqL, utfS + "\n" + subS + "\n\n"]
 
-    def vsub(self, eqL, rprecS, eprecS):
+    def vsub(self, eqL, precI, varS, val1U):
         """substitute numbers for variables in printed output
 
         Args:
@@ -525,40 +497,51 @@ class TagsUTF:
             epS (str): [description]
         """
         locals().update(self.localD)
-
-        utfS = eqL[0] + " = " + eqL[1]
-        varS = utfS.split("=")
+        fmtS = "%." + str(precI) + "f"
+        varL = [str(eqL[0]), str(eqL[1])]
         # resultS = vars[0].strip() + " = " + str(eval(vars[1]))
         # sps = sps.encode('unicode-escape').decode()
         eqS = "Eq(" + eqL[0] + ",(" + eqL[1] + "))"
-        symeq = sp.sympify(eqS.strip())
+        with sp.evaluate(False):
+            symeq = sp.sympify(eqS.strip())
+        # print(f"{symeq=}")
         symat = symeq.atoms(sp.Symbol)
-        for n2 in symat:
-            evlen = len((eval(n2.__str__())).__str__())  # get var length
-            new_var = str(n2).rjust(evlen, "~")
+        # print(f"{symat=}")
+        for n1O in symat:
+            if str(n1O) == varS:
+                symeq = symeq.subs(n1O, sp.Symbol(str(val1U)))
+                continue
+            # print(f"{n1O=}")
+            n1U = eval(str(n1O))
+            n1U.set_format(value_format=fmtS, auto_norm=True)
+            # print(f"{n1U=}")
+            evlen = len(str(n1U))  # get var length
+            new_var = str(n1U).rjust(evlen, "~")
             new_var = new_var.replace("_", "|")
-            symeq = symeq.subs(n2, sp.Symbol(new_var))
+            # print(f"{new_var=}")
+            with sp.evaluate(False):
+                symeq = symeq.subs(n1O, sp.Symbol(new_var))
+            # print(f"{symeq=}")
         out2 = sp.pretty(symeq, wrap_line=False)
         # print('out2a\n', out2)
-        symat1 = symeq.atoms(sp.Symbol)  # adjust character length
-        for n1 in symat1:
-            orig_var = str(n1).replace("~", "")
-            orig_var = orig_var.replace("|", "_")
-            expr = eval(varS[1])
-            if type(expr) == float:
-                form = "{:." + eprecS + "f}"
-                symeval1 = form.format(eval(str(expr)))
-            else:
-                try:
-                    symeval1 = eval(
-                        orig_var.__str__()).__str__()
-                except:
-                    symeval1 = eval(orig_var.__str__()).__str__()
-            out2 = out2.replace(n1.__str__(), symeval1)   # substitute
+        # symat1 = symeq.atoms(sp.Symbol)  # adjust character length
+        # for n2 in symat1:
+        #     orig_var = str(n2).replace("~", "")
+        #     orig_var = orig_var.replace("|", "_")
+        #     expr = eval(varL[1])
+        #     if type(expr) == float:
+        #         form = "{%." + str(precI) + "f}"
+        #         symeval1 = form.format(eval(str(expr)))
+        #     else:
+        #         try:
+        #             symeval1 = eval(
+        #                 orig_var.__str__()).__str__()
+        #         except:
+        #             symeval1 = eval(orig_var.__str__()).__str__()
+        #     out2 = out2.replace(n2.__str__(), symeval1)   # substitute
         # print('out2b\n', out2)
         out3 = out2  # clean up unicode
         out3 = out3.replace("*", "\\u22C5")
-        # print('out3a\n', out3)
         _cnt = 0
         for _m in out3:
             if _m == "-":
@@ -568,8 +551,9 @@ class TagsUTF:
                 if _cnt > 1:
                     out3 = out3.replace("-" * _cnt, "\u2014" * _cnt)
                 _cnt = 0
-
         self.localD.update(locals())
+        utfS = out3 + "\n\n"
 
-        utfS = out3
+        print(utfS)
+
         return utfS

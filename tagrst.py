@@ -187,7 +187,6 @@ class TagsRST():
         lineS = ".. raw:: latex \n\n" \
             + "?x?hfill ?x?textbf{" + self.lineS + "}" \
             + "\n"
-
         return lineS
 
     def italiccenter(self):
@@ -200,7 +199,6 @@ class TagsRST():
         lineS = ".. raw:: latex \n\n" \
             + "   ?x?begin{center} ?x?textit{" + self.lineS + "} ?x?end{center}" \
             + "\n"
-
         return lineS
 
     def italicright(self):
@@ -213,7 +211,6 @@ class TagsRST():
         lineS = ".. raw:: latex \n\n" \
             + "?x?hfill ?x?textit{" + self.lineS + "}" \
             + "\n"
-
         return lineS
 
     def label(self, labelS, numS):
@@ -222,11 +219,8 @@ class TagsRST():
             : return labelS: formatted label
             : rtype: str
         """
-
         secS = str(self.incrD["secnumI"]).zfill(2)
-        labelS = secS + " - " + labelS + numS
-
-        return labelS
+        return secS + " - " + labelS + numS
 
     def description(self):
         """footnote description _[d]
@@ -234,10 +228,7 @@ class TagsRST():
         : return lineS: footnote
         : rtype: str
         """
-
-        lineS = ".. [*] " + self.lineS
-
-        return lineS
+        return ".. [*] " + self.lineS
 
     def equation(self):
         """reST equation label _[e]
@@ -245,13 +236,11 @@ class TagsRST():
         : return lineS: reST equation label
         : rtype: str
         """
-
         enumI = int(self.incrD["equI"])
         fillS = str(enumI).zfill(2)
         refS = self.label("E", fillS)
-        lineS = "\n\n" + "**" + "Eq. " + str(enumI) + "** " + \
-            self.lineS + " ?x?hfill " + refS + "\n\n"
-
+        lineS = "\n\n" + "**" + "Eq. " + str(enumI) + ": " + self.lineS + \
+            + "** " + " ?x?hfill " + refS + "\n\n"
         return lineS
 
     def figure(self):
@@ -264,63 +253,27 @@ class TagsRST():
         fnumI = int(self.incrD["figI"])
         fillS = str(fnumI).zfill(2)
         refS = self.label("F", fillS)
-        lineS = "\n \n" + "**" + "Figure " + str(fnumI) + "** " + \
-            self.lineS + " ?x?hfill " + refS + "\n \n"
-        lineS = self.vgap + lineS + self.vgap + " ?x?nopagebreak \n"
+        lineS = "\n \n" + "**" + "Figure " + str(fnumI) + ": " + self.lineS + \
+                          "** " + " ?x?hfill " + refS + "\n \n"
 
-        return lineS
+        return self.vgap + lineS + self.vgap + " ?x?nopagebreak \n"
 
     def footnumber(self):
         """insert footnote number _[  # ]
+
+        :
+        :
         """
-
         lineS = "".join(self.lineS)
-        lineS = lineS.replace("*]", "[*]_ ")
-
-        return lineS
+        return lineS.replace("*]", "[*]_ ")
 
     def latex(self):
-        """format latex _[l]:return lineS: reST formatted latex:rtype: str
-        """
+        """format latex _[l]
 
-        lineS = ".. raw:: math\n\n   " + self.lineS + "\n"
-
-        return lineS
-
-    def plain(self):
-        """10 format plain literal _[p]:return lineS: page break line:rtype: str
-        """
-        lineS = ".. raw:: latex \n\n ?x?newpage \n"
-
-        return lineS
-
-    def sympy(self):
-        """13 reST format line of sympy _[s]:return lineS: formatted sympy:rtype: str
-        """
-
-        spS = self.lineS
-        txS = sp.latex(S(spS))
-        lineS = ".. raw:: math\n\n   " + txS + "\n"
-
-        return lineS
-
-    def underline(self):
-        """underline _[u]
-
-        :return lineS: underline
+        :return lineS: reST formatted latex
         :rtype: str
         """
-
-        lineS = ":math: `?x?text?x?underline{" + self.lineS.strip() + "}"
-
-        return lineS
-
-    def page(self):
-        """11 insert page break _[page]:return lineS: page break line:rtype: str
-        """
-        lineS = ".. raw:: latex \n\n ?x?newpage \n"
-
-        return lineS
+        return ".. raw:: math\n\n   " + self.lineS + "\n"
 
     def link(self):
         """15 url or internal link:return: _description_:rtype: _type_
@@ -337,32 +290,62 @@ class TagsRST():
         param lineS: _description_
         :type lineS: _type_
         """
+        return self.widthI * "-"
 
-        lineS = self.widthI * "-"
+    def plain(self):
+        """format plain literal _[p]
 
-        return lineS
+        :return lineS: page break line
+        :rtype: str
+        """
+        return ".. raw:: latex \n\n ?x?newpage \n"
+
+    def sympy(self):
+        """13 reST format line of sympy _[s]:return lineS: formatted sympy:rtype: str
+        """
+
+        spS = self.lineS
+        txS = sp.latex(S(spS))
+        return ".. raw:: math\n\n   " + txS + "\n"
+
+    def underline(self):
+        """underline _[u]
+
+        :return lineS: underline
+        :rtype: str
+        """
+        return ":math: `?x?text?x?underline{" + self.lineS.strip() + "}"
+
+    def page(self):
+        """insert page break _[page]
+
+        :return lineS: page break line
+        :rtype: str
+        """
+        return ".. raw:: latex \n\n ?x?newpage \n"
 
     def table(self):
-        """14 table label _[t]:return lineS: figure label:rtype: str
+        """table label _[t]
+
+        :return lineS: figure label
+        :rtype: str
         """
 
         tnumI = int(self.incrD["tableI"])
         fillS = str(tnumI).zfill(2)
         refS = self.label("T", fillS)
-        lineS = "\n" + "**" + "Table " + fillS + "** " + \
-            self.lineS + " ?x?hfill " + refS + "\n"
-        lineS = self.vgap + lineS + self.vgap + " ?x?nopagebreak \n"
-
-        return lineS
+        lineS = "\n" + "**" + "Table " + fillS + + ": " + self.lineS + \
+            "** " + " ?x?hfill " + refS + "\n"
+        return self.vgap + lineS + self.vgap + " ?x?nopagebreak \n"
 
     def centerblk(self):
         """_summary_
         """
-
         lineS = ".. raw:: latex \n\n" \
             + "   ?x?begin{center} + ?x?parbox{5cm}" \
             + self.lineS + " ?x?end{center}" \
             + "\n\n"
+        return lineS
 
     def latexblk(self):
         pass
@@ -380,17 +363,19 @@ class TagsRST():
         pass
 
     def declare(self):
-        """declare variable value :=
+        """ := declare variable value
 
+        :return assignL: assign results
+        :rtype: list
+        :return rstS: restruct string 
+        :rtype: string
         """
         locals().update(self.localD)
-
         varS = str(self.lineS).split(":=")[0].strip()
         valS = str(self.lineS).split(":=")[1].strip()
         unit1S = str(self.incrD["unitS"]).split(",")[0]
         unit2S = str(self.incrD["unitS"]).split(",")[1]
         descripS = str(self.incrD["descS"])
-
         if unit1S.strip() != "-":
             cmdS = varS + "= " + valS + "*" + unit1S
         else:
@@ -403,21 +388,21 @@ class TagsRST():
         return [varS, valS, unit1S, unit2S, descripS]
 
     def assign(self):
-        """assign result to equation=
+        """ = assign result to equation
 
+        :return assignL: assign results
+        :rtype: list
+        :return rstS: restruct string 
+        :rtype: string
         """
         locals().update(self.localD)
-
         varS = str(self.lineS).split("=")[0].strip()
         valS = str(self.lineS).split("=")[1].strip()
         unit1S = str(self.incrD["unitS"]).split(",")[0]
         unit2S = str(self.incrD["unitS"]).split(",")[1]
         descS = str(self.incrD["eqlabelS"])
-        rprecS = str(self.incrD["descS"].split(",")[0])  # trim result
-        eprecS = str(self.incrD["descS"].split(",")[1])  # trim equations
-        exec("set_printoptions(precision=" + rprecS + ")")
-        exec("Unum.set_format(value_format = '%." + eprecS + "f')")
-        fltfmtS = "%." + rprecS.strip() + "f"
+        precI = int(self.incrD["descS"])  # trim result
+        fmtS = "%." + str(precI) + "f"
         if unit1S.strip() != "-":
             if type(eval(valS)) == list:
                 val1U = array(eval(valS)) * eval(unit1S)
@@ -425,79 +410,78 @@ class TagsRST():
             else:
                 cmdS = varS + "= " + valS
                 exec(cmdS, globals(), locals())
-                valU = eval(varS).cast_unit(eval(unit1S))
-                valdec = fltfmtS % valU.number()
-                val1U = str(valdec) + " " + str(valU.unit())
-                val2U = valU.cast_unit(eval(unit2S))
+                val1U = eval(varS).cast_unit(eval(unit1S))
+                val1U.set_format(value_format=fmtS, auto_norm=True)
+                val2U = val1U.cast_unit(eval(unit2S))
         else:
             cmdS = varS + "= as_unum(" + valS + ")"
             exec(cmdS, globals(), locals())
             valU = eval(varS)
-            valdec = fltfmtS % valU.number()
+            valdec = round(valU.number(), precI)
             val1U = val2U = str(valdec)
         spS = "Eq(" + varS + ",(" + valS + "))"
-        symeq = sp.sympify(spS, _clash2, evaluate=False)
-        eqltxS = sp.latex(symeq, mul_symbol="dot")
-        rstS = "\n.. math:: \n\n" + "  " + eqltxS + "\n\n"
-        rstS = "\n" + rstS + "\n"
+        # symeq = sp.sympify(spS, _clash2, evaluate=False)
+        # eqltxS = sp.latex(symeq, mul_symbol="dot")
+        eqS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+        indeqS = eqS.replace("\n", "\n   ")
+        rstS = "\n::\n\n   " + indeqS + "\n\n"
         eqL = [varS, valS, unit1S, unit2S, descS]
-
         self.localD.update(locals())
 
-        subS = "\n"
+        subS = "\n\n"
         if self.incrD["subB"]:              # replace variables with numbers
-            subS = self.vsub(eqL)
+            subS = self.vsub(eqL, precI, varS, val1U) + "\n\n"
 
-        return [[varS, str(val1U), unit1S, unit2S, descS], rstS + subS]
+        assignL = [varS, str(val1U), unit1S, unit2S, descS]
+        return [assignL, rstS + subS]
 
-    def vsub(self, eqL):
+    def vsub(self, eqL, precI, varS, val1U):
         """substitute numbers for variables in printed output
 
-        Args:
-            epL(list): equation and units
-            epS(str): [description]
+        :return assignL: assign results
+        :rtype: list
+        :return rstS: restruct string 
+        :rtype: string
         """
-
         locals().update(self.localD)
-
-        rprecS = str(self.incrD["descS"].split(",")[0])  # trim result
-        eprecS = str(self.incrD["descS"].split(",")[1])  # trim equations
-        utfS = eqL[0] + " = " + eqL[1]
-        varS = utfS.split("=")
+        fmtS = "%." + str(precI) + "f"
+        varL = [str(eqL[0]), str(eqL[1])]
         # resultS = vars[0].strip() + " = " + str(eval(vars[1]))
         # sps = sps.encode('unicode-escape').decode()
         eqS = "Eq(" + eqL[0] + ",(" + eqL[1] + "))"
-
-        utfs = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
-        symeq = sp.sympify(eqS.strip())
+        with sp.evaluate(False):
+            symeq = sp.sympify(eqS.strip())
         symat = symeq.atoms(sp.Symbol)
-        for n2 in symat:
-            evlen = len((eval(n2.__str__())).__str__())  # get var length
-            new_var = str(n2).rjust(evlen, "~")
+        for n1O in symat:
+            if str(n1O) == varS:
+                symeq = symeq.subs(n1O, sp.Symbol(str(val1U)))
+                continue
+            n1U = eval(str(n1O))
+            n1U.set_format(value_format=fmtS, auto_norm=True)
+            evlen = len(str(n1U))  # get var length
+            new_var = str(n1U).rjust(evlen, "~")
             new_var = new_var.replace("_", "|")
-            symeq = symeq.subs(n2, sp.Symbol(new_var))
-        eqltxS = sp.latex(symeq, mul_symbol="dot")
-        out2 = "\n.. math:: \n\n" + "  " + eqltxS + "\n\n"
-        out2 = "\n" + out2 + "\n"
-        # print('out2a\n', out2)
-        symat1 = symeq.atoms(sp.Symbol)  # adjust character length
-        for n1 in symat1:
-            orig_var = str(n1).replace("~", "")
-            orig_var = orig_var.replace("|", "_")
-            expr = eval(varS[1])
-            if type(expr) == float:
-                form = "{:." + eprecS + "f}"
-                symeval1 = form.format(eval(str(expr)))
-            else:
-                try:
-                    symeval1 = eval(
-                        orig_var.__str__()).__str__()
-                except:
-                    symeval1 = eval(orig_var.__str__()).__str__()
-            out2 = out2.replace(n1.__str__(), symeval1)   # substitute
+            with sp.evaluate(False):                # sub values
+                symeq = symeq.subs(n1O, sp.Symbol(new_var))
+        out2 = sp.pretty(symeq, wrap_line=False)
+        symat1 = symeq.atoms(sp.Symbol)             # adjust character length
+        # for n2 in symat1:
+        #     orig_var = str(n2).replace("~", "")
+        #     orig_var = orig_var.replace("|", "_")
+        #     expr = eval(varL[1])
+        #     if type(expr) == float:
+        #         form = "{%." + str(precI) + "f}"
+        #         symeval1 = form.format(eval(str(expr)))
+        #     else:
+        #         try:
+        #             symeval1 = eval(
+        #                 orig_var.__str__()).__str__()
+        #         except:
+        #             symeval1 = eval(orig_var.__str__()).__str__()
+        #     out2 = out2.replace(n2.__str__(), symeval1)   # substitute
+        # print('out2b\n', out2)
         out3 = out2  # clean up unicode
         out3 = out3.replace("*", "\\u22C5")
-        # print('out3a\n', out3)
         _cnt = 0
         for _m in out3:
             if _m == "-":
@@ -507,8 +491,8 @@ class TagsRST():
                 if _cnt > 1:
                     out3 = out3.replace("-" * _cnt, "\u2014" * _cnt)
                 _cnt = 0
-
         self.localD.update(locals())
+        indeqS = out3.replace("\n", "\n   ")
+        rstS = "\n::\n\n   " + indeqS + "\n\n"
 
-        rstS = "\n" + out3 + "\n"
         return rstS

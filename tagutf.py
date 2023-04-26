@@ -359,8 +359,8 @@ class TagsUTF:
         pagenoS = str(self.incrD["pageI"])
         rvtS = self.incrD["headuS"].replace("p##", pagenoS)
         self.incrD["pageI"] = int(pagenoS)+1
-        print("_" * self.incrD["widthI"])
-        print("\n" + rvtS)
+        lineS = "\n"+"_" * self.incrD["widthI"] + "\n" + rvtS +\
+                "\n"+"_" * self.incrD["widthI"] + "\n"
         return "\n" + rvtS
 
     def underline(self):
@@ -369,10 +369,7 @@ class TagsUTF:
         :return lineS: underline
         :rtype: str
         """
-
-        lineS = self.lineS
-
-        return lineS
+        return self.lineS
 
     def centerblk(self):
         """_summary_
@@ -405,10 +402,7 @@ class TagsUTF:
         :param lineS: _description_
         :type lineS: _type_
         """
-        lineS = self.widthI * "_   "
-
-        print(lineS)
-        return lineS
+        pass
 
     def quitblock(self):
         """ quit shade block _[[q]]
@@ -416,17 +410,16 @@ class TagsUTF:
         :param lineS: _description_
         :type lineS: _type_
         """
-        lineS = self.widthI * "_   "
-
-        print(lineS)
-        return lineS
+        pass
 
     def tagblk(self):
         pass
 
     def declare(self):
-        """ := declare variable value
+        """declare variable values
 
+        :return: _description_
+        :rtype: _type_
         """
         locals().update(self.localD)
         varS = str(self.lineS).split(":=")[0].strip()
@@ -440,14 +433,14 @@ class TagsUTF:
             cmdS = varS + "= as_unum(" + valS + ")"
 
         exec(cmdS, globals(), locals())
-
         self.localD.update(locals())
-
         return [varS, valS, unit1S, unit2S, descripS]
 
     def assign(self):
-        """ = assign result to equation
+        """assign value to equation
 
+        :return: _description_
+        :rtype: _type_
         """
         locals().update(self.localD)
         varS = str(self.lineS).split("=")[0].strip()
@@ -464,38 +457,49 @@ class TagsUTF:
             else:
                 cmdS = varS + "= " + valS
                 exec(cmdS, globals(), locals())
+
                 val1U = eval(varS).cast_unit(eval(unit1S))
-                # print(f"{val1U=}")
                 val1U.set_format(value_format=fmtS, auto_norm=True)
-                # print(f"{val1U=}")
                 val2U = val1U.cast_unit(eval(unit2S))
+                # print(f"{val1U=}")
         else:
             cmdS = varS + "= as_unum(" + valS + ")"
             exec(cmdS, globals(), locals())
+
             valU = eval(varS)
             valdec = round(valU.number(), precI)
             val1U = val2U = str(valdec)
+
         spS = "Eq(" + varS + ",(" + valS + "))"
         utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
         utfS = "\n" + utfS + "\n"
         eqL = [varS, valS, unit1S, unit2S, descS]
-        self.localD.update(locals())
 
-        print(utfS)
+        print(utfS)                      # print equation
 
         subS = " "
-        if self.incrD["subB"]:              # replace variables with numbers
+        if self.incrD["subB"]:
             subS = self.vsub(eqL, precI, varS, val1U)
+            print(subS)                  # print with substition
 
+        self.localD.update(locals())
         return [eqL, utfS + "\n" + subS + "\n\n"]
 
     def vsub(self, eqL, precI, varS, val1U):
-        """substitute numbers for variables in printed output
+        """substitute variables with values
 
-        Args:
-            eqL (list): equation and units
-            epS (str): [description]
+        :param eqL: _description_
+        :type eqL: _type_
+        :param precI: _description_
+        :type precI: _type_
+        :param varS: _description_
+        :type varS: _type_
+        :param val1U: _description_
+        :type val1U: _type_
+        :return: _description_
+        :rtype: _type_
         """
+
         locals().update(self.localD)
         fmtS = "%." + str(precI) + "f"
         varL = [str(eqL[0]), str(eqL[1])]
@@ -553,7 +557,5 @@ class TagsUTF:
                 _cnt = 0
         self.localD.update(locals())
         utfS = out3 + "\n\n"
-
-        print(utfS)
 
         return utfS

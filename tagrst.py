@@ -76,7 +76,7 @@ class TagsRST():
         self.lineS = lineS
         self.widthI = incrD["widthI"]
         self.errlogP = folderD["errlogP"]
-        self.valL = []                          # accumulated values
+        self.valL = []                          # list of accumulated results
 
         self.tagsD = {"b]": "bold", "i]": "italic", "c]": "center", "r]": "right",
                       "d]": "description", "e]": "equation", "f]": "figure",
@@ -128,10 +128,7 @@ class TagsRST():
         :return lineS: bold line
         :rtype: str
         """
-
-        lineS = "**" + self.lineS.strip() + "**"
-
-        return lineS
+        return "**" + self.lineS.strip() + "**"
 
     def center(self):
         """center text _[c]
@@ -139,7 +136,6 @@ class TagsRST():
         : return lineS: centered line
         : rtype: str
         """
-
         lineS = ".. raw:: latex \n\n" \
             + "   ?x?begin{center} " + self.lineS + " ?x?end{center}" \
             + "\n"
@@ -152,18 +148,15 @@ class TagsRST():
         :return lineS: centered line
         :rtype: str
         """
-
-        lineS = "*" + self.lineS.strip() + "*"
-
-        return lineS
+        return "*" + self.lineS.strip() + "*"
 
     def right(self):
-        """right justify text _[r]:return lineS: right justified text:rtype: str
+        """right justify text _[r]
+
+        :return lineS: right justified text
+        :rtype: str
         """
-
-        lineS = "?x?hfill " + lineS
-
-        return lineS
+        return "?x?hfill " + self.lineS
 
     def boldcenter(self):
         """bold center text _[c]
@@ -171,11 +164,9 @@ class TagsRST():
         :return lineS: centered line
         :rtype: str
         """
-
         lineS = ".. raw:: latex \n\n" \
-            + "   ?x?begin{center} ?x?textbf{" + self.lineS + "} ?x?end{center}" \
-            + "\n"
-
+            + "   ?x?begin{center} ?x?textbf{" + self.lineS +  \
+            "} ?x?end{center}" + "\n"
         return lineS
 
     def boldright(self):
@@ -195,10 +186,9 @@ class TagsRST():
         :return lineS: centered line
         :rtype: str
         """
-
         lineS = ".. raw:: latex \n\n" \
-            + "   ?x?begin{center} ?x?textit{" + self.lineS + "} ?x?end{center}" \
-            + "\n"
+            + "   ?x?begin{center} ?x?textit{" + self.lineS +  \
+            "} ?x?end{center}" + "\n"
         return lineS
 
     def italicright(self):
@@ -249,20 +239,18 @@ class TagsRST():
         : return lineS: figure label
         : rtype: str
         """
-
         fnumI = int(self.incrD["figI"])
         fillS = str(fnumI).zfill(2)
         refS = self.label("F", fillS)
         lineS = "\n \n" + "**" + "Figure " + str(fnumI) + ": " + self.lineS + \
                           "** " + " ?x?hfill " + refS + "\n \n"
-
         return self.vgap + lineS + self.vgap + " ?x?nopagebreak \n"
 
     def footnumber(self):
-        """insert footnote number _[  # ]
+        """insert footnote number _[#]
 
-        :
-        :
+        :return: _description_
+        :rtype: _type_
         """
         lineS = "".join(self.lineS)
         return lineS.replace("*]", "[*]_ ")
@@ -276,9 +264,11 @@ class TagsRST():
         return ".. raw:: math\n\n   " + self.lineS + "\n"
 
     def link(self):
-        """15 url or internal link:return: _description_:rtype: _type_
-        """
+        """url or internal link
 
+        :return: _description_
+        :rtype: _type_
+        """
         lineL = lineS.split(",")
         lineS = ".. _" + lineL[0] + ": " + lineL[1]
 
@@ -301,9 +291,11 @@ class TagsRST():
         return ".. raw:: latex \n\n ?x?newpage \n"
 
     def sympy(self):
-        """13 reST format line of sympy _[s]:return lineS: formatted sympy:rtype: str
-        """
+        """reST line of sympy _[s]
 
+        :return lineS: formatted sympy
+        :rtype: str
+        """
         spS = self.lineS
         txS = sp.latex(S(spS))
         return ".. raw:: math\n\n   " + txS + "\n"
@@ -330,7 +322,6 @@ class TagsRST():
         :return lineS: figure label
         :rtype: str
         """
-
         tnumI = int(self.incrD["tableI"])
         fillS = str(tnumI).zfill(2)
         refS = self.label("T", fillS)
@@ -410,12 +401,14 @@ class TagsRST():
             else:
                 cmdS = varS + "= " + valS
                 exec(cmdS, globals(), locals())
+
                 val1U = eval(varS).cast_unit(eval(unit1S))
                 val1U.set_format(value_format=fmtS, auto_norm=True)
                 val2U = val1U.cast_unit(eval(unit2S))
         else:
             cmdS = varS + "= as_unum(" + valS + ")"
             exec(cmdS, globals(), locals())
+
             valU = eval(varS)
             valdec = round(valU.number(), precI)
             val1U = val2U = str(valdec)
@@ -464,7 +457,7 @@ class TagsRST():
             with sp.evaluate(False):                # sub values
                 symeq = symeq.subs(n1O, sp.Symbol(new_var))
         out2 = sp.pretty(symeq, wrap_line=False)
-        symat1 = symeq.atoms(sp.Symbol)             # adjust character length
+        # symat1 = symeq.atoms(sp.Symbol)
         # for n2 in symat1:
         #     orig_var = str(n2).replace("~", "")
         #     orig_var = orig_var.replace("|", "_")

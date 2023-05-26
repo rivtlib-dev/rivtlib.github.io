@@ -217,9 +217,9 @@ def _str_title(hdrS):
     snumI = incrD["secnumI"] + 1
     incrD["secnumI"] = snumI
     docnumS = "[" + incrD["docnumS"]+"]"
-    compnumS = docnumS + " - " + str(snumI)
+    dnumS = docnumS + " - " + str(snumI)
     widthI = incrD["widthI"] - 3
-    headS = " " + hdrS + compnumS.rjust(widthI - len(hdrS))
+    headS = " " + hdrS + dnumS.rjust(widthI - len(hdrS))
     bordrS = incrD["widthI"] * "-"
     hdutfS = bordrS + "\n" + headS + "\n" + bordrS + "\n"
 
@@ -235,16 +235,21 @@ def _str_title(hdrS):
 
     hdrstS += (
         ".. raw:: latex"
-        + "\n\n"
-        + "   ?x?vspace{.2in}"
-        + "   ?x?textbf{ "
-        + hdrS
-        + "}"
-        + "   ?x?hfill?x?textbf{SECTION "
-        + compnumS
-        + " }\n"
-        + "   ?x?newline"
-        + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
+        + "   \n\n ?x?vspace{.2in} "
+        + "   ?x?begin{tcolorbox} "
+        + "   ?x?textbf{ " + hdrS + "}"
+        + "   ?x?hfill?x?textbf{SECTION " + dnumS + " }"
+        + "   ?x?end{tcolorbox}"
+        + "   \n" + "   ?x?newline" + "   ?x?vspace{.05in}"
+        # + "   ?x?vspace{.2in}"
+        # + "   ?x?textbf{ "
+        # + hdrS
+        # + "}"
+        # + "   ?x?hfill?x?textbf{SECTION "
+        # + compnumS
+        # + " }\n"
+        # + "   ?x?newline"
+        # + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
         + "\n\n"
     )
 
@@ -447,7 +452,7 @@ def _mod_tex(tfileP):
     texf = texf.replace("?x?", """\\""")
     texf = texf.replace(
         """fancyhead[L]{\leftmark}""",
-        """fancyhead[L]{\\normalsize  """ + doctitleS + "}")
+        """fancyhead[L]{\\normalsize\\bfseries  """ + doctitleS + "}")
     texf = texf.replace("x*x*x", "[" + incrD["docnumS"] + "]")
     texf = texf.replace("""\\begin{tabular}""", "%% ")
     texf = texf.replace("""\\end{tabular}""", "%% ")

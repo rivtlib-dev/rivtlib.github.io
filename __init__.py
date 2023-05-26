@@ -125,23 +125,22 @@ used for navigation (see tags for syntax).
  name                     API Functions (VSCode snippet prefix)
 ======= ===================================================================
 
-repo    rv.R("""label | utf width
+repo    rv.R("""label | std out width
 (rvr)
-                ||text ||table ||github ||project ||append
+                ||project ||append
 
                 """)
 
 insert  rv.I("""label 
 (rvi)
-                ||text ||table ||image ||image2 
+                ||text ||table ||image
 
                 """)
 
 values  rv.V("""label | sub;nosub 
 (rvv)
-                = ||value ||list ||function
 
-                ||text ||table ||image ||image2 
+                = =: ||text ||table ||image ||value ||list ||dict
 
                 """)
 
@@ -150,42 +149,48 @@ tools  rv.T("""label | hide;show
                 Python simple statements
                 (any valid expression or statment on a single line)
 
-                ||text ||table ||image ||image2 
+                ||text ||table ||image ||value ||list ||dict
 
                 """)
 
 exclude rv.X("""any text
 
-                used to modify a function for comments and debugging
+                used for comments and debugging
 
                 """)
 
 write   rv.Write()
 
 =============================================================== ============
-    command syntax and description (VSCode snippets)             API Method
+    command syntax and description (snippet)                     API Method
 =============================================================== ============
 
 || append | folder | file_name                                         R
     (app)   pdf folder | .pdf; .txt  
 
-|| project | folder | pdfstyle file | project file  | 60,r;l;c | [:]   R
-    (pro)    .txt; csv; syk; xls 
+|| private | folder | file_name | text type                            R
+    (tex)   .txt; .tex; .html | plain; tags; latex
 
-|| text | folder | file_name | text type                               I
-   (tex)   .txt; .tex; .html | plain; tags; code; math
+|| text | folder | file_name | text type               I
+    (tex)   .txt; .tex; .html | plain; tags; code; math; latex
 
-|| values | folder | file_name | type                                  V
-   (val)    .csv; .txt; .xlsx;  | values, list, array
+|| values | folder | file_name | type                  V
+    (val)    .csv; .xlsx;  | values, list, array, dict
 
-|| functions | folder | file_name | docs; nodocs                       V
-    (fun)  .for; .py; .c; .c++; .jl; .mat; .xlxs | docstrings
+|| image  | source; local | folder | file_name, .. | .50, ..         I,V,T
+    (img)   .png; .jpg |  page width fraction
 
-|| image  | folder | file_name, ...  | .50, ...                      I,V,T
-   (img)   .png; .jpg |  page width fraction
+|| table | source, local | folder | file_name | 60,r;l;c | [:]       I,V,T
+    (tab)   .csv; syk; xls  | max col width, locate | rows
+    
+|| import | source; local | folder | file_name | docs; nodocs          T
+    (imp)  .for; .py; .c; .c++; .jl; .mat; .xlxs | docstrings
+    
+|| file | folder | file_name | edit; make              T
+    (sta)  .txt, .py 
 
-|| table | folder | file_name | 60,r;l;c | [:]                       I,V,T
-   (tab)   .csv; syk; xls  | max col width, locate | rows
+|| run | path to executable                                            T
+    (sta)  .txt, .py 
 
 ============================ ============================================
  tags                                   description 

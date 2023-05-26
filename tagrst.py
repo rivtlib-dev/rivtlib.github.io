@@ -229,8 +229,8 @@ class TagsRST():
         enumI = int(self.incrD["equI"])
         fillS = str(enumI).zfill(2)
         refS = self.label("E", fillS)
-        lineS = "\n\n" + "**" + "Eq. " + str(enumI) + ": " + self.lineS + \
-            + "** " + " ?x?hfill " + refS + "\n\n"
+        lineS = "\n\n" + "**" + "Eq. " + str(enumI) + ": "  \
+                + self.lineS.strip() + "** " + " ?x?hfill " + refS + "\n\n"
         return lineS
 
     def figure(self):
@@ -242,8 +242,8 @@ class TagsRST():
         fnumI = int(self.incrD["figI"])
         fillS = str(fnumI).zfill(2)
         refS = self.label("F", fillS)
-        lineS = "\n \n" + "**" + "Figure " + str(fnumI) + ": " + self.lineS + \
-                          "** " + " ?x?hfill " + refS + "\n \n"
+        lineS = "\n \n" + "**" + "Figure " + str(fnumI) + ": " + \
+                self.lineS.strip() + "** " + " ?x?hfill " + refS + "\n \n"
         return self.vgap + lineS + self.vgap + " ?x?nopagebreak \n"
 
     def footnumber(self):
@@ -325,8 +325,8 @@ class TagsRST():
         tnumI = int(self.incrD["tableI"])
         fillS = str(tnumI).zfill(2)
         refS = self.label("T", fillS)
-        lineS = "\n" + "**" + "Table " + fillS + + ": " + self.lineS + \
-            "** " + " ?x?hfill " + refS + "\n"
+        lineS = "\n" + "**" + "Table " + fillS + ": " + self.lineS.strip() + \
+                "** " + " ?x?hfill " + refS + "\n"
         return self.vgap + lineS + self.vgap + " ?x?nopagebreak \n"
 
     def centerblk(self):

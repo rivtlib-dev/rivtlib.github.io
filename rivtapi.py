@@ -28,7 +28,7 @@ for fileS in os.listdir(docpathP):
         docP = Path(docpathP / docfileS)
         print(docP)
         break
-if docfileS == "x":
+if docfileS == "xx":
     print("INFO     rivt file not found")
     exit()
 
@@ -51,11 +51,12 @@ prfxS = docbaseS[1:3]
 dataP = Path(docP.parent / "data")
 projP = docP.parent.parent.parent  # rivt project folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
-rvconfigP = Path(docP.parent.parent / "rv0000-config")
+rconfigP = Path(docP.parent.parent / "r0000-config")
 
+# config file
 rvtlocalP = " "
 config = ConfigParser()
-config.read(Path(rvconfigP, "rivt-config.ini"))
+config.read(Path(rconfigP, "rivt.ini"))
 rvtlocalP = config.get('project', 'resource')
 titleS = config.get('report', 'title')
 headS = config.get('utf', 'head')
@@ -64,7 +65,7 @@ footS = config.get('utf', 'foot')
 # print(f"{rvtlocalP=}")
 
 for fileS in os.listdir(rvtlocalP):
-    if fnmatch.fnmatch(fileS[2:5], prfxS + "-*"):
+    if fnmatch.fnmatch(fileS[1:5], prfxS + "-*"):
         refileP = Path(fileS)  # resource folder
         break
 
@@ -75,7 +76,7 @@ divtitleS = (refileP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
 siteP = Path(rvtlocalP, "website")  # site folder path
 reportP = Path(rvtlocalP, "report")  # report folder path
-retempP = Path(rvtlocalP, "rv00-temp")
+retempP = Path(rvtlocalP, "r00-config")
 rivtP = Path("rivtapi.py").parent  # rivt package path
 pypath = os.path.dirname(sys.executable)
 rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
@@ -575,7 +576,7 @@ def writedoc(formatS):
     global utfS, rstS, outputS, incrD, folderD
 
     formatL = [i.strip() for i in formatS.split(",")]
-    docutfP = Path(docP.parent / "README.txt")
+    docutfP = Path(docP.parent / "README.md")
     rstfileP = Path(docP.parent, docbaseS + ".rst")
     eshortP = Path(*Path(rstfileP).parts[-3:])
 
@@ -632,7 +633,7 @@ def writereport(fileS):
         file1.close()
         mergelist2 = mergelist[:]
     except OSError:
-        print('< reportmerge.txt file not found in reprt folder >')
+        print('< reportmerge.txt file not found in report folder >')
         return
     calnum1 = self.pdffile[0:5]
     file2 = open(filen1, 'w')

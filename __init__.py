@@ -14,28 +14,27 @@ the import statement:
 
 import rivt.text as rv 
  
-This Python module exposes four API functions:
+This Python module provides four API functions:
     
-rv.R(rvtS) - specify repo and report information (occurs first and only once)
+rv.R(rvtS) - specify repo and report information (occurs first)
 rv.I(rvtS) - insert static text, images, tables and math
-rv.V(rvtS) - calculate values from equations
-rv.T(rvtS) - calculate tables and functions using Python statements 
+rv.V(rvtS) - specify and calculat values from equations
+rv.T(rvtS) - run rivt and external tools 
 
-A rivt document is made up of an arbitrary collection of the four methods. Each
-method takes a single literal string argument, rvtS. When running in an
-IDE (e.g. VSCode), methods can be run interactively using the standard cell
-decorator (# %%). Parameters in rv.R() will generate documents in UTF, PDF or
-HTML formats.
+A rivt document is made up of an arbitrary sequence of three methods, after the
+initial rv.R. Each method takes a single literal string argument - rvtS. When
+running in an IDE (e.g. VSCode), methods may be run interactively using the
+standard cell decorator (# %%). The rv.writedoc function generates documents in
+UTF, PDF or HTML formats.
 
-rivt is designed for simple short calculations as well as large, extensive
-reports. The rivt folder structure shown below is designed to support both. A
-project with rivt documents requires four top level folders within the parent
-folder. The four top-level folder names are *rivt-*user-project-name,
-*resource*, *report* and *site*. Folder and file names and prefixes that are
-fixed are shown as *name*. Sub folders are combinations of specified prefixes
-and user titles. Hyphens that separate words in file and folder
-names are stripped out when used as document and division names in the
-document. Sentence case is also applied.
+rivt is designed for both simple short documents and extensive reports. The
+rivt folder structure shown below supports both. A project with rivt documents
+requires four top level folders within the parent folder. The two top-level
+folder names are *rivtpublic-*project-name, and *rivtprivate-*project-name.
+Folder and file name prefixes that are fixed are shown as *name*. Sub folders
+are combinations of specified prefixes and user titles. Hyphens that separate
+words in file and folder names are stripped out when used as document and
+division names in the document. Sentence case is also applied.
 
 The *rivt-* folder contains most of the document input information as text
 files. The resource folder includes supporting binary files (images, pdf etc.)
@@ -50,29 +49,30 @@ is written to the report folder, and HTML output to the site folder.
 Folder Structure Example (folders in [])
 ========================================
 
-- [project-folder] (can contain arbitrary folders besides the required four)
-    - [*rivt-*project-name]
-        - README.txt                    (project table of contents)
+- [project-folder] (may contain arbitrary folders besides the required four)
+    - [*rivtpublic-*project-name]
+        - README.md                     (project table of contents)
         - units.py                      (units over-ride)              
-        - [*rv0101-*gravity-loads]      (rivt document title)
+        - rivt.ini                      
+        - [*r0101-*gravity-loads]      (rivt document title)
             -[*data*]      
                 - data1.csv             (a data source file)
                 - functions1.py         (a function file)
             - *r0101.py*                (rivt file name) 
-            - README.txt                (utf output file)
-        - [*rv0102-*seismic-loads] 
+            - README.md                (utf output file)
+        - [*r0102-*seismic-loads] 
             -[*data*]      
                 - data2.csv 
                 - functions2.py 
             - *r0102.py*
-            - README.txt
-        - [*rv0201-*pile-design] 
+            - README.md
+        - [*r0201-*pile-design] 
             -[*data*]                      
                 - paragraph1.txt
                 - functions3.py 
             - *r0201.py*
-            - README.txt
-    - [*resource*]
+            - README.md
+    - [*rivtprivate-*project-name*]
         - report_gen.txt                (report generation over-ride)
         - site_gen.txt                  (website generation over-ride)
         - pdf_style.sty                 (LaTeX style override)
@@ -165,38 +165,33 @@ write   rv.Write()
     command syntax and description (snippet)                     API Method
 =============================================================== ============
 
-|| append | folder | file_name                                         R
+|| append | folder | file_name                                           R
     (app)   pdf folder | .pdf; .txt  
 
-|| private | folder | file_name | text type                            R
+|| private | folder | file_name | text type                           R,I,V
     (tex)   .txt; .tex; .html | plain; tags; latex
 
-|| text | folder | file_name | text type               I
+|| text | folder | file_name | text type                               I,V
     (tex)   .txt; .tex; .html | plain; tags; code; math; latex
 
-|| values | folder | file_name | type                  V
-    (val)    .csv; .xlsx;  | values, list, array, dict
-
-|| image  | source; local | folder | file_name, .. | .50, ..         I,V,T
+|| image  | folder | file_name, .. | .50, ..                           I,V
     (img)   .png; .jpg |  page width fraction
 
-|| table | source, local | folder | file_name | 60,r;l;c | [:]       I,V,T
+|| table  | folder | file | 60,r;l;c | [:]                             I,V
     (tab)   .csv; syk; xls  | max col width, locate | rows
     
-|| import | source; local | folder | file_name | docs; nodocs          T
-    (imp)  .for; .py; .c; .c++; .jl; .mat; .xlxs | docstrings
-    
-|| file | folder | file_name | edit; make              T
+|| values | folder | file | type |                                       V
+    (val)    .csv; .xlsx;  | list, dict
+
+|| tool | name | folder | file | read; write; edit                      T
     (sta)  .txt, .py 
 
-|| run | path to executable                                            T
-    (sta)  .txt, .py 
 
 ============================ ============================================
  tags                                   description 
 ============================ ============================================
 
-I,V,T line formats:             at the end of a line
+I,V  end of line formats:        
 ---- can be combined 
 text _[b]                       bold 
 text _[c]                       center
@@ -215,7 +210,7 @@ _[line]                         horizontal line
 _[page]                         new page
 address, label _[link]          url or internal reference
 
-I,V,T block formats:            at the start and end of block
+I,V  block formats:          
 ---- can be combined 
 _[[b]]                          bold
 _[[c]]                          center
@@ -228,7 +223,7 @@ _[[h]]                          HTML
 _[[q]]                          quit block
 
 V calculation formats: 
-a := n | unit, alt | descrip    declare = ; units, description
+a = n | unit, alt | descrip    declare = ; units, description
 a := b + c | unit, alt | n,n    assign := ; units, decimals
 
 The first line of a rivt file is always import rivt.rivtapi as rv followed by

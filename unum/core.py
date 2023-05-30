@@ -1,9 +1,6 @@
 from __future__ import division, unicode_literals
-
 import collections
-
 import six
-
 from .exceptions import *
 
 BASIC_UNIT = 0
@@ -48,7 +45,6 @@ class UnitTable(dict):
 UNIT_TABLE = UnitTable()
 
 new_unit = UNIT_TABLE.new_unit
-
 
 _SUPERSCRIPT_NUMBERS = {
     '0': '\u2070',

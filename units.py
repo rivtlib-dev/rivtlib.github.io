@@ -5,12 +5,13 @@
 
 import importlib.util
 import sys
-from pathlib import Path, PurePath
+from pathlib import Path
 
-from rivt.unum.core import *
+# from rivt.unum.core import *
+# from rivt.unum.utils import *
+from rivt.unum.core import new_unit
+# from rivt.unum.utils import uarray
 from rivt.unum.core import Unum
-from rivt.unum.utils import *
-from rivt.unum.utils import uarray
 
 rvpath = importlib.util.find_spec("rivt")
 rivpath = Path(rvpath.origin).parent

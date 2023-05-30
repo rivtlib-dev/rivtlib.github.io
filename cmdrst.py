@@ -10,12 +10,13 @@ from pathlib import Path
 import html2text as htm
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
-import numpy.linalg as la
 import pandas as pd
 import sympy as sp
+import numpy.linalg as la
+import numpy as np
 from IPython.display import Image as _Image
 from IPython.display import display as _display
-from numpy import *
+
 from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
 from sympy.parsing.latex import parse_latex

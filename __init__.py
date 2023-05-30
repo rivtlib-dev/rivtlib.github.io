@@ -54,12 +54,12 @@ Folder Structure Example (folders in [])
         - README.md                     (project table of contents)
         - units.py                      (units over-ride)              
         - rivt.ini                      
-        - [*r0101-*gravity-loads]      (rivt document title)
+        - [*r0101-*gravity-loads]       (rivt document title)
             -[*data*]      
                 - data1.csv             (a data source file)
                 - functions1.py         (a function file)
             - *r0101.py*                (rivt file name) 
-            - README.md                (utf output file)
+            - README.md                 (markdown output)
         - [*r0102-*seismic-loads] 
             -[*data*]      
                 - data2.csv 
@@ -72,30 +72,28 @@ Folder Structure Example (folders in [])
                 - functions3.py 
             - *r0201.py*
             - README.md
-    - [*rivtprivate-*project-name*]
-        - report_gen.txt                (report generation over-ride)
-        - site_gen.txt                  (website generation over-ride)
-        - pdf_style.sty                 (LaTeX style override)
-        - [*rv01-*overview-and-loads]   (division title)
+    - [*rivtprivate-*project-name]
+        - [*r00-*config]
+            - pdf_style.sty            (LaTeX style override)
+        - [*r01-*overview-and-loads]   (division title)
             - image1.jpg
-            - project_data.xls          (project data)
-        - [*rv02-*foundations]   
+            - project_data.txt         (project data)
+        - [*r02-*foundations]   
             - image2.jpg
             - attachment.pdf    
-    - [*report*]                        (PDF document output files)
-        - rv0101-gravity-loads.pdf
-        - rv0102-seismic-loads.pdf
-        - rv0201-pile-design.pdf
-        - project-name.pdf              (PDF collated report)
-    - [*site*]                          (HTML site)
-        - [*resources*]             
-            - image1.png
-            - image2.png
-            - html-style.css            (HTML style over-ride)
-        - index.html                    (table of contents)
-        - rv0101-gravity-loads.html
-        - rv0102-seismic-loads.html
-        - rv0201-pile-design.html
+        - [*docs*]                     (pdf and html output files)
+            - [*resources*]             
+                - image1.png
+                - image2.png
+                - html-style.css           
+            - rv0101-gravity-loads.pdf
+            - rv0102-seismic-loads.pdf
+            - rv0201-pile-design.pdf
+            - project-name.pdf              
+            - index.html                    
+            - rv0101-gravity-loads.html
+            - rv0102-seismic-loads.html
+            - rv0201-pile-design.html
 
 The API is designed so that only files in the text folder are uploaded for
 version control and sharing. They are the essential core of the calculation -
@@ -162,36 +160,36 @@ exclude rv.X("""any text
 write   rv.Write()
 
 =============================================================== ============
-    command syntax and description (snippet)                     API Method
+    command syntax and description (snippet)                         API 
 =============================================================== ============
 
-|| append | folder | file_name                                           R
+|| append | folder | file_name                                        R
     (app)   pdf folder | .pdf; .txt  
 
-|| private | folder | file_name | text type                           R,I,V
+|| project | folder | file_name | text type                           R
     (tex)   .txt; .tex; .html | plain; tags; latex
 
-|| text | folder | file_name | text type                               I,V
+|| text | folder | file_name | text type                             I,V
     (tex)   .txt; .tex; .html | plain; tags; code; math; latex
 
-|| image  | folder | file_name, .. | .50, ..                           I,V
+|| image  | folder | file_name, .. | .50, ..                         I,V
     (img)   .png; .jpg |  page width fraction
 
-|| table  | folder | file | 60,r;l;c | [:]                             I,V
+|| table  | folder | file | 60,r;l;c | [:]                           I,V
     (tab)   .csv; syk; xls  | max col width, locate | rows
     
-|| values | folder | file | type |                                       V
+|| values | folder | file | type |                                    V
     (val)    .csv; .xlsx;  | list, dict
 
-|| tool | name | folder | file | read; write; edit                      T
-    (sta)  .txt, .py 
+|| tool | name | folder | file | read; edit                           T
+    (too)  .txt, .py 
 
 
 ============================ ============================================
  tags                                   description 
 ============================ ============================================
 
-I,V  end of line formats:        
+I,V line formats:        
 ---- can be combined 
 text _[b]                       bold 
 text _[c]                       center
@@ -201,10 +199,10 @@ text _[r]                       right justify
 text _[u]                       underline   
 text _[m]                       LaTeX math
 text _[s]                       sympy math
-text _[e]                       equation label, autonumber
-text _[f]                       figure caption, autonumber
-text _[t]                       table title, autonumber
-text _[#]                       footnote, autonumber
+text _[e]                       equation label and autonumber
+text _[f]                       figure caption and autonumber
+text _[t]                       table title and autonumber
+text _[#]                       footnote and autonumber
 text _[d]                       footnote description 
 _[line]                         horizontal line
 _[page]                         new page
@@ -223,25 +221,25 @@ _[[h]]                          HTML
 _[[q]]                          quit block
 
 V calculation formats: 
-a = n | unit, alt | descrip    declare = ; units, description
-a := b + c | unit, alt | n,n    assign := ; units, decimals
+a = n | unit, alt | descrip    declare = 
+a := b + c | unit, alt | n,n   assign := 
 
-The first line of a rivt file is always import rivt.rivtapi as rv followed by
+The first line of a rivt file is always *import rivt.rivtapi as rv* followed by
 the Repo method rv.R(rvtxt) which occurs once. rv.R is followed by any of the
 other three methods in any number or order. rv.R(rvtxt) sets options for
 repository and report output formats.
 
 File format conventions follow the Python formatter pep8. Method names start in
-column one. All other lines must be indented 4 spaces to faciliate section
+column one. All other lines must be indented 4 spaces which faciliates section
 folding, bookmarks and legibility.
 
 ============================================================================
 rivt example
 ============================================================================
 
-import rivt.text as rv
+import rivt.rivtapi as rv
 
-rv.R("""Introduction | inter | 80,1
+rv.R("""Introduction | 80,1
 
 The Repo method (short for repository or report) is the first method of a rivt
 doc and specifies repository settings and output formats.
@@ -266,7 +264,7 @@ The ||append command attaches PDF files to the end of the document.
 
 """)
 
-rv.I("""Insert method summary | default
+rv.I("""Insert method summary 
 
 The Insert method formats static, descriptive information as opposed to
 dynamic calculations and values.
@@ -307,7 +305,7 @@ Attach PDF documents at the end of the method:
 
 """)
 
-rv.V("""Value method summary | default | nosub | save
+rv.V("""Value method summary 
 
 The Value method assigns values to variables and evaluates equations. The
 sub;nosub setting specifies whether equations are also fornatted with
@@ -318,7 +316,7 @@ in other docs. The write mode is not triggered in interactive mode.
 The = tag triggers the evaluation of a value. A block of values terminated with
 a blank line are formatted as a table.
 
-Table of values
+Example of values list
 a1 = 10.1    | unit, alt | description
 d1 = 12.1    | unit, alt | description
 
@@ -333,37 +331,23 @@ a1 := 3.14(d1/2)^2 | in^2, cm^2 | 2,2
 The ||value command imports values from a csv file, where each row
 includes the variable name, value, primary unit, secondary unit, description and equation where applicable.
 
-|| value | folder | file | [:]
-
-The ||list command inserts lists from a csv, text or Python file where the
-first column is the variable name and the subsequent values make up a
-vector of values assigned to the variable.
-
-|| list | folder | file | [:]
-
-The ||function command imports Python, Fortran, C or C++ functions in a
-file. The function signature and docstrings are inserted into the doc if
-specified.
-
-|| function | folder|  file |  docs;nodocs
+|| value | file | type | [:]
 
 """)
 
-rv.T("""Table method summary | default
+rv.T("""Tool method summary 
 
-The Table method generates tables, plots and functions from native Python code.
-The method may include any Python simple statement (single line), and
-recognized commands or tags (see list above). Any library initially imported
-may be used, along with pandas, numpy, matplotlib and sympy library methods,
-which are imported by rivt. The four available import names are:
+The Tool method may include any Python simple statement (single line) including
+imports. Four libraries are imported by rivt and accessed with the following
+names:
 
 pandas: pd.method()
 numpy: np.method()
 matplotlib: mp.method()
 sympy: sy.method()
 
-Examples of common single line Python statements for defining functions and
-reading or writing a file include:
+Examples of single line Python statements for defining functions and reading or
+writing a file include:
 
 def f1(x,y): z = x + y; print(z); return
 
@@ -372,46 +356,51 @@ with open('file.csv', 'r') as f: input = f.readlines()
 var = range(10)
 with open('fileout.csv', 'w') as f: f.write(var)
 
+
+
 """)
 
-rv.X("""skip this string
+rv.X("""skip string
 
-Skips evaluation of the string and is used for review comments, checking and editing.
+Skips evaluation of the string - is used for review comments, checking and
+editing.
 
 """) 
 
-================== =========================================================
-Keystroke                   VSCode shortcuts with rivt extensions
-================== =========================================================
+============== =========================================================
+Keystroke                   VSCode shortcuts and rivt extensions
+============== =========================================================
 
 alt+q                rewrap paragraph with hard line feeds
-alt+8                toggle explorer sort order
-alt+9                toggle spell check
-ctl+.                select correct spelling under cursor
+alt+.                select correct spelling under cursor
+alt+8                insert date
+alt+9                insert time
 
 ctl+alt+x            reload window
 ctl+alt+u            unfold all code
-ctl+alt+f            fold code - rivt sections visible
+ctl+alt+f            fold code level 2 (rivt sections visible)
 ctl+alt+a            fold code - all levels
-ctl+alt+t            toggle local fold at cursor
-ctl+alt+g            open GitHub rivt README search
-ctl+alt+s            open URL under cursor in browser
-ctl+alt+9            insert date
-ctl+alt+8            insert time
+ctl+alt+t            toggle local fold
+ctl+alt+e            toggle explorer sort order
+ctl+alt+s            toggle spell check
+ctl+alt+g            next editor group
+ctl+1                focus on first editor
+ctl+2                focus on next editor
+ctl+3                focus on previous editor
+ctl+8                focus on explorer pane
+ctl+9                focus on github pane     
 
-ctl+shift+e          focus on explorer pane
-ctl+shift+g          focus on github pane
+ctl+shift+u          open URL under cursor in browser
+ctl+shift+s          open GitHub rivt README search
 ctl+shift+a          commit all 
 ctl+shift+z          commit current editor
-ctl+shift+x          post to remote        
-ctl+shift+1          focus on recent editor
-ctl+shift+2          focus on next editor
-ctl+shift+3          focus on previous editor
+ctl+shift+x          post to remote   
 
-rivtDocs
-========
 
-The minimum software needed to run rivt with plain text output is a Python
+rivt
+====
+
+The minimum software needed to run rivt with markdown output is a Python
 installation and a plain text processor. rivtDocs is an installer that
 integrates five open source programs to provide a complete document production
 system:
@@ -422,8 +411,8 @@ system:
 - LaTeX (recommended for output quality)
 - Github (recommended for collaboration and version control)
 
-rivtDocs installs as a system level program or portable folder, and is
+rivt-sys installs as a system level program or portable folder, and is
 available for every OS platforms. It alos runs in the cloud using GitHub
 CodeSpaces or other cloud service providers. Installation details are provided
-in the [rivtDocs User Manual](https://www.rivtDocs.net>)
+in the [rivtDocs User Manual](https://www.rivt-sys.net>)
 '''

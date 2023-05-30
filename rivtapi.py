@@ -14,7 +14,7 @@ from configparser import ConfigParser
 from pathlib import Path
 
 from rivt import parse
-from rivt.units import *
+
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
 

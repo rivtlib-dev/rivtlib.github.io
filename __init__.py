@@ -179,11 +179,7 @@ write   rv.Write()
     (tab)   .csv; syk; xls  | max col width, locate | rows
     
 || values | folder | file | type |                                    V
-    (val)    .csv; .xlsx;  | list, dict
-
-|| tool | name | folder | file | read; edit                           T
-    (too)  .txt, .py 
-
+    (val)    .csv; .xlsx;  | list, dict, rivt
 
 ============================ ============================================
  tags                                   description 
@@ -233,27 +229,34 @@ File format conventions follow the Python formatter pep8. Method names start in
 column one. All other lines must be indented 4 spaces which faciliates section
 folding, bookmarks and legibility.
 
+The first line of each rivt method sets the section title and section
+parameters. 
+
 ============================================================================
 rivt example
 ============================================================================
 
 import rivt.rivtapi as rv
 
-rv.R("""Introduction | 80,1
+rv.R("""Introduction | rgb background, foreground
 
 The Repo method (short for repository or report) is the first method of a rivt
 doc and specifies repository settings and output formats.
 
-The setting line specifies the method, paragraph or section label, the
-processing type and the output width and starting page number for the output.
+The setting line specifies the section label and and background color if any.
+If the label is preceded by a two dashes "--", the the label is only a
+reference and a new section is not started. If the color parameter (applies to
+PDF and HTML output) is ignored then the default black text and no background
+is used.
 
-The ||github command defines GitHub repository parameters and a rivt-string to
-be written to the project level folder as a README file. It is specified only
-once in a project, and when specified includes the text in the method. It overwrites any existing README file.
+The ||github command defines a project README.md file in the public r00 folder
+and the GitHub repository where public project files are uploaded. It
+overwrites any existing README file.
 
-|| github | none | readme | none 
+|| github | file | upload repository | 
 
-The ||project command imports data from the resource folder. Its formatted output depends on the file type.
+The ||project command imports data from the private r00 folder. Its formatted
+output depends on the file type.
 
 || project | file | default
 
@@ -264,16 +267,16 @@ The ||append command attaches PDF files to the end of the document.
 
 """)
 
-rv.I("""Insert method summary 
+rv.I("""Insert method | rgb background, foreground
 
 The Insert method formats static, descriptive information as opposed to
 dynamic calculations and values.
 
-The ||text command inserts and formats text files. Text files are always
-inserted as is, without formatting. They may include rivt commands and
-tags.
+The ||text command inserts and formats text files. Text files may be plain
+text, latex, code, sympy math or include rivt tags.
 
-|| text | file | shade
+|| text | file | text type
+plain; tags; code; math; latex
 
 Tags _[t] and _[f] format and autonumber tables and figures.
 
@@ -305,7 +308,7 @@ Attach PDF documents at the end of the method:
 
 """)
 
-rv.V("""Value method summary 
+rv.V("""Value method | rgb background, foreground
 
 The Value method assigns values to variables and evaluates equations. The
 sub;nosub setting specifies whether equations are also fornatted with
@@ -313,31 +316,32 @@ substituted numerical values. The save;nosave setting specifies whether
 equations and value assignments are written to a values.txt file for reuse
 in other docs. The write mode is not triggered in interactive mode. 
 
-The = tag triggers the evaluation of a value. A block of values terminated with
+Example of values list
+a1 = 10.1    | LBF, N | a force
+d1 = 12.1    | IN, CM | a length
+
+The equal tag triggers the assignment of a value. A block of values terminated with
 a blank line are formatted as a table.
 
-Example of values list
-a1 = 10.1    | unit, alt | description
-d1 = 12.1    | unit, alt | description
+Example equation tag - Area of circle  _[e]
+b1 := 3.14(d1/2)^2 | in^2, cm^2 | 2,2
 
-An equation tag labels it with a description and auto number. The <= tag
+An equation tag labels it with a description and auto number. The colon-equal tag
 triggers the evaluation of an equation and specifies the result units and
 printed decimal places in the equation and results. Decimal places are retained
 until changed.
 
-Example equation tag - Area of circle  _[e]
-a1 := 3.14(d1/2)^2 | in^2, cm^2 | 2,2
-
-The ||value command imports values from a csv file, where each row
-includes the variable name, value, primary unit, secondary unit, description and equation where applicable.
+The ||value command imports values from a csv file, where each row includes the
+variable name, value, primary unit, secondary unit, description and equation
+where applicable.
 
 || value | file | type | [:]
 
 """)
 
-rv.T("""Tool method summary 
+rv.T("""Tool method summary | print;noprint | include
 
-The Tool method may include any Python simple statement (single line) including
+The Tool method includes Python code. 
 imports. Four libraries are imported by rivt and accessed with the following
 names:
 
@@ -355,8 +359,6 @@ with open('file.csv', 'r') as f: input = f.readlines()
 
 var = range(10)
 with open('fileout.csv', 'w') as f: f.write(var)
-
-
 
 """)
 
@@ -400,19 +402,20 @@ ctl+shift+x          post to remote
 rivt
 ====
 
-The minimum software needed to run rivt with markdown output is a Python
-installation and a plain text processor. rivtDocs is an installer that
-integrates five open source programs to provide a complete document production
-system:
+The minimum software needed to run rivt with markdown output is:
 
 - Python 3.8 or higher (required)  
-- rivt + other Python libraries (required)
+- rivt + a dozen Python libraries (required)
+
+A complete rivt system also includes:
+
 - VSCode + extensions (recommended for efficiency)
 - LaTeX (recommended for output quality)
 - Github (recommended for collaboration and version control)
 
-rivt-sys installs as a system level program or portable folder, and is
-available for every OS platforms. It alos runs in the cloud using GitHub
-CodeSpaces or other cloud service providers. Installation details are provided
-in the [rivtDocs User Manual](https://www.rivt-sys.net>)
-'''
+rivt-sys installs the complete rivt system in a portable folder, and is
+available for every OS platforms. 
+
+rivt also runs in the cloud using GitHub CodeSpaces or other cloud service
+providers. Installation details are provided in the [rivtDocs User
+Manual](https://www.rivt-sys.net>) '''

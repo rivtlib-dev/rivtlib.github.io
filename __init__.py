@@ -12,20 +12,20 @@ rivtapi wraps and extends the markup language reStructuredText (reST) defined
 at https://docutils.sourceforge.io/rst.html. A rivt document begins with
 the import statement:
 
-import rivt.text as rv 
+import rivt.rivtapi as rv 
  
 This Python module provides four API functions:
     
-rv.R(rvtS) - specify repo and report information (occurs first)
-rv.I(rvtS) - insert static text, images, tables and math
-rv.V(rvtS) - specify and calculat values from equations
-rv.T(rvtS) - run rivt and external tools 
+rv.R(rvtS) - repository and report information (Repo)
+rv.I(rvtS) - static text, images, tables and math (Insert)
+rv.V(rvtS) - equations (Values)
+rv.T(rvtS) - Python functions and scripts (Tools)
 
 A rivt document is made up of an arbitrary sequence of three methods, after the
-initial rv.R. Each method takes a single literal string argument - rvtS. When
-running in an IDE (e.g. VSCode), methods may be run interactively using the
-standard cell decorator (# %%). The rv.writedoc function generates documents in
-UTF, PDF or HTML formats.
+initial rv.R. Each method takes a single literal string argument referred to as
+a rivt-string. When running in an IDE (e.g. VSCode), each method may be run
+interactively using the standard cell decorator (# %%). The rv.writedoc()
+function generates documents in GitHub Markdown, PDF or HTML formats.
 
 rivt is designed for both simple short documents and extensive reports. The
 rivt folder structure shown below supports both. A project with rivt documents
@@ -36,22 +36,22 @@ are combinations of specified prefixes and user titles. Hyphens that separate
 words in file and folder names are stripped out when used as document and
 division names in the document. Sentence case is also applied.
 
-The *rivt-* folder contains most of the document input information as text
-files. The resource folder includes supporting binary files (images, pdf etc.)
-and other files that may include confidential project information or
-copyrighted material. The resource folder is not designed to share.
+The *rivtpublic-* folder contains the document input in text format. The
+*rivtprivate-* folder includes dcoument files that may include confidential
+project information or copyrighted material. The *rivtprivate-* folder is
+typically not shared.
 
 Output files are written to three folders, depending on the output type. The
-UTF8 output is written to a README.txt file within the rivt folder. It is
-displayed and searchable on version control platforms like GitHub. PDF output
-is written to the report folder, and HTML output to the site folder.
+Markdown output is written to a README.md file in a *rivtpublic-* subfolder.
+It can be read and searched on version control platforms like GitHub. The PDF
+and HTML output is written to the doc folder in *rivtprivate-*
 
 Folder Structure Example (folders in [])
 ========================================
 
 - [project-folder] (may contain arbitrary folders besides the required four)
     - [*rivtpublic-*project-name]
-        - README.md                     (project table of contents)
+        - README.md                     (project README)
         - units.py                      (units over-ride)              
         - rivt.ini                      
         - [*r0101-*gravity-loads]       (rivt document title)
@@ -85,79 +85,82 @@ Folder Structure Example (folders in [])
             - [*resources*]             
                 - image1.png
                 - image2.png
-                - html-style.css           
+                - html-style.css
+            - project-name.pdf         (compiled PDF document)        
             - rv0101-gravity-loads.pdf
             - rv0102-seismic-loads.pdf
-            - rv0201-pile-design.pdf
-            - project-name.pdf              
+            - rv0201-pile-design.pdf           
             - index.html                    
             - rv0101-gravity-loads.html
             - rv0102-seismic-loads.html
             - rv0201-pile-design.html
 
-The API is designed so that only files in the text folder are uploaded for
-version control and sharing. They are the essential core of the calculation -
-the text, equations, functions, tables and image references. Files in the
-resource folder are not shared and are typically binary or proprietary files
-such as images, pdf attachments and proprietary data (e.g. client contact
-information and costs). This folder and file structure makes it easy to share
-and apply version control on the primary calculation inputs.
+The API is designed so that only files *rivtpublic-* folder are uploaded for
+version control and sharing. They represent the core of the document - the
+text, equations, functions and tables. Files in the *rivtprivate-* folder are
+typicaly not shared. This folder and file structure makes it easy to protect
+private content and apply version control on the primary calculation inputs.
 
 Commands and Tags
 =================
 
-rivtapi syntax includes arbitrary text, commands, tags and simple (single
-line) Python statements. Commands read or write files in and out of the
-calculation and are denoted by || at the beginning of a line. Tags format a
-line of text and are generally denoted with _[tag] at the end of a line and
-<tag> for inline text. Block tags start the block of text with _[[tag]] and end
-with _[[end]].
-
+rivt syntax includes arbitrary text along with commands, tags and simple
+(single line) Python statements. Commands are markup that read or write files
+in and out of the document and are denoted by || at the beginning of a line.
 Command parameters are separated by |. In the summary below, user parameter
-options are separated by semi-colons for single value selections and commas for
-lists. The first line of each method specifies formatting and section labeling
-for that rivt-string. The method label can be a section or paragraph title, or
-used for navigation (see tags for syntax).
+options are separated by semi-colons if designating single value selections and
+commas if a list. The first line of each method specifies section labels and
+formatting for that rivt-string. 
+
+Tags format a line or block of text and are generally denoted with _[tag] at
+the end of a line. Block tags start the block of text with _[[tag]] and end
+with _[[end]]. The "=" and ":=" tags used in the Value method are the
+exceptions.
+
 
 ======= ===================================================================
  name                     API Functions (VSCode snippet prefix)
 ======= ===================================================================
 
-repo    rv.R("""label | std out width
+Repo    rv.R("""label | rgb
 (rvr)
-                ||project ||append
+                ||github (git)
+                ||project (proj)
+                ||append (app)
 
                 """)
 
-insert  rv.I("""label 
+Insert  rv.I("""label 
 (rvi)
-                ||text ||table ||image
+                ||text (tex)
+                ||table (tab)
+                ||image (ima)
 
                 """)
 
-values  rv.V("""label | sub;nosub 
+Values  rv.V("""label | sub;nosub | rgb
 (rvv)
-
-                = =: ||text ||table ||image ||value ||list ||dict
+                ||text (tex)
+                ||table (tab)
+                ||image (ima)
+                ||value (val)
 
                 """)
 
-tools  rv.T("""label | hide;show
+Tools  rv.T("""label | print; noprint | include; exclude | rgb
 (rvt)
                 Python simple statements
-                (any valid expression or statment on a single line)
-
-                ||text ||table ||image ||value ||list ||dict
 
                 """)
 
-exclude rv.X("""any text
+exclude rv.X("""any method
 
-                used for comments and debugging
+                If any method is changed to X it is not evaluated. Used for
+                comments and debugging.
 
                 """)
 
-write   rv.Write()
+write   rv.writedoc()
 
 =============================================================== ============
     command syntax and description (snippet)                         API 
@@ -166,14 +169,17 @@ write   rv.Write()
 || append | folder | file_name                                        R
     (app)   pdf folder | .pdf; .txt  
 
+|| github | folder | file_name                                        R
+    (git)   pdf folder | .pdf; .txt  
+    
 || project | folder | file_name | text type                           R
-    (tex)   .txt; .tex; .html | plain; tags; latex
+    (pro)   .txt; .tex; .html | plain; tags; latex
 
 || text | folder | file_name | text type                             I,V
     (tex)   .txt; .tex; .html | plain; tags; code; math; latex
 
 || image  | folder | file_name, .. | .50, ..                         I,V
-    (img)   .png; .jpg |  page width fraction
+    (ima)   .png; .jpg |  page width fraction
 
 || table  | folder | file | 60,r;l;c | [:]                           I,V
     (tab)   .csv; syk; xls  | max col width, locate | rows
@@ -238,136 +244,132 @@ rivt example
 
 import rivt.rivtapi as rv
 
-rv.R("""Introduction | rgb background, foreground
+rv.R("""Introduction | rgb fore,background
 
-The Repo method (short for repository or report) is the first method of a rivt
-doc and specifies repository settings and output formats.
+    The Repo method (short for repository or report) is the first method of a
+    rivt doc and specifies repository settings and output formats.
 
-The setting line specifies the section label and and background color if any.
-If the label is preceded by a two dashes "--", the the label is only a
-reference and a new section is not started. If the color parameter (applies to
-PDF and HTML output) is ignored then the default black text and no background
-is used.
+    The setting line specifies the section label and color. if any. If the
+    label is preceded by two dashes "--", the the label becomes a reference and
+    a new section is not started. If the color parameter (applies to PDF and
+    HTML output) is omitted then default black text and no background is used.
 
-The ||github command defines a project README.md file in the public r00 folder
-and the GitHub repository where public project files are uploaded. It
-overwrites any existing README file.
+    The ||github command specifies a project README.md file in the public r00
+    folder and the GitHub repository url where public project files are
+    uploaded. It overwrites any existing README file. Files may also be
+    uploaded directly using standard upload procedures.
 
-|| github | file | upload repository | 
+    || github | file | upload repository
 
-The ||project command imports data from the private r00 folder. Its formatted
-output depends on the file type.
+    The ||project command imports data from the private r00 folder. Its
+    formatted output depends on the file type.
 
-|| project | file | default
+    || project | file | default
 
-The ||append command attaches PDF files to the end of the document.
+    The ||append command attaches PDF files to the end of the document.
 
-|| append | file1 | title1
-|| append | file2 | title2
+    || append | file1 | title1
+    || append | file2 | title2
 
-""")
+    """)
 
-rv.I("""Insert method | rgb background, foreground
+rv.I("""Insert method | rgb fore,background
 
-The Insert method formats static, descriptive information as opposed to
-dynamic calculations and values.
+    The Insert method formats descriptive information that is static, as
+    opposed to dynamic calculations and values.
 
-The ||text command inserts and formats text files. Text files may be plain
-text, latex, code, sympy math or include rivt tags.
+    The ||text command inserts and formats text files. Text files may be plain
+    text, latex, code, sympy math or include rivt tags.
 
-|| text | file | text type
-plain; tags; code; math; latex
+    || text | file | text type
+    plain; tags; code; math; latex
 
-Tags _[t] and _[f] format and autonumber tables and figures.
+    Tags _[t] and _[f] format and autonumber tables and figures.
 
-table title  _[t]
-|| table | data | file.csv | 60,r
+    table title  _[t]
+    || table | data | file.csv | 60,r
 
-|| image | resource | f1.png | 50
-A figure caption _[f]
+    || image | resource | f1.png | 50
+    A figure caption _[f]
 
-Insert two images side by side:
+    Insert two images side by side:
 
-|| image2 | f2.png | 35 | f3.png | 45
-The first figure caption  _[f]
-The second figure caption  _[f]
+    || image | f2.png,f3.png | 45,35
+    The first figure caption  _[f]
+    The second figure caption  _[f]
 
-The tags [x]_ and [s]_ format LaTeX and sympy equations:
+    The tags [x]_ and [s]_ format LaTeX and sympy equations:
 
-\gamma = \frac{5}{x+y} + 3  _[x] 
-x = 32 + (y/2)  _[s]
+    \gamma = \frac{5}{x+y} + 3  _[x] 
 
-The url tag formats a url link.
-_[http://wwww.url, link label]
+    x = 32 + (y/2)  _[s]
 
-The link tag formats an internal document link to a table, equation,
-section or paragraph title:
-_[lnk, existing label]
+    The url tag formats a url link.
+    _[http://wwww.url, link label]
 
-Attach PDF documents at the end of the method:
+    The link tag formats an internal document link to a table, equation,
+    section or paragraph title:
+    _[lnk, existing label]
 
-""")
+    """)
 
-rv.V("""Value method | rgb background, foreground
+rv.V("""Value method | sub; nosub | rgb fore,background
 
-The Value method assigns values to variables and evaluates equations. The
-sub;nosub setting specifies whether equations are also fornatted with
-substituted numerical values. The save;nosave setting specifies whether
-equations and value assignments are written to a values.txt file for reuse
-in other docs. The write mode is not triggered in interactive mode. 
+    The Value method assigns values to variables and evaluates equations. The
+    sub;nosub setting specifies whether equations are also printed with
+    substituted numerical values. 
 
-Example of values list
-a1 = 10.1    | LBF, N | a force
-d1 = 12.1    | IN, CM | a length
+    Example of values list
+    a1 = 10.1    | LBF, N | a force
+    d1 = 12.1    | IN, CM | a length
 
-The equal tag triggers the assignment of a value. A block of values terminated with
-a blank line are formatted as a table.
+    The equal tag triggers the assignment of a value. A block of values
+    terminated with a blank line are formatted as a table.
 
-Example equation tag - Area of circle  _[e]
-b1 := 3.14(d1/2)^2 | in^2, cm^2 | 2,2
+    Example equation tag - Area of circle  _[e]
+    b1 := 3.14(d1/2)^2 | in^2, cm^2 | 2,2
 
-An equation tag labels it with a description and auto number. The colon-equal tag
-triggers the evaluation of an equation and specifies the result units and
-printed decimal places in the equation and results. Decimal places are retained
-until changed.
+    An equation tag provides an equation description and number. The
+    colon-equal tag triggers the evaluation of an equation and specifies the
+    result units and printed decimal places in the equation and results.
 
-The ||value command imports values from a csv file, where each row includes the
-variable name, value, primary unit, secondary unit, description and equation
-where applicable.
-
-|| value | file | type | [:]
+    || value | file | type | [:]
+    
+    The ||value command imports values from a csv file, where each row includes
+    the variable name, value, primary unit, secondary unit, description and
+    equation where applicable.
 
 """)
 
-rv.T("""Tool method summary | print;noprint | include
+rv.T("""Tool method | print;noprint | include; exclude| rgb fore,background
 
-The Tool method includes Python code. 
-imports. Four libraries are imported by rivt and accessed with the following
-names:
+    The Tool method includes Python code. 
+    imports. Four libraries are imported by rivt and accessed with the following
+    names:
 
-pandas: pd.method()
-numpy: np.method()
-matplotlib: mp.method()
-sympy: sy.method()
+    pandas: pd.method()
+    numpy: np.method()
+    matplotlib: mp.method()
+    sympy: sy.method()
 
-Examples of single line Python statements for defining functions and reading or
-writing a file include:
+    Examples of single line Python statements for defining functions and reading or
+    writing a file include:
 
-def f1(x,y): z = x + y; print(z); return
+    def f1(x,y): z = x + y; print(z); return
 
-with open('file.csv', 'r') as f: input = f.readlines()
+    with open('file.csv', 'r') as f: input = f.readlines()
 
-var = range(10)
-with open('fileout.csv', 'w') as f: f.write(var)
+    var = range(10)
+    with open('fileout.csv', 'w') as f: f.write(var)
 
-""")
+    """)
 
 rv.X("""skip string
 
-Skips evaluation of the string - is used for review comments, checking and
-editing.
+    Skips evaluation of the string - is used for review comments, checking and
+    editing.
 
-""") 
+    """) 
 
 ============== =========================================================
 Keystroke                   VSCode shortcuts and rivt extensions
@@ -404,18 +406,18 @@ rivt
 
 The minimum software needed to run rivt with markdown output is:
 
-- Python 3.8 or higher (required)  
-- rivt + a dozen Python libraries (required)
+- Python 3.8 or higher 
+- rivt + a dozen Python libraries 
 
 A complete rivt system also includes:
 
-- VSCode + extensions (recommended for efficiency)
-- LaTeX (recommended for output quality)
-- Github (recommended for collaboration and version control)
+- VSCode + two dozen extensions 
+- LaTeX 
+- Github account
 
-rivt-sys installs the complete rivt system in a portable folder, and is
-available for every OS platforms. 
+rivt-sys installs the complete rivt system in a portable folder via a zip file,
+and is available for every OS platform. rivt also runs in the cloud using
+GitHub CodeSpaces or other cloud service providers. Installation details are
+provided in the [rivtDocs User Manual](https://www.rivt-sys.net>)
 
-rivt also runs in the cloud using GitHub CodeSpaces or other cloud service
-providers. Installation details are provided in the [rivtDocs User
-Manual](https://www.rivt-sys.net>) '''
+'''

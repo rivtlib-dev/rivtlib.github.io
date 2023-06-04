@@ -48,14 +48,12 @@ class CmdRST:
         ======================================================== ============
 
         1 || append | folder | file_name                                 R
-        2 || functions | folder | file_name | code; nocode               V
-        3 || image | folder | file_name  | size                        I,V,T
-        4 || image2 | folder | file_name  | size | file_name  | size   I,V,T
-        5 || list | folder | file_name                                   V
-        6 || project | folder | style file | proj file | [:] wid, algn   R
-        7 || table | folder | file_name | max width | rows             I,V,T
-        8 || text | folder | file_name | text type |shade; noshade     I,V,T
-        9 || values | folder | file_name | [:];[x:y]                     V
+        2 || github | file | repository                                  R
+        3 || project | file                                              R
+        4 || image | folder | file_name  | size                         I,V
+        5 || table | folder | file_name | max width | rows              I,V
+        6 || text | folder | file_name | text type |shade; noshade      I,V
+        7 || values | folder | file_name |                               V
 
         """
 

@@ -27,7 +27,7 @@ try:
     from PIL import ImageOps as PImageOps
 except:
     pass
-from rivt import cmdrst, cmdutf, tagrst, tagutf
+from rivt import cmdrst, cmdmd, tagrst, tagmd
 
 # tabulate.PRESERVE_WHITESPACE = True
 
@@ -36,7 +36,7 @@ class RivtParse:
     """process rivt-text"""
 
     def __init__(self, methS, folderD, incrD,  localD):
-        """process rivt-text to UTF8 or reST string
+        """process rivt-text to md8 or reST string
 
             :param dict folderD: folder paths
             :param dict incrD: numbers that increment
@@ -83,17 +83,17 @@ class RivtParse:
         """parse insert string
 
             :param list strL: split rivt string
-            :return utfS: utf formatted string
+            :return mdS: md formatted string
             :return rstS: reST formatted string
             :return incrD: increment references
             :return folderD: folder paths
-            :rtype utfS: string
+            :rtype mdS: string
             :rtype rstS: string
             :rtype folderD: dictionary
             :rtype incrD: dictionary
         """
 
-        utfS = """"""
+        mdS = """"""
         rstS = """"""
         rvtuS = rvtrS = ""
         uS = """"""
@@ -116,8 +116,8 @@ class RivtParse:
                 lineS += uS
                 continue
             if blockB and uS.strip() == "[q]]":
-                rvtS = tagutf.TagsUTF(lineS, tagS, strL)
-                utfS += rvtS + "\n"
+                rvtS = tagmd.Tagsmd(lineS, tagS, strL)
+                mdS += rvtS + "\n"
                 rvtS = tagrst.TagsRST(lineS, tagS, strL)
                 rstS += rvtS + "\n"
                 blockB = False
@@ -126,12 +126,12 @@ class RivtParse:
                 if tfS == "declare":
                     vS = self.dtable(blockevalL, hdrvL,
                                      "rst", alignvL) + "\n\n"
-                    utfS += vS
+                    mdS += vS
                     rstS += vS
                 if tfS == "assign":
                     resultS = self.atable(blockevalL, hdraL,
                                           "rst", alignaL) + "\n\n"
-                    utfS += resultS
+                    mdS += resultS
                     rstS += resultS
                 blockevalL = []
                 blockevalB = False
@@ -140,11 +140,11 @@ class RivtParse:
                 parL = usL[1:]
                 cmdS = usL[0].strip()
                 if cmdS in self.cmdL:
-                    rvtC = cmdutf.CmdUTF(parL, self.incrD, self.folderD,
-                                         self.localD)  # utf cmd ******
+                    rvtC = cmdmd.Cmdmd(parL, self.incrD, self.folderD,
+                                       self.localD)  # md cmd ******
                     utS = rvtC.cmd_parse(cmdS)
                     # print(f"{utS=}")
-                    utfS += utS
+                    mdS += utS
                     rvtC = cmdrst.CmdRST(parL, self.incrD, self.folderD,
                                          self.localD)  # rst cmd ******
                     reS = rvtC.cmd_parse(cmdS)
@@ -155,10 +155,10 @@ class RivtParse:
                 tagS = usL[1].strip()
                 if tagS[0] == "[":                     # block tag
                     blockB = True
-                rvtC = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
-                                      self.localD)     # utf tag ******
+                rvtC = tagmd.Tagsmd(lineS, self.incrD, self.folderD,
+                                    self.localD)     # md tag ******
                 utS = rvtC.tag_parse(tagS)
-                utfS += utS + "\n"                     # rst tag ******
+                mdS += utS + "\n"                     # rst tag ******
                 rvtC = tagrst.TagsRST(lineS, self.incrD, self.folderD,
                                       self.localD)
                 reS = rvtC.tag_parse(tagS)
@@ -169,8 +169,8 @@ class RivtParse:
                 lineS = usL[0]
                 self.incrD["unitS"] = usL[1].strip()
                 self.incrD["descS"] = usL[2].strip()
-                rvtC = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
-                                      self.localD)
+                rvtC = tagmd.Tagsmd(lineS, self.incrD, self.folderD,
+                                    self.localD)
                 if ":=" in uS:                          # declare tag
                     tfS = "declare"
                     blockevalL.append(rvtC.tag_parse(":="))
@@ -183,7 +183,7 @@ class RivtParse:
                 else:
                     tfS = "assign"                      # assign tag
                     eqL = rvtC.tag_parse("=")
-                    utfS += eqL[1]
+                    mdS += eqL[1]
                     blockevalL.append(eqL[0])
 
                     rvtC = tagrst.TagsRST(lineS, self.incrD, self.folderD,
@@ -202,7 +202,7 @@ class RivtParse:
                 writecsv.writerow(hdrvL)
                 writecsv.writerows(vtableL)
 
-        return (utfS, rvtuS), (rstS, rvtrS),  self.incrD, self.folderD, self.localD
+        return (mdS, rvtuS), (rstS, rvtrS),  self.incrD, self.folderD, self.localD
 
     def atable(self, tblL, hdreL, tblfmt, aligneL):
         """write assign values table"""
@@ -241,13 +241,13 @@ class RivtParse:
             tabulate(
                 valL, tablefmt=tblfmt, headers=hdreL,
                 showindex=False,  colalign=aligneL))
-        utfS = output.getvalue()
+        mdS = output.getvalue()
         sys.stdout = old_stdout
         sys.stdout.flush()
 
         self.localD.update(locals())
-        print("\n" + utfS+"\n")
-        return utfS
+        print("\n" + mdS+"\n")
+        return mdS
 
     def dtable(self, tblL, hdrvL, tblfmt, alignvL):
         """write declare values table"""
@@ -285,14 +285,14 @@ class RivtParse:
             tabulate(
                 valL, tablefmt=tblfmt, headers=hdrvL,
                 showindex=False,  colalign=alignvL))
-        utfS = output.getvalue()
+        mdS = output.getvalue()
         sys.stdout = old_stdout
         sys.stdout.flush()
 
         self.localD.update(locals())
 
-        print("\n" + utfS+"\n")
-        return utfS
+        print("\n" + mdS+"\n")
+        return mdS
 
 
 class RivtParseTag:
@@ -328,19 +328,19 @@ class RivtParseTag:
         warnings.filterwarnings("ignore")
         # self.rivtD.update(locals())
 
-    def utf_parse(self, strL):
+    def md_parse(self, strL):
         """parse insert string
 
             :param list strL: split rivt string
-            :return utfS: utf formatted string
+            :return mdS: md formatted string
             :return incrD: increment references
             :return folderD: folder paths
-            :rtype utfS: string
+            :rtype mdS: string
             :rtype folderD: dictionary
             :rtype incrD: dictionary
         """
 
-        xutfS = """"""
+        xmdS = """"""
         uS = """"""
         blockB = False
         for uS in strL:
@@ -353,8 +353,8 @@ class RivtParseTag:
                 lineS += uS
                 continue
             if blockB and uS.strip() == "[q]]":
-                rvtS = tagutf.TagsUTF(lineS, tagS, strL)
-                xutfS += rvtS + "\n"
+                rvtS = tagmd.Tagsmd(lineS, tagS, strL)
+                xmdS += rvtS + "\n"
                 blockB = False
             elif "_[" in uS:                              # end of line tag
                 usL = uS.split("_[")
@@ -364,12 +364,12 @@ class RivtParseTag:
                     blockB = True
                     continue
                 if tagS in self.tagL:
-                    rvtM = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
-                                          self.localD)
+                    rvtM = tagmd.Tagsmd(lineS, self.incrD, self.folderD,
+                                        self.localD)
                     utS = rvtM.tag_parse(tagS)
-                    xutfS += utS + "\n"                 # rst ********
+                    xmdS += utS + "\n"                 # rst ********
 
-        return xutfS,  self.incrD, self.folderD, self.localD
+        return xmdS,  self.incrD, self.folderD, self.localD
 
     def rst_parse(self, strL):
         """parse insert string

@@ -8,7 +8,7 @@ process the entire file:
     python -m rivt
 
 The program execute the file *rvddnn_file.py* in the folder, where dd is the
-two digit division number and nn the subdivision number. Docs are output as UTF
+two digit division number and nn the subdivision number. Docs are output as md
 text, PDF and HTML files. See https://rivtDocs.net for the **rivtDocs** user
 manual.
 

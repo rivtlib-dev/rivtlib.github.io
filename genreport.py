@@ -12,7 +12,7 @@
 
 import os
 import time
-def write_utf(utfS):
+def write_md(mdS):
     pass
 
 
@@ -34,10 +34,10 @@ def gen_rst(cmdS, doctypeS, stylefileS, calctitleS, startpageS):
     exec(cmdS, globals(), locals())
     docdir = os.getcwd()
     with open(_rstfileP, "wb") as f1:
-        f1.write(rstcalcS.encode("UTF-8"))
+        f1.write(rstcalcS.encode("md-8"))
     print("INFO: rst calc written ", docdir, flush=True)
 
-    f1 = open(_rstfileP, "r", encoding="utf-8", errors="ignore")
+    f1 = open(_rstfileP, "r", encoding="md-8", errors="ignore")
     rstcalcL = f1.readlines()
     f1.close()
     print("INFO: rst file read: " + str(_rstfileP))
@@ -62,7 +62,7 @@ def gen_tex(doctypeS, stylefileS, calctitleS, startpageS):
         "trst": Path(_dpathP0 / ".".join([_cnameS, "rst"])),
         "ttex1": Path(_dpathP0 / ".".join([_cnameS, "tex"])),
         "auxfile": Path(_dpathP0 / ".".join([_cnameS, ".aux"])),
-        "outfile": Path(_dpathP0 / ".".join([_cnameS, ".out"])),
+        "omdile": Path(_dpathP0 / ".".join([_cnameS, ".out"])),
         "texmak2": Path(_dpathP0 / ".".join([_cnameS, ".fls"])),
         "texmak3": Path(_dpathP0 / ".".join([_cnameS, ".fdb_latexmk"])),
     }
@@ -100,7 +100,7 @@ def gen_tex(doctypeS, stylefileS, calctitleS, startpageS):
 
     # fix escape sequences
     fnumS = _setsectD["fnumS"]
-    with open(texfileP, "r", encoding="utf-8", errors="ignore") as texin:
+    with open(texfileP, "r", encoding="md-8", errors="ignore") as texin:
         texf = texin.read()
     texf = texf.replace("?x?", """\\""")
     texf = texf.replace(
@@ -131,7 +131,7 @@ def gen_tex(doctypeS, stylefileS, calctitleS, startpageS):
     # )
 
     time.sleep(1)
-    with open(texfileP, "w", encoding="utf-8") as texout:
+    with open(texfileP, "w", encoding="md-8") as texout:
         texout.write(texf)
     print("INFO: tex file updated")
 
@@ -306,7 +306,7 @@ def attach(self, rsL):
 
 
 def report(self, rL):
-    """skip info command for utf calcs
+    """skip info command for md calcs
 
     Command is executed only for docs in order to
     separate protected information for shareable calcs.
@@ -383,11 +383,11 @@ def report(self, rL):
                 val1U = eval(varS)
                 val1U = val1U.simplify_unit()
                 val2U = val1U
-            utfS = vL[0]
+            mdS = vL[0]
             spS = "Eq(" + varS + ",(" + valS + "))"
-            utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
-            print("\n" + utfS + "\n")  # pretty print equation
-            self.calcS += "\n" + utfS + "\n"
+            mdS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+            print("\n" + mdS + "\n")  # pretty print equation
+            self.calcS += "\n" + mdS + "\n"
             eqS = sp.sympify(valS)
             eqatom = eqS.atoms(sp.Symbol)
             if self.setcmdD["subB"]:  # substitute into equation
@@ -572,18 +572,18 @@ def report(self, rL):
         locals().update(self.rivtd)
 
         eformat = ""
-        utfS = eqL[0].strip()
+        mdS = eqL[0].strip()
         descripS = eqL[3]
         parD = dict(eqL[1])
-        varS = utfS.split("=")
+        varS = mdS.split("=")
         resultS = vars[0].strip() + " = " + str(eval(vars[1]))
         try:
             eqS = "Eq(" + eqL[0] + ",(" + eqL[1] + "))"
             # sps = sps.encode('unicode-escape').decode()
-            utfs = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
-            self.calcl.append(utfs)
+            mds = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
+            self.calcl.append(mds)
         except:
-            self.calcl.append(utfs)
+            self.calcl.append(mds)
         try:
             symeq = sp.sympify(eqS.strip())  # substitute
             symat = symeq.atoms(sp.Symbol)
@@ -749,7 +749,7 @@ def attach(self, rsL):
 
 
 def report(self, rL):
-    """skip info command for utf calcs
+    """skip info command for md calcs
 
     Command is executed only for docs in order to
     separate protected information for shareable calcs.
@@ -826,11 +826,11 @@ def report(self, rL):
                 val1U = eval(varS)
                 val1U = val1U.simplify_unit()
                 val2U = val1U
-            utfS = vL[0]
+            mdS = vL[0]
             spS = "Eq(" + varS + ",(" + valS + "))"
-            utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
-            print("\n" + utfS + "\n")  # pretty print equation
-            self.calcS += "\n" + utfS + "\n"
+            mdS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+            print("\n" + mdS + "\n")  # pretty print equation
+            self.calcS += "\n" + mdS + "\n"
             eqS = sp.sympify(valS)
             eqatom = eqS.atoms(sp.Symbol)
             if self.setcmdD["subB"]:  # substitute into equation
@@ -1015,18 +1015,18 @@ def report(self, rL):
         locals().update(self.rivtd)
 
         eformat = ""
-        utfS = eqL[0].strip()
+        mdS = eqL[0].strip()
         descripS = eqL[3]
         parD = dict(eqL[1])
-        varS = utfS.split("=")
+        varS = mdS.split("=")
         resultS = vars[0].strip() + " = " + str(eval(vars[1]))
         try:
             eqS = "Eq(" + eqL[0] + ",(" + eqL[1] + "))"
             # sps = sps.encode('unicode-escape').decode()
-            utfs = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
-            self.calcl.append(utfs)
+            mds = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
+            self.calcl.append(mds)
         except:
-            self.calcl.append(utfs)
+            self.calcl.append(mds)
         try:
             symeq = sp.sympify(eqS.strip())  # substitute
             symat = symeq.atoms(sp.Symbol)

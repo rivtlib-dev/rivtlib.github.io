@@ -1,27 +1,27 @@
 # Module rv_t
 
-T2utf and T2rst classes
+T2md and T2rst classes
 
 None
 
 ??? example "View Source"
         #!python
 
-        "T2utf and T2rst classes"
+        "T2md and T2rst classes"
 
         
 
         
 
-        class T2utf:
+        class T2md:
 
-            """convert insert-string to UTF8 calc"""
+            """convert insert-string to md8 calc"""
 
         
 
             def __init__(self, strL: list, folderD, cmdD, sectD):
 
-                """convert insert-string to UTF8 calc-string
+                """convert insert-string to md8 calc-string
 
         
 
@@ -39,7 +39,7 @@ None
 
         
 
-                self.utfS = """"""  # utf calc string
+                self.mdS = """"""  # md calc string
 
                 self.strL = strL
 
@@ -59,7 +59,7 @@ None
 
                 Return:
 
-                    calcS (list): utf formatted calc-string (appended)
+                    calcS (list): md formatted calc-string (appended)
 
                     setsectD (dict): section settings
 
@@ -77,7 +77,7 @@ None
 
         
 
-                self._parseUTF("table", tcmdL, tmethL, ttagL)
+                self._parsemd("table", tcmdL, tmethL, ttagL)
 
         
 
@@ -85,10 +85,10 @@ None
 
 ## Classes
 
-### T2utf
+### T2md
 
 ```python3
-class T2utf(
+class T2md(
     strL: list,
     folderD,
     cmdD,
@@ -111,7 +111,7 @@ def t_rst(
 parse table-strings
 
 Return:
-    calcS (list): utf formatted calc-string (appended)
+    calcS (list): md formatted calc-string (appended)
     setsectD (dict): section settings
     setcmdD (dict): command settings
     rivtD (list): calculation values
@@ -125,7 +125,7 @@ Return:
 
                 Return:
 
-                    calcS (list): utf formatted calc-string (appended)
+                    calcS (list): md formatted calc-string (appended)
 
                     setsectD (dict): section settings
 
@@ -143,7 +143,7 @@ Return:
 
         
 
-                self._parseUTF("table", tcmdL, tmethL, ttagL)
+                self._parsemd("table", tcmdL, tmethL, ttagL)
 
         
 

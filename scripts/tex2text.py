@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
+# -*- coding: md-8 -*-
 import optparse, os, re, sys
 
 def tex2text(x, options):

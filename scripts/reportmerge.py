@@ -19,7 +19,7 @@ preamble = r"""\\documentclass[12pt,notitle]{report}
 \\usepackage{cmap} % fix search and cut-and-paste in Acrobat
 \\usepackage{ifthen}
 \\usepackage[T1]{fontenc}
-\\usepackage[utf8]{ }
+\\usepackage[md8]{ }
 \\usepackage{amsmath}
 \\usepackage{float} % float configuration
 \\floatplacement{figure}{H} % place figures here definitely
@@ -92,7 +92,8 @@ def rewrite():
                         for k in range(1, 50):
                             tst4 = "}{" + str(k) + "}"
                             if tst4 in s4:
-                                s5 = s4.replace(tst4, "}\\hfill{" + str(k) + "}")
+                                s5 = s4.replace(
+                                    tst4, "}\\hfill{" + str(k) + "}")
                 file3.write(s5 + "\\newline")
     writepdf(list2, path2)
 
@@ -147,7 +148,8 @@ def writepdf(list2, path2):
     with open("reporttoc.tex", "w") as file1:
         file1.write(tocstring)
     try:
-        pdf1 = "latexmk -xelatex -quiet -f " + os.path.join(path2, "reporttoc.tex")
+        pdf1 = "latexmk -xelatex -quiet -f " + \
+            os.path.join(path2, "reporttoc.tex")
         print("< pdf table of contents written to reprt folder >")
         os.system(pdf1)
     except:

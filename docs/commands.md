@@ -69,7 +69,7 @@ None
 
         
 
-        def text_utf(self, iL: list):
+        def text_md(self, iL: list):
 
             """insert text from file
 
@@ -91,7 +91,7 @@ None
 
             txtP = Path(self.folderD["cpathcur"] / iL[1].strip())
 
-            with open(txtP, "r", encoding="utf-8") as txtf1:
+            with open(txtP, "r", encoding="md-8") as txtf1:
 
                 uL = txtf1.readlines()
 
@@ -175,7 +175,7 @@ None
 
         
 
-        def table_utf(self, iL: list):
+        def table_md(self, iL: list):
 
             """insert table from csv or xlsx file
 
@@ -197,7 +197,7 @@ None
 
                 iL += [""] * (4 - len(iL))  # pad parameters
 
-            utfS = ""
+            mdS = ""
 
             contentL = []
 
@@ -315,7 +315,7 @@ None
 
             )
 
-            utfS = output.getvalue()
+            mdS = output.getvalue()
 
             sys.stdout = old_stdout
 
@@ -323,17 +323,17 @@ None
 
             print(str(tfileS))
 
-            print(utfS)
+            print(mdS)
 
             self.calcS += str(tfileS) + "\n"
 
-            self.calcS += utfS + "\n"
+            self.calcS += mdS + "\n"
 
         
 
         
 
-        def image_utf(self, iL: list):
+        def image_md(self, iL: list):
 
             """insert one or two images from file
 
@@ -345,7 +345,7 @@ None
 
             """
 
-            utfS = ""
+            mdS = ""
 
             if "," in iL[1]:  # two images
 
@@ -377,7 +377,7 @@ None
 
                 for fS in [img1S, img2S]:
 
-                    utfS += "Figure path: " + fS + "\n"
+                    mdS += "Figure path: " + fS + "\n"
 
                     try:
 
@@ -387,9 +387,9 @@ None
 
                         pass
 
-                print(utfS)
+                print(mdS)
 
-                self.calcS += utfS + "\n"
+                self.calcS += mdS + "\n"
 
             else:  # one image
 
@@ -405,7 +405,7 @@ None
 
                 img1S = str(Path(self.folderD["dpathcur"] / file1S))
 
-                utfS += "Figure path: " + img1S + "\n"
+                mdS += "Figure path: " + img1S + "\n"
 
                 try:
 
@@ -415,15 +415,15 @@ None
 
                     pass
 
-                print(utfS)
+                print(mdS)
 
-                self.calcS += utfS + "\n"
-
-        
+                self.calcS += mdS + "\n"
 
         
 
-        def latex_utf(self, iL: list):
+        
+
+        def latex_md(self, iL: list):
 
             """insert latex text from file
 
@@ -499,7 +499,7 @@ None
 
             txapath = Path(self.folderD["cpathcur"] / iL[1].strip())
 
-            with open(txapath, "r", encoding="utf-8") as txtf1:
+            with open(txapath, "r", encoding="md-8") as txtf1:
 
                 rstL = txtf1.readlines()
 
@@ -609,7 +609,7 @@ None
 
                 iL += [""] * (4 - len(iL))  # pad parameters
 
-            utfS = ""
+            mdS = ""
 
             contentL = []
 
@@ -1037,7 +1037,7 @@ None
 
         def report(self, rL):
 
-            """skip info command for utf calcs
+            """skip info command for md calcs
 
         
 
@@ -1267,10 +1267,10 @@ insert one or two images from file
             time.sleep(1)
 
     
-### image_utf
+### image_md
 
 ```python3
-def image_utf(
+def image_md(
     self,
     iL: list
 )
@@ -1286,7 +1286,7 @@ insert one or two images from file
 | iL | list | image parameters | None |
 
 ??? example "View Source"
-        def image_utf(self, iL: list):
+        def image_md(self, iL: list):
 
             """insert one or two images from file
 
@@ -1298,7 +1298,7 @@ insert one or two images from file
 
             """
 
-            utfS = ""
+            mdS = ""
 
             if "," in iL[1]:  # two images
 
@@ -1330,7 +1330,7 @@ insert one or two images from file
 
                 for fS in [img1S, img2S]:
 
-                    utfS += "Figure path: " + fS + "\n"
+                    mdS += "Figure path: " + fS + "\n"
 
                     try:
 
@@ -1340,9 +1340,9 @@ insert one or two images from file
 
                         pass
 
-                print(utfS)
+                print(mdS)
 
-                self.calcS += utfS + "\n"
+                self.calcS += mdS + "\n"
 
             else:  # one image
 
@@ -1358,7 +1358,7 @@ insert one or two images from file
 
                 img1S = str(Path(self.folderD["dpathcur"] / file1S))
 
-                utfS += "Figure path: " + img1S + "\n"
+                mdS += "Figure path: " + img1S + "\n"
 
                 try:
 
@@ -1368,15 +1368,15 @@ insert one or two images from file
 
                     pass
 
-                print(utfS)
+                print(mdS)
 
-                self.calcS += utfS + "\n"
+                self.calcS += mdS + "\n"
 
     
-### latex_utf
+### latex_md
 
 ```python3
-def latex_utf(
+def latex_md(
     self,
     iL: list
 )
@@ -1392,7 +1392,7 @@ insert latex text from file
 | iL | list | text command list | None |
 
 ??? example "View Source"
-        def latex_utf(self, iL: list):
+        def latex_md(self, iL: list):
 
             """insert latex text from file
 
@@ -1635,7 +1635,7 @@ def report(
 ```
 
     
-skip info command for utf calcs
+skip info command for md calcs
 
 Command is executed only for docs in order to
 separate protected information for shareable calcs.
@@ -1649,7 +1649,7 @@ separate protected information for shareable calcs.
 ??? example "View Source"
         def report(self, rL):
 
-            """skip info command for utf calcs
+            """skip info command for md calcs
 
         
 
@@ -1846,7 +1846,7 @@ insert table from csv or xlsx file
 
                 iL += [""] * (4 - len(iL))  # pad parameters
 
-            utfS = ""
+            mdS = ""
 
             contentL = []
 
@@ -1985,10 +1985,10 @@ insert table from csv or xlsx file
             self.restS += "  \\vspace{.15in}\n"
 
     
-### table_utf
+### table_md
 
 ```python3
-def table_utf(
+def table_md(
     self,
     iL: list
 )
@@ -2004,7 +2004,7 @@ insert table from csv or xlsx file
 | ipl | list | parameter list | None |
 
 ??? example "View Source"
-        def table_utf(self, iL: list):
+        def table_md(self, iL: list):
 
             """insert table from csv or xlsx file
 
@@ -2026,7 +2026,7 @@ insert table from csv or xlsx file
 
                 iL += [""] * (4 - len(iL))  # pad parameters
 
-            utfS = ""
+            mdS = ""
 
             contentL = []
 
@@ -2144,7 +2144,7 @@ insert table from csv or xlsx file
 
             )
 
-            utfS = output.getvalue()
+            mdS = output.getvalue()
 
             sys.stdout = old_stdout
 
@@ -2152,11 +2152,11 @@ insert table from csv or xlsx file
 
             print(str(tfileS))
 
-            print(utfS)
+            print(mdS)
 
             self.calcS += str(tfileS) + "\n"
 
-            self.calcS += utfS + "\n"
+            self.calcS += mdS + "\n"
 
     
 ### text_rst
@@ -2192,7 +2192,7 @@ insert text from file
 
             txapath = Path(self.folderD["cpathcur"] / iL[1].strip())
 
-            with open(txapath, "r", encoding="utf-8") as txtf1:
+            with open(txapath, "r", encoding="md-8") as txtf1:
 
                 rstL = txtf1.readlines()
 
@@ -2277,10 +2277,10 @@ insert text from file
             self.restS += rstS + "\n"
 
     
-### text_utf
+### text_md
 
 ```python3
-def text_utf(
+def text_md(
     self,
     iL: list
 )
@@ -2297,7 +2297,7 @@ insert text from file
 || text | (file.txt) | literal; indent; html | None |
 
 ??? example "View Source"
-        def text_utf(self, iL: list):
+        def text_md(self, iL: list):
 
             """insert text from file
 
@@ -2319,7 +2319,7 @@ insert text from file
 
             txtP = Path(self.folderD["cpathcur"] / iL[1].strip())
 
-            with open(txtP, "r", encoding="utf-8") as txtf1:
+            with open(txtP, "r", encoding="md-8") as txtf1:
 
                 uL = txtf1.readlines()
 

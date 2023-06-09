@@ -19,7 +19,7 @@ None
 
         
 
-        def write_utf(utfS):
+        def write_md(mdS):
 
             pass
 
@@ -63,13 +63,13 @@ None
 
             with open(_rstfileP, "wb") as f1:
 
-                f1.write(rstcalcS.encode("UTF-8"))
+                f1.write(rstcalcS.encode("md-8"))
 
             print("INFO: rst calc written ", docdir, flush=True)
 
         
 
-            f1 = open(_rstfileP, "r", encoding="utf-8", errors="ignore")
+            f1 = open(_rstfileP, "r", encoding="md-8", errors="ignore")
 
             rstcalcL = f1.readlines()
 
@@ -119,7 +119,7 @@ None
 
                 "auxfile": Path(_dpathP0 / ".".join([_cnameS, ".aux"])),
 
-                "outfile": Path(_dpathP0 / ".".join([_cnameS, ".out"])),
+                "omdile": Path(_dpathP0 / ".".join([_cnameS, ".out"])),
 
                 "texmak2": Path(_dpathP0 / ".".join([_cnameS, ".fls"])),
 
@@ -195,7 +195,7 @@ None
 
             fnumS = _setsectD["fnumS"]
 
-            with open(texfileP, "r", encoding="utf-8", errors="ignore") as texin:
+            with open(texfileP, "r", encoding="md-8", errors="ignore") as texin:
 
                 texf = texin.read()
 
@@ -257,7 +257,7 @@ None
 
             time.sleep(1)
 
-            with open(texfileP, "w", encoding="utf-8") as texout:
+            with open(texfileP, "w", encoding="md-8") as texout:
 
                 texout.write(texf)
 
@@ -593,13 +593,13 @@ write calc rSt file to d00_docs folder
 
             with open(_rstfileP, "wb") as f1:
 
-                f1.write(rstcalcS.encode("UTF-8"))
+                f1.write(rstcalcS.encode("md-8"))
 
             print("INFO: rst calc written ", docdir, flush=True)
 
         
 
-            f1 = open(_rstfileP, "r", encoding="utf-8", errors="ignore")
+            f1 = open(_rstfileP, "r", encoding="md-8", errors="ignore")
 
             rstcalcL = f1.readlines()
 
@@ -660,7 +660,7 @@ def gen_tex(
 
                 "auxfile": Path(_dpathP0 / ".".join([_cnameS, ".aux"])),
 
-                "outfile": Path(_dpathP0 / ".".join([_cnameS, ".out"])),
+                "omdile": Path(_dpathP0 / ".".join([_cnameS, ".out"])),
 
                 "texmak2": Path(_dpathP0 / ".".join([_cnameS, ".fls"])),
 
@@ -736,7 +736,7 @@ def gen_tex(
 
             fnumS = _setsectD["fnumS"]
 
-            with open(texfileP, "r", encoding="utf-8", errors="ignore") as texin:
+            with open(texfileP, "r", encoding="md-8", errors="ignore") as texin:
 
                 texf = texin.read()
 
@@ -798,7 +798,7 @@ def gen_tex(
 
             time.sleep(1)
 
-            with open(texfileP, "w", encoding="utf-8") as texout:
+            with open(texfileP, "w", encoding="md-8") as texout:
 
                 texout.write(texf)
 
@@ -934,17 +934,17 @@ write pdf calc to reports folder and open
             os._exit(1)
 
     
-### write_utf
+### write_md
 
 ```python3
-def write_utf(
-    utfS
+def write_md(
+    mdS
 )
 ```
 
     
 
 ??? example "View Source"
-        def write_utf(utfS):
+        def write_md(mdS):
 
             pass

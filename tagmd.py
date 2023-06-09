@@ -33,10 +33,10 @@ except:
 from rivt.units import *
 
 
-class TagsUTF:
+class Tagsmd:
 
     def __init__(self, lineS, incrD, folderD,  localD):
-        """format tags to utf
+        """format tags to md
             ============================ ======================================
             tags                                   description 
             ============================ ======================================
@@ -226,9 +226,9 @@ class TagsUTF:
         return lineS
 
     def equation(self):
-        """3 utf equation label _[e]
+        """3 md equation label _[e]
 
-        :return lineS: utf equation label
+        :return lineS: md equation label
         :rtype: str
         """
 
@@ -315,7 +315,7 @@ class TagsUTF:
     def table(self):
         """format table title  _[t]
 
-        :return lineS: utf table title
+        :return lineS: md table title
         :rtype: str
         """
         tnumI = int(self.incrD["tableI"])
@@ -468,11 +468,11 @@ class TagsUTF:
             val1U = val2U = str(valdec)
 
         spS = "Eq(" + varS + ",(" + valS + "))"
-        utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
-        utfS = "\n" + utfS + "\n"
+        mdS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+        mdS = "\n" + mdS + "\n"
         eqL = [varS, valS, unit1S, unit2S, descS]
 
-        print(utfS)                      # print equation
+        print(mdS)                      # print equation
 
         subS = " "
         if self.incrD["subB"]:
@@ -480,7 +480,7 @@ class TagsUTF:
             print(subS)                  # print with substition
 
         self.localD.update(locals())
-        return [eqL, utfS + "\n" + subS + "\n\n"]
+        return [eqL, mdS + "\n" + subS + "\n\n"]
 
     def vsub(self, eqL, precI, varS, val1U):
         """substitute variables with values
@@ -553,6 +553,6 @@ class TagsUTF:
                     out3 = out3.replace("-" * _cnt, "\u2014" * _cnt)
                 _cnt = 0
         self.localD.update(locals())
-        utfS = out3 + "\n\n"
+        mdS = out3 + "\n\n"
 
-        return utfS
+        return mdS

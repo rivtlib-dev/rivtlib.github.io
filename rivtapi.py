@@ -25,14 +25,14 @@ for fileS in os.listdir(docpathP):
     print(fileS)
     if fnmatch.fnmatch(fileS, "r????.py"):
         docfileS = fileS
-        docP = Path(docpathP / docfileS)
+        docP = Path(docpathP, docfileS)
         print(docP)
         break
 if docfileS == "xx":
     print("INFO     rivt file not found")
     exit()
 
-# run test files if this module is run as __main__
+# run test files if api is run as __main__
 if Path(docfileS).name == "rv0101t.py":
     docP = Path(
         "./tests/rivt_Example_Test_01/text/rv0101_Overview/rv0101t.py")
@@ -45,55 +45,54 @@ print(f"{modnameS=}")
 print(f"{docfileS=}")
 print(f"{docP=}")
 
-# files and paths
+# paths from file
 docbaseS = docfileS.split(".py")[0]
-prfxS = docbaseS[1:3]
 dataP = Path(docP.parent / "data")
-projP = docP.parent.parent.parent  # rivt project folder path
+pubP = docP.parent.parent  # rivt public folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
-pubcfgP = Path(docP.parent.parent / "r0000-config")
+pubcfgP = Path(pubP / "r0000-config")
 
 # config file
 config = ConfigParser()
 config.read(Path(pubcfgP, "rivt.ini"))
-priP = config.get('project', 'resource')
+prvP = config.get('project', 'private')
 titleS = config.get('report', 'title')
-headS = config.get('utf', 'head')
-footS = config.get('utf', 'foot')
+headS = config.get('md', 'head')
+footS = config.get('md', 'foot')
 # print(f"{rvconfigP=}")
 # print(f"{rvtlocalP=}")
 
-for fileS in os.listdir(priP):
+# private path
+prfxS = docbaseS[0:3]
+for fileS in os.listdir(prvP):
     if fnmatch.fnmatch(fileS[1:5], prfxS + "-*"):
-        refileP = Path(fileS)  # resource folder
+        prvfolderP = Path(fileS)  # private folder
         break
-
-resourceP = Path(priP, refileP)
 doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = titleS + " [ " + doctitleS.replace("-", " ") + " ] "
-divtitleS = (refileP.name).split("-", 1)[1]
+divtitleS = (prvfolderP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
-siteP = Path(priP, "website")  # site folder path
-reportP = Path(priP, "report")  # report folder path
-retempP = Path(priP, "r00-config")
+
+siteP = Path(prvP, "website")  # site folder path
+reportP = Path(prvP, "report")  # report folder path
+prvcfgP = Path(prvP, "r00-config")
 rivtP = Path("rivtapi.py").parent  # rivt package path
 pypath = os.path.dirname(sys.executable)
 rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
-errlogP = Path(retempP, "rivt-log.txt")
+errlogP = Path(prvcfgP, "rivt-log.txt")
 styleP = Path   # file name added at runtime
 valfileS = docbaseS.replace("r", "v") + ".csv"
 saveP = Path(dataP, valfileS)
 
-
 # global dicts and vars
-utfS = """\n"""                     # utf output string
+mdS = """\n"""                     # md output string
 rstS = """\n"""                     # reST output string
 valS = """"""                       # values string for export
 rvtfileS = """"""                   # rivt input file
-outputS = "utf"                     # default output type
+outputS = "md"                     # default output type
 xflagB = 0
 rstoutL = ["pdf", "html", "both"]   # reST formats
-outputL = ["utf", "pdf", "html", "both", "report", "site"]
+outputL = ["md", "pdf", "html", "both", "report", "site"]
 
 folderD = {}
 for item in ["docP", "dataP", "resourceP", "rvtlocalP", "resourceP", "projP",
@@ -106,7 +105,7 @@ incrD = {
     "doctitleS": doctitleS,  # doc title
     "divtitleS": divtitleS,  # section title
     "secnumI": 0,  # section number
-    "widthI": 80,  # utf printing width
+    "widthI": 80,  # md printing width
     "equI": 0,  # equation number
     "tableI": 0,  # table number
     "figI": 0,  # figure number
@@ -136,8 +135,8 @@ logging.basicConfig(
     filemode="w",
 )
 dshortP = Path(*Path(docP.parent).parts[-2:])
-lshortP = Path(*Path(rvtlocalP).parts[-2:])
-rshortP = Path(*Path(resourceP).parts[-2:])
+pubshortP = Path(*Path(pubP).parts[-2:])
+prvshortP = Path(*Path(prvfolderP).parts[-2:])
 
 print(f"\n-------- start rivt file : [{docfileS}] ---------")
 
@@ -146,11 +145,11 @@ if docP.exists():
     logging.info(f"""rivt short path : [{dshortP}]""")
 else:
     logging.info(f"""rivt file path not found: {docP}""")
-if resourceP.exists:
-    logging.info(f"""resource short path: [{rshortP}]""")
+if prvP.exists:
+    logging.info(f"""public short path: [{prvshortP}]""")
 else:
-    logging.info(f"""resource path not found: {resourceP}""")
-logging.info(f"""log folder short path: [{lshortP}]""")
+    logging.info(f"""private path not found: {prvfolderP}""")
+logging.info(f"""log folder short path: [{prvshortP}]""")
 
 
 with open(docP, "r") as f2:                 # write backup doc file
@@ -212,7 +211,7 @@ def _str_title(hdrS):
     global outputS
 
     hdrstS = """"""
-    hdutfS = """"""
+    hdmdS = """"""
 
     snumI = incrD["secnumI"] + 1
     incrD["secnumI"] = snumI
@@ -221,7 +220,7 @@ def _str_title(hdrS):
     widthI = incrD["widthI"] - 3
     headS = " " + hdrS + dnumS.rjust(widthI - len(hdrS))
     bordrS = incrD["widthI"] * "-"
-    hdutfS = bordrS + "\n" + headS + "\n" + bordrS + "\n"
+    hdmdS = bordrS + "\n" + headS + "\n" + bordrS + "\n"
 
     # if snumI > 1:
     #     hdrstS = (
@@ -253,7 +252,7 @@ def _str_title(hdrS):
         + "\n\n"
     )
 
-    return hdutfS, hdrstS
+    return hdmdS, hdrstS
 
 
 def _str_set(rS, methS):
@@ -267,12 +266,12 @@ def _str_set(rS, methS):
     :rtype: _type_
     """
 
-    global utfS, rstS, outputS, incrD, folderD
+    global mdS, rstS, outputS, incrD, folderD
 
     rs1L = rS.split("|")
 
     if methS == "R":
-        incrD["widthI"] = int(rs1L[1])     # utf print width
+        incrD["widthI"] = int(rs1L[1])     # md print width
         incrD["pageI"] = int(rs1L[2])      # start page
 
     elif methS == "V":
@@ -292,8 +291,8 @@ def _str_set(rS, methS):
     if rs1S.strip()[0:2] == "--":
         return "\n", "\n"                             # skip heading
     else:
-        hdutfS, hdrstS = _str_title(rs1L[0].strip())  # get_heading
-        return hdutfS, hdrstS
+        hdmdS, hdrstS = _str_title(rs1L[0].strip())  # get_heading
+        return hdmdS, hdrstS
 
 
 def R(rS: str):
@@ -301,27 +300,27 @@ def R(rS: str):
 
         : param rS: triple quoted repo string
         : type rS: str
-        : return: formatted utf string
+        : return: formatted md string
         : type: str
     """
 
-    global utfS, rstS, incrD, folderD, localD
+    global mdS, rstS, incrD, folderD, localD
 
-    _pages(incrD["headuS"], incrD["footuS"])   # header, footer for utf pages
+    _pages(incrD["headuS"], incrD["footuS"])   # header, footer for md pages
 
-    xutfS = ""
+    xmdS = ""
     xrstS = ""
     rL = rS.split("\n")
-    hutfS, hrstS = _str_set(rL[0], "R")
-    print(hutfS)
-    utfC = parse.RivtParse("R", folderD, incrD,  localD)
-    xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
-    if hutfS != None:
-        xutfS = xutfL[1] + hutfS + xutfL[0]
+    hmdS, hrstS = _str_set(rL[0], "R")
+    print(hmdS)
+    mdC = parse.RivtParse("R", folderD, incrD,  localD)
+    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:])
+    if hmdS != None:
+        xmdS = xmdL[1] + hmdS + xmdL[0]
         xrstS = xrstL[1] + hrstS + xrstL[0]
-    utfS += xutfS                    # accumulate utf string
+    mdS += xmdS                    # accumulate md string
     rstS += xrstS                    # accumulate reST string
-    xutfS = ""                       # reset local string
+    xmdS = ""                       # reset local string
 
 
 def I(rS: str):
@@ -329,25 +328,25 @@ def I(rS: str):
 
         : param rS: triple quoted insert string
         : type rS: str
-        : return: formatted utf string
+        : return: formatted md string
         : rtype: str
     """
 
-    global utfS, rstS, incrD, folderD, localD
+    global mdS, rstS, incrD, folderD, localD
 
-    xutfS = ""
+    xmdS = ""
     xrstS = ""
     rL = rS.split("\n")
-    hutfS, hrstS = _str_set(rL[0], "I")
-    print(hutfS)
-    utfC = parse.RivtParse("I", folderD, incrD,  localD)
-    xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
-    if hutfS != None:
-        xutfS = hutfS + xutfL[0]
+    hmdS, hrstS = _str_set(rL[0], "I")
+    print(hmdS)
+    mdC = parse.RivtParse("I", folderD, incrD,  localD)
+    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:])
+    if hmdS != None:
+        xmdS = hmdS + xmdL[0]
         xrstS = hrstS + xrstL[0]
-    utfS += xutfS
+    mdS += xmdS
     rstS += xrstS
-    xutfS = ""
+    xmdS = ""
 
 
 def V(rS: str):
@@ -355,27 +354,27 @@ def V(rS: str):
 
         :param rS: triple quoted values string
         :type rS: str: return
-        :formatted utf string: type: str
+        :formatted md string: type: str
     """
 
-    global utfS, rstS, incrD, folderD, localD
+    global mdS, rstS, incrD, folderD, localD
 
     locals().update(localD)
 
-    xutfS = ""
+    xmdS = ""
     xrstS = ""
     rL = rS.split("\n")
-    hutfS, hrstS = _str_set(rL[0], "V")
-    print(hutfS)
-    utfC = parse.RivtParse("V", folderD, incrD, localD)
-    xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
-    # print(f"{xutfS=}", f"{rL[1:]=}")
-    if hutfS != None:
-        xutfS = hutfS + xutfL[0]
+    hmdS, hrstS = _str_set(rL[0], "V")
+    print(hmdS)
+    mdC = parse.RivtParse("V", folderD, incrD, localD)
+    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:])
+    # print(f"{xmdS=}", f"{rL[1:]=}")
+    if hmdS != None:
+        xmdS = hmdS + xmdL[0]
         xrstS = hrstS + xrstL[0]
-    utfS += xutfS                    # accumulate utf string
+    mdS += xmdS                    # accumulate md string
     rstS += xrstS                    # accumulate reST string
-    xutfS = ""
+    xmdS = ""
 
     localD.update(locals())
 
@@ -384,24 +383,24 @@ def T(rS: str):
     """process Tables string
 
     : param rS: triple quoted insert string
-    : type rS: str: return: formatted utf or reST string: type: str
+    : type rS: str: return: formatted md or reST string: type: str
 
     """
-    global utfS, rstS, incrD, folderD, localD
+    global mdS, rstS, incrD, folderD, localD
 
-    xutfS = ""
+    xmdS = ""
     xrstS = ""
     rL = rS.split("\n")
-    hutfS, hrstS = _str_set(rL[0], "T")
-    utfC = parse.RivtParse("T", folderD, incrD, localD)
-    xutfL, xrstL, incrD, folderD, localD = utfC.str_parse(rL[1:])
-    if hutfS != None:
-        xutfS = hutfS + xutfL[0]
+    hmdS, hrstS = _str_set(rL[0], "T")
+    mdC = parse.RivtParse("T", folderD, incrD, localD)
+    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:])
+    if hmdS != None:
+        xmdS = hmdS + xmdL[0]
         xrstS = hrstS + xrstL[0]
-    utfS += xutfS                    # accumulate utf string
+    mdS += xmdS                    # accumulate md string
     rstS += xrstS                    # accumulate reST string
 
-    xutfS = ""
+    xmdS = ""
 
 
 def X(rS: str):
@@ -423,7 +422,7 @@ def _mod_tex(tfileP):
     """
     startS = str(incrD["pageI"])
 
-    with open(tfileP, "r", encoding="utf-8", errors="ignore") as f2:
+    with open(tfileP, "r", encoding="md-8", errors="ignore") as f2:
         texf = f2.read()
 
     # modify "at" command
@@ -460,7 +459,7 @@ def _mod_tex(tfileP):
         """\\begin{document}""",
         """\\begin{document}\n\\setcounter{page}{""" + startS + "}\n")
 
-    with open(tfileP, "w", encoding="utf-8") as f2:
+    with open(tfileP, "w", encoding="md-8") as f2:
         f2.write(texf)
 
     # with open(tfileP, 'w') as texout:
@@ -504,7 +503,7 @@ def _rest2tex(rstfileS):
     0. insert [i] data into model (see _genxmodel())
     1. read the expanded model
     2. build the operations ordered dictionary
-    3. execute the dictionary and write the utf-8 calc and Python file
+    3. execute the dictionary and write the md-8 calc and Python file
     4. if the pdf flag is set re-execute xmodel and write the PDF calc
     5. write variable summary to stdout
 
@@ -530,7 +529,7 @@ def _rest2tex(rstfileS):
     texfileP = Path(retempP, docbaseS + ".tex")
     rstfileP = Path(retempP, docbaseS + ".rst")
 
-    with open(rstfileP, "w", encoding='utf-8') as f2:
+    with open(rstfileP, "w", encoding='md-8') as f2:
         f2.write(rstS)
 
     tex1S = "".join(
@@ -572,10 +571,10 @@ def writedoc(formatS):
     :type formatS: str
     """
 
-    global utfS, rstS, outputS, incrD, folderD
+    global mdS, rstS, outputS, incrD, folderD
 
     formatL = [i.strip() for i in formatS.split(",")]
-    docutfP = Path(docP.parent / "README.md")
+    docmdP = Path(docP.parent / "README.md")
     rstfileP = Path(docP.parent, docbaseS + ".rst")
     eshortP = Path(*Path(rstfileP).parts[-3:])
 
@@ -583,20 +582,20 @@ def writedoc(formatS):
     print(f" -------- end rivt file: [{docfileS}] --------- ")
 
     print("", flush=True)
-    if "utf" in formatL:                          # save utf file
-        with open(docutfP, "w", encoding='utf-8') as f1:
-            f1.write(utfS)
+    if "md" in formatL:                          # save md file
+        with open(docmdP, "w", encoding='md-8') as f1:
+            f1.write(mdS)
             # with open(_rstfile, "wb") as f1:
-            #   f1.write(rstcalcS.encode("UTF-8"))
-            # f1 = open(_rstfile, "r", encoding="utf-8", errors="ignore")
-        logging.info(f"""utf doc written: {dshortP}\README.txt""")
-        print(f"utf doc written: {dshortP}\README.txt")
+            #   f1.write(rstcalcS.encode("md-8"))
+            # f1 = open(_rstfile, "r", encoding="md-8", errors="ignore")
+        logging.info(f"""markdown written: {dshortP}\README.md""")
+        print(f"markdown written: {dshortP}\README.md")
     print("", flush=True)
     if "pdf" in formatS or "html" in formatS:      # save rst file
-        with open(rstfileP, "w", encoding='utf-8') as f2:
+        with open(rstfileP, "w", encoding='md-8') as f2:
             f2.write(rstS)
-        logging.info(f"reST file written: {rstfileP}")
-        print(f"reST file written: {rstfileP}")
+        logging.info(f"reST written: {rstfileP}")
+        print(f"reST written: {rstfileP}")
     for i in formatL:
         if "pdf" not in i:
             continue
@@ -604,7 +603,7 @@ def writedoc(formatS):
             logging.info(f"start PDF file process: {rstfileP}")
             print("start PDF file process: {rstfileP}")
             pdfstyleS = i.split(":")[1].strip()
-            styleP = Path(rvconfigP, pdfstyleS)
+            styleP = Path(prvcfgP, pdfstyleS)
             folderD["styleP"] = styleP
             logging.info(f"PDF style file: {styleP}")
             print(f"PDF style file: {styleP}")

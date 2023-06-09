@@ -33,8 +33,8 @@ from rivt import parse
 from rivt.units import *
 
 
-class CmdUTF:
-    """translate rivt-strings to utf strings
+class Cmdmd:
+    """translate rivt-strings to md strings
 
     param:exportS (str): stores values that are written to file
     strL (list): calc rivt-strings
@@ -88,13 +88,26 @@ class CmdUTF:
     def get_folder(self, prefixS):
         """ get folder path from prefix
 
-        :param prefixS: _description_
-        :type prefixS: _type_
+        :param prefixS: folder prefix
+        :type prefixS: string
         :return: path
 
-
-
         """
+
+        # get private path
+        prfxS = docbaseS[0:3]
+        for fileS in os.listdir(privP):
+            if fnmatch.fnmatch(fileS[1:5], prfxS + "-*"):
+                privP = Path(fileS)  # private folder
+                break
+
+        if len(prefixS) == 3:
+            pathP = 
+            pass
+        elif len(prefixS) == 5:
+            pass
+
+        return pathP
 
     def append(self):
         """_summary_
@@ -106,7 +119,7 @@ class CmdUTF:
 
         """
 
-        utfS = ""
+        mdS = ""
         iL = self.paramL
         if len(iL[1].split(",")) == 1:
             scale1S = iL[2]
@@ -151,12 +164,12 @@ class CmdUTF:
                     + "\n\n"
                     )
 
-        return utfS
+        return mdS
 
     def project(self):
         """insert project information from csv, xlsx or syk
 
-            :return lineS: utf table
+            :return lineS: md table
             :rtype: str
         """
 
@@ -228,7 +241,7 @@ class CmdUTF:
     def table(self):
         """insert table from csv or xlsx file
 
-            :return lineS: utf table
+            :return lineS: md table
             :rtype: str
         """
 
@@ -315,9 +328,9 @@ class CmdUTF:
                 continue
             txtS += " "*4 + iS
             txtS = htm.html2text(txtS)
-            utfS = txtS.replace("\n    \n", "")
+            mdS = txtS.replace("\n    \n", "")
 
-            return utfS
+            return mdS
 
     def txttex(self, txtfileS, txttypeS):
         """9b _summary_
@@ -366,9 +379,9 @@ class CmdUTF:
         pathP = Path(folderP / fileP)
         txttypeS = self.paramL[2].strip()
         extS = pathP.suffix
-        with open(pathP, "r", encoding="utf-8") as f1:
+        with open(pathP, "r", encoding="md-8") as f1:
             txtfileS = f1.read()
-        with open(pathP, "r", encoding="utf-8") as f2:
+        with open(pathP, "r", encoding="md-8") as f2:
             txtfileL = f2.readlines()
         j = ""
         if extS == ".txt":
@@ -381,13 +394,13 @@ class CmdUTF:
             elif txttypeS == "tags":
                 xtagC = parse.RivtParseTag(
                     self.folderD, self.incrD,  self.localD)
-                xutfS, self.incrD, self.folderD, self.localD = xtagC.utf_parse(
+                xmdS, self.incrD, self.folderD, self.localD = xtagC.md_parse(
                     txtfileL)
-                return xutfS
+                return xmdS
         elif extS == ".html":
-            utfS = self.txthtml(txtfileL)
-            print(utfS)
-            return utfS
+            mdS = self.txthtml(txtfileL)
+            print(mdS)
+            return mdS
         elif extS == ".tex":
             soupS = self.txttex(txtfileS, txttypeS)
             print(soupS)
@@ -408,13 +421,13 @@ class CmdUTF:
                 showindex=False, colalign=alignL
             )
         )
-        utfS = output.getvalue()
+        mdS = output.getvalue()
         sys.stdout = old_stdout
         sys.stdout.flush()
 
-        return utfS
+        return mdS
 
-        # self.calcS += utfS + "\n"
+        # self.calcS += mdS + "\n"
         # self.rivtD.update(locals())
 
     def values(self):
@@ -465,18 +478,18 @@ class CmdUTF:
                     val2U = valU.cast_unit(eval(unit2S))
             valL.append([varS, val1U, val2U, descripS])
 
-        utfS = self.vtable(valL, hdrL, "rst", alignL)
+        mdS = self.vtable(valL, hdrL, "rst", alignL)
 
         self.localD.update(locals())
 
-        print(utfS + "\n")
-        return utfS
+        print(mdS + "\n")
+        return mdS
 
     def list(self):
         """5 import data from files
 
 
-            :return lineS: utf table
+            :return lineS: md table
             :rtype: str
         """
 

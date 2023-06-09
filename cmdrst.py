@@ -143,7 +143,7 @@ class CmdRST:
         """5 import data from files
 
 
-            :return lineS: utf table
+            :return lineS: md table
             :rtype: str
         """
 
@@ -175,7 +175,7 @@ class CmdRST:
     def project(self):
         """insert project information from csv, xlsx or syk
 
-            :return lineS: utf table
+            :return lineS: md table
             :rtype: str
         """
 
@@ -325,9 +325,9 @@ class CmdRST:
         pathP = Path(folderP / fileP)
         txttypeS = self.paramL[2].strip()
         extS = pathP.suffix
-        with open(pathP, "r", encoding="utf-8") as f1:
+        with open(pathP, "r", encoding="md-8") as f1:
             txtfileS = f1.read()
-        with open(pathP, "r", encoding="utf-8") as f2:
+        with open(pathP, "r", encoding="md-8") as f2:
             txtfileL = f2.readlines()
         j = ""
         if extS == ".txt":
@@ -380,7 +380,7 @@ class CmdRST:
 
         return rstS
 
-        # self.calcS += utfS + "\n"
+        # self.calcS += mdS + "\n"
         # self.rivtD.update(locals())
 
     def values(self):
@@ -431,5 +431,5 @@ class CmdRST:
 
         rstS = self.vtable(valL, hdrL, "rst", alignL)
 
-        # print(utfS + "\n")
+        # print(mdS + "\n")
         return rstS

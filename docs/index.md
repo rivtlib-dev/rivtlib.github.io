@@ -27,7 +27,7 @@ layout: default
 readable document markup and template language designed for calculation
 documents. **rivt-text** wraps and extends [reStructuredText
 (reST)](https://docutils.sourceforge.io/rst.html). Ouptut documents include
-UTF8, HTML and PDF from the same **rivt-text** file.
+md8, HTML and PDF from the same **rivt-text** file.
 
 The program prioritizes four design principles:
 
@@ -53,7 +53,7 @@ copyrighted material. The resource folder often contains binary information and
 is not designed to share.
 
 Output files are written to three folders, depending on the output type. The
-UTF8 output is written to a README.txt file within the text folder. It is
+md8 output is written to a README.txt file within the text folder. It is
 displayed and searchable on version control platforms like GitHub. PDF output
 is written to the report folder, and HTML output to the website folder.
 
@@ -68,7 +68,7 @@ is written to the report folder, and HTML output to the website folder.
             - README.txt (output file)
             - **[*r0101*_Gravity-Loads]**  (document name)
                 - *r0101.py* (document file) 
-                - README.txt (utf output file)
+                - README.txt (md output file)
                 - data1.csv (source file)
                 - functions1.py (function file)
             - **[*r0102_Seismic-Loads*]** (document name)

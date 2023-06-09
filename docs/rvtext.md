@@ -14,7 +14,7 @@ rvtext
     where *rs* is a *rivtapi* string. When running in an IDE (e.g. VSCode),
     each method can be run interactively using the standard cell decorator (#
     %%). If parameters are set in the file, or the entire calculation file is
-    run from the command line, the formatted output is written to a utf8, PDF,
+    run from the command line, the formatted output is written to a md8, PDF,
     or HTML file.
 
     The calculation input files are separated into two folders labeled *calc*
@@ -24,7 +24,7 @@ rvtext
     that include confidential project information or copyrights. The *files*
     folder is not intended to share.
 
-    Output files are written to three places. The UTF8 calc output is
+    Output files are written to three places. The md8 calc output is
     written to a *readme.txt* file in the *calc* folder that is automatically
     displayed on source control platforms like GitHub. PDF output is written to
     *report*, and HTML output to the *site* folder.
@@ -56,7 +56,7 @@ rvtext
      name              method, settings, snippet prefix
     ======= ===================================================================
 
-    repo    rv.R("""label | folder;default | utf;pdf;html;int | width#n
+    repo    rv.R("""label | folder;default | md;pdf;html;int | width#n
     rvr
                  ||text ||table ||github ||project
 
@@ -383,7 +383,7 @@ rv.X("""skip-string - can be anything.
 
             %%). If parameters are set in the file, or the entire calculation file is
 
-            run from the command line, the formatted output is written to a utf8, PDF,
+            run from the command line, the formatted output is written to a md8, PDF,
 
             or HTML file.
 
@@ -403,7 +403,7 @@ rv.X("""skip-string - can be anything.
 
         
 
-            Output files are written to three places. The UTF8 calc output is
+            Output files are written to three places. The md8 calc output is
 
             written to a *readme.txt* file in the *calc* folder that is automatically
 
@@ -467,7 +467,7 @@ rv.X("""skip-string - can be anything.
 
         
 
-            repo    rv.R("""label | folder;default | utf;pdf;html;int | width#n
+            repo    rv.R("""label | folder;default | md;pdf;html;int | width#n
 
             rvr
 
@@ -1169,7 +1169,7 @@ rv.X("""skip-string - can be anything.
 
         # initialize strings
 
-        utfS = """"""  # utf accumulating string
+        mdS = """"""  # md accumulating string
 
         rstS = """"""  # reST accumulating string
 
@@ -1203,9 +1203,9 @@ rv.X("""skip-string - can be anything.
 
             "secnumI": 0,  # section number
 
-            "secwidthI": 80,  # utf section width
+            "secwidthI": 80,  # md section width
 
-            "widthI": 77,  # utf body width
+            "widthI": 77,  # md body width
 
             "equI": 0,  # equation number
 
@@ -1305,11 +1305,11 @@ rv.X("""skip-string - can be anything.
 
         # set some defaults
 
-        typesL = ["inter", "utf", "pdf", "html"]
+        typesL = ["inter", "md", "pdf", "html"]
 
         rest_typeL = ["pdf", "html"]
 
-        typeS = "utf"
+        typeS = "md"
 
         methodS = "R"
 
@@ -1333,19 +1333,19 @@ rv.X("""skip-string - can be anything.
 
         
 
-            global utfS, rstS, pubS, tagcountD, genrestB
+            global mdS, rstS, pubS, tagcountD, genrestB
 
         
 
             if riv1L[0][0:2] == "--":
 
-                utfhS = "\n"
+                mdhS = "\n"
 
             elif riv1L[0][0:1] == "-":
 
                 headS = riv1L[0][1:]
 
-                utfhS = "\n" + headS + "\n"
+                mdhS = "\n" + headS + "\n"
 
             else:
 
@@ -1365,11 +1365,11 @@ rv.X("""skip-string - can be anything.
 
                 bordrS = tagcountD["secwidthI"] * "_"
 
-                utfhS = "\n" + bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
+                mdhS = "\n" + bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
 
-                utfS += utfhS
+                mdS += mdhS
 
-                print(utfhS)
+                print(mdhS)
 
         
 
@@ -1417,7 +1417,7 @@ rv.X("""skip-string - can be anything.
 
         
 
-            R('''section lable | Calc title | utf;pdf;html;inter | page#
+            R('''section lable | Calc title | md;pdf;html;inter | page#
 
                 Repo string commands.
 
@@ -1431,7 +1431,7 @@ rv.X("""skip-string - can be anything.
 
             :type rvrS: str
 
-            :return: formatted utf or reST string
+            :return: formatted md or reST string
 
             :rtype: str
 
@@ -1439,7 +1439,7 @@ rv.X("""skip-string - can be anything.
 
         
 
-            global utfS, rstS, valuexS, pubS, rivtvalD, foldersD, tagcountD, genrestB
+            global mdS, rstS, valuexS, pubS, rivtvalD, foldersD, tagcountD, genrestB
 
         
 
@@ -1451,7 +1451,7 @@ rv.X("""skip-string - can be anything.
 
             rvr1L[2] = "rivt Document"
 
-            rvr1L[3] = pubS = "utf"
+            rvr1L[3] = pubS = "md"
 
             rvr1L[4] = "80#1"
 
@@ -1473,33 +1473,33 @@ rv.X("""skip-string - can be anything.
 
         
 
-            rvC = rM.R2utf()
+            rvC = rM.R2md()
 
-            utfS += rvC.utf1(rvr1L)
+            mdS += rvC.md1(rvr1L)
 
             for i in rivtL[1:]:
 
-                rS = rC.parseRutf(i)
+                rS = rC.parseRmd(i)
 
-                utfS += rS
-
-        
-
-            intercmdS = """print(utfS)"""
+                mdS += rS
 
         
 
-            utfcmdS = """
+            intercmdS = """print(mdS)"""
 
-            utfoutP = Path(calcfileP / "README.txt")
+        
 
-            with open(utfoutP, "wb") as f1:
+            mdcmdS = """
 
-                f1.write(utfS.encode("UTF-8"))
+            mdoutP = Path(calcfileP / "README.txt")
 
-            logging.info("utf calc written, program complete")
+            with open(mdoutP, "wb") as f1:
 
-            print(utfS)
+                f1.write(mdS.encode("md-8"))
+
+            logging.info("md calc written, program complete")
+
+            print(mdS)
 
             print("", flush=True)
 
@@ -1581,7 +1581,7 @@ rv.X("""skip-string - can be anything.
 
             :type rviS: str
 
-            :return: formatted utf or reST string
+            :return: formatted md or reST string
 
             :rtype: str
 
@@ -1589,7 +1589,7 @@ rv.X("""skip-string - can be anything.
 
         
 
-            global utfS, rstS, valuexS, rivtvalD, foldersD, tagcountD, genrstB
+            global mdS, rstS, valuexS, rivtvalD, foldersD, tagcountD, genrstB
 
             cmdL = cmdM.rvcmds("I")     # returns list of valid commands
 
@@ -1597,13 +1597,13 @@ rv.X("""skip-string - can be anything.
 
             rviL = rviS.split("\n")     # list of rivt string lines
 
-            iC = iM._I2utf()
+            iC = iM._I2md()
 
         
 
             if typeS == "inter":
 
-                utfS += _tagM.tags(rvL[0])
+                mdS += _tagM.tags(rvL[0])
 
                 for i in rvL[1:]:
 
@@ -1611,15 +1611,15 @@ rv.X("""skip-string - can be anything.
 
                     if utL[1]:
 
-                        utfS += utL[0]
+                        mdS += utL[0]
 
                         continue
 
                     else:
 
-                        utfS += iC.i_utf(cmdL)
+                        mdS += iC.i_md(cmdL)
 
-                print(utfS)
+                print(mdS)
 
         
 
@@ -1647,25 +1647,25 @@ rv.X("""skip-string - can be anything.
 
             :type rvvS: str
 
-            :return: formatted utf or reST string
+            :return: formatted md or reST string
 
             :rtype: str
 
             """
 
-            global utfS, rstS, valuexS, rivtvalD, foldersD, tagcountD, genrstB
+            global mdS, rstS, valuexS, rivtvalD, foldersD, tagcountD, genrstB
 
             cmdL = cmdM.rvcmds("V")  # returns list of valid commands
 
             rvL = rvS.split("\n")  # line list of rivt string
 
-            vC = vM._V2utf()
+            vC = vM._V2md()
 
         
 
             if doctypeS == "term":
 
-                utfS += _tagM.tags(rvL[0])
+                mdS += _tagM.tags(rvL[0])
 
                 for i in rvL[1:]:
 
@@ -1673,15 +1673,15 @@ rv.X("""skip-string - can be anything.
 
                     if utL[1]:
 
-                        utfS += utL[0]
+                        mdS += utL[0]
 
                         continue
 
                     else:
 
-                        utfS += vC.v_utf(cmdL)
+                        mdS += vC.v_md(cmdL)
 
-                print(utfS)
+                print(mdS)
 
         
 
@@ -1707,7 +1707,7 @@ rv.X("""skip-string - can be anything.
 
             :type rvtS: str
 
-            :return: formatted utf or reST string
+            :return: formatted md or reST string
 
             :rtype: str
 
@@ -1715,19 +1715,19 @@ rv.X("""skip-string - can be anything.
 
             """
 
-            global utfS, rstS, rivtvalD, foldersD, tagL, cmdL, typeS, genrstB
+            global mdS, rstS, rivtvalD, foldersD, tagL, cmdL, typeS, genrstB
 
             cmdL = cmdM.rvcmds("T")  # returns list of valid commands
 
             rvL = rvtS.split("\n")  # line list of rivt string
 
-            tC = tM._T2utf()
+            tC = tM._T2md()
 
         
 
             if doctypeS == "term":
 
-                utfS += _tagM.tags(rvL[0])
+                mdS += _tagM.tags(rvL[0])
 
                 for i in rvL[1:]:
 
@@ -1735,15 +1735,15 @@ rv.X("""skip-string - can be anything.
 
                     if utL[1]:
 
-                        utfS += utL[0]
+                        mdS += utL[0]
 
                         continue
 
                     else:
 
-                        utfS += tC.t_utf(cmdL)
+                        mdS += tC.t_md(cmdL)
 
-                print(utfS)
+                print(mdS)
 
         
 
@@ -1922,7 +1922,7 @@ typesL
 ```
 
 ```python3
-utfS
+mdS
 ```
 
 ```python3
@@ -1959,7 +1959,7 @@ I('''section label | file folder; default
 
 | Type | Description |
 |---|---|
-| None | formatted utf or reST string |
+| None | formatted md or reST string |
 
 ??? example "View Source"
         def I(rviS: str):
@@ -1984,7 +1984,7 @@ I('''section label | file folder; default
 
             :type rviS: str
 
-            :return: formatted utf or reST string
+            :return: formatted md or reST string
 
             :rtype: str
 
@@ -1992,7 +1992,7 @@ I('''section label | file folder; default
 
         
 
-            global utfS, rstS, valuexS, rivtvalD, foldersD, tagcountD, genrstB
+            global mdS, rstS, valuexS, rivtvalD, foldersD, tagcountD, genrstB
 
             cmdL = cmdM.rvcmds("I")     # returns list of valid commands
 
@@ -2000,13 +2000,13 @@ I('''section label | file folder; default
 
             rviL = rviS.split("\n")     # list of rivt string lines
 
-            iC = iM._I2utf()
+            iC = iM._I2md()
 
         
 
             if typeS == "inter":
 
-                utfS += _tagM.tags(rvL[0])
+                mdS += _tagM.tags(rvL[0])
 
                 for i in rvL[1:]:
 
@@ -2014,15 +2014,15 @@ I('''section label | file folder; default
 
                     if utL[1]:
 
-                        utfS += utL[0]
+                        mdS += utL[0]
 
                         continue
 
                     else:
 
-                        utfS += iC.i_utf(cmdL)
+                        mdS += iC.i_md(cmdL)
 
-                print(utfS)
+                print(mdS)
 
     
 ### R
@@ -2036,7 +2036,7 @@ def R(
     
 processes a Repo string and sets output type
 
-R('''section lable | Calc title | utf;pdf;html;inter | page#
+R('''section lable | Calc title | md;pdf;html;inter | page#
     Repo string commands.
     ||text, ||table, ||github, ||project, ||append, ||report
 ''')
@@ -2051,7 +2051,7 @@ R('''section lable | Calc title | utf;pdf;html;inter | page#
 
 | Type | Description |
 |---|---|
-| None | formatted utf or reST string |
+| None | formatted md or reST string |
 
 ??? example "View Source"
         def R(rvrS: str):
@@ -2060,7 +2060,7 @@ R('''section lable | Calc title | utf;pdf;html;inter | page#
 
         
 
-            R('''section lable | Calc title | utf;pdf;html;inter | page#
+            R('''section lable | Calc title | md;pdf;html;inter | page#
 
                 Repo string commands.
 
@@ -2074,7 +2074,7 @@ R('''section lable | Calc title | utf;pdf;html;inter | page#
 
             :type rvrS: str
 
-            :return: formatted utf or reST string
+            :return: formatted md or reST string
 
             :rtype: str
 
@@ -2082,7 +2082,7 @@ R('''section lable | Calc title | utf;pdf;html;inter | page#
 
         
 
-            global utfS, rstS, valuexS, pubS, rivtvalD, foldersD, tagcountD, genrestB
+            global mdS, rstS, valuexS, pubS, rivtvalD, foldersD, tagcountD, genrestB
 
         
 
@@ -2094,7 +2094,7 @@ R('''section lable | Calc title | utf;pdf;html;inter | page#
 
             rvr1L[2] = "rivt Document"
 
-            rvr1L[3] = pubS = "utf"
+            rvr1L[3] = pubS = "md"
 
             rvr1L[4] = "80#1"
 
@@ -2116,33 +2116,33 @@ R('''section lable | Calc title | utf;pdf;html;inter | page#
 
         
 
-            rvC = rM.R2utf()
+            rvC = rM.R2md()
 
-            utfS += rvC.utf1(rvr1L)
+            mdS += rvC.md1(rvr1L)
 
             for i in rivtL[1:]:
 
-                rS = rC.parseRutf(i)
+                rS = rC.parseRmd(i)
 
-                utfS += rS
-
-        
-
-            intercmdS = """print(utfS)"""
+                mdS += rS
 
         
 
-            utfcmdS = """
+            intercmdS = """print(mdS)"""
 
-            utfoutP = Path(calcfileP / "README.txt")
+        
 
-            with open(utfoutP, "wb") as f1:
+            mdcmdS = """
 
-                f1.write(utfS.encode("UTF-8"))
+            mdoutP = Path(calcfileP / "README.txt")
 
-            logging.info("utf calc written, program complete")
+            with open(mdoutP, "wb") as f1:
 
-            print(utfS)
+                f1.write(mdS.encode("md-8"))
+
+            logging.info("md calc written, program complete")
+
+            print(mdS)
 
             print("", flush=True)
 
@@ -2225,7 +2225,7 @@ T('''section label | file folder; default
 
 | Type | Description |
 |---|---|
-| None | formatted utf or reST string |
+| None | formatted md or reST string |
 
 ??? example "View Source"
         def T(rvtS: str):
@@ -2248,7 +2248,7 @@ T('''section label | file folder; default
 
             :type rvtS: str
 
-            :return: formatted utf or reST string
+            :return: formatted md or reST string
 
             :rtype: str
 
@@ -2256,19 +2256,19 @@ T('''section label | file folder; default
 
             """
 
-            global utfS, rstS, rivtvalD, foldersD, tagL, cmdL, typeS, genrstB
+            global mdS, rstS, rivtvalD, foldersD, tagL, cmdL, typeS, genrstB
 
             cmdL = cmdM.rvcmds("T")  # returns list of valid commands
 
             rvL = rvtS.split("\n")  # line list of rivt string
 
-            tC = tM._T2utf()
+            tC = tM._T2md()
 
         
 
             if doctypeS == "term":
 
-                utfS += _tagM.tags(rvL[0])
+                mdS += _tagM.tags(rvL[0])
 
                 for i in rvL[1:]:
 
@@ -2276,15 +2276,15 @@ T('''section label | file folder; default
 
                     if utL[1]:
 
-                        utfS += utL[0]
+                        mdS += utL[0]
 
                         continue
 
                     else:
 
-                        utfS += tC.t_utf(cmdL)
+                        mdS += tC.t_md(cmdL)
 
-                print(utfS)
+                print(mdS)
 
     
 ### V
@@ -2314,7 +2314,7 @@ V('''section label | file folder; default | sub; nosub | save; nosave
 
 | Type | Description |
 |---|---|
-| None | formatted utf or reST string |
+| None | formatted md or reST string |
 
 ??? example "View Source"
         def V(rvvS: str):
@@ -2339,25 +2339,25 @@ V('''section label | file folder; default | sub; nosub | save; nosave
 
             :type rvvS: str
 
-            :return: formatted utf or reST string
+            :return: formatted md or reST string
 
             :rtype: str
 
             """
 
-            global utfS, rstS, valuexS, rivtvalD, foldersD, tagcountD, genrstB
+            global mdS, rstS, valuexS, rivtvalD, foldersD, tagcountD, genrstB
 
             cmdL = cmdM.rvcmds("V")  # returns list of valid commands
 
             rvL = rvS.split("\n")  # line list of rivt string
 
-            vC = vM._V2utf()
+            vC = vM._V2md()
 
         
 
             if doctypeS == "term":
 
-                utfS += _tagM.tags(rvL[0])
+                mdS += _tagM.tags(rvL[0])
 
                 for i in rvL[1:]:
 
@@ -2365,15 +2365,15 @@ V('''section label | file folder; default | sub; nosub | save; nosave
 
                     if utL[1]:
 
-                        utfS += utL[0]
+                        mdS += utL[0]
 
                         continue
 
                     else:
 
-                        utfS += vC.v_utf(cmdL)
+                        mdS += vC.v_md(cmdL)
 
-                print(utfS)
+                print(mdS)
 
     
 ### X
@@ -2459,19 +2459,19 @@ format method headings - first line of string
 
         
 
-            global utfS, rstS, pubS, tagcountD, genrestB
+            global mdS, rstS, pubS, tagcountD, genrestB
 
         
 
             if riv1L[0][0:2] == "--":
 
-                utfhS = "\n"
+                mdhS = "\n"
 
             elif riv1L[0][0:1] == "-":
 
                 headS = riv1L[0][1:]
 
-                utfhS = "\n" + headS + "\n"
+                mdhS = "\n" + headS + "\n"
 
             else:
 
@@ -2491,11 +2491,11 @@ format method headings - first line of string
 
                 bordrS = tagcountD["secwidthI"] * "_"
 
-                utfhS = "\n" + bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
+                mdhS = "\n" + bordrS + "\n\n" + headS + "\n" + bordrS + "\n"
 
-                utfS += utfhS
+                mdS += mdhS
 
-                print(utfhS)
+                print(mdhS)
 
         
 

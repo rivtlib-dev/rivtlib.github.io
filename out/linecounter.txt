@@ -47,7 +47,7 @@ __pycache__\tags.cpython-38.pyc, it is a binary file.
 __pycache__\units.cpython-38.pyc, it is a binary file.
 __pycache__\write.cpython-38.pyc, it is a binary file.
 cmdrst.py, code is 448, comment is 34, blank is 54.
-cmdutf.py, code is 425, comment is 32, blank is 58.
+cmdmd.py, code is 425, comment is 32, blank is 58.
 docs\_config.yml, code is 54, comment is 1, blank is 0.
 docs\_includes\head_custom.html, code is 1, comment is 0, blank is 0.
 docs\_sass\color_schemes\rivt.scss, code is 107, comment is 25, blank is 14.
@@ -106,7 +106,7 @@ scripts\rst2xml.py, code is 9, comment is 4, blank is 8.
 scripts\tex2text.py, code is 136, comment is 4, blank is 6.
 setup.py, code is 15, comment is 10, blank is 1.
 tagrst.py, code is 140, comment is 1, blank is 85.
-tagutf.py, code is 248, comment is 29, blank is 89.
+tagmd.py, code is 248, comment is 29, blank is 89.
 tests\rivt_Example_Test_01\report\report1.txt, code is 1, comment is 0, blank is 0.
 tests\rivt_Example_Test_01\resource\01_resource\data1.txt, code is 1, comment is 0, blank is 0.
 tests\rivt_Example_Test_01\resource\02_resource\data2.txt, code is 1, comment is 0, blank is 0.
@@ -195,7 +195,7 @@ __pycache__\tags.cpython-38.pyc, it is a binary file.
 __pycache__\units.cpython-38.pyc, it is a binary file.
 __pycache__\write.cpython-38.pyc, it is a binary file.
 cmdrst.py, code is 326, comment is 17, blank is 33.
-cmdutf.py, code is 411, comment is 27, blank is 50.
+cmdmd.py, code is 411, comment is 27, blank is 50.
 docs\_config.yml, code is 54, comment is 1, blank is 0.
 docs\_includes\head_custom.html, code is 1, comment is 0, blank is 0.
 docs\_sass\color_schemes\rivt.scss, code is 107, comment is 25, blank is 14.
@@ -254,7 +254,7 @@ scripts\rst2xml.py, code is 9, comment is 4, blank is 8.
 scripts\tex2text.py, code is 136, comment is 4, blank is 6.
 setup.py, code is 15, comment is 10, blank is 1.
 tagrst.py, code is 225, comment is 30, blank is 93.
-tagutf.py, code is 247, comment is 32, blank is 93.
+tagmd.py, code is 247, comment is 32, blank is 93.
 tests\rivt_Example_Test_01\report\report1.txt, code is 1, comment is 0, blank is 0.
 tests\rivt_Example_Test_01\resource\01_resource\data1.txt, code is 1, comment is 0, blank is 0.
 tests\rivt_Example_Test_01\resource\02_resource\data2.txt, code is 1, comment is 0, blank is 0.
@@ -343,7 +343,7 @@ __pycache__\tags.cpython-38.pyc, it is a binary file.
 __pycache__\units.cpython-38.pyc, it is a binary file.
 __pycache__\write.cpython-38.pyc, it is a binary file.
 cmdrst.py, code is 403, comment is 21, blank is 57.
-cmdutf.py, code is 446, comment is 27, blank is 64.
+cmdmd.py, code is 446, comment is 27, blank is 64.
 docs\_config.yml, code is 54, comment is 1, blank is 0.
 docs\_includes\head_custom.html, code is 1, comment is 0, blank is 0.
 docs\_sass\color_schemes\rivt.scss, code is 107, comment is 25, blank is 14.
@@ -402,7 +402,7 @@ scripts\rst2xml.py, code is 9, comment is 4, blank is 8.
 scripts\tex2text.py, code is 136, comment is 4, blank is 6.
 setup.py, code is 15, comment is 10, blank is 1.
 tagrst.py, code is 234, comment is 30, blank is 94.
-tagutf.py, code is 251, comment is 32, blank is 95.
+tagmd.py, code is 251, comment is 32, blank is 95.
 tests\rivt_Example_Test_01\report\report1.txt, code is 1, comment is 0, blank is 0.
 tests\rivt_Example_Test_01\resource\01_resource\data1.txt, code is 1, comment is 0, blank is 0.
 tests\rivt_Example_Test_01\resource\02_resource\data2.txt, code is 1, comment is 0, blank is 0.

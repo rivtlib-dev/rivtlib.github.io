@@ -1,13 +1,13 @@
 # Module rv_v
 
-V2utf and V2rst classes
+V2md and V2rst classes
 
 None
 
 ??? example "View Source"
         #!python
 
-        """V2utf and V2rst classes
+        """V2md and V2rst classes
 
         """
 
@@ -69,15 +69,15 @@ None
 
         
 
-        class V2utf:
+        class V2md:
 
-            """convert value-string to UTF8 calc"""
+            """convert value-string to md8 calc"""
 
         
 
             def __init__(self, strL: list, folderD, cmdD, sectD):
 
-                """convert insert-string to UTF8 calc-string
+                """convert insert-string to md8 calc-string
 
         
 
@@ -95,7 +95,7 @@ None
 
         
 
-                self.utfS = """"""  # utf calc string
+                self.mdS = """"""  # md calc string
 
                 self.strL = strL
 
@@ -205,15 +205,15 @@ None
 
                         val2U = val1U
 
-                    utfS = vL[0]
+                    mdS = vL[0]
 
                     spS = "Eq(" + varS + ",(" + valS + "))"
 
-                    utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+                    mdS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
 
-                    print("\n" + utfS + "\n")  # pretty print equation
+                    print("\n" + mdS + "\n")  # pretty print equation
 
-                    self.calcS += "\n" + utfS + "\n"
+                    self.calcS += "\n" + mdS + "\n"
 
                     eqS = sp.sympify(valS)
 
@@ -339,15 +339,15 @@ None
 
                 )
 
-                utfS = output.getvalue()
+                mdS = output.getvalue()
 
                 sys.stdout = old_stdout
 
                 sys.stdout.flush()
 
-                print(utfS)
+                print(mdS)
 
-                self.calcS += utfS + "\n"
+                self.calcS += mdS + "\n"
 
                 self.rivtD.update(locals())
 
@@ -519,13 +519,13 @@ None
 
                 eformat = ""
 
-                utfS = eqL[0].strip()
+                mdS = eqL[0].strip()
 
                 descripS = eqL[3]
 
                 parD = dict(eqL[1])
 
-                varS = utfS.split("=")
+                varS = mdS.split("=")
 
                 resultS = vars[0].strip() + " = " + str(eval(vars[1]))
 
@@ -535,17 +535,17 @@ None
 
                     # sps = sps.encode('unicode-escape').decode()
 
-                    utfs = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
+                    mds = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
 
-                    print(utfs)
+                    print(mds)
 
-                    self.calcl.append(utfs)
+                    self.calcl.append(mds)
 
                 except:
 
-                    print(utfs)
+                    print(mds)
 
-                    self.calcl.append(utfs)
+                    self.calcl.append(mds)
 
                 try:
 
@@ -651,7 +651,7 @@ None
 
                 Return:
 
-                calcS (list): utf formatted calc-string (appended)
+                calcS (list): md formatted calc-string (appended)
 
                 setsectD (dict): section settings
 
@@ -1139,13 +1139,13 @@ None
 
                 eformat = ""
 
-                utfS = eqL[0].strip()
+                mdS = eqL[0].strip()
 
                 descripS = eqL[3]
 
                 parD = dict(eqL[1])
 
-                varS = utfS.split("=")
+                varS = mdS.split("=")
 
                 resultS = vars[0].strip() + " = " + str(eval(vars[1]))
 
@@ -1155,13 +1155,13 @@ None
 
                     # sps = sps.encode('unicode-escape').decode()
 
-                    utfs = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
+                    mds = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
 
-                    self.calcl.append(utfs)
+                    self.calcl.append(mds)
 
                 except:
 
-                    self.calcl.append(utfs)
+                    self.calcl.append(mds)
 
                 try:
 
@@ -1826,7 +1826,7 @@ def v_rst(
 parse value-string and set method
 
 Return:
-calcS (list): utf formatted calc-string (appended)
+calcS (list): md formatted calc-string (appended)
 setsectD (dict): section settings
 setcmdD (dict): command settings
 rivtD (list): calculation results
@@ -1841,7 +1841,7 @@ exportS (list): value strings for export
 
                 Return:
 
-                calcS (list): utf formatted calc-string (appended)
+                calcS (list): md formatted calc-string (appended)
 
                 setsectD (dict): section settings
 
@@ -2257,13 +2257,13 @@ substitute numbers for variables in printed output
 
                 eformat = ""
 
-                utfS = eqL[0].strip()
+                mdS = eqL[0].strip()
 
                 descripS = eqL[3]
 
                 parD = dict(eqL[1])
 
-                varS = utfS.split("=")
+                varS = mdS.split("=")
 
                 resultS = vars[0].strip() + " = " + str(eval(vars[1]))
 
@@ -2273,13 +2273,13 @@ substitute numbers for variables in printed output
 
                     # sps = sps.encode('unicode-escape').decode()
 
-                    utfs = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
+                    mds = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
 
-                    self.calcl.append(utfs)
+                    self.calcl.append(mds)
 
                 except:
 
-                    self.calcl.append(utfs)
+                    self.calcl.append(mds)
 
                 try:
 
@@ -2539,10 +2539,10 @@ import values from files
 
                 self.rivtD.update(locals())
 
-### V2utf
+### V2md
 
 ```python3
-class V2utf(
+class V2md(
     strL: list,
     folderD,
     cmdD,
@@ -2648,15 +2648,15 @@ assign values to variables and equations
 
                         val2U = val1U
 
-                    utfS = vL[0]
+                    mdS = vL[0]
 
                     spS = "Eq(" + varS + ",(" + valS + "))"
 
-                    utfS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+                    mdS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
 
-                    print("\n" + utfS + "\n")  # pretty print equation
+                    print("\n" + mdS + "\n")  # pretty print equation
 
-                    self.calcS += "\n" + utfS + "\n"
+                    self.calcS += "\n" + mdS + "\n"
 
                     eqS = sp.sympify(valS)
 
@@ -2935,13 +2935,13 @@ substitute numbers for variables in printed output
 
                 eformat = ""
 
-                utfS = eqL[0].strip()
+                mdS = eqL[0].strip()
 
                 descripS = eqL[3]
 
                 parD = dict(eqL[1])
 
-                varS = utfS.split("=")
+                varS = mdS.split("=")
 
                 resultS = vars[0].strip() + " = " + str(eval(vars[1]))
 
@@ -2951,17 +2951,17 @@ substitute numbers for variables in printed output
 
                     # sps = sps.encode('unicode-escape').decode()
 
-                    utfs = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
+                    mds = sp.pretty(sp.sympify(eqS, _clash2, evaluate=False))
 
-                    print(utfs)
+                    print(mds)
 
-                    self.calcl.append(utfs)
+                    self.calcl.append(mds)
 
                 except:
 
-                    print(utfs)
+                    print(mds)
 
-                    self.calcl.append(utfs)
+                    self.calcl.append(mds)
 
                 try:
 
@@ -3088,15 +3088,15 @@ write value table
 
                 )
 
-                utfS = output.getvalue()
+                mdS = output.getvalue()
 
                 sys.stdout = old_stdout
 
                 sys.stdout.flush()
 
-                print(utfS)
+                print(mdS)
 
-                self.calcS += utfS + "\n"
+                self.calcS += mdS + "\n"
 
                 self.rivtD.update(locals())
 

@@ -1,13 +1,13 @@
 # Module rv_r
 
-Class R2utf and R2rst
+Class R2md and R2rst
 
 None
 
 ??? example "View Source"
         #!python
 
-        """Class R2utf and R2rst"""
+        """Class R2md and R2rst"""
 
         
 
@@ -53,9 +53,9 @@ None
 
         
 
-        class R2utf:
+        class R2md:
 
-            """convert repo-string to UTF8 calc"""
+            """convert repo-string to md8 calc"""
 
         
 
@@ -75,7 +75,7 @@ None
 
         
 
-                self.utfS = """"""  # utf calc string
+                self.mdS = """"""  # md calc string
 
                 self.strL = strL
 
@@ -87,7 +87,7 @@ None
 
         
 
-            def parseRutf(self, strL: list, cmdD: dict, cmdL: list, methL: list):
+            def parseRmd(self, strL: list, cmdD: dict, cmdL: list, methL: list):
 
                 """_summary_
 
@@ -145,7 +145,7 @@ None
 
         
 
-                    self.utfS += uS.rstrip() + "\n"
+                    self.mdS += uS.rstrip() + "\n"
 
         
 
@@ -153,7 +153,7 @@ None
 
         
 
-            def utf1():
+            def md1():
 
                 pass
 
@@ -549,10 +549,10 @@ def rst1(
 
                 pass
 
-### R2utf
+### R2md
 
 ```python3
-class R2utf(
+class R2md(
     strL: list,
     folderD: dict,
     tagvalD: dict
@@ -562,10 +562,10 @@ class R2utf(
 #### Methods
 
     
-#### parseRutf
+#### parseRmd
 
 ```python3
-def parseRutf(
+def parseRmd(
     self,
     strL: list,
     cmdD: dict,
@@ -593,7 +593,7 @@ _summary_
 | _type_ | _description_ |
 
 ??? example "View Source"
-            def parseRutf(self, strL: list, cmdD: dict, cmdL: list, methL: list):
+            def parseRmd(self, strL: list, cmdD: dict, cmdL: list, methL: list):
 
                 """_summary_
 
@@ -651,17 +651,17 @@ _summary_
 
         
 
-                    self.utfS += uS.rstrip() + "\n"
+                    self.mdS += uS.rstrip() + "\n"
 
         
 
                 return self.calcS, self.setsectD
 
     
-#### utf1
+#### md1
 
 ```python3
-def utf1(
+def md1(
     
 )
 ```
@@ -669,6 +669,6 @@ def utf1(
     
 
 ??? example "View Source"
-            def utf1():
+            def md1():
 
                 pass

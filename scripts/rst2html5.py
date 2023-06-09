@@ -1,5 +1,5 @@
 #!/Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8
-# -*- coding: utf8 -*-
+# -*- coding: md8 -*-
 # :Copyright: © 2015 Günter Milde.
 # :License: Released under the terms of the `2-Clause BSD license`_, in short:
 #
@@ -21,7 +21,7 @@ The output also conforms to XHTML 1.0 transitional
 """
 
 try:
-    import locale # module missing in Jython
+    import locale  # module missing in Jython
     locale.setlocale(locale.LC_ALL, '')
 except locale.Error:
     pass

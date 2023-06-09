@@ -226,7 +226,7 @@
                     "blank": 58,
                     "code": 425,
                     "comment": 32,
-                    "filename": "cmdutf.py"
+                    "filename": "cmdmd.py"
                 },
                 {
                     "blank": 0,
@@ -598,7 +598,7 @@
                     "blank": 89,
                     "code": 248,
                     "comment": 29,
-                    "filename": "tagutf.py"
+                    "filename": "tagmd.py"
                 },
                 {
                     "blank": 0,
@@ -1059,7 +1059,7 @@
                     "blank": 50,
                     "code": 411,
                     "comment": 27,
-                    "filename": "cmdutf.py"
+                    "filename": "cmdmd.py"
                 },
                 {
                     "blank": 0,
@@ -1431,7 +1431,7 @@
                     "blank": 93,
                     "code": 247,
                     "comment": 32,
-                    "filename": "tagutf.py"
+                    "filename": "tagmd.py"
                 },
                 {
                     "blank": 0,
@@ -1892,7 +1892,7 @@
                     "blank": 64,
                     "code": 446,
                     "comment": 27,
-                    "filename": "cmdutf.py"
+                    "filename": "cmdmd.py"
                 },
                 {
                     "blank": 0,
@@ -2264,7 +2264,7 @@
                     "blank": 95,
                     "code": 251,
                     "comment": 32,
-                    "filename": "tagutf.py"
+                    "filename": "tagmd.py"
                 },
                 {
                     "blank": 0,

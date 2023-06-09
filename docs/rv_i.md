@@ -1,11 +1,11 @@
 # Module rv_i
 
-I2utf and I2rst classes
+I2md and I2rst classes
 
 None
 
 ??? example "View Source"
-        """I2utf and I2rst classes
+        """I2md and I2rst classes
 
         """
 
@@ -85,15 +85,15 @@ None
 
         
 
-        class I2utf:
+        class I2md:
 
-            """convert insert-string to UTF8 calc"""
+            """convert insert-string to md8 calc"""
 
         
 
             def __init__(self, strL: list, folderD, cmdD, sectD):
 
-                """convert insert-string to UTF8 calc-string
+                """convert insert-string to md8 calc-string
 
         
 
@@ -111,7 +111,7 @@ None
 
         
 
-                self.utfS = """"""  # utf calc string
+                self.mdS = """"""  # md calc string
 
                 self.strL = strL
 
@@ -155,9 +155,9 @@ None
 
         
 
-            def parseUTF(self, cmdL: list, methL: list, tagL: list):
+            def parsemd(self, cmdL: list, methL: list, tagL: list):
 
-                """parse rivt-string to UTF
+                """parse rivt-string to md
 
         
 
@@ -517,7 +517,7 @@ None
 
                 Returns:
 
-                    calcS (list): utf formatted calc-string (appended)
+                    calcS (list): md formatted calc-string (appended)
 
                     setsectD (dict): section settings
 
@@ -1142,7 +1142,7 @@ parse insert-string
 
 | Type | Description |
 |---|---|
-| None | calcS (list): utf formatted calc-string (appended)
+| None | calcS (list): md formatted calc-string (appended)
 setsectD (dict): section settings
 setcmdD (dict): command settings |
 
@@ -1155,7 +1155,7 @@ setcmdD (dict): command settings |
 
                 Returns:
 
-                    calcS (list): utf formatted calc-string (appended)
+                    calcS (list): md formatted calc-string (appended)
 
                     setsectD (dict): section settings
 
@@ -1355,10 +1355,10 @@ parse rivt-string to reST
 
                         self.restS += uS.rstrip() + "\n"
 
-### I2utf
+### I2md
 
 ```python3
-class I2utf(
+class I2md(
     strL: list,
     folderD,
     cmdD,
@@ -1369,10 +1369,10 @@ class I2utf(
 #### Methods
 
     
-#### parseUTF
+#### parsemd
 
 ```python3
-def parseUTF(
+def parsemd(
     self,
     cmdL: list,
     methL: list,
@@ -1381,7 +1381,7 @@ def parseUTF(
 ```
 
     
-parse rivt-string to UTF
+parse rivt-string to md
 
 **Parameters:**
 
@@ -1392,9 +1392,9 @@ parse rivt-string to UTF
 | tagL | list | tag list | None |
 
 ??? example "View Source"
-            def parseUTF(self, cmdL: list, methL: list, tagL: list):
+            def parsemd(self, cmdL: list, methL: list, tagL: list):
 
-                """parse rivt-string to UTF
+                """parse rivt-string to md
 
         
 

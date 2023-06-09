@@ -105,7 +105,7 @@ None
 
         
 
-        def e_utf(self) -> tuple:
+        def e_md(self) -> tuple:
 
             """parse eval-string
 
@@ -113,7 +113,7 @@ None
 
             Returns:
 
-                calcS (list): utf formatted calc-string (appended)
+                calcS (list): md formatted calc-string (appended)
 
                 setsectD (dict): section settings
 
@@ -161,7 +161,7 @@ None
 
         
 
-            self._parseUTF("insert", icmdL, imethL, itagL)
+            self._parsemd("insert", icmdL, imethL, itagL)
 
         
 
@@ -309,7 +309,7 @@ None
 
             Return:
 
-                uS (str): utf string
+                uS (str): md string
 
             """
 
@@ -551,7 +551,7 @@ None
 
             Return:
 
-                uS (str): utf string
+                uS (str): md string
 
             """
 
@@ -628,10 +628,10 @@ None
 ## Functions
 
     
-### e_utf
+### e_md
 
 ```python3
-def e_utf(
+def e_md(
     self
 ) -> tuple
 ```
@@ -643,12 +643,12 @@ parse eval-string
 
 | Type | Description |
 |---|---|
-| None | calcS (list): utf formatted calc-string (appended)
+| None | calcS (list): md formatted calc-string (appended)
 setsectD (dict): section settings
 setcmdD (dict): command settings |
 
 ??? example "View Source"
-        def e_utf(self) -> tuple:
+        def e_md(self) -> tuple:
 
             """parse eval-string
 
@@ -656,7 +656,7 @@ setcmdD (dict): command settings |
 
             Returns:
 
-                calcS (list): utf formatted calc-string (appended)
+                calcS (list): md formatted calc-string (appended)
 
                 setsectD (dict): section settings
 
@@ -704,7 +704,7 @@ setcmdD (dict): command settings |
 
         
 
-            self._parseUTF("insert", icmdL, imethL, itagL)
+            self._parsemd("insert", icmdL, imethL, itagL)
 
         
 
@@ -984,7 +984,7 @@ format line with tag
 | lineS | str | rivt-string line with tag | None |
 | sectD | dict | section dictionary
 Return: | None |
-| uS | str | utf string | None |
+| uS | str | md string | None |
 
 ??? example "View Source"
         def tags(self, lineS: str, sectD: dict) -> tuple:
@@ -1001,7 +1001,7 @@ Return: | None |
 
             Return:
 
-                uS (str): utf string
+                uS (str): md string
 
             """
 

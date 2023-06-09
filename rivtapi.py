@@ -51,39 +51,38 @@ prfxS = docbaseS[1:3]
 dataP = Path(docP.parent / "data")
 projP = docP.parent.parent.parent  # rivt project folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
-rconfigP = Path(docP.parent.parent / "r0000-config")
+pubcfgP = Path(docP.parent.parent / "r0000-config")
 
 # config file
-rvtlocalP = " "
 config = ConfigParser()
-config.read(Path(rconfigP, "rivt.ini"))
-rvtlocalP = config.get('project', 'resource')
+config.read(Path(pubcfgP, "rivt.ini"))
+priP = config.get('project', 'resource')
 titleS = config.get('report', 'title')
 headS = config.get('utf', 'head')
 footS = config.get('utf', 'foot')
 # print(f"{rvconfigP=}")
 # print(f"{rvtlocalP=}")
 
-for fileS in os.listdir(rvtlocalP):
+for fileS in os.listdir(priP):
     if fnmatch.fnmatch(fileS[1:5], prfxS + "-*"):
         refileP = Path(fileS)  # resource folder
         break
 
-resourceP = Path(rvtlocalP, refileP)
+resourceP = Path(priP, refileP)
 doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = titleS + " [ " + doctitleS.replace("-", " ") + " ] "
 divtitleS = (refileP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
-siteP = Path(rvtlocalP, "website")  # site folder path
-reportP = Path(rvtlocalP, "report")  # report folder path
-retempP = Path(rvtlocalP, "r00-config")
+siteP = Path(priP, "website")  # site folder path
+reportP = Path(priP, "report")  # report folder path
+retempP = Path(priP, "r00-config")
 rivtP = Path("rivtapi.py").parent  # rivt package path
 pypath = os.path.dirname(sys.executable)
 rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
 errlogP = Path(retempP, "rivt-log.txt")
 styleP = Path   # file name added at runtime
-tempfileS = docbaseS.replace("r", "v") + ".csv"
-saveP = Path(dataP, tempfileS)
+valfileS = docbaseS.replace("r", "v") + ".csv"
+saveP = Path(dataP, valfileS)
 
 
 # global dicts and vars

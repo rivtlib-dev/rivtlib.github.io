@@ -50,16 +50,18 @@ Folder Structure Example (folders in [])
 ========================================
 
 - [project-folder] (may contain arbitrary folders besides the required four)
-    - [*rivtpublic-*project-name]
+    - [*rivtpublic-*project-name]       (shared public files)
         - README.md                     (project README)
-        - units.py                      (units over-ride)              
-        - rivt.ini                      
-        - [*r0101-*gravity-loads]       (rivt document title)
-            -[*data*]      
-                - data1.csv             (a data source file)
-                - functions1.py         (a function file)
+        - [*r000-config]                (public config files)        
+            - units.py                  (unit over-ride)              
+            - rivt.ini                  (config file)
+        - [*r0101-*gravity-loads]       (division sub-title)
+            -[*data*]                   (static data input)
+                - data1.csv             (public data)
+                - pic1.png              (public data)
             - *r0101.py*                (rivt file name) 
-            - README.md                 (markdown output)
+            - README.md                 (output file)
+            - functions1.py             (function file)
         - [*r0102-*seismic-loads] 
             -[*data*]      
                 - data2.csv 
@@ -72,25 +74,25 @@ Folder Structure Example (folders in [])
                 - functions3.py 
             - *r0201.py*
             - README.md
-    - [*rivtprivate-*project-name]
-        - [*r00-*config]
-            - pdf_style.sty            (LaTeX style override)
-        - [*r01-*overview-and-loads]   (division title)
-            - image1.jpg
-            - project_data.txt         (project data)
-        - [*r02-*foundations]   
+    - [*rivtprivate-*project-name]      (private files)
+        - [*r00-*config]                (private config files)
+            - pdf_style.sty             (LaTeX style override)
+        - [*r01-*Overview-and-Loads]    (division title)
+            - image1.jpg                (private data)
+            - project_data.txt          (private data)
+        - [*r02-*Foundations]   
             - image2.jpg
             - attachment.pdf    
-        - [*docs*]                     (pdf and html output files)
+        - [*docs*]                      (pdf and html output files)
             - [*resources*]             
                 - image1.png
                 - image2.png
                 - html-style.css
-            - project-name.pdf         (compiled PDF document)        
+            - index.html                (site html)                    
+            - project-name.pdf          (compiled PDF report)        
             - rv0101-gravity-loads.pdf
             - rv0102-seismic-loads.pdf
             - rv0201-pile-design.pdf           
-            - index.html                    
             - rv0101-gravity-loads.html
             - rv0102-seismic-loads.html
             - rv0201-pile-design.html
@@ -114,42 +116,42 @@ formatting for that rivt-string.
 
 Tags format a line or block of text and are generally denoted with _[tag] at
 the end of a line. Block tags start the block of text with _[[tag]] and end
-with _[[end]]. The "=" and ":=" tags used in the Value method are the
+with _[[q]]. The "=" and ":=" tags used in the Value method are the
 exceptions.
 
 
 ======= ===================================================================
- name                     API Functions (VSCode snippet prefix)
+ name             API Functions and commands (VSCode snippet prefix)
 ======= ===================================================================
 
-Repo    rv.R("""label | rgb
+Repo    rv.R("""label | rgb;default
 (rvr)
-                ||github (git)
                 ||project (proj)
+                ||github (git)
                 ||append (app)
 
                 """)
 
-Insert  rv.I("""label 
+Insert  rv.I("""label | rgb;default
 (rvi)
+                ||image (ima)
                 ||text (tex)
                 ||table (tab)
-                ||image (ima)
 
                 """)
 
-Values  rv.V("""label | sub;nosub | rgb
+Values  rv.V("""label | sub;nosub | rgb;default
 (rvv)
+                ||image (ima)
                 ||text (tex)
                 ||table (tab)
-                ||image (ima)
                 ||value (val)
 
                 """)
 
-Tools  rv.T("""label | print; noprint | include; exclude | rgb
+Tools  rv.T("""label | print; noprint | name; noname | rgb;default
 (rvt)
-                Python simple statements
+                Python code
 
                 """)
 
@@ -191,15 +193,15 @@ write   rv.writedoc()
  tags                                   description 
 ============================ ============================================
 
-I,V line formats:        
+I,V line format:        
 ---- can be combined 
 text _[b]                       bold 
 text _[c]                       center
 text _[i]                       italic
 text _[r]                       right justify
----------
+---------------------
 text _[u]                       underline   
-text _[m]                       LaTeX math
+text _[l]                       LaTeX math
 text _[s]                       sympy math
 text _[e]                       equation label and autonumber
 text _[f]                       figure caption and autonumber
@@ -208,34 +210,32 @@ text _[#]                       footnote and autonumber
 text _[d]                       footnote description 
 _[line]                         horizontal line
 _[page]                         new page
-address, label _[link]          url or internal reference
-
-I,V  block formats:          
+_[address, label]               url, internal reference
+I,V  block format:          
 ---- can be combined 
 _[[b]]                          bold
 _[[c]]                          center
 _[[i]]                          italic
 _[[p]]                          plain  
--------
-_[[s]]                          shade 
-_[[l]]                          LateX
+--------------------
+_[[l]]                          LaTeX
 _[[h]]                          HTML 
 _[[q]]                          quit block
 
-V calculation formats: 
+V calculation format: 
 a = n | unit, alt | descrip    declare = 
 a := b + c | unit, alt | n,n   assign := 
 
 The first line of a rivt file is always *import rivt.rivtapi as rv* followed by
-the Repo method rv.R(rvtxt) which occurs once. rv.R is followed by any of the
-other three methods in any number or order. rv.R(rvtxt) sets options for
-repository and report output formats.
+the Repo method rv.R() which occurs once. rv.R is followed by any of the other
+three methods in any number or order. rv.R() sets options for repository and
+report output formats.
 
-File format conventions follow the Python formatter pep8. Method names start in
-column one. All other lines must be indented 4 spaces which faciliates section
-folding, bookmarks and legibility.
+File format conventions follow the Python formatter pep8, and linter ruff.
+Method names start in column one. All other lines must be indented 4 spaces to
+facilitate section folding, bookmarks and legibility.
 
-The first line of each rivt method sets the section title and section
+The first line of each rivt method defines the section title and section
 parameters. 
 
 ============================================================================
@@ -244,12 +244,12 @@ rivt example
 
 import rivt.rivtapi as rv
 
-rv.R("""Introduction | rgb fore,background
+rv.R("""Introduction | rgb-fore,background; default
 
     The Repo method (short for repository or report) is the first method of a
     rivt doc and specifies repository settings and output formats.
 
-    The setting line specifies the section label and color. if any. If the
+    The setting line specifies the section label and colors. if any. If the
     label is preceded by two dashes "--", the the label becomes a reference and
     a new section is not started. If the color parameter (applies to PDF and
     HTML output) is omitted then default black text and no background is used.
@@ -273,7 +273,7 @@ rv.R("""Introduction | rgb fore,background
 
     """)
 
-rv.I("""Insert method | rgb fore,background
+rv.I("""Insert method | rgb-fore,background
 
     The Insert method formats descriptive information that is static, as
     opposed to dynamic calculations and values.
@@ -319,19 +319,20 @@ rv.V("""Value method | sub; nosub | rgb fore,background
     sub;nosub setting specifies whether equations are also printed with
     substituted numerical values. 
 
-    Example of values list
+    Example of values list _[t]
     a1 = 10.1    | LBF, N | a force
     d1 = 12.1    | IN, CM | a length
 
-    The equal tag triggers the assignment of a value. A block of values
-    terminated with a blank line are formatted as a table.
+    An table tag provides a table title and number.  The equal tag declares a
+    value. A sequence of declared values terminated with a blank line are
+    formatted as a table.
 
     Example equation tag - Area of circle  _[e]
     b1 := 3.14(d1/2)^2 | in^2, cm^2 | 2,2
 
     An equation tag provides an equation description and number. The
-    colon-equal tag triggers the evaluation of an equation and specifies the
-    result units and printed decimal places in the equation and results.
+    colon-equal tag triggers the assignment of a value and specifies the
+    result units and printed output decimal places in the equation and results.
 
     || value | file | type | [:]
     
@@ -343,42 +344,54 @@ rv.V("""Value method | sub; nosub | rgb fore,background
 
 rv.T("""Tool method | print;noprint | include; exclude| rgb fore,background
 
-    The Tool method includes Python code. 
-    imports. Four libraries are imported by rivt and accessed with the following
-    names:
+    
+    # The Tool method includes Python code. The "print" parameter specifies
+    # whether the code is echoed in the document. The "include" parameter
+    # specifies whether the code values are subsequently available (i.e. 
+    # included in the document namespace).
+    
+    # Four libraries are imported by rivt and accessed as: 
 
-    pandas: pd.method()
-    numpy: np.method()
-    matplotlib: mp.method()
-    sympy: sy.method()
+    # pyplot: plt.method()
+    # numpy: np.method()
+    # pandas: pd.method()
+    # sympy: sy.method()
 
-    Examples of single line Python statements for defining functions and reading or
-    writing a file include:
-
+    # Examples of single line Python statements include: 
+    
     def f1(x,y): z = x + y; print(z); return
-
+    
+    # for defining functions and
+        
     with open('file.csv', 'r') as f: input = f.readlines()
-
     var = range(10)
     with open('fileout.csv', 'w') as f: f.write(var)
 
+    # for reading and writing files
+        
     """)
 
-rv.X("""skip string
+rv.X("""any text
 
-    Skips evaluation of the string - is used for review comments, checking and
-    editing.
+    Replacing any method letter with X skips evaluation of thhat string. Its
+    uses include review comments, checking and editing.
 
     """) 
 
 ============== =========================================================
-Keystroke                   VSCode shortcuts and rivt extensions
+Keystroke                   VSCode rivt shortcuts and extensions
 ============== =========================================================
 
-alt+q                rewrap paragraph with hard line feeds
+alt+q                rewrap paragraph with hard line feeds (80 default)
 alt+.                select correct spelling under cursor
 alt+8                insert date
 alt+9                insert time
+
+ctl+1                focus on first editor
+ctl+2                focus on next editor
+ctl+3                focus on previous editor
+ctl+8                focus on explorer pane
+ctl+9                focus on github pane    
 
 ctl+alt+x            reload window
 ctl+alt+u            unfold all code
@@ -388,17 +401,16 @@ ctl+alt+t            toggle local fold
 ctl+alt+e            toggle explorer sort order
 ctl+alt+s            toggle spell check
 ctl+alt+g            next editor group
-ctl+1                focus on first editor
-ctl+2                focus on next editor
-ctl+3                focus on previous editor
-ctl+8                focus on explorer pane
-ctl+9                focus on github pane     
 
 ctl+shift+u          open URL under cursor in browser
 ctl+shift+s          open GitHub rivt README search
 ctl+shift+a          commit all 
 ctl+shift+z          commit current editor
 ctl+shift+x          post to remote   
+
+ 
+
+
 
 
 rivt

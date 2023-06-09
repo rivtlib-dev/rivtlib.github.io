@@ -49,15 +49,14 @@ class CmdUTF:
                         command syntax                              methods
         ======================================================== ============
 
-        1 || append | folder | file_name                                 R
-        2 || functions | folder | file_name | code; nocode               V
-        3 || image | folder | file_name  | size                        I,V,T
-        4 || image2 | folder | file_name  | size | file_name  | size   I,V,T
-        5 || list | folder | file_name                                   V
-        6 || project | folder | style file | proj file | [:] wid, algn   R
-        7 || table | folder | file_name | max width | rows             I,V,T
-        8 || text | folder | file_name | text type |shade; noshade     I,V,T
-        9 || values | folder | file_name | [:];[x:y]                     V
+
+        || append | folder | file                                      R
+        || github | repository | "folder"; "repo"                      R
+        || project | folder | file                                     R
+        || image | folder | file  | size                              I,V
+        || table | folder | file  | max width | rows                  I,V
+        || text | folder | file  | type                               I,V
+        || values | folder | file | type | rows                        V
 
         """
 
@@ -86,12 +85,18 @@ class CmdUTF:
         self.cmdS = cmdS
         return eval("self." + cmdS+"()")
 
-    def append(self):
-        """_summary_
-        """
-        pass
+    def get_folder(self, prefixS):
+        """ get folder path from prefix
 
-    def func(self):
+        :param prefixS: _description_
+        :type prefixS: _type_
+        :return: path
+
+
+
+        """
+
+    def append(self):
         """_summary_
         """
         pass
@@ -103,25 +108,48 @@ class CmdUTF:
 
         utfS = ""
         iL = self.paramL
-        file1S = iL[1].strip()
-        imgL = file1S.split(",")
-        if iL[0].strip() == "resource":
-            imgP = Path(self.folderD["resourceP"])
-        elif iL[0].strip() == "data":
-            imgP = Path(self.folderD["data"])
-        else:
-            imgP = Path(self.folderD["resourceP"])
-        temp_out = StringIO()
-        sys.stdout = temp_out
-        for i in imgL:
-            imgS = Path(imgP, i)
-            shrt1S = str(Path(*Path(imgS).parts[-3:]))
-            utfS += "Figure path: " + shrt1S + "\n"
-            try:
-                _display(_Image(imgS))
-            except:
-                pass
-        sys.stdout = sys.__stdout__
+        if len(iL[1].split(",")) == 1:
+            scale1S = iL[2]
+            file1S = iL[1].strip()
+            if iL[0].strip() == "resource":
+                img1S = str(Path(self.folderD["resourceP"], file1S))
+            else:
+                img1S = str(Path(self.folderD["resourceP"], file1S))
+            img1S = img1S.replace("\\", "/")
+            rstS = ("\n.. image:: "
+                    + img1S + "\n"
+                    + "   :scale: "
+                    + scale1S + "%" + "\n"
+                    + "   :align: center"
+                    + "\n\n"
+                    )
+        elif len(iL[1].split(",")) == 2:
+            iL = self.paramL
+            scale1S = iL[2]
+            scale2S = iL[4]
+            file1S = iL[1].strip()
+            file2S = iL[3].strip()
+            if iL[0].strip() == "resource":
+                img1S = str(Path(self.folderD["resourceP"], file1S))
+                img2S = str(Path(self.folderD["resourceP"], file2S))
+            else:
+                img1S = str(Path(self.folderD["resourceP"], file1S))
+                img2S = str(Path(self.folderD["resourceP"], file2S))
+            img1S = img1S.replace("\\", "/")
+            img2S = img2S.replace("\\", "/")
+            rstS = ("|L| . |R|"
+                    + "\n\n"
+                    + ".. |L| image:: "
+                    + img1S + "\n"
+                    + "   :width: "
+                    + scale1S + "%"
+                    + "\n\n"
+                    + ".. |R| image:: "
+                    + img2S + "\n"
+                    + "   :width: "
+                    + scale2S + "%"
+                    + "\n\n"
+                    )
 
         return utfS
 
@@ -256,7 +284,7 @@ class CmdUTF:
         output.write(
             tabulate(
                 wcontentL,
-                tablefmt="rst",
+                tablefmt="github",
                 headers="firstrow",
                 numalign="decimal",
                 stralign=alignS,
@@ -317,7 +345,7 @@ class CmdUTF:
         return soupS
 
     def text(self):
-        """9 insert text from file
+        """insert text from file
 
         || text | folder | file | type 
 
@@ -390,7 +418,7 @@ class CmdUTF:
         # self.rivtD.update(locals())
 
     def values(self):
-        """10 import values from files
+        """import values from files
 
         """
 

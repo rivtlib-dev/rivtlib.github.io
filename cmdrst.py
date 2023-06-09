@@ -83,17 +83,12 @@ class CmdRST:
         return eval("self." + cmdS+"()")
 
     def append(self):
-        """1 append pdf files
-        """
-        pass
-
-    def func(self):
-        """2 import functions
+        """append pdf files
         """
         pass
 
     def image(self):
-        """3 insert an image from file
+        """insert image from file
 
         Args:
             il (list): image parameters

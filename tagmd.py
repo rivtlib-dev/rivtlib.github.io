@@ -12,31 +12,25 @@ from io import StringIO
 from pathlib import Path
 
 import html2text as htm
-import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import numpy.linalg as la
 import pandas as pd
 import sympy as sp
-from IPython.display import Image as _Image
-from IPython.display import display as _display
 from numpy import *
 from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
 from sympy.parsing.latex import parse_latex as parsx
 from tabulate import tabulate
-
-try:
-    from PIL import Image as PImage
-    from PIL import ImageOps as PImageOps
-except:
-    pass
+from rivt import parse
 from rivt.units import *
 
 
 class Tagsmd:
+    """convert rivt tags to md
+    """
 
     def __init__(self, lineS, incrD, folderD,  localD):
-        """format tags to md
+        """convert rivt tags to md
             ============================ ======================================
             tags                                   description 
             ============================ ======================================

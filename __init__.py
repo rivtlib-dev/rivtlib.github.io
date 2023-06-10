@@ -408,10 +408,6 @@ ctl+shift+a          commit all
 ctl+shift+z          commit current editor
 ctl+shift+x          post to remote   
 
- 
-
-
-
 
 rivt
 ====

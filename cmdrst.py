@@ -8,52 +8,38 @@ from io import StringIO
 from pathlib import Path
 
 import html2text as htm
-import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import pandas as pd
 import sympy as sp
 import numpy.linalg as la
 import numpy as np
-from IPython.display import Image as _Image
-from IPython.display import display as _display
-
 from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
 from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
-
-try:
-    from PIL import Image as PImage
-    from PIL import ImageOps as PImageOps
-except:
-    pass
 from rivt import parse
 from rivt.units import *
 
 
 class CmdRST:
-    """translate rivt-strings to reST strings
-
-    param:exportS (str): stores values that are written to file
-    strL (list): calc rivt-strings
-    folderD (dict): folder paths
-    tagD (dict): tag dictionary
+    """convert rivt commands to reST
 
     """
 
     def __init__(self, paramL, incrD, folderD,  localD):
-        """
+        """convert rivt commands to md 
+
         ======================================================== ============
-                        command syntax                              methods
+                        command syntax                              scope
         ======================================================== ============
 
-        1 || append | folder | file_name                                 R
-        2 || github | file | repository                                  R
-        3 || project | file                                              R
-        4 || image | folder | file_name  | size                         I,V
-        5 || table | folder | file_name | max width | rows              I,V
-        6 || text | folder | file_name | text type |shade; noshade      I,V
-        7 || values | folder | file_name |                               V
+        || append | folder | file1, file2, ...                         R
+        || github | repository                                         R
+        || project | file | type                                       R
+        || image | folder | file1, file2  | size1, size2              I,V
+        || table | folder | file  | max width | rows                  I,V
+        || text | folder | file  | type                               I,V
+        || declare | folder | file | type | rows                       V
 
         """
 
@@ -87,90 +73,10 @@ class CmdRST:
         """
         pass
 
-    def image(self):
-        """insert image from file
-
-        Args:
-            il (list): image parameters
+    def github(self):
+        """_summary_
         """
-        rstS = ""
-        iL = self.paramL
-        if len(iL[1].split(",")) == 1:
-            scale1S = iL[2]
-            file1S = iL[1].strip()
-            if iL[0].strip() == "resource":
-                img1S = str(Path(self.folderD["resourceP"], file1S))
-            else:
-                img1S = str(Path(self.folderD["resourceP"], file1S))
-            img1S = img1S.replace("\\", "/")
-            rstS = ("\n.. image:: "
-                    + img1S + "\n"
-                    + "   :scale: "
-                    + scale1S + "%" + "\n"
-                    + "   :align: center"
-                    + "\n\n"
-                    )
-        elif len(iL[1].split(",")) == 2:
-            iL = self.paramL
-            scale1S = iL[2]
-            scale2S = iL[4]
-            file1S = iL[1].strip()
-            file2S = iL[3].strip()
-            if iL[0].strip() == "resource":
-                img1S = str(Path(self.folderD["resourceP"], file1S))
-                img2S = str(Path(self.folderD["resourceP"], file2S))
-            else:
-                img1S = str(Path(self.folderD["resourceP"], file1S))
-                img2S = str(Path(self.folderD["resourceP"], file2S))
-            img1S = img1S.replace("\\", "/")
-            img2S = img2S.replace("\\", "/")
-            rstS = ("|L| . |R|"
-                    + "\n\n"
-                    + ".. |L| image:: "
-                    + img1S + "\n"
-                    + "   :width: "
-                    + scale1S + "%"
-                    + "\n\n"
-                    + ".. |R| image:: "
-                    + img2S + "\n"
-                    + "   :width: "
-                    + scale2S + "%"
-                    + "\n\n"
-                    )
-        return rstS
-
-    def list(self):
-        """5 import data from files
-
-
-            :return lineS: md table
-            :rtype: str
-        """
-
-        locals().update(self.rivtD)
-        valL = []
-        if len(vL) < 5:
-            vL += [""] * (5 - len(vL))  # pad command
-        valL.append(["variable", "values"])
-        vfileS = Path(self.folderD["cpath"] / vL[2].strip())
-        vecL = eval(vL[3].strip())
-        with open(vfileS, "r") as csvF:
-            reader = csv.reader(csvF)
-        vL = list(reader)
-        for i in vL:
-            varS = i[0]
-            varL = array(i[1:])
-            cmdS = varS + "=" + str(varL)
-            exec(cmdS, globals(), locals())
-            if len(varL) > 4:
-                varL = str((varL[:2]).append(["..."]))
-            valL.append([varS, varL])
-        hdrL = ["variable", "values"]
-        alignL = ["left", "right"]
-        self.vtable(valL, hdrL, "rst", alignL)
-        self.rivtD.update(locals())
-
-        return
+        pass
 
     def project(self):
         """insert project information from csv, xlsx or syk
@@ -242,6 +148,58 @@ class CmdRST:
         sys.stdout = old_stdout
 
         return tableS
+
+    def image(self):
+        """insert image from file
+
+        Args:
+            il (list): image parameters
+        """
+        rstS = ""
+        iL = self.paramL
+        if len(iL[1].split(",")) == 1:
+            scale1S = iL[2]
+            file1S = iL[1].strip()
+            if iL[0].strip() == "resource":
+                img1S = str(Path(self.folderD["resourceP"], file1S))
+            else:
+                img1S = str(Path(self.folderD["resourceP"], file1S))
+            img1S = img1S.replace("\\", "/")
+            rstS = ("\n.. image:: "
+                    + img1S + "\n"
+                    + "   :scale: "
+                    + scale1S + "%" + "\n"
+                    + "   :align: center"
+                    + "\n\n"
+                    )
+        elif len(iL[1].split(",")) == 2:
+            iL = self.paramL
+            scale1S = iL[2]
+            scale2S = iL[4]
+            file1S = iL[1].strip()
+            file2S = iL[3].strip()
+            if iL[0].strip() == "resource":
+                img1S = str(Path(self.folderD["resourceP"], file1S))
+                img2S = str(Path(self.folderD["resourceP"], file2S))
+            else:
+                img1S = str(Path(self.folderD["resourceP"], file1S))
+                img2S = str(Path(self.folderD["resourceP"], file2S))
+            img1S = img1S.replace("\\", "/")
+            img2S = img2S.replace("\\", "/")
+            rstS = ("|L| . |R|"
+                    + "\n\n"
+                    + ".. |L| image:: "
+                    + img1S + "\n"
+                    + "   :width: "
+                    + scale1S + "%"
+                    + "\n\n"
+                    + ".. |R| image:: "
+                    + img2S + "\n"
+                    + "   :width: "
+                    + scale2S + "%"
+                    + "\n\n"
+                    )
+        return rstS
 
     def table(self):
         """insert table from csv or xlsx file
@@ -383,8 +341,41 @@ class CmdRST:
         # self.calcS += mdS + "\n"
         # self.rivtD.update(locals())
 
-    def values(self):
-        """10 import values from files
+    def list(self):
+        """5 import data from files
+
+
+            :return lineS: md table
+            :rtype: str
+        """
+
+        locals().update(self.rivtD)
+        valL = []
+        if len(vL) < 5:
+            vL += [""] * (5 - len(vL))  # pad command
+        valL.append(["variable", "values"])
+        vfileS = Path(self.folderD["cpath"] / vL[2].strip())
+        vecL = eval(vL[3].strip())
+        with open(vfileS, "r") as csvF:
+            reader = csv.reader(csvF)
+        vL = list(reader)
+        for i in vL:
+            varS = i[0]
+            varL = array(i[1:])
+            cmdS = varS + "=" + str(varL)
+            exec(cmdS, globals(), locals())
+            if len(varL) > 4:
+                varL = str((varL[:2]).append(["..."]))
+            valL.append([varS, varL])
+        hdrL = ["variable", "values"]
+        alignL = ["left", "right"]
+        self.vtable(valL, hdrL, "rst", alignL)
+        self.rivtD.update(locals())
+
+        return
+
+    def declare(self):
+        """import values from files
 
         """
 

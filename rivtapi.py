@@ -583,7 +583,7 @@ def writedoc(formatS):
 
     print("", flush=True)
     if "md" in formatL:                          # save md file
-        with open(docmdP, "w", encoding='md-8') as f1:
+        with open(docmdP, "w", encoding='utf-8') as f1:
             f1.write(mdS)
             # with open(_rstfile, "wb") as f1:
             #   f1.write(rstcalcS.encode("md-8"))

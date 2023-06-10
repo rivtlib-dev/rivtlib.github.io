@@ -106,13 +106,13 @@ private content and apply version control on the primary calculation inputs.
 Commands and Tags
 =================
 
-rivt syntax includes arbitrary text along with commands, tags and simple
-(single line) Python statements. Commands are markup that read or write files
-in and out of the document and are denoted by || at the beginning of a line.
-Command parameters are separated by |. In the summary below, user parameter
-options are separated by semi-colons if designating single value selections and
-commas if a list. The first line of each method specifies section labels and
-formatting for that rivt-string. 
+rivt syntax includes arbitrary, commands, tags and simple (single line) Python
+statements. Syntax is interepreted by the particular rivt method. Commands read
+or write extrnal files that are denoted by || at the beginning of a line.
+Command parameters are separated by |. In the summary below parameter options
+are separated by semi-colons. List parameters are separated by a comma. The
+first line of each method specifies a section label and section parameters.
+Section labels may be hidden by prepending with a double hyphen --.
 
 Tags format a line or block of text and are generally denoted with _[tag] at
 the end of a line. Block tags start the block of text with _[[tag]] and end
@@ -124,40 +124,40 @@ exceptions.
  name             API Functions and commands (VSCode snippet prefix)
 ======= ===================================================================
 
-Repo    rv.R("""label | rgb;default
-(rvr)
-                ||project (proj)
+Repo    rv.R("""label | page
+(rep)
                 ||github (git)
+                ||project (proj)
                 ||append (app)
 
                 """)
 
-Insert  rv.I("""label | rgb;default
-(rvi)
-                ||image (ima)
+Insert  rv.I("""label | rgb; default
+(ins)
+                ||image (img)
                 ||text (tex)
                 ||table (tab)
 
                 """)
 
-Values  rv.V("""label | sub;nosub | rgb;default
-(rvv)
-                ||image (ima)
+Values  rv.V("""label | sub; nosub 
+(val)
+                ||image (img)
                 ||text (tex)
                 ||table (tab)
-                ||value (val)
+                ||declare (dec)
 
                 """)
 
-Tools  rv.T("""label | print; noprint | name; noname | rgb;default
-(rvt)
+Tools  rv.T("""label | rgb; default; noprint | name; noname
+(too)
                 Python code
 
                 """)
 
 exclude rv.X("""any method
 
-                If any method is changed to X it is not evaluated. Used for
+                A method is changed to X is not evaluated and may be used for
                 comments and debugging.
 
                 """)

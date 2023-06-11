@@ -31,42 +31,7 @@ except:
 class TagsRST():
 
     def __init__(self, lineS, incrD, folderD,  localD):
-        """format tags to reST
-            ============================ ======================================
-            tags                                   description 
-            ============================ ======================================
-
-            I,V,T line formats:               one at the end of a line
-            ---- can be combined 
-            1 text _[b]                       bold 
-            2 text _[c]                       center
-            3 text _[i]                       italicize
-            4 text _[r]                       right justify
-            ---------
-            5 text _[u]                       underline   
-            6 text _[m]                       LaTeX math
-            7 text _[s]                       sympy math
-            8 text _[e]                       equation label, autonumber
-            9 text _[f]                       figure caption, autonumber
-            10 text _[t]                      table title, autonumber
-            11 text _[#]                      footnote, autonumber
-            12 text _[d]                      footnote description 
-            13 _[line]                        horizontal line
-            14 _[page]                        new page
-            15 address, label _[link]         url or internal reference
-
-            I,V,T block formats:             blocks end with quit block
-            ---- can be combined 
-            16 _[[p]]                        plain  
-            17 _[[s]]                        shade 
-            -------
-            18 _[[l]]                        LateX
-            19 _[[h]]                        HTML 
-            20 _[[q]]                        quit block
-
-            V calculation formats: 
-            21 a := n | unit, alt | descrip    declare = ; units, description
-            22 a := b + c | unit, alt | n,n    assign := ; units, decimals
+        """ convert rivt tags to reST
 
         """
 

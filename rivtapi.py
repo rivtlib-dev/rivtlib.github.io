@@ -125,7 +125,7 @@ incrD = {
     "footrS": ""
 }
 
-localD = {}                         # local rivt dictionary of values
+localD = {}                         # local rivt dictionary
 
 logging.basicConfig(
     level=logging.DEBUG,

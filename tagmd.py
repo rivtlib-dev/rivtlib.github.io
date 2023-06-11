@@ -1,13 +1,4 @@
 #
-import csv
-import logging
-import os
-import re
-import subprocess
-import sys
-import tempfile
-import textwrap
-import warnings
 from io import StringIO
 from pathlib import Path
 
@@ -25,78 +16,9 @@ from rivt import parse
 from rivt.units import *
 
 
-class Tagsmd:
+class Tagsmd(Tags):
     """convert rivt tags to md
     """
-
-    def __init__(self, lineS, incrD, folderD,  localD):
-        """convert rivt tags to md
-            ============================ ======================================
-            tags                                   description 
-            ============================ ======================================
-
-            I,V,T line formats:               place at end of a line
-            ---- can be combined 
-            1 text _[b]                       bold 
-            2 text _[c]                       center
-            3 text _[i]                       italicize
-            4 text _[r]                       right justify
-            ---------
-            5 text _[u]                       underline   
-            6 text _[m]                       LaTeX math
-            7 text _[s]                       sympy math
-            8 text _[e]                       equation label, autonumber
-            9 text _[f]                       figure caption, autonumber
-            10 text _[t]                      table title, autonumber
-            11 text _[#]                      footnote, autonumber
-            12 text _[d]                      footnote description 
-            13 _[line]                        horizontal line
-            14 _[page]                        new page
-            15 address, label _[link]         url or internal reference
-
-            I,V,T block formats:             end block with quit 
-            ---- can be combined 
-            16 _[[p]]                        plain  
-            17 _[[s]]                        shade 
-            -------
-            18 _[[l]]                        LateX
-            19 _[[h]]                        HTML 
-            20 _[[q]]                        quit
-
-            V calculation formats: 
-            21 a := n | unit, alt | descrip    declare = ; units, description
-            22 a := b + c | unit, alt | n,n    assign := ; units, decimals
-
-        """
-
-        self.localD = localD
-        self.folderD = folderD
-        self.incrD = incrD
-        self.lineS = lineS
-        self.widthI = incrD["widthI"]
-        self.errlogP = folderD["errlogP"]
-        self.valL = []                         # accumulate values in list
-
-        self.tagsD = {"b]": "bold", "i]": "italic", "c]": "center", "r]": "right",
-                      "d]": "description", "e]": "equation", "f]": "figure",
-                      "#]": "foot", "l]": "latex", "s]": "sympy", "t]": "table",
-                      "u]": "underline", ":=": "declare",  "=": "assign",
-                      "link]": "link", "line]": "line", "page]": "page",
-                      "[c]]": "centerblk", "[e]]": "endblk", "[l]]": "latexblk",
-                      "[m]]": "mathblk", "[o]]": "codeblk", "[p]]": "plainblk",
-                      "[q]]": "quitblk", "[s]]": "shadeblk"}
-
-        modnameS = __name__.split(".")[1]
-        # print(f"{modnameS=}")
-        logging.basicConfig(
-            level=logging.DEBUG,
-            format="%(asctime)-8s  " + modnameS +
-            "   %(levelname)-8s %(message)s",
-            datefmt="%m-%d %H:%M",
-            filename=self.errlogP,
-            filemode="w",
-        )
-        warnings.filterwarnings("ignore")
 
     def tag_parse(self, tagS):
         """_summary_

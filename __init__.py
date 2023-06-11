@@ -199,8 +199,8 @@ text _[b]                       bold
 text _[c]                       center
 text _[i]                       italic
 text _[r]                       right justify
----------------------
 text _[u]                       underline   
+---------------------
 text _[l]                       LaTeX math
 text _[s]                       sympy math
 text _[e]                       equation label and autonumber
@@ -211,6 +211,7 @@ text _[d]                       footnote description
 _[line]                         horizontal line
 _[page]                         new page
 _[address, label]               url, internal reference
+
 I,V  block format:          
 ---- can be combined 
 _[[b]]                          bold

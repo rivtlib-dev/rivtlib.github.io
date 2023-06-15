@@ -1,13 +1,14 @@
 #
 import csv
 import logging
+import warnings
 import os
 import re
 import subprocess
 import sys
 import tempfile
 import textwrap
-import warnings
+
 from io import StringIO
 from pathlib import Path
 from io import StringIO
@@ -27,6 +28,16 @@ from rivt.tags import Tags
 class TagsMD(Tags):
     """convert rivt tags to md
 
+    :param paramL: _description_
+    :type paramL: _type_
+    :param incrD: _description_
+    :type incrD: _type_
+    :param folderD: _description_
+    :type folderD: _type_
+    :param localD: _description_
+    :type localD: _type_
+    :return: _description_
+    :rtype: _type_
     """
 
     def __init__(self, lineS, incrD, folderD,  localD):

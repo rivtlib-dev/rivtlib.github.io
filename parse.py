@@ -137,8 +137,6 @@ class RivtParse:
         for uS in strL:
             # print(f"{blockassignB=}")
             # print(f"{uS=}")
-            if uS[0:2] == "##":                        # remove comments
-                continue
             uS = uS[4:]                                # remove indent
             if blockB:                                 # accumulate block
                 lineS += uS

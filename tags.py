@@ -12,7 +12,7 @@ class Tags:
             ============================ =======================================
 
             I,V line format:
-            text _[1-6]                     heading type        
+            text _[h1-h6]                     heading type        
             text _[b]                       bold 
             text _[i]                       italic
             text _[c]                       center
@@ -21,7 +21,7 @@ class Tags:
             text _[r]                       right justify
             text _[l]                       LaTeX math
             text _[s]                       sympy math
-            text _[l,sbic]                  combined formatting
+            text _[l,s;bic]                 combined formatting
             text _[e]                       equation label and autonumber
             text _[f]                       figure caption and autonumber
             text _[t]                       table title and autonumber

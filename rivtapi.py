@@ -217,9 +217,9 @@ def _str_title(hdrS):
     incrD["secnumI"] = snumI
     docnumS = "[" + incrD["docnumS"]+"]"
     dnumS = docnumS + " - " + str(snumI)
-    widthI = incrD["widthI"] - 3
-    headS = " " + hdrS + dnumS.rjust(widthI - len(hdrS))
-    bordrS = incrD["widthI"] * "-"
+    widthI = incrD["widthI"]
+    headS = dnumS + " &nbsp; &nbsp; &nbsp;" + hdrS
+    bordrS = widthI * "-"
     hdmdS = bordrS + "\n" + headS + "\n" + bordrS + "\n"
 
     # if snumI > 1:
@@ -311,13 +311,13 @@ def R(rS: str):
     xmdS = ""
     xrstS = ""
     rL = rS.split("\n")
-    hmdS, hrstS = _str_set(rL[0], "R")
-    print(hmdS)
+    # hmdS, hrstS = _str_set(rL[0], "R")
+    # print(hmdS)
     mdC = parse.RivtParse("R", folderD, incrD,  localD)
     xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:])
-    if hmdS != None:
-        xmdS = xmdL[1] + hmdS + xmdL[0]
-        xrstS = xrstL[1] + hrstS + xrstL[0]
+    # if hmdS != None:
+    xmdS = xmdL[1] + hmdS + xmdL[0]
+    xrstS = xrstL[1] + hrstS + xrstL[0]
     mdS += xmdS                         # accumulate md string
     rstS += xrstS                       # accumulate reST string
     xmdS = ""                           # reset local string

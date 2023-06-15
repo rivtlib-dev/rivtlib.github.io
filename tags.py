@@ -1,5 +1,7 @@
-
-"Tags Class"
+import sympy as sp
+from sympy.abc import _clash2
+from numpy import *
+from rivt.units import *
 
 
 class Tags:
@@ -9,7 +11,8 @@ class Tags:
             tags                                   description 
             ============================ =======================================
 
-            I,V line format:        
+            I,V line format:
+            text _[1-6]                     heading type        
             text _[b]                       bold 
             text _[i]                       italic
             text _[c]                       center

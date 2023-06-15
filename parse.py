@@ -47,7 +47,15 @@ class RivtParse:
         if methS == "R":
             self.cmdL = ["append", "github", "project"]
 
-            self.tagsD = []
+            self.tagsD = {"b]": "bold", "i]": "italic", "u]": "underline",
+                          "c]": "center", "r]": "right",
+                          "e]": "equation", "f]": "figure", "t]": "table",
+                          "#]": "foot", "d]": "description",
+                          "l]": "latex", "s]": "sympy",
+                          "link]": "link", "line]": "line", "page]": "page",
+                          "[c]]": "centerblk",  "[p]]": "plainblk",
+                          "[l]]": "latexblk", "[m]]": "mathblk",
+                          "[o]]": "codeblk", "[q]]": "quitblk"}
 
         elif methS == "I":
             self.cmdL = ["image", "table", "text"]
@@ -60,22 +68,26 @@ class RivtParse:
                           "link]": "link", "line]": "line", "page]": "page",
                           "[c]]": "centerblk",  "[p]]": "plainblk",
                           "[l]]": "latexblk", "[m]]": "mathblk",
-                          "[o]]": "codeblk", "[q]]": "quitblk", }
+                          "[o]]": "codeblk", "[q]]": "quitblk"}
 
         elif methS == "V":
-            self.cmdL = ["image", "table", "text", "declare"]
+            self.cmdL = ["image", "table", "text", "assign", "declare"]
 
-            self.tagsD = {"b]": "bold", "i]": "italic", "c]": "center", "r]": "right",
-                          "d]": "description", "e]": "equation", "f]": "figure",
-                          "#]": "foot", "t]": "table",
-                          "u]": "underline", ":=": "declare",  "=": "assign",
+            self.tagsD = {"b]": "bold", "i]": "italic", "u]": "underline",
+                          "c]": "center", "r]": "right",
+                          "e]": "equation", "f]": "figure", "t]": "table",
+                          "#]": "foot", "d]": "description",
+                          "l]": "latex", "s]": "sympy",
                           "link]": "link", "line]": "line", "page]": "page",
+                          "[c]]": "centerblk",  "[p]]": "plainblk",
+                          "[l]]": "latexblk", "[m]]": "mathblk",
+                          "[o]]": "codeblk", "[q]]": "quitblk",
                           ":=": "declare",  "=": "assign"}
 
         elif methS == "T":
             self.cmdL = []
 
-            self.tagsD = []
+            self.tagsD = {}
 
         else:
             pass

@@ -2,7 +2,6 @@ import sys
 import csv
 import textwrap
 import logging
-import warnings
 
 
 class Commands():

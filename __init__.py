@@ -189,8 +189,11 @@ write   rv.writedoc()
 
 || table  | folder | file | 60,r;l;c | [:]                           I,V
     (tab)   .csv; syk; xls  | max col width, locate | rows
-    
-|| values | folder | file | type |                                    V
+
+|| declare | folder | file | type |                                   V
+    (dec)    .csv; .xlsx;  | list, dict, rivt
+
+|| assign | folder | file | type |                                    V
     (val)    .csv; .xlsx;  | list, dict, rivt
 
 ============================ ============================================

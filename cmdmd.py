@@ -19,24 +19,42 @@ from rivt import parse
 from rivt.units import *
 from commands import Commands
 
-class Cmdmd(Commands):
-    
-    def cmd_parse(self, cmdS):
+
+class CmdMD(Commands):
+
+    def __init__(self, paramL, incrD, folderD,  localD):
         """_summary_
+
+        :param paramL: _description_
+        :type paramL: _type_
+        :param incrD: _description_
+        :type incrD: _type_
+        :param folderD: _description_
+        :type folderD: _type_
+        :param localD: _description_
+        :type localD: _type_
+        :return: _description_
+        :rtype: _type_
         """
-        self.cmdS = cmdS
-        return eval("self." + cmdS+"()")
 
-    def get_folder(self, prefixS):
-        """ get folder path from prefix
+        self.localD = localD
+        self.folderD = folderD
+        self.incrD = incrD
+        self.widthII = incrD["widthI"] - 1
+        self.paramL = paramL
+        self.errlogP = folderD["errlogP"]
 
-        :param prefixS: folder prefix
-        :type prefixS: string
-        :return: pathP
-        :rtype: Path
-
-        """
-
+        modnameS = __name__.split(".")[1]
+        # print(f"{modnameS=}")
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)-8s  " + modnameS +
+            "   %(levelname)-8s %(message)s",
+            datefmt="%m-%d %H:%M",
+            filename=self.errlogP,
+            filemode="w",
+        )
+        warnings.filterwarnings("ignore")
         prfxS = folderD docbaseS[0:3]
         for fileS in os.listdir(privP):
             if fnmatch.fnmatch(fileS[1:5], prfxS + "-*"):
@@ -51,6 +69,12 @@ class Cmdmd(Commands):
         # private
 
         return pathP
+
+    def cmd_parse(self, cmdS):
+        """_summary_
+        """
+        self.cmdS = cmdS
+        return eval("self." + cmdS+"()")
 
     def append(self):
         """_summary_

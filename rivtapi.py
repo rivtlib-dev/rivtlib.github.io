@@ -48,7 +48,7 @@ print(f"{docP=}")
 # paths from file
 docbaseS = docfileS.split(".py")[0]
 dataP = Path(docP.parent / "data")
-pubP = docP.parent.parent  # rivt public folder path
+pubP = docP.parent.parent               # rivt public folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
 pubcfgP = Path(pubP / "r0000-config")
 
@@ -66,58 +66,58 @@ footS = config.get('md', 'foot')
 prfxS = docbaseS[0:3]
 for fileS in os.listdir(prvP):
     if fnmatch.fnmatch(fileS[1:5], prfxS + "-*"):
-        prvfolderP = Path(fileS)  # private folder
+        prvfolderP = Path(fileS)        # private folder
         break
 doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = titleS + " [ " + doctitleS.replace("-", " ") + " ] "
 divtitleS = (prvfolderP.name).split("-", 1)[1]
 divtitleS = divtitleS.replace("-", " ")
 
-siteP = Path(prvP, "website")  # site folder path
-reportP = Path(prvP, "report")  # report folder path
+siteP = Path(prvP, "website")           # site folder path
+reportP = Path(prvP, "report")          # report folder path
 prvcfgP = Path(prvP, "r00-config")
-rivtP = Path("rivtapi.py").parent  # rivt package path
+rivtP = Path("rivtapi.py").parent       # rivt package path
 pypath = os.path.dirname(sys.executable)
 rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
 errlogP = Path(prvcfgP, "rivt-log.txt")
-styleP = Path   # file name added at runtime
+styleP = Path()                         # file name added at runtime
 valfileS = docbaseS.replace("r", "v") + ".csv"
 saveP = Path(dataP, valfileS)
 
 # global dicts and vars
-mdS = """\n"""                     # md output string
-rstS = """\n"""                     # reST output string
-valS = """"""                       # values string for export
-rvtfileS = """"""                   # rivt input file
-outputS = "md"                     # default output type
+mdS = """\n"""                          # md output string
+rstS = """\n"""                         # reST output string
+valS = """"""                           # values string for export
+rvtfileS = """"""                       # rivt input file
+outputS = "md"                          # default output type
 xflagB = 0
-rstoutL = ["pdf", "html", "both"]   # reST formats
+rstoutL = ["pdf", "html", "both"]       # reST formats
 outputL = ["md", "pdf", "html", "both", "report", "site"]
 
 folderD = {}
-for item in ["docP", "dataP", "resourceP", "rvtlocalP", "resourceP", "projP",
-             "reportP", "siteP", "rvconfigP", "retempP",
+for item in ["docP", "dataP", "privP", "pubP",
+             "reportP", "siteP", "pubcfgP", "prvcfgP",
              "errlogP", "styleP", "saveP"]:
     folderD[item] = eval(item)
 
 incrD = {
-    "docnumS": docbaseS[1:5],  # doc number
-    "doctitleS": doctitleS,  # doc title
-    "divtitleS": divtitleS,  # section title
-    "secnumI": 0,  # section number
-    "widthI": 80,  # md printing width
-    "equI": 0,  # equation number
-    "tableI": 0,  # table number
-    "figI": 0,  # figure number
-    "noteL": [0],  # footnote counter
-    "footL": [1],  # foot counter
-    "subvB": False,  # substitute values
-    "unitS": "M,M",  # units
-    "descS": "2,2",  # description or decimal places
-    "saveP": "nosave",  # save values to file
-    "eqlabelS": "equation",  # last used equation label
-    "codeB": False,  # print code strings in doc
-    "pageI": 1,  # starting page number
+    "docnumS": docbaseS[1:5],           # doc number
+    "doctitleS": doctitleS,             # doc title
+    "divtitleS": divtitleS,             # section title
+    "secnumI": 0,                       # section number
+    "widthI": 80,                       # md printing width
+    "equI": 0,                          # equation number
+    "tableI": 0,                        # table number
+    "figI": 0,                          # figure number
+    "noteL": [0],                       # footnote counter
+    "footL": [1],                       # foot counter
+    "subvB": False,                     # substitute values
+    "unitS": "M,M",                     # units
+    "descS": "2,2",                     # description or decimal places
+    "saveP": "nosave",                  # save values to file
+    "eqlabelS": "equation",             # last used equation label
+    "codeB": False,                     # print code strings in doc
+    "pageI": 1,                         # starting page number
     "titleS": "rivtdoc",
     "headuS": headS,
     "footuS": "",
@@ -125,7 +125,7 @@ incrD = {
     "footrS": ""
 }
 
-localD = {}                         # local rivt dictionary
+localD = {}                             # local rivt dictionary
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -318,9 +318,9 @@ def R(rS: str):
     if hmdS != None:
         xmdS = xmdL[1] + hmdS + xmdL[0]
         xrstS = xrstL[1] + hrstS + xrstL[0]
-    mdS += xmdS                    # accumulate md string
-    rstS += xrstS                    # accumulate reST string
-    xmdS = ""                       # reset local string
+    mdS += xmdS                         # accumulate md string
+    rstS += xrstS                       # accumulate reST string
+    xmdS = ""                           # reset local string
 
 
 def I(rS: str):
@@ -372,7 +372,7 @@ def V(rS: str):
     if hmdS != None:
         xmdS = hmdS + xmdL[0]
         xrstS = hrstS + xrstL[0]
-    mdS += xmdS                    # accumulate md string
+    mdS += xmdS                      # accumulate md string
     rstS += xrstS                    # accumulate reST string
     xmdS = ""
 
@@ -397,8 +397,8 @@ def T(rS: str):
     if hmdS != None:
         xmdS = hmdS + xmdL[0]
         xrstS = hrstS + xrstL[0]
-    mdS += xmdS                    # accumulate md string
-    rstS += xrstS                    # accumulate reST string
+    mdS += xmdS                         # accumulate md string
+    rstS += xrstS                       # accumulate reST string
 
     xmdS = ""
 

@@ -21,98 +21,102 @@ rv.I(rvtS) - static text, images, tables and math (Insert)
 rv.V(rvtS) - equations (Values)
 rv.T(rvtS) - Python functions and scripts (Tools)
 
-A rivt document is made up of an arbitrary sequence of three methods, after the
-initial rv.R. Each method takes a single literal string argument referred to as
-a rivt-string. When running in an IDE (e.g. VSCode), each method may be run
-interactively using the standard cell decorator (# %%). The rv.writedoc()
-function generates documents in GitHub Markdown, PDF or HTML formats.
+A rivt document is made up of an arbitrary sequence of three string methods
+following the initial method rv.R. Each method takes a single literal (triple)
+string argument referred to as a rivt string (rs). When running in an IDE (e.g.
+VSCode), each method may be run interactively using the standard cell decorator
+(# %%). The rv.writedoc() and rv.reportdoc() functions generate documents and
+compilations in GitHub Markdown (ghmd), PDF or HTML formats.
 
-rivt is designed for both simple short documents and extensive reports. The
-rivt folder structure shown below supports both. A project with rivt documents
-requires four top level folders within the parent folder. The two top-level
-folder names are *rivtpublic-*project-name, and *rivtprivate-*project-name.
-Folder and file name prefixes that are fixed are shown as *name*. Sub folders
-are combinations of specified prefixes and user titles. Hyphens that separate
-words in file and folder names are stripped out when used as document and
-division names in the document. Sentence case is also applied.
+rivt works for simple short documents and extensive reports. The rivt folder
+structure shown below is designed to support both. A rivt project includes
+top-level folder names: *rivtpublic-*project-name, and
+*rivtprivate-*project-name. Folder and file name prefixes that are fixed are
+shown as *name* in the example below. Sub-folders are combinations of specified
+prefixes and user titles. Hyphens that separate words in file and folder names
+are stripped out when used as document and division names in the document.
 
 The *rivtpublic-* folder contains the document input in text format. The
-*rivtprivate-* folder includes dcoument files that may include confidential
-project information or copyrighted material. The *rivtprivate-* folder is
+*rivtprivate-* folder includes confidential document files including project
+and clinet information or copyrighted material. The *rivtprivate-* folder is
 typically not shared.
 
 Output files are written to three folders, depending on the output type. The
-Markdown output is written to a README.md file in a *rivtpublic-* subfolder.
-It can be read and searched on version control platforms like GitHub. The PDF
-and HTML output is written to the doc folder in *rivtprivate-*
+Markdown output is written to a README.md file within the *rivtpublic-*
+subfolder and may be read, searched and shared on version control platforms like
+GitHub. The PDF and HTML output is written to the doc folder in *rivtprivate-*.
+
+Each separate document file is both a standalone document, and a subdivision
+document in an overall report structure.
 
 Folder Structure Example (folders in [])
 ========================================
 
-- [project-folder] (may contain arbitrary folders besides the required four)
-    - [*rivtpublic-*project-name]       (shared public files)
-        - README.md                     (project README)
-        - [*r000-config]                (public config files)        
-            - units.py                  (unit over-ride)              
-            - rivt.ini                  (config file)
-        - [*r0101-*gravity-loads]       (division sub-title)
-            -[*data*]                   (static data input)
-                - data1.csv             (public data)
-                - pic1.png              (public data)
-            - *r0101.py*                (rivt file name) 
-            - README.md                 (output file)
-            - functions1.py             (function file)
-        - [*r0102-*seismic-loads] 
-            -[*data*]      
-                - data2.csv 
-                - functions2.py 
-            - *r0102.py*
-            - README.md
-        - [*r0201-*pile-design] 
-            -[*data*]                      
-                - paragraph1.txt
-                - functions3.py 
-            - *r0201.py*
-            - README.md
-    - [*rivtprivate-*project-name]      (private files)
-        - [*r00-*config]                (private config files)
-            - pdf_style.sty             (LaTeX style override)
-        - [*r01-*Overview-and-Loads]    (division title)
-            - image1.jpg                (private data)
-            - project_data.txt          (private data)
-        - [*r02-*Foundations]   
-            - image2.jpg
-            - attachment.pdf    
-        - [*docs*]                      (pdf and html output files)
-            - [*resources*]             
-                - image1.png
-                - image2.png
-                - html-style.css
-            - index.html                (site html)                    
-            - project-name.pdf          (compiled PDF report)        
-            - rv0101-gravity-loads.pdf
-            - rv0102-seismic-loads.pdf
-            - rv0201-pile-design.pdf           
-            - rv0101-gravity-loads.html
-            - rv0102-seismic-loads.html
-            - rv0201-pile-design.html
+- [*rivtpublic-*Project-Name]       (repo name and shared public files)
+    - README.md                     (project README - table of contents)
+    - [*r000-config]                (public config files)        
+        - units.py                  (unit over-ride)              
+        - rivt.ini                  (config file)
+    - [*r0101-*Gravity-Loads]       (sub-division title)
+        -[*data*]                   (static data input)
+            - data1.csv             (public data)
+            - pic1.png              (public data)
+        - *r0101.py*                (rivt file name) 
+        - README.md                 (output file)
+        - functions1.py             (function file)
+    - [*r0102-*Seismic-Loads] 
+        -[*data*]      
+            - data2.csv 
+            - functions2.py 
+        - *r0102.py*
+        - README.md
+    - [*r0201-*Pile-Design] 
+        -[*data*]                      
+            - paragraph1.txt
+            - functions3.py 
+        - *r0201.py*
+        - README.md
+- [*rivtprivate-*Project-Name]      (private files)
+    - [*r00-*config]                (private config files)
+        - pdf_style.sty             (LaTeX style override)
+        - project-info.txt          (private project information)
+    - [*r01-*Overview-and-Loads]    (division title)
+        - image1.jpg                (private data)
+        - project_data.txt          (private data)
+    - [*r02-*Foundations]   
+        - image2.jpg
+        - attachment.pdf    
+    - [*docs*]                      (pdf and html output files)
+        - [*resources*]             (html resources)      
+            - image1.png
+            - image2.png
+            - html-style.css
+        - index.html                (site html)                    
+        - project-name.pdf          (compiled PDF report)        
+        - r0101-Gravity-Loads.pdf   (subdivision outputs)
+        - r0102-Seismic-Loads.pdf
+        - r0201-Pile-Design.pdf           
+        - r0101-Gravity-Loads.html
+        - r0102-Seismic-Loads.html
+        - r0201-Pile-Design.html
 
-The API is designed so that only files *rivtpublic-* folder are uploaded for
-version control and sharing. They represent the core of the document - the
-text, equations, functions and tables. Files in the *rivtprivate-* folder are
-typicaly not shared. This folder and file structure makes it easy to protect
-private content and apply version control on the primary calculation inputs.
+The API is designed for sharing files in the *rivtpublic-* folder. They
+represent the core information in the document - the text, equations, functions
+and tables. Files in the *rivtprivate-* folder are typically not shared. This
+two-part folder and file structure simplifies protection of confidential
+content, while applying version control and sharing for the primary calculation
+inputs.
 
 Commands and Tags
 =================
 
-rivt syntax includes arbitrary, commands, tags and simple (single line) Python
-statements. Syntax is interepreted by the particular rivt method. Commands read
-or write extrnal files that are denoted by || at the beginning of a line.
-Command parameters are separated by |. In the summary below parameter options
-are separated by semi-colons. List parameters are separated by a comma. The
-first line of each method specifies a section label and section parameters.
-Section labels may be hidden by prepending with a double hyphen --.
+rivt syntax includes arbitrary unicode text, commands, tags and simple (single
+line) Python statements. Syntax is interepreted by the particular rivt method.
+Commands read or write extrnal files denoted by || at the beginning of a line.
+Command parameters are separated by |. In the summary below single parameter
+options are separated by semi-colons and list parameters are separated by
+commas. The first line of each method is a section label followed by section
+parameters. Section labels may be hidden by prepending with a double hyphen --.
 
 Tags format a line or block of text and are generally denoted with _[tag] at
 the end of a line. Block tags start the block of text with _[[tag]] and end
@@ -194,13 +198,11 @@ write   rv.writedoc()
 ============================ ============================================
 
 I,V line format:        
----- can be combined 
 text _[b]                       bold 
 text _[c]                       center
 text _[i]                       italic
 text _[r]                       right justify
 text _[u]                       underline   
----------------------
 text _[l]                       LaTeX math
 text _[s]                       sympy math
 text _[e]                       equation label and autonumber
@@ -208,17 +210,14 @@ text _[f]                       figure caption and autonumber
 text _[t]                       table title and autonumber
 text _[#]                       footnote and autonumber
 text _[d]                       footnote description 
-_[line]                         horizontal line
 _[page]                         new page
 _[address, label]               url, internal reference
 
 I,V  block format:          
----- can be combined 
 _[[b]]                          bold
 _[[c]]                          center
 _[[i]]                          italic
 _[[p]]                          plain  
---------------------
 _[[l]]                          LaTeX
 _[[h]]                          HTML 
 _[[q]]                          quit block

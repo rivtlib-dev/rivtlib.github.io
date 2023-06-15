@@ -19,14 +19,7 @@ from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
 from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
-
 from rivt.units import *
-
-try:
-    from PIL import Image as PImage
-    from PIL import ImageOps as PImageOps
-except:
-    pass
 from rivt import cmdrst, cmdmd, tagrst, tagmd
 
 # tabulate.PRESERVE_WHITESPACE = True
@@ -179,7 +172,7 @@ class RivtParse:
                 if tagS[0] == "[":                     # block tag
                     blockB = True
                 if tagS in self.tagsD:
-                    rvtC = tagmd.Tagsmd(lineS, self.incrD, self.folderD,
+                    rvtC = tagmd.TagsMD(lineS, self.incrD, self.folderD,
                                         self.localD)       # md tag
                     utS = rvtC.tag_parse(tagS)
                     mdS += utS + "\n"                      # rst tag
@@ -193,7 +186,7 @@ class RivtParse:
                 lineS = usL[0]
                 self.incrD["unitS"] = usL[1].strip()
                 self.incrD["descS"] = usL[2].strip()
-                rvtC = tagmd.Tagsmd(lineS, self.incrD, self.folderD,
+                rvtC = tagmd.TagsMD(lineS, self.incrD, self.folderD,
                                     self.localD)
                 if ":=" in uS:                          # declare tag
                     tfS = "declare"

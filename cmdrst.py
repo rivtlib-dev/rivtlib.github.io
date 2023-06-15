@@ -19,6 +19,36 @@ from commands import Commands
 
 class CmdRST(Commands):
 
+    def __init__(self, paramL, incrD, folderD,  localD):
+        """_summary_
+
+        :param paramL: _description_
+        :type paramL: _type_
+        :param incrD: _description_
+        :type incrD: _type_
+        :param folderD: _description_
+        :type folderD: _type_
+        :param localD: _description_
+        :type localD: _type_
+        :return: _description_
+        :rtype: _type_
+        """
+        prfxS = folderD docbaseS[0:3]
+        for fileS in os.listdir(privP):
+            if fnmatch.fnmatch(fileS[1:5], prfxS + "-*"):
+                privP = Path(fileS)  # private folder
+                break
+        # public
+        if len(prefixS) == 3:
+            pathP = 1
+            pass
+        elif len(prefixS) == 5:
+            pass
+        # private
+
+        return pathP
+    
+    
     def cmd_parse(self, cmdS):
         """_summary_
         """

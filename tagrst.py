@@ -11,27 +11,22 @@ import matplotlib.pyplot as plt
 import numpy.linalg as la
 import pandas as pd
 import sympy as sp
-from IPython.display import Image as _Image
-from IPython.display import display as _display
 from numpy import *
 from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
 from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
-
 from rivt.units import *
-
-try:
-    from PIL import Image as PImage
-    from PIL import ImageOps as PImageOps
-except:
-    pass
+from rivt.tags import Tags
 
 
-class TagsRST():
+class TagsRST(Tags):
+    """convert rivt tags to reST
+
+    """
 
     def __init__(self, lineS, incrD, folderD,  localD):
-        """ convert rivt tags to reST
+        """convert rivt tags to md or reST
 
         """
 
@@ -41,24 +36,7 @@ class TagsRST():
         self.lineS = lineS
         self.widthI = incrD["widthI"]
         self.errlogP = folderD["errlogP"]
-        self.valL = []                          # list of accumulated results
-
-        self.tagsD = {"b]": "bold", "i]": "italic", "c]": "center", "r]": "right",
-                      "d]": "description", "e]": "equation", "f]": "figure",
-                      "#]": "foot", "l]": "latex", "s]": "sympy", "t]": "table",
-                      "u]": "underline", ":=": "declare",  "=": "assign",
-                      "link]": "link", "line]": "line", "page]": "page",
-                      "[c]]": "centerblk", "[e]]": "endblk", "[l]]": "latexblk",
-                      "[m]]": "mathblk", "[o]]": "codeblk", "[p]]": "plainblk",
-                      "[q]]": "quitblk", "[s]]": "shadeblk"}
-
-        self.vgap = (
-            "\n\n" +
-            ".. raw:: latex"
-            + "\n\n"
-            + "   ?x?vspace{.05in}"
-            + "\n\n"
-        )
+        self.valL = []                         # accumulate values in list
 
         modnameS = __name__.split(".")[1]
         # print(f"{modnameS=}")
@@ -70,22 +48,7 @@ class TagsRST():
             filename=self.errlogP,
             filemode="w",
         )
-        warnings.filterwarnings("ignore")
-
-    def tag_parse(self, tagS):
-        """_summary_
-        """
-        if tagS in self.tagsD:
-            return eval("self." + self.tagsD[tagS] + "()")
-
-        if "b" in tagS and "c" in tagS:
-            return self.boldcenter()
-        if "b" in tagS and "r" in tagS:
-            return self.boldright()
-        if "i" in tagS and "c" in tagS:
-            return self.italiccenter()
-        if "i" in tagS and "r" in tagS:
-            return self.italicright()
+    warnings.filterwarnings("ignore")
 
     def bold(self):
         """bold text _[b]
@@ -317,140 +280,3 @@ class TagsRST():
 
     def tagblk(self):
         pass
-
-    def declare(self):
-        """ := declare variable value
-
-        :return assignL: assign results
-        :rtype: list
-        :return rstS: restruct string 
-        :rtype: string
-        """
-        locals().update(self.localD)
-        varS = str(self.lineS).split(":=")[0].strip()
-        valS = str(self.lineS).split(":=")[1].strip()
-        unit1S = str(self.incrD["unitS"]).split(",")[0]
-        unit2S = str(self.incrD["unitS"]).split(",")[1]
-        descripS = str(self.incrD["descS"])
-        if unit1S.strip() != "-":
-            cmdS = varS + "= " + valS + "*" + unit1S
-        else:
-            cmdS = varS + "= as_unum(" + valS + ")"
-
-        exec(cmdS, globals(), locals())
-
-        self.localD.update(locals())
-
-        return [varS, valS, unit1S, unit2S, descripS]
-
-    def assign(self):
-        """ = assign result to equation
-
-        :return assignL: assign results
-        :rtype: list
-        :return rstS: restruct string 
-        :rtype: string
-        """
-        locals().update(self.localD)
-        varS = str(self.lineS).split("=")[0].strip()
-        valS = str(self.lineS).split("=")[1].strip()
-        unit1S = str(self.incrD["unitS"]).split(",")[0]
-        unit2S = str(self.incrD["unitS"]).split(",")[1]
-        descS = str(self.incrD["eqlabelS"])
-        precI = int(self.incrD["descS"])  # trim result
-        fmtS = "%." + str(precI) + "f"
-        if unit1S.strip() != "-":
-            if type(eval(valS)) == list:
-                val1U = array(eval(valS)) * eval(unit1S)
-                val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
-            else:
-                cmdS = varS + "= " + valS
-                exec(cmdS, globals(), locals())
-
-                val1U = eval(varS).cast_unit(eval(unit1S))
-                val1U.set_format(value_format=fmtS, auto_norm=True)
-                val2U = val1U.cast_unit(eval(unit2S))
-        else:
-            cmdS = varS + "= as_unum(" + valS + ")"
-            exec(cmdS, globals(), locals())
-
-            valU = eval(varS)
-            valdec = round(valU.number(), precI)
-            val1U = val2U = str(valdec)
-        spS = "Eq(" + varS + ",(" + valS + "))"
-        # symeq = sp.sympify(spS, _clash2, evaluate=False)
-        # eqltxS = sp.latex(symeq, mul_symbol="dot")
-        eqS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
-        indeqS = eqS.replace("\n", "\n   ")
-        rstS = "\n::\n\n   " + indeqS + "\n\n"
-        eqL = [varS, valS, unit1S, unit2S, descS]
-        self.localD.update(locals())
-
-        subS = "\n\n"
-        if self.incrD["subB"]:              # replace variables with numbers
-            subS = self.vsub(eqL, precI, varS, val1U) + "\n\n"
-
-        assignL = [varS, str(val1U), unit1S, unit2S, descS]
-        return [assignL, rstS + subS]
-
-    def vsub(self, eqL, precI, varS, val1U):
-        """substitute numbers for variables in printed output
-
-        :return assignL: assign results
-        :rtype: list
-        :return rstS: restruct string 
-        :rtype: string
-        """
-        locals().update(self.localD)
-        fmtS = "%." + str(precI) + "f"
-        varL = [str(eqL[0]), str(eqL[1])]
-        # resultS = vars[0].strip() + " = " + str(eval(vars[1]))
-        # sps = sps.encode('unicode-escape').decode()
-        eqS = "Eq(" + eqL[0] + ",(" + eqL[1] + "))"
-        with sp.evaluate(False):
-            symeq = sp.sympify(eqS.strip())
-        symat = symeq.atoms(sp.Symbol)
-        for n1O in symat:
-            if str(n1O) == varS:
-                symeq = symeq.subs(n1O, sp.Symbol(str(val1U)))
-                continue
-            n1U = eval(str(n1O))
-            n1U.set_format(value_format=fmtS, auto_norm=True)
-            evlen = len(str(n1U))  # get var length
-            new_var = str(n1U).rjust(evlen, "~")
-            new_var = new_var.replace("_", "|")
-            with sp.evaluate(False):                # sub values
-                symeq = symeq.subs(n1O, sp.Symbol(new_var))
-        out2 = sp.pretty(symeq, wrap_line=False)
-        # symat1 = symeq.atoms(sp.Symbol)
-        # for n2 in symat1:
-        #     orig_var = str(n2).replace("~", "")
-        #     orig_var = orig_var.replace("|", "_")
-        #     expr = eval(varL[1])
-        #     if type(expr) == float:
-        #         form = "{%." + str(precI) + "f}"
-        #         symeval1 = form.format(eval(str(expr)))
-        #     else:
-        #         try:
-        #             symeval1 = eval(
-        #                 orig_var.__str__()).__str__()
-        #         except:
-        #             symeval1 = eval(orig_var.__str__()).__str__()
-        #     out2 = out2.replace(n2.__str__(), symeval1)   # substitute
-        # print('out2b\n', out2)
-        out3 = out2  # clean up unicode
-        out3 = out3.replace("*", "\\u22C5")
-        _cnt = 0
-        for _m in out3:
-            if _m == "-":
-                _cnt += 1
-                continue
-            else:
-                if _cnt > 1:
-                    out3 = out3.replace("-" * _cnt, "\u2014" * _cnt)
-                _cnt = 0
-        self.localD.update(locals())
-        indeqS = out3.replace("\n", "\n   ")
-        rstS = "\n::\n\n   " + indeqS + "\n\n"
-
-        return rstS

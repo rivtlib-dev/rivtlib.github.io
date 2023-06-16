@@ -47,7 +47,6 @@ print(f"{docP=}")
 
 # paths from file
 docbaseS = docfileS.split(".py")[0]
-dataP = Path(docP.parent / "data")
 pubP = docP.parent.parent               # rivt public folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
 pubcfgP = Path(pubP / "r0000-config")
@@ -82,7 +81,8 @@ rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
 errlogP = Path(prvcfgP, "rivt-log.txt")
 styleP = Path()                         # file name added at runtime
 valfileS = docbaseS.replace("r", "v") + ".csv"
-saveP = Path(dataP, valfileS)
+dataP = Path(docP.parent, "data")
+cmdP = Path(dataP)
 
 # global dicts and vars
 mdS = """\n"""                          # md output string
@@ -95,9 +95,9 @@ rstoutL = ["pdf", "html", "both"]       # reST formats
 outputL = ["md", "pdf", "html", "both", "report", "site"]
 
 folderD = {}
-for item in ["docP", "dataP", "privP", "pubP",
+for item in ["docP", "dataP", "prvP", "pubP",
              "reportP", "siteP", "pubcfgP", "prvcfgP",
-             "errlogP", "styleP", "saveP"]:
+             "errlogP", "styleP", "dataP", "cmdP"]:
     folderD[item] = eval(item)
 
 incrD = {
@@ -106,6 +106,7 @@ incrD = {
     "divtitleS": divtitleS,             # section title
     "secnumI": 0,                       # section number
     "widthI": 80,                       # md printing width
+    "eqlabelS": "equation",             # last used equation label
     "equI": 0,                          # equation number
     "tableI": 0,                        # table number
     "figI": 0,                          # figure number
@@ -115,14 +116,11 @@ incrD = {
     "unitS": "M,M",                     # units
     "descS": "2,2",                     # description or decimal places
     "saveP": "nosave",                  # save values to file
-    "eqlabelS": "equation",             # last used equation label
     "codeB": False,                     # print code strings in doc
     "pageI": 1,                         # starting page number
-    "titleS": "rivtdoc",
-    "headuS": headS,
-    "footuS": "",
-    "headrS": "",
-    "footrS": ""
+    "titleS": "rivtdoc",                # document title
+    "headrS": "",                       # header string reST
+    "footrS": ""                        # footer string reST
 }
 
 localD = {}                             # local rivt dictionary
@@ -220,7 +218,7 @@ def _str_title(hdrS):
     widthI = incrD["widthI"]
     headS = dnumS + " &nbsp; &nbsp; &nbsp;" + hdrS
     bordrS = widthI * "-"
-    hdmdS = bordrS + "\n" + headS + "\n" + bordrS + "\n"
+    hdmdS = bordrS + "\n" + "##" + headS + "\n" + bordrS + "\n"
 
     # if snumI > 1:
     #     hdrstS = (
@@ -308,19 +306,19 @@ def R(rS: str):
 
     _pages(incrD["headuS"], incrD["footuS"])   # header, footer for md pages
 
-    xmdS = ""
-    xrstS = ""
+    # xmdS = ""
+    # xrstS = ""
     rL = rS.split("\n")
     # hmdS, hrstS = _str_set(rL[0], "R")
     # print(hmdS)
     mdC = parse.RivtParse("R", folderD, incrD,  localD)
     xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:])
     # if hmdS != None:
-    xmdS = xmdL[1] + hmdS + xmdL[0]
-    xrstS = xrstL[1] + hrstS + xrstL[0]
-    mdS += xmdS                         # accumulate md string
-    rstS += xrstS                       # accumulate reST string
-    xmdS = ""                           # reset local string
+    # xmdS = xmdL[1] + hmdS + xmdL[0]
+    # xrstS = xrstL[1] + hrstS + xrstL[0]
+    mdS += xmdL[0]                         # accumulate md string
+    rstS += xrstL[0]                       # accumulate reST string
+    # xmdS = ""                            # reset local string
 
 
 def I(rS: str):

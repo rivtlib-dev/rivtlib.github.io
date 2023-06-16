@@ -1,6 +1,8 @@
 #
+import os
 import logging
 import warnings
+import fnmatch
 import numpy.linalg as la
 import pandas as pd
 import sympy as sp
@@ -56,111 +58,22 @@ class CmdMD(Commands):
             filemode="w",
         )
         warnings.filterwarnings("ignore")
-        prfxS = folderD docbaseS[0:3]
-        for fileS in os.listdir(privP):
-            if fnmatch.fnmatch(fileS[1:5], prfxS + "-*"):
-                privP = Path(fileS)  # private folder
-                break
-        # public
-        if len(prefixS) == 3:
-            pathP = 1
-            pass
-        elif len(prefixS) == 5:
-            pass
-        # private
 
-        return pathP
-
-    def cmd_parse(self, cmdS):
-        """_summary_
-        """
-        self.cmdS = cmdS
-        return eval("self." + cmdS+"()")
-
-    def append(self):
-        """_summary_
-        """
-        pass
-
-    def github(self):
-        """_summary_
-        """
-        pass
-
-    def project(self):
-        """insert project information from csv, xlsx or syk
-
-            :return lineS: md table
-            :rtype: str
-        """
-
-        alignD = {"s": "", "d": "decimal",
-                  "c": "center", "r": "right", "l": "left"}
-
-        tableS = ""
-        plenI = 4
-        if len(self.paramL) != plenI:
-            logging.info(
-                f"{self.cmdS} not evaluated: {plenI} parameters required")
-            return
-
-        if self.paramL[0].strip() == "resource":
-            folderP = Path(self.folderD["resourceP"])
-        else:
-            folderP = Path(self.folderD["resourceP"])
-        fileP = Path(self.paramL[1].strip())
-        pathP = Path(folderP / fileP)                    # file path
-        maxwI = int(self.paramL[2].split(",")[0])        # max column width
-        alignS = alignD[self.paramL[2].split(",")[1].strip()]
-        colS = self.paramL[3].strip()                    # rows read
-        extS = (pathP.suffix).strip()
-        if extS == ".csv":                               # read csv file
-            with open(pathP, "r") as csvfile:
-                readL = list(csv.reader(csvfile))
-        elif extS == ".xlsx":                            # read xls file
-            pDF1 = pd.read_excel(pathP, header=None)
-            readL = pDF1.values.tolist()
-        else:
-            logging.info(
-                f"{self.cmdS} not evaluated: {extS} file not processed")
-            return
-
-        incl_colL = list(range(len(readL[1])))
-        if colS == "[:]":
-            colL = [] * len(incl_colL)
-        else:
-            incl_colL = eval(colS)
-            colL = eval(colS)
-        for row in readL[1:]:                           # select columns
-            colL.append([row[i] for i in incl_colL])
-        wcontentL = []
-        for rowL in colL:                               # wrap columns
-            wrowL = []
-            for iS in rowL:
-                templist = textwrap.wrap(str(iS), int(maxwI))
-                templist = [i.replace("""\\n""", """\n""") for i in templist]
-                wrowL.append("""\n""".join(templist))
-            wcontentL.append(wrowL)
-        sys.stdout.flush()
-        old_stdout = sys.stdout
-        output = StringIO()
-        output.write(
-            tabulate(
-                wcontentL,
-                tablefmt="rst",
-                headers="firstrow",
-                numalign="decimal",
-                stralign=alignS,
-            )
-        )
-        tableS = output.getvalue()
-        sys.stdout = old_stdout
-
-        print(tableS)
-        return tableS
+        folderS = paramL[0]
+        fileS = paramL[1]
+        if len(folderS) == 3:
+            pathP = folderD["pubP"]
+            for fS in os.listdir(pathP):
+                if fnmatch.fnmatch(fS[0:4], fileS):
+                    self.currP = Path(fS)  # private folder
+        elif len(folderS) == 5:
+            pathP = folderD["prvP"]
+            for fS in os.listdir(pathP):
+                if fnmatch.fnmatch(fS[0:6], fileS):
+                    self.currP = Path(fS)  # public folder
 
     def image(self):
-        """insert image from file
+        """insert image(s) from files
 
         """
 
@@ -169,45 +82,18 @@ class CmdMD(Commands):
         if len(iL[1].split(",")) == 1:
             scale1S = iL[2]
             file1S = iL[1].strip()
-            if iL[0].strip() == "resource":
-                img1S = str(Path(self.folderD["resourceP"], file1S))
-            else:
-                img1S = str(Path(self.folderD["resourceP"], file1S))
-            img1S = img1S.replace("\\", "/")
-            rstS = ("\n.. image:: "
-                    + img1S + "\n"
-                    + "   :scale: "
-                    + scale1S + "%" + "\n"
-                    + "   :align: center"
-                    + "\n\n"
-                    )
+            imgpath1P = str(Path(self.currP, "data", file1S))
+            mdS = "![figure](" + imgpath1P + "=" + scale1S + "%x)"
         elif len(iL[1].split(",")) == 2:
             iL = self.paramL
             scale1S = iL[2]
             scale2S = iL[4]
             file1S = iL[1].strip()
             file2S = iL[3].strip()
-            if iL[0].strip() == "resource":
-                img1S = str(Path(self.folderD["resourceP"], file1S))
-                img2S = str(Path(self.folderD["resourceP"], file2S))
-            else:
-                img1S = str(Path(self.folderD["resourceP"], file1S))
-                img2S = str(Path(self.folderD["resourceP"], file2S))
-            img1S = img1S.replace("\\", "/")
-            img2S = img2S.replace("\\", "/")
-            rstS = ("|L| . |R|"
-                    + "\n\n"
-                    + ".. |L| image:: "
-                    + img1S + "\n"
-                    + "   :width: "
-                    + scale1S + "%"
-                    + "\n\n"
-                    + ".. |R| image:: "
-                    + img2S + "\n"
-                    + "   :width: "
-                    + scale2S + "%"
-                    + "\n\n"
-                    )
+            imgpath1P = str(Path(self.currP, "data", file1S))
+            imgpath2P = str(Path(self.currP, "data", file2S))
+            mdS = "![figure1](" + imgpath1P + "=" + scale1S + \
+                "%x) ![figure2](" + imgpath2P + "=" + scale2S + "%x)"
 
         return mdS
 

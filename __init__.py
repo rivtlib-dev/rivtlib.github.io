@@ -172,19 +172,19 @@ write   rv.writedoc()
     command syntax and description (snippet)                         API 
 =============================================================== ============
 
-|| append | folder | file_name                                        R
+|| append | folder | file                                             R
     (app)   pdf folder | .pdf; .txt  
 
-|| github | folder | file_name                                        R
+|| github | folder | file                                             R
     (git)   pdf folder | .pdf; .txt  
     
-|| project | folder | file_name | text type                           R
+|| project | folder | file | text type                                R
     (pro)   .txt; .tex; .html | plain; tags; latex
 
-|| text | folder | file_name | text type                             I,V
+|| text | folder | file| text type                                   I,V
     (tex)   .txt; .tex; .html | plain; tags; code; math; latex
 
-|| image  | folder | file_name, .. | .50, ..                         I,V
+|| image  | folder | file, .. | .50, ..                              I,V
     (ima)   .png; .jpg |  page width fraction
 
 || table  | folder | file | 60,r;l;c | [:]                           I,V
@@ -247,7 +247,7 @@ rivt example
 
 import rivt.rivtapi as rv
 
-rv.R("""Introduction | rgb-fore,background; default
+rv.R("""Introduction 
 
     The Repo method (short for repository or report) is the first method of a
     rivt doc and specifies repository settings and output formats.
@@ -276,7 +276,7 @@ rv.R("""Introduction | rgb-fore,background; default
 
     """)
 
-rv.I("""Insert method | rgb-fore,background
+rv.I("""Inserts method | rgb-fore,back; default
 
     The Insert method formats descriptive information that is static, as
     opposed to dynamic calculations and values.
@@ -316,9 +316,9 @@ rv.I("""Insert method | rgb-fore,background
 
     """)
 
-rv.V("""Value method | sub; nosub | rgb fore,background
+rv.V("""Values method | sub; nosub 
 
-    The Value method assigns values to variables and evaluates equations. The
+    The Values method assigns values to variables and evaluates equations. The
     sub;nosub setting specifies whether equations are also printed with
     substituted numerical values. 
 
@@ -331,27 +331,27 @@ rv.V("""Value method | sub; nosub | rgb fore,background
     formatted as a table.
 
     Example equation tag - Area of circle  _[e]
-    b1 := 3.14(d1/2)^2 | in^2, cm^2 | 2,2
+    b1 := 3.14(d1/2)^2 | IN^2, CM^2 | 2,2
 
     An equation tag provides an equation description and number. The
-    colon-equal tag triggers the assignment of a value and specifies the
-    result units and printed output decimal places in the equation and results.
+    colon-equal tag assigns a value and specifies the result units and printed
+    output decimal places in the equation and results.
 
-    || value | file | type | [:]
+    || assign | folder | file | [:]
     
-    The ||value command imports values from a csv file, where each row includes
-    the variable name, value, primary unit, secondary unit, description and
-    equation where applicable.
+    || declare | folder | file | [:]
+
+    The ||assign and || declare commands import values from csv files written
+    by rivt when processing assigned and declared values.
 
 """)
 
-rv.T("""Tool method | print;noprint | include; exclude| rgb fore,background
-
+rv.T("""Tools method | print;noprint | import folder | rgb fore,background
     
-    # The Tool method includes Python code. The "print" parameter specifies
-    # whether the code is echoed in the document. The "include" parameter
-    # specifies whether the code values are subsequently available (i.e. 
-    # included in the document namespace).
+    # The Tools method processes Python code. The "print" parameter specifies #
+    whether the code is echoed in the document. The "include" parameter #
+    specifies whether the code values are subsequently available (i.e. #
+    included in the document namespace).
     
     # Four libraries are imported by rivt and accessed as: 
 
@@ -360,17 +360,15 @@ rv.T("""Tool method | print;noprint | include; exclude| rgb fore,background
     # pandas: pd.method()
     # sympy: sy.method()
 
-    # Examples of single line Python statements include: 
+    # Examples of Python code include defining functions: 
     
     def f1(x,y): z = x + y; print(z); return
     
-    # for defining functions and
+    # and reading and writing files:
         
     with open('file.csv', 'r') as f: input = f.readlines()
     var = range(10)
     with open('fileout.csv', 'w') as f: f.write(var)
-
-    # for reading and writing files
         
     """)
 

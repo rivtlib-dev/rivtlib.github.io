@@ -1,4 +1,10 @@
 #
+import logging
+import warnings
+import fnmatch
+import os
+import sys
+import textwrap
 from io import StringIO
 from pathlib import Path
 
@@ -33,22 +39,42 @@ class CmdRST(Commands):
         :return: _description_
         :rtype: _type_
         """
-        prfxS = folderD docbaseS[0:3]
-        for fileS in os.listdir(privP):
-            if fnmatch.fnmatch(fileS[1:5], prfxS + "-*"):
-                privP = Path(fileS)  # private folder
-                break
-        # public
-        if len(prefixS) == 3:
-            pathP = 1
-            pass
-        elif len(prefixS) == 5:
-            pass
-        # private
 
-        return pathP
-    
-    
+        self.localD = localD
+        self.folderD = folderD
+        self.incrD = incrD
+        self.widthII = incrD["widthI"] - 1
+        self.paramL = paramL
+        self.errlogP = folderD["errlogP"]
+
+        modnameS = __name__.split(".")[1]
+        # print(f"{modnameS=}")
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)-8s  " + modnameS +
+            "   %(levelname)-8s %(message)s",
+            datefmt="%m-%d %H:%M",
+            filename=self.errlogP,
+            filemode="w",
+        )
+        warnings.filterwarnings("ignore")
+
+        folderS = paramL[1]
+        fileS = paramL[2]
+        cmdS = paramL[0]
+        if len(folderS) == 3:
+            pathP = folderD["pubP"]
+            for fS in os.listdir(pathP):
+                if fnmatch.fnmatch(fS[0:4], fileS):
+                    self.privP = Path(fS)  # private folder
+        elif len(folderS) == 5:
+            pathP = folderD["prvP"]
+            for fS in os.listdir(pathP):
+                if fnmatch.fnmatch(fS[0:6], fileS):
+                    self.pubP = Path(fS)  # private folder
+
+        self.cmd_parse(cmdS)
+
     def cmd_parse(self, cmdS):
         """_summary_
         """

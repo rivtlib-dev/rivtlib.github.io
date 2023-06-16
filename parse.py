@@ -123,7 +123,6 @@ class RivtParse:
 
         mdS = """"""
         rstS = """"""
-        rvtuS = rvtrS = ""
         uS = """"""
         blockB = False
         hdrvL = ["variable", "value", "[value]", "description"]
@@ -134,6 +133,7 @@ class RivtParse:
         blockevalB = False  # stop accumulation of values
         vtableL = []        # value table export
         eqL = []            # equation result table
+        lineS = ""
         for uS in strL:
             # print(f"{blockassignB=}")
             # print(f"{uS=}")
@@ -142,7 +142,9 @@ class RivtParse:
                 lineS += uS
                 continue
             if blockB and uS.strip() == "[q]]":
-                rvtS = tagmd.Tagsmd(lineS, tagS, strL)
+                tagS = self.tagsD["[q]"]
+                rvtS = tagmd.Tagsmd(lineS, tagS,
+                                    self.incrD, self.folderD,  self.localD)
                 mdS += rvtS + "\n"
                 rvtS = tagrst.TagsRST(lineS, tagS, strL)
                 rstS += rvtS + "\n"
@@ -166,11 +168,11 @@ class RivtParse:
                 parL = usL[1:]
                 cmdS = usL[0].strip()
                 if cmdS in self.cmdL:
-                    rvtC = cmdmd.Cmdmd(parL, self.incrD, self.folderD,
+                    rvtC = cmdmd.CmdMD(parL, self.incrD, self.folderD,
                                        self.localD)   # md cmd
-                    utS = rvtC.cmd_parse(cmdS)
+                    mdS = rvtC.cmd_parse(cmdS)
                     # print(f"{utS=}")
-                    mdS += utS
+                    mdS += mdS
                     rvtC = cmdrst.CmdRST(parL, self.incrD, self.folderD,
                                          self.localD)  # rst cmd
                     reS = rvtC.cmd_parse(cmdS)
@@ -183,14 +185,14 @@ class RivtParse:
                     blockB = True
                 if tagS in self.tagsD:
                     rvtC = tagmd.TagsMD(lineS, self.incrD, self.folderD,
-                                        self.localD)       # md tag
+                                        self.localD)   # md tag
                     utS = rvtC.tag_parse(tagS)
-                    mdS += utS + "\n"                      # rst tag
+                    mdS += mdS + "\n"                  # rst tag
                     rvtC = tagrst.TagsRST(lineS, self.incrD, self.folderD,
                                           self.localD)
                     reS = rvtC.tag_parse(tagS)
                     rstS += reS + "\n"
-            elif "=" in uS and methS == "V":            # equation tag
+            elif "=" in uS and methS == "V":           # equation tag
                 # print(f"{uS=}")
                 usL = uS.split("|")
                 lineS = usL[0]
@@ -198,7 +200,7 @@ class RivtParse:
                 self.incrD["descS"] = usL[2].strip()
                 rvtC = tagmd.TagsMD(lineS, self.incrD, self.folderD,
                                     self.localD)
-                if ":=" in uS:                          # declare tag
+                if ":=" in uS:                         # declare tag
                     tfS = "declare"
                     blockevalL.append(rvtC.tag_parse(":="))
 
@@ -208,7 +210,7 @@ class RivtParse:
                     blockevalB = True
                     continue
                 else:
-                    tfS = "assign"                      # assign tag
+                    tfS = "assign"                     # assign tag
                     eqL = rvtC.tag_parse("=")
                     mdS += eqL[1]
                     blockevalL.append(eqL[0])
@@ -229,7 +231,7 @@ class RivtParse:
                 writecsv.writerow(hdrvL)
                 writecsv.writerows(vtableL)
 
-        return (mdS, rvtuS), (rstS, rvtrS),  self.incrD, self.folderD, self.localD
+        return (mdS, rstS,  self.incrD, self.folderD, self.localD)
 
     def atable(self, tblL, hdreL, tblfmt, aligneL):
         """write assign values table"""

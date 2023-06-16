@@ -40,10 +40,9 @@ if Path(docfileS).name == "-o":
     docP = Path(
         "./tests/rivt_Example_Test_01/text/rv0101_Overview/rv0101t.py")
 modnameS = __name__.split(".")[1]
-print(f"{modnameS=}")
-
-print(f"{docfileS=}")
-print(f"{docP=}")
+# print(f"{modnameS=}")
+# print(f"{docfileS=}")
+# print(f"{docP=}")
 
 # paths from file
 docbaseS = docfileS.split(".py")[0]
@@ -54,7 +53,7 @@ pubcfgP = Path(pubP / "r0000-config")
 # config file
 config = ConfigParser()
 config.read(Path(pubcfgP, "rivt.ini"))
-prvP = config.get('project', 'private')
+prvP = Path(config.get('project', 'private'))
 titleS = config.get('report', 'title')
 headS = config.get('md', 'head')
 footS = config.get('md', 'foot')
@@ -64,7 +63,7 @@ footS = config.get('md', 'foot')
 # private path
 prfxS = docbaseS[0:3]
 for fileS in os.listdir(prvP):
-    if fnmatch.fnmatch(fileS[1:5], prfxS + "-*"):
+    if fnmatch.fnmatch(fileS[0:3], prfxS):
         prvfolderP = Path(fileS)        # private folder
         break
 doctitleS = (docP.parent.name).split("-", 1)[1]
@@ -141,12 +140,15 @@ print(f"\n-------- start rivt file : [{docfileS}] ---------")
 if docP.exists():
     logging.info(f"""start rivt file : [{docfileS}]""")
     logging.info(f"""rivt short path : [{dshortP}]""")
+    print(f"""rivt public path : [{pubP}]""")
 else:
     logging.info(f"""rivt file path not found: {docP}""")
 if prvP.exists:
-    logging.info(f"""public short path: [{prvshortP}]""")
+    logging.info(f"""private short path: [{prvshortP}]""")
+    print(f"""rivt private path : [{prvP}]""")
 else:
     logging.info(f"""private path not found: {prvfolderP}""")
+
 logging.info(f"""log folder short path: [{prvshortP}]""")
 
 

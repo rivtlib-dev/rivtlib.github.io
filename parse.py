@@ -73,15 +73,9 @@ class RivtParse:
         elif methS == "V":
             self.cmdL = ["image", "table", "text", "assign", "declare"]
 
-            self.tagsD = {"b]": "bold", "i]": "italic", "u]": "underline",
-                          "c]": "center", "r]": "right",
-                          "e]": "equation", "f]": "figure", "t]": "table",
+            self.tagsD = {"e]": "equation", "f]": "figure", "t]": "table",
                           "#]": "foot", "d]": "description",
                           "l]": "latex", "s]": "sympy",
-                          "link]": "link", "line]": "line", "page]": "page",
-                          "[c]]": "centerblk",  "[p]]": "plainblk",
-                          "[l]]": "latexblk", "[m]]": "mathblk",
-                          "[o]]": "codeblk", "[q]]": "quitblk",
                           ":=": "declare",  "=": "assign"}
 
         elif methS == "T":

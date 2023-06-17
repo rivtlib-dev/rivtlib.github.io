@@ -1461,7 +1461,7 @@ rv.X("""skip-string - can be anything.
 
             tagL = tagM.rvtags("R")     # returns list of valid tags
 
-            rvL = rvrS.split("\n")     # list of rivt string lines
+            rvL = rvrS.split("\n")     # list of method string lines
 
             rv1L = [i.strip() for i in rvL[0].split("|")]    # first line parameters
 
@@ -1595,7 +1595,7 @@ rv.X("""skip-string - can be anything.
 
             tagL = tagM.rvtags("I")     # returns list of valid tags
 
-            rviL = rviS.split("\n")     # list of rivt string lines
+            rviL = rviS.split("\n")     # list of method string lines
 
             iC = iM._I2md()
 
@@ -1657,7 +1657,7 @@ rv.X("""skip-string - can be anything.
 
             cmdL = cmdM.rvcmds("V")  # returns list of valid commands
 
-            rvL = rvS.split("\n")  # line list of rivt string
+            rvL = rvS.split("\n")  # line list of method string
 
             vC = vM._V2md()
 
@@ -1719,7 +1719,7 @@ rv.X("""skip-string - can be anything.
 
             cmdL = cmdM.rvcmds("T")  # returns list of valid commands
 
-            rvL = rvtS.split("\n")  # line list of rivt string
+            rvL = rvtS.split("\n")  # line list of method string
 
             tC = tM._T2md()
 
@@ -1759,7 +1759,7 @@ rv.X("""skip-string - can be anything.
 
         
 
-                An exclude string can be any triple quoted string. It is used for review and debugging. To skip a rivt string processing, change R,I,V,T to X.
+                An exclude string can be any triple quoted string. It is used for review and debugging. To skip a method string processing, change R,I,V,T to X.
 
             ''')
 
@@ -1998,7 +1998,7 @@ I('''section label | file folder; default
 
             tagL = tagM.rvtags("I")     # returns list of valid tags
 
-            rviL = rviS.split("\n")     # list of rivt string lines
+            rviL = rviS.split("\n")     # list of method string lines
 
             iC = iM._I2md()
 
@@ -2104,7 +2104,7 @@ R('''section lable | Calc title | md;pdf;html;inter | page#
 
             tagL = tagM.rvtags("R")     # returns list of valid tags
 
-            rvL = rvrS.split("\n")     # list of rivt string lines
+            rvL = rvrS.split("\n")     # list of method string lines
 
             rv1L = [i.strip() for i in rvL[0].split("|")]    # first line parameters
 
@@ -2260,7 +2260,7 @@ T('''section label | file folder; default
 
             cmdL = cmdM.rvcmds("T")  # returns list of valid commands
 
-            rvL = rvtS.split("\n")  # line list of rivt string
+            rvL = rvtS.split("\n")  # line list of method string
 
             tC = tM._T2md()
 
@@ -2349,7 +2349,7 @@ V('''section label | file folder; default | sub; nosub | save; nosave
 
             cmdL = cmdM.rvcmds("V")  # returns list of valid commands
 
-            rvL = rvS.split("\n")  # line list of rivt string
+            rvL = rvS.split("\n")  # line list of method string
 
             vC = vM._V2md()
 
@@ -2389,7 +2389,7 @@ processes an Exclude string
 
 X('''
 
-    An exclude string can be any triple quoted string. It is used for review and debugging. To skip a rivt string processing, change R,I,V,T to X.
+    An exclude string can be any triple quoted string. It is used for review and debugging. To skip a method string processing, change R,I,V,T to X.
 ''')
 
 **Parameters:**
@@ -2409,7 +2409,7 @@ X('''
 
         
 
-                An exclude string can be any triple quoted string. It is used for review and debugging. To skip a rivt string processing, change R,I,V,T to X.
+                An exclude string can be any triple quoted string. It is used for review and debugging. To skip a method string processing, change R,I,V,T to X.
 
             ''')
 

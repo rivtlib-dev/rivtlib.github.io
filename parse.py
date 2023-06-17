@@ -26,7 +26,7 @@ from rivt import cmdrst, cmdmd, tagrst, tagmd
 
 
 class RivtParse:
-    """process rivt string"""
+    """process method string"""
 
     def __init__(self, methS, folderD, incrD,  localD):
         """process rivt-text to md8 or reST string
@@ -106,11 +106,11 @@ class RivtParse:
         # self.rivtD.update(locals())
 
     def str_parse(self, strL, methS):
-        """parse rivt string line by line
+        """parse method string line by line
 
             parsing starts with second line
 
-            :param list strL: split rivt string
+            :param list strL: split method string
             :return mdS: md formatted string
             :return rstS: reST formatted string
             :return incrD: increment references

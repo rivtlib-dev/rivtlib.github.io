@@ -23,7 +23,7 @@ rv.T(rvtS) - Python functions and scripts (Tools)
 
 A rivt document is made up of an arbitrary sequence of three string methods
 following the initial method rv.R. Each method takes a single literal (triple)
-string argument referred to as a rivt string (rs). When running in an IDE (e.g.
+string argument referred to as a method string (rs). When running in an IDE (e.g.
 VSCode), each method may be run interactively using the standard cell decorator
 (# %%). The rv.writedoc() and rv.reportdoc() functions generate documents and
 compilations in GitHub Markdown (ghmd), PDF or HTML formats.
@@ -200,7 +200,7 @@ write   rv.writedoc()
  tags                                   description 
 ============================ ============================================
 
-I,V line format:        
+Repo and Inserts:        
 text _[b]                       bold 
 text _[c]                       center
 text _[i]                       italic
@@ -214,9 +214,9 @@ text _[t]                       table title and autonumber
 text _[#]                       footnote and autonumber
 text _[d]                       footnote description 
 _[page]                         new page
-_[address, label]               url, internal reference
+_[address, label]               url or internal reference
 
-I,V  block format:          
+Inserts blocks:          
 _[[b]]                          bold
 _[[c]]                          center
 _[[i]]                          italic
@@ -225,7 +225,14 @@ _[[l]]                          LaTeX
 _[[h]]                          HTML 
 _[[q]]                          quit block
 
-V calculation format: 
+Values formats: 
+text _[l]                       LaTeX math
+text _[s]                       sympy math
+text _[e]                       equation label and autonumber
+text _[f]                       figure caption and autonumber
+text _[t]                       table title and autonumber
+text _[#]                       footnote and autonumber
+text _[d]                       footnote description 
 a = n | unit, alt | descrip    declare = 
 a := b + c | unit, alt | n,n   assign := 
 

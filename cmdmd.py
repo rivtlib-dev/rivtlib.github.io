@@ -59,18 +59,19 @@ class CmdMD(Commands):
         )
         warnings.filterwarnings("ignore")
 
-        folderS = paramL[0]
-        fileS = paramL[1]
-        if len(folderS) == 3:
-            pathP = folderD["pubP"]
-            for fS in os.listdir(pathP):
-                if fnmatch.fnmatch(fS[0:4], fileS):
-                    self.currP = Path(fS)  # private folder
-        elif len(folderS) == 5:
-            pathP = folderD["prvP"]
-            for fS in os.listdir(pathP):
-                if fnmatch.fnmatch(fS[0:6], fileS):
-                    self.currP = Path(fS)  # public folder
+        fileS = paramL[0].strip()
+        if fileS[0:4] == "data":
+            self.currP = folderD["docpathP"]
+        elif fnmatch.fnmatch(fileS[0:5], "r[0-9]"):
+            self.currP = Path(folderD["pubP"])
+        else:
+            self.currP = Path(folderD["prvP"])
+
+    def project(self):
+
+        print("[Project Data - see report output]")
+
+        return "[Project Data - see report output]"
 
     def image(self):
         """insert image(s) from files
@@ -79,19 +80,20 @@ class CmdMD(Commands):
 
         mdS = ""
         iL = self.paramL
-        if len(iL[1].split(",")) == 1:
-            scale1S = iL[2]
-            file1S = iL[1].strip()
-            imgpath1P = str(Path(self.currP, "data", file1S))
+        if len(iL[0].split(",")) == 1:
+            file1S = iL[0].strip()
+            scale1S = iL[1].strip()
+            imgpath1P = str(Path(self.currP, file1S))
             mdS = "![figure](" + imgpath1P + "=" + scale1S + "%x)"
-        elif len(iL[1].split(",")) == 2:
-            iL = self.paramL
-            scale1S = iL[2]
-            scale2S = iL[4]
-            file1S = iL[1].strip()
-            file2S = iL[3].strip()
-            imgpath1P = str(Path(self.currP, "data", file1S))
-            imgpath2P = str(Path(self.currP, "data", file2S))
+        elif len(iL[0].split(",")) == 2:
+            iL = iL[0].split(",")
+            file1S = iL[0].strip()
+            file2S = iL[1].strip()
+            iL = iL[1].split(",")
+            scale1S = iL[0]
+            scale2S = iL[1]
+            imgpath1P = str(Path(self.currP, file1S))
+            imgpath2P = str(Path(self.currP, file2S))
             mdS = "![figure1](" + imgpath1P + "=" + scale1S + \
                 "%x) ![figure2](" + imgpath2P + "=" + scale2S + "%x)"
 

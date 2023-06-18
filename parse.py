@@ -165,12 +165,19 @@ class RivtParse:
                     rvtC = cmdmd.CmdMD(parL, self.incrD, self.folderD,
                                        self.localD)   # md cmd
                     mdS = rvtC.cmd_parse(cmdS)
-                    # print(f"{utS=}")
-                    mdS += mdS
+                    # print(f"{mdS=}")
+                    try:
+                        mdS += mdS
+                    except:
+                        pass
+
                     rvtC = cmdrst.CmdRST(parL, self.incrD, self.folderD,
                                          self.localD)  # rst cmd
                     reS = rvtC.cmd_parse(cmdS)
-                    rstS += reS
+                    try:
+                        rstS += reS
+                    except:
+                        pass
             elif "_[" in uS:                           # line tag
                 usL = uS.split("_[")
                 lineS = usL[0]
@@ -179,11 +186,11 @@ class RivtParse:
                     blockB = True
                 if tagS in self.tagsD:
                     rvtC = tagmd.TagsMD(lineS, self.incrD, self.folderD,
-                                        self.localD)   # md tag
-                    utS = rvtC.tag_parse(tagS)
+                                        self.tagsD, self.localD)   # md tag
+                    mdS = rvtC.tag_parse(tagS)
                     mdS += mdS + "\n"                  # rst tag
                     rvtC = tagrst.TagsRST(lineS, self.incrD, self.folderD,
-                                          self.localD)
+                                          self.tagsD, self.localD)
                     reS = rvtC.tag_parse(tagS)
                     rstS += reS + "\n"
             elif "=" in uS and methS == "V":           # equation tag

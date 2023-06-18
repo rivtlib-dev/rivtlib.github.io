@@ -40,11 +40,12 @@ class TagsMD(Tags):
     :rtype: _type_
     """
 
-    def __init__(self, lineS, tagS, incrD, folderD,  localD):
+    def __init__(self, lineS, incrD, folderD, tagsD, localD):
         """convert rivt tags to md or reST
 
         """
 
+        self.tagsD = tagsD
         self.localD = localD
         self.folderD = folderD
         self.incrD = incrD
@@ -64,10 +65,6 @@ class TagsMD(Tags):
             filemode="w",
         )
         warnings.filterwarnings("ignore")
-
-        mdS = self.tag_parse(tagS)
-
-        return mdS
 
     def bold(self):
         """bold text _[b]

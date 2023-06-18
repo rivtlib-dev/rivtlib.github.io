@@ -25,15 +25,17 @@ class TagsRST(Tags):
 
     """
 
-    def __init__(self, lineS, incrD, folderD,  localD):
+    def __init__(self, lineS, incrD, folderD,  tagsD, localD):
         """convert rivt tags to md or reST
 
         """
 
+        self.tagsD = tagsD
         self.localD = localD
         self.folderD = folderD
         self.incrD = incrD
         self.lineS = lineS
+        self.vgap = "2"
         self.widthI = incrD["widthI"]
         self.errlogP = folderD["errlogP"]
         self.valL = []                         # accumulate values in list

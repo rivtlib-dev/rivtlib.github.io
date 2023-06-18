@@ -42,81 +42,87 @@ and clinet information or copyrighted material. The *rivtprivate-* folder is
 typically not shared.
 
 Output files are written to three folders, depending on the output type. The
-Markdown output is written to a README.md file within the *rivtpublic-*
+Markdown output is written to a README.md file within the *rivt-*
 subfolder and may be read, searched and shared on version control platforms like
-GitHub. The PDF and HTML output is written to the doc folder in *rivtprivate-*.
+GitHub. The PDF and HTML output is written to the doc folder in *private*.
 
-Each separate document file is both a standalone document, and a subdivision
-document in an overall report structure.
 
-Folder Structure Example (folders in [])
-========================================
+Folder Structure (required prefixes in [])
+==========================================
 
-- [*rivtpublic-*Project-Name]       (repo name and shared public files)
-    - README.md                     (project README - table of contents)
-    - [*r000-config]                (public config files)        
-        - units.py                  (unit over-ride)              
-        - rivt.ini                  (config file)
-    - [*r0101-*Gravity-Loads]       (sub-division title)
-        -[*data*]                   (static data input)
-            - data1.csv             (public data)
-            - pic1.png              (public data)
-        - *r0101.py*                (rivt file name) 
-        - README.md                 (output file)
-        - functions1.py             (function file)
-    - [*r0102-*Seismic-Loads] 
-        -[*data*]      
-            - data2.csv 
-            - functions2.py 
-        - *r0102.py*
-        - README.md
-    - [*r0201-*Pile-Design] 
-        -[*data*]                      
-            - paragraph1.txt
-            - functions3.py 
-        - *r0201.py*
-        - README.md
-- [*rivtprivate-*Project-Name]      (private files)
-    - [*r00-*config]                (private config files)
-        - pdf_style.sty             (LaTeX style override)
-        - project-info.txt          (private project information)
-    - [*r01-*Overview-and-Loads]    (division title)
-        - image1.jpg                (private data)
-        - project_data.txt          (private data)
-    - [*r02-*Foundations]   
-        - image2.jpg
-        - attachment.pdf    
-    - [*docs*]                      (pdf and html output files)
-        - [*resources*]             (html resources)      
-            - image1.png
-            - image2.png
-            - html-style.css
-        - index.html                (site html)                    
-        - project-name.pdf          (compiled PDF report)        
-        - r0101-Gravity-Loads.pdf   (subdivision outputs)
-        - r0102-Seismic-Loads.pdf
-        - r0201-Pile-Design.pdf           
-        - r0101-Gravity-Loads.html
-        - r0102-Seismic-Loads.html
-        - r0201-Pile-Design.html
+[rivtproject]-Project-Name/
+├── [rivt]-Report-Name/                     (public files)
+    ├── .git
+    ├── units.py                            (unit over-ride)
+    ├── README.md                           (report toc)                                      
+    └── [r0101]-Document-Name1/
+        ├── data/
+            ├── data1.csv                   (input data)
+            ├── data2.csv
+            └── fig1.png
+        ├── [r0101].py                      (document input)
+        ├── README.md                       (document output)
+        └── functions1.py                   (function file)
+    ├── [r0102]-Document-Name2/
+        ├── data/
+            ├── data1.csv
+            ├── fig1.png
+            └── fig2.png
+        ├── [r0102].py
+        ├── README.md
+        └── functions2.py
+    └── [r0201]-Document-Name3/
+       ├── data/
+           ├── data1.csv
+           ├── attachment.pdf
+           └── fig1.png
+       ├── [r0201].py
+       ├── README.md
+       └── functions3.py
+└── [private]/                              (private files)
+    ├── [rivt.ini]                          (config file)
+    ├── project-info.txt
+    ├── [temp]/                             (output files)
+    ├── [docs]/                             (output files)
+        ├──[site]                           (html site)      
+            └──[resources]                  (html resources)      
+                ├── image1.png
+                ├── image2.png
+                ├── html-style.css
+            ├── index.html                  (site output)                    
+            ├── r0101-Document-Name1.html  
+            ├── r0102-Document-Name2.html
+            ├── r0201-Document-Name2.html    
+        └──[report]                         (document output)
+            ├── r0101-Document-Name1.pdf   
+            ├── r0102-Document-Name2.pdf
+            ├── r0201-Document-Name2.pdf
+            └── Report-Name.pdf             (compiled PDF report)    
+    ├── images/                             (optional data folders)
+            ├── fig1.png
+            └── fig2.png
+    └── tables/
+        ├── data1.csv
+        └── data1.csv
 
-The API is designed for sharing files in the *rivtpublic-* folder. They
-represent the core information in the document - the text, equations, functions
-and tables. Files in the *rivtprivate-* folder are typically not shared. This
-two-part folder and file structure simplifies protection of confidential
+
+The API is designed for sharing files in the *rivt-* folder. Files in this
+folder include the core information in the document - the text, equations,
+functions and tables. Files in the *private-* folder are typically not shared.
+This two-part folder and file structure simplifies protection of confidential
 content, while applying version control and sharing for the primary calculation
 inputs.
 
 Commands and Tags
 =================
 
-rivt syntax includes arbitrary unicode text, commands, tags and simple (single
-line) Python statements. Syntax is interepreted by the particular rivt method.
-Commands read or write extrnal files denoted by || at the beginning of a line.
-Command parameters are separated by |. In the summary below single parameter
-options are separated by semi-colons and list parameters are separated by
-commas. The first line of each method is a section label followed by section
-parameters. Section labels may be hidden by prepending with a double hyphen --.
+rivt syntax includes arbitrary unicode text and rivt commands and tags. Syntax
+is interepreted by the particular rivt method. Commands read or write extrnal
+files denoted by || at the beginning of a line. Command parameters are
+separated by |. In the summary below single parameter options are separated by
+semi-colons and list parameters are separated by commas. The first line of each
+method is a section label followed by section parameters. Section labels may be
+hidden by prepending with a double hyphen --.
 
 Tags format a line or block of text and are generally denoted with _[tag] at
 the end of a line. Block tags start the block of text with _[[tag]] and end
@@ -146,14 +152,12 @@ Insert  rv.I("""label | rgb; default
 
 Values  rv.V("""label | sub; nosub 
 (val)
-                ||image (img)
-                ||text (tex)
-                ||table (tab)
+                ||assign (ass)
                 ||declare (dec)
 
                 """)
 
-Tools  rv.T("""label | rgb; default; noprint | name; noname
+Tools  rv.T("""label | rgb; default; noprint | space; nospace
 (too)
                 Python code
 
@@ -161,12 +165,12 @@ Tools  rv.T("""label | rgb; default; noprint | name; noname
 
 exclude rv.X("""any method
 
-                A method is changed to X is not evaluated and may be used for
+                A method changed to X is not evaluated and may be used for
                 comments and debugging.
 
                 """)
 
-write   rv.writedoc()
+write   rv.writedoc(md,pdf,html)
 
 =============================================================== ============
     command syntax and description (snippet)                         API 
@@ -178,23 +182,23 @@ write   rv.writedoc()
 || github | folder | file                                             R
     (git)   pdf folder | .pdf; .txt  
     
-|| project | folder | file | text type                                R
+|| project | file                                 R
     (pro)   .txt; .tex; .html | plain; tags; latex
 
-|| text | folder | file| text type                                   I,V
+|| text | relative file path | text type                              I
     (tex)   .txt; .tex; .html | plain; tags; code; math; latex
 
-|| image  | folder | file, .. | .50, ..                              I,V
+|| image  | relative file path | .50, ..                              I
     (ima)   .png; .jpg |  page width fraction
 
-|| table  | folder | file | 60,r;l;c | [:]                           I,V
-    (tab)   .csv; syk; xls  | max col width, locate | rows
+|| table  | relative file path | 60,r;l;c | [:]                       I
+    (tab)   .csv; xls  | max col width, locate | rows
 
-|| declare | folder | file | type |                                   V
-    (dec)    .csv; .xlsx;  | list, dict, rivt
+|| declare | relative file path  | [:]                                V
+    (dec)    .csv; .xls  | rows
 
-|| assign | folder | file | type |                                    V
-    (val)    .csv; .xlsx;  | list, dict, rivt
+|| assign | relative file path  | [:]                                 V
+    (ass)    .csv; .xls  | rows
 
 ============================ ============================================
  tags                                   description 

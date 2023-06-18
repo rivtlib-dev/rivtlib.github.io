@@ -22,11 +22,11 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 docfileS = "xx"
 docpathP = Path(os.getcwd())
 for fileS in os.listdir(docpathP):
-    print(fileS)
+    # print(fileS)
     if fnmatch.fnmatch(fileS, "r????.py"):
         docfileS = fileS
         docP = Path(docpathP, docfileS)
-        print(docP)
+        # print(docP)
         break
 if docfileS == "xx":
     print("INFO     rivt file not found")
@@ -48,40 +48,38 @@ modnameS = __name__.split(".")[1]
 docbaseS = docfileS.split(".py")[0]
 pubP = docP.parent.parent               # rivt public folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
-pubcfgP = Path(pubP / "r0000-config")
+prvP = Path(pubP.parent, "private")
 
 # config file
 config = ConfigParser()
-config.read(Path(pubcfgP, "rivt.ini"))
-prvP = Path(config.get('project', 'private'))
+config.read(Path(prvP, "rivt.ini"))
 titleS = config.get('report', 'title')
 headS = config.get('md', 'head')
 footS = config.get('md', 'foot')
 # print(f"{rvconfigP=}")
 # print(f"{rvtlocalP=}")
-
-# private path
 prfxS = docbaseS[0:3]
-for fileS in os.listdir(prvP):
-    if fnmatch.fnmatch(fileS[0:3], prfxS):
-        prvfolderP = Path(fileS)        # private folder
-        break
 doctitleS = (docP.parent.name).split("-", 1)[1]
 doctitleS = titleS + " [ " + doctitleS.replace("-", " ") + " ] "
-divtitleS = (prvfolderP.name).split("-", 1)[1]
-divtitleS = divtitleS.replace("-", " ")
+divtitleS = config.get("divisions", prfxS)
 
-siteP = Path(prvP, "website")           # site folder path
-reportP = Path(prvP, "report")          # report folder path
-prvcfgP = Path(prvP, "r00-config")
-rivtP = Path("rivtapi.py").parent       # rivt package path
+# match
+# for fileS in os.listdir(prvP):
+#    if fnmatch.fnmatch(fileS[0:3], prfxS):
+#        prvfolderP = Path(fileS)        # private folder
+#        break
+
+
+siteP = Path(prvP, "docs", "site")          # site folder path
+reportP = Path(prvP, "docs", "report")      # report folder path
+tempP = Path(prvP, "temp")
+rivtP = Path("rivtapi.py").parent           # rivt package path
 pypath = os.path.dirname(sys.executable)
 rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
-errlogP = Path(prvcfgP, "rivt-log.txt")
-styleP = Path()                         # file name added at runtime
+errlogP = Path(tempP, "rivt-log.txt")
+styleP = prvP
 valfileS = docbaseS.replace("r", "v") + ".csv"
 dataP = Path(docP.parent, "data")
-cmdP = Path(dataP)
 
 # global dicts and vars
 mdS = """\n"""                          # md output string
@@ -94,9 +92,9 @@ rstoutL = ["pdf", "html", "both"]       # reST formats
 outputL = ["md", "pdf", "html", "both", "report", "site"]
 
 folderD = {}
-for item in ["docP", "dataP", "prvP", "pubP",
-             "reportP", "siteP", "pubcfgP", "prvcfgP",
-             "errlogP", "styleP", "dataP", "cmdP"]:
+for item in ["docP", "dataP", "prvP", "pubP", "docpathP",
+             "reportP", "siteP", "dataP",
+             "errlogP", "styleP", "tempP"]:
     folderD[item] = eval(item)
 
 incrD = {
@@ -133,9 +131,8 @@ logging.basicConfig(
 )
 dshortP = Path(*Path(docP.parent).parts[-2:])
 pubshortP = Path(*Path(pubP).parts[-2:])
-prvshortP = Path(*Path(prvfolderP).parts[-2:])
+prvshortP = Path(*Path(prvP).parts[-2:])
 
-print(f"\n-------- start rivt file : [{docfileS}] ---------")
 
 if docP.exists():
     logging.info(f"""start rivt file : [{docfileS}]""")
@@ -147,10 +144,11 @@ if prvP.exists:
     logging.info(f"""private short path: [{prvshortP}]""")
     print(f"""rivt private path : [{prvP}]""")
 else:
-    logging.info(f"""private path not found: {prvfolderP}""")
+    logging.info(f"""private path not found: {prvP}""")
 
 logging.info(f"""log folder short path: [{prvshortP}]""")
 
+print(f"\n-------- start rivt file : [{docfileS}] ---------")
 
 with open(docP, "r") as f2:                 # write backup doc file
     rivtS = f2.read()
@@ -218,7 +216,7 @@ def _str_title(hdrS):
     docnumS = "[" + incrD["docnumS"]+"]"
     dnumS = docnumS + " - " + str(snumI)
     widthI = incrD["widthI"]
-    headS = dnumS + " &nbsp; &nbsp; &nbsp;" + hdrS
+    headS = dnumS + " : " + hdrS
     bordrS = widthI * "-"
     hdmdS = bordrS + "\n" + "##" + headS + "\n" + bordrS + "\n"
 
@@ -306,7 +304,7 @@ def R(rS: str):
 
     global mdS, rstS, incrD, folderD, localD
 
-    _pages(incrD["headuS"], incrD["footuS"])   # header, footer for md pages
+    # _pages(incrD["headuS"], incrD["footuS"])   # header, footer for md pages
 
     # xmdS = ""
     # xrstS = ""
@@ -314,7 +312,7 @@ def R(rS: str):
     # hmdS, hrstS = _str_set(rL[0], "R")
     # print(hmdS)
     mdC = parse.RivtParse("R", folderD, incrD,  localD)
-    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:])
+    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "R")
     # if hmdS != None:
     # xmdS = xmdL[1] + hmdS + xmdL[0]
     # xrstS = xrstL[1] + hrstS + xrstL[0]
@@ -340,7 +338,7 @@ def I(rS: str):
     hmdS, hrstS = _str_set(rL[0], "I")
     print(hmdS)
     mdC = parse.RivtParse("I", folderD, incrD,  localD)
-    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:])
+    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "I")
     if hmdS != None:
         xmdS = hmdS + xmdL[0]
         xrstS = hrstS + xrstL[0]
@@ -367,7 +365,7 @@ def V(rS: str):
     hmdS, hrstS = _str_set(rL[0], "V")
     print(hmdS)
     mdC = parse.RivtParse("V", folderD, incrD, localD)
-    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:])
+    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "V")
     # print(f"{xmdS=}", f"{rL[1:]=}")
     if hmdS != None:
         xmdS = hmdS + xmdL[0]
@@ -393,7 +391,7 @@ def T(rS: str):
     rL = rS.split("\n")
     hmdS, hrstS = _str_set(rL[0], "T")
     mdC = parse.RivtParse("T", folderD, incrD, localD)
-    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:])
+    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "T")
     if hmdS != None:
         xmdS = hmdS + xmdL[0]
         xrstS = hrstS + xrstL[0]

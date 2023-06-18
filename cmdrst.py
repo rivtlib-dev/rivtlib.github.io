@@ -7,6 +7,7 @@ import sys
 import textwrap
 from io import StringIO
 from pathlib import Path
+import csv
 
 import html2text as htm
 import matplotlib.pyplot as plt
@@ -59,21 +60,13 @@ class CmdRST(Commands):
         )
         warnings.filterwarnings("ignore")
 
-        folderS = paramL[1]
-        fileS = paramL[2]
-        cmdS = paramL[0]
-        if len(folderS) == 3:
-            pathP = folderD["pubP"]
-            for fS in os.listdir(pathP):
-                if fnmatch.fnmatch(fS[0:4], fileS):
-                    self.privP = Path(fS)  # private folder
-        elif len(folderS) == 5:
-            pathP = folderD["prvP"]
-            for fS in os.listdir(pathP):
-                if fnmatch.fnmatch(fS[0:6], fileS):
-                    self.pubP = Path(fS)  # private folder
-
-        self.cmd_parse(cmdS)
+        fileS = paramL[0].strip()
+        if fileS[0:4] == "data":
+            self.currP = folderD["docpathP"]
+        elif fnmatch.fnmatch(fileS[0:5], "r[0-9]"):
+            self.currP = Path(folderD["pubP"])
+        else:
+            self.currP = Path(folderD["prvP"])
 
     def cmd_parse(self, cmdS):
         """_summary_
@@ -102,65 +95,38 @@ class CmdRST(Commands):
                   "c": "center", "r": "right", "l": "left"}
 
         tableS = ""
-        plenI = 4
+        plenI = 2
         if len(self.paramL) != plenI:
             logging.info(
                 f"{self.cmdS} not evaluated: {plenI} parameters required")
             return
 
-        if self.paramL[0].strip() == "resource":
-            folderP = Path(self.folderD["resourceP"])
-        else:
-            folderP = Path(self.folderD["resourceP"])
-        fileP = Path(self.paramL[1].strip())
-        pathP = Path(folderP / fileP)                    # file path
-        maxwI = int(self.paramL[2].split(",")[0])        # max column width
-        alignS = alignD[self.paramL[2].split(",")[1].strip()]
-        colS = self.paramL[3].strip()                    # rows read
+        folderP = Path(self.folderD["prvP"])
+        fileP = Path(self.paramL[0].strip())
+        pathP = Path(folderP, fileP)                    # file path
         extS = (pathP.suffix).strip()
-        if extS == ".csv":                               # read csv file
-            with open(pathP, "r") as csvfile:
-                readL = list(csv.reader(csvfile))
-        elif extS == ".xlsx":                            # read xls file
-            pDF1 = pd.read_excel(pathP, header=None)
-            readL = pDF1.values.tolist()
+        txttypeS = self.paramL[1].strip()
+        with open(pathP, "r", encoding="utf-8") as f2:
+            txtfileL = f2.readlines()
+        j = ""
+        if extS == ".txt":
+            # print(f"{txttypeS=}")
+            if txttypeS == "plain":
+                for iS in txtfileL:
+                    j += "   " + iS
+                return "\n\n::\n\n" + j + "\n\n"
+            elif txttypeS == "code":
+                pass
+            elif txttypeS == "tags":
+                xtagC = parse.RivtParseTag(
+                    self.folderD, self.incrD,  self.localD)
+                xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
+                    txtfileL)
+                return xrstS
         else:
             logging.info(
                 f"{self.cmdS} not evaluated: {extS} file not processed")
             return
-
-        incl_colL = list(range(len(readL[1])))
-        if colS == "[:]":
-            colL = [] * len(incl_colL)
-        else:
-            incl_colL = eval(colS)
-            colL = eval(colS)
-        for row in readL[1:]:                           # select columns
-            colL.append([row[i] for i in incl_colL])
-        wcontentL = []
-        for rowL in colL:                               # wrap columns
-            wrowL = []
-            for iS in rowL:
-                templist = textwrap.wrap(str(iS), int(maxwI))
-                templist = [i.replace("""\\n""", """\n""") for i in templist]
-                wrowL.append("""\n""".join(templist))
-            wcontentL.append(wrowL)
-        sys.stdout.flush()
-        old_stdout = sys.stdout
-        output = StringIO()
-        output.write(
-            tabulate(
-                wcontentL,
-                tablefmt="rst",
-                headers="firstrow",
-                numalign="decimal",
-                stralign=alignS,
-            )
-        )
-        tableS = output.getvalue() + "\n\n"
-        sys.stdout = old_stdout
-
-        return tableS
 
     def image(self):
         """insert image from file
@@ -170,13 +136,10 @@ class CmdRST(Commands):
         """
         rstS = ""
         iL = self.paramL
-        if len(iL[1].split(",")) == 1:
-            scale1S = iL[2]
-            file1S = iL[1].strip()
-            if iL[0].strip() == "resource":
-                img1S = str(Path(self.folderD["resourceP"], file1S))
-            else:
-                img1S = str(Path(self.folderD["resourceP"], file1S))
+        if len(iL[0].split(",")) == 1:
+            scale1S = iL[1].strip()
+            file1S = iL[0].strip()
+            img1S = str(Path(self.currP, file1S))
             img1S = img1S.replace("\\", "/")
             rstS = ("\n.. image:: "
                     + img1S + "\n"
@@ -185,18 +148,15 @@ class CmdRST(Commands):
                     + "   :align: center"
                     + "\n\n"
                     )
-        elif len(iL[1].split(",")) == 2:
-            iL = self.paramL
-            scale1S = iL[2]
-            scale2S = iL[4]
-            file1S = iL[1].strip()
-            file2S = iL[3].strip()
-            if iL[0].strip() == "resource":
-                img1S = str(Path(self.folderD["resourceP"], file1S))
-                img2S = str(Path(self.folderD["resourceP"], file2S))
-            else:
-                img1S = str(Path(self.folderD["resourceP"], file1S))
-                img2S = str(Path(self.folderD["resourceP"], file2S))
+        elif len(iL[0].split(",")) == 2:
+            iL = iL[0].split(",")
+            file1S = iL[0].strip()
+            file2S = iL[1].strip()
+            iL = iL[1].split(",")
+            scale1S = iL[0]
+            scale2S = iL[1]
+            img1S = str(Path(self.currP, file1S))
+            img2S = str(Path(self.currP, file1S))
             img1S = img1S.replace("\\", "/")
             img2S = img2S.replace("\\", "/")
             rstS = ("|L| . |R|"

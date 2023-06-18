@@ -62,6 +62,7 @@ class CmdMD(Commands):
         fileS = paramL[0].strip()
         if fileS[0:4] == "data":
             self.currP = folderD["docpathP"]
+            self.relP = fileS
         elif fnmatch.fnmatch(fileS[0:5], "r[0-9]"):
             self.currP = Path(folderD["pubP"])
         else:
@@ -83,7 +84,7 @@ class CmdMD(Commands):
         if len(iL[0].split(",")) == 1:
             file1S = iL[0].strip()
             scale1S = iL[1].strip()
-            imgpath1P = str(Path(self.currP, file1S))
+            imgpath1P = "../" + file1S
             mdS = "![figure](" + imgpath1P + "=" + scale1S + "%x)"
         elif len(iL[0].split(",")) == 2:
             iL = iL[0].split(",")
@@ -92,11 +93,12 @@ class CmdMD(Commands):
             iL = iL[1].split(",")
             scale1S = iL[0]
             scale2S = iL[1]
-            imgpath1P = str(Path(self.currP, file1S))
-            imgpath2P = str(Path(self.currP, file2S))
+            imgpath1P = "../" + file1S
+            imgpath2P = "../" + file2S
             mdS = "![figure1](" + imgpath1P + "=" + scale1S + \
                 "%x) ![figure2](" + imgpath2P + "=" + scale2S + "%x)"
 
+        print(mdS)
         return mdS
 
     def table(self):

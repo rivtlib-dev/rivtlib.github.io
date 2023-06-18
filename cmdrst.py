@@ -63,6 +63,7 @@ class CmdRST(Commands):
         fileS = paramL[0].strip()
         if fileS[0:4] == "data":
             self.currP = folderD["docpathP"]
+            self.relP = fileS
         elif fnmatch.fnmatch(fileS[0:5], "r[0-9]"):
             self.currP = Path(folderD["pubP"])
         else:

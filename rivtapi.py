@@ -104,9 +104,9 @@ incrD = {
     "secnumI": 0,                       # section number
     "widthI": 80,                       # md printing width
     "eqlabelS": "equation",             # last used equation label
-    "equI": 0,                          # equation number
-    "tableI": 0,                        # table number
-    "figI": 0,                          # figure number
+    "equI": 1,                          # equation number
+    "tableI": 1,                        # table number
+    "figI": 1,                          # figure number
     "noteL": [0],                       # footnote counter
     "footL": [1],                       # foot counter
     "subvB": False,                     # substitute values
@@ -216,7 +216,7 @@ def _str_title(hdrS):
     docnumS = "[" + incrD["docnumS"]+"]"
     dnumS = docnumS + " - " + str(snumI)
     widthI = incrD["widthI"]
-    headS = dnumS + " : " + hdrS
+    headS = dnumS + ": " + hdrS
     bordrS = widthI * "-"
     hdmdS = bordrS + "\n" + "##" + headS + "\n" + bordrS + "\n"
 

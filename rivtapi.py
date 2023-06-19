@@ -2,7 +2,7 @@
 '''rivt API
 
 '''
-import datetime
+from datetime import datetime, time
 import fnmatch
 import logging
 import os
@@ -49,19 +49,18 @@ docbaseS = docfileS.split(".py")[0]
 pubP = docP.parent.parent               # rivt public folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
 prvP = Path(pubP.parent, "private")
+prfxS = docbaseS[0:3]
 
 # config file
 config = ConfigParser()
 config.read(Path(prvP, "rivt.ini"))
-titleS = config.get('report', 'title')
+reportS = config.get('report', 'title')
 headS = config.get('md', 'head')
 footS = config.get('md', 'foot')
+divS = config.get("divisions", prfxS)
 # print(f"{rvconfigP=}")
 # print(f"{rvtlocalP=}")
-prfxS = docbaseS[0:3]
-doctitleS = (docP.parent.name).split("-", 1)[1]
-doctitleS = titleS + " [ " + doctitleS.replace("-", " ") + " ] "
-divtitleS = config.get("divisions", prfxS)
+
 
 # match
 # for fileS in os.listdir(prvP):
@@ -98,9 +97,11 @@ for item in ["docP", "dataP", "prvP", "pubP", "docpathP",
     folderD[item] = eval(item)
 
 incrD = {
+    "reportS": reportS,                 # report title
+    "divS": divS,                       # div title
+    "sectS": "",                        # section title
+    "doctitleS": "",                    # doctitle
     "docnumS": docbaseS[1:5],           # doc number
-    "doctitleS": doctitleS,             # doc title
-    "divtitleS": divtitleS,             # section title
     "secnumI": 0,                       # section number
     "widthI": 80,                       # md printing width
     "eqlabelS": "equation",             # last used equation label
@@ -117,7 +118,8 @@ incrD = {
     "pageI": 1,                         # starting page number
     "titleS": "rivtdoc",                # document title
     "headrS": "",                       # header string reST
-    "footrS": ""                        # footer string reST
+    "footrS": "",                       # footer string reST
+    "tocS": "",                         # table of contents
 }
 
 localD = {}                             # local rivt dictionary
@@ -163,40 +165,6 @@ with open(docP, "r") as f1:
     rvtfileS += rvtfileS + """\nsys.exit()\n"""
 
 
-def _pages(headS, footS):
-    """write head or foot format line to dictionary
-
-        :return lineS: header or footer
-        :rtype: str
-    """
-
-    pageS = str(incrD["pageI"])
-    if "<date>" in headS:
-        headS = headS.replace("<date>",
-                              datetime.date.today().strftime('%Y-%m-%d'))
-    if "<datetime>" in headS:
-        headS = headS.replace("<datetime>",
-                              datetime.date.today().strftime('%Y-%m-%d %H:%M'))
-    if "<page>" in headS:
-        headS = headS.replace("<page>", pageS)
-
-    headL = headS.split("|")
-    # footL = footS.split("|")
-
-    l1I = len(headL[0])
-    l2I = len(headL[1])
-    l3I = len(headL[2])
-    wI = int(incrD["widthI"])
-    spS = (int((wI - l1I - l3I - l2I)/2) - 2) * " "
-    sepS = wI * "_" + 2*"\n"
-
-    incrD["headuS"] = sepS + headL[0] + spS + \
-        headL[1] + spS + headL[2] + "\n" + sepS
-    # incrD["footS"] = lineL[0] + spS + lineL[1] + spS + lineL[2] + "\n" + sepS
-
-    print(incrD["headuS"])
-
-
 def _str_title(hdrS):
     """_summary_
 
@@ -213,22 +181,10 @@ def _str_title(hdrS):
 
     snumI = incrD["secnumI"] + 1
     incrD["secnumI"] = snumI
-    docnumS = "[" + incrD["docnumS"]+"]"
-    dnumS = docnumS + " - " + str(snumI)
-    widthI = incrD["widthI"]
-    headS = dnumS + ": " + hdrS
-    bordrS = widthI * "-"
-    hdmdS = bordrS + "\n" + "##" + headS + "\n" + bordrS + "\n"
-
-    # if snumI > 1:
-    #     hdrstS = (
-    #         ".. raw:: latex\n"
-    #         + "\n"
-    #         + "   \\clearpage \n"
-    #         + "   \\pagebreak \n"
-    #         + "   \\newpage \n"
-    #         + "\n"
-    #     )
+    docnumS = incrD["docnumS"]
+    dnumS = docnumS + "-[" + str(snumI) + "]"
+    headS = dnumS + " " + hdrS
+    hdmdS = "### " + headS + "\n"
 
     hdrstS += (
         ".. raw:: latex"
@@ -304,21 +260,22 @@ def R(rS: str):
 
     global mdS, rstS, incrD, folderD, localD
 
-    # _pages(incrD["headuS"], incrD["footuS"])   # header, footer for md pages
-
-    # xmdS = ""
-    # xrstS = ""
+    mdS = ""
+    rstS = ""
     rL = rS.split("\n")
-    # hmdS, hrstS = _str_set(rL[0], "R")
-    # print(hmdS)
+    doctitleS = rL[0].split("|")[0].strip()
+    headmdS = datetime.now().strftime("%Y-%m-%d %I:%M%p") + "\n"
+    print(headmdS)
+    mdS += headmdS
+
+    print("## " + doctitleS)
+    incrD["doctitleS"] = doctitleS
+    mdS += doctitleS
+
     mdC = parse.RivtParse("R", folderD, incrD,  localD)
     xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "R")
-    # if hmdS != None:
-    # xmdS = xmdL[1] + hmdS + xmdL[0]
-    # xrstS = xrstL[1] + hrstS + xrstL[0]
     mdS += xmdL[0]                         # accumulate md string
     rstS += xrstL[0]                       # accumulate reST string
-    # xmdS = ""                            # reset local string
 
 
 def I(rS: str):
@@ -419,6 +376,7 @@ def _mod_tex(tfileP):
 
     """
     startS = str(incrD["pageI"])
+    doctitleS = str(incrD["doctitleS"])
 
     with open(tfileP, "r", encoding="md-8", errors="ignore") as f2:
         texf = f2.read()
@@ -472,17 +430,17 @@ def _gen_pdf(self):
     """
 
     pdfD = {
-        "xpdfP": Path(retempP, docbaseS + ".pdf"),
-        "xhtmlP": Path(retempP, docbaseS + ".html"),
-        "xrstP": Path(retempP, docbaseS + ".rst"),
-        "xtexP": Path(retempP, docbaseS + ".tex"),
-        "xauxP": Path(retempP, docbaseS + ".aux"),
-        "xoutP": Path(retempP, docbaseS + ".out"),
-        "xflsP": Path(retempP, docbaseS + ".fls"),
-        "xtexmakP": Path(retempP, docbaseS + ".fdb_latexmk"),
+        "xpdfP": Path(tempP, docbaseS + ".pdf"),
+        "xhtmlP": Path(tempP, docbaseS + ".html"),
+        "xrstP": Path(tempP, docbaseS + ".rst"),
+        "xtexP": Path(tempP, docbaseS + ".tex"),
+        "xauxP": Path(tempP, docbaseS + ".aux"),
+        "xoutP": Path(tempP, docbaseS + ".out"),
+        "xflsP": Path(tempP, docbaseS + ".fls"),
+        "xtexmakP": Path(tempP, docbaseS + ".fdb_latexmk"),
     }
     # os.system('latex --version')
-    os.chdir(retempP)
+    os.chdir(tempP)
     texfS = str(pdfD["xtexP"])
     # pdf1 = 'latexmk -xelatex -quiet -f ' + texfS + " > latex-log.txt"
     pdf1 = 'xelatex -interaction=batchmode ' + texfS
@@ -524,8 +482,8 @@ def _rest2tex(rstfileS):
 
     rst2texP = Path(rivtP, "scripts", "rst2latex.py")
     # print(f"{str(rst2texP)=}")
-    texfileP = Path(retempP, docbaseS + ".tex")
-    rstfileP = Path(retempP, docbaseS + ".rst")
+    texfileP = Path(tempP, docbaseS + ".tex")
+    rstfileP = Path(tempP, docbaseS + ".rst")
 
     with open(rstfileP, "w", encoding='md-8') as f2:
         f2.write(rstS)
@@ -544,7 +502,7 @@ def _rest2tex(rstfileS):
         ]
     )
     logging.info(f"tex call:{tex1S=}")
-    os.chdir(retempP)
+    os.chdir(tempP)
     try:
         os.system(tex1S)
         time.sleep(1)
@@ -574,10 +532,36 @@ def writedoc(formatS):
     formatL = [i.strip() for i in formatS.split(",")]
     docmdP = Path(docP.parent / "README.md")
     rstfileP = Path(docP.parent, docbaseS + ".rst")
-    eshortP = Path(*Path(rstfileP).parts[-3:])
+    # eshortP = Path(*Path(rstfileP).parts[-3:])
 
-    logging.info(f"""end rivt file: [{docfileS}]""")
     print(f" -------- end rivt file: [{docfileS}] --------- ")
+    logging.info(f"""end rivt file: [{docfileS}]""")
+
+    # add table of contents to summary
+
+    tocS = ""
+    secI = 0
+    for iS in rivtL:
+        if iS[0:5] == "rv.I(" and "--" not in iS:
+            secI += 1
+            jS = iS.split('"""')
+            kS = jS.split("|").strip()
+            tocS += str(secI) + "'" + kS
+        elif i[0:4] == "rv.V" and "--" not in iS:
+            secI += 1
+            jS = iS.split('"""')
+            kS = jS.split("|").strip()
+            tocS += str(secI) + "'" + kS
+        elif i[0:4] == "rv.T" and "--" not in iS:
+            secI += 1
+            jS = iS.split('"""')
+            kS = jS.split("|").strip()
+            tocS += str(secI) + "'" + kS
+        else:
+            pass
+    incrD["tocS"] = tocS
+    mdeditL = mdS.split("## ", 1)
+    mdS = mdeditL[0] + tocS + mdeditL[1]
 
     print("", flush=True)
     if "md" in formatL:                          # save md file
@@ -586,29 +570,28 @@ def writedoc(formatS):
             # with open(_rstfile, "wb") as f1:
             #   f1.write(rstcalcS.encode("md-8"))
             # f1 = open(_rstfile, "r", encoding="md-8", errors="ignore")
-        logging.info(f"""markdown written: {dshortP}\README.md""")
         print(f"markdown written: {dshortP}\README.md")
+        logging.info(f"""markdown written: {dshortP}\README.md""")
     print("", flush=True)
+
     if "pdf" in formatS or "html" in formatS:      # save rst file
         with open(rstfileP, "w", encoding='md-8') as f2:
             f2.write(rstS)
         logging.info(f"reST written: {rstfileP}")
         print(f"reST written: {rstfileP}")
     for i in formatL:
-        if "pdf" not in i:
-            continue
-        else:
+        if "pdf" in i:
             logging.info(f"start PDF file process: {rstfileP}")
             print("start PDF file process: {rstfileP}")
             pdfstyleS = i.split(":")[1].strip()
-            styleP = Path(prvcfgP, pdfstyleS)
+            styleP = Path(prvP, pdfstyleS)
             folderD["styleP"] = styleP
             logging.info(f"PDF style file: {styleP}")
             print(f"PDF style file: {styleP}")
         pdffileP = _rest2tex(rstS)
         logging.info(f"PDF doc written: {pdffileP}")
         print(f"PDF doc written: {pdffileP}")
-    # if "html" in formatL:
+    #   if "html" in I:
     #     pdffileP = _rest2html(rstS)
     #     logging.info(f"HTML doc written: {pdffileP}")
     sys.exit()

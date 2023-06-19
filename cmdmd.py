@@ -1,5 +1,5 @@
 #
-import os
+import csv
 import logging
 import warnings
 import fnmatch
@@ -70,22 +70,21 @@ class CmdMD(Commands):
 
     def project(self):
 
-        print("[Project Data - see report output]")
-
-        return "[Project Data - see report output]"
+        print("(... for project data - see PDF report output ...)")
+        return "(... for project data - see PDF report output ...)"
 
     def image(self):
         """insert image(s) from files
 
         """
-
         mdS = ""
         iL = self.paramL
         if len(iL[0].split(",")) == 1:
             file1S = iL[0].strip()
             scale1S = iL[1].strip()
-            imgpath1P = "../" + file1S
-            mdS = "![figure](" + imgpath1P + "=" + scale1S + "%x)"
+            imgS = "<img src=" + file1S + " width=" + \
+                scale1S + "% alt=" + file1S + ">"
+            mdS = imgS
         elif len(iL[0].split(",")) == 2:
             iL = iL[0].split(",")
             file1S = iL[0].strip()
@@ -93,10 +92,10 @@ class CmdMD(Commands):
             iL = iL[1].split(",")
             scale1S = iL[0]
             scale2S = iL[1]
-            imgpath1P = "../" + file1S
-            imgpath2P = "../" + file2S
-            mdS = "![figure1](" + imgpath1P + "=" + scale1S + \
-                "%x) ![figure2](" + imgpath2P + "=" + scale2S + "%x)"
+            imgS = "<img src=" + file1S + " width=" + \
+                scale1S + "% alt=" + file1S + "<img src=" + \
+                file2S + " width=" + scale2S + "% alt=" + file2S + ">"
+            mdS = imgS
 
         print(mdS)
         return mdS
@@ -108,64 +107,50 @@ class CmdMD(Commands):
             :rtype: str
         """
 
+        tableS = ""
         alignD = {"s": "", "d": "decimal",
                   "c": "center", "r": "right", "l": "left"}
-
-        tableS = ""
-        plenI = 4
+        plenI = 2
         if len(self.paramL) != plenI:
             logging.info(
-                f"{self.cmdS} not evaluated: {plenI} parameters required")
+                f"{self.cmdS} command not evaluated: {plenI} parameters required")
             return
 
-        if self.paramL[0] == "data":
-            folderP = Path(self.folderD["dataP"])
+        fileP = Path(self.paramL[0].strip())
+        prfxP = self.folderD["docpathP"]
+        if str(fileP)[0:4] == "data":
+            pathP = Path(prfxP, fileP)                       # file path
+        elif str(fileP)[0:4] == "data":
+            pass
         else:
-            folderP = Path(self.folderD["dataP"])
-        fileP = Path(self.paramL[1].strip())
-        pathP = Path(folderP / fileP)                    # file path
-        maxwI = int(self.paramL[2].split(",")[0])        # max column width
-        alignS = alignD[self.paramL[2].split(",")[1].strip()]
-        colS = self.paramL[3].strip()                    # rows read
-        extS = (pathP.suffix).strip()
-        if extS == ".csv":                               # read csv file
+            pass
+        maxwI = int(self.paramL[1].split(",")[0])        # max column width
+        keyS = self.paramL[1].split(",")[1].strip()
+        alignS = alignD[keyS]
+        extS = pathP.suffix[1:]
+        # print(f"{extS=}")
+        if extS == "csv":                               # read csv file
             with open(pathP, "r") as csvfile:
                 readL = list(csv.reader(csvfile))
-        elif extS == ".xlsx":                            # read xls file
+        elif extS == "xlsx":                            # read xls file
             pDF1 = pd.read_excel(pathP, header=None)
             readL = pDF1.values.tolist()
         else:
             logging.info(
                 f"{self.cmdS} not evaluated: {extS} file not processed")
             return
-        incl_colL = list(range(len(readL[1])))
-        if colS == "[:]":
-            colL = [] * len(incl_colL)
-        else:
-            incl_colL = eval(colS)
-            colL = eval(colS)
-        for row in readL[1:]:                           # select columns
-            colL.append([row[i] for i in incl_colL])
-        wcontentL = []
-        for rowL in colL:                               # wrap columns
-            wrowL = []
-            for iS in rowL:
-                templist = textwrap.wrap(str(iS), int(maxwI))
-                templist = [i.replace("""\\n""", """\n""") for i in templist]
-                wrowL.append("""\n""".join(templist))
-            wcontentL.append(wrowL)
+
         sys.stdout.flush()
         old_stdout = sys.stdout
         output = StringIO()
-        output.write(
-            tabulate(
-                wcontentL,
-                tablefmt="github",
-                headers="firstrow",
-                numalign="decimal",
-                stralign=alignS,
-            )
-        )
+        output.write(tabulate(
+            readL,
+            tablefmt="html",
+            headers="firstrow",
+            numalign="decimal",
+            maxcolwidths=maxwI,
+            stralign=alignS))
+
         tableS = output.getvalue()
         sys.stdout = old_stdout
 

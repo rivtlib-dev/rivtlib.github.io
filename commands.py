@@ -3,6 +3,9 @@ import csv
 import textwrap
 import logging
 from pathlib import Path
+import tabulate
+from TexSoup import TexSoup
+import html2text as htm
 
 
 class Commands():
@@ -15,9 +18,9 @@ class Commands():
         || append | folder | file1, file2, ...                         R
         || github | folder | file |repository                          R
         || project | file | type                                       R
-        || image | folder | file1, (file2)  | size1, (size2)          I,V
-        || table | folder | file  | max width | rows                  I,V
-        || text | folder | file  | type                               I,V
+        || image | folder | file1, (file2)  | size1, (size2)           I 
+        || table | folder | file  | max width | rows                   I
+        || text | folder | file  | type                                I
         || declare | folder | file | rows                              V
         || assign | folder | file | rows                               V
 
@@ -199,3 +202,51 @@ class Commands():
 
         # self.calcS += mdS + "\n"
         # self.rivtD.update(locals())
+
+    def txthtml(self, txtfileL):
+        """9a _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """
+        txtS = ""
+        flg = 0
+        for iS in txtfileL:
+            if "src=" in iS:
+                flg = 1
+                continue
+            if flg == 1 and '"' in iS:
+                flg = 0
+                continue
+            if flg == 1:
+                continue
+            txtS += " "*4 + iS
+            txtS = htm.html2text(txtS)
+            mdS = txtS.replace("\n    \n", "")
+
+            return mdS
+
+    def txttex(self, txtfileS, txttypeS):
+        """9b _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """
+
+        soup = TexSoup(txtfileS)
+        soupL = list(soup.text)
+        soupS = "".join(soupL)
+        soup1L = []
+        soupS = soupS.replace("\\\\", "\n")
+        soupL = soupS.split("\n")
+        for s in soupL:
+            sL = s.split("&")
+            sL = s.split(">")
+            try:
+                soup1L.append(sL[0].ljust(10) + sL[1])
+            except:
+                soup1L.append(s)
+        soupS = [s.replace("\\", " ") for s in soup1L]
+        soupS = "\n".join(soup1L)
+
+        return soupS

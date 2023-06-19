@@ -69,22 +69,6 @@ class CmdRST(Commands):
         else:
             self.currP = Path(folderD["prvP"])
 
-    def cmd_parse(self, cmdS):
-        """_summary_
-        """
-        self.cmdS = cmdS
-        return eval("self." + cmdS+"()")
-
-    def append(self):
-        """append pdf files
-        """
-        pass
-
-    def github(self):
-        """_summary_
-        """
-        pass
-
     def project(self):
         """insert project information from csv, xlsx or syk
 

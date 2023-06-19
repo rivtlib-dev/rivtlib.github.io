@@ -4,66 +4,67 @@
 Introduction
 ============
 
-rivt is a Python package that processes a calculation oriented plain text
-markup language - rivtapi. It runs on any platform that supports Python 3.8 or
-later and prioritizes simplicity, universal access and reports in its design.
+rivt is an open source Python package that processes a new plain text markup
+language - rivttext. rivttext was designed to write engineering documents that
+can be shared as easily modified templates. rivt runs on any platform that
+supports Python 3.8 or later and prioritizes simplicity, flexibility,
+efficiency and universal access.
 
-rivtapi wraps and extends the markup language reStructuredText (reST) defined
-at https://docutils.sourceforge.io/rst.html. A rivt document begins with
-the import statement:
+The rivt api wraps and extends the Github (gfm) and reStructuredText (reST)
+markup languages defined at https://docutils.sourceforge.io/rst.html and xxx. 
 
-import rivt.rivtapi as rv 
+A rivt file begins with the import statement:
+
+*import rivt.rivtapi as rv*
  
-This Python module provides four API functions:
+which provides four API functions:
     
-rv.R(rvtS) - repository and report information (Repo)
-rv.I(rvtS) - static text, images, tables and math (Insert)
-rv.V(rvtS) - equations (Values)
-rv.T(rvtS) - Python functions and scripts (Tools)
+rv.R(rmS) - repository and report information (Repo)
+rv.I(rmS) - static text, images, tables and math (Insert)
+rv.V(rmS) - equations (Values)
+rv.T(rmS) - Python functions and scripts (Tools)
 
-A rivt document is made up of an arbitrary sequence of three string methods
-following the initial method rv.R. Each method takes a single literal (triple)
-string argument referred to as a method string (rs). When running in an IDE (e.g.
-VSCode), each method may be run interactively using the standard cell decorator
-(# %%). The rv.writedoc() and rv.reportdoc() functions generate documents and
-compilations in GitHub Markdown (ghmd), PDF or HTML formats.
+A rivt document is made up of an arbitrary sequence of the three later string
+methods following the initial method rv.R. Each method takes a single literal
+(triple) string argument referred to as a rivt method string (rms) or rivt
+string. When running in an IDE (e.g. VSCode), each method may be run
+interactively using the standard cell decorator (# %%). The rv.writedoc() and
+rv.reportdoc() functions generate documents and compilations in GitHub Markdown
+(ghmd) and PDF formats. Interactive output to the terminal and VSCode
+interative window is utf-8.
 
-rivt works for simple short documents and extensive reports. The rivt folder
-structure shown below is designed to support both. A rivt project includes
-top-level folder names: *rivtpublic-*project-name, and
-*rivtprivate-*project-name. Folder and file name prefixes that are fixed are
-shown as *name* in the example below. Sub-folders are combinations of specified
-prefixes and user titles. Hyphens that separate words in file and folder names
-are stripped out when used as document and division names in the document.
+rivt works for both simple short documents and extensive reports. The rivt
+folder structure shown below is designed to support both. A rivt project
+includes public folders; *rivt-*report-label and *private* folders intended
+for client and other confidential or proprietary files and information. 
 
-The *rivtpublic-* folder contains the document input in text format. The
-*rivtprivate-* folder includes confidential document files including project
-and clinet information or copyrighted material. The *rivtprivate-* folder is
-typically not shared.
+Output files are written in two places, depending on the output type.
+The Markdown output is written to a README.md file within the public *rivt-*
+subfolder and may be read, searched and shared on version control platforms
+like GitHub. Private information is not written to the README. The PDF output
+is written to the doc folder in *private*.
 
-Output files are written to three folders, depending on the output type. The
-Markdown output is written to a README.md file within the *rivt-*
-subfolder and may be read, searched and shared on version control platforms like
-GitHub. The PDF and HTML output is written to the doc folder in *private*.
+Folder and file name prefixes that are fixed are shown in [ ] in the example
+below. Folder labels may be combinations of specified prefixes and user labels.
 
 
-Folder Structure (required prefixes in [])
-==========================================
+Example Folder Structure (required prefixes shown in [ ])
+=========================================================
 
-[rivtproject]-Project-Name/
-├── [rivt]-Report-Name/                     (public files)
+[rivtproject]-Project-Label/
+├── [rivt]-Report-Label/                    (public files)
     ├── .git
     ├── units.py                            (unit over-ride)
     ├── README.md                           (report toc)                                      
-    └── [r0101]-Document-Name1/
+    └── [r0101]-Doc-Label1/
         ├── data/
             ├── data1.csv                   (input data)
             ├── data2.csv
             └── fig1.png
         ├── [r0101].py                      (document input)
-        ├── README.md                       (document output)
+        ├── README.md                       (output file)
         └── functions1.py                   (function file)
-    ├── [r0102]-Document-Name2/
+    ├── [r0102]-Doc-Label2/
         ├── data/
             ├── data1.csv
             ├── fig1.png
@@ -71,7 +72,7 @@ Folder Structure (required prefixes in [])
         ├── [r0102].py
         ├── README.md
         └── functions2.py
-    └── [r0201]-Document-Name3/
+    └── [r0201]-Doc- Labe3l/
        ├── data/
            ├── data1.csv
            ├── attachment.pdf
@@ -83,22 +84,12 @@ Folder Structure (required prefixes in [])
     ├── [rivt.ini]                          (config file)
     ├── project-info.txt
     ├── [temp]/                             (output files)
-    ├── [docs]/                             (output files)
-        ├──[site]                           (html site)      
-            └──[resources]                  (html resources)      
-                ├── image1.png
-                ├── image2.png
-                ├── html-style.css
-            ├── index.html                  (site output)                    
-            ├── r0101-Document-Name1.html  
-            ├── r0102-Document-Name2.html
-            ├── r0201-Document-Name2.html    
-        └──[report]                         (document output)
-            ├── r0101-Document-Name1.pdf   
-            ├── r0102-Document-Name2.pdf
-            ├── r0201-Document-Name2.pdf
-            └── Report-Name.pdf             (compiled PDF report)    
-    ├── images/                             (optional data folders)
+    ├── [report]/                           (output files)
+        ├── r0101-Doc-Label1.pdf   
+        ├── r0102-Doc-Label2.pdf
+        ├── r0201-Doc-Label3.pdf
+        └── Report-Label.pdf                 (compiled PDF report)    
+    ├── images/                              (optional data folders)
             ├── fig1.png
             └── fig2.png
     └── tables/
@@ -170,7 +161,7 @@ exclude rv.X("""any method
 
                 """)
 
-write   rv.writedoc(md,pdf,html)
+write   rv.writedoc(md,pdf)
 
 =============================================================== ============
     command syntax and description (snippet)                         API 
@@ -265,8 +256,8 @@ rv.R("""Introduction
 
     The setting line specifies the section label and colors. if any. If the
     label is preceded by two dashes "--", the the label becomes a reference and
-    a new section is not started. If the color parameter (applies to PDF and
-    HTML output) is omitted then default black text and no background is used.
+    a new section is not started. If the color parameter (applies to PDF) is
+    omitted then default black text and no background is used.
 
     The ||github command specifies a project README.md file in the public r00
     folder and the GitHub repository url where public project files are

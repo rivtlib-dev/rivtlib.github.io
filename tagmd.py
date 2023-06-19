@@ -76,6 +76,15 @@ class TagsMD(Tags):
         print(self.lineS)
         return self.lineS
 
+    def italic(self):
+        """italicize text _[i]
+
+        :return lineS: centered line
+        :rtype: str
+        """
+        print(self.lineS)
+        return self.lineS
+
     def center(self):
         """center text _[c]
 
@@ -85,15 +94,6 @@ class TagsMD(Tags):
         lineS = self.lineS.center(int(self.widthI))
         print(lineS)
         return lineS
-
-    def italic(self):
-        """italicize text _[i]
-
-        :return lineS: centered line
-        :rtype: str
-        """
-        print(self.lineS)
-        return self.lineS
 
     def boldcenter(self):
         """center text _[bc]
@@ -115,28 +115,6 @@ class TagsMD(Tags):
 
         lineS = self.lineS.center(int(self.widthI))
 
-        print(lineS)
-        return lineS
-
-    def bolditaliccenter(self):
-        """center text _[c]
-
-        :return lineS: centered line
-        :rtype: str
-        """
-
-        lineS = self.lineS.rjust(int(self.widthI))
-
-        print(lineS)
-        return lineS
-
-    def italiccenter(self):
-        """center text _[c]
-
-        :return lineS: centered line
-        :rtype: str
-        """
-        lineS = self.lineS.center(int(self.widthI))
         print(lineS)
         return lineS
 

@@ -7,7 +7,7 @@ import numpy.linalg as la
 import pandas as pd
 import sympy as sp
 import matplotlib.pyplot as plt
-
+import html2text as htm
 import configparser
 from io import StringIO
 from numpy import *
@@ -17,7 +17,7 @@ from sympy.core.alphabets import greeks
 from tabulate import tabulate
 from pathlib import Path
 from datetime import datetime
-
+from TexSoup import TexSoup
 from rivt import parse
 from rivt.units import *
 from commands import Commands
@@ -69,9 +69,46 @@ class CmdMD(Commands):
             self.currP = Path(folderD["prvP"])
 
     def project(self):
+        """insert project information from txt
 
-        print("(... for project data - see PDF report output ...)")
-        return "(... for project data - see PDF report output ...)"
+            :return lineS: utf text
+            :rtype: str
+        """
+
+        alignD = {"s": "", "d": "decimal",
+                  "c": "center", "r": "right", "l": "left"}
+
+        tableS = ""
+        plenI = 2
+        if len(self.paramL) != plenI:
+            logging.info(
+                f"{self.cmdS} not evaluated: {plenI} parameters required")
+            return
+
+        folderP = Path(self.folderD["prvP"])
+        fileP = Path(self.paramL[0].strip())
+        pathP = Path(folderP, fileP)                    # file path
+        extS = (pathP.suffix).strip()
+        txttypeS = self.paramL[1].strip()
+        with open(pathP, "r", encoding="utf-8") as f2:
+            txtfileL = f2.readlines()
+        j = ""
+        if extS == ".txt":
+            # print(f"{txttypeS=}")
+            if txttypeS == "plain":
+                for iS in txtfileL:
+                    j += "   " + iS
+                return "\n\n::\n\n" + j + "\n\n"
+            elif txttypeS == "rivttags":
+                xtagC = parse.RivtParseTag(
+                    self.folderD, self.incrD,  self.localD)
+                xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
+                    txtfileL)
+                return xrstS
+        else:
+            logging.info(
+                f"{self.cmdS} not evaluated: {extS} file not processed")
+            return
 
     def image(self):
         """insert image(s) from files
@@ -191,7 +228,7 @@ class CmdMD(Commands):
                 return txtfileS
             elif txttypeS == "code":
                 pass
-            elif txttypeS == "tags":
+            elif txttypeS == "rivttags":
                 xtagC = parse.RivtParseTag(
                     self.folderD, self.incrD,  self.localD)
                 xmdS, self.incrD, self.folderD, self.localD = xtagC.md_parse(

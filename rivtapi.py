@@ -264,7 +264,7 @@ def R(rS: str):
     rstS = ""
     rL = rS.split("\n")
     doctitleS = rL[0].split("|")[0].strip()
-    headmdS = datetime.now().strftime("%Y-%m-%d %I:%M%p") + "\n"
+    headmdS = datetime.now().strftime("%Y-%m-%d | %I:%M%p") + "\n"
     print(headmdS)
     mdS += headmdS
 

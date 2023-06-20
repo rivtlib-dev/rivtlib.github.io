@@ -25,7 +25,7 @@ from rivt.units import *
 from rivt.tags import Tags
 
 
-class TagsMD(Tags):
+class TagsUTF(Tags):
     """convert rivt tags to md
 
     :param paramL: _description_

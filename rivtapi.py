@@ -43,14 +43,12 @@ modnameS = __name__.split(".")[1]
 # print(f"{modnameS=}")
 # print(f"{docfileS=}")
 # print(f"{docP=}")
-
-# paths from file
+# paths relative to file
 docbaseS = docfileS.split(".py")[0]
 pubP = docP.parent.parent               # rivt public folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
 prvP = Path(pubP.parent, "private")
 prfxS = docbaseS[0:3]
-
 # config file
 config = ConfigParser()
 config.read(Path(prvP, "rivt.ini"))
@@ -58,18 +56,7 @@ reportS = config.get('report', 'title')
 headS = config.get('md', 'head')
 footS = config.get('md', 'foot')
 divS = config.get("divisions", prfxS)
-# print(f"{rvconfigP=}")
-# print(f"{rvtlocalP=}")
-
-
-# match
-# for fileS in os.listdir(prvP):
-#    if fnmatch.fnmatch(fileS[0:3], prfxS):
-#        prvfolderP = Path(fileS)        # private folder
-#        break
-
-
-siteP = Path(prvP, "docs", "site")          # site folder path
+# output paths
 reportP = Path(prvP, "docs", "report")      # report folder path
 tempP = Path(prvP, "temp")
 rivtP = Path("rivtapi.py").parent           # rivt package path
@@ -79,23 +66,17 @@ errlogP = Path(tempP, "rivt-log.txt")
 styleP = prvP
 valfileS = docbaseS.replace("r", "v") + ".csv"
 dataP = Path(docP.parent, "data")
+# print(f"{prvP=}")
 
-# global dicts and vars
-mdS = """\n"""                          # md output string
-rstS = """\n"""                         # reST output string
-valS = """"""                           # values string for export
-rvtfileS = """"""                       # rivt input file
-outputS = "md"                          # default output type
-xflagB = 0
-rstoutL = ["pdf", "html", "both"]       # reST formats
-outputL = ["md", "pdf", "html", "both", "report", "site"]
-
+# global
+utfS = """"""                         # utf-8 output string
+mdS = """"""                          # md output string
+rstS = """"""                         # reST output string
+rvtfileS = """"""                     # rivt input string
+declareS = """"""                     # declares output string
+assignS = """"""                      # assigns output string
+rivtD = {}                            # rivt dictionary
 folderD = {}
-for item in ["docP", "dataP", "prvP", "pubP", "docpathP",
-             "reportP", "siteP", "dataP",
-             "errlogP", "styleP", "tempP"]:
-    folderD[item] = eval(item)
-
 incrD = {
     "reportS": reportS,                 # report title
     "divS": divS,                       # div title
@@ -108,33 +89,32 @@ incrD = {
     "equI": 1,                          # equation number
     "tableI": 1,                        # table number
     "figI": 1,                          # figure number
+    "pageI": 1,                         # starting page number
     "noteL": [0],                       # footnote counter
     "footL": [1],                       # foot counter
-    "subvB": False,                     # substitute values
     "unitS": "M,M",                     # units
     "descS": "2,2",                     # description or decimal places
-    "saveP": "nosave",                  # save values to file
-    "codeB": False,                     # print code strings in doc
-    "pageI": 1,                         # starting page number
-    "titleS": "rivtdoc",                # document title
+    "titleS": "rivt Document",          # document title
     "headrS": "",                       # header string reST
     "footrS": "",                       # footer string reST
-    "tocS": "",                         # table of contents
+    "tocB": False,                      # table of contents
+    "codeB": False,                     # print code strings in doc
+    "subB": False                       # sub values in equations
 }
+for item in ["docP", "dataP", "prvP", "pubP", "docpathP",
+             "reportP", "dataP", "errlogP", "styleP", "tempP"]:
+    folderD[item] = eval(item)
 
-localD = {}                             # local rivt dictionary
 
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)-8s  " + modnameS + "   %(levelname)-8s %(message)s",
     datefmt="%m-%d %H:%M",
     filename=errlogP,
-    filemode="w",
-)
+    filemode="w")
 dshortP = Path(*Path(docP.parent).parts[-2:])
 pubshortP = Path(*Path(pubP).parts[-2:])
 prvshortP = Path(*Path(prvP).parts[-2:])
-
 
 if docP.exists():
     logging.info(f"""start rivt file : [{docfileS}]""")
@@ -152,7 +132,8 @@ logging.info(f"""log folder short path: [{prvshortP}]""")
 
 print(f"\n-------- start rivt file : [{docfileS}] ---------")
 
-with open(docP, "r") as f2:                 # write backup doc file
+# write backup doc file
+with open(docP, "r") as f2:
     rivtS = f2.read()
     rivtL = f2.readlines()
 with open(bakP, "w") as f3:
@@ -174,18 +155,19 @@ def _str_title(hdrS):
     :rtype: _type_
     """
 
-    global outputS
-
     hdrstS = """"""
     hdmdS = """"""
+    hdutfS = """"""""
 
     snumI = incrD["secnumI"] + 1
     incrD["secnumI"] = snumI
     docnumS = incrD["docnumS"]
     dnumS = docnumS + "-[" + str(snumI) + "]"
     headS = dnumS + " " + hdrS
-    hdmdS = "### " + headS + "\n"
+    bordrS = incrD["widthI"] * "-"
 
+    hdutfS = bordrS + "\n" + headS + "\n" + bordrS + "\n"
+    hdmdS = "### " + headS + "\n"
     hdrstS += (
         ".. raw:: latex"
         + "   \n\n ?x?vspace{.2in} "
@@ -194,19 +176,9 @@ def _str_title(hdrS):
         + "   ?x?hfill?x?textbf{SECTION " + dnumS + " }"
         + "   ?x?end{tcolorbox}"
         + "   \n" + "   ?x?newline" + "   ?x?vspace{.05in}"
-        # + "   ?x?vspace{.2in}"
-        # + "   ?x?textbf{ "
-        # + hdrS
-        # + "}"
-        # + "   ?x?hfill?x?textbf{SECTION "
-        # + compnumS
-        # + " }\n"
-        # + "   ?x?newline"
-        # + "   ?x?vspace{.05in}   {?x?color{black}?x?hrulefill}"
-        + "\n\n"
-    )
+        + "\n\n")
 
-    return hdmdS, hdrstS
+    return hdutfS, hdmdS, hdrstS
 
 
 def _str_set(rS, methS):
@@ -220,16 +192,21 @@ def _str_set(rS, methS):
     :rtype: _type_
     """
 
-    global mdS, rstS, outputS, incrD, folderD
+    global mdS, rstS, incrD, folderD
 
     rs1L = rS.split("|")
 
     if methS == "R":
-        incrD["widthI"] = int(rs1L[1])     # md print width
-        incrD["pageI"] = int(rs1L[2])      # start page
+        incrD["pageI"] = int(rs1L[1])                  # start page
+
+    elif methS == "I":
+        if rs1L[1].strip() == "default":
+            incrD["subB"] = True
+        else:
+            incrD["subB"] = False
 
     elif methS == "V":
-        if rs1L[1].strip().casefold() == "sub".casefold():
+        if rs1L[1].strip() == "sub":
             incrD["subB"] = True
         else:
             incrD["subB"] = False
@@ -242,40 +219,57 @@ def _str_set(rS, methS):
 
     rs1S = rs1L[0].strip()
 
-    if rs1S.strip()[0:2] == "--":
-        return "\n", "\n"                             # skip heading
+    if rs1S.strip()[0:2] == "--":                       # skip new section
+        return "\n", "\n", "\n"                             
     else:
-        hdmdS, hdrstS = _str_title(rs1L[0].strip())  # get_heading
-        return hdmdS, hdrstS
+        return _str_title(rs1L[0].strip())
 
 
 def R(rS: str):
-    """format Repo string
+    """process Repo string
 
         : param rS: triple quoted repo string
         : type rS: str
-        : return: formatted md string
+        : return: formatted utf, md and reST strings
         : type: str
     """
 
-    global mdS, rstS, incrD, folderD, localD
+    global utfS, mdS, rstS, incrD, folderD
 
-    mdS = ""
-    rstS = ""
+    xmdS = xrstS = ""
     rL = rS.split("\n")
+    hdutf, hmdS, hrstS = _str_set(rL[0], "R")
     doctitleS = rL[0].split("|")[0].strip()
-    headmdS = datetime.now().strftime("%Y-%m-%d | %I:%M%p") + "\n"
-    print(headmdS)
-    mdS += headmdS
-
-    print("## " + doctitleS)
     incrD["doctitleS"] = doctitleS
-    mdS += doctitleS
+    headS = datetime.now().strftime("%Y-%m-%d | %I:%M%p") + "\n"
 
-    mdC = parse.RivtParse("R", folderD, incrD,  localD)
-    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "R")
-    mdS += xmdL[0]                         # accumulate md string
-    rstS += xrstL[0]                       # accumulate reST string
+    utftitleS = (headS + "\n" + doctitleS + "\n")
+    mdtitleS = (headS + "\n## " + doctitleS + "\n")
+    rsttitleS = (
+        ".. raw:: latex"
+        + "   \n\n ?x?vspace{.2in} "
+        + "   ?x?begin{tcolorbox} "
+        + "   ?x?textbf{ " + doctitleS + "}"
+        + "   ?x?end{tcolorbox}"
+        + "   \n" + "   ?x?newline" + "   ?x?vspace{.05in}"
+        + "\n\n")
+
+    utfS += utftitleS
+    mdS += mdtitleS
+    rstS += rsttitleS
+
+    print(utftitleS)
+
+    mdC = parse.RivtParse("R", folderD, incrD, rivtD)
+    xmdL, xrstL, incrD, folderD = mdC.str_parse(rL[1:], "R")
+    mdS += xmdL[0]
+    rstS += xrstL[0]
+
+    utfS += utftitleS
+    mdS += mdtitleS
+    rstS += rsttitleS
+
+    print(utftitleS)
 
 
 def I(rS: str):
@@ -287,18 +281,21 @@ def I(rS: str):
         : rtype: str
     """
 
-    global mdS, rstS, incrD, folderD, localD
+    global utfS, mdS, rstS, incrD, folderD
 
     xmdS = ""
     xrstS = ""
+    xutfS = ""
     rL = rS.split("\n")
-    hmdS, hrstS = _str_set(rL[0], "I")
+    hdutf, hmdS, hrstS = _str_set(rL[0], "I")
     print(hmdS)
-    mdC = parse.RivtParse("I", folderD, incrD,  localD)
+    
+    mdC = parse.RivtParse("I", folderD, incrD,  rivtD)
     xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "I")
     if hmdS != None:
         xmdS = hmdS + xmdL[0]
         xrstS = hrstS + xrstL[0]
+    
     mdS += xmdS
     rstS += xrstS
     xmdS = ""
@@ -312,7 +309,7 @@ def V(rS: str):
         :formatted md string: type: str
     """
 
-    global mdS, rstS, incrD, folderD, localD
+    global utfS, mdS, rstS, incrD, folderD, rivtD
 
     locals().update(localD)
 
@@ -321,7 +318,7 @@ def V(rS: str):
     rL = rS.split("\n")
     hmdS, hrstS = _str_set(rL[0], "V")
     print(hmdS)
-    mdC = parse.RivtParse("V", folderD, incrD, localD)
+    mdC = parse.RivtParse("V", folderD, incrD, rivtD)
     xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "V")
     # print(f"{xmdS=}", f"{rL[1:]=}")
     if hmdS != None:
@@ -341,21 +338,20 @@ def T(rS: str):
     : type rS: str: return: formatted md or reST string: type: str
 
     """
-    global mdS, rstS, incrD, folderD, localD
+    global utfS, mdS, rstS, incrD, folderD, rivtD
 
     xmdS = ""
     xrstS = ""
     rL = rS.split("\n")
+
     hmdS, hrstS = _str_set(rL[0], "T")
-    mdC = parse.RivtParse("T", folderD, incrD, localD)
+    mdC = parse.RivtParse("T", folderD, incrD, rivtD)
     xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "T")
-    if hmdS != None:
         xmdS = hmdS + xmdL[0]
         xrstS = hrstS + xrstL[0]
-    mdS += xmdS                         # accumulate md string
-    rstS += xrstS                       # accumulate reST string
 
-    xmdS = ""
+    mdS += xmdS
+    rstS += xrstS
 
 
 def X(rS: str):
@@ -363,6 +359,10 @@ def X(rS: str):
 
     """
 
+    pass
+
+
+def writedocs():
     pass
 
 
@@ -520,7 +520,7 @@ def _rest2tex(rstfileS):
     return pdfS
 
 
-def writedoc(formatS):
+def writepdf():
     """write output files
 
     :param formatS: comma separated output types
@@ -529,7 +529,6 @@ def writedoc(formatS):
 
     global mdS, rstS, outputS, incrD, folderD
 
-    formatL = [i.strip() for i in formatS.split(",")]
     docmdP = Path(docP.parent / "README.md")
     rstfileP = Path(docP.parent, docbaseS + ".rst")
     # eshortP = Path(*Path(rstfileP).parts[-3:])

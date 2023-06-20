@@ -20,15 +20,15 @@ from sympy.core.alphabets import greeks
 from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
 from rivt.units import *
-from rivt import cmdrst, cmdmd, tagrst, tagmd
+from rivt import cmdutf, cmdmd, cmdrst, tagutf, tagmd, tagrst
 
 # tabulate.PRESERVE_WHITESPACE = True
 
 
 class RivtParse:
-    """process method string"""
+    """process a rivt api method"""
 
-    def __init__(self, methS, folderD, incrD,  localD):
+    def __init__(self, methS, folderD, incrD,  rivtD):
         """process rivt-text to md8 or reST string
 
             :param dict folderD: folder paths
@@ -37,7 +37,7 @@ class RivtParse:
             :param dict outputS: output type
         """
 
-        self.localD = localD
+        self.rivtD = rivtD
         self.folderD = folderD  # folder paths
         self.incrD = incrD      # incrementing formats
         self.errlogP = folderD["errlogP"]
@@ -115,14 +115,17 @@ class RivtParse:
             :rtype incrD: dictionary
         """
 
-        mdS = """"""
-        rstS = """"""
+        xutfS = """"""
+        xmdS = """"""
+        xrstS = """"""
         uS = """"""
         blockB = False
-        hdrvL = ["variable", "value", "[value]", "description"]
-        alignvL = ["left", "right", "right", "left"]
+
+        hdrdL = ["variable", "value", "[value]", "description"]
+        aligndL = ["left", "right", "right", "left"]
         hdraL = ["variable", "value", "[value]", "description [eq. number]"]
         alignaL = ["left", "right", "right", "left"]
+
         blockevalL = []     # current value table
         blockevalB = False  # stop accumulation of values
         vtableL = []        # value table export
@@ -135,26 +138,36 @@ class RivtParse:
             if blockB:                                 # accumulate block
                 lineS += uS
                 continue
-            if blockB and uS.strip() == "[q]]":
+            if blockB and uS.strip() == "[q]]":        # process block
                 tagS = self.tagsD["[q]"]
-                rvtS = tagmd.Tagsmd(lineS, tagS,
-                                    self.incrD, self.folderD,  self.localD)
-                mdS += rvtS + "\n"
-                rvtS = tagrst.TagsRST(lineS, tagS, strL)
-                rstS += rvtS + "\n"
+                rvtS = tagutf.TagsUTF(lineS, tagS,
+                                      self.incrD, self.folderD,  self.rivtD)
+                xutfS += rvtS + "\n"
+                rvtS = tagmd.TagsMD(lineS, tagS,
+                                    self.incrD, self.folderD,  self.rivtD)
+                xmdS += rvtS + "\n"
+                rvtS = tagrst.TagsRST(lineS, tagS,
+                                      self.incrD, self.folderD,  self.rivtD)
+                xrstS += rvtS + "\n"
                 blockB = False
-            if blockevalB and len(uS.strip()) < 2:     # values table
+            if blockevalB and len(uS.strip()) < 2:    # declare and assign table
                 vtableL += blockevalL
                 if tfS == "declare":
-                    vS = self.dtable(blockevalL, hdrvL,
-                                     "rst", alignvL) + "\n\n"
-                    mdS += vS
-                    rstS += vS
+                    vutfS = self.dtable(blockevalL, hdrdL,
+                                        "rst", aligndL) + "\n\n"
+                    vmdS = self.dtable(blockevalL, hdrdL,
+                                       "html", aligndL) + "\n\n"
+                    xutfS += vutfS
+                    xmdS += vmdS
+                    xrstS += vutfS
                 if tfS == "assign":
-                    resultS = self.atable(blockevalL, hdraL,
-                                          "rst", alignaL) + "\n\n"
-                    mdS += resultS
-                    rstS += resultS
+                    vutfS = self.dtable(blockevalL, hdrdL,
+                                        "rst", aligndL) + "\n\n"
+                    vmdS = self.atable(blockevalL, hdraL,
+                                       "html", alignaL) + "\n\n"
+                    xutfS += vutfS
+                    xmdS += vmdS
+                    xrstS += vutfS
                 blockevalL = []
                 blockevalB = False
             elif uS[0:2] == "||":                      # command
@@ -163,7 +176,7 @@ class RivtParse:
                 cmdS = usL[0].strip()
                 if cmdS in self.cmdL:
                     rvtC = cmdmd.CmdMD(parL, self.incrD, self.folderD,
-                                       self.localD)   # md cmd
+                                       self.rivtD)
                     mdS = rvtC.cmd_parse(cmdS)
                     # print(f"{mdS=}")
                     try:
@@ -172,10 +185,10 @@ class RivtParse:
                         pass
 
                     rvtC = cmdrst.CmdRST(parL, self.incrD, self.folderD,
-                                         self.localD)  # rst cmd
+                                         self.rivtD)
                     reS = rvtC.cmd_parse(cmdS)
                     try:
-                        rstS += reS
+                        xrstS += reS
                     except:
                         pass
             elif "_[" in uS:                           # line tag
@@ -185,12 +198,16 @@ class RivtParse:
                 if tagS[0] == "[":                     # block tag
                     blockB = True
                 if tagS in self.tagsD:
+                    rvtC = tagutf.TagsMD(lineS, self.incrD, self.folderD,
+                                         self.tagsD, self.rivtD)
+                    utfS = rvtC.tag_parse(tagS)
+                    utfS += mdS + "\n"
                     rvtC = tagmd.TagsMD(lineS, self.incrD, self.folderD,
-                                        self.tagsD, self.localD)   # md tag
+                                        self.tagsD, self.rivtD)
                     mdS = rvtC.tag_parse(tagS)
-                    mdS += mdS + "\n"                  # rst tag
+                    mdS += mdS + "\n"
                     rvtC = tagrst.TagsRST(lineS, self.incrD, self.folderD,
-                                          self.tagsD, self.localD)
+                                          self.tagsD, self.rivtD)
                     reS = rvtC.tag_parse(tagS)
                     rstS += reS + "\n"
             elif "=" in uS and methS == "V":           # equation tag
@@ -225,19 +242,19 @@ class RivtParse:
             else:
                 print(uS)
 
-        if self.incrD["saveP"] != None:            # write saved values
+        if self.incrD["saveP"] != None:            # write assigns and declares
             valP = Path(self.folderD["dataP"] / self.incrD["saveP"])
             with open(valP, "w", newline="") as f:
                 writecsv = csv.writer(f)
-                writecsv.writerow(hdrvL)
+                writecsv.writerow(hdraL)
                 writecsv.writerows(vtableL)
 
-        return (mdS, rstS,  self.incrD, self.folderD, self.localD)
+        return (utfS, mdS, rstS,  self.incrD, self.folderD, self.rivtD)
 
-    def atable(self, tblL, hdreL, tblfmt, aligneL):
+    def atable(self, tblL, hdreL, tblfmt, alignaL):
         """write assign values table"""
 
-        locals().update(self.localD)
+        locals().update(self.rivtD)
 
         valL = []
         for vaL in tblL:
@@ -270,7 +287,7 @@ class RivtParse:
         output.write(
             tabulate(
                 valL, tablefmt=tblfmt, headers=hdreL,
-                showindex=False,  colalign=aligneL))
+                showindex=False,  colalign=alignaL))
         mdS = output.getvalue()
         sys.stdout = old_stdout
         sys.stdout.flush()
@@ -282,7 +299,7 @@ class RivtParse:
     def dtable(self, tblL, hdrvL, tblfmt, alignvL):
         """write declare values table"""
 
-        locals().update(self.localD)
+        locals().update(self.rivtD)
 
         valL = []
         for vaL in tblL:
@@ -319,7 +336,7 @@ class RivtParse:
         sys.stdout = old_stdout
         sys.stdout.flush()
 
-        self.localD.update(locals())
+        self.rivtD.update(locals())
 
         print("\n" + mdS+"\n")
         return mdS

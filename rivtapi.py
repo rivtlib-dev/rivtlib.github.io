@@ -44,6 +44,7 @@ modnameS = __name__.split(".")[1]
 # print(f"{docfileS=}")
 # print(f"{docP=}")
 # paths relative to file
+
 docbaseS = docfileS.split(".py")[0]
 pubP = docP.parent.parent               # rivt public folder path
 bakP = docP.parent / ".".join((docbaseS, "bak"))
@@ -70,40 +71,38 @@ dataP = Path(docP.parent, "data")
 
 # global
 utfS = """"""                         # utf-8 output string
-mdS = """"""                          # md output string
+mdS = """"""                          # github md output string
 rstS = """"""                         # reST output string
 rvtfileS = """"""                     # rivt input string
 declareS = """"""                     # declares output string
 assignS = """"""                      # assigns output string
 rivtD = {}                            # rivt dictionary
 folderD = {}
-incrD = {
-    "reportS": reportS,                 # report title
-    "divS": divS,                       # div title
-    "sectS": "",                        # section title
-    "doctitleS": "",                    # doctitle
-    "docnumS": docbaseS[1:5],           # doc number
-    "secnumI": 0,                       # section number
-    "widthI": 80,                       # md printing width
-    "eqlabelS": "equation",             # last used equation label
-    "equI": 1,                          # equation number
-    "tableI": 1,                        # table number
-    "figI": 1,                          # figure number
-    "pageI": 1,                         # starting page number
-    "noteL": [0],                       # footnote counter
-    "footL": [1],                       # foot counter
-    "unitS": "M,M",                     # units
-    "descS": "2,2",                     # description or decimal places
-    "titleS": "rivt Document",          # document title
-    "headrS": "",                       # header string reST
-    "footrS": "",                       # footer string reST
-    "tocB": False,                      # table of contents
-    "codeB": False,                     # print code strings in doc
-    "subB": False                       # sub values in equations
-}
 for item in ["docP", "dataP", "prvP", "pubP", "docpathP",
              "reportP", "dataP", "errlogP", "styleP", "tempP"]:
     folderD[item] = eval(item)
+incrD = {
+    "reportS": reportS,               # report title
+    "titleS": "rivt Document",        # document title
+    "divS": divS,                     # div title
+    "sectS": "",                      # section title
+    "docnumS": docbaseS[1:5],         # doc number
+    "secnumI": 0,                     # section number
+    "widthI": 80,                     # print width
+    "equI": 1,                        # equation number
+    "tableI": 1,                      # table number
+    "figI": 1,                        # figure number
+    "pageI": 1,                       # starting page number
+    "noteL": [0],                     # footnote counter
+    "footL": [1],                     # foot counter
+    "unitS": "M,M",                   # units
+    "descS": "2",                     # description or decimal places
+    "headrS": "",                     # header string
+    "footrS": "",                     # footer string
+    "tocB": False,                    # table of contents
+    "docstrB": False,                 # print doc strings
+    "subB": False                     # sub values in equations
+}
 
 
 logging.basicConfig(
@@ -117,14 +116,14 @@ pubshortP = Path(*Path(pubP).parts[-2:])
 prvshortP = Path(*Path(prvP).parts[-2:])
 
 if docP.exists():
-    logging.info(f"""start rivt file : [{docfileS}]""")
-    logging.info(f"""rivt short path : [{dshortP}]""")
-    print(f"""rivt public path : [{pubP}]""")
+    logging.info(f"""rivt file : [{docfileS}]""")
+    logging.info(f"""rivt public path : [{pubP}]""")
+    print(f"""rivt public short path : [{pubshortP}]""")
 else:
     logging.info(f"""rivt file path not found: {docP}""")
 if prvP.exists:
-    logging.info(f"""private short path: [{prvshortP}]""")
-    print(f"""rivt private path : [{prvP}]""")
+    logging.info(f"""private path: [{prvP}]""")
+    print(f"""rivt private short path : [{prvshortP}]""")
 else:
     logging.info(f"""private path not found: {prvP}""")
 
@@ -220,7 +219,7 @@ def _str_set(rS, methS):
     rs1S = rs1L[0].strip()
 
     if rs1S.strip()[0:2] == "--":                       # skip new section
-        return "\n", "\n", "\n"                             
+        return "\n", "\n", "\n"
     else:
         return _str_title(rs1L[0].strip())
 
@@ -260,8 +259,8 @@ def R(rS: str):
 
     print(utftitleS)
 
-    mdC = parse.RivtParse("R", folderD, incrD, rivtD)
-    xmdL, xrstL, incrD, folderD = mdC.str_parse(rL[1:], "R")
+    parseC = parse.RivtParse("R", folderD, incrD, rivtD)
+    xutf, xmdL, xrstL, incrD, folderD = parseC.str_parse(rL[1:], "R")
     mdS += xmdL[0]
     rstS += xrstL[0]
 
@@ -289,13 +288,13 @@ def I(rS: str):
     rL = rS.split("\n")
     hdutf, hmdS, hrstS = _str_set(rL[0], "I")
     print(hmdS)
-    
+
     mdC = parse.RivtParse("I", folderD, incrD,  rivtD)
     xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "I")
     if hmdS != None:
         xmdS = hmdS + xmdL[0]
         xrstS = hrstS + xrstL[0]
-    
+
     mdS += xmdS
     rstS += xrstS
     xmdS = ""
@@ -347,8 +346,8 @@ def T(rS: str):
     hmdS, hrstS = _str_set(rL[0], "T")
     mdC = parse.RivtParse("T", folderD, incrD, rivtD)
     xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "T")
-        xmdS = hmdS + xmdL[0]
-        xrstS = hrstS + xrstL[0]
+    xmdS = hmdS + xmdL[0]
+    xrstS = hrstS + xrstL[0]
 
     mdS += xmdS
     rstS += xrstS

@@ -26,7 +26,7 @@ from rivt import cmdutf, cmdmd, cmdrst, tagutf, tagmd, tagrst
 
 
 class RivtParse:
-    """process a rivt api method"""
+    """format rivt-text strings for utf, md or rst"""
 
     def __init__(self, methS, folderD, incrD,  rivtD):
         """process rivt-text to md8 or reST string

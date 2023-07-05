@@ -129,8 +129,6 @@ else:
 
 logging.info(f"""log folder short path: [{prvshortP}]""")
 
-print(f"\n-------- start rivt file : [{docfileS}] ---------")
-
 # write backup doc file
 with open(docP, "r") as f2:
     rivtS = f2.read()
@@ -145,7 +143,7 @@ with open(docP, "r") as f1:
     rvtfileS += rvtfileS + """\nsys.exit()\n"""
 
 
-def _str_title(hdrS):
+def _sect_head(hdrS):
     """_summary_
 
     :param hdrS: _description_
@@ -181,47 +179,47 @@ def _str_title(hdrS):
 
 
 def _str_set(rS, methS):
-    """_summary_
+    """format section title and set dictionary values
 
-    :param rS: _description_
-    :type rS: _type_
-    :param methS: _description_
-    :type methS: _type_
-    :return: _description_
-    :rtype: _type_
+    :param rS: first line of string
+    :type rS: str
+    :param methS: rivt method
+    :type methS: str
+    :return: section title
+    :rtype: str
     """
 
     global mdS, rstS, incrD, folderD
 
-    rs1L = rS.split("|")
+    rsL = rS.split("|")
 
     if methS == "R":
-        incrD["pageI"] = int(rs1L[1])                  # start page
+        incrD["pageI"] = int(rsL[1])
 
     elif methS == "I":
-        if rs1L[1].strip() == "default":
+        if rsL[1].strip() == "default":
             incrD["subB"] = True
         else:
             incrD["subB"] = False
 
     elif methS == "V":
-        if rs1L[1].strip() == "sub":
+        if rsL[1].strip() == "sub":
             incrD["subB"] = True
         else:
             incrD["subB"] = False
 
     elif methS == "T":
-        if rs1L[1] == "code":
+        if rsL[1].strip() == "code":
             folderD["codeB"] = True
         else:
             folderD["codeB"] = False
 
-    rs1S = rs1L[0].strip()
+    rs1S = rsL[0].strip()
 
-    if rs1S.strip()[0:2] == "--":                       # skip new section
+    if rS.strip()[0:2] == "--":              # omit section heading
         return "\n", "\n", "\n"
     else:
-        return _str_title(rs1L[0].strip())
+        return _sect_head(rsL[0].strip())   #
 
 
 def R(rS: str):
@@ -235,9 +233,7 @@ def R(rS: str):
 
     global utfS, mdS, rstS, incrD, folderD
 
-    xmdS = xrstS = ""
     rL = rS.split("\n")
-    hdutf, hmdS, hrstS = _str_set(rL[0], "R")
     doctitleS = rL[0].split("|")[0].strip()
     incrD["doctitleS"] = doctitleS
     headS = datetime.now().strftime("%Y-%m-%d | %I:%M%p") + "\n"
@@ -257,18 +253,15 @@ def R(rS: str):
     mdS += mdtitleS
     rstS += rsttitleS
 
-    print(utftitleS)
-
+    xmdS = xrstS = xutfS = ""
     parseC = parse.RivtParse("R", folderD, incrD, rivtD)
-    xutf, xmdL, xrstL, incrD, folderD = parseC.str_parse(rL[1:], "R")
-    mdS += xmdL[0]
-    rstS += xrstL[0]
+    xutfS, xmdS, xrstS, incrD, folderD = parseC.str_parse(rL[1:], "R")
 
-    utfS += utftitleS
-    mdS += mdtitleS
-    rstS += rsttitleS
+    utfS += xutfS
+    mdS += xmdS
+    rstS += xrstS
 
-    print(utftitleS)
+    print(utfS)
 
 
 def I(rS: str):
@@ -276,28 +269,28 @@ def I(rS: str):
 
         : param rS: triple quoted insert string
         : type rS: str
-        : return: formatted md string
+        : return: formatted utf, md and reST strings
         : rtype: str
     """
 
     global utfS, mdS, rstS, incrD, folderD
 
-    xmdS = ""
-    xrstS = ""
-    xutfS = ""
+    xmdS = xrstS = xutfS = ""
     rL = rS.split("\n")
-    hdutf, hmdS, hrstS = _str_set(rL[0], "I")
-    print(hmdS)
+    hutfS, hmdS, hrstS = _str_set(rL[0], "I")
+
+    utfS += hutfS
+    mdS += hmdS
+    rstS += hrstS
 
     mdC = parse.RivtParse("I", folderD, incrD,  rivtD)
-    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "I")
-    if hmdS != None:
-        xmdS = hmdS + xmdL[0]
-        xrstS = hrstS + xrstL[0]
+    xutfS, xmdS, xrstS, incrD, folderD, localD = mdC.str_parse(rL[1:], "I")
 
+    utfS += xutfS
     mdS += xmdS
     rstS += xrstS
-    xmdS = ""
+
+    print(utfS)
 
 
 def V(rS: str):
@@ -595,15 +588,17 @@ def writepdf():
     sys.exit()
 
 
-def writereport(fileS):
+def writedocs(fileS):
     """_summary_
 
     :param fileS: _description_
     :type fileS: _type_
     """
 
+    print(f"\n-------- write doc files : [{docfileS}] ---------")
+
     try:
-        filen1 = os.path.join(self.rpath, "reportmerge.txt")
+        filen1 = os.path.join(prvP, "reportmerge.txt")
         print(filen1)
         file1 = open(filen1, 'r')
         mergelist = file1.readlines()

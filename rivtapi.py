@@ -68,7 +68,6 @@ styleP = prvP
 valfileS = docbaseS.replace("r", "v") + ".csv"
 dataP = Path(docP.parent, "data")
 # print(f"{prvP=}")
-
 # global
 utfS = """"""                         # utf-8 output string
 mdS = """"""                          # github md output string
@@ -128,7 +127,6 @@ else:
     logging.info(f"""private path not found: {prvP}""")
 
 logging.info(f"""log folder short path: [{prvshortP}]""")
-
 # write backup doc file
 with open(docP, "r") as f2:
     rivtS = f2.read()
@@ -179,7 +177,7 @@ def _sect_head(hdrS):
 
 
 def _str_set(rS, methS):
-    """format section title and set dictionary values
+    """format section title and update dictionary
 
     :param rS: first line of string
     :type rS: str
@@ -195,6 +193,9 @@ def _str_set(rS, methS):
 
     if methS == "R":
         incrD["pageI"] = int(rsL[1])
+        doctitleS = rsL[0].strip()
+        incrD["doctitleS"] = doctitleS
+        return
 
     elif methS == "I":
         if rsL[1].strip() == "default":
@@ -214,8 +215,6 @@ def _str_set(rS, methS):
         else:
             folderD["codeB"] = False
 
-    rs1S = rsL[0].strip()
-
     if rS.strip()[0:2] == "--":              # omit section heading
         return "\n", "\n", "\n"
     else:
@@ -223,9 +222,9 @@ def _str_set(rS, methS):
 
 
 def R(rS: str):
-    """process Repo string
+    """format Repo string
 
-        : param rS: triple quoted repo string
+        : param rS: triple quoted string
         : type rS: str
         : return: formatted utf, md and reST strings
         : type: str
@@ -233,11 +232,12 @@ def R(rS: str):
 
     global utfS, mdS, rstS, incrD, folderD
 
+    xmdS = xrstS = xutfS = ""
     rL = rS.split("\n")
-    doctitleS = rL[0].split("|")[0].strip()
-    incrD["doctitleS"] = doctitleS
-    headS = datetime.now().strftime("%Y-%m-%d | %I:%M%p") + "\n"
+    _str_set(rL[0], "I")
 
+    headS = datetime.now().strftime("%Y-%m-%d | %I:%M%p") + "\n"
+    doctitleS = incrD["doctitleS"]
     utftitleS = (headS + "\n" + doctitleS + "\n")
     mdtitleS = (headS + "\n## " + doctitleS + "\n")
     rsttitleS = (
@@ -248,15 +248,12 @@ def R(rS: str):
         + "   ?x?end{tcolorbox}"
         + "   \n" + "   ?x?newline" + "   ?x?vspace{.05in}"
         + "\n\n")
-
     utfS += utftitleS
     mdS += mdtitleS
     rstS += rsttitleS
 
-    xmdS = xrstS = xutfS = ""
     parseC = parse.RivtParse("R", folderD, incrD, rivtD)
-    xutfS, xmdS, xrstS, incrD, folderD = parseC.str_parse(rL[1:], "R")
-
+    xutfS, xmdS, xrstS, incrD, folderD, rivtD = parseC.str_parse(rL[1:], "R")
     utfS += xutfS
     mdS += xmdS
     rstS += xrstS
@@ -265,9 +262,9 @@ def R(rS: str):
 
 
 def I(rS: str):
-    """process Insert string
+    """format Insert string
 
-        : param rS: triple quoted insert string
+        : param rS: triple quoted string
         : type rS: str
         : return: formatted utf, md and reST strings
         : rtype: str
@@ -284,7 +281,7 @@ def I(rS: str):
     rstS += hrstS
 
     mdC = parse.RivtParse("I", folderD, incrD,  rivtD)
-    xutfS, xmdS, xrstS, incrD, folderD, localD = mdC.str_parse(rL[1:], "I")
+    xutfS, xmdS, xrstS, incrD, folderD, rivtD = mdC.str_parse(rL[1:], "I")
 
     utfS += xutfS
     mdS += xmdS
@@ -294,7 +291,7 @@ def I(rS: str):
 
 
 def V(rS: str):
-    """process Value string
+    """format Value string
 
         :param rS: triple quoted values string
         :type rS: str: return
@@ -303,7 +300,7 @@ def V(rS: str):
 
     global utfS, mdS, rstS, incrD, folderD, rivtD
 
-    locals().update(localD)
+    locals().update(rivtD)
 
     xmdS = ""
     xrstS = ""
@@ -311,7 +308,7 @@ def V(rS: str):
     hmdS, hrstS = _str_set(rL[0], "V")
     print(hmdS)
     mdC = parse.RivtParse("V", folderD, incrD, rivtD)
-    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "V")
+    xmdL, xrstL, incrD, folderD, rivtD = mdC.str_parse(rL[1:], "V")
     # print(f"{xmdS=}", f"{rL[1:]=}")
     if hmdS != None:
         xmdS = hmdS + xmdL[0]
@@ -320,7 +317,7 @@ def V(rS: str):
     rstS += xrstS                    # accumulate reST string
     xmdS = ""
 
-    localD.update(locals())
+    rivtD.update(locals())
 
 
 def T(rS: str):
@@ -338,12 +335,14 @@ def T(rS: str):
 
     hmdS, hrstS = _str_set(rL[0], "T")
     mdC = parse.RivtParse("T", folderD, incrD, rivtD)
-    xmdL, xrstL, incrD, folderD, localD = mdC.str_parse(rL[1:], "T")
+    xmdL, xrstL, incrD, folderD, rivtD = mdC.str_parse(rL[1:], "T")
     xmdS = hmdS + xmdL[0]
     xrstS = hrstS + xrstL[0]
 
     mdS += xmdS
     rstS += xrstS
+
+    rivtD.update(locals())
 
 
 def X(rS: str):
@@ -351,10 +350,6 @@ def X(rS: str):
 
     """
 
-    pass
-
-
-def writedocs():
     pass
 
 

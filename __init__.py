@@ -88,8 +88,8 @@ Example Folder Structure (required prefixes shown in [ ])
         ├── r0101-Doc-Label1.pdf   
         ├── r0102-Doc-Label2.pdf
         ├── r0201-Doc-Label3.pdf
-        └── Report-Label.pdf                 (compiled PDF report)    
-    ├── images/                              (optional data folders)
+        └── Report-Label.pdf                (compiled PDF report)    
+    ├── images/                             (optional data folders)
             ├── fig1.png
             └── fig2.png
     └── tables/
@@ -126,7 +126,7 @@ exceptions.
 ======= ===================================================================
 
 Repo    rv.R("""label | page
-(rep)
+(re)
                 ||github (git)
                 ||project (proj)
                 ||append (app)
@@ -134,7 +134,7 @@ Repo    rv.R("""label | page
                 """)
 
 Insert  rv.I("""label | rgb; default
-(ins)
+(in)
                 ||image (img)
                 ||text (tex)
                 ||table (tab)
@@ -142,14 +142,14 @@ Insert  rv.I("""label | rgb; default
                 """)
 
 Values  rv.V("""label | sub; nosub 
-(val)
+(va)
                 ||assign (ass)
                 ||declare (dec)
 
                 """)
 
 Tools  rv.T("""label | rgb; default; noprint | space; nospace
-(too)
+(to)
                 Python code
 
                 """)
@@ -161,35 +161,35 @@ exclude rv.X("""any method
 
                 """)
 
-write   rv.writedoc(md,pdf)
-
+write   rv.writedoc('utf,pdf')
+(wr)
 =============================================================== ============
     command syntax and description (snippet)                         API 
 =============================================================== ============
 
 || append | folder | file                                             R
-    (app)   pdf folder | .pdf; .txt  
+    (ap)   pdf folder | .pdf; .txt  
 
 || github | folder | file                                             R
-    (git)   pdf folder | .pdf; .txt  
+    (gi)   pdf folder | .pdf; .txt  
     
 || project | file                                 R
-    (pro)   .txt; .tex; .html | plain; tags; latex
+    (pr)   .txt; .tex; .html | plain; tags; latex
 
 || text | relative file path | text type                              I
-    (tex)   .txt; .tex; .html | plain; tags; code; math; latex
+    (te)   .txt; .tex; .html | plain; tags; code; math; latex
 
 || image  | relative file path | .50, ..                              I
-    (ima)   .png; .jpg |  page width fraction
+    (im)   .png; .jpg |  page width fraction
 
 || table  | relative file path | 60,r;l;c | [:]                       I
-    (tab)   .csv; xls  | max col width, locate | rows
+    (ta)   .csv; xls  | max col width, locate | rows
 
 || declare | relative file path  | [:]                                V
-    (dec)    .csv; .xls  | rows
+    (de)    .csv; .xls  | rows
 
 || assign | relative file path  | [:]                                 V
-    (ass)    .csv; .xls  | rows
+    (as)    .csv; .xls  | rows
 
 ============================ ============================================
  tags                                   description 
@@ -294,14 +294,15 @@ rv.I("""Inserts method | rgb-fore,back; default
     table title  _[t]
     || table | data | file.csv | 60,r
 
-    || image | resource | f1.png | 50
     A figure caption _[f]
+    || image | resource | f1.png | 50
+
 
     Insert two images side by side:
 
-    || image | f2.png,f3.png | 45,35
     The first figure caption  _[f]
     The second figure caption  _[f]
+    || image | f2.png,f3.png | 45,35
 
     The tags [x]_ and [s]_ format LaTeX and sympy equations:
 
@@ -355,28 +356,33 @@ rv.T("""Tools method | print;noprint | import folder | rgb fore,background
     specifies whether the code values are subsequently available (i.e. #
     included in the document namespace).
     
-    # Four libraries are imported by rivt and accessed as: 
+    # Four libraries are imported by rivt as: 
 
-    # pyplot: plt.method()
-    # numpy: np.method()
-    # pandas: pd.method()
-    # sympy: sy.method()
+    # pyplot (plt.)
+    # numpy (np.)
+    # pandas (pd.)
+    # sympy (sy.)
 
-    # Examples of Python code include defining functions: 
+    # Examples of Python code:
+
+    # Define a function -S
+    def f1(x,y): z = x + y
+        print(z)
+        return
     
-    def f1(x,y): z = x + y; print(z); return
+    # Read and write files -    
+    with open('file.csv', 'r') as f: 
+        input = f.readlines()
     
-    # and reading and writing files:
-        
-    with open('file.csv', 'r') as f: input = f.readlines()
     var = range(10)
-    with open('fileout.csv', 'w') as f: f.write(var)
+    with open('fileout.csv', 'w') as f: 
+        f.write(var)
         
     """)
 
 rv.X("""any text
 
-    Replacing any method letter with X skips evaluation of thhat string. Its
+    Replacing the method letter with X skips evaluation of that string. Its
     uses include review comments, checking and editing.
 
     """) 
@@ -412,23 +418,23 @@ ctl+shift+z          commit current editor
 ctl+shift+x          post to remote   
 
 
-rivt
-====
+rivt installation
+=================
 
-The minimum software needed to run rivt with markdown output is:
+The minimum software needed to run is:
 
 - Python 3.8 or higher 
-- rivt + a dozen Python libraries 
+- rivt library + Python dependencies
 
-A complete rivt system also includes:
+A complete rivt system additionally includes:
 
-- VSCode + two dozen extensions 
+- VSCode + extensions 
 - LaTeX 
 - Github account
 
 rivt-sys installs the complete rivt system in a portable folder via a zip file,
 and is available for every OS platform. rivt also runs in the cloud using
 GitHub CodeSpaces or other cloud service providers. Installation details are
-provided in the [rivtDocs User Manual](https://www.rivt-sys.net>)
+provided in the [rivt User Manual](https://www.rivt-sys.net>)
 
 '''

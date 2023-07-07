@@ -221,7 +221,34 @@ def _str_set(rS, methS):
         return _sect_head(rsL[0].strip())   #
 
 
-def R(rS: str):
+def _rivt_format(rS, mS):
+    """_summary_
+
+    :param rS: _description_
+    :type rS: _type_
+    :param mS: _description_
+    :type mS: _type_
+    """
+
+    global utfS, mdS, rstS, incrD, folderD, rivtD
+
+    # format section headings
+    xmdS = xrstS = xutfS = ""
+    rL = rS.split("\n")
+    hutfS, hmdS, hrstS = _str_set(rL[0], mS)
+    utfS += hutfS
+    mdS += hmdS
+    rstS += hrstS
+
+    # format rivt string
+    parseC = parse.RivtParse(mS, folderD, incrD,  rivtD)
+    xutfS, xmdS, xrstS, incrD, folderD, rivtD = parseC.str_parse(rL[1:])
+    utfS += xutfS
+    mdS += xmdS
+    rstS += xrstS
+
+
+def R(rS):
     """format Repo string
 
         : param rS: triple quoted rivt string
@@ -231,8 +258,9 @@ def R(rS: str):
 
     xmdS = xrstS = xutfS = ""
     rL = rS.split("\n")
-    _str_set(rL[0], "I")
 
+    # format doc heading
+    _str_set(rL[0], "R")
     headS = datetime.now().strftime("%Y-%m-%d | %I:%M%p") + "\n"
     doctitleS = incrD["doctitleS"]
     utftitleS = (headS + "\n" + doctitleS + "\n")
@@ -248,19 +276,15 @@ def R(rS: str):
     utfS += utftitleS
     mdS += mdtitleS
     rstS += rsttitleS
-
-    # generate formatted section strings
-    parseC = parse.RivtParse("R", folderD, incrD, rivtD)
-    xutfS, xmdS, xrstS, incrD, folderD, rivtD = parseC.str_parse(rL[1:], "R")
-    # update doc strings
+    # format repo string
+    parseC = parse.RivtParse("R", folderD, incrD,  rivtD)
+    xutfS, xmdS, xrstS, incrD, folderD, rivtD = parseC.str_parse(rL[1:])
     utfS += xutfS
     mdS += xmdS
     rstS += xrstS
 
-    print(utfS)
 
-
-def I(rS: str):
+def I(rS):
     """format Insert string
 
         : param rS: triple quoted rivt string
@@ -268,24 +292,10 @@ def I(rS: str):
     """
     global utfS, mdS, rstS, incrD, folderD
 
-    xmdS = xrstS = xutfS = ""
-    rL = rS.split("\n")
-    hutfS, hmdS, hrstS = _str_set(rL[0], "I")
-
-    utfS += hutfS
-    mdS += hmdS
-    rstS += hrstS
-
-    parseC = parse.RivtParse("I", folderD, incrD,  rivtD)
-    xutfS, xmdS, xrstS, incrD, folderD, rivtD = parseC.str_parse(rL[1:], "I")
-    utfS += xutfS
-    mdS += xmdS
-    rstS += xrstS
-
-    print(utfS)
+    _rivt_format(rS, "I")
 
 
-def V(rS: str):
+def V(rS):
     """format Value string
 
         :param rS: triple quoted values string
@@ -294,52 +304,24 @@ def V(rS: str):
     global utfS, mdS, rstS, incrD, folderD, rivtD
 
     locals().update(rivtD)
-
-    xmdS = ""
-    xrstS = ""
-    rL = rS.split("\n")
-    hmdS, hrstS = _str_set(rL[0], "V")
-    print(hmdS)
-    mdC = parse.RivtParse("V", folderD, incrD, rivtD)
-    xmdL, xrstL, incrD, folderD, rivtD = mdC.str_parse(rL[1:], "V")
-    # print(f"{xmdS=}", f"{rL[1:]=}")
-    if hmdS != None:
-        xmdS = hmdS + xmdL[0]
-        xrstS = hrstS + xrstL[0]
-    mdS += xmdS                      # accumulate md string
-    rstS += xrstS                    # accumulate reST string
-    xmdS = ""
-
+    _rivt_format(rS, "V")
     rivtD.update(locals())
 
 
-def T(rS: str):
+def T(rS):
     """process Tables string
 
         : param rS: triple quoted insert string
         : type rS: str: return: formatted md or reST string: type: str
     """
-    global utfS, mdS, rstS, incrD, folderD, rivtD
 
-    xmdS = ""
-    xrstS = ""
-    rL = rS.split("\n")
-
-    hmdS, hrstS = _str_set(rL[0], "T")
-    mdC = parse.RivtParse("T", folderD, incrD, rivtD)
-    xmdL, xrstL, incrD, folderD, rivtD = mdC.str_parse(rL[1:], "T")
-    xmdS = hmdS + xmdL[0]
-    xrstS = hrstS + xrstL[0]
-
-    mdS += xmdS
-    rstS += xrstS
-
+    locals().update(rivtD)
+    _rivt_format(rS, "T")
     rivtD.update(locals())
 
 
-def X(rS: str):
-    """skip string - do not process
-
+def X(rS):
+    """skip string - do not format
     """
 
     rL = rS.split("\n")

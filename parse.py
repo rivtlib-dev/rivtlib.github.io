@@ -99,7 +99,7 @@ class RivtParse:
         warnings.filterwarnings("ignore")
         # self.rivtD.update(locals())
 
-    def str_parse(self, strL, methS):
+    def str_parse(self, strL):
         """parse method string line by line
 
             parsing starts with second line

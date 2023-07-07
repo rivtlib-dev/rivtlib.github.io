@@ -280,8 +280,8 @@ def I(rS: str):
     mdS += hmdS
     rstS += hrstS
 
-    mdC = parse.RivtParse("I", folderD, incrD,  rivtD)
-    xutfS, xmdS, xrstS, incrD, folderD, rivtD = mdC.str_parse(rL[1:], "I")
+    parseC = parse.RivtParse("I", folderD, incrD,  rivtD)
+    xutfS, xmdS, xrstS, incrD, folderD, rivtD = parseC.str_parse(rL[1:], "I")
 
     utfS += xutfS
     mdS += xmdS
@@ -350,6 +350,8 @@ def X(rS: str):
 
     """
 
+    rL = rS.split("\n")
+    print("\n skip section: " + rL[0] + "\n")
     pass
 
 

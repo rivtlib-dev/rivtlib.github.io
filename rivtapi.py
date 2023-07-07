@@ -224,12 +224,9 @@ def _str_set(rS, methS):
 def R(rS: str):
     """format Repo string
 
-        : param rS: triple quoted string
+        : param rS: triple quoted rivt string
         : type rS: str
-        : return: formatted utf, md and reST strings
-        : type: str
     """
-
     global utfS, mdS, rstS, incrD, folderD
 
     xmdS = xrstS = xutfS = ""
@@ -252,8 +249,10 @@ def R(rS: str):
     mdS += mdtitleS
     rstS += rsttitleS
 
+    # generate formatted section strings
     parseC = parse.RivtParse("R", folderD, incrD, rivtD)
     xutfS, xmdS, xrstS, incrD, folderD, rivtD = parseC.str_parse(rL[1:], "R")
+    # update doc strings
     utfS += xutfS
     mdS += xmdS
     rstS += xrstS
@@ -264,12 +263,9 @@ def R(rS: str):
 def I(rS: str):
     """format Insert string
 
-        : param rS: triple quoted string
+        : param rS: triple quoted rivt string
         : type rS: str
-        : return: formatted utf, md and reST strings
-        : rtype: str
     """
-
     global utfS, mdS, rstS, incrD, folderD
 
     xmdS = xrstS = xutfS = ""
@@ -282,7 +278,6 @@ def I(rS: str):
 
     parseC = parse.RivtParse("I", folderD, incrD,  rivtD)
     xutfS, xmdS, xrstS, incrD, folderD, rivtD = parseC.str_parse(rL[1:], "I")
-
     utfS += xutfS
     mdS += xmdS
     rstS += xrstS
@@ -294,10 +289,8 @@ def V(rS: str):
     """format Value string
 
         :param rS: triple quoted values string
-        :type rS: str: return
-        :formatted md string: type: str
+        :type rS: str
     """
-
     global utfS, mdS, rstS, incrD, folderD, rivtD
 
     locals().update(rivtD)
@@ -323,9 +316,8 @@ def V(rS: str):
 def T(rS: str):
     """process Tables string
 
-    : param rS: triple quoted insert string
-    : type rS: str: return: formatted md or reST string: type: str
-
+        : param rS: triple quoted insert string
+        : type rS: str: return: formatted md or reST string: type: str
     """
     global utfS, mdS, rstS, incrD, folderD, rivtD
 
@@ -346,7 +338,7 @@ def T(rS: str):
 
 
 def X(rS: str):
-    """skip string - not processed
+    """skip string - do not process
 
     """
 
@@ -509,21 +501,21 @@ def _rest2tex(rstfileS):
     return pdfS
 
 
-def writepdf():
+def writedocs(formatS):
     """write output files
 
-    :param formatS: comma separated output types
+    :param formatS: comma separated output types: 'utf,md,pdf' 
     :type formatS: str
     """
 
-    global mdS, rstS, outputS, incrD, folderD
+    global mdS, rstS, utfS, incrD, folderD
+
+    print(f" -------- write doc files: [{docfileS}] --------- ")
+    logging.info(f"""write doc files: [{docfileS}]""")
 
     docmdP = Path(docP.parent / "README.md")
     rstfileP = Path(docP.parent, docbaseS + ".rst")
     # eshortP = Path(*Path(rstfileP).parts[-3:])
-
-    print(f" -------- end rivt file: [{docfileS}] --------- ")
-    logging.info(f"""end rivt file: [{docfileS}]""")
 
     # add table of contents to summary
 
@@ -583,66 +575,3 @@ def writepdf():
     #     pdffileP = _rest2html(rstS)
     #     logging.info(f"HTML doc written: {pdffileP}")
     sys.exit()
-
-
-def writedocs(fileS):
-    """_summary_
-
-    :param fileS: _description_
-    :type fileS: _type_
-    """
-
-    print(f"\n-------- write doc files : [{docfileS}] ---------")
-
-    try:
-        filen1 = os.path.join(prvP, "reportmerge.txt")
-        print(filen1)
-        file1 = open(filen1, 'r')
-        mergelist = file1.readlines()
-        file1.close()
-        mergelist2 = mergelist[:]
-    except OSError:
-        print('< reportmerge.txt file not found in report folder >')
-        return
-    calnum1 = self.pdffile[0:5]
-    file2 = open(filen1, 'w')
-    newstr1 = 'c | ' + self.pdffile + ' | ' + self.calctitle
-    for itm1 in mergelist:
-        if calnum1 in itm1:
-            indx1 = mergelist2.index(itm1)
-            mergelist2[indx1] = newstr1
-            for j1 in mergelist2:
-                file2.write(j1)
-            file2.close()
-            return
-    mergelist2.append("\n" + newstr1)
-    for j1 in mergelist2:
-        file2.write(j1)
-    file2.close()
-
-    try:
-        filen1 = os.path.join(self.rpath, "reportmerge.txt")
-        print(filen1)
-        file1 = open(filen1, 'r')
-        mergelist = file1.readlines()
-        file1.close()
-        mergelist2 = mergelist[:]
-    except OSError:
-        print('< reportmerge.txt file not found in reprt folder >')
-        return
-    calnum1 = self.pdffile[0:5]
-    file2 = open(filen1, 'w')
-    newstr1 = 'c | ' + self.pdffile + ' | ' + self.calctitle
-    for itm1 in mergelist:
-        if calnum1 in itm1:
-            indx1 = mergelist2.index(itm1)
-            mergelist2[indx1] = newstr1
-            for j1 in mergelist2:
-                file2.write(j1)
-            file2.close()
-            return
-    mergelist2.append("\n" + newstr1)
-    for j1 in mergelist2:
-        file2.write(j1)
-    file2.close()
-    return

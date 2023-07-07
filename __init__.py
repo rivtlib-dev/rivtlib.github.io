@@ -325,27 +325,26 @@ rv.V("""Values method | sub; nosub
     sub;nosub setting specifies whether equations are also printed with
     substituted numerical values. 
 
-    Example of values list _[t]
-    a1 = 10.1    | LBF, N | a force
-    d1 = 12.1    | IN, CM | a length
+    Example of assignment list _[t]
+    f1 = 10.1 * LBF | N | a force
+    d1 = 12.1 * IN | CM | a length
 
     An table tag provides a table title and number.  The equal tag declares a
     value. A sequence of declared values terminated with a blank line are
     formatted as a table.
 
-    Example equation tag - Area of circle  _[e]
-    b1 := 3.14(d1/2)^2 | IN^2, CM^2 | 2,2
+    Example equation - Area of circle  _[e]
+    a1 := 3.14(d1/2)^2 | IN^2, CM^2 | 2,2
 
     An equation tag provides an equation description and number. The
     colon-equal tag assigns a value and specifies the result units and printed
     output decimal places in the equation and results.
 
-    || assign | folder | file | [:]
+    || values | r0101 | s3
     
-    || declare | folder | file | [:]
-
-    The ||assign and || declare commands import values from csv files written
-    by rivt when processing assigned and declared values.
+    The values command imports values from csv files written by rivt when
+    processing assigned and declared values. The parameters specify the
+    section number and doc number.
 
 """)
 

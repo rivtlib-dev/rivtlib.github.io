@@ -348,27 +348,23 @@ rv.V("""Values method | sub; nosub
 
 """)
 
-rv.T("""Tools method | print;noprint | import folder | rgb fore,background
-    
-    # The Tools method processes Python code. The "print" parameter specifies #
-    whether the code is echoed in the document. The "include" parameter #
-    specifies whether the code values are subsequently available (i.e. #
-    included in the document namespace).
+rv.T("""Tools method | print;noprint 
+
+    # The Tools method processes Python code. The "print" parameter specifies 
+    # whether the code is echoed in the document. 
     
     # Four libraries are imported by rivt as: 
 
-    # pyplot (plt.)
-    # numpy (np.)
-    # pandas (pd.)
-    # sympy (sy.)
+    # pyplot -> plt.
+    # numpy -> np.
+    # pandas -> pd.
+    # sympy -> sy.
 
     # Examples of Python code:
-
-    # Define a function -S
+    # Define a function -
     def f1(x,y): z = x + y
         print(z)
-        return
-    
+        return Z
     # Read and write files -    
     with open('file.csv', 'r') as f: 
         input = f.readlines()

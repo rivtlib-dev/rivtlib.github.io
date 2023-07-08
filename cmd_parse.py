@@ -6,10 +6,11 @@ from pathlib import Path
 import tabulate
 from TexSoup import TexSoup
 import html2text as htm
+from numpy import *
 
 
 class Commands():
-    """subclass - convert rivt commands to MD and reST
+    """common methods for rivt to md, utf and reST
 
         ======================================================== ===========
                         command syntax                              scope

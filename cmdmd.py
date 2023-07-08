@@ -20,7 +20,7 @@ from datetime import datetime
 
 from rivt import parse
 from rivt.units import *
-from cmd import Commands
+from rivt.cmd_parse import Commands
 
 
 class CmdMD(Commands):
@@ -47,7 +47,7 @@ class CmdMD(Commands):
         self.paramL = paramL
         self.errlogP = folderD["errlogP"]
 
-        modnameS = __name__.split(".")[1]
+        modnameS = self.incrD["modnameS"]
         # print(f"{modnameS=}")
         logging.basicConfig(
             level=logging.DEBUG,

@@ -19,8 +19,13 @@ from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
 from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
-from rivt.units import *
-from rivt import cmdutf, cmdmd, cmdrst, tagutf, tagmd, tagrst
+from .units import *
+import cmdutf
+import cmdmd
+import cmdrst
+import tagutf
+import tagmd
+import tagrst
 
 # tabulate.PRESERVE_WHITESPACE = True
 
@@ -100,9 +105,7 @@ class RivtParse:
         # self.rivtD.update(locals())
 
     def str_parse(self, strL):
-        """parse method string line by line
-
-            parsing starts with second line
+        """parse method string line by line starting with second line
 
             :param list strL: split method string
             :return mdS: md formatted string
@@ -115,12 +118,13 @@ class RivtParse:
             :rtype incrD: dictionary
         """
 
-        xutfS = """"""
-        xmdS = """"""
-        xrstS = """"""
-        uS = """"""
+        xutfS = """"""      # utfS local string
+        xmdS = """"""       # mdS local string
+        xrstS = """"""      # rstS local string
+        uS = """"""         # raw local line
         blockB = False
 
+        # table alignment
         hdrdL = ["variable", "value", "[value]", "description"]
         aligndL = ["left", "right", "right", "left"]
         hdraL = ["variable", "value", "[value]", "description [eq. number]"]
@@ -128,7 +132,7 @@ class RivtParse:
 
         blockevalL = []     # current value table
         blockevalB = False  # stop accumulation of values
-        vtableL = []        # value table export
+        vtableL = []        # value table for export
         eqL = []            # equation result table
         lineS = ""
         for uS in strL:
@@ -138,7 +142,7 @@ class RivtParse:
             if blockB:                                 # accumulate block
                 lineS += uS
                 continue
-            if blockB and uS.strip() == "[q]]":        # process block
+            if blockB and uS.strip() == "[q]]":        # end of block
                 tagS = self.tagsD["[q]"]
                 rvtS = tagutf.TagsUTF(lineS, tagS,
                                       self.incrD, self.folderD,  self.rivtD)
@@ -150,7 +154,7 @@ class RivtParse:
                                       self.incrD, self.folderD,  self.rivtD)
                 xrstS += rvtS + "\n"
                 blockB = False
-            if blockevalB and len(uS.strip()) < 2:    # declare and assign table
+            if blockevalB and len(uS.strip()) < 2:    # value tables
                 vtableL += blockevalL
                 if tfS == "declare":
                     vutfS = self.dtable(blockevalL, hdrdL,
@@ -170,27 +174,25 @@ class RivtParse:
                     xrstS += vutfS
                 blockevalL = []
                 blockevalB = False
-            elif uS[0:2] == "||":                      # command
+            elif uS[0:2] == "||":                      # commands
                 usL = uS[2:].split("|")
                 parL = usL[1:]
                 cmdS = usL[0].strip()
                 if cmdS in self.cmdL:
-                    rvtC = cmdmd.CmdMD(parL, self.incrD, self.folderD,
-                                       self.rivtD)
+                    rvtC = cmdutf.CmdUTF(
+                        parL, self.incrD, self.folderD, self.rivtD)
+                    utfS = rvtC.cmd_parse(cmdS)
+                    # print(f"{utfS=}")
+                    xutfS += utfS
+                    rvtC = cmdmd.CmdMD(
+                        parL, self.incrD, self.folderD, self.rivtD)
                     mdS = rvtC.cmd_parse(cmdS)
                     # print(f"{mdS=}")
-                    try:
-                        mdS += mdS
-                    except:
-                        pass
-
-                    rvtC = cmdrst.CmdRST(parL, self.incrD, self.folderD,
-                                         self.rivtD)
+                    xmdS += mdS
+                    rvtC = cmdrst.CmdRST(
+                        parL, self.incrD, self.folderD, self.rivtD)
                     reS = rvtC.cmd_parse(cmdS)
-                    try:
-                        xrstS += reS
-                    except:
-                        pass
+                    xrstS += reS
             elif "_[" in uS:                           # line tag
                 usL = uS.split("_[")
                 lineS = usL[0]
@@ -240,16 +242,16 @@ class RivtParse:
                     blockevalB = True
                     continue
             else:
-                print(uS)
+                print(uS)       # pass unformatted string
 
-        if self.incrD["saveP"] != None:            # write assigns and declares
-            valP = Path(self.folderD["dataP"] / self.incrD["saveP"])
-            with open(valP, "w", newline="") as f:
-                writecsv = csv.writer(f)
-                writecsv.writerow(hdraL)
-                writecsv.writerows(vtableL)
+        # export values
+        valP = Path(self.folderD["dataP"], self.folderD["valfileS"])
+        with open(valP, "w", newline="") as f:
+            writecsv = csv.writer(f)
+            writecsv.writerow(hdraL)
+            writecsv.writerows(vtableL)
 
-        return (utfS, mdS, rstS,  self.incrD, self.folderD, self.rivtD)
+        return (xutfS, xmdS, xrstS,  self.incrD, self.folderD, self.rivtD)
 
     def atable(self, tblL, hdreL, tblfmt, alignaL):
         """write assign values table"""

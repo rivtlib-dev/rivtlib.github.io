@@ -107,25 +107,24 @@ inputs.
 Commands and Tags
 =================
 
-rivt syntax includes arbitrary unicode text and rivt commands and tags. Syntax
-is interepreted by the particular rivt method. Commands read or write extrnal
-files denoted by || at the beginning of a line. Command parameters are
-separated by |. In the summary below single parameter options are separated by
-semi-colons and list parameters are separated by commas. The first line of each
-method is a section label followed by section parameters. Section labels may be
-hidden by prepending with a double hyphen --.
+rivt syntax includes arbitrary unicode text with rivt commands and tags. Syntax
+is interepreted within the rivt methods. A rivt command reads or writes
+external files and is denoted by || at the beginning of a line. Command
+parameters are separated by |. In the summary below parameter options
+desginated with semi-colons and list parameters with commas. 
 
-Tags format a line or block of text and are generally denoted with _[tag] at
-the end of a line. Block tags start the block of text with _[[tag]] and end
-with _[[q]]. The "=" and ":=" tags used in the Value method are the
-exceptions.
+Tags format a line or block of text and are denoted with _[tag] at the end of a
+line. Block tags start a block of text with _[[tag]] and end with _[[q]]. The
+"=" and ":=" tags used in the Value method are the exceptions.
 
+The first line of each method is a section label followed by section
+parameters. Section labels may be omitted by prepending with a double hyphen --.
 
 ======= ===================================================================
  name             API Functions and commands (VSCode snippet prefix)
 ======= ===================================================================
 
-Repo    rv.R("""label | page
+Repo    rv.R("""label | toc; notoc | page
 (re)
                 ||github (git)
                 ||project (proj)
@@ -143,12 +142,11 @@ Insert  rv.I("""label | rgb; default
 
 Values  rv.V("""label | sub; nosub 
 (va)
-                ||assign (ass)
                 ||declare (dec)
 
                 """)
 
-Tools  rv.T("""label | rgb; default; noprint | space; nospace
+Tools  rv.T("""label | rgb; default; noprint 
 (to)
                 Python code
 
@@ -161,35 +159,32 @@ exclude rv.X("""any method
 
                 """)
 
-write   rv.writedoc('utf,pdf')
+write   rv.writedoc('md,utf,pdf')
 (wr)
 =============================================================== ============
     command syntax and description (snippet)                         API 
 =============================================================== ============
 
-|| append | folder | file                                             R
-    (ap)   pdf folder | .pdf; .txt  
+|| append | rel file path                                             R
+    (app)   pdf folder
 
-|| github | folder | file                                             R
-    (gi)   pdf folder | .pdf; .txt  
+|| github | rel file path                                             R
+    (git)   pdf folder | .pdf; .txt  
     
-|| project | file                                 R
-    (pr)   .txt; .tex; .html | plain; tags; latex
+|| project | rel file path | type                                     R
+    (pro)   .txt; | plain; tags
 
-|| text | relative file path | text type                              I
-    (te)   .txt; .tex; .html | plain; tags; code; math; latex
+|| text | rel file path | text type                                   I
+    (tex)   .txt; .tex; .rst | plain; tags
 
-|| image  | relative file path | .50, ..                              I
-    (im)   .png; .jpg |  page width fraction
+|| image  | rel file path | .50, ..                                   I
+    (img)   .png; .jpg |  page width 
 
-|| table  | relative file path | 60,r;l;c | [:]                       I
-    (ta)   .csv; xls  | max col width, locate | rows
+|| table  | rel file path | 60,r;l;c                                  I
+    (tab)   .csv; xls  | max col width, align
 
-|| declare | relative file path  | [:]                                V
-    (de)    .csv; .xls  | rows
-
-|| assign | relative file path  | [:]                                 V
-    (as)    .csv; .xls  | rows
+|| declare | rel file path | print,;noprint                           V
+    (dec)    .csv; .xls  | print or hide
 
 ============================ ============================================
  tags                                   description 
@@ -199,10 +194,13 @@ Repo and Inserts:
 text _[b]                       bold 
 text _[c]                       center
 text _[i]                       italic
+text _[bc]                      bold center 
+text _[bi]                      bold italic
 text _[r]                       right justify
 text _[u]                       underline   
 text _[l]                       LaTeX math
 text _[s]                       sympy math
+text _[bs]                      bold sympy math
 text _[e]                       equation label and autonumber
 text _[f]                       figure caption and autonumber
 text _[t]                       table title and autonumber
@@ -231,10 +229,10 @@ text _[d]                       footnote description
 a = n | unit, alt | descrip    declare = 
 a := b + c | unit, alt | n,n   assign := 
 
-The first line of a rivt file is always *import rivt.rivtapi as rv* followed by
+The first line of a rivt file is *import rivt.rivtapi as rv* followed by
 the Repo method rv.R() which occurs once. rv.R is followed by any of the other
 three methods in any number or order. rv.R() sets options for repository and
-report output formats.
+report output.
 
 File format conventions follow the Python formatter pep8, and linter ruff.
 Method names start in column one. All other lines must be indented 4 spaces to
@@ -340,7 +338,7 @@ rv.V("""Values method | sub; nosub
     colon-equal tag assigns a value and specifies the result units and printed
     output decimal places in the equation and results.
 
-    || values | r0101 | s3
+    || declare | data/
     
     The values command imports values from csv files written by rivt when
     processing assigned and declared values. The parameters specify the

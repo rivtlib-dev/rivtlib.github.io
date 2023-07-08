@@ -17,7 +17,7 @@ from sympy.core.alphabets import greeks
 from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
 from rivt.units import *
-from rivt.tags import Tags
+from rivt.tag_parse import Tags
 
 
 class TagsRST(Tags):

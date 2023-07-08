@@ -68,6 +68,7 @@ errlogP = Path(tempP, "rivt-log.txt")
 styleP = prvP
 valfileS = docbaseS.replace("r", "v") + ".csv"
 dataP = Path(docP.parent, "data")
+
 # print(f"{prvP=}")
 # global
 utfS = """"""                         # utf-8 output string
@@ -78,10 +79,11 @@ declareS = """"""                     # declares output string
 assignS = """"""                      # assigns output string
 rivtD = {}                            # rivt dictionary
 folderD = {}
-for item in ["docP", "dataP", "prvP", "pubP", "docpathP",
-             "reportP", "dataP", "errlogP", "styleP", "tempP"]:
+for item in ["docP", "dataP", "prvP", "pubP", "docpathP", "reportP",
+             "dataP", "valfileS", "errlogP", "styleP", "tempP"]:
     folderD[item] = eval(item)
 incrD = {
+    "modnameS": modnameS,
     "reportS": reportS,               # report title
     "docS": "rivt Document",          # document title
     "divS": divS,                     # div title
@@ -142,20 +144,8 @@ with open(docP, "r") as f1:
     rvtfileS += rvtfileS + """\nsys.exit()\n"""
 
 
-def _sect_head(hdrS):
-    """_summary_
-
-    :param hdrS: _description_
-    :type hdrS: _type_
-    :return: _description_
-    :rtype: _type_
-    """
-
-    return
-
-
 def _str_set(rS, methS):
-    """format section title and update dictionary
+    """format section title and update dictionaries
 
     :param rS: first line of string
     :type rS: str
@@ -174,7 +164,8 @@ def _str_set(rS, methS):
     rsL = rS.split("|")
     titleS = rsL[0].strip()
     if methS == "R":
-        incrD["pageI"] = int(rsL[1])
+        incrD["tocS"] = rsL[1].strip()
+        incrD["pageI"] = int(rsL[2])
         incrD["doctitleS"] = titleS
     elif methS == "I":
         if rsL[1].strip() == "default":
@@ -334,30 +325,6 @@ def writedocs(formatS):
     rstfileP = Path(docP.parent, docbaseS + ".rst")
     # eshortP = Path(*Path(rstfileP).parts[-3:])
 
-    # add table of contents to summary
-    tocS = ""
-    secI = 0
-    for iS in rivtL:
-        if iS[0:5] == "rv.I(" and "--" not in iS:
-            secI += 1
-            jS = iS.split('"""')
-            kS = jS.split("|").strip()
-            tocS += str(secI) + "'" + kS
-        elif i[0:4] == "rv.V" and "--" not in iS:
-            secI += 1
-            jS = iS.split('"""')
-            kS = jS.split("|").strip()
-            tocS += str(secI) + "'" + kS
-        elif i[0:4] == "rv.T" and "--" not in iS:
-            secI += 1
-            jS = iS.split('"""')
-            kS = jS.split("|").strip()
-            tocS += str(secI) + "'" + kS
-        else:
-            pass
-    incrD["tocS"] = tocS
-    mdeditL = mdS.split("## ", 1)
-    mdS = mdeditL[0] + tocS + mdeditL[1]
     print("", flush=True)
 
     if "md" in formatL:                          # save md file

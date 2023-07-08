@@ -1,3 +1,31 @@
+def _tocs():
+    # add table of contents to summary
+    tocS = ""
+    secI = 0
+
+    for iS in rivtL:
+        if iS[0:5] == "rv.I(" and "--" not in iS:
+            secI += 1
+            jS = iS.split('"""')
+            kS = jS.split("|").strip()
+            tocS += str(secI) + "'" + kS
+        elif i[0:4] == "rv.V" and "--" not in iS:
+            secI += 1
+            jS = iS.split('"""')
+            kS = jS.split("|").strip()
+            tocS += str(secI) + "'" + kS
+        elif i[0:4] == "rv.T" and "--" not in iS:
+            secI += 1
+            jS = iS.split('"""')
+            kS = jS.split("|").strip()
+            tocS += str(secI) + "'" + kS
+        else:
+            pass
+
+    mdeditL = mdS.split("## ", 1)
+    mdS = mdeditL[0] + tocS + mdeditL[1]
+
+
 def _mod_tex(tfileP):
     """Modify TeX file to avoid problems with escapes:
 

@@ -21,7 +21,7 @@ from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
 from rivt import parse
 from rivt.units import *
-from cmd import Commands
+from rivt.cmd_parse import Commands
 
 
 class CmdRST(Commands):
@@ -48,7 +48,7 @@ class CmdRST(Commands):
         self.paramL = paramL
         self.errlogP = folderD["errlogP"]
 
-        modnameS = __name__.split(".")[1]
+        modnameS = self.incrD["modnameS"]
         # print(f"{modnameS=}")
         logging.basicConfig(
             level=logging.DEBUG,

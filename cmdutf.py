@@ -19,11 +19,11 @@ from pathlib import Path
 from datetime import datetime
 from TexSoup import TexSoup
 from rivt import parse
+from rivt.cmd_parse import Commands
 from rivt.units import *
-from rivt.cmd import Commands
 
 
-class CmdMD(Commands):
+class CmdUTF(Commands):
 
     def __init__(self, paramL, incrD, folderD,  localD):
         """_summary_
@@ -47,7 +47,7 @@ class CmdMD(Commands):
         self.paramL = paramL
         self.errlogP = folderD["errlogP"]
 
-        modnameS = __name__.split(".")[1]
+        modnameS = self.incrD["modnameS"]
         # print(f"{modnameS=}")
         logging.basicConfig(
             level=logging.DEBUG,

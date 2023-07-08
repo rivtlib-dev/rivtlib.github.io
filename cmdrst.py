@@ -21,7 +21,7 @@ from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
 from rivt import parse
 from rivt.units import *
-from commands import Commands
+from cmd import Commands
 
 
 class CmdRST(Commands):

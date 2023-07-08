@@ -14,6 +14,7 @@ from configparser import ConfigParser
 from pathlib import Path
 
 from rivt import parse
+from rivt import write
 
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
@@ -82,7 +83,7 @@ for item in ["docP", "dataP", "prvP", "pubP", "docpathP",
     folderD[item] = eval(item)
 incrD = {
     "reportS": reportS,               # report title
-    "titleS": "rivt Document",        # document title
+    "docS": "rivt Document",          # document title
     "divS": divS,                     # div title
     "sectS": "",                      # section title
     "docnumS": docbaseS[1:5],         # doc number
@@ -150,30 +151,7 @@ def _sect_head(hdrS):
     :rtype: _type_
     """
 
-    hdrstS = """"""
-    hdmdS = """"""
-    hdutfS = """"""""
-
-    snumI = incrD["secnumI"] + 1
-    incrD["secnumI"] = snumI
-    docnumS = incrD["docnumS"]
-    dnumS = docnumS + "-[" + str(snumI) + "]"
-    headS = dnumS + " " + hdrS
-    bordrS = incrD["widthI"] * "-"
-
-    hdutfS = bordrS + "\n" + headS + "\n" + bordrS + "\n"
-    hdmdS = "### " + headS + "\n"
-    hdrstS += (
-        ".. raw:: latex"
-        + "   \n\n ?x?vspace{.2in} "
-        + "   ?x?begin{tcolorbox} "
-        + "   ?x?textbf{ " + hdrS + "}"
-        + "   ?x?hfill?x?textbf{SECTION " + dnumS + " }"
-        + "   ?x?end{tcolorbox}"
-        + "   \n" + "   ?x?newline" + "   ?x?vspace{.05in}"
-        + "\n\n")
-
-    return hdutfS, hdmdS, hdrstS
+    return
 
 
 def _str_set(rS, methS):
@@ -189,50 +167,83 @@ def _str_set(rS, methS):
 
     global mdS, rstS, incrD, folderD
 
-    rsL = rS.split("|")
+    hdrstS = """"""
+    hdmdS = """"""
+    hdutfS = """"""""
 
+    rsL = rS.split("|")
+    titleS = rsL[0].strip()
     if methS == "R":
         incrD["pageI"] = int(rsL[1])
-        doctitleS = rsL[0].strip()
-        incrD["doctitleS"] = doctitleS
-        return
-
+        incrD["doctitleS"] = titleS
     elif methS == "I":
         if rsL[1].strip() == "default":
             incrD["subB"] = True
         else:
             incrD["subB"] = False
-
     elif methS == "V":
         if rsL[1].strip() == "sub":
             incrD["subB"] = True
         else:
             incrD["subB"] = False
-
     elif methS == "T":
         if rsL[1].strip() == "code":
             folderD["codeB"] = True
         else:
             folderD["codeB"] = False
+    else:
+        pass
 
     if rS.strip()[0:2] == "--":              # omit section heading
         return "\n", "\n", "\n"
+    elif methS == "R":
+        headS = datetime.now().strftime("%Y-%m-%d | %I:%M%p") + "\n"
+        incrD["docS"] = titleS
+        hdutfS = (headS + "\n" + titleS + "\n")
+        hdmdS = (headS + "\n## " + titleS + "\n")
+        hdrstS = (
+            ".. raw:: latex"
+            + "   \n\n ?x?vspace{.2in} "
+            + "   ?x?begin{tcolorbox} "
+            + "   ?x?textbf{ " + titleS + "}"
+            + "   ?x?end{tcolorbox}"
+            + "   \n" + "   ?x?newline" + "   ?x?vspace{.05in}"
+            + "\n\n")
     else:
-        return _sect_head(rsL[0].strip())   #
+        snumI = incrD["secnumI"] + 1
+        incrD["secnumI"] = snumI
+        docnumS = incrD["docnumS"]
+        dnumS = docnumS + "-[" + str(snumI) + "]"
+        headS = dnumS + " " + titleS
+        bordrS = incrD["widthI"] * "-"
+
+        hdutfS = bordrS + "\n" + headS + "\n" + bordrS + "\n"
+        hdmdS = "### " + headS + "\n"
+        hdrstS += (
+            ".. raw:: latex"
+            + "   \n\n ?x?vspace{.2in} "
+            + "   ?x?begin{tcolorbox} "
+            + "   ?x?textbf{ " + titleS + "}"
+            + "   ?x?hfill?x?textbf{SECTION " + dnumS + " }"
+            + "   ?x?end{tcolorbox}"
+            + "   \n" + "   ?x?newline" + "   ?x?vspace{.05in}"
+            + "\n\n")
+
+    return hdutfS, hdmdS, hdrstS
 
 
-def _rivt_format(rS, mS):
-    """_summary_
+def _rivt_parse(rS, mS):
+    """call rivt parsing classes
 
-    :param rS: _description_
-    :type rS: _type_
-    :param mS: _description_
-    :type mS: _type_
+    :param rS: rivt string
+    :type rS: str
+    :param mS: rivt string method - R,I,V,T or X
+    :type mS: str
     """
 
     global utfS, mdS, rstS, incrD, folderD, rivtD
 
-    # format section headings
+    # section headings
     xmdS = xrstS = xutfS = ""
     rL = rS.split("\n")
     hutfS, hmdS, hrstS = _str_set(rL[0], mS)
@@ -240,7 +251,7 @@ def _rivt_format(rS, mS):
     mdS += hmdS
     rstS += hrstS
 
-    # format rivt string
+    # rivt string
     parseC = parse.RivtParse(mS, folderD, incrD,  rivtD)
     xutfS, xmdS, xrstS, incrD, folderD, rivtD = parseC.str_parse(rL[1:])
     utfS += xutfS
@@ -251,72 +262,47 @@ def _rivt_format(rS, mS):
 def R(rS):
     """format Repo string
 
-        : param rS: triple quoted rivt string
+        : param rS: repo string
         : type rS: str
     """
     global utfS, mdS, rstS, incrD, folderD
 
-    xmdS = xrstS = xutfS = ""
-    rL = rS.split("\n")
-
-    # format doc heading
-    _str_set(rL[0], "R")
-    headS = datetime.now().strftime("%Y-%m-%d | %I:%M%p") + "\n"
-    doctitleS = incrD["doctitleS"]
-    utftitleS = (headS + "\n" + doctitleS + "\n")
-    mdtitleS = (headS + "\n## " + doctitleS + "\n")
-    rsttitleS = (
-        ".. raw:: latex"
-        + "   \n\n ?x?vspace{.2in} "
-        + "   ?x?begin{tcolorbox} "
-        + "   ?x?textbf{ " + doctitleS + "}"
-        + "   ?x?end{tcolorbox}"
-        + "   \n" + "   ?x?newline" + "   ?x?vspace{.05in}"
-        + "\n\n")
-    utfS += utftitleS
-    mdS += mdtitleS
-    rstS += rsttitleS
-    # format repo string
-    parseC = parse.RivtParse("R", folderD, incrD,  rivtD)
-    xutfS, xmdS, xrstS, incrD, folderD, rivtD = parseC.str_parse(rL[1:])
-    utfS += xutfS
-    mdS += xmdS
-    rstS += xrstS
+    _rivt_parse(rS, "R")
 
 
 def I(rS):
     """format Insert string
 
-        : param rS: triple quoted rivt string
+        : param rS: insert string
         : type rS: str
     """
     global utfS, mdS, rstS, incrD, folderD
 
-    _rivt_format(rS, "I")
+    _rivt_parse(rS, "I")
 
 
 def V(rS):
     """format Value string
 
-        :param rS: triple quoted values string
+        :param rS: value string
         :type rS: str
     """
     global utfS, mdS, rstS, incrD, folderD, rivtD
 
     locals().update(rivtD)
-    _rivt_format(rS, "V")
+    _rivt_parse(rS, "V")
     rivtD.update(locals())
 
 
 def T(rS):
-    """process Tables string
+    """process Tools string
 
-        : param rS: triple quoted insert string
-        : type rS: str: return: formatted md or reST string: type: str
+        : param rS: tool string
+        : type rS: str
     """
 
     locals().update(rivtD)
-    _rivt_format(rS, "T")
+    _rivt_parse(rS, "T")
     rivtD.update(locals())
 
 
@@ -327,160 +313,6 @@ def X(rS):
     rL = rS.split("\n")
     print("\n skip section: " + rL[0] + "\n")
     pass
-
-
-def _mod_tex(tfileP):
-    """Modify TeX file to avoid problems with escapes:
-
-        -  Replace marker "aaxbb " inserted by rivt with
-            \\hfill because it is not handled by reST).
-        - Delete inputenc package
-        - Modify section title and add table of contents
-
-    """
-    startS = str(incrD["pageI"])
-    doctitleS = str(incrD["doctitleS"])
-
-    with open(tfileP, "r", encoding="md-8", errors="ignore") as f2:
-        texf = f2.read()
-
-    # modify "at" command
-    texf = texf.replace("""\\begin{document}""",
-                        """\\renewcommand{\contentsname}{""" + doctitleS
-                        + "}\n" +
-                        """\\begin{document}\n""" +
-                        """\\makeatletter\n""" +
-                        """\\renewcommand\@dotsep{10000}""" +
-                        """\\makeatother\n""")
-
-    # add table of contents, figures and tables
-    # texf = texf.replace("""\\begin{document}""",
-    #                     """\\renewcommand{\contentsname}{""" + doctitleS
-    #                     + "}\n" +
-    #                     """\\begin{document}\n""" +
-    #                     """\\makeatletter\n""" +
-    #                     """\\renewcommand\@dotsep{10000}""" +
-    #                     """\\makeatother\n""" +
-    #                     """\\tableofcontents\n""" +
-    #                     """\\listoftables\n""" +
-    #                     """\\listoffigures\n""")
-
-    texf = texf.replace("""inputenc""", """ """)
-    texf = texf.replace("aaxbb ", """\\hfill""")
-    texf = texf.replace("?x?", """\\""")
-    texf = texf.replace(
-        """fancyhead[L]{\leftmark}""",
-        """fancyhead[L]{\\normalsize\\bfseries  """ + doctitleS + "}")
-    texf = texf.replace("x*x*x", "[" + incrD["docnumS"] + "]")
-    texf = texf.replace("""\\begin{tabular}""", "%% ")
-    texf = texf.replace("""\\end{tabular}""", "%% ")
-    texf = texf.replace(
-        """\\begin{document}""",
-        """\\begin{document}\n\\setcounter{page}{""" + startS + "}\n")
-
-    with open(tfileP, "w", encoding="md-8") as f2:
-        f2.write(texf)
-
-    # with open(tfileP, 'w') as texout:
-    #    print(texf, file=texout)
-
-    return
-
-
-def _gen_pdf(self):
-    """Write PDF file from TEX file
-
-    """
-
-    pdfD = {
-        "xpdfP": Path(tempP, docbaseS + ".pdf"),
-        "xhtmlP": Path(tempP, docbaseS + ".html"),
-        "xrstP": Path(tempP, docbaseS + ".rst"),
-        "xtexP": Path(tempP, docbaseS + ".tex"),
-        "xauxP": Path(tempP, docbaseS + ".aux"),
-        "xoutP": Path(tempP, docbaseS + ".out"),
-        "xflsP": Path(tempP, docbaseS + ".fls"),
-        "xtexmakP": Path(tempP, docbaseS + ".fdb_latexmk"),
-    }
-    # os.system('latex --version')
-    os.chdir(tempP)
-    texfS = str(pdfD["xtexP"])
-    # pdf1 = 'latexmk -xelatex -quiet -f ' + texfS + " > latex-log.txt"
-    pdf1 = 'xelatex -interaction=batchmode ' + texfS
-    # print(f"{pdf1=}"")
-    os.system(pdf1)
-    srcS = ".".join([docbaseS, "pdf"])
-    dstS = str(Path(reportP, srcS))
-    shutil.copy(srcS, dstS)
-
-    return dstS
-
-
-def _rest2tex(rstfileS):
-    """convert reST to tex file
-
-    0. insert [i] data into model (see _genxmodel())
-    1. read the expanded model
-    2. build the operations ordered dictionary
-    3. execute the dictionary and write the md-8 calc and Python file
-    4. if the pdf flag is set re-execute xmodel and write the PDF calc
-    5. write variable summary to stdout
-
-    :param pdffileS: _description_
-    :type pdffileS: _type_
-    """
-
-    global folderD
-
-    style_path = folderD["styleP"]
-    # print(f"{style_path=}")
-    # f2 = open(style_path)
-    # f2.close
-
-    pythoncallS = "python "
-    if sys.platform == "linux":
-        pythoncallS = "python3 "
-    elif sys.platform == "darwin":
-        pythoncallS = "python3 "
-
-    rst2texP = Path(rivtP, "scripts", "rst2latex.py")
-    # print(f"{str(rst2texP)=}")
-    texfileP = Path(tempP, docbaseS + ".tex")
-    rstfileP = Path(tempP, docbaseS + ".rst")
-
-    with open(rstfileP, "w", encoding='md-8') as f2:
-        f2.write(rstS)
-
-    tex1S = "".join(
-        [
-            pythoncallS,
-            str(rst2texP),
-            " --embed-stylesheet ",
-            " --documentclass=report ",
-            " --documentoptions=12pt,notitle,letterpaper ",
-            " --stylesheet=",
-            str(style_path) + " ",
-            str(rstfileP) + " ",
-            str(texfileP),
-        ]
-    )
-    logging.info(f"tex call:{tex1S=}")
-    os.chdir(tempP)
-    try:
-        os.system(tex1S)
-        time.sleep(1)
-        logging.info(f"tex file written: {texfileP=}")
-        print(f"tex file written: {texfileP=}")
-    except SystemExit as e:
-        logging.exception('tex file not written')
-        logging.error(str(e))
-        sys.exit("tex file write failed")
-
-    _mod_tex(texfileP)
-
-    pdfS = _gen_pdf(texfileP)
-
-    return pdfS
 
 
 def writedocs(formatS):
@@ -495,12 +327,14 @@ def writedocs(formatS):
     print(f" -------- write doc files: [{docfileS}] --------- ")
     logging.info(f"""write doc files: [{docfileS}]""")
 
-    docmdP = Path(docP.parent / "README.md")
+    formatL = formatS.split(",")
+    docmdS = "README.md"
+    docmdP = Path(docP.parent / docmdS)
+    docutfP = Path(docP.parent / docutfS)
     rstfileP = Path(docP.parent, docbaseS + ".rst")
     # eshortP = Path(*Path(rstfileP).parts[-3:])
 
     # add table of contents to summary
-
     tocS = ""
     secI = 0
     for iS in rivtL:
@@ -524,8 +358,8 @@ def writedocs(formatS):
     incrD["tocS"] = tocS
     mdeditL = mdS.split("## ", 1)
     mdS = mdeditL[0] + tocS + mdeditL[1]
-
     print("", flush=True)
+
     if "md" in formatL:                          # save md file
         with open(docmdP, "w", encoding='utf-8') as f1:
             f1.write(mdS)
@@ -536,24 +370,29 @@ def writedocs(formatS):
         logging.info(f"""markdown written: {dshortP}\README.md""")
     print("", flush=True)
 
-    if "pdf" in formatS or "html" in formatS:      # save rst file
+    if "utf" in formatL:                          # save utf file
+        with open(docmdP, "w", encoding='utf-8') as f1:
+            f1.write(mdS)
+            # with open(_rstfile, "wb") as f1:
+            #   f1.write(rstcalcS.encode("md-8"))
+            # f1 = open(_rstfile, "r", encoding="md-8", errors="ignore")
+        print(f"markdown written: {dshortP}\README.md")
+        logging.info(f"""markdown written: {dshortP}\README.md""")
+    print("", flush=True)
+
+    if "pdf" in formatL:                           # save pdf file
         with open(rstfileP, "w", encoding='md-8') as f2:
             f2.write(rstS)
         logging.info(f"reST written: {rstfileP}")
         print(f"reST written: {rstfileP}")
-    for i in formatL:
-        if "pdf" in i:
-            logging.info(f"start PDF file process: {rstfileP}")
-            print("start PDF file process: {rstfileP}")
-            pdfstyleS = i.split(":")[1].strip()
-            styleP = Path(prvP, pdfstyleS)
-            folderD["styleP"] = styleP
-            logging.info(f"PDF style file: {styleP}")
-            print(f"PDF style file: {styleP}")
+        logging.info(f"start PDF file process: {rstfileP}")
+        print("start PDF file process: {rstfileP}")
+        pdfstyleS = i.split(":")[1].strip()
+        styleP = Path(prvP, pdfstyleS)
+        folderD["styleP"] = styleP
+        logging.info(f"PDF style file: {styleP}")
+        print(f"PDF style file: {styleP}")
         pdffileP = _rest2tex(rstS)
         logging.info(f"PDF doc written: {pdffileP}")
         print(f"PDF doc written: {pdffileP}")
-    #   if "html" in I:
-    #     pdffileP = _rest2html(rstS)
-    #     logging.info(f"HTML doc written: {pdffileP}")
     sys.exit()

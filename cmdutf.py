@@ -20,7 +20,7 @@ from datetime import datetime
 from TexSoup import TexSoup
 from rivt import parse
 from rivt.units import *
-from commands import Commands
+from cmd import Commands
 
 
 class CmdMD(Commands):

@@ -114,28 +114,18 @@ class CmdUTF(Commands):
         """insert image(s) from files
 
         """
-        mdS = ""
+        utfS = ""
         iL = self.paramL
         if len(iL[0].split(",")) == 1:
             file1S = iL[0].strip()
-            scale1S = iL[1].strip()
-            imgS = "<img src=" + file1S + " width=" + \
-                scale1S + "% alt=" + file1S + ">"
-            mdS = imgS
+            utfS = "Figure path: " + file1S + "\n"
         elif len(iL[0].split(",")) == 2:
             iL = iL[0].split(",")
             file1S = iL[0].strip()
             file2S = iL[1].strip()
-            iL = iL[1].split(",")
-            scale1S = iL[0]
-            scale2S = iL[1]
-            imgS = "<img src=" + file1S + " width=" + \
-                scale1S + "% alt=" + file1S + "<img src=" + \
-                file2S + " width=" + scale2S + "% alt=" + file2S + ">"
-            mdS = imgS
-
-        print(mdS)
-        return mdS
+            utfS = "Figure path: " + file1S + "\n" + "Figure path: " + file2S + "\n"
+        print(utfS)
+        return utfS
 
     def table(self):
         """insert table from csv or xlsx file

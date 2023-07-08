@@ -200,19 +200,19 @@ class RivtParse:
                 if tagS[0] == "[":                     # block tag
                     blockB = True
                 if tagS in self.tagsD:
-                    rvtC = tagutf.TagsMD(lineS, self.incrD, self.folderD,
-                                         self.tagsD, self.rivtD)
+                    rvtC = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
+                                          self.tagsD, self.rivtD)
                     utfS = rvtC.tag_parse(tagS)
-                    utfS += mdS + "\n"
+                    xutfS += utfS + "\n"
                     rvtC = tagmd.TagsMD(lineS, self.incrD, self.folderD,
                                         self.tagsD, self.rivtD)
                     mdS = rvtC.tag_parse(tagS)
-                    mdS += mdS + "\n"
+                    xmdS += mdS + "\n"
                     rvtC = tagrst.TagsRST(lineS, self.incrD, self.folderD,
                                           self.tagsD, self.rivtD)
                     reS = rvtC.tag_parse(tagS)
-                    rstS += reS + "\n"
-            elif "=" in uS and methS == "V":           # equation tag
+                    xrstS += reS + "\n"
+            elif "=" in uS and self.methS == "V":           # equation tag
                 # print(f"{uS=}")
                 usL = uS.split("|")
                 lineS = usL[0]

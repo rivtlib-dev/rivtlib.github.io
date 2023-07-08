@@ -40,7 +40,7 @@ class TagsRST(Tags):
         self.errlogP = folderD["errlogP"]
         self.valL = []                         # accumulate values in list
 
-        modnameS = __name__.split(".")[1]
+        modnameS = self.incrD["modnameS"]
         # print(f"{modnameS=}")
         logging.basicConfig(
             level=logging.DEBUG,

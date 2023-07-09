@@ -73,7 +73,6 @@ class TagsMD(Tags):
         :return lineS: bold line
         :rtype: str
         """
-        print(self.lineS)
         return self.lineS
 
     def italic(self):
@@ -82,7 +81,6 @@ class TagsMD(Tags):
         :return lineS: centered line
         :rtype: str
         """
-        print(self.lineS)
         return self.lineS
 
     def center(self):
@@ -92,7 +90,6 @@ class TagsMD(Tags):
         :rtype: str
         """
         lineS = self.lineS.center(int(self.widthI))
-        print(lineS)
         return lineS
 
     def boldcenter(self):
@@ -114,8 +111,6 @@ class TagsMD(Tags):
         """
 
         lineS = self.lineS.center(int(self.widthI))
-
-        print(lineS)
         return lineS
 
     def right(self):
@@ -149,7 +144,6 @@ class TagsMD(Tags):
         """
         ftnumI = self.incrD["noteL"].pop(0)
         lineS = "[" + str(ftnumI) + "] " + self.lineS
-        print(lineS)
         return lineS
 
     def equation(self):
@@ -167,8 +161,6 @@ class TagsMD(Tags):
         lineS = "Equ. " + fillS + " - " + self.lineS.strip() \
             + refS.rjust(wI-spcI)
         self.incrD["equI"] = enumI
-
-        print(lineS)
         return lineS
 
     def figure(self):
@@ -179,13 +171,8 @@ class TagsMD(Tags):
         """
 
         fnumI = int(self.incrD["figI"])
-        sectnumI = self.incrD["secnumI"]
-        fillS = str(fnumI).zfill(2)
-        sectnumS = "[" + str(sectnumI) + "]"
-        lineS = sectnumS + " Fig. " + fillS + " - " + self.lineS
-        self.incrD["figI"] = fnumI + 1
+        lineS = "Fig. " + str(fnumI) + " - " + self.lineS
 
-        print(lineS + "\n")
         return lineS + "\n"
 
     def foot(self):
@@ -247,14 +234,9 @@ class TagsMD(Tags):
         :return lineS: md table title
         :rtype: str
         """
-        sectnumI = self.incrD["secnumI"]
         tnumI = int(self.incrD["tableI"])
-        fillS = str(tnumI).zfill(2)
-        sectnumS = "[" + str(sectnumI) + "]"
-        lineS = sectnumS + " Table " + fillS + " - " + self.lineS
         self.incrD["tableI"] = tnumI + 1
-
-        print(lineS)
+        lineS = "Table " + str(tnumI) + " - " + self.lineS
         return lineS
 
     def link(self):

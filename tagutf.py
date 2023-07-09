@@ -201,11 +201,8 @@ class TagsUTF(Tags):
         """
 
         fnumI = int(self.incrD["figI"])
-        sectnumI = self.incrD["secnumI"]
-        fillS = str(fnumI).zfill(2)
-        sectnumS = "[" + str(sectnumI) + "]"
-        lineS = sectnumS + " Fig. " + fillS + " - " + self.lineS
         self.incrD["figI"] = fnumI + 1
+        lineS = "Fig. " + str(fnumI) + " - " + self.lineS
 
         print(lineS + "\n")
         return lineS + "\n"
@@ -232,7 +229,6 @@ class TagsUTF(Tags):
         # txS = txs.encode('unicode-escape').decode()
         ptxS = sp.parse_latex(txS)
         lineS = sp.pretty(sp.sympify(ptxS, _clash2, evaluate=False))
-
         print(lineS)
         return lineS
 
@@ -259,7 +255,6 @@ class TagsUTF(Tags):
         #     # sps = sp.encode('unicode-escape').decode()
         # except:
         lineS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
-
         print(lineS)
         return lineS
 
@@ -269,13 +264,9 @@ class TagsUTF(Tags):
         :return lineS: md table title
         :rtype: str
         """
-        sectnumI = self.incrD["secnumI"]
         tnumI = int(self.incrD["tableI"])
-        fillS = str(tnumI).zfill(2)
-        sectnumS = "[" + str(sectnumI) + "]"
-        lineS = sectnumS + " Table " + fillS + " - " + self.lineS
         self.incrD["tableI"] = tnumI + 1
-
+        lineS = "Table " + str(tnumI) + " - " + self.lineS
         print(lineS)
         return lineS
 

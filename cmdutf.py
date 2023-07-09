@@ -75,40 +75,8 @@ class CmdUTF(Commands):
             :rtype: str
         """
 
-        alignD = {"s": "", "d": "decimal",
-                  "c": "center", "r": "right", "l": "left"}
-
-        tableS = ""
-        plenI = 2
-        if len(self.paramL) != plenI:
-            logging.info(
-                f"{self.cmdS} not evaluated: {plenI} parameters required")
-            return
-
-        folderP = Path(self.folderD["prvP"])
-        fileP = Path(self.paramL[0].strip())
-        pathP = Path(folderP, fileP)                    # file path
-        extS = (pathP.suffix).strip()
-        txttypeS = self.paramL[1].strip()
-        with open(pathP, "r", encoding="utf-8") as f2:
-            txtfileL = f2.readlines()
-        j = ""
-        if extS == ".txt":
-            # print(f"{txttypeS=}")
-            if txttypeS == "plain":
-                for iS in txtfileL:
-                    j += "   " + iS
-                return "\n\n::\n\n" + j + "\n\n"
-            elif txttypeS == "rivttags":
-                xtagC = parse.RivtParseTag(
-                    self.folderD, self.incrD,  self.localD)
-                xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
-                    txtfileL)
-                return xrstS
-        else:
-            logging.info(
-                f"{self.cmdS} not evaluated: {extS} file not processed")
-            return
+        print("< for project data see PDF output >")
+        return "(... for project data - see PDF report output ...)"
 
     def image(self):
         """insert image(s) from files
@@ -118,7 +86,8 @@ class CmdUTF(Commands):
         iL = self.paramL
         if len(iL[0].split(",")) == 1:
             file1S = iL[0].strip()
-            utfS = "Figure path: " + file1S + "\n"
+          #  file1S = file1S.replace("/", "|")
+            utfS = "< Figure path: " + file1S + "> \n"
         elif len(iL[0].split(",")) == 2:
             iL = iL[0].split(",")
             file1S = iL[0].strip()
@@ -172,7 +141,7 @@ class CmdUTF(Commands):
         output = StringIO()
         output.write(tabulate(
             readL,
-            tablefmt="html",
+            tablefmt="rst",
             headers="firstrow",
             numalign="decimal",
             maxcolwidths=maxwI,

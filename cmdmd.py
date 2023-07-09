@@ -70,7 +70,6 @@ class CmdMD(Commands):
 
     def project(self):
 
-        print("(... for project data - see PDF report output ...)")
         return "(... for project data - see PDF report output ...)"
 
     def image(self):
@@ -97,7 +96,6 @@ class CmdMD(Commands):
                 file2S + " width=" + scale2S + "% alt=" + file2S + ">"
             mdS = imgS
 
-        print(mdS)
         return mdS
 
     def table(self):
@@ -154,7 +152,6 @@ class CmdMD(Commands):
         tableS = output.getvalue()
         sys.stdout = old_stdout
 
-        print(tableS)
         return tableS
 
     def text(self):

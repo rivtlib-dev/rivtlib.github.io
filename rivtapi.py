@@ -190,7 +190,8 @@ def _str_set(rS, methS):
     elif methS == "R":
         headS = datetime.now().strftime("%Y-%m-%d | %I:%M%p") + "\n"
         incrD["docS"] = titleS
-        hdutfS = (headS + "\n" + titleS + "\n")
+        bordrS = incrD["widthI"] * "="
+        hdutfS = (headS + "\n" + bordrS + "\n" + titleS + "\n" + bordrS + "\n")
         hdmdS = (headS + "\n## " + titleS + "\n")
         hdrstS = (
             ".. raw:: latex"
@@ -220,6 +221,7 @@ def _str_set(rS, methS):
             + "   \n" + "   ?x?newline" + "   ?x?vspace{.05in}"
             + "\n\n")
 
+    print(hdutfS)
     return hdutfS, hdmdS, hdrstS
 
 

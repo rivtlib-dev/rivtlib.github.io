@@ -7,7 +7,7 @@
             "|| github | $(1:repo_name} | ${2:param1} | ${0:param2}    "
         ]
     },
-    "new R method": {
+    "new R": {
         "prefix": "rvr",
         "description": "add new Repo method",
         "scope": "python",
@@ -19,7 +19,7 @@
             "    \"\"\")"
         ]
     },
-    "new I method": {
+    "new I": {
         "prefix": "rvi",
         "description": "add new Insert method",
         "scope": "python",
@@ -31,7 +31,7 @@
             "    \"\"\")"
         ]
     },
-    "new V method": {
+    "new V": {
         "prefix": "rvv",
         "description": "add new Value method",
         "scope": "python",
@@ -43,32 +43,24 @@
             "    \"\"\")"
         ]
     },
-    "new T method": {
+    "new T": {
         "prefix": "rvt",
         "description": "add new Table method",
         "scope": "python",
         "body": [
             "rv.T(\"\"\"${1:section label} | ${2:docfolder; default} ",
             "    ",
-            "    ${0:new Table text}",
+            "    ${0:new Tools text}",
             "    ",
             "    \"\"\")"
         ]
     },
     "image": {
-        "prefix": "im1",
-        "description": "insert image",
-        "scope": "python",
-        "body": [
-            "|| image | ${1: filename} | ${0:0.5}"
-        ]
-    },
-    "image2": {
-        "prefix": "im2",
+        "prefix": "im",
         "description": "insert side by side image",
         "scope": "python",
         "body": [
-            "|| image2 | ${1: filename} | ${0:0.5} | ${1: filename} | ${0:0.5}"
+            "|| image | ${4: filename} | ${3: filename},${2: filename} | ${1:0.5}, ${0:0.5}"
         ]
     },
     "table": {

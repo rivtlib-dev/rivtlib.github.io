@@ -12,7 +12,7 @@
     "fsdeploy.nodes": [
         {
             "source": "C:/git/rivt/",
-            "target": "C:/Users/rhh2/Python38/Lib/site-packages/rivt",
+            "target": "C:/Users/rhh/AppData/Roaming/Python/Python310/site-packages/rivt",
             "include": "**/*.*",
             "deleteTargetOnDeploy": true,
         }

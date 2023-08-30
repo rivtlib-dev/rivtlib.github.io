@@ -55,40 +55,39 @@ Example Folder Structure (required prefixes shown in [ ])
 ├── [rivt]-Report-Label/                    (public files)
     ├── .git
     ├── units.py                            (unit over-ride)
-    ├── README.md                           (report toc)                                      
-    └── [rv0101]-Div-Label1/
-        ├── data0101/
-            ├── data1.csv                   (input data)
+    ├── README.md                           (report toc and summary)                                      
+    └── [rv0101]-Div-Label1/                (division and label)
+        ├── data0101/                       (input data)
+            ├── data1.csv                   
             ├── data2.csv
             ├── paper1.pdf
             └── functions1.py                   
-        ├── [r0101]-Doc-name.py             (rivt file)
-        └── README.md
-    ├── [rv0102]/
+        ├── [r0101]-Doc-Name.py             (rivt input file)
+        └── README.md                       (rivt output doc)
+    ├── [rv0102]/                           (subdivision)
         ├── data0102/
             ├── data1.csv
             ├── fig1.png
             └── fig2.png
-        ├── [r0102]-Doc-name.py
+        ├── [r0102]-Doc-name.py             (rivt input file)
         └── README.md
-    └── [rv0201]-Doc- Label3/
-       ├── data0201/
-           ├── data1.csv
-           ├── attachment.pdf
-           ├── functions.py
-           └── fig1.png
-       ├── [r0201]-Doc-name.py
-       └── README.md
+    └── [rv0201]-Doc- Label2/               (division and label)
+        ├── data0201/
+            ├── data1.csv
+            ├── attachment.pdf
+            ├── functions.py
+            └── fig1.png
+        ├── [r0201]-Doc-name.py             (rivt file)
+        └── README.md
 └── [rivtprivate]/                          (private files)
-    ├── project-info.txt
-    ├── [temp]/                             (output files)
-    ├── [report]/                           (output files)
-        ├── [rivt.ini]                      (config file)
-        ├── r0101-Doc-Label1.pdf   
+    ├── [temp]/                             (temporary output files)
+    ├── [report]/                           (report files)
+        ├── rivt.ini                        (config file)
+        ├── r0101-Doc-Label1.pdf            (output doc)
         ├── r0102-Doc-Label2.pdf
         ├── r0201-Doc-Label3.pdf
         └── Report-Label.pdf                (compiled PDF report)    
-    ├── images/                             (optional data folders)
+    ├── images/                             (optional input data folders)
         ├── fig1.png
         └── fig2.png
     ├── text/    

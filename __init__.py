@@ -126,8 +126,7 @@ parameters. Section labels may be omitted by prepending with a double hyphen --.
 
 Repo    rv.R("""label | toc; notoc | page
 (re)
-                ||github (git)
-                ||project (proj)
+                ||text (tex)
                 ||append (app)
 
                 """)
@@ -154,7 +153,7 @@ Tools  rv.T("""label | rgb; default; noprint
 
 exclude rv.X("""any method
 
-                A method changed to X is not evaluated and may be used for
+                Any method changed to X is not evaluated. It may be used for
                 comments and debugging.
 
                 """)
@@ -167,12 +166,6 @@ write   rv.writedoc('md,utf,pdf')
 
 || append | rel file path                                             R
     (app)   pdf folder
-
-|| github | rel file path                                             R
-    (git)   pdf folder | .pdf; .txt  
-    
-|| project | rel file path | type                                     R
-    (pro)   .txt; | plain; tags
 
 || text | rel file path | text type                                   I
     (tex)   .txt; .tex; .rst | plain; tags
@@ -187,10 +180,9 @@ write   rv.writedoc('md,utf,pdf')
     (dec)    .csv; .xls  | print or hide
 
 ============================ ============================================
- tags                                   description 
+ tags                                  description 
 ============================ ============================================
-
-Repo and Inserts:        
+single lines in R,I,V:
 text _[b]                       bold 
 text _[c]                       center
 text _[i]                       italic
@@ -209,25 +201,18 @@ text _[d]                       footnote description
 _[page]                         new page
 _[address, label]               url or internal reference
 
-Inserts blocks:          
+single lines in V: 
+a = n | unit, alt | descrip    declare = 
+a := b + c | unit, alt | n,n   assign := 
+
+blocks in R,I,V:          
 _[[b]]                          bold
 _[[c]]                          center
 _[[i]]                          italic
 _[[p]]                          plain  
 _[[l]]                          LaTeX
-_[[h]]                          HTML 
 _[[q]]                          quit block
 
-Values formats: 
-text _[l]                       LaTeX math
-text _[s]                       sympy math
-text _[e]                       equation label and autonumber
-text _[f]                       figure caption and autonumber
-text _[t]                       table title and autonumber
-text _[#]                       footnote and autonumber
-text _[d]                       footnote description 
-a = n | unit, alt | descrip    declare = 
-a := b + c | unit, alt | n,n   assign := 
 
 The first line of a rivt file is *import rivt.rivtapi as rv* followed by
 the Repo method rv.R() which occurs once. rv.R is followed by any of the other
@@ -247,117 +232,117 @@ rivt example
 
 import rivt.rivtapi as rv
 
-rv.R("""Introduction 
+rv.R("""Introduction | white | 1
 
-    The Repo method (short for repository or report) is the first method of a
-    rivt doc and specifies repository settings and output formats.
+    The Repo method (short for repository and report) is the first method of a
+    rivt doc and specifies document configuration settings.
 
-    The setting line specifies the section label and colors. if any. If the
-    label is preceded by two dashes "--", the the label becomes a reference and
-    a new section is not started. If the color parameter (applies to PDF) is
-    omitted then default black text and no background is used.
+    The first line of a method is the heading line that starts a new document
+    section. If the section heading is preceded by two dashes (--) it becomes a
+    section reference and a new section is not started. The color parameter
+    applies only to PDF output and specfies the background color for the
+    section heading. The page number is the starting page number for the
+    doc when processed as a stand alone document.
 
-    The ||github command specifies a project README.md file in the public r00
-    folder and the GitHub repository url where public project files are
-    uploaded. It overwrites any existing README file. Files may also be
-    uploaded directly using standard upload procedures.
+    The init command specifies the path to the doc configuration file. 
 
-    || github | file | upload repository
+    ||init | config/rivt.ini
+    
+    The ||text command inserts text from external files into the rivt file.
+    Text files may be plain text or text with rivt tags.
+    
+    ||text | data0101/describe.txt | rivt                                  I
 
-    The ||project command imports data from the private r00 folder. Its
-    formatted output depends on the file type.
+    The ||append command attaches PDF files to the end of the doc.
 
-    || project | file | default
+    || append | append/report1.pdf
+    || append | append/report2.pdf
 
-    The ||append command attaches PDF files to the end of the document.
-
-    || append | file1 | title1
-    || append | file2 | title2
-
+    
     """)
 
-rv.I("""Inserts method | rgb-fore,back; default
+rv.I("""The Insert method | green | heading; all
 
-    The Insert method formats descriptive information that is static, as
-    opposed to dynamic calculations and values.
+    The Insert method formats static information e.g. images and text.
 
-    The ||text command inserts and formats text files. Text files may be plain
-    text, latex, code, sympy math or include rivt tags.
+    The ||text command inserts and formats text from external files into the
+    rivt file. Text files may be plain text or text with rivt tags.
 
-    || text | file | text type
-    plain; tags; code; math; latex
+    ||text | rel file path | text type    
 
-    Tags _[t] and _[f] format and autonumber tables and figures.
+    The ||table command inserts and formats tabular data from csv or xls files.
+    
+    The _[t] tag formats and autonumbers table titles.
 
-    table title  _[t]
+    A table title  _[t]
     || table | data | file.csv | 60,r
 
+    The ||image command inserts and formats image data from png or jpg files.
+
+    The _[f] tag formats and autonumbers figures.
+        
     A figure caption _[f]
     || image | resource | f1.png | 50
 
-
-    Insert two images side by side:
+    Two images may be placed side by side as follows:
 
     The first figure caption  _[f]
     The second figure caption  _[f]
     || image | f2.png,f3.png | 45,35
+    
 
-    The tags [x]_ and [s]_ format LaTeX and sympy equations:
+    The tags _[x] and _[s] format LaTeX and sympy equations:
 
     \gamma = \frac{5}{x+y} + 3  _[x] 
 
     x = 32 + (y/2)  _[s]
 
-    The url tag formats a url link.
-    _[http://wwww.url, link label]
-
-    The link tag formats an internal document link to a table, equation,
-    section or paragraph title:
-    _[lnk, existing label]
-
     """)
 
-rv.V("""Values method | sub; nosub 
+rv.V("""The Values method | white | sub; nosub 
 
     The Values method assigns values to variables and evaluates equations. The
-    sub;nosub setting specifies whether equations are also printed with
-    substituted numerical values. 
+    sub; nosub setting specifies whether the equations are printed a second
+    time with substituted numerical values.
 
+    A table tag provides a table title and number.  
+    
+    The equal tag declares a value. A sequence of declared values terminated
+    with a blank line are formatted as a table.
+    
     Example of assignment list _[t]
     f1 = 10.1 * LBF | N | a force
     d1 = 12.1 * IN | CM | a length
 
-    An table tag provides a table title and number.  The equal tag declares a
-    value. A sequence of declared values terminated with a blank line are
-    formatted as a table.
+    An equation tag provides an equation description and number. A colon-equal
+    tag assigns a value and specifies the result units and printed output
+    decimal places in the result and equation.
 
     Example equation - Area of circle  _[e]
-    a1 := 3.14(d1/2)^2 | IN^2, CM^2 | 2,2
+    a1 := 3.14(d1/2)^2 | IN^2, CM^2 | 1,2
 
-    An equation tag provides an equation description and number. The
-    colon-equal tag assigns a value and specifies the result units and printed
-    output decimal places in the equation and results.
-
-    || declare | data/
+    || declare | data0102/values0102.csv
     
-    The values command imports values from csv files written by rivt when
-    processing assigned and declared values. The parameters specify the
-    section number and doc number.
+    The declare command imports values from a csv file written by rivt when
+    processing assigned and declared values from another doc in the same
+    project.
 
 """)
 
-rv.T("""Tools method | print;noprint 
+rv.T("""The Tools method | white | print; noprint 
 
-    # The Tools method processes Python code. The "print" parameter specifies 
-    # whether the code is echoed in the document. 
+    # The Tools method processes Python code in the rivt namespace. Functions
+    # may be written explicitly or imported from files. All line comments (#) 
+    # are printed. Triple quotes cannot be used. The "print" parameter specifies
+    whether the code itself is echoed in the document.
     
-    # Four libraries are imported by rivt as: 
+    # Four Python libraries are imported by rivt and available as: 
 
-    # pyplot -> plt.
-    # numpy -> np.
-    # pandas -> pd.
-    # sympy -> sy.
-
+    # pyplot -> plt
+    # numpy -> np
+    # pandas -> pd
+    # sympy -> sy
+    
     # Examples of Python code:
     # Define a function -
     def f1(x,y): z = x + y
@@ -375,7 +360,7 @@ rv.T("""Tools method | print;noprint
 
 rv.X("""any text
 
-    Replacing the method letter with X skips evaluation of that string. Its
+    Replacing a method letter with X skips evaluation of that string. Its
     uses include review comments, checking and editing.
 
     """) 
@@ -385,6 +370,7 @@ Keystroke                   VSCode rivt shortcuts and extensions
 ============== =========================================================
 
 alt+q                rewrap paragraph with hard line feeds (80 default)
+alt+p                open file under cursor
 alt+.                select correct spelling under cursor
 alt+8                insert date
 alt+9                insert time

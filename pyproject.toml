@@ -1,0 +1,143 @@
+[project]
+
+# setup(
+#     name="rivtlib",
+#     author="rhholland",
+#     packages=["rivtlib", "rivtlib.unum", "rivtlib.scripts"],
+#     version="0.8.2-beta.0",
+#     python_requires=">=3.8",
+#     license="GPLv3",
+#     long_description=open("README.md").read(),
+#     classifiers=[
+#         "Programming Language :: Python :: 3",
+#         "License :: OSI Approved :: MIT License",
+#         "Operating System :: OS Independent",
+#     ],
+#     #    install_requires=[
+
+# )
+
+# This is the name of your project. The first time you publish this
+# package, this name will be registered for you. 
+#
+# $ pip install sampleproject
+#
+# it will live on PyPI: https://pypi.org/project/sampleproject/
+#
+# restrictions on what makes a valid project name specification here:
+# https://packaging.python.org/specifications/core-metadata/#name
+# Required
+
+name = "rivt"
+
+# Versions should comply with PEP 440:
+# https://www.python.org/dev/peps/pep-0440/
+#
+# For a discussion on single-sourcing the version, see
+# https://packaging.python.org/guides/single-sourcing-package-version/
+# Required
+
+version = "0.0.8"
+
+# This is a one-line "Summary" metadata field:
+# https://packaging.python.org/specifications/core-metadata/#summary
+# Optional
+
+description = "markdown for engineering documents"
+
+# This field corresponds to the "Description" metadata field:
+# https://packaging.python.org/specifications/core-metadata/#description-optional
+# Optional
+
+readme = "README.md"
+
+# Specify which Python versions you support. 
+# https://packaging.python.org/guides/distributing-packages-using-setuptools/#python-requires
+
+requires-python = ">=3.7"
+
+# https://packaging.python.org/en/latest/specifications/core-metadata/#license
+
+license = { file = "LICENSE.txt" }
+
+# This field adds keywords for your project which will appear on the
+# project page. What does your project relate to?
+# Optional
+
+keywords = ["engineering", "documents", "format", "share", "markdown"]
+
+authors = [{ name = "R. Holland", email = "rholland@rivt.info" }]
+
+maintainers = [
+  { name = "A. Great Maintainer", email = "maintainer@example.com" },
+]
+
+classifiers = [
+  #   3 - Alpha
+  #   4 - Beta
+  #   5 - Production/Stable
+  "Development Status :: 4 - Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Build Tools",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3 :: Only",
+]
+# Specify the Python versions you support here. 
+# For a list of valid classifiers, see https://pypi.org/classifiers/
+#
+# For an analysis of this field vs pip's requirements files see:
+# https://packaging.python.org/discussions/install-requires-vs-requirements/
+
+dependencies = [
+  "numpy",
+  "sympy",
+  "pandas",
+  "tabulate",
+  "matplotlib",
+  "jupyter",
+  "docutils",
+  "xlrd",
+  "antlr4-python3-runtime>=4.7,<4.8",
+]
+
+# List additional groups of dependencies here (e.g. development
+# dependencies). Users will be able to install these using the "extras"
+# syntax, for example:
+#
+#   $ pip install sampleproject[dev]
+#
+
+[project.optional-dependencies]
+dev = ["check-manifest"]
+test = ["coverage"]
+
+[project.urls]
+"Bug Reports" = "https://github.com/pypa/sampleproject/issues"
+"Funding" = "https://donate.pypi.org"
+"Homepage" = "https://github.com/pypa/sampleproject"
+"Say Thanks!" = "http://saythanks.io/to/example"
+"Source" = "https://github.com/pypa/sampleproject/"
+
+# The following would provide a command line executable called `sample`
+# which executes the function `main` from this package when invoked.
+[project.scripts]
+sample = "sample:main"
+
+# This is configuration specific to the `setuptools` build backend.
+# If you are using a different build backend, you will need to change this.
+[tool.setuptools]
+# If there are data files included in your packages that need to be
+# installed, specify them here.
+package-data = { "sample" = ["*.dat"] }
+
+[build-system]
+# These are the assumed default build requirements from pip:
+# https://pip.pypa.io/en/stable/reference/pip/#pep-517-and-518-support
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=43.0.0", "wheel"]

@@ -56,45 +56,50 @@ Example Folder Structure (required prefixes shown in [ ])
     ├── .git
     ├── units.py                            (unit over-ride)
     ├── README.md                           (report toc)                                      
-    └── [r0101]-Doc-Label1/
-        ├── data/
+    └── [rv0101]-Div-Label1/
+        ├── data0101/
             ├── data1.csv                   (input data)
             ├── data2.csv
-            └── fig1.png
-        ├── [r0101].py                      (document input)
-        ├── README.md                       (output file)
-        └── functions1.py                   (function file)
-    ├── [r0102]-Doc-Label2/
-        ├── data/
+            ├── paper1.pdf
+            └── functions1.py                   
+        ├── [r0101]-Doc-name.py             (rivt file)
+        └── README.md
+    ├── [rv0102]/
+        ├── data0102/
             ├── data1.csv
             ├── fig1.png
             └── fig2.png
-        ├── [r0102].py
-        ├── README.md
-        └── functions2.py
-    └── [r0201]-Doc- Labe3l/
-       ├── data/
+        ├── [r0102]-Doc-name.py
+        └── README.md
+    └── [rv0201]-Doc- Label3/
+       ├── data0201/
            ├── data1.csv
            ├── attachment.pdf
+           ├── functions.py
            └── fig1.png
-       ├── [r0201].py
-       ├── README.md
-       └── functions3.py
-└── [private]/                              (private files)
-    ├── [rivt.ini]                          (config file)
+       ├── [r0201]-Doc-name.py
+       └── README.md
+└── [rivtprivate]/                          (private files)
     ├── project-info.txt
     ├── [temp]/                             (output files)
     ├── [report]/                           (output files)
+        ├── [rivt.ini]                      (config file)
         ├── r0101-Doc-Label1.pdf   
         ├── r0102-Doc-Label2.pdf
         ├── r0201-Doc-Label3.pdf
         └── Report-Label.pdf                (compiled PDF report)    
     ├── images/                             (optional data folders)
-            ├── fig1.png
-            └── fig2.png
+        ├── fig1.png
+        └── fig2.png
+    ├── text/    
+        ├── text1.txt
+        └── text2.txt
+    ├── append/    
+        ├── report1.pdf
+        └── report2.pdf
     └── tables/
         ├── data1.csv
-        └── data1.csv
+        └── data1.xls
 
 
 The API is designed for sharing files in the *rivt-* folder. Files in this
@@ -164,16 +169,19 @@ write   rv.writedoc('md,utf,pdf')
     command syntax and description (snippet)                         API 
 =============================================================== ============
 
+|| init | rel file path                                               R
+    (ini)   config file path
+
 || append | rel file path                                             R
-    (app)   pdf folder
+    (app)   pdf path
 
-|| text | rel file path | text type                                   I
-    (tex)   .txt; .tex; .rst | plain; tags
+|| text | rel file path | text type                                 R I V
+    (tex)   .txt | plain; tags
 
-|| image  | rel file path | .50, ..                                   I
+|| image  | rel file path | .50, ..                                 R I V
     (img)   .png; .jpg |  page width 
 
-|| table  | rel file path | 60,r;l;c                                  I
+|| table  | rel file path | 60,r;l;c                                R I V
     (tab)   .csv; xls  | max col width, align
 
 || declare | rel file path | print,;noprint                           V
@@ -251,8 +259,12 @@ rv.R("""Introduction | white | 1
     The ||text command inserts text from external files into the rivt file.
     Text files may be plain text or text with rivt tags.
     
-    ||text | data0101/describe.txt | rivt                                  I
+    ||text | text/describe.txt | rivt 
 
+    The ||table command inserts and formats tabular data from csv or xls files.
+
+    || table | data | file.csv | 60,r
+    
     The ||append command attaches PDF files to the end of the doc.
 
     || append | append/report1.pdf

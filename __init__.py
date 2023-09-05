@@ -56,38 +56,36 @@ Example Folder Structure (required prefixes shown in [])
     ├── units.py                        (unit over-ride)
     ├── README.md                       (output toc and summary)                                      
     ├── rivt1.ini                       (config file)
-    ├── [div01]-div-label/                  (division label)
-        ├── [doc01]-doc-label/                  (doc label)
-            ├── [data0101]/                         (resource data)
-                ├── data1.csv                   
-                ├── paper1.pdf
-                └── functions1.py                   
-            ├── [rivt]-file-name.py                 (rivt file)
-            └── README.md                           (output doc)
-        ├── [doc02]-doc-label/                  (doc label)
-            ├── data[0102]/                         (resourde data)
-                ├── data1.csv
-                ├── fig1.png
-                └── fig2.png
-            ├── [rivt]-file-name.py                 (rivt file)
-            └── README.md                           (output doc)
-    ├── [div02]-div-label/                  (division label)
-        ├── [doc01]-doc-label/                  (doc label)
-            ├── [data0201]/                         (resource data)                   
-                ├── data1.csv
-                ├── attachment.pdf
-                ├── functions.py
-                └── fig1.png
-            ├── [rivt]-file-name.py                 (rivt file)   
-            └── README.md                           (output doc)
-    └── [private]/                          (private files)
+    ├── [doc0101]-div-label/            (division label)
+        ├── [data0101]/                     (resource data)
+            ├── data1.csv                   
+            ├── paper1.pdf
+            └── functions1.py                   
+        ├── [rivt]-doc-label.py             (rivt file)
+        └── README.md                       (output doc)
+    ├── [doc0102]/ 
+        ├── data[0102]/                     (resource data)
+            ├── data1.csv
+            ├── fig1.png
+            └── fig2.png
+        ├── [rivt]-doc-label.py             (rivt file)
+        └── README.md                       (output doc)
+    ├── [doc0201]-div-label/            (division label)
+        ├── [data0201]/                     (resource data)                   
+            ├── data1.csv
+            ├── attachment.pdf
+            ├── functions.py
+            └── fig1.png
+        ├── [rivt]-doc-label.py             (rivt file)   
+        └── README.md                       (output doc)
+    └── [private]/                      (private files)
         ├── [temp]/                         (temp output files)
         ├── [report]/                       (report files)
             ├── r0101-Doc-Label1.pdf        (output docs)
             ├── r0102-Doc-Label2.pdf
             ├── r0201-Doc-Label3.pdf
             └── Report-Label.pdf                (compiled PDF report)    
-        ├── images/                             (optional data folders ...)
+        ├── images/                         (optional data folders ...)
             ├── fig1.png
             └── fig2.png
         ├── text/    

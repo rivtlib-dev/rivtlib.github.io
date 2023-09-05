@@ -48,57 +48,57 @@ Folder and file name prefixes that are fixed are shown in [ ] in the example
 below. Folder labels may be combinations of specified prefixes and user labels.
 
 
-Example Folder Structure (required prefixes shown in [ ])
+Example Folder Structure (required prefixes shown in [])
 =========================================================
 
-[rivtproject]-Project-Label/
-├── [rivt]-Report-Label/                    (public files)
+[rivt-doc]-Report-Label/               
     ├── .git
-    ├── units.py                            (unit over-ride)
-    ├── README.md                           (report toc and summary)                                      
-    └── [rv0101]-Div-Label1/                (division and label)
-        ├── data0101/                       (input data)
-            ├── data1.csv                   
-            ├── data2.csv
-            ├── paper1.pdf
-            └── functions1.py                   
-        ├── [r0101]-Doc-Name.py             (rivt input file)
-        └── README.md                       (rivt output doc)
-    ├── [rv0102]/                           (subdivision)
-        ├── data0102/
-            ├── data1.csv
+    ├── units.py                        (unit over-ride)
+    ├── README.md                       (output toc and summary)                                      
+    ├── rivt1.ini                       (config file)
+    ├── [div01]-div-label/                  (division label)
+        ├── [doc01]-doc-label/                  (doc label)
+            ├── [data0101]/                         (resource data)
+                ├── data1.csv                   
+                ├── paper1.pdf
+                └── functions1.py                   
+            ├── [rivt]-file-name.py                 (rivt file)
+            └── README.md                           (output doc)
+        ├── [doc02]-doc-label/                  (doc label)
+            ├── data[0102]/                         (resourde data)
+                ├── data1.csv
+                ├── fig1.png
+                └── fig2.png
+            ├── [rivt]-file-name.py                 (rivt file)
+            └── README.md                           (output doc)
+    ├── [div02]-div-label/                  (division label)
+        ├── [doc01]-doc-label/                  (doc label)
+            ├── [data0201]/                         (resource data)                   
+                ├── data1.csv
+                ├── attachment.pdf
+                ├── functions.py
+                └── fig1.png
+            ├── [rivt]-file-name.py                 (rivt file)   
+            └── README.md                           (output doc)
+    └── [private]/                          (private files)
+        ├── [temp]/                         (temp output files)
+        ├── [report]/                       (report files)
+            ├── r0101-Doc-Label1.pdf        (output docs)
+            ├── r0102-Doc-Label2.pdf
+            ├── r0201-Doc-Label3.pdf
+            └── Report-Label.pdf                (compiled PDF report)    
+        ├── images/                             (optional data folders ...)
             ├── fig1.png
             └── fig2.png
-        ├── [r0102]-Doc-name.py             (rivt input file)
-        └── README.md
-    └── [rv0201]-Doc- Label2/               (division and label)
-        ├── data0201/
+        ├── text/    
+            ├── text1.txt
+            └── text2.txt
+        ├── append/    
+            ├── report1.pdf
+            └── report2.pdf
+        └── tables/
             ├── data1.csv
-            ├── attachment.pdf
-            ├── functions.py
-            └── fig1.png
-        ├── [r0201]-Doc-name.py             (rivt file)
-        └── README.md
-└── [rivtprivate]/                          (private files)
-    ├── [temp]/                             (temporary output files)
-    ├── [report]/                           (report files)
-        ├── rivt.ini                        (config file)
-        ├── r0101-Doc-Label1.pdf            (output doc)
-        ├── r0102-Doc-Label2.pdf
-        ├── r0201-Doc-Label3.pdf
-        └── Report-Label.pdf                (compiled PDF report)    
-    ├── images/                             (optional input data folders)
-        ├── fig1.png
-        └── fig2.png
-    ├── text/    
-        ├── text1.txt
-        └── text2.txt
-    ├── append/    
-        ├── report1.pdf
-        └── report2.pdf
-    └── tables/
-        ├── data1.csv
-        └── data1.xls
+            └── data1.xls
 
 
 The API is designed for sharing files in the *rivt-* folder. Files in this

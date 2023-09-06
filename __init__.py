@@ -21,7 +21,7 @@ rv.V(rmS) - equations
 rv.T(rmS) - Python functions and scripts
 
 A rivt file begins with rv.R followed by an arbitrary sequence of the
-three later string methods.
+three other string methods.
 
 When running in an IDE (e.g. VSCode), each method may be run interactively
 using the standard cell decorator (# %%). Interactive output is formatted as
@@ -92,61 +92,54 @@ write   rv.writepdf()
 (wp)
 
 
-=============================================================== ============
-    command syntax and description (snippet)                         API 
-=============================================================== ============
+==================================================== ==============
+    command syntax                                          API 
+==================================================== ==============
 
-|| init | rel file path                                               R
-    (ini)   config file path
+|| init | rel file path                                      R
 
-|| append | rel file path                                             R
-    (app)   pdf path
+|| append | rel file path                                    R
 
-|| text | rel file path | text type                                 R I V
-    (tex)   .txt | plain; tags
+|| image  | rel file path, .. | .50, ..                      I
 
-|| image  | rel file path | .50, ..                                 R I V
-    (img)   .png; .jpg |  page width 
+|| table  | rel file path | 60,r; l; c                       I
 
-|| table  | rel file path | 60,r;l;c                                R I V
-    (tab)   .csv; xls  | max col width, align
+|| declare | rel file path |  print; noprint                 V
 
-|| declare | rel file path | print,;noprint                           V
-    (dec)    .csv; .xls  | print or hide
+|| text | rel file path | rivt; plain                      R I V
 
-============================ ============================================
- tags                                  description 
-============================ ============================================
-lines in R,I,V:
-text _[b]                       bold 
-text _[c]                       center
-text _[i]                       italic
-text _[bc]                      bold center 
-text _[bi]                      bold italic
-text _[r]                       right justify
-text _[u]                       underline   
-text _[l]                       LaTeX math
-text _[s]                       sympy math
-text _[bs]                      bold sympy math
-text _[e]                       equation label and autonumber
-text _[f]                       figure caption and autonumber
-text _[t]                       table title and autonumber
-text _[#]                       footnote and autonumber
-text _[d]                       footnote description 
-_[page]                         new page
-_[address, label]               url or internal reference
+============================ ================================= ==========
+   line tags                        description                   API
+============================ ================================ ===========
+text _[b]                       bold                            R I V 
+text _[c]                       center                          R I V  
+text _[i]                       italic                          R I V  
+text _[bc]                      bold center                     R I V  
+text _[bi]                      bold italic                     R I V
+text _[r]                       right justify                   R I V
+text _[u]                       underline                       R I V   
+text _[l]                       LaTeX math                        I V
+text _[s]                       sympy math                        I V
+text _[bs]                      bold sympy math                   I V
+text _[e]                       equation label, autonumber        I V
+text _[f]                       figure caption, autonumber        I V
+text _[t]                       table title, autonumber           I V
+text _[#]                       footnote, autonumber              I V
+text _[d]                       footnote description              I V
+_[page]                         new page                          I V
+_[address, label]               url or internal reference         I V
+a = 1.2 | unit, alt | descrip   declare =                           V
+a := b + c | unit, alt | n,n    assign :=                           V
 
-lines in V: 
-a = n | unit, alt | descrip    declare = 
-a := b + c | unit, alt | n,n   assign := 
-
-blocks in R,I,V:          
-_[[b]]                          bold
-_[[c]]                          center
-_[[i]]                          italic
-_[[p]]                          plain  
-_[[l]]                          LaTeX
-_[[q]]                          quit block
+============================ ================================= ==========
+   block tags                        description                   API
+============================ ================================ ===========
+_[[b]]                          bold                            R I V
+_[[c]]                          center                          R I V
+_[[i]]                          italic                          R I V
+_[[p]]                          plain                           R I V
+_[[q]]                          quit block                      R I V
+_[[l]]                          LaTeX                             I V
 
 
 The first line of a rivt file is *import rivt.rivtapi as rv* followed by the

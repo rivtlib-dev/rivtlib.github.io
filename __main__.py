@@ -12,8 +12,7 @@ two digit division number and nn the subdivision number. Docs are output as md
 text, PDF and HTML files. See https://rivtDocs.net for the **rivtDocs** user
 manual.
 
-Within the code base the following convention for typing variable names has
-been used, where the last letter of each variable name indicates the type.
+This code base uses a last letter convention for variable name types:
 
 A = array
 B = boolean

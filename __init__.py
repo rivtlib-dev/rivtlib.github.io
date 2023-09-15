@@ -157,12 +157,12 @@ rivt function defines the section title and parameters.
 rivt example
 ============================================================================
 
-import rivt.rivtapi as rv
+import rivtlib.rivtapi as rv
 
 rv.R("""Introduction | notoc, 1
 
-    The Repo method (short for repository and report) is the first method of a
-    rivt file which specifies document configuration settings.
+    The Rivitinit method is the first method of a rivt file and specifies
+    repository, report and document settings.
 
     The first line of any method is the heading line, which starts a new
     document section. If the section heading is preceded by two dashes (--) it
@@ -313,24 +313,24 @@ generate report folder templates.
 
 [rivtdoc]-Report-Label/               
     ├── .git
-    ├── units.py                        (input: unit over-ride)
-    ├── README.md                       (output: toc and summary)                                      
-    ├── rivt01.ini                      (input: config file)
-    ├── [doc0101]-div-label/            (division label)
+    ├── units.py                      (input: unit over-ride)
+    ├── README.md                     (output: toc and summary) 
+    ├── rivt01.ini                    (input: config file)
+    ├── [doc0101]-div-label/          (division file and label)
         ├── [data0101]/                     (resource data)
             ├── data1.csv                   
             ├── paper1.pdf
             └── functions1.py                   
         ├── [rivt]-doc-label1.py            (input: rivt file)
         └── README.md                       (output: GFM doc)
-    ├── [doc0102]/                      (division file)
+    ├── [doc0102]/                    (division file)
         ├── data[0102]/                     (input: resource data)
             ├── data1.csv
             ├── fig1.png
             └── fig2.png
         ├── [rivt]-doc-label2.py            (input: rivt file)
         └── README.md                       (output: GFM doc)
-    ├── [doc0201]-div-label/            (division label)
+    ├── [doc0201]-div-label/          (division file and label)
         ├── [data0201]/                     (input: resource data)                   
             ├── data1.csv
             ├── attachment.pdf
@@ -338,14 +338,14 @@ generate report folder templates.
             └── fig1.png
         ├── [rivt]-doc-label3.py            (input: rivt file)   
         └── README.md                       (output: GFM doc)
-    └── [private]/                      (private files)
+    └── [private]/                    (private files)
         ├── [temp]/                         (output: temp files)
         ├── [report]/                       (report files)
             ├── 0101-Doc Label1.pdf         (output: PDF docs)
             ├── 0102-Doc Label2.pdf
             ├── 0201-Doc Label3.pdf
             └── Report Label.pdf            
-        ├── images/                         (input: optional data folders ...)
+        ├── images/                         (input: optional data folders)
             ├── fig1.png
             └── fig2.png
         ├── text/    

@@ -20,12 +20,12 @@ from sympy.core.alphabets import greeks
 from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
 from .units import *
-import cmdutf
-import cmdmd
-import cmdrst
-import tagutf
-import tagmd
-import tagrst
+import cmd_utf
+import cmd_md
+import cmd_rst
+import tag_utf
+import tag_md
+import tag_rst
 
 # tabulate.PRESERVE_WHITESPACE = True
 
@@ -144,14 +144,14 @@ class RivtParse:
                 continue
             if blockB and uS.strip() == "[q]]":        # end of block
                 tagS = self.tagsD["[q]"]
-                rvtS = tagutf.TagsUTF(lineS, tagS,
-                                      self.incrD, self.folderD,  self.rivtD)
+                rvtS = tag_utf.TagsUTF(lineS, tagS,
+                                       self.incrD, self.folderD,  self.rivtD)
                 xutfS += rvtS + "\n"
-                rvtS = tagmd.TagsMD(lineS, tagS,
-                                    self.incrD, self.folderD,  self.rivtD)
+                rvtS = tag_md.TagsMD(lineS, tagS,
+                                     self.incrD, self.folderD,  self.rivtD)
                 xmdS += rvtS + "\n"
-                rvtS = tagrst.TagsRST(lineS, tagS,
-                                      self.incrD, self.folderD,  self.rivtD)
+                rvtS = tag_rst.TagsRST(lineS, tagS,
+                                       self.incrD, self.folderD,  self.rivtD)
                 xrstS += rvtS + "\n"
                 blockB = False
             if blockevalB and len(uS.strip()) < 2:    # value tables
@@ -179,17 +179,17 @@ class RivtParse:
                 parL = usL[1:]
                 cmdS = usL[0].strip()
                 if cmdS in self.cmdL:
-                    rvtC = cmdutf.CmdUTF(
+                    rvtC = cmd_utf.CmdUTF(
                         parL, self.incrD, self.folderD, self.rivtD)
                     utfS = rvtC.cmd_parse(cmdS)
                     # print(f"{utfS=}")
                     xutfS += utfS
-                    rvtC = cmdmd.CmdMD(
+                    rvtC = cmd_md.CmdMD(
                         parL, self.incrD, self.folderD, self.rivtD)
                     mdS = rvtC.cmd_parse(cmdS)
                     # print(f"{mdS=}")
                     xmdS += mdS
-                    rvtC = cmdrst.CmdRST(
+                    rvtC = cmd_rst.CmdRST(
                         parL, self.incrD, self.folderD, self.rivtD)
                     reS = rvtC.cmd_parse(cmdS)
                     xrstS += reS
@@ -200,16 +200,16 @@ class RivtParse:
                 if tagS[0] == "[":                     # block tag
                     blockB = True
                 if tagS in self.tagsD:
-                    rvtC = tagutf.TagsUTF(lineS, self.incrD, self.folderD,
-                                          self.tagsD, self.rivtD)
+                    rvtC = tag_utf.TagsUTF(lineS, self.incrD, self.folderD,
+                                           self.tagsD, self.rivtD)
                     utfxS = rvtC.tag_parse(tagS)
                     xutfS += utfxS + "\n"
-                    rvtC = tagmd.TagsMD(lineS, self.incrD, self.folderD,
-                                        self.tagsD, self.rivtD)
+                    rvtC = tag_md.TagsMD(lineS, self.incrD, self.folderD,
+                                         self.tagsD, self.rivtD)
                     mdS = rvtC.tag_parse(tagS)
                     xmdS += mdS + "\n"
-                    rvtC = tagrst.TagsRST(lineS, self.incrD, self.folderD,
-                                          self.tagsD, self.rivtD)
+                    rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                                           self.tagsD, self.rivtD)
                     reS = rvtC.tag_parse(tagS)
                     xrstS += reS + "\n"
             elif "=" in uS and self.methS == "V":       # equation tag
@@ -218,14 +218,14 @@ class RivtParse:
                 lineS = usL[0]
                 self.incrD["unitS"] = usL[1].strip()
                 self.incrD["descS"] = usL[2].strip()
-                rvtC = tagmd.TagsMD(lineS, self.incrD, self.folderD,
-                                    self.localD)
+                rvtC = tag_md.TagsMD(lineS, self.incrD, self.folderD,
+                                     self.localD)
                 if ":=" in uS:                         # declare tag
                     tfS = "declare"
                     blockevalL.append(rvtC.tag_parse(":="))
 
-                    rvtC = tagrst.TagsRST(lineS, self.incrD, self.folderD,
-                                          self.localD)
+                    rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                                           self.localD)
                     eqL = rvtC.tag_parse(":=")
                     blockevalB = True
                     continue
@@ -235,8 +235,8 @@ class RivtParse:
                     mdS += eqL[1]
                     blockevalL.append(eqL[0])
 
-                    rvtC = tagrst.TagsRST(lineS, self.incrD, self.folderD,
-                                          self.localD)
+                    rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                                           self.localD)
                     eqL = rvtC.tag_parse("=")
                     rstS += eqL[1]
                     blockevalB = True

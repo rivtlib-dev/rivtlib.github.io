@@ -69,7 +69,6 @@ classifiers = [
   "Topic :: Software Development :: Build Tools",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
@@ -83,6 +82,7 @@ classifiers = [
 # https://packaging.python.org/discussions/install-requires-vs-requirements/
 
 dependencies = [
+  "rivtlib@git+https://github.com/rivt-code/rivtlib",
   "numpy",
   "sympy",
   "pandas",
@@ -101,9 +101,9 @@ dependencies = [
 #   $ pip install sampleproject[dev]
 #
 
-[project.optional-dependencies]
-dev = ["check-manifest"]
-test = ["coverage"]
+#[project.optional-dependencies]
+#dev = ["check-manifest"]
+#test = ["coverage"]
 
 [project.urls]
 "Bug Reports" = "https://github.com/pypa/sampleproject/issues"

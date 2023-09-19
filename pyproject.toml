@@ -1,22 +1,5 @@
 [project]
 
-# setup(
-#     name="rivtlib",
-#     author="rhholland",
-#     packages=["rivtlib", "rivtlib.unum", "rivtlib.scripts"],
-#     version="0.8.2-beta.0",
-#     python_requires=">=3.8",
-#     license="GPLv3",
-#     long_description=open("README.md").read(),
-#     classifiers=[
-#         "Programming Language :: Python :: 3",
-#         "License :: OSI Approved :: MIT License",
-#         "Operating System :: OS Independent",
-#     ],
-#     #    install_requires=[
-
-# )
-
 # This is the name of your project. The first time you publish this
 # package, this name will be registered for you. 
 #
@@ -28,7 +11,7 @@
 # https://packaging.python.org/specifications/core-metadata/#name
 # Required
 
-name = "rivt"
+name = "rivtlib"
 
 # Versions should comply with PEP 440:
 # https://www.python.org/dev/peps/pep-0440/

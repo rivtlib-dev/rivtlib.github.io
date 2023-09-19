@@ -1,7 +1,7 @@
 #! python
 ''' See https://rivt-doc.net  for user manual
 
-rivt is both an open source engineering document markdown language and the Python
+rivt is an open source engineering document markdown language and the Python
 library that processes it. It is written in Python as is designed to write,
 assemble and share engineering documents. It runs on any platform that supports
 Python 3.8 or later and prioritizes legibility, flexibility, efficiency and

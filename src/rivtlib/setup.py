@@ -9,6 +9,6 @@ setup(
         "rivtlib.scripts",
         "rivtlib.docs"
     ],
-    package_dir={""},
+    package_dir={"": "src"},
     python_requires='>=3.8',
 )

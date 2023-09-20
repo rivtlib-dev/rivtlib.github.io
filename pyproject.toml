@@ -19,8 +19,6 @@ requires-python = ">=3.8"
 
 # https://packaging.python.org/en/latest/specifications/core-metadata/#license
 
-license = "MIT"
-
 keywords = ["engineering", "document", "write", "organize", "share", "markdown"]
 
 authors = [{ name = "rhholland", email = "rholland@rivt.info" }]

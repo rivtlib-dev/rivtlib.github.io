@@ -82,7 +82,6 @@ classifiers = [
 # https://packaging.python.org/discussions/install-requires-vs-requirements/
 
 dependencies = [
-  "rivtlib@git+https://github.com/rivt-code/rivtlib",
   "numpy",
   "sympy",
   "pandas",
@@ -120,6 +119,7 @@ dependencies = [
 # This is configuration specific to the `setuptools` build backend.
 # If you are using a different build backend, you will need to change this.
 [tool.setuptools]
+setuptools.find_packages()
 # If there are data files included in your packages that need to be
 # installed, specify them here.
 #package-data = { "sample" = ["*.dat"] }

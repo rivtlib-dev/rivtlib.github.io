@@ -9,5 +9,6 @@ setup(
         "rivtlib.scripts",
         "rivtlib.docs"
     ],
+    package_dir={""},
     python_requires='>=3.8',
 )

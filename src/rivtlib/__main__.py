@@ -64,8 +64,10 @@ def cmdlinehelp():
     print("     python -m rivtlib rivtnn-filename.py                  ")
     print()
     print("The command is run in the rivt file folder.                ")
+    print("File name must match 'rivtnn-filename.py'                  ")
+    print("Where nn is a two digit integer                            ")
     print("Text output is written to stdout.                          ")
-    print("Other file outputs depend on file contents.                ")
+    print("Other outputs depend on file contents.                     ")
     print("See User Manual at https://rivt-doc.net for details        ")
     sys.exit()
 

@@ -24,7 +24,7 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 if __name__ != "__main__":
     argfileS = Path(sys.argv[0]).name
-    print(f"{argfileS=}"
+    print(f"{argfileS=}")
 rivtpathP = Path(os.getcwd())
 if fnmatch.fnmatch(fileS, "rivt??-*.py"):
     rivtfileS = fileS
@@ -33,7 +33,7 @@ if fnmatch.fnmatch(fileS, "rivt??-*.py"):
 else:
     print("INFO     rivt file not found")
     print("INFO     file name must match 'rivtnn-filename.py'")
-    print("INFO     where nn is a two digit integer doc number")
+    print("INFO     where nn is a two digit integer")
     exit()
 
 modnameS = __name__.split(".")[1]

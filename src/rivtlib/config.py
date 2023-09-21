@@ -1,5 +1,7 @@
 """check for init file and set defaults if not found"""
 
+from configparser import ConfigParser
+
 # config file
 config = ConfigParser()
 config.read(Path(prvP, "rivt.ini"))

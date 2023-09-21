@@ -10,7 +10,6 @@ import shutil
 import sys
 import time
 import warnings
-from configparser import ConfigParser
 from pathlib import Path
 
 from rivtlib import parse

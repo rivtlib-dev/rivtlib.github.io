@@ -32,7 +32,8 @@ if fnmatch.fnmatch(fileS, "rivt??-*.py"):
     # print(docP)
 else:
     print("INFO     rivt file not found")
-    print("INFO     file name must be rivtnn-filename where nn are integers")
+    print("INFO     file name must match 'rivtnn-filename.py'")
+    print("INFO     where nn is a two digit integer doc number")
     exit()
 
 modnameS = __name__.split(".")[1]

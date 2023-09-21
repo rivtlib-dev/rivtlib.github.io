@@ -26,25 +26,25 @@ if __name__ != "__main__":
     argfileS = Path(sys.argv[0]).name
     print(f"{argfileS=}")
 rivtpathP = Path(os.getcwd())
-if fnmatch.fnmatch(fileS, "rivt??-*.py"):
-    rivtfileS = fileS
+if fnmatch.fnmatch(argfileS, "rivt??-*.py"):
+    rivtfileS = argfileS
     rivtP = Path(rivtpathP, rivtfileS)
-    # print(docP)
+    print(f"{rivtfileS=}")
+    print(f"{rivtP=}")
 else:
     print("INFO     rivt file not found")
     print("INFO     file name must match 'rivtnn-filename.py'")
     print("INFO     where nn is a two digit integer")
     exit()
 
-modnameS = __name__.split(".")[1]
+# modnameS = __name__.split(".")[1]
 # print(f"{modnameS=}")
-print(f"{rivtfileS=}")
-print(f"{rivtP=}")
+
 
 # relative paths
 rivtbaseS = rivtfileS.split(".py")[0]
 projP = rivtP.parent.parent                   # rivt project path
-bakP = rivtP.parent / ".".join((docbaseS, "bak"))
+bakP = rivtP.parent / ".".join((rivtbaseS, "bak"))
 prvP = Path(projP, "private")
 prfxS = rivtbaseS[0:6]
 # output paths
@@ -55,8 +55,7 @@ pypath = os.path.dirname(sys.executable)
 rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
 errlogP = Path(tempP, "rivt-log.txt")
 styleP = prvP
-valfileS = docbaseS.replace("r", "v") + ".csv"
-dataP = Path(docP.parent, "data")
+valfileS = rivtbaseS.replace("rivt", "val") + ".csv"
 
 # print(f"{prvP=}")
 # global

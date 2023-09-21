@@ -16,3 +16,6 @@ def get_div_files(cur_dirP):
     if docfileS == "xx":
         print("INFO     rivt file not found")
         exit()
+
+# find data and function file
+# dataP = Path(fnmatch.fnmatch(argfileS, "rivt??-*.py"))

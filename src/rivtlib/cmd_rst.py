@@ -9,19 +9,20 @@ from io import StringIO
 from pathlib import Path
 import csv
 
-import html2text as htm
 import matplotlib.pyplot as plt
 import pandas as pd
 import sympy as sp
 import numpy.linalg as la
 import numpy as np
+from sympy.parsing.latex import parse_latex
 from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
-from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
-from rivt import parse
-from rivt.units import *
-from rivt.cmd_parse import Commands
+from pathlib import Path
+from datetime import datetime
+from rivtlib import parse
+from rivtlib.cmd_parse import Commands
+from rivtlib.units import *
 
 
 class CmdRST(Commands):

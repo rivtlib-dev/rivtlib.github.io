@@ -4,8 +4,6 @@ import textwrap
 import logging
 from pathlib import Path
 import tabulate
-from TexSoup import TexSoup
-import html2text as htm
 from numpy import *
 
 

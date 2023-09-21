@@ -7,7 +7,6 @@ import numpy.linalg as la
 import pandas as pd
 import sympy as sp
 import matplotlib.pyplot as plt
-import html2text as htm
 import configparser
 from io import StringIO
 from numpy import *
@@ -17,10 +16,9 @@ from sympy.core.alphabets import greeks
 from tabulate import tabulate
 from pathlib import Path
 from datetime import datetime
-from TexSoup import TexSoup
-from rivt import parse
-from rivt.cmd_parse import Commands
-from rivt.units import *
+from rivtlib import parse
+from rivtlib.cmd_parse import Commands
+from rivtlib.units import *
 
 
 class CmdUTF(Commands):

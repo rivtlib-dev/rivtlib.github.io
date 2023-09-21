@@ -18,9 +18,9 @@ from tabulate import tabulate
 from pathlib import Path
 from datetime import datetime
 
-from rivt import parse
-from rivt.units import *
-from rivt.cmd_parse import Commands
+from rivtlib import parse
+from rivtlib.cmd_parse import Commands
+from rivtlib.units import *
 
 
 class CmdMD(Commands):

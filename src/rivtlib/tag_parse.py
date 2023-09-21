@@ -1,7 +1,7 @@
 import sympy as sp
 from sympy.abc import _clash2
 from numpy import *
-from rivt.units import *
+from rivtlib.units import *
 
 
 class Tags:

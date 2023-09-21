@@ -27,28 +27,52 @@ __version__ = "a.b.c"
 __author__ = "rhholand"
 
 import sys
-from pathlib import Path
+import getopt
+
+if sys.version_info < (3, 8):
+    sys.exit("rivtlib requires Python version 3.8 or later")
+
+
+def main(argv):
+    """process command line arguments"""
+
+    inputfile = ''
+    outputfile = ''
+    try:
+        opts, args = getopt.getopt(argv, "hi:o:", ["ifile=", "ofile="])
+    except getopt.GetoptError:
+        print('test.py -i <inputfile> -o <outputfile>')
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print('test.py -i <inputfile> -o <outputfile>')
+            sys.exit()
+        elif opt in ("-i", "--ifile"):
+            inputfile = arg
+        elif opt in ("-o", "--ofile"):
+            outputfile = arg
+    print('Input file is ', inputfile)
+    print('Output file is ', outputfile)
 
 
 def cmdlinehelp():
     """command line help"""
 
     print()
-    print("Run the following command in a rivt document folder:")
+    print("Run the following command in a rivt file folder:           ")
     print()
-    print("  python -m rivtlib rel-path/rivtnn-filename.py     ")
+    print("     python -m rivtlib rivtnn-filename.py                  ")
     print()
-    print("Text output is written to stdout.                   ")
-    print("Other outputs depend on rivt file settings.         ")
-    print()
-    print("See User Manual at https://rivt-doc.net for details            ")
+    print("The command is run in the rivt file folder.                ")
+    print("Text output is written to stdout.                          ")
+    print("Other file outputs depend on file contents.                ")
+    print("See User Manual at https://rivt-doc.net for details        ")
+    sys.exit()
 
-
-if sys.version_info < (3, 8):
-    sys.exit("rivtlib requires Python version 3.8 or later")
 
 if __name__ == "__main__":
     try:
+        fileS = sys.argv[1]
         import rivtlib.rivtapi
     except:
         cmdlinehelp()

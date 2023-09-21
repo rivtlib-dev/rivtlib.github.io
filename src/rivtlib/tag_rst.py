@@ -5,7 +5,6 @@ from datetime import datetime
 from io import StringIO
 from pathlib import Path
 
-import html2text as htm
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import numpy.linalg as la
@@ -16,8 +15,8 @@ from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
 from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
-from rivt.units import *
-from rivt.tag_parse import Tags
+from rivtlib.units import *
+from rivtlib.tag_parse import Tags
 
 
 class TagsRST(Tags):

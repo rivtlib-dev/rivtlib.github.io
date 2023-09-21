@@ -9,11 +9,11 @@ from pathlib import Path
 
 # from rivt.unum.core import *
 # from rivt.unum.utils import *
-from rivt.unum.core import new_unit
+from rivtlib.unum.core import new_unit
 # from rivt.unum.utils import uarray
-from rivt.unum.core import Unum
+from rivtlib.unum.core import Unum
 
-rvpath = importlib.util.find_spec("rivt")
+rvpath = importlib.util.find_spec("rivtlib")
 rivpath = Path(rvpath.origin).parent
 unumpath = Path(rivpath, "unum")
 sys.path.append(str(rivpath))

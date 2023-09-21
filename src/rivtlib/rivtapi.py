@@ -13,51 +13,39 @@ import warnings
 from configparser import ConfigParser
 from pathlib import Path
 
-from rivt import parse
-from rivt import write
-
+from rivtlib import parse
+from rivtlib import folders
+from rivtlib import config
+from rivtlib import write_readme
+from rivtlib import write_md
+from rivtlib import write_pdf
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
-
-docfileS = "xx"
-docpathP = Path(os.getcwd())
-for fileS in os.listdir(docpathP):
-    # print(fileS)
-    if fnmatch.fnmatch(fileS, "r????.py"):
-        docfileS = fileS
-        docP = Path(docpathP, docfileS)
-        # print(docP)
-        break
-if docfileS == "xx":
+if __name__ != "__main__":
+    argfileS = Path(sys.argv[0]).name
+    print(f"{argfileS=}"
+rivtpathP = Path(os.getcwd())
+if fnmatch.fnmatch(fileS, "rivt??-*.py"):
+    rivtfileS = fileS
+    rivtP = Path(rivtpathP, rivtfileS)
+    # print(docP)
+else:
     print("INFO     rivt file not found")
+    print("INFO     file name must be rivtnn-filename where nn are integers")
     exit()
 
-# run test files if api is run as __main__
-if Path(docfileS).name == "rv0101t.py":
-    docP = Path(
-        "./tests/rivt_Example_Test_01/text/rv0101_Overview/rv0101t.py")
-if Path(docfileS).name == "-o":
-    docP = Path(
-        "./tests/rivt_Example_Test_01/text/rv0101_Overview/rv0101t.py")
 modnameS = __name__.split(".")[1]
 # print(f"{modnameS=}")
-# print(f"{docfileS=}")
-# print(f"{docP=}")
-# paths relative to file
+print(f"{rivtfileS=}")
+print(f"{rivtP=}")
 
-docbaseS = docfileS.split(".py")[0]
-pubP = docP.parent.parent               # rivt public folder path
-bakP = docP.parent / ".".join((docbaseS, "bak"))
-prvP = Path(pubP.parent, "private")
-prfxS = docbaseS[0:3]
-# config file
-config = ConfigParser()
-config.read(Path(prvP, "rivt.ini"))
-reportS = config.get('report', 'title')
-headS = config.get('md', 'head')
-footS = config.get('md', 'foot')
-divS = config.get("divisions", prfxS)
+# relative paths
+rivtbaseS = rivtfileS.split(".py")[0]
+projP = rivtP.parent.parent                   # rivt project path
+bakP = rivtP.parent / ".".join((docbaseS, "bak"))
+prvP = Path(projP, "private")
+prfxS = rivtbaseS[0:6]
 # output paths
 reportP = Path(prvP, "docs", "report")      # report folder path
 tempP = Path(prvP, "temp")
@@ -71,39 +59,39 @@ dataP = Path(docP.parent, "data")
 
 # print(f"{prvP=}")
 # global
-utfS = """"""                         # utf-8 output string
-mdS = """"""                          # github md output string
-rstS = """"""                         # reST output string
-rvtfileS = """"""                     # rivt input string
-declareS = """"""                     # declares output string
-assignS = """"""                      # assigns output string
-rivtD = {}                            # rivt dictionary
+utfS = """"""                               # utf-8 output string
+mdS = """"""                                # github md output string
+rstS = """"""                               # reST output string
+rvtfileS = """"""                           # rivt input string
+declareS = """"""                           # declares output string
+assignS = """"""                            # assigns output string
+rivtD = {}                                  # rivt dictionary
 folderD = {}
 for item in ["docP", "dataP", "prvP", "pubP", "docpathP", "reportP",
              "dataP", "valfileS", "errlogP", "styleP", "tempP"]:
     folderD[item] = eval(item)
 incrD = {
     "modnameS": modnameS,
-    "reportS": reportS,               # report title
-    "docS": "rivt Document",          # document title
-    "divS": divS,                     # div title
-    "sectS": "",                      # section title
-    "docnumS": docbaseS[1:5],         # doc number
-    "secnumI": 0,                     # section number
-    "widthI": 80,                     # print width
-    "equI": 1,                        # equation number
-    "tableI": 1,                      # table number
-    "figI": 1,                        # figure number
-    "pageI": 1,                       # starting page number
-    "noteL": [0],                     # footnote counter
-    "footL": [1],                     # foot counter
-    "unitS": "M,M",                   # units
-    "descS": "2",                     # description or decimal places
-    "headrS": "",                     # header string
-    "footrS": "",                     # footer string
-    "tocB": False,                    # table of contents
-    "docstrB": False,                 # print doc strings
-    "subB": False                     # sub values in equations
+    "reportS": reportS,                     # report title
+    "docS": "rivt Document",                # document title
+    "divS": divS,                           # div title
+    "sectS": "",                            # section title
+    "docnumS": docbaseS[1:5],               # doc number
+    "secnumI": 0,                           # section number
+    "widthI": 80,                           # print width
+    "equI": 1,                              # equation number
+    "tableI": 1,                            # table number
+    "figI": 1,                              # figure number
+    "pageI": 1,                             # starting page number
+    "noteL": [0],                           # footnote counter
+    "footL": [1],                           # foot counter
+    "unitS": "M,M",                         # units
+    "descS": "2",                           # description or decimal places
+    "headrS": "",                           # header string
+    "footrS": "",                           # footer string
+    "tocB": False,                          # table of contents
+    "docstrB": False,                       # print doc strings
+    "subB": False                           # sub values in equations
 }
 
 

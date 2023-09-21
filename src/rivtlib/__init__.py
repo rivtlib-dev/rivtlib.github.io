@@ -24,7 +24,7 @@ A rivt file begins with rv.R followed by an arbitrary sequence of the
 three other string methods.
 
 When running in an IDE (e.g. VSCode), each method may be run interactively
-using the standard cell decorator (# %%). Interactive output is formatted as
+using the standard cell decorator *# %%*. Interactive output is formatted as
 utf-8 text. The rv.writemd() and rv.writepdf() functions generate documents and
 compilations in GitHub Markdown (ghmd) and PDF formats. 
 

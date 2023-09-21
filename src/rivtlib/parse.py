@@ -6,7 +6,6 @@ import warnings
 from io import StringIO
 from pathlib import Path
 
-import html2text as htm
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import numpy.linalg as la

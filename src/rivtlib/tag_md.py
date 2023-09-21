@@ -20,9 +20,9 @@ from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
 from sympy.parsing.latex import parse_latex as parsx
 from tabulate import tabulate
-from rivt import parse
-from rivt.units import *
-from rivt.tag_parse import Tags
+from rivtlib import parse
+from rivtlib.units import *
+from rivtlib.tag_parse import Tags
 
 
 class TagsMD(Tags):

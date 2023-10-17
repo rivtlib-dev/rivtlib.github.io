@@ -305,58 +305,44 @@ It also includes editors and utilities designed to work with rivt, and may be
 installed as a system program or used as single, portable zip file. It works
 with Github as a cloud service for sharing rivt files and documents.
 
-In the example folder structure below, fixed folder and file prefixes are shown
-in [ ]. Report, division and documents names are taken from the folder and file
-naming. The folder structure will generate a two level organization, with
-individual rivt documents grouped into divisions. Tools are available to
-generate report folder templates.
+Fixed folder and file prefixes are shown in [ ]. Report and document headings
+are taken from the folder and file labels. Tools are available to generate
+report folder templates.
 
-[rivtdoc]-Report-Label/               
-    ├── .git
-    ├── units.py                      (input: unit over-ride)
-    ├── README.md                     (output: toc and summary) 
-    ├── rivt01.ini                    (input: config file)
-    ├── [doc0101]-div-label/          (division file and label)
-        ├── [data0101]/                     (resource data)
-            ├── data1.csv                   
-            ├── paper1.pdf
-            └── functions1.py                   
-        ├── [rivt]-doc-label1.py            (input: rivt file)
-        └── README.md                       (output: GFM doc)
-    ├── [doc0102]/                    (division file)
-        ├── data[0102]/                     (input: resource data)
-            ├── data1.csv
-            ├── fig1.png
-            └── fig2.png
-        ├── [rivt]-doc-label2.py            (input: rivt file)
-        └── README.md                       (output: GFM doc)
-    ├── [doc0201]-div-label/          (division file and label)
-        ├── [data0201]/                     (input: resource data)                   
-            ├── data1.csv
+Example Folder Structure
+------------------------
+
+[rivt]_Report-Label/               
+    ├── [div01]_div-label/              (division folder)
+        ├── [data]/                     (resource data)
+            ├── data.csv                   
             ├── attachment.pdf
-            ├── functions.py
-            └── fig1.png
-        ├── [rivt]-doc-label3.py            (input: rivt file)   
-        └── README.md                       (output: GFM doc)
-    └── [private]/                    (private files)
-        ├── [temp]/                         (output: temp files)
-        ├── [report]/                       (report files)
-            ├── 0101-Doc Label1.pdf         (output: PDF docs)
-            ├── 0102-Doc Label2.pdf
-            ├── 0201-Doc Label3.pdf
-            └── Report Label.pdf            
-        ├── images/                         (input: optional data folders)
-            ├── fig1.png
-            └── fig2.png
-        ├── text/    
-            ├── text1.txt
-            └── text2.txt
-        ├── append/    
-            ├── report1.pdf
-            └── report2.pdf
-        └── tables/
-            ├── data1.csv
-            └── data1.xls
+            ├── fig.png
+            └── functions.py                   
+        ├── [riv01]_label1.py           (rivt file)
+        └── [riv02]_label2.py           (rivt file)   
+    ├── [div02]_div-label/              (division folder)
+        ├── [data]/                     (resource data)
+            ├── data.csv
+            └── fig.png
+        └── [riv01]_label3.py           (rivt file)
+    ├── [private]/                      (private files)
+        ├── [temp]/                     (temp files)
+        ├── [data]/                     (private data)                   
+            ├── data.csv
+            ├── attachment.pdf
+            └── fig.png        
+        ├── [report]/                   (report output files)
+            ├── doc0101_label1.pdf      
+            ├── doc0102_label2.pdf
+            ├── doc0201_label3.pdf
+            └── Report-Label.pdf 
+    ├── .git
+    ├── config.ini                      (config file, over-rides)
+    ├── doc0101-label1.md               (rivt document output) 
+    ├── doc0102-label2.md
+    ├── doc0201-label3.md
+    └── README.md                       (cumulative rivt document output) 
 
 rivt installation
 =================

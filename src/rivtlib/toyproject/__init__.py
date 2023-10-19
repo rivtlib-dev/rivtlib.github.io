@@ -1,98 +1,91 @@
 #! python
-''' This script generates a simple report folder and file structure.
+''' This script generates a small example folder and file structure for a
+simple rivt report.
 
-See https://rivt-doc.net  for user manual
-
-rivt is an open source engineering document markdown language and the Python
-library that processes it. It is written in Python as is designed to write,
-assemble and share engineering documents. It runs on any platform that supports
-Python 3.8 or later and prioritizes legibility, flexibility, efficiency and
-universal access. rivt-doc has a number of dependencies (see below).
+**rivt** is an open source engineering document markdown language for writing,
+organizing and sharing engineering documents. **rivtlib** is a Python library
+for processing rivt. It runs on any platform that supports Python 3.10 or
+later. rivtlib works with both single file documents and extensive reports with
+hundreds of files. 
 
 A rivt file is a Python file that begins with the import statement:
 
-*import rivt.rivtapi as rv*
+*import rivtlib.rivtapi as rv*
  
-which in turn provides four API functions (referred to as Repo, Insert, Values
-and Tools). Each function takes a single, triple quoted string as an
-argument.
+which provides four API functions. Each function takes a single, triple quoted
+string as an argument.
 
-rv.R(rmS) - report and document configuration 
-rv.I(rmS) - static text, images, tables and math
-rv.V(rmS) - equations
-rv.T(rmS) - Python functions and scripts
+rv.R(rS) - report and document configuration (Rivtinit)
+rv.I(rS) - static text, images, tables and math (Insert)
+rv.V(rS) - equations (Values)
+rv.T(rS) - Python functions and scripts (Tools)
+rv.write() - formatted rivt document output
 
-A rivt file begins with rv.R followed by an arbitrary sequence of the
-three other string methods.
-
-When running in an IDE (e.g. VSCode), each method may be run interactively
+rv.R may be followed by an arbitrary sequence of the other three functions.
+When running in an IDE (e.g. VSCode), each function may be run interactively
 using the standard cell decorator *# %%*. Interactive output is formatted as
-utf-8 text. The rv.writemd() and rv.writepdf() functions generate documents and
-compilations in GitHub Markdown (ghmd) and PDF formats. 
+utf-8 text. The rv.write() function exports calculated values to a file for
+later use, and generates formatted documents and reports in GitHub Markdown
+(ghmd) and PDF.
 
-rivt works with both simple, single file documents as well as extensive reports
-with hundreds of files. Multi-file reports can be structured in an efficient
-folder based framework.
+rivt syntax includes arbitrary unicode and rivt commands and tags. It wraps and
+extends reStructuredText (reST).  See https://rivt-doc.net  for user manual
 
+commands
+========
 
-rivt syntax
-===========
-
-rivt syntax includes arbitrary unicode text including rivt commands and tags. A
-rivt command reads or writes external files and is denoted by || at the
-beginning of a line. Command parameters are separated by |. In the summary
-below parameter options are desginated with semi-colons and list parameters
+A rivt command reads or writes external files and is triggered by starting a
+line with ||. Commands are implemented per API function. Either-or parameter
+choices below are designated with semi-colons. List parameters are separated
 with commas.
 
-Tags format a line or block of text and are denoted with _[tag] at the end of a
-line. Block tags start a block of text with _[[tag]] and end with _[[q]]. The
-"=" and ":=" tags used in the Value method are exceptions.
-
 ======= ===================================================================
- name    Commands per API function (VSCode snippet prefix)
+ name               Commands (VSCode snippet prefix)
 ======= ===================================================================
 
-Rivtinit    rv.R("""label | toc; notoc | page
-(ri)
-                ||init (ini)
-                ||text (tex)
-                ||append (app)
+Rivtinit (ri)       rv.R("""label | toc;notoc,start page
 
-                """)
+                        ||config (co)
+                        ||text (te)
+                        ||append (ap)
 
-Insert      rv.I("""label | color(hex); nocolor  
-(in)
-                ||image (img)
-                ||text (tex)
-                ||table (tab)
+                        """)
 
-                """)
+Insert (in)         rv.I("""label | nocolor;hexvalue  
+                        
+                        ||image (im)
+                        ||text (te)
+                        ||table (ta)
 
-Values      rv.V("""label | sub; nosub 
-(va)
-                ||declare (dec)
+                    """)
 
-                """)
+Values (va)         rv.V("""label | sub;nosub 
+                
+                        ||declare (de)
 
-Tools       rv.T("""label | color | print; noprint 
-(to)
-                Python code
+                        """)
 
-                """)
+Tools (to)          rv.T("""label | summary;inline
+                
+                        Python code
 
-Exclude     rv.X("""any method
+                        """)
 
-                Any method changed to X is not evaluated. It may be used for
-                comments and debugging.
+Exclude             rv.X("""any method
 
-                """)
+                        Any method changed to X is not evaluated and may be
+                        used for comments and debugging.
 
-write   rv.write(md,pdf)
-(wr)
+                    """)
+
+Write (wr)          rv.write(md,pdf,report)
+
 
 ==================================================== ==============
     command syntax                                          API 
 ==================================================== ==============
+
+|| text | rel file path | rivt;plain                       R I V
 
 || init | rel file path                                      R
 
@@ -100,60 +93,65 @@ write   rv.write(md,pdf)
 
 || image  | rel file path, .. | .50, ..                      I
 
-|| table  | rel file path | 60,r; l; c                       I
+|| table  | rel file path | 60,r;l;c                         I
 
-|| declare | rel file path |  print; noprint                 V
-
-|| text | rel file path | rivt; plain                      R I V
-
-============================ ================================= ==========
-   line tags                        description                   API
-============================ ================================ ===========
-text _[b]                       bold                            R I V 
-text _[c]                       center                          R I V  
-text _[i]                       italic                          R I V  
-text _[bc]                      bold center                     R I V  
-text _[bi]                      bold italic                     R I V
-text _[r]                       right justify                   R I V
-text _[u]                       underline                       R I V   
-text _[l]                       LaTeX math                        I V
-text _[s]                       sympy math                        I V
-text _[bs]                      bold sympy math                   I V
-text _[e]                       equation label, autonumber        I V
-text _[f]                       figure caption, autonumber        I V
-text _[t]                       table title, autonumber           I V
-text _[#]                       footnote, autonumber              I V
-text _[d]                       footnote description              I V
-_[page]                         new page                          I V
-_[address, label]               url or internal reference         I V
-a = 1.2 | unit, alt | descrip   declare =                           V
-a := b + c | unit, alt | n,n    assign :=                           V
-
-============================ ================================= ==========
-   block tags                        description                   API
-============================ ================================ ===========
-_[[b]]                          bold                            R I V
-_[[c]]                          center                          R I V
-_[[i]]                          italic                          R I V
-_[[p]]                          plain                           R I V
-_[[q]]                          quit block                      R I V
-_[[l]]                          LaTeX                             I V
+|| declare | rel file path |  print;noprint                  V
 
 
-The first line of a rivt file is *import rivt.rivtapi as rv* followed by the
-Repo method rv.R(). rv.R is followed by any of the other three methods in any
-number or order. The first line of each method is a section label followed by
-section parameters. Section labels may be converted into editing references by
-prepending a double hyphen --.
+tags
+====
 
-File format conventions follow the Python formatter pep8, and linter ruff.
-Method names start in column one. All other lines must be indented 4 spaces to
-facilitate section folding, bookmarks and legibility. The first line of each
-rivt function defines the section title and parameters.
+rivt tags are typically entered at the end of line and are processed per API
+function. Line tags apply to a single line. Block tags appy to blocks of text.
 
-============================================================================
-rivt example
-============================================================================
+===================== ================================== ==========
+   line tags                 description                   API
+===================== ================================= ===========
+text _[b]                bold                            R I V 
+text _[c]                center                          R I V  
+text _[i]                italic                          R I V  
+text _[bc]               bold center                     R I V  
+text _[bi]               bold italic                     R I V
+text _[r]                right justify                   R I V
+text _[u]                underline                       R I V   
+text _[p]                plain                           R I V   
+text _[l]                LaTeX math                        I V
+text _[s]                sympy math                        I V
+text _[bs]               bold sympy math                   I V
+text _[e]                equation label, autonumber        I V
+text _[f]                figure caption, autonumber        I V
+text _[t]                table title, autonumber           I V
+text _[#]                footnote, autonumber              I V
+text _[d]                footnote description              I V
+_[page]                  new page                          I V
+_[address, label]        url or internal reference         I V
+= (declare)              a = 1.2 | unit, alt | descrip       V
+:= (assign)              a := b + c | unit, alt | n,n        V
+
+
+==================== ========================== ==========
+   block tags                description            API
+==================== ========================== ==========
+_[[b]]                  start bold                 R I
+_[[c]]                  start center               R I
+_[[i]]                  start italic               R I
+_[[p]]                  start plain                R I
+_[[l]]                  start LaTeX                  I
+_[[e]]                  end block                  R I
+
+
+
+rivt file example
+=================
+
+File format conventions follow the Python pep8 formatter and ruff linter.
+Function declarations start in column one. All other lines are indented 4
+spaces to facilitate section folding, bookmarks and legibility. The first line
+of each function defines the section label for a new document section, followed
+by section parameters. New section definitions may be suppressed by prepending
+a double hyphen -- to the label.
+
+--------------------------------------
 
 import rivtlib.rivtapi as rv
 
@@ -165,9 +163,10 @@ rv.R("""Introduction | notoc, 1
     The first line of any method is the heading line, which starts a new
     document section. If the section heading is preceded by two dashes (--) it
     becomes a section reference and a new section is not started. The toc
-    parameter specifies whether a document table of contents is generated (not
-    to be confused with a report table of contents). The page number is the
-    starting page number for the doc when processed as a stand alone document.
+    parameter specifies whether a document table of contents is generated and
+    inserted at the top of the document (not to be confused with a report table
+    of contents). The page number is the starting page number for the doc, when
+    processed as a stand alone document.
 
     The init command specifies the name of the configuration file which is read
     from the rivt-doc folder. Report formatting can be easily modified by
@@ -178,7 +177,7 @@ rv.R("""Introduction | notoc, 1
     The text command inserts text from an external file. Text files may be
     plain text or include rivt tags.
 
-    ||text | private/text/proj.txt | plain
+    ||text | private/data/proj.txt | plain
     
     The append command attaches PDF files to the end of the doc.
 
@@ -188,26 +187,21 @@ rv.R("""Introduction | notoc, 1
     
     """)
 
-rv.I("""The Insert method | color 
+rv.I("""The Insert method | nocolor 
 
     The Insert method formats static information e.g. images and text. The
     color command specifies a background color for the section.
 
-    The text command inserts and formats text from external files into the
-    rivt file. Text files may be plain text or text with rivt tags.
-
-    ||text | data0101/describe.txt | rivt     
+    ||text | data01/describe.txt | rivt     
 
     The table command inserts and formats tabular data from csv or xls files.
-    
     The _[t] tag formats and autonumbers table titles.
 
     A table title  _[t]
     || table | data/file.csv | 60,r
 
-    The image command inserts and formats image data from png or jpg files.
-`
-    The _[f] tag formats and autonumbers figures.
+    The image command inserts and formats image data from png or jpg files. The
+    _[f] tag formats and autonumbers figures.
         
     A figure caption _[f]
     || image | data/f1.png | 50
@@ -226,37 +220,34 @@ rv.I("""The Insert method | color
 
     """)
 
-rv.V("""The Values method |  sub; nosub 
+rv.V("""The Values method |  nosub 
 
     The Values method assigns values to variables and evaluates equations. The
-    sub; nosub setting specifies whether the equations are printed a second
-    time with substituted numerical values.
-
-    A table tag provides a table title and number.  
+    sub or nosub setting specifies whether equations are also printed with
+    substituted numerical values.
     
     The equal tag declares a value. A sequence of declared values terminated
-    with a blank line are formatted as a table.
+    with a blank line is formatted as a table.
     
     Example of assignment list _[t]
-    f1 = 10.1 * LBF | N | a force
-    d1 = 12.1 * IN | CM | a length
+    f1 = 10.1 * LBF |LBF, N| a force value
+    d1 = 12.1 * IN  |IN, CM| a length value
 
     An equation tag provides an equation description and number. A colon-equal
-    tag assigns a value and specifies the result units and printed output
-    decimal places in the result and equation.
+    tag assigns a value and specifies the result units and the output decimal
+    places printed in the result and equation.
 
     Example equation - Area of circle  _[e]
     a1 := 3.14(d1/2)^2 | IN^2, CM^2 | 1,2
 
-    || declare | data0102/values0102.csv
+    || declare | data01/values02.csv
     
-    The declare command imports values from a csv file written by rivt when
-    processing assigned and declared values from another doc in the same
-    project.
+    The declare command imports values from the csv file written by rivt when
+    processing values in other documents. 
 
 """)
 
-rv.T("""The Tools method | color 
+rv.T("""The Tools method | summary
 
     # The Tools method processes Python code in the rivt namespace and prints
     # the code and the result of any print statement in the doc. 
@@ -292,46 +283,37 @@ rv.X("""any text
 
     """) 
 
-rivt-doc
-========
+-----------------------------------------------
 
-rivt-doc is an open source framework for writing, organizing and sharing rivt
-documents. It includes an editor and utilities designed to simplify working
-with rivt documents. It may be installed as a set of system programs, or as a
-single, portable zip file. It also works with Github as a cloud service. 
-
-Reports
-=======
 
 rivtlib can process single rivt files, but typically it is used to generate
 reports. A rivt report is generated from the folder structure illustrated
-below. rivt documents are organized into divisions. Document inputs may be divided
-into publically shareable and private files. The report is formatted with
-divisions, subdivisions and sections.
+below. rivt documents are organized into divisions. Document inputs may be
+divided into publically shareable and private files. The report is formatted
+with divisions, subdivisions and sections.
 
 Fixed folder and file prefixes are shown in [ ]. Report and document headings
 are taken from the folder and file labels. Tools are available to generate
 starter folder templates.
 
 Example Folder Structure
-------------------------
+========================
 
 [rivt]_Report-Label/               
-    ├── [div01]_div-label/              (division folder)
-        ├── [data]/                     (resource data)
+    ├── [Div01]-div-label/              (division folder)
+        ├── [data01]/                   (resource data)
             ├── data.csv                   
             ├── attachment.pdf
             ├── fig.png
             └── functions.py                   
         ├── [riv01]_label1.py           (rivt file)
         └── [riv02]_label2.py           (rivt file)   
-    ├── [div02]_div-label/              (division folder)
-        ├── [data]/                     (resource data)
+    ├── [Div02]-div-label/              (division folder)
+        ├── [data02]/                   (resource data)
             ├── data.csv
             └── fig.png
         └── [riv01]_label3.py           (rivt file)
-    ├── [private]/                      (private files)
-        ├── [temp]/                     (temp files)
+    ├── [Data-private]/                 (private files)
         ├── [data]/                     (private data)                   
             ├── data.csv
             ├── attachment.pdf
@@ -341,63 +323,13 @@ Example Folder Structure
             ├── doc0102_label2.pdf
             ├── doc0201_label3.pdf
             └── Report-Label.pdf 
-    ├── .git
-    ├── config.ini                      (config file, over-rides)
+        └── [temp]/                     (temp files)
+    ├── .gitignore
+    ├── config.ini                      (config file and over-rides)
     ├── doc0101-label1.md               (rivt document output) 
     ├── doc0102-label2.md
     ├── doc0201-label3.md
     └── README.md                       (cumulative rivt document output) 
-
-rivt installation
-=================
-
-The minimum software needed to run rivt:
-
-- Python 3.8 or higher 
-- rivt Python library
-
-A complete rivt-doc system additionally includes:
-
-- Python libraries
-- VSCode + extensions 
-- LaTeX 
-- Github account
-
-rivt-doc may be installed as a system level program or as a single portable
-folder via a zip file. It runs on every OS major platform and in the cloud (e.g.
-GitHub CodeSpaces). [rivt-doc User Manual](https://www.rivt-doc.net>)
-
-
-============== =========================================================
-Keystroke         VSCode shortcuts and extensions using rivt profile
-============== =========================================================
-
-alt+q                rewrap paragraph with hard line feeds (80 default)
-alt+p                open file under cursor
-alt+.                select correct spelling under cursor
-alt+8                insert date
-alt+9                insert time
-
-ctl+1                focus on first editor
-ctl+2                focus on next editor
-ctl+3                focus on previous editor
-ctl+8                focus on explorer pane
-ctl+9                focus on github pane    
-
-ctl+alt+x            reload window
-ctl+alt+u            unfold all code
-ctl+alt+f            fold code level 2 (rivt sections visible)
-ctl+alt+a            fold code - all levels
-ctl+alt+t            toggle local fold
-ctl+alt+e            toggle explorer sort order
-ctl+alt+s            toggle spell check
-ctl+alt+g            next editor group
-
-ctl+shift+u          open URL under cursor in browser
-ctl+shift+s          open GitHub rivt README search
-ctl+shift+a          commit all 
-ctl+shift+z          commit current editor
-ctl+shift+x          post to remote   
 
 
 '''

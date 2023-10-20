@@ -8,12 +8,14 @@ for processing rivt. It runs on any platform that supports Python 3.10 or
 later. rivtlib works with both single file documents and extensive reports with
 hundreds of files. 
 
+The rivt-doc User Manual is at https://www.rivt-doc.net/
+
 A **rivt** file is a Python file that begins with the import statement:
 
 *import rivtlib.rivtapi as rv*
  
-which provides four API functions. Each function takes a single, triple quoted
-string as an argument.
+that provides four API functions which take a single, triple quoted
+string as argument, and two write functions.
 
 ::
 
@@ -21,28 +23,28 @@ string as an argument.
  rv.I(rS) - static text, images, tables and math (Insert)
  rv.V(rS) - equations (Values)
  rv.T(rS) - Python functions and scripts (Tools)
- rv.write_public() - formatted rivt document output to public folders
- rv.write_private() - formatted rivt document output to private folders
+ rv.write_public() - formatted document output to public folders
+ rv.write_private() - formatted document output to private folders
 
 
-rv.R may be followed by arbitrary sequences of rv.I, rv.V and rv.T. When
-running in an IDE (e.g. VSCode), each function may be run interactively using
-the standard cell decorator *# %%*. Interactive output and output to stdout
+rv.R may be followed by sequences of rv.I, rv.V and rv.T in arbitrary orders.
+When running in an IDE (e.g. VSCode) each function may be run interactively
+using the standard cell decorator *# %%*. Interactive output to stdout
 (terminal) is formatted as utf-8 text. The rv.write function generates
 formatted documents and reports in text, GitHub Markdown (ghmd) and PDF, and
-exports calculated values to a csv file for reuse.
+exports calculated values to a csv file for reuse in subsequent files.
 
-rivt syntax includes arbitrary unicode and rivt commands and tags. It wraps and
-extends reStructuredText (reST).  See https://rivt-doc.net  for user manual
+**rivt** syntax includes arbitrary unicode with rivt commands and tags. It
+wraps and extends reStructuredText (reST). 
 
 ========
 commands
 ========
 
-A rivt command reads or writes external files and is triggered by starting a
-line with ||. Commands are implemented per API function. Either-or parameter
+A rivt command reads or writes external files. It is triggered by starting a
+line with ||. Commands are implemented per API function. (Either-or parameter
 choices below are designated with semi-colons. List parameters are separated
-with commas.
+with commas).
 
 ::
 
@@ -302,8 +304,8 @@ folders
 rivtlib can process single rivt files, but typically it is used to generate
 reports. A rivt report is generated from the folder structure illustrated
 below. rivt documents are organized into divisions. Document inputs and outputs
-may be stored in or directed to publically shareable or private foldrers.
-Reports is formatted with divisions, subdivisions and sections.
+may be stored in or directed to public (shared) or private folders. Reports is
+formatted with divisions, subdivisions and sections.
 
 Fixed folder and file prefixes are shown in [ ]. Report and document headings
 are taken from the folder and file labels. Tools are available to generate

@@ -262,11 +262,13 @@ label with a double hyphen (--).
 
     rv.T("""The Tools method | summary
 
-        # The Tools method processes Python code in the rivt namespace and prints
+        # The Tools method processes Python code in the rivt namespace and prints 
         # the code and the result of any print statement in the doc. 
-        # Functions may be written explicitly or imported from other
-        # files. Line comments (#) are printed. Triple quotes cannot be used. Use
-        # raw strings instead.
+        # Functions may be written explicitly or imported from other 
+        # files. The 'summary' parameter prints the line comments (#) in the 
+        # and creates and appendix with the code. The 'inline' parameter 
+        # includes the code verbatim in the document. If triple quotes are used 
+        # they must be single stroke.
         
         # Four Python libraries are imported by rivt and available as: 
         # pyplot -> plt

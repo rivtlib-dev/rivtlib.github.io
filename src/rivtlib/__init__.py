@@ -297,36 +297,45 @@ are taken from the folder and file labels. Tools are available to generate
 starter folder templates.
 
 [rivt]_Report-Label/               
-    ├── [Div01]-div-label/              (division folder)
+    ├── [div01]-div-label/              (division folder)
         ├── [data01]/                   (resource data)
             ├── data.csv                   
             ├── attachment.pdf
             ├── fig.png
             └── functions.py                   
-        ├── [riv01]_label1.py           (rivt file)
-        └── [riv02]_label2.py           (rivt file)   
-    ├── [Div02]-div-label/              (division folder)
+        ├── [riv01]-label1.py           (rivt file)
+        └── [riv02]-label2.py           (rivt file)   
+    ├── [div02]-div-label/              (division folder)
         ├── [data02]/                   (resource data)
             ├── data.csv
             └── fig.png
         └── [riv01]_label3.py           (rivt file)
-    ├── [Data-private]/                 (private files)
+    ├── [data-private]/                 (private files)
         ├── [data]/                     (private data)                   
             ├── data.csv
             ├── attachment.pdf
             └── fig.png        
-        ├── [report]/                   (report output files)
-            ├── doc0101_label1.pdf      
-            ├── doc0102_label2.pdf
-            ├── doc0201_label3.pdf
-            └── Report-Label.pdf 
-        └── [temp]/                     (temp files)
+        ├── [rivt-docs]/                (private output documents)
+            ├── [pdf]/                      
+                ├── doc0101-label1.pdf      
+                ├── doc0102-label2.pdf
+                ├── doc0201-label3.pdf
+                └── Report-Label.pdf 
+            ├── [text]/                    
+                ├── doc0101-label1.txt      
+                ├── doc0102-label2.txt
+                └── doc0201-label3.txt       
+            ├── doc0101-label1.md            
+            ├── doc0102-label2.md
+            └── doc0201-label3.md
+        ├── [temp]/
+            └── doc0201-label3.tex       
     ├── .gitignore
-    ├── config.ini                      (config file and over-rides)
-    ├── doc0101-label1.md               (rivt document output) 
+    ├── config.ini                      (config file)
+    ├── doc0101-label1.md               (public output documents) 
     ├── doc0102-label2.md
     ├── doc0201-label3.md
-    └── README.md                       (cumulative rivt document output) 
+    └── README.txt                      (cumulative document output) 
 
 ========
 rivt-doc

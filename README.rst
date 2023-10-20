@@ -49,7 +49,7 @@ with commas).
 ::
 
     =============== ==========================================================
-    name                      Commands (VSCode snippet prefix)
+       name                      Commands (VSCode snippet prefix)
     =============== ==========================================================
 
     Rivtinit (ri)       rv.R("""label | toc;notoc,start page
@@ -116,7 +116,7 @@ function. Line tags apply to a single line. Block tags appy to blocks of text.
 ::
 
     ===================== ================================== ==========
-    line tags                 description                   API
+       line tags                 description                   API
     ===================== ================================= ===========
     text _[b]                bold                            R I V 
     text _[c]                center                          R I V  
@@ -141,7 +141,7 @@ function. Line tags apply to a single line. Block tags appy to blocks of text.
 
 
     ==================== ========================== ==========
-    block tags                description            API
+       block tags                description            API
     ==================== ========================== ==========
     _[[b]]                  start bold                 R I
     _[[c]]                  start center               R I
@@ -399,7 +399,7 @@ The rivt-doc User Manual is at https://www.rivt-doc.net/
 ::
 
     ============= =============================================================
-    Keystroke             VSCode rivt profile shortcut description
+      Keystroke             VSCode rivt profile shortcut description
     ============= =============================================================
 
     alt+q                rewrap paragraph with hard line feeds (80 default)
@@ -430,7 +430,7 @@ The rivt-doc User Manual is at https://www.rivt-doc.net/
     ctl+shift+x          post to remote   
 
     ============================================== ===============================
-    VSCode extension                                       Description
+        VSCode extension                                       Description
     ============================================== ===============================
 
     BUTTON INTERFACES

@@ -81,7 +81,7 @@ with commas).
 
     Exclude             rv.X("""any API function
 
-                            A method changed to X is not evaluated (used for
+                            An API changed to X is not evaluated (used for
                             comments and debugging).
 
                         """)
@@ -110,7 +110,7 @@ with commas).
 tags
 ====
 
-rivt tags are typically entered at the end of line and are processed per API
+rivt tags are typically entered at the end of a line and are processed per API
 function. Line tags apply to a single line. Block tags appy to blocks of text.
 
 ::
@@ -291,8 +291,8 @@ label with a double hyphen (--).
 
     rv.X("""any text
 
-        Changing a function to X skips evaluation of that function. Its uses
-        include review comments and debugging.
+        Changing an API to X skips evaluation of that function. It is used
+        for review and debugging.
 
         """) 
 
@@ -377,11 +377,11 @@ rivt-doc
 ========
 
 rivt-doc is an open source framework that faciliates writing, organizing and
-sharing rivt documents. It includes an editor, typesetting and mnay utilities
-and extensions that reduce the steps needed to produce rivt documents. rivt-doc
-may be installed on every major OS platform as set of system programs, or as a
-single, portable zip file. The framework can also be implemented as a cloud
-service. It includes:
+sharing rivt documents. It includes an editor, typesetting and utilities and
+extensions that reduce the steps needed to produce and edit rivt documents.
+rivt-doc installs on every major OS platform as a single, portable zip file, or
+as a collection of system programs. The framework can also be implemented as a
+cloud service. It includes:
 
 - Python 3.8 or higher 
 - rivt Python library and dependencies

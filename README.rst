@@ -392,7 +392,7 @@ The minimum software needed to run rivt is:
 - Python 3.8 or higher 
 - rivt Python library and dependencies
 
-[rivt-doc User Manual](https://www.rivt-doc.net>)
+`rivt-doc User Manual<https://www.rivt-doc.net/>`_
 
 ::
 

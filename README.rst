@@ -1,4 +1,3 @@
-#! python
 
 **rivt** is an open source engineering document markdown language for writing,
 organizing and sharing engineering documents. **rivtlib** is a Python library

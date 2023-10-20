@@ -21,7 +21,7 @@ string as an argument.
 | rv.T(rS) - Python functions and scripts (Tools)
 | rv.write_public() - formatted rivt document output to public folders
 | rv.write_private() - formatted rivt document output to private folders
-
+|
 
 rv.R may be followed by arbitrary sequences of rv.I, rv.V and rv.T. When
 running in an IDE (e.g. VSCode), each function may be run interactively using
@@ -67,7 +67,7 @@ Exclude             rv.X("""any API function
 .                    """)
 Write (pu)          rv.write_public(text,md,pdf,report)
       (pr)          rv.write_private(text,md,pdf,report)
-
+=============== ===============================================================
 
 ================================================ ============== 
        command syntax                                API      

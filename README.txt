@@ -29,7 +29,6 @@ and reports in GitHub Markdown (ghmd) and PDF.
 rivt syntax includes arbitrary unicode and rivt commands and tags. It wraps and
 extends reStructuredText (reST).  See https://rivt-doc.net  for user manual
 
-========
 commands
 ========
 
@@ -38,12 +37,13 @@ line with ||. Commands are implemented per API function. Either-or parameter
 choices below are designated with semi-colons. List parameters are separated
 with commas.
 
-=============== ===============================================================
- name                      Commands (VSCode snippet prefix)
-=============== ===============================================================
+======= ===================================================================
+ name               Commands (VSCode snippet prefix)
+======= ===================================================================
 
 Rivtinit (ri)       rv.R("""label | toc;notoc,start page
 
+                        ||config (co)
                         ||text (te)
                         ||append (ap)
 
@@ -69,32 +69,33 @@ Tools (to)          rv.T("""label | summary;inline
 
                         """)
 
-Exclude             rv.X("""any API function
+Exclude             rv.X("""any method
 
-                        A method changed to X is not evaluated (used for
-                        comments and debugging).
+                        Any method changed to X is not evaluated and may be
+                        used for comments and debugging.
 
                     """)
 
-Write (pu)          rv.write_public(text,md,pdf,report)
-      (pr)          rv.write_private(text,md,pdf,report)
+Write (wr)          rv.write(md,pdf,report)
 
 
-================================================ ============== 
-       command syntax                                API      
-================================================ ============== 
+==================================================== ==============
+    command syntax                                          API 
+==================================================== ==============
 
-|| text | rel file path | rivt;plain;default        R I V      
+|| text | rel file path | rivt;plain                       R I V
 
-|| append | rel file path | num;nonum                 R        
+|| init | rel file path                                      R
 
-|| image  | rel file path, .. | .50, ..               I        
- 
-|| table  | rel file path | 30,r;l;c                  I        
+|| append | rel file path                                    R
 
-|| declare | rel file path | print;noprint            V        
+|| image  | rel file path, .. | .50, ..                      I
 
-====
+|| table  | rel file path | 60,r;l;c                         I
+
+|| declare | rel file path |  print;noprint                  V
+
+
 tags
 ====
 
@@ -137,16 +138,16 @@ _[[l]]                  start LaTeX                  I
 _[[e]]                  end block                  R I
 
 
-=================
+
 rivt file example
 =================
 
-File formatting conventions follow Python pep8 and ruff conventions. API
-function declarations start in column one. All other lines are indented 4
+File format conventions follow the Python pep8 formatter and ruff linter.
+Function declarations start in column one. All other lines are indented 4
 spaces to facilitate section folding, bookmarks and legibility. The first line
-of each function defines the heading for a new document section, followed by
-section parameters. New sections may be suppressed by prepending the heading
-label with a double hyphen (--).
+of each function defines the section label for a new document section, followed
+by section parameters. New section definitions may be suppressed by prepending
+a double hyphen -- to the label.
 
 --------------------------------------
 
@@ -282,9 +283,6 @@ rv.X("""any text
 
 -----------------------------------------------
 
-=======
-folders
-=======
 
 rivtlib can process single rivt files, but typically it is used to generate
 reports. A rivt report is generated from the folder structure illustrated
@@ -295,6 +293,9 @@ with divisions, subdivisions and sections.
 Fixed folder and file prefixes are shown in [ ]. Report and document headings
 are taken from the folder and file labels. Tools are available to generate
 starter folder templates.
+
+Example Folder Structure
+========================
 
 [rivt]_Report-Label/               
     ├── [Div01]-div-label/              (division folder)
@@ -328,9 +329,15 @@ starter folder templates.
     ├── doc0201-label3.md
     └── README.md                       (cumulative rivt document output) 
 
-========
+
+
 rivt-doc
 ========
+
+The minimum software needed to run rivt:
+
+- Python 3.8 or higher 
+- rivt Python library and dependencies
 
 rivt-doc is an open source framework that faciliates writing, organizing and
 sharing rivt documents. It includes an editor, typesetting and mnay utilities
@@ -339,22 +346,17 @@ may be installed on every major OS platform as set of system programs, or as a
 single, portable zip file. The framework can also be implemented as a cloud
 service. It includes:
 
-- Python 3.8 or higher 
-- rivt Python library and dependencies
+- Additional Python libraries
 - VSCode + extensions 
 - LaTeX 
 - Github 
 
-The minimum software needed to run rivt is:
-
-- Python 3.8 or higher 
-- rivt Python library and dependencies
-
 [rivt-doc User Manual](https://www.rivt-doc.net>)
 
-============= =============================================================
-Keystroke             VSCode rivt profile shortcut description
-============= ==============================================================
+
+============== =========================================================
+Shortcut         VSCode shortcuts and extensions using rivt profile
+============== =========================================================
 
 alt+q                rewrap paragraph with hard line feeds (80 default)
 alt+p                open file under cursor
@@ -378,15 +380,14 @@ ctl+alt+s            toggle spell check
 ctl+alt+g            next editor group
 
 ctl+shift+u          open URL under cursor in browser
-ctl+shift+s          open GitHub README search for rivt
+ctl+shift+s          open GitHub rivt README search
 ctl+shift+a          commit all 
-ctl+shift+z          commit the current editor
+ctl+shift+z          commit current editor
 ctl+shift+x          post to remote   
 
 ============================================== ===============================
-VSCode extension                                       Description
+VSCode extension                                         Description
 ============================================== ===============================
-
 BUTTON INTERFACES
 tombonnike.vscode-status-bar-format-toggle          format button
 gsppvo.vscode-commandbar                            command buttons

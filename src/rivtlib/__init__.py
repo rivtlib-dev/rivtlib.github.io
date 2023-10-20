@@ -352,7 +352,7 @@ starter folder templates.
     ├── doc0101-label1.md             (public output documents) 
     ├── doc0102-label2.md
     ├── doc0201-label3.md
-    └── README.txt                    (cumulative output document - searchable) 
+    └── README.txt                    (cumulative documents - searchable) 
 
 ========
 rivt-doc

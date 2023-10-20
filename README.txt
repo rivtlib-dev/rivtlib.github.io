@@ -1,5 +1,5 @@
 #! python
-'''
+
 **rivt** is an open source engineering document markdown language for writing,
 organizing and sharing engineering documents. **rivtlib** is a Python library
 for processing rivt. It runs on any platform that supports Python 3.10 or
@@ -29,6 +29,7 @@ and reports in GitHub Markdown (ghmd) and PDF.
 rivt syntax includes arbitrary unicode and rivt commands and tags. It wraps and
 extends reStructuredText (reST).  See https://rivt-doc.net  for user manual
 
+========
 commands
 ========
 
@@ -37,13 +38,12 @@ line with ||. Commands are implemented per API function. Either-or parameter
 choices below are designated with semi-colons. List parameters are separated
 with commas.
 
-======= ===================================================================
- name               Commands (VSCode snippet prefix)
-======= ===================================================================
+=============== ===============================================================
+ name                      Commands (VSCode snippet prefix)
+=============== ===============================================================
 
 Rivtinit (ri)       rv.R("""label | toc;notoc,start page
 
-                        ||config (co)
                         ||text (te)
                         ||append (ap)
 
@@ -69,33 +69,32 @@ Tools (to)          rv.T("""label | summary;inline
 
                         """)
 
-Exclude             rv.X("""any method
+Exclude             rv.X("""any API function
 
-                        Any method changed to X is not evaluated and may be
-                        used for comments and debugging.
+                        A method changed to X is not evaluated (used for
+                        comments and debugging).
 
                     """)
 
-Write (wr)          rv.write(md,pdf,report)
+Write (pu)          rv.write_public(text,md,pdf,report)
+      (pr)          rv.write_private(text,md,pdf,report)
 
 
-==================================================== ==============
-    command syntax                                          API 
-==================================================== ==============
+================================================ ============== 
+       command syntax                                API      
+================================================ ============== 
 
-|| text | rel file path | rivt;plain                       R I V
+|| text | rel file path | rivt;plain;default        R I V      
 
-|| init | rel file path                                      R
+|| append | rel file path | num;nonum                 R        
 
-|| append | rel file path                                    R
+|| image  | rel file path, .. | .50, ..               I        
+ 
+|| table  | rel file path | 30,r;l;c                  I        
 
-|| image  | rel file path, .. | .50, ..                      I
+|| declare | rel file path | print;noprint            V        
 
-|| table  | rel file path | 60,r;l;c                         I
-
-|| declare | rel file path |  print;noprint                  V
-
-
+====
 tags
 ====
 
@@ -138,16 +137,16 @@ _[[l]]                  start LaTeX                  I
 _[[e]]                  end block                  R I
 
 
-
+=================
 rivt file example
 =================
 
-File format conventions follow the Python pep8 formatter and ruff linter.
-Function declarations start in column one. All other lines are indented 4
+File formatting conventions follow Python pep8 and ruff conventions. API
+function declarations start in column one. All other lines are indented 4
 spaces to facilitate section folding, bookmarks and legibility. The first line
-of each function defines the section label for a new document section, followed
-by section parameters. New section definitions may be suppressed by prepending
-a double hyphen -- to the label.
+of each function defines the heading for a new document section, followed by
+section parameters. New sections may be suppressed by prepending the heading
+label with a double hyphen (--).
 
 --------------------------------------
 
@@ -283,61 +282,81 @@ rv.X("""any text
 
 -----------------------------------------------
 
+=======
+folders
+=======
 
 rivtlib can process single rivt files, but typically it is used to generate
 reports. A rivt report is generated from the folder structure illustrated
-below. rivt documents are organized into divisions. Document inputs may be
-divided into publically shareable and private files. The report is formatted
-with divisions, subdivisions and sections.
+below. rivt documents are organized into divisions. Document inputs and outputs
+may be stored in or directed to publically shareable or private foldrers.
+Reports is formatted with divisions, subdivisions and sections.
 
 Fixed folder and file prefixes are shown in [ ]. Report and document headings
 are taken from the folder and file labels. Tools are available to generate
 starter folder templates.
 
-Example Folder Structure
-========================
-
 [rivt]_Report-Label/               
-    ├── [Div01]-div-label/              (division folder)
-        ├── [data01]/                   (resource data)
+    ├── [div01]-div-label/            (division folder)
+        ├── [data01]/                 (resource data)
             ├── data.csv                   
             ├── attachment.pdf
-            ├── fig.png
-            └── functions.py                   
-        ├── [riv01]_label1.py           (rivt file)
-        └── [riv02]_label2.py           (rivt file)   
-    ├── [Div02]-div-label/              (division folder)
-        ├── [data02]/                   (resource data)
+            └── fig.png            
+             functions.py                   
+        ├── [riv01]-label1.py         (rivt file)
+        └── [riv02]-label2.py         (rivt file)   
+    ├── [div02]-div-label/            (division folder)
+        ├── [data02]/                 (resource data)
             ├── data.csv
             └── fig.png
-        └── [riv01]_label3.py           (rivt file)
-    ├── [Data-private]/                 (private files)
-        ├── [data]/                     (private data)                   
+        └── [riv01]_label3.py         (rivt file)
+    ├── [data-private]/                 
+        ├── [data]/                   (private data)                   
             ├── data.csv
             ├── attachment.pdf
             └── fig.png        
-        ├── [report]/                   (report output files)
-            ├── doc0101_label1.pdf      
-            ├── doc0102_label2.pdf
-            ├── doc0201_label3.pdf
+        ├── [functions]/              (private functions)                   
+            ├── [data]/
+            ├── [output]/
+            └── function.py                
+        ├── [rivt-docs]/              (private output documents)
+            ├── [pdf]/                      
+                ├── doc0101-label1.pdf      
+                ├── doc0102-label2.pdf
+                ├── doc0201-label3.pdf
+                └── Report-Label.pdf 
+            ├── [text]/                    
+                ├── doc0101-label1.txt      
+                └── doc0201-label3.txt       
+            ├── doc0101-label1.md            
+            └── doc0201-label3.md
+        ├── [temp]/
+            └── doc0201-label3.tex 
+    ├── [functions]/                  (public functions)                   
+        ├── [data]/
+        ├── [output]/
+        ├── function1.py
+        └── function2.py                
+    ├── [rivt-docs]/                  (public output documents)
+        ├── [pdf]/                      
+            ├── doc0101-label1.pdf      
+            ├── doc0102-label2.pdf
+            ├── doc0201-label3.pdf
             └── Report-Label.pdf 
-        └── [temp]/                     (temp files)
+        ├── [text]/                    
+            ├── doc0101-label1.txt      
+            ├── doc0102-label2.txt
+            └── doc0201-label3.txt           
     ├── .gitignore
-    ├── config.ini                      (config file and over-rides)
-    ├── doc0101-label1.md               (rivt document output) 
+    ├── config.ini                    (config file)
+    ├── doc0101-label1.md             (public output documents) 
     ├── doc0102-label2.md
     ├── doc0201-label3.md
-    └── README.md                       (cumulative rivt document output) 
+    └── README.txt                    (cumulative documents - searchable) 
 
-
-
+========
 rivt-doc
 ========
-
-The minimum software needed to run rivt:
-
-- Python 3.8 or higher 
-- rivt Python library and dependencies
 
 rivt-doc is an open source framework that faciliates writing, organizing and
 sharing rivt documents. It includes an editor, typesetting and mnay utilities
@@ -346,17 +365,22 @@ may be installed on every major OS platform as set of system programs, or as a
 single, portable zip file. The framework can also be implemented as a cloud
 service. It includes:
 
-- Additional Python libraries
+- Python 3.8 or higher 
+- rivt Python library and dependencies
 - VSCode + extensions 
 - LaTeX 
 - Github 
 
+The minimum software needed to run rivt is:
+
+- Python 3.8 or higher 
+- rivt Python library and dependencies
+
 [rivt-doc User Manual](https://www.rivt-doc.net>)
 
-
-============== =========================================================
-Shortcut         VSCode shortcuts and extensions using rivt profile
-============== =========================================================
+============= =============================================================
+Keystroke             VSCode rivt profile shortcut description
+============= ==============================================================
 
 alt+q                rewrap paragraph with hard line feeds (80 default)
 alt+p                open file under cursor
@@ -380,14 +404,15 @@ ctl+alt+s            toggle spell check
 ctl+alt+g            next editor group
 
 ctl+shift+u          open URL under cursor in browser
-ctl+shift+s          open GitHub rivt README search
+ctl+shift+s          open GitHub README search for rivt
 ctl+shift+a          commit all 
-ctl+shift+z          commit current editor
+ctl+shift+z          commit the current editor
 ctl+shift+x          post to remote   
 
 ============================================== ===============================
-VSCode extension                                         Description
+VSCode extension                                       Description
 ============================================== ===============================
+
 BUTTON INTERFACES
 tombonnike.vscode-status-bar-format-toggle          format button
 gsppvo.vscode-commandbar                            command buttons
@@ -462,4 +487,4 @@ qwtel.sqlite-viewer                                 sqlite tools
 RDebugger.r-debugger                                R tools
 REditorSupport.r                                    R tools
 ms-vscode-remote.remote-wsl                         windows linux tools
-'''
+

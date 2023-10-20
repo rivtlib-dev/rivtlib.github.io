@@ -21,12 +21,12 @@ rv.V(rS) - equations (Values)
 rv.T(rS) - Python functions and scripts (Tools)
 rv.write() - formatted rivt document output
 
-rv.R may be followed by an arbitrary sequence of the other three functions.
-When running in an IDE (e.g. VSCode), each function may be run interactively
-using the standard cell decorator *# %%*. Interactive output is formatted as
-utf-8 text. The rv.write() function exports calculated values to a file for
-later use, and generates formatted documents and reports in GitHub Markdown
-(ghmd) and PDF.
+rv.R may be followed by arbitrary sequences of rv.I, rv.V and rv.T. When
+running in an IDE (e.g. VSCode), each function may be run interactively using
+the standard cell decorator *# %%*. Interactive output and output to stdout
+(terminal) is formatted as utf-8 text. The rv.write() function exports
+calculated values to a file for later use, and generates formatted documents
+and reports in GitHub Markdown (ghmd) and PDF.
 
 rivt syntax includes arbitrary unicode and rivt commands and tags. It wraps and
 extends reStructuredText (reST).  See https://rivt-doc.net  for user manual

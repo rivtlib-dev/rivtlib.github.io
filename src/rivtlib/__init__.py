@@ -19,12 +19,12 @@ rv.V(rS) - equations (Values)
 rv.T(rS) - Python functions and scripts (Tools)
 rv.write() - formatted rivt document output
 
-rv.R may be followed by an arbitrary sequence of the other three functions.
-When running in an IDE (e.g. VSCode), each function may be run interactively
-using the standard cell decorator *# %%*. Interactive output is formatted as
-utf-8 text. The rv.write() function exports calculated values to a file for
-later use, and generates formatted documents and reports in GitHub Markdown
-(ghmd) and PDF.
+rv.R may be followed by arbitrary sequences of rv.I, rv.V and rv.T. When
+running in an IDE (e.g. VSCode), each function may be run interactively using
+the standard cell decorator *# %%*. Interactive output and output to stdout
+(terminal) is formatted as utf-8 text. The rv.write() function exports
+calculated values to a file for later use, and generates formatted documents
+and reports in GitHub Markdown (ghmd) and PDF.
 
 rivt syntax includes arbitrary unicode and rivt commands and tags. It wraps and
 extends reStructuredText (reST).  See https://rivt-doc.net  for user manual
@@ -423,18 +423,14 @@ alefragnani.project-manager                         folder, project management
 Anjali.clipboard-history                            clipboard history
 dionmunk.vscode-notes                               notepad
 hbenl.vscode-test-explorer                          test explorer
+mightycoco.fsdeploy                                 save file to second location
+lyzerk.linecounter                                  count lines in files
+sandcastle.vscode-open                              open files in default app
 James-Yu.latex-workshop                             latex tools
 lextudio.restructuredtext                           restructured text tools
-lyzerk.linecounter                                  count lines in files
-qwtel.sqlite-viewer                                 sqlite tools
-RDebugger.r-debugger                                R tools
-REditorSupport.r                                    R tools
-sandcastle.vscode-open                              open files in default app
-trond-snekvik.simple-rst                            restructured text tools
-mightycoco.fsdeploy                                 save file to second location
+trond-snekvik.simple-rst                            restructured syntax
 yzane.markdown-pdf                                  markdown to pdf
 yzhang.markdown-all-in-one                          markdown tools
-ms-vscode-remote.remote-wsl                         windows linux tools
 zjffun.snippetsmanager                              snippet manager
 spmeesseman.vscode-taskexplorer                     task explorer
 
@@ -461,4 +457,9 @@ ms-toolsai.jupyter-renderers                        jupyter tools
 ms-toolsai.vscode-jupyter-cell-tags                 jupyter tools
 ms-toolsai.vscode-jupyter-slideshow                 jupyter tools
 
+OTHER LANGUAGES
+qwtel.sqlite-viewer                                 sqlite tools
+RDebugger.r-debugger                                R tools
+REditorSupport.r                                    R tools
+ms-vscode-remote.remote-wsl                         windows linux tools
 '''

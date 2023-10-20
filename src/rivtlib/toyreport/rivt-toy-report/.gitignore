@@ -1,0 +1,4 @@
+#.gitignore
+
+# rivt files
+data-private/

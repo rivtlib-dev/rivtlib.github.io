@@ -235,9 +235,9 @@ label with a double hyphen (--).
 
     rv.V("""The Values method |  nosub 
 
-        The Values method assigns values to variables and evaluates equations. The
-        sub or nosub setting specifies whether equations are also printed with
-        substituted numerical values.
+        The Values method assigns values to variables and evaluates equations.
+        The sub or nosub setting specifies whether equations are additionally
+        printed with substituted numerical values.
         
         The equal tag declares a value. A sequence of declared values terminated
         with a blank line is formatted as a table.
@@ -255,8 +255,8 @@ label with a double hyphen (--).
 
         || declare | data01/values02.csv
         
-        The declare command imports values from the csv file written by rivt when
-        processing values in other documents. 
+        The declare command imports values from a csv file exported by rivt when
+        processing values in previous documents. 
 
     """)
 
@@ -265,10 +265,9 @@ label with a double hyphen (--).
         # The Tools method processes Python code in the rivt namespace and prints 
         # the code and the result of any print statement in the doc. 
         # Functions may be written explicitly or imported from other 
-        # files. The 'summary' parameter prints the line comments (#) in the 
-        # and creates and appendix with the code. The 'inline' parameter 
-        # includes the code verbatim in the document. If triple quotes are used 
-        # they must be single stroke.
+        # files. The 'summary' parameter inserts the line comments (#) in the 
+        # document and creates an appendix for the code. The 'inline' parameter 
+        # includes the code verbatim in the document.
         
         # Four Python libraries are imported by rivt and available as: 
         # pyplot -> plt
@@ -276,15 +275,18 @@ label with a double hyphen (--).
         # pandas -> pd
         # sympy -> sy
         
-        # Python code example:
+        # Python code examples:
         
+        # a function
         def f1(x,y): z = x + y
             print(z)
             return Z
 
-        with open('file.csv', 'r') as f: 
+        # read file
+        with open('input/file.csv', 'r') as f: 
             input = f.readlines()
         
+        # write file
         var = range(10)
         with open('fileout.csv', 'w') as f: 
             f.write(var)

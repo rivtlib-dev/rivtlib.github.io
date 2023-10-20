@@ -22,6 +22,7 @@ string as an argument.
 | rv.write_public() - formatted rivt document output to public folders
 | rv.write_private() - formatted rivt document output to private folders
 
+
 rv.R may be followed by arbitrary sequences of rv.I, rv.V and rv.T. When
 running in an IDE (e.g. VSCode), each function may be run interactively using
 the standard cell decorator *# %%*. Interactive output and output to stdout
@@ -46,39 +47,24 @@ with commas.
 =============== ===============================================================
 
 Rivtinit (ri)       rv.R("""label | toc;notoc,start page
-
-                        ||text (te)
-                        ||append (ap)
-
-                        """)
-
-Insert (in)         rv.I("""label | nocolor;hexvalue  
-                        
-                        ||image (im)
-                        ||text (te)
-                        ||table (ta)
-
-                    """)
-
+.                        ||text (te)
+.                        ||append (ap)
+.                        """)
+Insert (in)         rv.I("""label | nocolor;hexvalue                          
+.                        ||image (im)
+.                        ||text (te)
+.                        ||table (ta)
+.                        """)
 Values (va)         rv.V("""label | sub;nosub 
-                
-                        ||declare (de)
-
-                        """)
-
+.                        ||declare (de)
+.                        """)
 Tools (to)          rv.T("""label | summary;inline
-                
-                        Python code
-
-                        """)
-
+.                        Python code
+.                        """)
 Exclude             rv.X("""any API function
-
-                        A method changed to X is not evaluated (used for
-                        comments and debugging).
-
-                    """)
-
+.                        A method changed to X is not evaluated (used for
+.                        comments and debugging).
+.                    """)
 Write (pu)          rv.write_public(text,md,pdf,report)
       (pr)          rv.write_private(text,md,pdf,report)
 

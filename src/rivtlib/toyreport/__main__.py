@@ -3,26 +3,27 @@ from PIL import Image, ImageDraw, ImageFont
 
 # folders
 root_dirS = 'rivt-toy-report'
-main_dirL = ['div01L', 'div02L', 'privateL', 'rivtdocL']
+main_dirL = ['div01L', 'div02L', 'privateL', 'functionsL', 'rivtdocL']
 main_dir_nameL = ['div01-division-one',
                   'div02-division-two',
                   'data-private',
+                  'functions',
                   'rivt-docs']
 div01L = [
     'data01',
-    'func01'
 ]
 
 div02L = [
-    'data02',
-    'func02'
+    'data02'
 ]
 
 privateL = [
     'data',
+    'functions',
+    'functions\\output',
+    'functions\\input',
     'rivt-docs',
     'temp',
-    'functions',
     'rivt-docs\\text',
     'rivt-docs\\pdf'
 ]
@@ -30,6 +31,11 @@ privateL = [
 rivtdocL = [
     'pdf',
     'text'
+]
+
+functionsL = [
+    'input',
+    'output'
 ]
 
 
@@ -164,7 +170,7 @@ def main():
             
             '''
 
-        if "data-private" not in divNameS and "rivt-docs" not in divNameS:
+        if "div01" in divNameS or "div02" in divNameS:
             try:
                 with open(file1P, 'w') as f:
                     f.write(rivtS)

@@ -239,16 +239,16 @@ label with a double hyphen (--).
         The sub or nosub setting specifies whether equations are additionally
         printed with substituted numerical values.
         
-        The equal tag declares a value. A sequence of declared values terminated
-        with a blank line is formatted as a table.
+        The equal tag declares a value and the printed units. A sequence of
+        declared values terminated with a blank line is formatted as a table.
         
         Example of assignment list _[t]
         f1 = 10.1 * LBF |LBF, N| a force value
         d1 = 12.1 * IN  |IN, CM| a length value
 
-        An equation tag provides an equation description and number. A colon-equal
-        tag assigns a value and specifies the result units and the output decimal
-        places printed in the result and equation.
+        The colon-equal tag assigns a value and specifies the result's units
+        and decimal places and the printed decimals for the equation terms. The
+        equation tag labels and numbers an equation.
 
         Example equation - Area of circle  _[e]
         a1 := 3.14(d1/2)^2 | IN^2, CM^2 | 1,2
@@ -262,10 +262,10 @@ label with a double hyphen (--).
 
     rv.T("""The Tools method | summary
 
-        # The Tools method processes Python code in the rivt namespace and prints 
-        # the code and the result of any print statement in the doc. 
-        # Functions may be written explicitly or imported from other 
-        # files. The 'summary' parameter inserts the line comments (#) in the 
+        # The Tools method processes Python code in the rivt namespace and  
+        # prints the code and the result of any print statement in the document. 
+        # Functions may be written or imported from other files.
+        # The 'summary' parameter inserts the comments (#) in the 
         # document and creates an appendix for the code. The 'inline' parameter 
         # includes the code verbatim in the document.
         

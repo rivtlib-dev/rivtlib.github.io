@@ -15,13 +15,15 @@ A **rivt** file is a Python file that begins with the import statement:
 which provides four API functions. Each function takes a single, triple quoted
 string as an argument.
 
-| rv.R(rS) - report and document configuration (Rivtinit)
-| rv.I(rS) - static text, images, tables and math (Insert)
-| rv.V(rS) - equations (Values)
-| rv.T(rS) - Python functions and scripts (Tools)
-| rv.write_public() - formatted rivt document output to public folders
-| rv.write_private() - formatted rivt document output to private folders
-|
+::
+    
+ rv.R(rS) - report and document configuration (Rivtinit)
+ rv.I(rS) - static text, images, tables and math (Insert)
+ rv.V(rS) - equations (Values)
+ rv.T(rS) - Python functions and scripts (Tools)
+ rv.write_public() - formatted rivt document output to public folders
+ rv.write_private() - formatted rivt document output to private folders
+
 
 rv.R may be followed by arbitrary sequences of rv.I, rv.V and rv.T. When
 running in an IDE (e.g. VSCode), each function may be run interactively using

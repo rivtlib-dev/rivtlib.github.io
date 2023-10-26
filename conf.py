@@ -28,7 +28,7 @@ html_context = {
 
 html_sidebars = {
     "index.md": ["folders", "__init__"],
-    "folders.md": ["write_pdf"]
+    "folders.md": ["write_pdf", "write_private", "write_public"]
 }
 
 html_theme = 'pydata_sphinx_theme'

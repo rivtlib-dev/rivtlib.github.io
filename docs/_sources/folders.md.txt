@@ -1,12 +1,5 @@
 # Module folders
 
-```{toctree}
-:maxdepth: 3
-:caption: test caption
-cmd_parse
-write_pdf
-```
-
 parse rivtlib folder structure
 
 ??? example "View Source"

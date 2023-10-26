@@ -4,7 +4,6 @@ pdocs as_markdown -o .\  .\src\rivtlib\cmd_parse.py
 pdocs as_markdown -o .\  .\src\rivtlib\cmd_rst.py
 pdocs as_markdown -o .\  .\src\rivtlib\cmd_utf.py
 pdocs as_markdown -o .\  .\src\rivtlib\config.py
-pdocs as_markdown -o .\  .\src\rivtlib\folders.py
 pdocs as_markdown -o .\  .\src\rivtlib\parse.py
 pdocs as_markdown -o .\  .\src\rivtlib\report.py
 pdocs as_markdown -o .\  .\src\rivtlib\rivtapi.py

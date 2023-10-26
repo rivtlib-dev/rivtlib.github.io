@@ -30,8 +30,8 @@ html_sidebars = {
 html_theme = 'sphinx_book_theme'
 html_static_path = ['_static', '_static/img/']
 
-# html_logo = "_static/img/riv-dark8a.png"
-# "navbar_start": ["navbar-logo"]
+
+html_logo = "_static/img/riv-dark8a.png"
 
 html_theme_options = {
     "show_nav_level": 2,
@@ -39,14 +39,16 @@ html_theme_options = {
     "navigation_depth": 3,
     "navbar_align": "content",
     "navbar_persistent": ["search-button"],
+    "navbar_start": ["navbar-logo"],
     "navbar_center": ["navbar-nav"],
     "navbar_end": ["navbar-icon-links"],
     "primary_sidebar_end": ["indices.html"],
     "footer_start": ["copyright"],
     "footer_end": [],
+
     "logo": {
         "text": "rivt",
-        "image_dark": "_static/img/riv-dark8.png",
+        "image_dark": "_static/img/riv-dark8a.png",
     }
 }
 

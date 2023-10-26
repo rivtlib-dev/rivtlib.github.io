@@ -29,9 +29,7 @@ html_sidebars = {
 }
 html_theme = 'sphinx_book_theme'
 html_static_path = ['_static', '_static/img/']
-
-
-html_logo = "_static/img/riv-dark8a.png"
+html_logo = "_static/img/riv-dark8b.png"
 
 html_theme_options = {
     "show_nav_level": 2,
@@ -48,7 +46,7 @@ html_theme_options = {
 
     "logo": {
         "text": "rivt",
-        "image_dark": "_static/img/riv-dark8a.png",
+        "image_dark": "_static/img/riv-dark8b.png",
     }
 }
 

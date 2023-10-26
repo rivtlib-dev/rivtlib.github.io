@@ -11,10 +11,6 @@
 
 <hr>
 
-## [organize](organize.md) .. [modify](modify.md) .. [publish](publish.md) 
-
-<hr> 
-
 **rivt** is open source software for publishing engineering documents that
 minimize new writing and maximize reuse of existing material. 
 

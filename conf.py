@@ -25,6 +25,7 @@ html_context = {
     # ...
     "default_mode": "auto"
 }
+
 html_theme = 'pydata_sphinx_theme'
 html_static_path = ['_static', '_static/img/']
 html_logo = "_static/img/riv-dark8.png"
@@ -43,15 +44,10 @@ html_theme_options = {
     }
 }
 
-html_sidebars = {
-    "**": ["sidebar-nav-bs"]
-}
-
 favicons = [
     {"href": "favicon-32x32.png"},
     {"href": "favicon-16x16.png"},
 ]
-
 
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html

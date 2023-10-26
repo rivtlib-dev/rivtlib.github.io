@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="_static/favicon-32x32.png" sizes="32x32" rel="icon" type="image/png">
     <link href="_static/favicon-16x16.png" sizes="16x16" rel="icon" type="image/png">
-    <title>Module cmd_parse &#8212; rivt 0.1 documentation</title>
+    <title>Module tag_parse &#8212; rivt 0.1 documentation</title>
   
   
   
@@ -44,11 +44,9 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'cmd_parse';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tag_parse';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Module write_pdf" href="write_pdf.html" />
-    <link rel="prev" title="Module folders" href="folders.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -154,8 +152,8 @@
                     </li>
                 
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="cmd_parse.html">
                         Module cmd_parse
                       </a>
                     </li>
@@ -251,8 +249,8 @@ document.write(`
                     </li>
                 
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="cmd_parse.html">
                         Module cmd_parse
                       </a>
                     </li>
@@ -320,7 +318,7 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">Module cmd_parse</li>
+    <li class="breadcrumb-item active" aria-current="page">Module tag_parse</li>
   </ul>
 </nav>
 </div>
@@ -337,441 +335,617 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="module-cmd-parse">
-<h1>Module cmd_parse<a class="headerlink" href="#module-cmd-parse" title="Link to this heading">#</a></h1>
+  <section id="module-tag-parse">
+<h1>Module tag_parse<a class="headerlink" href="#module-tag-parse" title="Link to this heading">#</a></h1>
 <p>??? example “View Source”
-import sys</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    import csv
-
-    import textwrap
-
-    import logging
-
-    from pathlib import Path
-
-    import tabulate
+import sympy as sp</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    from sympy.abc import _clash2
 
     from numpy import *
 
+    from rivtlib.units import *
+
     
 
-    class Commands():
+    class Tags:
 
-        &quot;&quot;&quot;common methods for rivt to md, utf and reST
+        &quot;&quot;&quot;subclass - convert rivt tags to MD or reST
 
-            ======================================================== ===========
+                ============================ =======================================
 
-                            command syntax                              scope
+                tags                                   description 
 
-            ======================================================== ===========
+                ============================ =======================================
 
-            || append | folder | file1, file2, ...                         R
+                I,V line format:
 
-            || github | folder | file |repository                          R
+                text _[h1-h6]                     heading type        
 
-            || project | file | type                                       R
+                text _[b]                       bold 
 
-            || image | folder | file1, (file2)  | size1, (size2)           I 
+                text _[i]                       italic
 
-            || table | folder | file  | max width | rows                   I
+                text _[c]                       center
 
-            || text | folder | file  | type                                I
+                text _[bic]                     combined formatting
 
-            || declare | folder | file | rows                              V
+                text _[u]                       underline   
 
-            || assign | folder | file | rows                               V
+                text _[r]                       right justify
+
+                text _[l]                       LaTeX math
+
+                text _[s]                       sympy math
+
+                text _[l,s;bic]                 combined formatting
+
+                text _[e]                       equation label and autonumber
+
+                text _[f]                       figure caption and autonumber
+
+                text _[t]                       table title and autonumber
+
+                text _[#]                       footnote and autonumber
+
+                text _[d]                       footnote description 
+
+                _[line]                         horizontal line
+
+                _[page]                         new page
+
+                _[address, label]               url, internal reference
+
+                I,V  block format:          
+
+                _[[b]]                          bold
+
+                _[[c]]                          center
+
+                _[[i]]                          italic
+
+                _[[p]]                          plain  
+
+                _[[bcip]]                       combined formatting
+
+                _[[l]]                          LaTeX
+
+                _[[h]]                          HTML 
+
+                _[[q]]                          quit block
 
             &quot;&quot;&quot;
 
-        def cmd_parse(self, cmdS):
+        def tag_parse(self, tagS):
 
-            &quot;&quot;&quot;_summary_
-
-            &quot;&quot;&quot;
-
-            self.cmdS = cmdS
-
-            return eval(&quot;self.&quot; + cmdS+&quot;()&quot;)
-
-        def append(self):
-
-            &quot;&quot;&quot;_summary_
+            &quot;&quot;&quot;convert rivt tags to md
 
             &quot;&quot;&quot;
 
-            pass
+            if tagS in self.tagsD:
 
-        def github(self):
+                return eval(&quot;self.&quot; + self.tagsD[tagS] + &quot;()&quot;)
 
-            &quot;&quot;&quot;_summary_
+            if &quot;b&quot; in tagS and &quot;c&quot; in tagS:
 
-            &quot;&quot;&quot;
+                return self.boldcenter()
 
-            pass
+            if &quot;b&quot; in tagS and &quot;i&quot; in tagS:
+
+                return self.bolditalic()
+
+            if &quot;b&quot; in tagS and &quot;i&quot; in tagS and &quot;c&quot; in tagS:
+
+                return self.bolditaliccenter()
+
+            if &quot;i&quot; in tagS and &quot;c&quot; in tagS:
+
+                return self.italiccenter()
 
         def declare(self):
 
-            &quot;&quot;&quot;import values from files
+            &quot;&quot;&quot;declare variable values
+
+            :return: _description_
+
+            :rtype: _type_
 
             &quot;&quot;&quot;
 
             locals().update(self.localD)
 
-            hdrL = [&quot;variable&quot;, &quot;value&quot;, &quot;[value]&quot;, &quot;description&quot;]
+            varS = str(self.lineS).split(&quot;:=&quot;)[0].strip()
 
-            alignL = [&quot;left&quot;, &quot;right&quot;, &quot;right&quot;, &quot;left&quot;]
+            valS = str(self.lineS).split(&quot;:=&quot;)[1].strip()
 
-            plenI = 2                       # number of parameters
+            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-            if len(self.paramL) != plenI:
+            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-                logging.info(
+            descripS = str(self.incrD[&quot;descS&quot;])
 
-                    f&quot;{self.cmdS} command not evaluated: {plenI} parameters required&quot;)
+            if unit1S.strip() != &quot;-&quot;:
 
-                return
-
-            if self.paramL[0] == &quot;data&quot;:
-
-                folderP = Path(self.folderD[&quot;dataP&quot;])
+                cmdS = varS + &quot;= &quot; + valS + &quot;*&quot; + unit1S
 
             else:
 
-                folderP = Path(self.folderD[&quot;dataP&quot;])
+                cmdS = varS + &quot;= as_unum(&quot; + valS + &quot;)&quot;
 
-            fileP = Path(self.paramL[1].strip())
-
-            pathP = Path(folderP / fileP)
-
-            valL = []
-
-            fltfmtS = &quot;&quot;
-
-            with open(pathP, &quot;r&quot;) as csvfile:
-
-                readL = list(csv.reader(csvfile))
-
-            for vaL in readL[1:]:
-
-                if len(vaL) &lt; 5:
-
-                    vL = len(vaL)
-
-                    vaL += [&quot; &quot;] * (5 - len(vL))  # pad values
-
-                varS = vaL[0].strip()
-
-                valS = vaL[1].strip()
-
-                unit1S, unit2S = vaL[2].strip(), vaL[3].strip()
-
-                descripS = vaL[4].strip()
-
-                if not len(varS):
-
-                    valL.append([&quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;Total&quot;])  # totals
-
-                    continue
-
-                val1U = val2U = array(eval(valS))
-
-                if unit1S != &quot;-&quot;:
-
-                    if type(eval(valS)) == list:
-
-                        val1U = array(eval(valS)) * eval(unit1S)
-
-                        val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
-
-                    else:
-
-                        cmdS = varS + &quot;= &quot; + valS + &quot;*&quot; + unit1S
-
-                        exec(cmdS, globals(), locals())
-
-                        valU = eval(varS)
-
-                        val1U = str(valU.number()) + &quot; &quot; + str(valU.unit())
-
-                        val2U = valU.cast_unit(eval(unit2S))
-
-                valL.append([varS, val1U, val2U, descripS])
-
-            mdS = self.vtable(valL, hdrL, &quot;rst&quot;, alignL)
+            exec(cmdS, globals(), locals())
 
             self.localD.update(locals())
 
-            print(mdS + &quot;\n&quot;)
+            return [varS, valS, unit1S, unit2S, descripS]
 
-            return mdS
+        def assign(self):
 
-        def list(self):
+            &quot;&quot;&quot;assign value to equation
 
-            &quot;&quot;&quot;import data from files
+            :return: _description_
 
-    
-
-                :return lineS: md table
-
-                :rtype: str
+            :rtype: _type_
 
             &quot;&quot;&quot;
 
-            locals().update(self.rivtD)
+            locals().update(self.localD)
 
-            valL = []
+            varS = str(self.lineS).split(&quot;=&quot;)[0].strip()
 
-            if len(vL) &lt; 5:
+            valS = str(self.lineS).split(&quot;=&quot;)[1].strip()
 
-                vL += [&quot;&quot;] * (5 - len(vL))  # pad command
+            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-            valL.append([&quot;variable&quot;, &quot;values&quot;])
+            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-            vfileS = Path(self.folderD[&quot;cpath&quot;] / vL[2].strip())
+            descS = str(self.incrD[&quot;eqlabelS&quot;])
 
-            vecL = eval(vL[3].strip())
+            precI = int(self.incrD[&quot;descS&quot;])  # trim result
 
-            with open(vfileS, &quot;r&quot;) as csvF:
+            fmtS = &quot;%.&quot; + str(precI) + &quot;f&quot;
 
-                reader = csv.reader(csvF)
+            if unit1S.strip() != &quot;-&quot;:
 
-            vL = list(reader)
+                if type(eval(valS)) == list:
 
-            for i in vL:
+                    val1U = array(eval(valS)) * eval(unit1S)
 
-                varS = i[0]
+                    val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
 
-                varL = array(i[1:])
+                else:
 
-                cmdS = varS + &quot;=&quot; + str(varL)
+                    cmdS = varS + &quot;= &quot; + valS
 
-                exec(cmdS, globals(), locals())
+                    exec(cmdS, globals(), locals())
 
-                if len(varL) &gt; 4:
+                    val1U = eval(varS).cast_unit(eval(unit1S))
 
-                    varL = str((varL[:2]).append([&quot;...&quot;]))
+                    val1U.set_format(value_format=fmtS, auto_norm=True)
 
-                valL.append([varS, varL])
+                    val2U = val1U.cast_unit(eval(unit2S))
 
-            hdrL = [&quot;variable&quot;, &quot;values&quot;]
-
-            alignL = [&quot;left&quot;, &quot;right&quot;]
-
-            self.vtable(valL, hdrL, &quot;rst&quot;, alignL)
-
-            self.rivtD.update(locals())
-
-            return
-
-        def declare(self):
-
-            &quot;&quot;&quot;import values from files
-
-            &quot;&quot;&quot;
-
-            hdrL = [&quot;variable&quot;, &quot;value&quot;, &quot;[value]&quot;, &quot;description&quot;]
-
-            alignL = [&quot;left&quot;, &quot;right&quot;, &quot;right&quot;, &quot;left&quot;]
-
-            plenI = 2                       # number of parameters
-
-            if len(self.paramL) != plenI:
-
-                logging.info(
-
-                    f&quot;{self.cmdS} command not evaluated: {plenI} parameters required&quot;)
-
-                return
-
-            if self.paramL[0] == &quot;data&quot;:
-
-                folderP = Path(self.folderD[&quot;dataP&quot;])
+                    # print(f&quot;{val1U=}&quot;)
 
             else:
 
-                folderP = Path(self.folderD[&quot;dataP&quot;])
+                cmdS = varS + &quot;= as_unum(&quot; + valS + &quot;)&quot;
 
-            fileP = Path(self.paramL[1].strip())
+                exec(cmdS, globals(), locals())
 
-            pathP = Path(folderP / fileP)
+                valU = eval(varS)
 
-            valL = []
+                valdec = round(valU.number(), precI)
 
-            fltfmtS = &quot;&quot;
+                val1U = val2U = str(valdec)
 
-            with open(pathP, &quot;r&quot;) as csvfile:
+            spS = &quot;Eq(&quot; + varS + &quot;,(&quot; + valS + &quot;))&quot;
 
-                readL = list(csv.reader(csvfile))
+            mdS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
 
-            for vaL in readL[1:]:
+            mdS = &quot;\n&quot; + mdS + &quot;\n&quot;
 
-                if len(vaL) &lt; 5:
+            eqL = [varS, valS, unit1S, unit2S, descS]
 
-                    vL = len(vaL)
+            print(mdS)                      # print equation
 
-                    vaL += [&quot;&quot;] * (5 - len(vL))  # pad values
+            subS = &quot; &quot;
 
-                varS = vaL[0].strip()
+            if self.incrD[&quot;subB&quot;]:
 
-                valS = vaL[1].strip()
+                subS = self.vsub(eqL, precI, varS, val1U)
 
-                unit1S, unit2S = vaL[2].strip(), vaL[3].strip()
+                print(subS)                  # print with substition
 
-                descripS = vaL[4].strip()
+            self.localD.update(locals())
 
-                if not len(varS):
+            return [eqL, mdS + &quot;\n&quot; + subS + &quot;\n\n&quot;]
 
-                    valL.append([&quot;_ _&quot;, &quot;_ _&quot;, &quot;_ _&quot;, &quot;Total&quot;])  # totals
+        def vsub(self, eqL, precI, varS, val1U):
+
+            &quot;&quot;&quot;substitute variables with values
+
+            :param eqL: _description_
+
+            :type eqL: _type_
+
+            :param precI: _description_
+
+            :type precI: _type_
+
+            :param varS: _description_
+
+            :type varS: _type_
+
+            :param val1U: _description_
+
+            :type val1U: _type_
+
+            :return: _description_
+
+            :rtype: _type_
+
+            &quot;&quot;&quot;
+
+            locals().update(self.localD)
+
+            fmtS = &quot;%.&quot; + str(precI) + &quot;f&quot;
+
+            varL = [str(eqL[0]), str(eqL[1])]
+
+            # resultS = vars[0].strip() + &quot; = &quot; + str(eval(vars[1]))
+
+            # sps = sps.encode(&#39;unicode-escape&#39;).decode()
+
+            eqS = &quot;Eq(&quot; + eqL[0] + &quot;,(&quot; + eqL[1] + &quot;))&quot;
+
+            with sp.evaluate(False):
+
+                symeq = sp.sympify(eqS.strip())
+
+            # print(f&quot;{symeq=}&quot;)
+
+            symat = symeq.atoms(sp.Symbol)
+
+            # print(f&quot;{symat=}&quot;)
+
+            for n1O in symat:
+
+                if str(n1O) == varS:
+
+                    symeq = symeq.subs(n1O, sp.Symbol(str(val1U)))
 
                     continue
 
-                val1U = val2U = array(eval(valS))
+                # print(f&quot;{n1O=}&quot;)
 
-                if unit1S != &quot;-&quot;:
+                n1U = eval(str(n1O))
 
-                    if type(eval(valS)) == list:
+                n1U.set_format(value_format=fmtS, auto_norm=True)
 
-                        val1U = array(eval(valS)) * eval(unit1S)
+                # print(f&quot;{n1U=}&quot;)
 
-                        val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+                evlen = len(str(n1U))  # get var length
 
-                    else:
+                new_var = str(n1U).rjust(evlen, &quot;~&quot;)
 
-                        cmdS = varS + &quot;= &quot; + valS + &quot;*&quot; + unit1S
+                new_var = new_var.replace(&quot;_&quot;, &quot;|&quot;)
 
-                        exec(cmdS, globals(), locals())
+                # print(f&quot;{new_var=}&quot;)
 
-                        valU = eval(varS)
+                with sp.evaluate(False):
 
-                        val1U = str(valU.number()) + &quot; &quot; + str(valU.unit())
+                    symeq = symeq.subs(n1O, sp.Symbol(new_var))
 
-                        val2U = valU.cast_unit(eval(unit2S))
+                # print(f&quot;{symeq=}&quot;)
 
-                valL.append([varS, val1U, val2U, descripS])
+            out2 = sp.pretty(symeq, wrap_line=False)
 
-            rstS = self.vtable(valL, hdrL, &quot;rst&quot;, alignL)
+            # print(&#39;out2a\n&#39;, out2)
 
-            # print(mdS + &quot;\n&quot;)
+            # symat1 = symeq.atoms(sp.Symbol)  # adjust character length
 
-            return rstS
+            # for n2 in symat1:
 
-        def vtable(self, tbL, hdrL, tblfmt, alignL):
+            #     orig_var = str(n2).replace(&quot;~&quot;, &quot;&quot;)
 
-            &quot;&quot;&quot;write value table&quot;&quot;&quot;
+            #     orig_var = orig_var.replace(&quot;|&quot;, &quot;_&quot;)
 
-            # locals().update(self.rivtD)
+            #     expr = eval(varL[1])
 
-            sys.stdout.flush()
+            #     if type(expr) == float:
 
-            old_stdout = sys.stdout
+            #         form = &quot;{%.&quot; + str(precI) + &quot;f}&quot;
 
-            output = StringIO()
+            #         symeval1 = form.format(eval(str(expr)))
 
-            output.write(
+            #     else:
 
-                tabulate(
+            #         try:
 
-                    tbL, headers=hdrL, tablefmt=tblfmt,
+            #             symeval1 = eval(
 
-                    showindex=False, colalign=alignL
+            #                 orig_var.__str__()).__str__()
 
-                )
+            #         except:
 
-            )
+            #             symeval1 = eval(orig_var.__str__()).__str__()
 
-            mdS = output.getvalue()
+            #     out2 = out2.replace(n2.__str__(), symeval1)   # substitute
 
-            sys.stdout = old_stdout
+            # print(&#39;out2b\n&#39;, out2)
 
-            sys.stdout.flush()
+            out3 = out2  # clean up unicode
+
+            out3 = out3.replace(&quot;*&quot;, &quot;\\u22C5&quot;)
+
+            _cnt = 0
+
+            for _m in out3:
+
+                if _m == &quot;-&quot;:
+
+                    _cnt += 1
+
+                    continue
+
+                else:
+
+                    if _cnt &gt; 1:
+
+                        out3 = out3.replace(&quot;-&quot; * _cnt, &quot;\u2014&quot; * _cnt)
+
+                    _cnt = 0
+
+            self.localD.update(locals())
+
+            mdS = out3 + &quot;\n\n&quot;
 
             return mdS
 
-            # self.calcS += mdS + &quot;\n&quot;
+        def declare(self):
 
-            # self.rivtD.update(locals())
+            &quot;&quot;&quot; := declare variable value
 
-        def txthtml(self, txtfileL):
+            :return assignL: assign results
 
-            &quot;&quot;&quot;9a _summary_
+            :rtype: list
 
-            :return: _description_
+            :return rstS: restruct string 
 
-            :rtype: _type_
-
-            &quot;&quot;&quot;
-
-            txtS = &quot;&quot;
-
-            flg = 0
-
-            for iS in txtfileL:
-
-                if &quot;src=&quot; in iS:
-
-                    flg = 1
-
-                    continue
-
-                if flg == 1 and &#39;&quot;&#39; in iS:
-
-                    flg = 0
-
-                    continue
-
-                if flg == 1:
-
-                    continue
-
-                txtS += &quot; &quot;*4 + iS
-
-                txtS = htm.html2text(txtS)
-
-                mdS = txtS.replace(&quot;\n    \n&quot;, &quot;&quot;)
-
-                return mdS
-
-        def txttex(self, txtfileS, txttypeS):
-
-            &quot;&quot;&quot;9b _summary_
-
-            :return: _description_
-
-            :rtype: _type_
+            :rtype: string
 
             &quot;&quot;&quot;
 
-            soup = TexSoup(txtfileS)
+            locals().update(self.localD)
 
-            soupL = list(soup.text)
+            varS = str(self.lineS).split(&quot;:=&quot;)[0].strip()
 
-            soupS = &quot;&quot;.join(soupL)
+            valS = str(self.lineS).split(&quot;:=&quot;)[1].strip()
 
-            soup1L = []
+            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-            soupS = soupS.replace(&quot;\\\\&quot;, &quot;\n&quot;)
+            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-            soupL = soupS.split(&quot;\n&quot;)
+            descripS = str(self.incrD[&quot;descS&quot;])
 
-            for s in soupL:
+            if unit1S.strip() != &quot;-&quot;:
 
-                sL = s.split(&quot;&amp;&quot;)
+                cmdS = varS + &quot;= &quot; + valS + &quot;*&quot; + unit1S
 
-                sL = s.split(&quot;&gt;&quot;)
+            else:
 
-                try:
+                cmdS = varS + &quot;= as_unum(&quot; + valS + &quot;)&quot;
 
-                    soup1L.append(sL[0].ljust(10) + sL[1])
+            exec(cmdS, globals(), locals())
 
-                except:
+            self.localD.update(locals())
 
-                    soup1L.append(s)
+            return [varS, valS, unit1S, unit2S, descripS]
 
-            soupS = [s.replace(&quot;\\&quot;, &quot; &quot;) for s in soup1L]
+        def assign(self):
 
-            soupS = &quot;\n&quot;.join(soup1L)
+            &quot;&quot;&quot; = assign result to equation
 
-            return soupS
+            :return assignL: assign results
+
+            :rtype: list
+
+            :return rstS: restruct string 
+
+            :rtype: string
+
+            &quot;&quot;&quot;
+
+            locals().update(self.localD)
+
+            varS = str(self.lineS).split(&quot;=&quot;)[0].strip()
+
+            valS = str(self.lineS).split(&quot;=&quot;)[1].strip()
+
+            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+
+            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+
+            descS = str(self.incrD[&quot;eqlabelS&quot;])
+
+            precI = int(self.incrD[&quot;descS&quot;])  # trim result
+
+            fmtS = &quot;%.&quot; + str(precI) + &quot;f&quot;
+
+            if unit1S.strip() != &quot;-&quot;:
+
+                if type(eval(valS)) == list:
+
+                    val1U = array(eval(valS)) * eval(unit1S)
+
+                    val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+
+                else:
+
+                    cmdS = varS + &quot;= &quot; + valS
+
+                    exec(cmdS, globals(), locals())
+
+                    val1U = eval(varS).cast_unit(eval(unit1S))
+
+                    val1U.set_format(value_format=fmtS, auto_norm=True)
+
+                    val2U = val1U.cast_unit(eval(unit2S))
+
+            else:
+
+                cmdS = varS + &quot;= as_unum(&quot; + valS + &quot;)&quot;
+
+                exec(cmdS, globals(), locals())
+
+                valU = eval(varS)
+
+                valdec = round(valU.number(), precI)
+
+                val1U = val2U = str(valdec)
+
+            spS = &quot;Eq(&quot; + varS + &quot;,(&quot; + valS + &quot;))&quot;
+
+            # symeq = sp.sympify(spS, _clash2, evaluate=False)
+
+            # eqltxS = sp.latex(symeq, mul_symbol=&quot;dot&quot;)
+
+            eqS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+
+            indeqS = eqS.replace(&quot;\n&quot;, &quot;\n   &quot;)
+
+            rstS = &quot;\n::\n\n   &quot; + indeqS + &quot;\n\n&quot;
+
+            eqL = [varS, valS, unit1S, unit2S, descS]
+
+            self.localD.update(locals())
+
+            subS = &quot;\n\n&quot;
+
+            if self.incrD[&quot;subB&quot;]:              # replace variables with numbers
+
+                subS = self.vsub(eqL, precI, varS, val1U) + &quot;\n\n&quot;
+
+            assignL = [varS, str(val1U), unit1S, unit2S, descS]
+
+            return [assignL, rstS + subS]
+
+        def vsub(self, eqL, precI, varS, val1U):
+
+            &quot;&quot;&quot;substitute numbers for variables in printed output
+
+            :return assignL: assign results
+
+            :rtype: list
+
+            :return rstS: restruct string 
+
+            :rtype: string
+
+            &quot;&quot;&quot;
+
+            locals().update(self.localD)
+
+            fmtS = &quot;%.&quot; + str(precI) + &quot;f&quot;
+
+            varL = [str(eqL[0]), str(eqL[1])]
+
+            # resultS = vars[0].strip() + &quot; = &quot; + str(eval(vars[1]))
+
+            # sps = sps.encode(&#39;unicode-escape&#39;).decode()
+
+            eqS = &quot;Eq(&quot; + eqL[0] + &quot;,(&quot; + eqL[1] + &quot;))&quot;
+
+            with sp.evaluate(False):
+
+                symeq = sp.sympify(eqS.strip())
+
+            symat = symeq.atoms(sp.Symbol)
+
+            for n1O in symat:
+
+                if str(n1O) == varS:
+
+                    symeq = symeq.subs(n1O, sp.Symbol(str(val1U)))
+
+                    continue
+
+                n1U = eval(str(n1O))
+
+                n1U.set_format(value_format=fmtS, auto_norm=True)
+
+                evlen = len(str(n1U))  # get var length
+
+                new_var = str(n1U).rjust(evlen, &quot;~&quot;)
+
+                new_var = new_var.replace(&quot;_&quot;, &quot;|&quot;)
+
+                with sp.evaluate(False):                # sub values
+
+                    symeq = symeq.subs(n1O, sp.Symbol(new_var))
+
+            out2 = sp.pretty(symeq, wrap_line=False)
+
+            # symat1 = symeq.atoms(sp.Symbol)
+
+            # for n2 in symat1:
+
+            #     orig_var = str(n2).replace(&quot;~&quot;, &quot;&quot;)
+
+            #     orig_var = orig_var.replace(&quot;|&quot;, &quot;_&quot;)
+
+            #     expr = eval(varL[1])
+
+            #     if type(expr) == float:
+
+            #         form = &quot;{%.&quot; + str(precI) + &quot;f}&quot;
+
+            #         symeval1 = form.format(eval(str(expr)))
+
+            #     else:
+
+            #         try:
+
+            #             symeval1 = eval(
+
+            #                 orig_var.__str__()).__str__()
+
+            #         except:
+
+            #             symeval1 = eval(orig_var.__str__()).__str__()
+
+            #     out2 = out2.replace(n2.__str__(), symeval1)   # substitute
+
+            # print(&#39;out2b\n&#39;, out2)
+
+            out3 = out2  # clean up unicode
+
+            out3 = out3.replace(&quot;*&quot;, &quot;\\u22C5&quot;)
+
+            _cnt = 0
+
+            for _m in out3:
+
+                if _m == &quot;-&quot;:
+
+                    _cnt += 1
+
+                    continue
+
+                else:
+
+                    if _cnt &gt; 1:
+
+                        out3 = out3.replace(&quot;-&quot; * _cnt, &quot;\u2014&quot; * _cnt)
+
+                    _cnt = 0
+
+            self.localD.update(locals())
+
+            indeqS = out3.replace(&quot;\n&quot;, &quot;\n   &quot;)
+
+            rstS = &quot;\n::\n\n   &quot; + indeqS + &quot;\n\n&quot;
+
+            return rstS
 </pre></div>
 </div>
 <section id="variables">
@@ -1196,66 +1370,158 @@ import sys</p>
 </section>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
-<section id="commands">
-<h3>Commands<a class="headerlink" href="#commands" title="Link to this heading">#</a></h3>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Commands</span><span class="p">(</span>
+<section id="tags">
+<h3>Tags<a class="headerlink" href="#tags" title="Link to this heading">#</a></h3>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Tags</span><span class="p">(</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>common methods for rivt to md, utf and reST</p>
-<p>======================================================== ===========
-command syntax                              scope
-======================================================== ===========</p>
-<p>|| append | folder | file1, file2, …                         R
-|| github | folder | file |repository                          R
-|| project | file | type                                       R
-|| image | folder | file1, (file2)  | size1, (size2)           I
-|| table | folder | file  | max width | rows                   I
-|| text | folder | file  | type                                I
-|| declare | folder | file | rows                              V
-|| assign | folder | file | rows                               V</p>
+<p>subclass - convert rivt tags to MD or reST</p>
+<p>============================ =======================================
+tags                                   description
+============================ =======================================</p>
+<p>I,V line format:
+text _[h1-h6]                     heading type<br />
+text _[b]                       bold
+text _[i]                       italic
+text _[c]                       center
+text _[bic]                     combined formatting
+text _[u]                       underline<br />
+text _[r]                       right justify
+text _[l]                       LaTeX math
+text _[s]                       sympy math
+text _[l,s;bic]                 combined formatting
+text _[e]                       equation label and autonumber
+text _[f]                       figure caption and autonumber
+text _[t]                       table title and autonumber
+text _[#]                       footnote and autonumber
+text _[d]                       footnote description
+_[line]                         horizontal line
+_[page]                         new page
+_[address, label]               url, internal reference
+I,V  block format:<br />
+_[[b]]                          bold
+_[[c]]                          center
+_[[i]]                          italic
+_[[p]]                          plain<br />
+_[[bcip]]                       combined formatting
+_[[l]]                          LaTeX
+_[[h]]                          HTML
+_[[q]]                          quit block</p>
 <section id="methods">
 <h4>Methods<a class="headerlink" href="#methods" title="Link to this heading">#</a></h4>
 </section>
-<section id="append">
-<h4>append<a class="headerlink" href="#append" title="Link to this heading">#</a></h4>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">append</span><span class="p">(</span>
+<section id="assign">
+<h4>assign<a class="headerlink" href="#assign" title="Link to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">assign</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p><em>summary</em></p>
+<p>= assign result to equation</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>assignL</p></td>
+<td><p>assign results</p></td>
+</tr>
+</tbody>
+</table>
 <p>??? example “View Source”
-def append(self):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;_summary_
+def assign(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot; = assign result to equation
+
+            :return assignL: assign results
+
+            :rtype: list
+
+            :return rstS: restruct string 
+
+            :rtype: string
 
             &quot;&quot;&quot;
 
-            pass
-</pre></div>
-</div>
-</section>
-<section id="cmd-parse">
-<h4>cmd_parse<a class="headerlink" href="#cmd-parse" title="Link to this heading">#</a></h4>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cmd_parse</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span>
-    <span class="n">cmdS</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p><em>summary</em></p>
-<p>??? example “View Source”
-def cmd_parse(self, cmdS):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;_summary_
+            locals().update(self.localD)
 
-            &quot;&quot;&quot;
+            varS = str(self.lineS).split(&quot;=&quot;)[0].strip()
 
-            self.cmdS = cmdS
+            valS = str(self.lineS).split(&quot;=&quot;)[1].strip()
 
-            return eval(&quot;self.&quot; + cmdS+&quot;()&quot;)
+            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+
+            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+
+            descS = str(self.incrD[&quot;eqlabelS&quot;])
+
+            precI = int(self.incrD[&quot;descS&quot;])  # trim result
+
+            fmtS = &quot;%.&quot; + str(precI) + &quot;f&quot;
+
+            if unit1S.strip() != &quot;-&quot;:
+
+                if type(eval(valS)) == list:
+
+                    val1U = array(eval(valS)) * eval(unit1S)
+
+                    val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+
+                else:
+
+                    cmdS = varS + &quot;= &quot; + valS
+
+                    exec(cmdS, globals(), locals())
+
+                    val1U = eval(varS).cast_unit(eval(unit1S))
+
+                    val1U.set_format(value_format=fmtS, auto_norm=True)
+
+                    val2U = val1U.cast_unit(eval(unit2S))
+
+            else:
+
+                cmdS = varS + &quot;= as_unum(&quot; + valS + &quot;)&quot;
+
+                exec(cmdS, globals(), locals())
+
+                valU = eval(varS)
+
+                valdec = round(valU.number(), precI)
+
+                val1U = val2U = str(valdec)
+
+            spS = &quot;Eq(&quot; + varS + &quot;,(&quot; + valS + &quot;))&quot;
+
+            # symeq = sp.sympify(spS, _clash2, evaluate=False)
+
+            # eqltxS = sp.latex(symeq, mul_symbol=&quot;dot&quot;)
+
+            eqS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+
+            indeqS = eqS.replace(&quot;\n&quot;, &quot;\n   &quot;)
+
+            rstS = &quot;\n::\n\n   &quot; + indeqS + &quot;\n\n&quot;
+
+            eqL = [varS, valS, unit1S, unit2S, descS]
+
+            self.localD.update(locals())
+
+            subS = &quot;\n\n&quot;
+
+            if self.incrD[&quot;subB&quot;]:              # replace variables with numbers
+
+                subS = self.vsub(eqL, precI, varS, val1U) + &quot;\n\n&quot;
+
+            assignL = [varS, str(val1U), unit1S, unit2S, descS]
+
+            return [assignL, rstS + subS]
 </pre></div>
 </div>
 </section>
@@ -1266,378 +1532,232 @@ def cmd_parse(self, cmdS):</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>import values from files</p>
+<p>:= declare variable value</p>
+<p>:return assignL: assign results
+:rtype: list
+:return rstS: restruct string
+:rtype: string</p>
 <p>??? example “View Source”
 def declare(self):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;import values from files
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot; := declare variable value
+
+            :return assignL: assign results
+
+            :rtype: list
+
+            :return rstS: restruct string 
+
+            :rtype: string
 
             &quot;&quot;&quot;
 
-            hdrL = [&quot;variable&quot;, &quot;value&quot;, &quot;[value]&quot;, &quot;description&quot;]
+            locals().update(self.localD)
 
-            alignL = [&quot;left&quot;, &quot;right&quot;, &quot;right&quot;, &quot;left&quot;]
+            varS = str(self.lineS).split(&quot;:=&quot;)[0].strip()
 
-            plenI = 2                       # number of parameters
+            valS = str(self.lineS).split(&quot;:=&quot;)[1].strip()
 
-            if len(self.paramL) != plenI:
+            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-                logging.info(
+            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-                    f&quot;{self.cmdS} command not evaluated: {plenI} parameters required&quot;)
+            descripS = str(self.incrD[&quot;descS&quot;])
 
-                return
+            if unit1S.strip() != &quot;-&quot;:
 
-            if self.paramL[0] == &quot;data&quot;:
-
-                folderP = Path(self.folderD[&quot;dataP&quot;])
+                cmdS = varS + &quot;= &quot; + valS + &quot;*&quot; + unit1S
 
             else:
 
-                folderP = Path(self.folderD[&quot;dataP&quot;])
+                cmdS = varS + &quot;= as_unum(&quot; + valS + &quot;)&quot;
 
-            fileP = Path(self.paramL[1].strip())
+            exec(cmdS, globals(), locals())
 
-            pathP = Path(folderP / fileP)
+            self.localD.update(locals())
 
-            valL = []
+            return [varS, valS, unit1S, unit2S, descripS]
+</pre></div>
+</div>
+</section>
+<section id="tag-parse">
+<h4>tag_parse<a class="headerlink" href="#tag-parse" title="Link to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tag_parse</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">tagS</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>convert rivt tags to md</p>
+<p>??? example “View Source”
+def tag_parse(self, tagS):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;convert rivt tags to md
 
-            fltfmtS = &quot;&quot;
+            &quot;&quot;&quot;
 
-            with open(pathP, &quot;r&quot;) as csvfile:
+            if tagS in self.tagsD:
 
-                readL = list(csv.reader(csvfile))
+                return eval(&quot;self.&quot; + self.tagsD[tagS] + &quot;()&quot;)
 
-            for vaL in readL[1:]:
+            if &quot;b&quot; in tagS and &quot;c&quot; in tagS:
 
-                if len(vaL) &lt; 5:
+                return self.boldcenter()
 
-                    vL = len(vaL)
+            if &quot;b&quot; in tagS and &quot;i&quot; in tagS:
 
-                    vaL += [&quot;&quot;] * (5 - len(vL))  # pad values
+                return self.bolditalic()
 
-                varS = vaL[0].strip()
+            if &quot;b&quot; in tagS and &quot;i&quot; in tagS and &quot;c&quot; in tagS:
 
-                valS = vaL[1].strip()
+                return self.bolditaliccenter()
 
-                unit1S, unit2S = vaL[2].strip(), vaL[3].strip()
+            if &quot;i&quot; in tagS and &quot;c&quot; in tagS:
 
-                descripS = vaL[4].strip()
+                return self.italiccenter()
+</pre></div>
+</div>
+</section>
+<section id="vsub">
+<h4>vsub<a class="headerlink" href="#vsub" title="Link to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">vsub</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">eqL</span><span class="p">,</span>
+    <span class="n">precI</span><span class="p">,</span>
+    <span class="n">varS</span><span class="p">,</span>
+    <span class="n">val1U</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>substitute numbers for variables in printed output</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>assignL</p></td>
+<td><p>assign results</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def vsub(self, eqL, precI, varS, val1U):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;substitute numbers for variables in printed output
 
-                if not len(varS):
+            :return assignL: assign results
 
-                    valL.append([&quot;_ _&quot;, &quot;_ _&quot;, &quot;_ _&quot;, &quot;Total&quot;])  # totals
+            :rtype: list
+
+            :return rstS: restruct string 
+
+            :rtype: string
+
+            &quot;&quot;&quot;
+
+            locals().update(self.localD)
+
+            fmtS = &quot;%.&quot; + str(precI) + &quot;f&quot;
+
+            varL = [str(eqL[0]), str(eqL[1])]
+
+            # resultS = vars[0].strip() + &quot; = &quot; + str(eval(vars[1]))
+
+            # sps = sps.encode(&#39;unicode-escape&#39;).decode()
+
+            eqS = &quot;Eq(&quot; + eqL[0] + &quot;,(&quot; + eqL[1] + &quot;))&quot;
+
+            with sp.evaluate(False):
+
+                symeq = sp.sympify(eqS.strip())
+
+            symat = symeq.atoms(sp.Symbol)
+
+            for n1O in symat:
+
+                if str(n1O) == varS:
+
+                    symeq = symeq.subs(n1O, sp.Symbol(str(val1U)))
 
                     continue
 
-                val1U = val2U = array(eval(valS))
+                n1U = eval(str(n1O))
 
-                if unit1S != &quot;-&quot;:
+                n1U.set_format(value_format=fmtS, auto_norm=True)
 
-                    if type(eval(valS)) == list:
+                evlen = len(str(n1U))  # get var length
 
-                        val1U = array(eval(valS)) * eval(unit1S)
+                new_var = str(n1U).rjust(evlen, &quot;~&quot;)
 
-                        val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+                new_var = new_var.replace(&quot;_&quot;, &quot;|&quot;)
 
-                    else:
+                with sp.evaluate(False):                # sub values
 
-                        cmdS = varS + &quot;= &quot; + valS + &quot;*&quot; + unit1S
+                    symeq = symeq.subs(n1O, sp.Symbol(new_var))
 
-                        exec(cmdS, globals(), locals())
+            out2 = sp.pretty(symeq, wrap_line=False)
 
-                        valU = eval(varS)
+            # symat1 = symeq.atoms(sp.Symbol)
 
-                        val1U = str(valU.number()) + &quot; &quot; + str(valU.unit())
+            # for n2 in symat1:
 
-                        val2U = valU.cast_unit(eval(unit2S))
+            #     orig_var = str(n2).replace(&quot;~&quot;, &quot;&quot;)
 
-                valL.append([varS, val1U, val2U, descripS])
+            #     orig_var = orig_var.replace(&quot;|&quot;, &quot;_&quot;)
 
-            rstS = self.vtable(valL, hdrL, &quot;rst&quot;, alignL)
+            #     expr = eval(varL[1])
 
-            # print(mdS + &quot;\n&quot;)
+            #     if type(expr) == float:
+
+            #         form = &quot;{%.&quot; + str(precI) + &quot;f}&quot;
+
+            #         symeval1 = form.format(eval(str(expr)))
+
+            #     else:
+
+            #         try:
+
+            #             symeval1 = eval(
+
+            #                 orig_var.__str__()).__str__()
+
+            #         except:
+
+            #             symeval1 = eval(orig_var.__str__()).__str__()
+
+            #     out2 = out2.replace(n2.__str__(), symeval1)   # substitute
+
+            # print(&#39;out2b\n&#39;, out2)
+
+            out3 = out2  # clean up unicode
+
+            out3 = out3.replace(&quot;*&quot;, &quot;\\u22C5&quot;)
+
+            _cnt = 0
+
+            for _m in out3:
+
+                if _m == &quot;-&quot;:
+
+                    _cnt += 1
+
+                    continue
+
+                else:
+
+                    if _cnt &gt; 1:
+
+                        out3 = out3.replace(&quot;-&quot; * _cnt, &quot;\u2014&quot; * _cnt)
+
+                    _cnt = 0
+
+            self.localD.update(locals())
+
+            indeqS = out3.replace(&quot;\n&quot;, &quot;\n   &quot;)
+
+            rstS = &quot;\n::\n\n   &quot; + indeqS + &quot;\n\n&quot;
 
             return rstS
-</pre></div>
-</div>
-</section>
-<section id="github">
-<h4>github<a class="headerlink" href="#github" title="Link to this heading">#</a></h4>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">github</span><span class="p">(</span>
-    <span class="bp">self</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p><em>summary</em></p>
-<p>??? example “View Source”
-def github(self):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;_summary_
-
-            &quot;&quot;&quot;
-
-            pass
-</pre></div>
-</div>
-</section>
-<section id="list">
-<h4>list<a class="headerlink" href="#list" title="Link to this heading">#</a></h4>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">list</span><span class="p">(</span>
-    <span class="bp">self</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>import data from files</p>
-<p><strong>Returns:</strong></p>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>lineS</p></td>
-<td><p>md table</p></td>
-</tr>
-</tbody>
-</table>
-<p>??? example “View Source”
-def list(self):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;import data from files
-
-    
-
-                :return lineS: md table
-
-                :rtype: str
-
-            &quot;&quot;&quot;
-
-            locals().update(self.rivtD)
-
-            valL = []
-
-            if len(vL) &lt; 5:
-
-                vL += [&quot;&quot;] * (5 - len(vL))  # pad command
-
-            valL.append([&quot;variable&quot;, &quot;values&quot;])
-
-            vfileS = Path(self.folderD[&quot;cpath&quot;] / vL[2].strip())
-
-            vecL = eval(vL[3].strip())
-
-            with open(vfileS, &quot;r&quot;) as csvF:
-
-                reader = csv.reader(csvF)
-
-            vL = list(reader)
-
-            for i in vL:
-
-                varS = i[0]
-
-                varL = array(i[1:])
-
-                cmdS = varS + &quot;=&quot; + str(varL)
-
-                exec(cmdS, globals(), locals())
-
-                if len(varL) &gt; 4:
-
-                    varL = str((varL[:2]).append([&quot;...&quot;]))
-
-                valL.append([varS, varL])
-
-            hdrL = [&quot;variable&quot;, &quot;values&quot;]
-
-            alignL = [&quot;left&quot;, &quot;right&quot;]
-
-            self.vtable(valL, hdrL, &quot;rst&quot;, alignL)
-
-            self.rivtD.update(locals())
-
-            return
-</pre></div>
-</div>
-</section>
-<section id="txthtml">
-<h4>txthtml<a class="headerlink" href="#txthtml" title="Link to this heading">#</a></h4>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">txthtml</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span>
-    <span class="n">txtfileL</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>9a <em>summary</em></p>
-<p><strong>Returns:</strong></p>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><em>type</em></p></td>
-<td><p><em>description</em></p></td>
-</tr>
-</tbody>
-</table>
-<p>??? example “View Source”
-def txthtml(self, txtfileL):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;9a _summary_
-
-            :return: _description_
-
-            :rtype: _type_
-
-            &quot;&quot;&quot;
-
-            txtS = &quot;&quot;
-
-            flg = 0
-
-            for iS in txtfileL:
-
-                if &quot;src=&quot; in iS:
-
-                    flg = 1
-
-                    continue
-
-                if flg == 1 and &#39;&quot;&#39; in iS:
-
-                    flg = 0
-
-                    continue
-
-                if flg == 1:
-
-                    continue
-
-                txtS += &quot; &quot;*4 + iS
-
-                txtS = htm.html2text(txtS)
-
-                mdS = txtS.replace(&quot;\n    \n&quot;, &quot;&quot;)
-
-                return mdS
-</pre></div>
-</div>
-</section>
-<section id="txttex">
-<h4>txttex<a class="headerlink" href="#txttex" title="Link to this heading">#</a></h4>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">txttex</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span>
-    <span class="n">txtfileS</span><span class="p">,</span>
-    <span class="n">txttypeS</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>9b <em>summary</em></p>
-<p><strong>Returns:</strong></p>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><em>type</em></p></td>
-<td><p><em>description</em></p></td>
-</tr>
-</tbody>
-</table>
-<p>??? example “View Source”
-def txttex(self, txtfileS, txttypeS):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;9b _summary_
-
-            :return: _description_
-
-            :rtype: _type_
-
-            &quot;&quot;&quot;
-
-            soup = TexSoup(txtfileS)
-
-            soupL = list(soup.text)
-
-            soupS = &quot;&quot;.join(soupL)
-
-            soup1L = []
-
-            soupS = soupS.replace(&quot;\\\\&quot;, &quot;\n&quot;)
-
-            soupL = soupS.split(&quot;\n&quot;)
-
-            for s in soupL:
-
-                sL = s.split(&quot;&amp;&quot;)
-
-                sL = s.split(&quot;&gt;&quot;)
-
-                try:
-
-                    soup1L.append(sL[0].ljust(10) + sL[1])
-
-                except:
-
-                    soup1L.append(s)
-
-            soupS = [s.replace(&quot;\\&quot;, &quot; &quot;) for s in soup1L]
-
-            soupS = &quot;\n&quot;.join(soup1L)
-
-            return soupS
-</pre></div>
-</div>
-</section>
-<section id="vtable">
-<h4>vtable<a class="headerlink" href="#vtable" title="Link to this heading">#</a></h4>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">vtable</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span>
-    <span class="n">tbL</span><span class="p">,</span>
-    <span class="n">hdrL</span><span class="p">,</span>
-    <span class="n">tblfmt</span><span class="p">,</span>
-    <span class="n">alignL</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>write value table</p>
-<p>??? example “View Source”
-def vtable(self, tbL, hdrL, tblfmt, alignL):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;write value table&quot;&quot;&quot;
-
-            # locals().update(self.rivtD)
-
-            sys.stdout.flush()
-
-            old_stdout = sys.stdout
-
-            output = StringIO()
-
-            output.write(
-
-                tabulate(
-
-                    tbL, headers=hdrL, tablefmt=tblfmt,
-
-                    showindex=False, colalign=alignL
-
-                )
-
-            )
-
-            mdS = output.getvalue()
-
-            sys.stdout = old_stdout
-
-            sys.stdout.flush()
-
-            return mdS
-
-            # self.calcS += mdS + &quot;\n&quot;
-
-            # self.rivtD.update(locals())
 </pre></div>
 </div>
 </section>
@@ -1655,24 +1775,6 @@ def vtable(self, tbL, hdrL, tblfmt, alignL):</p>
                 <footer class="prev-next-footer">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="folders.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Module folders</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="write_pdf.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Module write_pdf</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -1690,16 +1792,12 @@ def vtable(self, tbL, hdrL, tblfmt, alignL):</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">Commands</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tags">Tags</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#append">append</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cmd-parse">cmd_parse</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#assign">assign</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#declare">declare</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#github">github</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#list">list</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#txthtml">txthtml</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#txttex">txttex</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#vtable">vtable</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tag-parse">tag_parse</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#vsub">vsub</a></li>
 </ul>
 </li>
 </ul>
@@ -1709,7 +1807,7 @@ def vtable(self, tbL, hdrL, tblfmt, alignL):</p>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="_sources/cmd_parse.md.txt">
+    <a href="_sources/tag_parse.md.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

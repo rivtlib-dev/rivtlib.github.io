@@ -1,0 +1,1271 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-theme="auto">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="_static/favicon-32x32.png" sizes="32x32" rel="icon" type="image/png">
+    <link href="_static/favicon-16x16.png" sizes="16x16" rel="icon" type="image/png">
+    <title>Module init &#8212; rivt 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script src="_static/jquery.js?v=5d32c60e"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="_static/documentation_options.js?v=1b390748"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '__init__';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="auto">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/riv-dark8.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/riv-dark8.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+    <p class="title logo__title">rivt</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Module...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="module-init">
+<h1>Module <strong>init</strong><a class="headerlink" href="#module-init" title="Link to this heading">#</a></h1>
+<p><strong>rivt</strong> is an open source engineering document markdown language for writing,</p>
+<p>organizing and sharing engineering documents. <strong>rivtlib</strong> is a Python library
+for processing rivt. It runs on any platform that supports Python 3.10 or
+later. rivtlib works with both single file documents and extensive reports with
+hundreds of files.</p>
+<p>A rivt file is a Python file that begins with the import statement:</p>
+<p><em>import rivtlib.rivtapi as rv</em></p>
+<p>which provides four API functions. Each function takes a single, triple quoted
+string as an argument.</p>
+<p>rv.R(rS) - report and document configuration (Rivtinit)
+rv.I(rS) - static text, images, tables and math (Insert)
+rv.V(rS) - equations (Values)
+rv.T(rS) - Python functions and scripts (Tools)
+rv.write() - formatted rivt document output</p>
+<p>rv.R may be followed by arbitrary sequences of rv.I, rv.V and rv.T. When
+running in an IDE (e.g. VSCode), each function may be run interactively using
+the standard cell decorator <em># %%</em>. Interactive output and output to stdout
+(terminal) is formatted as utf-8 text. The rv.write() function exports
+calculated values to a file for later use, and generates formatted documents
+and reports in GitHub Markdown (ghmd) and PDF.</p>
+<p>rivt syntax includes arbitrary unicode and rivt commands and tags. It wraps and
+extends reStructuredText (reST).  See https://rivt-doc.net  for user manual</p>
+</section>
+<section id="commands">
+<h1>========
+commands<a class="headerlink" href="#commands" title="Link to this heading">#</a></h1>
+<p>A rivt command reads or writes external files and is triggered by starting a
+line with ||. Commands are implemented per API function. Either-or parameter
+choices below are designated with semi-colons. List parameters are separated
+with commas.</p>
+<p>=============== ===============================================================
+name                      Commands (VSCode snippet prefix)
+=============== ===============================================================</p>
+<p>Rivtinit (ri)       rv.R(“””label | toc;notoc,start page</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                    ||text (te)
+                    ||append (ap)
+
+                    &quot;&quot;&quot;)
+</pre></div>
+</div>
+<p>Insert (in)         rv.I(“””label | nocolor;hexvalue</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                    ||image (im)
+                    ||text (te)
+                    ||table (ta)
+
+                &quot;&quot;&quot;)
+</pre></div>
+</div>
+<p>Values (va)         rv.V(“””label | sub;nosub</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                    ||declare (de)
+
+                    &quot;&quot;&quot;)
+</pre></div>
+</div>
+<p>Tools (to)          rv.T(“””label | summary;inline</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                    Python code
+
+                    &quot;&quot;&quot;)
+</pre></div>
+</div>
+<p>Exclude             rv.X(“””any API function</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                    A method changed to X is not evaluated (used for
+                    comments and debugging).
+
+                &quot;&quot;&quot;)
+</pre></div>
+</div>
+<p>Write (pu)          rv.write_public(text,md,pdf,report)
+(pr)          rv.write_private(text,md,pdf,report)</p>
+<p>================================================ ==============
+command syntax                                API<br />
+================================================ ==============</p>
+<p>|| text | rel file path | rivt;plain;default        R I V</p>
+<p>|| append | rel file path | num;nonum                 R</p>
+<p>|| image  | rel file path, .. | .50, ..               I</p>
+<p>|| table  | rel file path | 30,r;l;c                  I</p>
+<p>|| declare | rel file path | print;noprint            V</p>
+</section>
+<section id="tags">
+<h1>====
+tags<a class="headerlink" href="#tags" title="Link to this heading">#</a></h1>
+<p>rivt tags are typically entered at the end of line and are processed per API
+function. Line tags apply to a single line. Block tags appy to blocks of text.</p>
+<p>===================== ================================== ==========
+line tags                 description                   API
+===================== ================================= ===========
+text _[b]                bold                            R I V
+text _[c]                center                          R I V<br />
+text _[i]                italic                          R I V<br />
+text _[bc]               bold center                     R I V<br />
+text _[bi]               bold italic                     R I V
+text _[r]                right justify                   R I V
+text _[u]                underline                       R I V<br />
+text _[p]                plain                           R I V<br />
+text _[l]                LaTeX math                        I V
+text _[s]                sympy math                        I V
+text _[bs]               bold sympy math                   I V
+text _[e]                equation label, autonumber        I V
+text _[f]                figure caption, autonumber        I V
+text _[t]                table title, autonumber           I V
+text _[#]                footnote, autonumber              I V
+text _[d]                footnote description              I V
+_[page]                  new page                          I V
+_[address, label]        url or internal reference         I V
+= (declare)              a = 1.2 | unit, alt | descrip       V</p>
+<p>??? example “View Source”
+#! python</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    &#39;&#39;&#39;
+
+    **rivt** is an open source engineering document markdown language for writing,
+
+    organizing and sharing engineering documents. **rivtlib** is a Python library
+
+    for processing rivt. It runs on any platform that supports Python 3.10 or
+
+    later. rivtlib works with both single file documents and extensive reports with
+
+    hundreds of files. 
+
+    A rivt file is a Python file that begins with the import statement:
+
+    *import rivtlib.rivtapi as rv*
+
+    which provides four API functions. Each function takes a single, triple quoted
+
+    string as an argument.
+
+    rv.R(rS) - report and document configuration (Rivtinit)
+
+    rv.I(rS) - static text, images, tables and math (Insert)
+
+    rv.V(rS) - equations (Values)
+
+    rv.T(rS) - Python functions and scripts (Tools)
+
+    rv.write() - formatted rivt document output
+
+    rv.R may be followed by arbitrary sequences of rv.I, rv.V and rv.T. When
+
+    running in an IDE (e.g. VSCode), each function may be run interactively using
+
+    the standard cell decorator *# %%*. Interactive output and output to stdout
+
+    (terminal) is formatted as utf-8 text. The rv.write() function exports
+
+    calculated values to a file for later use, and generates formatted documents
+
+    and reports in GitHub Markdown (ghmd) and PDF.
+
+    rivt syntax includes arbitrary unicode and rivt commands and tags. It wraps and
+
+    extends reStructuredText (reST).  See https://rivt-doc.net  for user manual
+
+    ========
+
+    commands
+
+    ========
+
+    A rivt command reads or writes external files and is triggered by starting a
+
+    line with ||. Commands are implemented per API function. Either-or parameter
+
+    choices below are designated with semi-colons. List parameters are separated
+
+    with commas.
+
+    =============== ===============================================================
+
+     name                      Commands (VSCode snippet prefix)
+
+    =============== ===============================================================
+
+    Rivtinit (ri)       rv.R(&quot;&quot;&quot;label | toc;notoc,start page
+
+                            ||text (te)
+
+                            ||append (ap)
+
+                            &quot;&quot;&quot;)
+
+    Insert (in)         rv.I(&quot;&quot;&quot;label | nocolor;hexvalue  
+
+                            ||image (im)
+
+                            ||text (te)
+
+                            ||table (ta)
+
+                        &quot;&quot;&quot;)
+
+    Values (va)         rv.V(&quot;&quot;&quot;label | sub;nosub 
+
+                            ||declare (de)
+
+                            &quot;&quot;&quot;)
+
+    Tools (to)          rv.T(&quot;&quot;&quot;label | summary;inline
+
+                            Python code
+
+                            &quot;&quot;&quot;)
+
+    Exclude             rv.X(&quot;&quot;&quot;any API function
+
+                            A method changed to X is not evaluated (used for
+
+                            comments and debugging).
+
+                        &quot;&quot;&quot;)
+
+    Write (pu)          rv.write_public(text,md,pdf,report)
+
+          (pr)          rv.write_private(text,md,pdf,report)
+
+    
+
+    ================================================ ============== 
+
+           command syntax                                API      
+
+    ================================================ ============== 
+
+    || text | rel file path | rivt;plain;default        R I V      
+
+    || append | rel file path | num;nonum                 R        
+
+    || image  | rel file path, .. | .50, ..               I        
+
+    || table  | rel file path | 30,r;l;c                  I        
+
+    || declare | rel file path | print;noprint            V        
+
+    ====
+
+    tags
+
+    ====
+
+    rivt tags are typically entered at the end of line and are processed per API
+
+    function. Line tags apply to a single line. Block tags appy to blocks of text.
+
+    ===================== ================================== ==========
+
+       line tags                 description                   API
+
+    ===================== ================================= ===========
+
+    text _[b]                bold                            R I V 
+
+    text _[c]                center                          R I V  
+
+    text _[i]                italic                          R I V  
+
+    text _[bc]               bold center                     R I V  
+
+    text _[bi]               bold italic                     R I V
+
+    text _[r]                right justify                   R I V
+
+    text _[u]                underline                       R I V   
+
+    text _[p]                plain                           R I V   
+
+    text _[l]                LaTeX math                        I V
+
+    text _[s]                sympy math                        I V
+
+    text _[bs]               bold sympy math                   I V
+
+    text _[e]                equation label, autonumber        I V
+
+    text _[f]                figure caption, autonumber        I V
+
+    text _[t]                table title, autonumber           I V
+
+    text _[#]                footnote, autonumber              I V
+
+    text _[d]                footnote description              I V
+
+    _[page]                  new page                          I V
+
+    _[address, label]        url or internal reference         I V
+
+    = (declare)              a = 1.2 | unit, alt | descrip       V
+
+    := (assign)              a := b + c | unit, alt | n,n        V
+
+    
+
+    ==================== ========================== ==========
+
+       block tags                description            API
+
+    ==================== ========================== ==========
+
+    _[[b]]                  start bold                 R I
+
+    _[[c]]                  start center               R I
+
+    _[[i]]                  start italic               R I
+
+    _[[p]]                  start plain                R I
+
+    _[[l]]                  start LaTeX                  I
+
+    _[[e]]                  end block                  R I
+
+    
+
+    =================
+
+    rivt file example
+
+    =================
+
+    File formatting conventions follow Python pep8 and ruff conventions. API
+
+    function declarations start in column one. All other lines are indented 4
+
+    spaces to facilitate section folding, bookmarks and legibility. The first line
+
+    of each function defines the heading for a new document section, followed by
+
+    section parameters. New sections may be suppressed by prepending the heading
+
+    label with a double hyphen (--).
+
+    --------------------------------------
+
+    import rivtlib.rivtapi as rv
+
+    rv.R(&quot;&quot;&quot;Introduction | notoc, 1
+
+        The Rivtinit method is the first method of a rivt file and specifies
+
+        repository, report and document settings.
+
+        The first line of any method is the heading line, which starts a new
+
+        document section. If the section heading is preceded by two dashes (--) it
+
+        becomes a section reference and a new section is not started. The toc
+
+        parameter specifies whether a document table of contents is generated and
+
+        inserted at the top of the document (not to be confused with a report table
+
+        of contents). The page number is the starting page number for the doc, when
+
+        processed as a stand alone document.
+
+        The init command specifies the name of the configuration file which is read
+
+        from the rivt-doc folder. Report formatting can be easily modified by
+
+        specifying a different init file.
+
+        ||init | rivt01.ini
+
+        The text command inserts text from an external file. Text files may be
+
+        plain text or include rivt tags.
+
+        ||text | private/data/proj.txt | plain
+
+        The append command attaches PDF files to the end of the doc.
+
+        || append | append/report1.pdf
+
+        || append | append/report2.pdf
+
+        
+
+        &quot;&quot;&quot;)
+
+    rv.I(&quot;&quot;&quot;The Insert method | nocolor 
+
+        The Insert method formats static information e.g. images and text. The
+
+        color command specifies a background color for the section.
+
+        ||text | data01/describe.txt | rivt     
+
+        The table command inserts and formats tabular data from csv or xls files.
+
+        The _[t] tag formats and autonumbers table titles.
+
+        A table title  _[t]
+
+        || table | data/file.csv | 60,r
+
+        The image command inserts and formats image data from png or jpg files. The
+
+        _[f] tag formats and autonumbers figures.
+
+        A figure caption _[f]
+
+        || image | data/f1.png | 50
+
+        Two images may be placed side by side as follows:
+
+        The first figure caption  _[f]
+
+        The second figure caption  _[f]
+
+        || image | private/image/f2.png, private/image/f3.png | 45,35
+
+        The tags _[x] and _[s] format LaTeX and sympy equations:
+
+        \gamma = \frac{5}{x+y} + 3  _[x] 
+
+        x = 32 + (y/2)  _[s]
+
+        &quot;&quot;&quot;)
+
+    rv.V(&quot;&quot;&quot;The Values method |  nosub 
+
+        The Values method assigns values to variables and evaluates equations. The
+
+        sub or nosub setting specifies whether equations are also printed with
+
+        substituted numerical values.
+
+        The equal tag declares a value. A sequence of declared values terminated
+
+        with a blank line is formatted as a table.
+
+        Example of assignment list _[t]
+
+        f1 = 10.1 * LBF |LBF, N| a force value
+
+        d1 = 12.1 * IN  |IN, CM| a length value
+
+        An equation tag provides an equation description and number. A colon-equal
+
+        tag assigns a value and specifies the result units and the output decimal
+
+        places printed in the result and equation.
+
+        Example equation - Area of circle  _[e]
+
+        a1 := 3.14(d1/2)^2 | IN^2, CM^2 | 1,2
+
+        || declare | data01/values02.csv
+
+        The declare command imports values from the csv file written by rivt when
+
+        processing values in other documents. 
+
+    &quot;&quot;&quot;)
+
+    rv.T(&quot;&quot;&quot;The Tools method | summary
+
+        # The Tools method processes Python code in the rivt namespace and prints
+
+        # the code and the result of any print statement in the doc. 
+
+        # Functions may be written explicitly or imported from other
+
+        # files. Line comments (#) are printed. Triple quotes cannot be used. Use
+
+        # raw strings instead.
+
+        # Four Python libraries are imported by rivt and available as: 
+
+        # pyplot -&gt; plt
+
+        # numpy -&gt; np
+
+        # pandas -&gt; pd
+
+        # sympy -&gt; sy
+
+        # Python code example:
+
+        def f1(x,y): z = x + y
+
+            print(z)
+
+            return Z
+
+        with open(&#39;file.csv&#39;, &#39;r&#39;) as f: 
+
+            input = f.readlines()
+
+        var = range(10)
+
+        with open(&#39;fileout.csv&#39;, &#39;w&#39;) as f: 
+
+            f.write(var)
+
+        &quot;&quot;&quot;)
+
+    rv.X(&quot;&quot;&quot;any text
+
+        Changing a function to X skips evaluation of that function. Its uses
+
+        include review comments and debugging.
+
+        &quot;&quot;&quot;) 
+
+    -----------------------------------------------
+
+    =======
+
+    folders
+
+    =======
+
+    rivtlib can process single rivt files, but typically it is used to generate
+
+    reports. A rivt report is generated from the folder structure illustrated
+
+    below. rivt documents are organized into divisions. Document inputs and outputs
+
+    may be stored in or directed to publically shareable or private foldrers.
+
+    Reports is formatted with divisions, subdivisions and sections.
+
+    Fixed folder and file prefixes are shown in [ ]. Report and document headings
+
+    are taken from the folder and file labels. Tools are available to generate
+
+    starter folder templates.
+
+    [rivt]_Report-Label/               
+
+        ├── [div01]-div-label/            (division folder)
+
+            ├── [data01]/                 (resource data)
+
+                ├── data.csv                   
+
+                ├── attachment.pdf
+
+                └── fig.png            
+
+                 functions.py                   
+
+            ├── [riv01]-label1.py         (rivt file)
+
+            └── [riv02]-label2.py         (rivt file)   
+
+        ├── [div02]-div-label/            (division folder)
+
+            ├── [data02]/                 (resource data)
+
+                ├── data.csv
+
+                └── fig.png
+
+            └── [riv01]_label3.py         (rivt file)
+
+        ├── [data-private]/                 
+
+            ├── [data]/                   (private data)                   
+
+                ├── data.csv
+
+                ├── attachment.pdf
+
+                └── fig.png        
+
+            ├── [functions]/              (private functions)                   
+
+                ├── [data]/
+
+                ├── [output]/
+
+                └── function.py                
+
+            ├── [rivt-docs]/              (private output documents)
+
+                ├── [pdf]/                      
+
+                    ├── doc0101-label1.pdf      
+
+                    ├── doc0102-label2.pdf
+
+                    ├── doc0201-label3.pdf
+
+                    └── Report-Label.pdf 
+
+                ├── [text]/                    
+
+                    ├── doc0101-label1.txt      
+
+                    └── doc0201-label3.txt       
+
+                ├── doc0101-label1.md            
+
+                └── doc0201-label3.md
+
+            ├── [temp]/
+
+                └── doc0201-label3.tex 
+
+        ├── [functions]/                  (public functions)                   
+
+            ├── [data]/
+
+            ├── [output]/
+
+            ├── function1.py
+
+            └── function2.py                
+
+        ├── [rivt-docs]/                  (public output documents)
+
+            ├── [pdf]/                      
+
+                ├── doc0101-label1.pdf      
+
+                ├── doc0102-label2.pdf
+
+                ├── doc0201-label3.pdf
+
+                └── Report-Label.pdf 
+
+            ├── [text]/                    
+
+                ├── doc0101-label1.txt      
+
+                ├── doc0102-label2.txt
+
+                └── doc0201-label3.txt           
+
+        ├── .gitignore
+
+        ├── config.ini                    (config file)
+
+        ├── doc0101-label1.md             (public output documents) 
+
+        ├── doc0102-label2.md
+
+        ├── doc0201-label3.md
+
+        └── README.txt                    (cumulative documents - searchable) 
+
+    ========
+
+    rivt-doc
+
+    ========
+
+    rivt-doc is an open source framework that faciliates writing, organizing and
+
+    sharing rivt documents. It includes an editor, typesetting and mnay utilities
+
+    and extensions that reduce the steps needed to produce rivt documents. rivt-doc
+
+    may be installed on every major OS platform as set of system programs, or as a
+
+    single, portable zip file. The framework can also be implemented as a cloud
+
+    service. It includes:
+
+    - Python 3.8 or higher 
+
+    - rivt Python library and dependencies
+
+    - VSCode + extensions 
+
+    - LaTeX 
+
+    - Github 
+
+    The minimum software needed to run rivt is:
+
+    - Python 3.8 or higher 
+
+    - rivt Python library and dependencies
+
+    [rivt-doc User Manual](https://www.rivt-doc.net&gt;)
+
+    ============= =============================================================
+
+    Keystroke             VSCode rivt profile shortcut description
+
+    ============= ==============================================================
+
+    alt+q                rewrap paragraph with hard line feeds (80 default)
+
+    alt+p                open file under cursor
+
+    alt+.                select correct spelling under cursor
+
+    alt+8                insert date
+
+    alt+9                insert time
+
+    ctl+1                focus on first editor
+
+    ctl+2                focus on next editor
+
+    ctl+3                focus on previous editor
+
+    ctl+8                focus on explorer pane
+
+    ctl+9                focus on github pane    
+
+    ctl+alt+x            reload window
+
+    ctl+alt+u            unfold all code
+
+    ctl+alt+f            fold code level 2 (rivt sections visible)
+
+    ctl+alt+a            fold code - all levels
+
+    ctl+alt+t            toggle local fold
+
+    ctl+alt+e            toggle explorer sort order
+
+    ctl+alt+s            toggle spell check
+
+    ctl+alt+g            next editor group
+
+    ctl+shift+u          open URL under cursor in browser
+
+    ctl+shift+s          open GitHub README search for rivt
+
+    ctl+shift+a          commit all 
+
+    ctl+shift+z          commit the current editor
+
+    ctl+shift+x          post to remote   
+
+    ============================================== ===============================
+
+    VSCode extension                                       Description
+
+    ============================================== ===============================
+
+    BUTTON INTERFACES
+
+    tombonnike.vscode-status-bar-format-toggle          format button
+
+    gsppvo.vscode-commandbar                            command buttons
+
+    AdamAnand.adamstool                                 command buttons
+
+    nanlei.save-all                                     save all button
+
+    Ho-Wan.setting-toggle                               toggle settings
+
+    yasukotelin.toggle-panel                            toggle panel
+
+    fabiospampinato.vscode-commands                     user command buttons
+
+    jerrygoyal.shortcut-menu-bar                        menu bar
+
+    EDITING TOOLS
+
+    henryclayton.context-menu-toggle-comments           toggle comments
+
+    TroelsDamgaard.reflow-paragraph                     wrap paragraph
+
+    streetsidesoftware.code-spell-checker               spell check
+
+    jmviz.quote-list                                    quote elements in a list
+
+    njpwerner.autodocstring                             insert doc string
+
+    oijaz.unicode-latex                                 unicode symbols from latex
+
+    jsynowiec.vscode-insertdatestring                   insert date string
+
+    janisdd.vscode-edit-csv                             csv editor
+
+    VIEWER TOOLS
+
+    GrapeCity.gc-excelviewer                            excel viewer
+
+    SimonSiefke.svg-preview                             svg viewer
+
+    tomoki1207.pdf                                      pdf viewer
+
+    RandomFractalsInc.vscode-data-preview               data viewing tools
+
+    Fr43nk.seito-openfile                               open file from path
+
+    vikyd.vscode-fold-level                             line folding tool
+
+    file-icons.file-icons                               icon library
+
+    tintinweb.vscode-inline-bookmarks                   inline bookmarks
+
+    MANAGEMENT TOOLS
+
+    alefragnani.project-manager                         folder, project management
+
+    Anjali.clipboard-history                            clipboard history
+
+    dionmunk.vscode-notes                               notepad
+
+    hbenl.vscode-test-explorer                          test explorer
+
+    mightycoco.fsdeploy                                 save file to second location
+
+    lyzerk.linecounter                                  count lines in files
+
+    sandcastle.vscode-open                              open files in default app
+
+    James-Yu.latex-workshop                             latex tools
+
+    lextudio.restructuredtext                           restructured text tools
+
+    trond-snekvik.simple-rst                            restructured syntax
+
+    yzane.markdown-pdf                                  markdown to pdf
+
+    yzhang.markdown-all-in-one                          markdown tools
+
+    zjffun.snippetsmanager                              snippet manager
+
+    spmeesseman.vscode-taskexplorer                     task explorer
+
+    GITHUB TOOLS
+
+    GitHub.codespaces                                   run files in codespaces
+
+    GitHub.remotehub                                    run remote files
+
+    ettoreciprian.vscode-websearch                      search github within VSCode
+
+    donjayamanne.githistory                             git history
+
+    MichaelCurrin.auto-commit-msg                       git auto commit message     
+
+    github.vscode-github-actions                        github actions
+
+    GitHub.vscode-pull-request-github                   github pull request
+
+    k9982874.github-gist-explorer                       gist explorer
+
+    vsls-contrib.gistfs                                 gist tools
+
+    PYTHON TOOLS
+
+    ms-python.autopep8                                  python pep8 formatting
+
+    ms-python.isort                                     python sort imports
+
+    donjayamanne.python-environment-manager             python library list
+
+    ms-python.python                                    python tools
+
+    ms-python.vscode-pylance                            python language server
+
+    ms-toolsai.jupyter                                  jupyter tools
+
+    ms-toolsai.jupyter-keymap                           jupyter tools
+
+    ms-toolsai.jupyter-renderers                        jupyter tools
+
+    ms-toolsai.vscode-jupyter-cell-tags                 jupyter tools
+
+    ms-toolsai.vscode-jupyter-slideshow                 jupyter tools
+
+    OTHER LANGUAGES
+
+    qwtel.sqlite-viewer                                 sqlite tools
+
+    RDebugger.r-debugger                                R tools
+
+    REditorSupport.r                                    R tools
+
+    ms-vscode-remote.remote-wsl                         windows linux tools
+
+    &#39;&#39;&#39;
+</pre></div>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Module <strong>init</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#commands">========
+commands</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#tags">====
+tags</a></li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="_sources/__init__.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023 StructureLabs.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

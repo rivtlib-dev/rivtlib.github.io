@@ -21,6 +21,7 @@ minimize new writing and maximize reuse of existing material.
 ```{toctree}
 :maxdepth: 3
 :hidden:
+__init__
 folders
 cmd_parse
 write_pdf

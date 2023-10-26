@@ -358,12 +358,11 @@ starter folder templates.
 rivt-doc
 ========
 
-rivt-doc is an open source framework that faciliates writing, organizing and
-sharing rivt documents. It includes an editor, typesetting and mnay utilities
-and extensions that reduce the steps needed to produce rivt documents. rivt-doc
-may be installed on every major OS platform as set of system programs, or as a
-single, portable zip file. The framework can also be implemented as a cloud
-service. It includes:
+rivt-doc is an open source framework that faciliates working with rivt files.
+It includes an editor, typesetting and mnay utilities and extensions that
+reduce the steps needed to produce rivt documents. rivt-doc may be installed on
+every major OS platform as set of system programs, or as a single, portable zip
+file. The framework can also be implemented as a cloud service. It includes:
 
 - Python 3.8 or higher 
 - rivt Python library and dependencies
@@ -413,7 +412,7 @@ ctl+shift+x          post to remote
 VSCode extension                                       Description
 ============================================== ===============================
 
-BUTTON INTERFACES
+BUTTONS
 tombonnike.vscode-status-bar-format-toggle          format button
 gsppvo.vscode-commandbar                            command buttons
 AdamAnand.adamstool                                 command buttons
@@ -423,7 +422,7 @@ yasukotelin.toggle-panel                            toggle panel
 fabiospampinato.vscode-commands                     user command buttons
 jerrygoyal.shortcut-menu-bar                        menu bar
 
-EDITING TOOLS
+EDITING 
 henryclayton.context-menu-toggle-comments           toggle comments
 TroelsDamgaard.reflow-paragraph                     wrap paragraph
 streetsidesoftware.code-spell-checker               spell check
@@ -433,7 +432,7 @@ oijaz.unicode-latex                                 unicode symbols from latex
 jsynowiec.vscode-insertdatestring                   insert date string
 janisdd.vscode-edit-csv                             csv editor
 
-VIEWER TOOLS
+VIEWER
 GrapeCity.gc-excelviewer                            excel viewer
 SimonSiefke.svg-preview                             svg viewer
 tomoki1207.pdf                                      pdf viewer
@@ -443,7 +442,7 @@ vikyd.vscode-fold-level                             line folding tool
 file-icons.file-icons                               icon library
 tintinweb.vscode-inline-bookmarks                   inline bookmarks
 
-MANAGEMENT TOOLS
+MANAGEMENT
 alefragnani.project-manager                         folder, project management
 Anjali.clipboard-history                            clipboard history
 dionmunk.vscode-notes                               notepad
@@ -451,15 +450,10 @@ hbenl.vscode-test-explorer                          test explorer
 mightycoco.fsdeploy                                 save file to second location
 lyzerk.linecounter                                  count lines in files
 sandcastle.vscode-open                              open files in default app
-James-Yu.latex-workshop                             latex tools
-lextudio.restructuredtext                           restructured text tools
-trond-snekvik.simple-rst                            restructured syntax
-yzane.markdown-pdf                                  markdown to pdf
-yzhang.markdown-all-in-one                          markdown tools
 zjffun.snippetsmanager                              snippet manager
 spmeesseman.vscode-taskexplorer                     task explorer
 
-GITHUB TOOLS
+GITHUB
 GitHub.codespaces                                   run files in codespaces
 GitHub.remotehub                                    run remote files
 ettoreciprian.vscode-websearch                      search github within VSCode
@@ -470,7 +464,7 @@ GitHub.vscode-pull-request-github                   github pull request
 k9982874.github-gist-explorer                       gist explorer
 vsls-contrib.gistfs                                 gist tools
 
-PYTHON TOOLS
+PYTHON
 ms-python.autopep8                                  python pep8 formatting
 ms-python.isort                                     python sort imports
 donjayamanne.python-environment-manager             python library list
@@ -482,9 +476,14 @@ ms-toolsai.jupyter-renderers                        jupyter tools
 ms-toolsai.vscode-jupyter-cell-tags                 jupyter tools
 ms-toolsai.vscode-jupyter-slideshow                 jupyter tools
 
-OTHER LANGUAGES
+LANGUAGES 
 qwtel.sqlite-viewer                                 sqlite tools
 RDebugger.r-debugger                                R tools
 REditorSupport.r                                    R tools
 ms-vscode-remote.remote-wsl                         windows linux tools
+James-Yu.latex-workshop                             latex tools
+lextudio.restructuredtext                           restructured text tools
+trond-snekvik.simple-rst                            restructured syntax
+yzane.markdown-pdf                                  markdown to pdf
+yzhang.markdown-all-in-one                          markdown tools
 '''

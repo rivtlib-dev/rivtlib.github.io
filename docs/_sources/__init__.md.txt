@@ -667,17 +667,15 @@ _[address, label]        url or internal reference         I V
 
         ========
 
-        rivt-doc is an open source framework that faciliates writing, organizing and
+        rivt-doc is an open source framework that faciliates working with rivt files.
 
-        sharing rivt documents. It includes an editor, typesetting and mnay utilities
+        It includes an editor, typesetting and mnay utilities and extensions that
 
-        and extensions that reduce the steps needed to produce rivt documents. rivt-doc
+        reduce the steps needed to produce rivt documents. rivt-doc may be installed on
 
-        may be installed on every major OS platform as set of system programs, or as a
+        every major OS platform as set of system programs, or as a single, portable zip
 
-        single, portable zip file. The framework can also be implemented as a cloud
-
-        service. It includes:
+        file. The framework can also be implemented as a cloud service. It includes:
 
         - Python 3.8 or higher 
 
@@ -755,7 +753,7 @@ _[address, label]        url or internal reference         I V
 
         ============================================== ===============================
 
-        BUTTON INTERFACES
+        BUTTONS
 
         tombonnike.vscode-status-bar-format-toggle          format button
 
@@ -773,7 +771,7 @@ _[address, label]        url or internal reference         I V
 
         jerrygoyal.shortcut-menu-bar                        menu bar
 
-        EDITING TOOLS
+        EDITING 
 
         henryclayton.context-menu-toggle-comments           toggle comments
 
@@ -791,7 +789,7 @@ _[address, label]        url or internal reference         I V
 
         janisdd.vscode-edit-csv                             csv editor
 
-        VIEWER TOOLS
+        VIEWER
 
         GrapeCity.gc-excelviewer                            excel viewer
 
@@ -809,7 +807,7 @@ _[address, label]        url or internal reference         I V
 
         tintinweb.vscode-inline-bookmarks                   inline bookmarks
 
-        MANAGEMENT TOOLS
+        MANAGEMENT
 
         alefragnani.project-manager                         folder, project management
 
@@ -825,21 +823,11 @@ _[address, label]        url or internal reference         I V
 
         sandcastle.vscode-open                              open files in default app
 
-        James-Yu.latex-workshop                             latex tools
-
-        lextudio.restructuredtext                           restructured text tools
-
-        trond-snekvik.simple-rst                            restructured syntax
-
-        yzane.markdown-pdf                                  markdown to pdf
-
-        yzhang.markdown-all-in-one                          markdown tools
-
         zjffun.snippetsmanager                              snippet manager
 
         spmeesseman.vscode-taskexplorer                     task explorer
 
-        GITHUB TOOLS
+        GITHUB
 
         GitHub.codespaces                                   run files in codespaces
 
@@ -859,7 +847,7 @@ _[address, label]        url or internal reference         I V
 
         vsls-contrib.gistfs                                 gist tools
 
-        PYTHON TOOLS
+        PYTHON
 
         ms-python.autopep8                                  python pep8 formatting
 
@@ -881,7 +869,7 @@ _[address, label]        url or internal reference         I V
 
         ms-toolsai.vscode-jupyter-slideshow                 jupyter tools
 
-        OTHER LANGUAGES
+        LANGUAGES 
 
         qwtel.sqlite-viewer                                 sqlite tools
 
@@ -890,5 +878,15 @@ _[address, label]        url or internal reference         I V
         REditorSupport.r                                    R tools
 
         ms-vscode-remote.remote-wsl                         windows linux tools
+
+        James-Yu.latex-workshop                             latex tools
+
+        lextudio.restructuredtext                           restructured text tools
+
+        trond-snekvik.simple-rst                            restructured syntax
+
+        yzane.markdown-pdf                                  markdown to pdf
+
+        yzhang.markdown-all-in-one                          markdown tools
 
         '''

@@ -25,9 +25,9 @@ html_context = {
     "default_mode": "auto"
 }
 html_sidebars = {
-    "**": ["sidebar-nav-bs"]
+    "**": ["sbt-sidebar-nav.html"]
 }
-html_theme = 'pydata_sphinx_theme'
+html_theme = 'sphinx_book_theme'
 html_static_path = ['_static', '_static/img/']
 html_logo = "_static/img/riv-dark8.png"
 html_theme_options = {

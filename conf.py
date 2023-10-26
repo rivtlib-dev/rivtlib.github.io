@@ -26,6 +26,11 @@ html_context = {
     "default_mode": "auto"
 }
 
+html_sidebars = {
+    "index.md": ["folders", "__init__"],
+    "folders.md": ["write_pdf"]
+}
+
 html_theme = 'pydata_sphinx_theme'
 html_static_path = ['_static', '_static/img/']
 html_logo = "_static/img/riv-dark8.png"

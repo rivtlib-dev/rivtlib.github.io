@@ -26,10 +26,6 @@ html_context = {
     "default_mode": "auto"
 }
 
-html_sidebars = {
-    "index.md": ["folders", "__init__"],
-    "folders.md": ["write_pdf", "write_private", "write_public"]
-}
 
 html_theme = 'pydata_sphinx_theme'
 html_static_path = ['_static', '_static/img/']

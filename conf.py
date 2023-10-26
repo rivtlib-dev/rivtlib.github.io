@@ -24,6 +24,9 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_context = {
     "default_mode": "auto"
 }
+html_sidebars = {
+    "**": ["sidebar-nav-bs"]
+}
 html_theme = 'pydata_sphinx_theme'
 html_static_path = ['_static', '_static/img/']
 html_logo = "_static/img/riv-dark8.png"

@@ -18,11 +18,10 @@ minimize new writing and maximize reuse of existing material.
 
 **rivt** uses the [MIT open source license](https://opensource.org/license/mit/)
 
+
 ```{toctree}
 :maxdepth: 3
 :hidden:
 __init__
 folders
-cmd_parse
-write_pdf
 ```

@@ -7,6 +7,7 @@
 :alt: rivt logo
 ```
 
+
 # rivt API Documentation
 
 <hr>
@@ -21,7 +22,15 @@ minimize new writing and maximize reuse of existing material.
 
 ```{toctree}
 :maxdepth: 3
-:hidden:
+:caption: section 1
 __init__
 folders
+```
+
+```{toctree}
+:maxdepth: 3
+:caption: section 2
+units
+tag_parse
+tag_rst
 ```

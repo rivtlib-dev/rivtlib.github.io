@@ -1,0 +1,3342 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-theme="auto">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <link href="_static/favicon-32x32.png" sizes="32x32" rel="icon" type="image/png">
+    <link href="_static/favicon-16x16.png" sizes="16x16" rel="icon" type="image/png">
+    <title>Module tag_md &#8212; rivt 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tag_md';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="auto">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/rivtpy3.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/rivtpy3.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="write_pdf.html">
+                        Module write_pdf
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="folders.html">
+                        Module folders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="__init__.html">
+                        Module init
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="tag_rst.html">
+                        Module tag_rst
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="units.html">
+                        Module units
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="tag_parse.html">
+                        Module tag_parse
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="write_pdf.html">
+                        Module write_pdf
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="folders.html">
+                        Module folders
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="__init__.html">
+                        Module init
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="tag_rst.html">
+                        Module tag_rst
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="units.html">
+                        Module units
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-header-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-header-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="tag_parse.html">
+                        Module tag_parse
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">section 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="write_pdf.html">Module write_pdf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="folders.html">Module folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="__init__.html">Module <strong>init</strong></a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">section 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tag_rst.html">Module tag_rst</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units.html">Module units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tag_parse.html">Module tag_parse</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><nav class="sidebar-indices-items">
+  <p class="sidebar-indices-items__title" role="heading" aria-level="1">Indices</p>
+  <ul class="indices-link">
+        <li class="toctree-l1">
+          <a class="reference internal"
+             href="genindex.html"
+             accesskey="I">General Index</a>
+        </li>
+  </ul>
+</nav></div>
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/tag_md.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Module tag_md</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tagsmd">TagsMD</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ancestors-in-mro">Ancestors (in MRO)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#assign">assign</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bold">bold</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#boldcenter">boldcenter</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bolditalic">bolditalic</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#center">center</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#centerblk">centerblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#codeblk">codeblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#declare">declare</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#description">description</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#equation">equation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#figure">figure</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#foot">foot</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#italic">italic</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#label">label</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#latex">latex</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#latexblk">latexblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#link">link</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mathblk">mathblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#page">page</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#plain">plain</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quitblock">quitblock</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#right">right</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rightblk">rightblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#shadeblk">shadeblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sympy">sympy</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#table">table</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tag-parse">tag_parse</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tagblk">tagblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#underline">underline</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#vsub">vsub</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="module-tag-md">
+<h1>Module tag_md<a class="headerlink" href="#module-tag-md" title="Permalink to this heading">#</a></h1>
+<p>??? example “View Source”
+#</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    import csv
+
+    import logging
+
+    import warnings
+
+    import os
+
+    import re
+
+    import subprocess
+
+    import sys
+
+    import tempfile
+
+    import textwrap
+
+    from io import StringIO
+
+    from pathlib import Path
+
+    from io import StringIO
+
+    from pathlib import Path
+
+    import sympy as sp
+
+    from numpy import *
+
+    from sympy.abc import _clash2
+
+    from sympy.core.alphabets import greeks
+
+    from sympy.parsing.latex import parse_latex as parsx
+
+    from tabulate import tabulate
+
+    from rivtlib import parse
+
+    from rivtlib.units import *
+
+    from rivtlib.tag_parse import Tags
+
+    
+
+    class TagsMD(Tags):
+
+        &quot;&quot;&quot;convert rivt tags to md
+
+        :param paramL: _description_
+
+        :type paramL: _type_
+
+        :param incrD: _description_
+
+        :type incrD: _type_
+
+        :param folderD: _description_
+
+        :type folderD: _type_
+
+        :param localD: _description_
+
+        :type localD: _type_
+
+        :return: _description_
+
+        :rtype: _type_
+
+        &quot;&quot;&quot;
+
+        def __init__(self, lineS, incrD, folderD, tagsD, localD):
+
+            &quot;&quot;&quot;convert rivt tags to md or reST
+
+            &quot;&quot;&quot;
+
+            self.lineS = lineS
+
+            self.tagsD = tagsD
+
+            self.localD = localD
+
+            self.folderD = folderD
+
+            self.incrD = incrD
+
+            self.lineS = lineS
+
+            self.widthI = incrD[&quot;widthI&quot;]
+
+            self.errlogP = folderD[&quot;errlogP&quot;]
+
+            self.valL = []                         # accumulate values in list
+
+            modnameS = self.incrD[&quot;modnameS&quot;]
+
+            # print(f&quot;{modnameS=}&quot;)
+
+            logging.basicConfig(
+
+                level=logging.DEBUG,
+
+                format=&quot;%(asctime)-8s  &quot; + modnameS +
+
+                &quot;   %(levelname)-8s %(message)s&quot;,
+
+                datefmt=&quot;%m-%d %H:%M&quot;,
+
+                filename=self.errlogP,
+
+                filemode=&quot;w&quot;,
+
+            )
+
+            warnings.filterwarnings(&quot;ignore&quot;)
+
+        def bold(self):
+
+            &quot;&quot;&quot;bold text _[b]
+
+            :return lineS: bold line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            return self.lineS
+
+        def italic(self):
+
+            &quot;&quot;&quot;italicize text _[i]
+
+            :return lineS: centered line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            return self.lineS
+
+        def center(self):
+
+            &quot;&quot;&quot;center text _[c]
+
+            :return lineS: centered line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            lineS = self.lineS.center(int(self.widthI))
+
+            return lineS
+
+        def boldcenter(self):
+
+            &quot;&quot;&quot;center text _[bc]
+
+            :return lineS: centered line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            lineS = self.lineS.center(int(self.widthI))
+
+            print(lineS)
+
+        def bolditalic(self):
+
+            &quot;&quot;&quot;center text _[bc]
+
+            :return lineS: centered line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            lineS = self.lineS.center(int(self.widthI))
+
+            return lineS
+
+        def right(self):
+
+            &quot;&quot;&quot;right justify text _[r]
+
+            :return lineS: right justified text
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            lineS = self.lineS.rjust(int(self.widthI))
+
+            return lineS
+
+        def label(self, labelS, numS):
+
+            &quot;&quot;&quot;format labels for equations, tables and figures
+
+                :return labelS: formatted label
+
+                :rtype: str
+
+            &quot;&quot;&quot;
+
+            secS = str(self.incrD[&quot;secnumI&quot;]).zfill(2)
+
+            labelS = secS + &quot; - &quot; + labelS + numS
+
+            # store for equation table
+
+            self.incrD[&quot;eqlabelS&quot;] = self.lineS + &quot; [&quot; + numS.zfill(2) + &quot;]&quot;
+
+            return labelS
+
+        def description(self):
+
+            &quot;&quot;&quot;footnote description _[d]
+
+            :return lineS: footnote
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            ftnumI = self.incrD[&quot;noteL&quot;].pop(0)
+
+            lineS = &quot;[&quot; + str(ftnumI) + &quot;] &quot; + self.lineS
+
+            return lineS
+
+        def equation(self):
+
+            &quot;&quot;&quot;md equation label _[e]
+
+            :return lineS: md equation label
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            enumI = int(self.incrD[&quot;equI&quot;]) + 1
+
+            fillS = str(enumI).zfill(2)
+
+            wI = self.incrD[&quot;widthI&quot;]
+
+            refS = self.label(&quot;E&quot;, fillS)
+
+            spcI = len(&quot;Equ. &quot; + fillS + &quot; - &quot; + self.lineS.strip())
+
+            lineS = &quot;Equ. &quot; + fillS + &quot; - &quot; + self.lineS.strip() \
+
+                + refS.rjust(wI-spcI)
+
+            self.incrD[&quot;equI&quot;] = enumI
+
+            return lineS
+
+        def figure(self):
+
+            &quot;&quot;&quot;md figure caption _[f]
+
+            :return lineS: figure label
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            fnumI = int(self.incrD[&quot;figI&quot;])
+
+            lineS = &quot;Fig. &quot; + str(fnumI) + &quot; - &quot; + self.lineS
+
+            return lineS + &quot;\n&quot;
+
+        def foot(self):
+
+            &quot;&quot;&quot;footnote number _[#]
+
+    
+
+            &quot;&quot;&quot;
+
+            ftnumI = self.incrD[&quot;footL&quot;].pop(0)
+
+            self.incrD[&quot;noteL&quot;].append(ftnumI + 1)
+
+            self.incrD[&quot;footL&quot;].append(ftnumI + 1)
+
+            lineS = self.lineS.replace(&quot;*]&quot;, &quot;[&quot; + str(ftnumI) + &quot;]&quot;)
+
+            print(lineS)
+
+            return lineS
+
+        def latex(self):
+
+            &quot;&quot;&quot;format latex
+
+            :return lineS: formatted latex
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            txS = self.lineS
+
+            # txS = txs.encode(&#39;unicode-escape&#39;).decode()
+
+            ptxS = sp.parse_latex(txS)
+
+            lineS = sp.pretty(sp.sympify(ptxS, _clash2, evaluate=False))
+
+            print(lineS)
+
+            return lineS
+
+        def plain(self):
+
+            &quot;&quot;&quot;format plain literal text _[p]
+
+            :param lineS: _description_
+
+            :type lineS: _type_
+
+            &quot;&quot;&quot;
+
+            print(self.lineS)
+
+            return self.lineS
+
+        def sympy(self):
+
+            &quot;&quot;&quot;format line of sympy _[s]
+
+            :return lineS: formatted sympy
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            spS = self.lineS.strip()
+
+            # try:
+
+            #     spL = spS.split(&quot;=&quot;)
+
+            #     spS = &quot;Eq(&quot; + spL[0] + &quot;,(&quot; + spL[1] + &quot;))&quot;
+
+            #     # sps = sp.encode(&#39;unicode-escape&#39;).decode()
+
+            # except:
+
+            lineS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+
+            print(lineS)
+
+            return lineS
+
+        def table(self):
+
+            &quot;&quot;&quot;format table title  _[t]
+
+            :return lineS: md table title
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            tnumI = int(self.incrD[&quot;tableI&quot;])
+
+            self.incrD[&quot;tableI&quot;] = tnumI + 1
+
+            lineS = &quot;Table &quot; + str(tnumI) + &quot; - &quot; + self.lineS
+
+            return lineS
+
+        def link(self):
+
+            &quot;&quot;&quot;format url or internal link _[link]
+
+            :return: _description_
+
+            :rtype: _type_
+
+            &quot;&quot;&quot;
+
+            lineL = self.lineS.split(&quot;,&quot;)
+
+            lineS = &quot;.. _&quot; + lineL[0] + &quot;: &quot; + lineL[1]
+
+            print(lineS)
+
+            return lineS
+
+        def page(self):
+
+            &quot;&quot;&quot;insert new page header _[page]
+
+            :return lineS: page header
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            pagenoS = str(self.incrD[&quot;pageI&quot;])
+
+            rvtS = self.incrD[&quot;headuS&quot;].replace(&quot;p##&quot;, pagenoS)
+
+            self.incrD[&quot;pageI&quot;] = int(pagenoS)+1
+
+            lineS = &quot;\n&quot;+&quot;_&quot; * self.incrD[&quot;widthI&quot;] + &quot;\n&quot; + rvtS +\
+
+                    &quot;\n&quot;+&quot;_&quot; * self.incrD[&quot;widthI&quot;] + &quot;\n&quot;
+
+            return &quot;\n&quot; + rvtS
+
+        def underline(self):
+
+            &quot;&quot;&quot;underline _[u]
+
+            :return lineS: underline
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            return self.lineS
+
+        def centerblk(self):
+
+            &quot;&quot;&quot;
+
+            &quot;&quot;&quot;
+
+            lineS = &quot;&quot;
+
+            for i in self.lineS:
+
+                lineS += i.center(int(self.widthI))
+
+            return lineS
+
+        def latexblk(self):
+
+            pass
+
+        def mathblk(self):
+
+            pass
+
+        def codeblk(self):
+
+            pass
+
+        def rightblk(self):
+
+            pass
+
+        def shadeblk(self):
+
+            &quot;&quot;&quot; start shade block _[[s]]
+
+            :param lineS: _description_
+
+            :type lineS: _type_
+
+            &quot;&quot;&quot;
+
+            pass
+
+        def quitblock(self):
+
+            &quot;&quot;&quot; quit shade block _[[q]]
+
+            :param lineS: _description_
+
+            :type lineS: _type_
+
+            &quot;&quot;&quot;
+
+            pass
+
+        def tagblk(self):
+
+            pass
+</pre></div>
+</div>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ALLOW_THREADS</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">BUFSIZE</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">CLIP</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_CALL</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_DEFAULT</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_IGNORE</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_LOG</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_PRINT</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_RAISE</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_WARN</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FLOATING_POINT_SUPPORT</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FPE_DIVIDEBYZERO</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FPE_INVALID</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FPE_OVERFLOW</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FPE_UNDERFLOW</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">False_</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">Inf</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">Infinity</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAXDIMS</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAY_SHARE_BOUNDS</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAY_SHARE_EXACT</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">NAN</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">NINF</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">NZERO</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">NaN</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">PINF</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">PZERO</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">RAISE</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SHIFT_DIVIDEBYZERO</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SHIFT_INVALID</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SHIFT_OVERFLOW</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SHIFT_UNDERFLOW</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ScalarType</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">True_</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">UFUNC_BUFSIZE_DEFAULT</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">UFUNC_PYVALS_NAME</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">WRAP</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">absolute</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">add</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arccos</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arccosh</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arcsin</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arcsinh</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arctan</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arctan2</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arctanh</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">bitwise_and</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">bitwise_not</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">bitwise_or</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">bitwise_xor</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cbrt</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ceil</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">conj</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">conjugate</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">copysign</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cos</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cosh</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">deg2rad</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">degrees</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">divide</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">divmod</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">e</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">equal</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">euler_gamma</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">exp2</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">expm1</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">fabs</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">float_power</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">floor</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">floor_divide</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">fmax</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">fmin</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">fmod</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">frexp</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">gcd</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">greater</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">greater_equal</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">greeks</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">heaviside</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">hypot</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">inf</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">infty</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">invert</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">isfinite</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">isinf</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">isnan</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">isnat</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">lcm</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ldexp</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">left_shift</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">less</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">less_equal</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">little_endian</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">log</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">log10</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">log1p</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">log2</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logaddexp</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logaddexp2</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logical_and</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logical_not</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logical_or</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logical_xor</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">matmul</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">maximum</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">minimum</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">modf</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">multiply</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">nan</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">negative</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">newaxis</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">nextafter</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">not_equal</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">pi</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">positive</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">power</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">rad2deg</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">radians</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">reciprocal</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">remainder</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">right_shift</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">rint</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">sctypeDict</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">sctypes</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">sign</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">signbit</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">sin</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">sinh</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">spacing</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">sqrt</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">square</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">subtract</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">tan</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">tanh</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">tracemalloc_domain</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">true_divide</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">trunc</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">typecodes</span>
+</pre></div>
+</div>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this heading">#</a></h2>
+<section id="tagsmd">
+<h3>TagsMD<a class="headerlink" href="#tagsmd" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TagsMD</span><span class="p">(</span>
+    <span class="n">lineS</span><span class="p">,</span>
+    <span class="n">incrD</span><span class="p">,</span>
+    <span class="n">folderD</span><span class="p">,</span>
+    <span class="n">tagsD</span><span class="p">,</span>
+    <span class="n">localD</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>convert rivt tags to md</p>
+<section id="attributes">
+<h4>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading">#</a></h4>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Default</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>paramL</p></td>
+<td><p><em>type</em></p></td>
+<td><p><em>description</em></p></td>
+<td><p>None</p></td>
+</tr>
+<tr class="row-odd"><td><p>incrD</p></td>
+<td><p><em>type</em></p></td>
+<td><p><em>description</em></p></td>
+<td><p>None</p></td>
+</tr>
+<tr class="row-even"><td><p>folderD</p></td>
+<td><p><em>type</em></p></td>
+<td><p><em>description</em></p></td>
+<td><p>None</p></td>
+</tr>
+<tr class="row-odd"><td><p>localD</p></td>
+<td><p><em>type</em></p></td>
+<td><p><em>description</em></p></td>
+<td><p>None</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+class TagsMD(Tags):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>        &quot;&quot;&quot;convert rivt tags to md
+
+        :param paramL: _description_
+
+        :type paramL: _type_
+
+        :param incrD: _description_
+
+        :type incrD: _type_
+
+        :param folderD: _description_
+
+        :type folderD: _type_
+
+        :param localD: _description_
+
+        :type localD: _type_
+
+        :return: _description_
+
+        :rtype: _type_
+
+        &quot;&quot;&quot;
+
+        def __init__(self, lineS, incrD, folderD, tagsD, localD):
+
+            &quot;&quot;&quot;convert rivt tags to md or reST
+
+            &quot;&quot;&quot;
+
+            self.lineS = lineS
+
+            self.tagsD = tagsD
+
+            self.localD = localD
+
+            self.folderD = folderD
+
+            self.incrD = incrD
+
+            self.lineS = lineS
+
+            self.widthI = incrD[&quot;widthI&quot;]
+
+            self.errlogP = folderD[&quot;errlogP&quot;]
+
+            self.valL = []                         # accumulate values in list
+
+            modnameS = self.incrD[&quot;modnameS&quot;]
+
+            # print(f&quot;{modnameS=}&quot;)
+
+            logging.basicConfig(
+
+                level=logging.DEBUG,
+
+                format=&quot;%(asctime)-8s  &quot; + modnameS +
+
+                &quot;   %(levelname)-8s %(message)s&quot;,
+
+                datefmt=&quot;%m-%d %H:%M&quot;,
+
+                filename=self.errlogP,
+
+                filemode=&quot;w&quot;,
+
+            )
+
+            warnings.filterwarnings(&quot;ignore&quot;)
+
+        def bold(self):
+
+            &quot;&quot;&quot;bold text _[b]
+
+            :return lineS: bold line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            return self.lineS
+
+        def italic(self):
+
+            &quot;&quot;&quot;italicize text _[i]
+
+            :return lineS: centered line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            return self.lineS
+
+        def center(self):
+
+            &quot;&quot;&quot;center text _[c]
+
+            :return lineS: centered line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            lineS = self.lineS.center(int(self.widthI))
+
+            return lineS
+
+        def boldcenter(self):
+
+            &quot;&quot;&quot;center text _[bc]
+
+            :return lineS: centered line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            lineS = self.lineS.center(int(self.widthI))
+
+            print(lineS)
+
+        def bolditalic(self):
+
+            &quot;&quot;&quot;center text _[bc]
+
+            :return lineS: centered line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            lineS = self.lineS.center(int(self.widthI))
+
+            return lineS
+
+        def right(self):
+
+            &quot;&quot;&quot;right justify text _[r]
+
+            :return lineS: right justified text
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            lineS = self.lineS.rjust(int(self.widthI))
+
+            return lineS
+
+        def label(self, labelS, numS):
+
+            &quot;&quot;&quot;format labels for equations, tables and figures
+
+                :return labelS: formatted label
+
+                :rtype: str
+
+            &quot;&quot;&quot;
+
+            secS = str(self.incrD[&quot;secnumI&quot;]).zfill(2)
+
+            labelS = secS + &quot; - &quot; + labelS + numS
+
+            # store for equation table
+
+            self.incrD[&quot;eqlabelS&quot;] = self.lineS + &quot; [&quot; + numS.zfill(2) + &quot;]&quot;
+
+            return labelS
+
+        def description(self):
+
+            &quot;&quot;&quot;footnote description _[d]
+
+            :return lineS: footnote
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            ftnumI = self.incrD[&quot;noteL&quot;].pop(0)
+
+            lineS = &quot;[&quot; + str(ftnumI) + &quot;] &quot; + self.lineS
+
+            return lineS
+
+        def equation(self):
+
+            &quot;&quot;&quot;md equation label _[e]
+
+            :return lineS: md equation label
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            enumI = int(self.incrD[&quot;equI&quot;]) + 1
+
+            fillS = str(enumI).zfill(2)
+
+            wI = self.incrD[&quot;widthI&quot;]
+
+            refS = self.label(&quot;E&quot;, fillS)
+
+            spcI = len(&quot;Equ. &quot; + fillS + &quot; - &quot; + self.lineS.strip())
+
+            lineS = &quot;Equ. &quot; + fillS + &quot; - &quot; + self.lineS.strip() \
+
+                + refS.rjust(wI-spcI)
+
+            self.incrD[&quot;equI&quot;] = enumI
+
+            return lineS
+
+        def figure(self):
+
+            &quot;&quot;&quot;md figure caption _[f]
+
+            :return lineS: figure label
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            fnumI = int(self.incrD[&quot;figI&quot;])
+
+            lineS = &quot;Fig. &quot; + str(fnumI) + &quot; - &quot; + self.lineS
+
+            return lineS + &quot;\n&quot;
+
+        def foot(self):
+
+            &quot;&quot;&quot;footnote number _[#]
+
+    
+
+            &quot;&quot;&quot;
+
+            ftnumI = self.incrD[&quot;footL&quot;].pop(0)
+
+            self.incrD[&quot;noteL&quot;].append(ftnumI + 1)
+
+            self.incrD[&quot;footL&quot;].append(ftnumI + 1)
+
+            lineS = self.lineS.replace(&quot;*]&quot;, &quot;[&quot; + str(ftnumI) + &quot;]&quot;)
+
+            print(lineS)
+
+            return lineS
+
+        def latex(self):
+
+            &quot;&quot;&quot;format latex
+
+            :return lineS: formatted latex
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            txS = self.lineS
+
+            # txS = txs.encode(&#39;unicode-escape&#39;).decode()
+
+            ptxS = sp.parse_latex(txS)
+
+            lineS = sp.pretty(sp.sympify(ptxS, _clash2, evaluate=False))
+
+            print(lineS)
+
+            return lineS
+
+        def plain(self):
+
+            &quot;&quot;&quot;format plain literal text _[p]
+
+            :param lineS: _description_
+
+            :type lineS: _type_
+
+            &quot;&quot;&quot;
+
+            print(self.lineS)
+
+            return self.lineS
+
+        def sympy(self):
+
+            &quot;&quot;&quot;format line of sympy _[s]
+
+            :return lineS: formatted sympy
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            spS = self.lineS.strip()
+
+            # try:
+
+            #     spL = spS.split(&quot;=&quot;)
+
+            #     spS = &quot;Eq(&quot; + spL[0] + &quot;,(&quot; + spL[1] + &quot;))&quot;
+
+            #     # sps = sp.encode(&#39;unicode-escape&#39;).decode()
+
+            # except:
+
+            lineS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+
+            print(lineS)
+
+            return lineS
+
+        def table(self):
+
+            &quot;&quot;&quot;format table title  _[t]
+
+            :return lineS: md table title
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            tnumI = int(self.incrD[&quot;tableI&quot;])
+
+            self.incrD[&quot;tableI&quot;] = tnumI + 1
+
+            lineS = &quot;Table &quot; + str(tnumI) + &quot; - &quot; + self.lineS
+
+            return lineS
+
+        def link(self):
+
+            &quot;&quot;&quot;format url or internal link _[link]
+
+            :return: _description_
+
+            :rtype: _type_
+
+            &quot;&quot;&quot;
+
+            lineL = self.lineS.split(&quot;,&quot;)
+
+            lineS = &quot;.. _&quot; + lineL[0] + &quot;: &quot; + lineL[1]
+
+            print(lineS)
+
+            return lineS
+
+        def page(self):
+
+            &quot;&quot;&quot;insert new page header _[page]
+
+            :return lineS: page header
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            pagenoS = str(self.incrD[&quot;pageI&quot;])
+
+            rvtS = self.incrD[&quot;headuS&quot;].replace(&quot;p##&quot;, pagenoS)
+
+            self.incrD[&quot;pageI&quot;] = int(pagenoS)+1
+
+            lineS = &quot;\n&quot;+&quot;_&quot; * self.incrD[&quot;widthI&quot;] + &quot;\n&quot; + rvtS +\
+
+                    &quot;\n&quot;+&quot;_&quot; * self.incrD[&quot;widthI&quot;] + &quot;\n&quot;
+
+            return &quot;\n&quot; + rvtS
+
+        def underline(self):
+
+            &quot;&quot;&quot;underline _[u]
+
+            :return lineS: underline
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            return self.lineS
+
+        def centerblk(self):
+
+            &quot;&quot;&quot;
+
+            &quot;&quot;&quot;
+
+            lineS = &quot;&quot;
+
+            for i in self.lineS:
+
+                lineS += i.center(int(self.widthI))
+
+            return lineS
+
+        def latexblk(self):
+
+            pass
+
+        def mathblk(self):
+
+            pass
+
+        def codeblk(self):
+
+            pass
+
+        def rightblk(self):
+
+            pass
+
+        def shadeblk(self):
+
+            &quot;&quot;&quot; start shade block _[[s]]
+
+            :param lineS: _description_
+
+            :type lineS: _type_
+
+            &quot;&quot;&quot;
+
+            pass
+
+        def quitblock(self):
+
+            &quot;&quot;&quot; quit shade block _[[q]]
+
+            :param lineS: _description_
+
+            :type lineS: _type_
+
+            &quot;&quot;&quot;
+
+            pass
+
+        def tagblk(self):
+
+            pass
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ancestors-in-mro">
+<h4>Ancestors (in MRO)<a class="headerlink" href="#ancestors-in-mro" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p>rivtlib.tag_parse.Tags</p></li>
+</ul>
+</section>
+<section id="methods">
+<h4>Methods<a class="headerlink" href="#methods" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="assign">
+<h4>assign<a class="headerlink" href="#assign" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">assign</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>= assign result to equation</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>assignL</p></td>
+<td><p>assign results</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def assign(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot; = assign result to equation
+
+            :return assignL: assign results
+
+            :rtype: list
+
+            :return rstS: restruct string 
+
+            :rtype: string
+
+            &quot;&quot;&quot;
+
+            locals().update(self.localD)
+
+            varS = str(self.lineS).split(&quot;=&quot;)[0].strip()
+
+            valS = str(self.lineS).split(&quot;=&quot;)[1].strip()
+
+            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+
+            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+
+            descS = str(self.incrD[&quot;eqlabelS&quot;])
+
+            precI = int(self.incrD[&quot;descS&quot;])  # trim result
+
+            fmtS = &quot;%.&quot; + str(precI) + &quot;f&quot;
+
+            if unit1S.strip() != &quot;-&quot;:
+
+                if type(eval(valS)) == list:
+
+                    val1U = array(eval(valS)) * eval(unit1S)
+
+                    val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+
+                else:
+
+                    cmdS = varS + &quot;= &quot; + valS
+
+                    exec(cmdS, globals(), locals())
+
+                    val1U = eval(varS).cast_unit(eval(unit1S))
+
+                    val1U.set_format(value_format=fmtS, auto_norm=True)
+
+                    val2U = val1U.cast_unit(eval(unit2S))
+
+            else:
+
+                cmdS = varS + &quot;= as_unum(&quot; + valS + &quot;)&quot;
+
+                exec(cmdS, globals(), locals())
+
+                valU = eval(varS)
+
+                valdec = round(valU.number(), precI)
+
+                val1U = val2U = str(valdec)
+
+            spS = &quot;Eq(&quot; + varS + &quot;,(&quot; + valS + &quot;))&quot;
+
+            # symeq = sp.sympify(spS, _clash2, evaluate=False)
+
+            # eqltxS = sp.latex(symeq, mul_symbol=&quot;dot&quot;)
+
+            eqS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+
+            indeqS = eqS.replace(&quot;\n&quot;, &quot;\n   &quot;)
+
+            rstS = &quot;\n::\n\n   &quot; + indeqS + &quot;\n\n&quot;
+
+            eqL = [varS, valS, unit1S, unit2S, descS]
+
+            self.localD.update(locals())
+
+            subS = &quot;\n\n&quot;
+
+            if self.incrD[&quot;subB&quot;]:              # replace variables with numbers
+
+                subS = self.vsub(eqL, precI, varS, val1U) + &quot;\n\n&quot;
+
+            assignL = [varS, str(val1U), unit1S, unit2S, descS]
+
+            return [assignL, rstS + subS]
+</pre></div>
+</div>
+</section>
+<section id="bold">
+<h4>bold<a class="headerlink" href="#bold" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bold</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>bold text _[b]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>bold line</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def bold(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;bold text _[b]
+
+            :return lineS: bold line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            return self.lineS
+</pre></div>
+</div>
+</section>
+<section id="boldcenter">
+<h4>boldcenter<a class="headerlink" href="#boldcenter" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">boldcenter</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>center text _[bc]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>centered line</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def boldcenter(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;center text _[bc]
+
+            :return lineS: centered line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            lineS = self.lineS.center(int(self.widthI))
+
+            print(lineS)
+</pre></div>
+</div>
+</section>
+<section id="bolditalic">
+<h4>bolditalic<a class="headerlink" href="#bolditalic" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bolditalic</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>center text _[bc]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>centered line</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def bolditalic(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;center text _[bc]
+
+            :return lineS: centered line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            lineS = self.lineS.center(int(self.widthI))
+
+            return lineS
+</pre></div>
+</div>
+</section>
+<section id="center">
+<h4>center<a class="headerlink" href="#center" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">center</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>center text _[c]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>centered line</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def center(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;center text _[c]
+
+            :return lineS: centered line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            lineS = self.lineS.center(int(self.widthI))
+
+            return lineS
+</pre></div>
+</div>
+</section>
+<section id="centerblk">
+<h4>centerblk<a class="headerlink" href="#centerblk" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">centerblk</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>??? example “View Source”
+def centerblk(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;
+
+            &quot;&quot;&quot;
+
+            lineS = &quot;&quot;
+
+            for i in self.lineS:
+
+                lineS += i.center(int(self.widthI))
+
+            return lineS
+</pre></div>
+</div>
+</section>
+<section id="codeblk">
+<h4>codeblk<a class="headerlink" href="#codeblk" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">codeblk</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>??? example “View Source”
+def codeblk(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            pass
+</pre></div>
+</div>
+</section>
+<section id="declare">
+<h4>declare<a class="headerlink" href="#declare" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">declare</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>:= declare variable value</p>
+<p>:return assignL: assign results
+:rtype: list
+:return rstS: restruct string
+:rtype: string</p>
+<p>??? example “View Source”
+def declare(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot; := declare variable value
+
+            :return assignL: assign results
+
+            :rtype: list
+
+            :return rstS: restruct string 
+
+            :rtype: string
+
+            &quot;&quot;&quot;
+
+            locals().update(self.localD)
+
+            varS = str(self.lineS).split(&quot;:=&quot;)[0].strip()
+
+            valS = str(self.lineS).split(&quot;:=&quot;)[1].strip()
+
+            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+
+            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+
+            descripS = str(self.incrD[&quot;descS&quot;])
+
+            if unit1S.strip() != &quot;-&quot;:
+
+                cmdS = varS + &quot;= &quot; + valS + &quot;*&quot; + unit1S
+
+            else:
+
+                cmdS = varS + &quot;= as_unum(&quot; + valS + &quot;)&quot;
+
+            exec(cmdS, globals(), locals())
+
+            self.localD.update(locals())
+
+            return [varS, valS, unit1S, unit2S, descripS]
+</pre></div>
+</div>
+</section>
+<section id="description">
+<h4>description<a class="headerlink" href="#description" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">description</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>footnote description _[d]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>footnote</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def description(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;footnote description _[d]
+
+            :return lineS: footnote
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            ftnumI = self.incrD[&quot;noteL&quot;].pop(0)
+
+            lineS = &quot;[&quot; + str(ftnumI) + &quot;] &quot; + self.lineS
+
+            return lineS
+</pre></div>
+</div>
+</section>
+<section id="equation">
+<h4>equation<a class="headerlink" href="#equation" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">equation</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>md equation label _[e]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>md equation label</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def equation(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;md equation label _[e]
+
+            :return lineS: md equation label
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            enumI = int(self.incrD[&quot;equI&quot;]) + 1
+
+            fillS = str(enumI).zfill(2)
+
+            wI = self.incrD[&quot;widthI&quot;]
+
+            refS = self.label(&quot;E&quot;, fillS)
+
+            spcI = len(&quot;Equ. &quot; + fillS + &quot; - &quot; + self.lineS.strip())
+
+            lineS = &quot;Equ. &quot; + fillS + &quot; - &quot; + self.lineS.strip() \
+
+                + refS.rjust(wI-spcI)
+
+            self.incrD[&quot;equI&quot;] = enumI
+
+            return lineS
+</pre></div>
+</div>
+</section>
+<section id="figure">
+<h4>figure<a class="headerlink" href="#figure" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">figure</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>md figure caption _[f]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>figure label</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def figure(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;md figure caption _[f]
+
+            :return lineS: figure label
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            fnumI = int(self.incrD[&quot;figI&quot;])
+
+            lineS = &quot;Fig. &quot; + str(fnumI) + &quot; - &quot; + self.lineS
+
+            return lineS + &quot;\n&quot;
+</pre></div>
+</div>
+</section>
+<section id="foot">
+<h4>foot<a class="headerlink" href="#foot" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foot</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>footnote number _[#]</p>
+<p>??? example “View Source”
+def foot(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;footnote number _[#]
+
+    
+
+            &quot;&quot;&quot;
+
+            ftnumI = self.incrD[&quot;footL&quot;].pop(0)
+
+            self.incrD[&quot;noteL&quot;].append(ftnumI + 1)
+
+            self.incrD[&quot;footL&quot;].append(ftnumI + 1)
+
+            lineS = self.lineS.replace(&quot;*]&quot;, &quot;[&quot; + str(ftnumI) + &quot;]&quot;)
+
+            print(lineS)
+
+            return lineS
+</pre></div>
+</div>
+</section>
+<section id="italic">
+<h4>italic<a class="headerlink" href="#italic" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">italic</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>italicize text _[i]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>centered line</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def italic(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;italicize text _[i]
+
+            :return lineS: centered line
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            return self.lineS
+</pre></div>
+</div>
+</section>
+<section id="label">
+<h4>label<a class="headerlink" href="#label" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">label</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">labelS</span><span class="p">,</span>
+    <span class="n">numS</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>format labels for equations, tables and figures</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>labelS</p></td>
+<td><p>formatted label</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def label(self, labelS, numS):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;format labels for equations, tables and figures
+
+                :return labelS: formatted label
+
+                :rtype: str
+
+            &quot;&quot;&quot;
+
+            secS = str(self.incrD[&quot;secnumI&quot;]).zfill(2)
+
+            labelS = secS + &quot; - &quot; + labelS + numS
+
+            # store for equation table
+
+            self.incrD[&quot;eqlabelS&quot;] = self.lineS + &quot; [&quot; + numS.zfill(2) + &quot;]&quot;
+
+            return labelS
+</pre></div>
+</div>
+</section>
+<section id="latex">
+<h4>latex<a class="headerlink" href="#latex" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">latex</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>format latex</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>formatted latex</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def latex(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;format latex
+
+            :return lineS: formatted latex
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            txS = self.lineS
+
+            # txS = txs.encode(&#39;unicode-escape&#39;).decode()
+
+            ptxS = sp.parse_latex(txS)
+
+            lineS = sp.pretty(sp.sympify(ptxS, _clash2, evaluate=False))
+
+            print(lineS)
+
+            return lineS
+</pre></div>
+</div>
+</section>
+<section id="latexblk">
+<h4>latexblk<a class="headerlink" href="#latexblk" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">latexblk</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>??? example “View Source”
+def latexblk(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            pass
+</pre></div>
+</div>
+</section>
+<section id="link">
+<h4>link<a class="headerlink" href="#link" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">link</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>format url or internal link _[link]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>type</em></p></td>
+<td><p><em>description</em></p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def link(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;format url or internal link _[link]
+
+            :return: _description_
+
+            :rtype: _type_
+
+            &quot;&quot;&quot;
+
+            lineL = self.lineS.split(&quot;,&quot;)
+
+            lineS = &quot;.. _&quot; + lineL[0] + &quot;: &quot; + lineL[1]
+
+            print(lineS)
+
+            return lineS
+</pre></div>
+</div>
+</section>
+<section id="mathblk">
+<h4>mathblk<a class="headerlink" href="#mathblk" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mathblk</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>??? example “View Source”
+def mathblk(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            pass
+</pre></div>
+</div>
+</section>
+<section id="page">
+<h4>page<a class="headerlink" href="#page" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">page</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>insert new page header _[page]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>page header</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def page(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;insert new page header _[page]
+
+            :return lineS: page header
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            pagenoS = str(self.incrD[&quot;pageI&quot;])
+
+            rvtS = self.incrD[&quot;headuS&quot;].replace(&quot;p##&quot;, pagenoS)
+
+            self.incrD[&quot;pageI&quot;] = int(pagenoS)+1
+
+            lineS = &quot;\n&quot;+&quot;_&quot; * self.incrD[&quot;widthI&quot;] + &quot;\n&quot; + rvtS +\
+
+                    &quot;\n&quot;+&quot;_&quot; * self.incrD[&quot;widthI&quot;] + &quot;\n&quot;
+
+            return &quot;\n&quot; + rvtS
+</pre></div>
+</div>
+</section>
+<section id="plain">
+<h4>plain<a class="headerlink" href="#plain" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plain</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>format plain literal text _[p]</p>
+<p><strong>Parameters:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Default</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p><em>type</em></p></td>
+<td><p><em>description</em></p></td>
+<td><p>None</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def plain(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;format plain literal text _[p]
+
+            :param lineS: _description_
+
+            :type lineS: _type_
+
+            &quot;&quot;&quot;
+
+            print(self.lineS)
+
+            return self.lineS
+</pre></div>
+</div>
+</section>
+<section id="quitblock">
+<h4>quitblock<a class="headerlink" href="#quitblock" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">quitblock</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>quit shade block _[[q]]</p>
+<p><strong>Parameters:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Default</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p><em>type</em></p></td>
+<td><p><em>description</em></p></td>
+<td><p>None</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def quitblock(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot; quit shade block _[[q]]
+
+            :param lineS: _description_
+
+            :type lineS: _type_
+
+            &quot;&quot;&quot;
+
+            pass
+</pre></div>
+</div>
+</section>
+<section id="right">
+<h4>right<a class="headerlink" href="#right" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">right</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>right justify text _[r]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>right justified text</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def right(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;right justify text _[r]
+
+            :return lineS: right justified text
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            lineS = self.lineS.rjust(int(self.widthI))
+
+            return lineS
+</pre></div>
+</div>
+</section>
+<section id="rightblk">
+<h4>rightblk<a class="headerlink" href="#rightblk" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rightblk</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>??? example “View Source”
+def rightblk(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            pass
+</pre></div>
+</div>
+</section>
+<section id="shadeblk">
+<h4>shadeblk<a class="headerlink" href="#shadeblk" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">shadeblk</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>start shade block _[[s]]</p>
+<p><strong>Parameters:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Default</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p><em>type</em></p></td>
+<td><p><em>description</em></p></td>
+<td><p>None</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def shadeblk(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot; start shade block _[[s]]
+
+            :param lineS: _description_
+
+            :type lineS: _type_
+
+            &quot;&quot;&quot;
+
+            pass
+</pre></div>
+</div>
+</section>
+<section id="sympy">
+<h4>sympy<a class="headerlink" href="#sympy" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sympy</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>format line of sympy _[s]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>formatted sympy</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def sympy(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;format line of sympy _[s]
+
+            :return lineS: formatted sympy
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            spS = self.lineS.strip()
+
+            # try:
+
+            #     spL = spS.split(&quot;=&quot;)
+
+            #     spS = &quot;Eq(&quot; + spL[0] + &quot;,(&quot; + spL[1] + &quot;))&quot;
+
+            #     # sps = sp.encode(&#39;unicode-escape&#39;).decode()
+
+            # except:
+
+            lineS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+
+            print(lineS)
+
+            return lineS
+</pre></div>
+</div>
+</section>
+<section id="table">
+<h4>table<a class="headerlink" href="#table" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">table</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>format table title  _[t]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>md table title</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def table(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;format table title  _[t]
+
+            :return lineS: md table title
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            tnumI = int(self.incrD[&quot;tableI&quot;])
+
+            self.incrD[&quot;tableI&quot;] = tnumI + 1
+
+            lineS = &quot;Table &quot; + str(tnumI) + &quot; - &quot; + self.lineS
+
+            return lineS
+</pre></div>
+</div>
+</section>
+<section id="tag-parse">
+<h4>tag_parse<a class="headerlink" href="#tag-parse" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tag_parse</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">tagS</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>convert rivt tags to md</p>
+<p>??? example “View Source”
+def tag_parse(self, tagS):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;convert rivt tags to md
+
+            &quot;&quot;&quot;
+
+            if tagS in self.tagsD:
+
+                return eval(&quot;self.&quot; + self.tagsD[tagS] + &quot;()&quot;)
+
+            if &quot;b&quot; in tagS and &quot;c&quot; in tagS:
+
+                return self.boldcenter()
+
+            if &quot;b&quot; in tagS and &quot;i&quot; in tagS:
+
+                return self.bolditalic()
+
+            if &quot;b&quot; in tagS and &quot;i&quot; in tagS and &quot;c&quot; in tagS:
+
+                return self.bolditaliccenter()
+
+            if &quot;i&quot; in tagS and &quot;c&quot; in tagS:
+
+                return self.italiccenter()
+</pre></div>
+</div>
+</section>
+<section id="tagblk">
+<h4>tagblk<a class="headerlink" href="#tagblk" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tagblk</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>??? example “View Source”
+def tagblk(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            pass
+</pre></div>
+</div>
+</section>
+<section id="underline">
+<h4>underline<a class="headerlink" href="#underline" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">underline</span><span class="p">(</span>
+    <span class="bp">self</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>underline _[u]</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>lineS</p></td>
+<td><p>underline</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def underline(self):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;underline _[u]
+
+            :return lineS: underline
+
+            :rtype: str
+
+            &quot;&quot;&quot;
+
+            return self.lineS
+</pre></div>
+</div>
+</section>
+<section id="vsub">
+<h4>vsub<a class="headerlink" href="#vsub" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">vsub</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">eqL</span><span class="p">,</span>
+    <span class="n">precI</span><span class="p">,</span>
+    <span class="n">varS</span><span class="p">,</span>
+    <span class="n">val1U</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>substitute numbers for variables in printed output</p>
+<p><strong>Returns:</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>assignL</p></td>
+<td><p>assign results</p></td>
+</tr>
+</tbody>
+</table>
+<p>??? example “View Source”
+def vsub(self, eqL, precI, varS, val1U):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;substitute numbers for variables in printed output
+
+            :return assignL: assign results
+
+            :rtype: list
+
+            :return rstS: restruct string 
+
+            :rtype: string
+
+            &quot;&quot;&quot;
+
+            locals().update(self.localD)
+
+            fmtS = &quot;%.&quot; + str(precI) + &quot;f&quot;
+
+            varL = [str(eqL[0]), str(eqL[1])]
+
+            # resultS = vars[0].strip() + &quot; = &quot; + str(eval(vars[1]))
+
+            # sps = sps.encode(&#39;unicode-escape&#39;).decode()
+
+            eqS = &quot;Eq(&quot; + eqL[0] + &quot;,(&quot; + eqL[1] + &quot;))&quot;
+
+            with sp.evaluate(False):
+
+                symeq = sp.sympify(eqS.strip())
+
+            symat = symeq.atoms(sp.Symbol)
+
+            for n1O in symat:
+
+                if str(n1O) == varS:
+
+                    symeq = symeq.subs(n1O, sp.Symbol(str(val1U)))
+
+                    continue
+
+                n1U = eval(str(n1O))
+
+                n1U.set_format(value_format=fmtS, auto_norm=True)
+
+                evlen = len(str(n1U))  # get var length
+
+                new_var = str(n1U).rjust(evlen, &quot;~&quot;)
+
+                new_var = new_var.replace(&quot;_&quot;, &quot;|&quot;)
+
+                with sp.evaluate(False):                # sub values
+
+                    symeq = symeq.subs(n1O, sp.Symbol(new_var))
+
+            out2 = sp.pretty(symeq, wrap_line=False)
+
+            # symat1 = symeq.atoms(sp.Symbol)
+
+            # for n2 in symat1:
+
+            #     orig_var = str(n2).replace(&quot;~&quot;, &quot;&quot;)
+
+            #     orig_var = orig_var.replace(&quot;|&quot;, &quot;_&quot;)
+
+            #     expr = eval(varL[1])
+
+            #     if type(expr) == float:
+
+            #         form = &quot;{%.&quot; + str(precI) + &quot;f}&quot;
+
+            #         symeval1 = form.format(eval(str(expr)))
+
+            #     else:
+
+            #         try:
+
+            #             symeval1 = eval(
+
+            #                 orig_var.__str__()).__str__()
+
+            #         except:
+
+            #             symeval1 = eval(orig_var.__str__()).__str__()
+
+            #     out2 = out2.replace(n2.__str__(), symeval1)   # substitute
+
+            # print(&#39;out2b\n&#39;, out2)
+
+            out3 = out2  # clean up unicode
+
+            out3 = out3.replace(&quot;*&quot;, &quot;\\u22C5&quot;)
+
+            _cnt = 0
+
+            for _m in out3:
+
+                if _m == &quot;-&quot;:
+
+                    _cnt += 1
+
+                    continue
+
+                else:
+
+                    if _cnt &gt; 1:
+
+                        out3 = out3.replace(&quot;-&quot; * _cnt, &quot;\u2014&quot; * _cnt)
+
+                    _cnt = 0
+
+            self.localD.update(locals())
+
+            indeqS = out3.replace(&quot;\n&quot;, &quot;\n   &quot;)
+
+            rstS = &quot;\n::\n\n   &quot; + indeqS + &quot;\n\n&quot;
+
+            return rstS
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tagsmd">TagsMD</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ancestors-in-mro">Ancestors (in MRO)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#assign">assign</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bold">bold</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#boldcenter">boldcenter</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bolditalic">bolditalic</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#center">center</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#centerblk">centerblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#codeblk">codeblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#declare">declare</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#description">description</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#equation">equation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#figure">figure</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#foot">foot</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#italic">italic</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#label">label</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#latex">latex</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#latexblk">latexblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#link">link</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mathblk">mathblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#page">page</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#plain">plain</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quitblock">quitblock</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#right">right</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rightblk">rightblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#shadeblk">shadeblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sympy">sympy</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#table">table</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tag-parse">tag_parse</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tagblk">tagblk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#underline">underline</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#vsub">vsub</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By rholland
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023 StructureLabs.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023 StructureLabs.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

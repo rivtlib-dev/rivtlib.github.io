@@ -1,13 +1,13 @@
 # Module units
 
-Unum unit definitions
+Unit definitions
 
-Add new units at end of file
+Add new units to end of file
 
 ??? example "View Source"
-        """Unum unit definitions
+        """Unit definitions
 
-            Add new units at end of file
+            Add new units to end of file
 
         """
 

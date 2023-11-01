@@ -11,16 +11,17 @@
 rivtlib API Documentation
 ============================
 
-**rivtlib** is an open source library that organizes, modifies and publishes
+**rivtlib** is a Python open source library for organizing, modifying and publishing
 engineering documents using **rivt** markup. 
 
 **rivt** is an engineering markup language that emphasizes reuse of existing
 data and documents.
 
 **rivt-doc** is an open source software system for efficiently producing
-**rivt** documents. The **rivt-doc User Manual** is here <https://rivt-doc.net>
+**rivt** documents. The **rivt-doc User Manual** is `here
+<https://rivt-doc.net>`_.
 
-**rivtlib** uses the MIT open source license <https://opensource.org/license/mit/>
+**rivtlib** uses the `MIT open source license <https://opensource.org/license/mit/>`_.
 
 some text
 

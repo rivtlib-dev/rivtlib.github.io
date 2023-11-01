@@ -8,15 +8,19 @@
 
 
 ============================
-rivt API Documentation
+rivtlib API Documentation
 ============================
 
-**rivt** is open source software for publishing engineering documents that
-minimize new writing and maximize reuse of existing material. 
+**rivtlib** is an open source library that organizes, modifies and publishes
+engineering documents using **rivt** markup. 
 
-**User Manual** is here <https://rivt-doc.net>
+**rivt** is an engineering markup language that emphasizes reuse of existing
+data and documents.
 
-**rivt** uses the MIT open source license <https://opensource.org/license/mit/>
+**rivt-doc** is an open source software system for efficiently producing
+**rivt** documents. The **rivt-doc User Manual** is here <https://rivt-doc.net>
+
+**rivtlib** uses the MIT open source license <https://opensource.org/license/mit/>
 
 some text
 

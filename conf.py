@@ -44,7 +44,7 @@ html_theme_options = {
     "footer_end": [],
 
     "logo": {
-        "image_dark": "_static/img/rivtpy3.png",
+        "image_dark": "_static/img/rivtpy3a.png",
     }
 }
 

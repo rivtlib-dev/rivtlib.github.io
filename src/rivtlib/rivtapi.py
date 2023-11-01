@@ -11,13 +11,13 @@ import sys
 import time
 import warnings
 from pathlib import Path
+from configparser import ConfigParser
+from pathlib import Path
 
 from rivtlib import parse
 from rivtlib import folders
-from rivtlib import config
-from rivtlib import write_readme
-from rivtlib import write_md
-from rivtlib import write_pdf
+from rivtlib import write_private
+from rivtlib import write_public
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
@@ -39,7 +39,6 @@ else:
 # modnameS = __name__.split(".")[1]
 # print(f"{modnameS=}")
 
-
 # relative paths
 rivtbaseS = rivtfileS.split(".py")[0]
 projP = rivtP.parent.parent                   # rivt project path
@@ -55,6 +54,14 @@ rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
 errlogP = Path(tempP, "rivt-log.txt")
 styleP = prvP
 valfileS = rivtbaseS.replace("rivt", "val") + ".csv"
+
+# config file
+config = ConfigParser()
+config.read(Path(prvP, "rivt.ini"))
+reportS = config.get('report', 'title')
+headS = config.get('md', 'head')
+footS = config.get('md', 'foot')
+divS = config.get("divisions", prfxS)
 
 # print(f"{prvP=}")
 # global

@@ -10,7 +10,7 @@
     "inline-bookmarks.view.showVisibleFilesOnly": false,
     "fsdeploy.nodes": [
         {
-            "source": "C:/git/rivtlib/src/rivtlib",
+            "source": "C:/git/rivt-code.github.io/src/rivtlib",
             "target": "C:/Python311/Lib/site-packages/rivtlib",
             "include": "**/*.*",
             "deleteTargetOnDeploy": true,

@@ -1,13 +1,13 @@
 # Module units
 
-Unum unit definitions
+Unit definitions
 
-Add new units at end of file
+Add new units to end of file
 
 ??? example "View Source"
-        """Unum unit definitions
+        """Unit definitions
 
-            Add new units at end of file
+            Add new units to end of file
 
         """
 
@@ -21,9 +21,9 @@ Add new units at end of file
 
         # from rivt.unum.utils import *
 
-        from rivtlib.unum.core import new_unit
-
         # from rivt.unum.utils import uarray
+
+        from rivtlib.unum.core import new_unit
 
         from rivtlib.unum.core import Unum
 

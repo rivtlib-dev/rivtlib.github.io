@@ -18,13 +18,13 @@ from sympy.abc import _clash2
 from sympy.core.alphabets import greeks
 from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
-from .units import *
-import cmd_utf
-import cmd_md
-import cmd_rst
-import tag_utf
-import tag_md
-import tag_rst
+from rivtlib import units
+from rivtlib import cmd_utf
+from rivtlib import cmd_md
+from rivtlib import cmd_rst
+from rivtlib import tag_utf
+from rivtlib import tag_md
+from rivtlib import tag_rst
 
 # tabulate.PRESERVE_WHITESPACE = True
 

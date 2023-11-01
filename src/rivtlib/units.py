@@ -9,8 +9,8 @@ from pathlib import Path
 
 # from rivt.unum.core import *
 # from rivt.unum.utils import *
-from rivtlib.unum.core import new_unit
 # from rivt.unum.utils import uarray
+from rivtlib.unum.core import new_unit
 from rivtlib.unum.core import Unum
 
 rvpath = importlib.util.find_spec("rivtlib")

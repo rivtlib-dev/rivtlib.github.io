@@ -1131,7 +1131,10 @@ convert rivt tags to md
 | localD | _type_ | _description_ | None |
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 77ef858e0000ebef82dbb2b50239d340baf1c633
 ??? example "View Source"
         class TagsUTF(Tags):
 
@@ -1629,6 +1632,9 @@ convert rivt tags to md
 
 ------
 
+<<<<<<< HEAD
+>>>>>>> 77ef858e0000ebef82dbb2b50239d340baf1c633
+=======
 >>>>>>> 77ef858e0000ebef82dbb2b50239d340baf1c633
 #### Ancestors (in MRO)
 

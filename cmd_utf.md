@@ -954,7 +954,10 @@ common methods for rivt to md, utf and reST
 || assign | folder | file | rows                               V
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 77ef858e0000ebef82dbb2b50239d340baf1c633
 ??? example "View Source"
         class CmdUTF(Commands):
 
@@ -1276,6 +1279,9 @@ common methods for rivt to md, utf and reST
 
 ------
 
+<<<<<<< HEAD
+>>>>>>> 77ef858e0000ebef82dbb2b50239d340baf1c633
+=======
 >>>>>>> 77ef858e0000ebef82dbb2b50239d340baf1c633
 #### Ancestors (in MRO)
 

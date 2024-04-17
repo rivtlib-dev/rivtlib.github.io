@@ -8,7 +8,7 @@
 
 
 ============================
-rivtlib API Documentationx
+rivtlib API Documentation
 ============================
 
 **rivtlib** is a Python open source library for organizing, modifying and publishing

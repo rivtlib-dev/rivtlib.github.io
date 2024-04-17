@@ -61,11 +61,11 @@ def cmdlinehelp():
     print()
     print("Run the following command in a rivt file folder:           ")
     print()
-    print("     python -m rivtlib rivtnn-filename.py                  ")
+    print("     python -m rivtlib rivddnn-filename.py                  ")
     print()
     print("The command is run in the rivt file folder.                ")
-    print("File name must match 'rivtnn-filename.py'                  ")
-    print("Where nn is a two digit integer                            ")
+    print("File name must match 'rivddcc-filename.py                  ")
+    print("Where dd and cc are two digit integers                     ")
     print("Text output is written to stdout.                          ")
     print("Other outputs depend on file contents.                     ")
     print("See User Manual at https://rivt-doc.net for details        ")
@@ -74,7 +74,7 @@ def cmdlinehelp():
 
 if __name__ == "__main__":
     try:
-        fileS = sys.argv[1]
+        argfileS = sys.argv[1]
         import rivtlib.rivtapi
     except:
         cmdlinehelp()

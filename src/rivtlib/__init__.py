@@ -26,26 +26,27 @@ the standard cell decorator *# %%*. Interactive output and output to stdout
 calculated values to a file for later use, and generates formatted documents
 and reports in GitHub Markdown (ghmd) and PDF.
 
-rivt syntax includes arbitrary unicode and rivt commands and tags. It wraps and
-extends reStructuredText (reST).  See https://rivt-doc.net  for user manual
+In addition to rivt commands and formatting tags, the language may include
+arbitrary unicode text. It is processed by a reStructuredText (reST) wrapper.
+See https://rivt-doc.net for user manual
 
 ========
 commands
 ========
 
-A rivt command reads or writes external files and is triggered by starting a
-line with ||. Commands are implemented per API function. Either-or parameter
-choices below are designated with semi-colons. List parameters are separated
-with commas.
+A rivt command processes files, links and equations and is typically triggered
+by a line that starts with ||. Commands are specific to an API function. In the
+summary elements of parameter lists are separated with commas and selection
+parameters are designated with semi-colons.
 
 =============== ===============================================================
- name                      Commands (VSCode snippet prefix)
+ name                      Commands (VSCode snippet)
 =============== ===============================================================
 
-Rivtinit (ri)       rv.R("""label | toc;notoc,start page
+Run (ru)       rv.R("""label | toc;notoc,start page
 
-                        ||text (te)
-                        ||append (ap)
+                        ||
+                        ||
 
                         """)
 
@@ -60,81 +61,69 @@ Insert (in)         rv.I("""label | nocolor;hexvalue
 Values (va)         rv.V("""label | sub;nosub 
                 
                         ||declare (de)
+                        =
+                        :=
 
                         """)
 
 Tools (to)          rv.T("""label | summary;inline
                 
-                        Python code
+                        ||
+                        ||
 
                         """)
 
 Exclude             rv.X("""any API function
 
-                        A method changed to X is not evaluated (used for
-                        comments and debugging).
+                        A method changed to X is not evaluated. It may be used
+                        for comments and debugging.
 
                     """)
 
-Write (pu)          rv.write_public(text,md,pdf,report)
-      (pr)          rv.write_private(text,md,pdf,report)
+Write (wr)          rv.write(html,pdf)
 
 
-================================================ ============== 
-       command syntax                                API      
-================================================ ============== 
+=============================================== ======= ========= 
+       command syntax                             API    Snippet
+=============================================== ======= ========= 
 
-|| text | rel file path | rivt;plain;default        R I V      
+|| te | descrip | rel path | rivt;plain;default    I       te
+|| im | descrip | rel path, .. | .50, ..           I       im 
+|| ta | descrip | rel path | 30,r;l;c              I       ta 
+|| de | descrip | rel path | print;noprint         V       de 
+= (declare)    a = 1.2 | descrip | alt, n          V
+:= (assign)    a := b + c | descrip | unit, alt | n,n     V
 
-|| append | rel file path | num;nonum                 R        
-
-|| image  | rel file path, .. | .50, ..               I        
- 
-|| table  | rel file path | 30,r;l;c                  I        
-
-|| declare | rel file path | print;noprint            V        
+|| li | url; reference | label                    I,V      li
 
 ====
 tags
 ====
 
-rivt tags are typically entered at the end of line and are processed per API
-function. Line tags apply to a single line. Block tags appy to blocks of text.
+Format tags are inserted at the end of a line and may be used in I or V
+strings. Line tags format a single line and block tags apply to blocks of text.
+Use reStructuredText for bold, italic, etc. markup.
 
-===================== ================================== ==========
-   line tags                 description                   API
-===================== ================================= ===========
-text _[b]                bold                            R I V 
-text _[c]                center                          R I V  
-text _[i]                italic                          R I V  
-text _[bc]               bold center                     R I V  
-text _[bi]               bold italic                     R I V
-text _[r]                right justify                   R I V
-text _[u]                underline                       R I V   
-text _[p]                plain                           R I V   
-text _[l]                LaTeX math                        I V
-text _[s]                sympy math                        I V
-text _[bs]               bold sympy math                   I V
-text _[e]                equation label, autonumber        I V
-text _[f]                figure caption, autonumber        I V
-text _[t]                table title, autonumber           I V
-text _[#]                footnote, autonumber              I V
-text _[d]                footnote description              I V
-_[page]                  new page                          I V
-_[address, label]        url or internal reference         I V
-= (declare)              a = 1.2 | unit, alt | descrip       V
-:= (assign)              a := b + c | unit, alt | n,n        V
+===================== ==========================
+   line tags                 description               
+===================== ==========================
+text _[u]                underline                                             
+text _[bc]               bold center                      
+text _[bi]               bold italic                      
+text _[r]                right justify                    
+text _[l]                LaTeX math                       
+text _[s]                sympy math                       
+text _[bs]               bold sympy math                  
+text _[#]                footnote (autonumber)            
+text _[d]                footnote description             
+_[page]                  new page                  
 
-
-==================== ========================== ==========
-   block tags                description            API
-==================== ========================== ==========
-_[[b]]                  start bold                 R I
-_[[c]]                  start center               R I
-_[[i]]                  start italic               R I
-_[[p]]                  start plain                R I
-_[[l]]                  start LaTeX                  I
-_[[e]]                  end block                  R I
+==================== ========================== 
+   block tags                description        
+==================== ==========================             
+_[[p]]                  start monospace              
+_[[l]]                  start LaTeX              
+_[[e]]                  end block                
 
 
 =================

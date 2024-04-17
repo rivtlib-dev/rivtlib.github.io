@@ -10,9 +10,11 @@ import shutil
 import sys
 import time
 import warnings
+import IPython
 from pathlib import Path
 from configparser import ConfigParser
 from pathlib import Path
+import __main__
 
 from rivtlib import parse
 from rivtlib import folders
@@ -21,20 +23,20 @@ from rivtlib import write_public
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
-if __name__ != "__main__":
-    argfileS = Path(sys.argv[0]).name
-    print(f"{argfileS=}")
 rivtpathP = Path(os.getcwd())
-if fnmatch.fnmatch(argfileS, "rivt??-*.py"):
+if __name__ == "rivtlib.rivtapi":
+    argfileS = Path(__main__.__file__).name
+    print(f"{argfileS=}")
+if fnmatch.fnmatch(argfileS, "riv????-*.py"):
     rivtfileS = argfileS
     rivtP = Path(rivtpathP, rivtfileS)
     print(f"{rivtfileS=}")
     print(f"{rivtP=}")
 else:
-    print("INFO     rivt file not found")
-    print("INFO     file name must match 'rivtnn-filename.py'")
-    print("INFO     where nn is a two digit integer")
-    exit()
+    print("INFO     rivt file not found - ")
+    print("INFO     file name must match 'rivddss-filename.py'")
+    print("INFO     where dd and ss are two digit integers")
+    sys.exit()
 
 # modnameS = __name__.split(".")[1]
 # print(f"{modnameS=}")

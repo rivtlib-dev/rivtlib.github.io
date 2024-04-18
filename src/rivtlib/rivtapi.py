@@ -65,9 +65,10 @@ headS = config.get('format', 'header')
 footS = config.get('format', 'footer')
 
 # global dictionaries and strings
-rivtS = """"""                           # rivt input string
+rivtS = """"""                              # rivt input string
 utfS = """"""                               # utf-8 output string
 rmeS = """"""                               # readme output string
+xremS = """"""                              # redacted readme string
 rstS = """"""                               # reST output string
 declareS = """"""                           # declares output string
 assignS = """"""                            # assigns output string
@@ -97,21 +98,21 @@ incrD = {
     "subB": False                           # sub values in equations
 }
 
-
+# logging
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)-8s  " + baseS + "   %(levelname)-8s %(message)s",
     datefmt="%m-%d %H:%M",
     filename=errlogP,
     filemode="w")
-pubshortP = Path(*Path(docP).parts[-2:])
-bshortP = Path(*Path(bakP).parts[-2:])
+docshortP = Path(*Path(docP).parts[-2:])
+bakshortP = Path(*Path(bakP).parts[-2:])
 
 
 if docP.exists():
     logging.info(f"""rivt file : [{docS}]""")
     logging.info(f"""rivt path : [{docP}]""")
-    print(f"""rivt short path : [{pubshortP}]""")
+    print(f"""rivt short path : [{docshortP}]""")
 else:
     logging.info(f"""rivt file path not found: {docP}""")
 
@@ -121,12 +122,12 @@ with open(rivtP, "r") as f2:
     rivtL = f2.readlines()
 with open(bakP, "w") as f3:
     f3.write(rivtS)
-logging.info(f"""rivt backup: [{bshortP}]""")
+logging.info(f"""rivt backup: [{bakshortP}]""")
 print(" ")
 
 with open(rivtP, "r") as f1:
-    rvtfileS = f1.read()
-    rvtfileS += rvtfileS + """\nsys.exit()\n"""
+    rivtS = f1.read()
+    rivtS += rivtS + """\nsys.exit()\n"""
 
 
 def _str_set(rS, methS):
@@ -140,10 +141,10 @@ def _str_set(rS, methS):
     :rtype: str
     """
 
-    global mdS, rstS, incrD, folderD
+    global rivtS, rstS, incrD, folderD
 
     hdrstS = """"""
-    hdmdS = """"""
+    hdreadS = """"""
     hdutfS = """"""""
 
     rsL = rS.split("|")
@@ -219,7 +220,7 @@ def _rivt_parse(rS, mS):
     :type mS: str
     """
 
-    global utfS, mdS, rstS, incrD, folderD, rivtD
+    global readS, xreadS, rstS, incrD, folderD, rivtD
 
     # section headings
     xmdS = xrstS = xutfS = ""
@@ -293,7 +294,7 @@ def X(rS):
     pass
 
 
-def writedocs(formatS):
+def write(formatS):
     """write output files
 
     :param formatS: comma separated output types: 'utf,md,pdf' 

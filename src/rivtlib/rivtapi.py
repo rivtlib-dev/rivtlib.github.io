@@ -23,68 +23,63 @@ from rivtlib import write_public
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
-rivtpathP = Path(os.getcwd())
+docP = Path(os.getcwd())
 if __name__ == "rivtlib.rivtapi":
-    argfileS = Path(__main__.__file__).name
+    argfileS = Path(__main__.__file__)
+    docS = argfileS.name
     print(f"{argfileS=}")
-if fnmatch.fnmatch(argfileS, "riv????-*.py"):
-    rivtfileS = argfileS
-    rivtP = Path(rivtpathP, rivtfileS)
-    print(f"{rivtfileS=}")
-    print(f"{rivtP=}")
+if fnmatch.fnmatch(docS, "riv????-*.py"):
+    rivtP = Path(docP, docS)
+    print(f"{docS=}")
+    print(f"{docP=}")
 else:
-    print("INFO     rivt file not found - ")
-    print("INFO     file name must match 'rivddss-filename.py'")
-    print("INFO     where dd and ss are two digit integers")
+    print(f"INFO     rivt file name is - {docS}")
+    print(f"INFO     The file name must match 'rivddss-filename.py' where")
+    print(f"INFO     dd and ss are two digit integers")
     sys.exit()
 
-# modnameS = __name__.split(".")[1]
-# print(f"{modnameS=}")
+# files and paths
+baseS = docS.split(".py")[0]
+titleS = baseS.split("-")[1]
+projP = docP
+bakP = docP / ".".join((baseS, "bak"))
+prfxS = baseS[0:7]
+dataP = Path(projP, "data")
+toolsP = Path(projP, "tools")
 
-# relative paths
-rivtbaseS = rivtfileS.split(".py")[0]
-projP = rivtP.parent.parent                   # rivt project path
-bakP = rivtP.parent / ".".join((rivtbaseS, "bak"))
-prvP = Path(projP, "private")
-prfxS = rivtbaseS[0:6]
 # output paths
-reportP = Path(prvP, "docs", "report")      # report folder path
-tempP = Path(prvP, "temp")
-rivtP = Path("rivtapi.py").parent           # rivt package path
-pypath = os.path.dirname(sys.executable)
-rivtP = os.path.join(pypath, "Lib", "site-packages", "rivt")
+reportP = Path(projP, "reports")
+xrivtP = Path(projP, "xrivt")
+tempP = Path(projP, "temp")
+pypath = os.path.dirname(sys.executable)  # rivt package path
+rivtpkgP = os.path.join(pypath, "Lib", "site-packages", "rivt")
 errlogP = Path(tempP, "rivt-log.txt")
-styleP = prvP
-valfileS = rivtbaseS.replace("rivt", "val") + ".csv"
+styleP = Path(projP, "reports", "pdf")
+valfileS = baseS.replace("riv", "val") + ".csv"
+readmeP = Path(projP, "README.txt")
 
 # config file
 config = ConfigParser()
-config.read(Path(prvP, "rivt.ini"))
-reportS = config.get('report', 'title')
-headS = config.get('md', 'head')
-footS = config.get('md', 'foot')
-divS = config.get("divisions", prfxS)
+config.read(Path(projP, "config.ini"))
+headS = config.get('format', 'header')
+footS = config.get('format', 'footer')
 
-# print(f"{prvP=}")
-# global
+# global dictionaries and strings
+rivtS = """"""                           # rivt input string
 utfS = """"""                               # utf-8 output string
-mdS = """"""                                # github md output string
+rmeS = """"""                               # readme output string
 rstS = """"""                               # reST output string
-rvtfileS = """"""                           # rivt input string
 declareS = """"""                           # declares output string
 assignS = """"""                            # assigns output string
-rivtD = {}                                  # rivt dictionary
-folderD = {}
-for item in ["docP", "dataP", "prvP", "pubP", "docpathP", "reportP",
+rivtD = {}                                  # rivt object dictionary
+folderD = {}                                # folder dictionary
+for item in ["rivtP", "dataP", "readmeP", "reportP",
              "dataP", "valfileS", "errlogP", "styleP", "tempP"]:
     folderD[item] = eval(item)
 incrD = {
-    "modnameS": modnameS,
-    "reportS": reportS,                     # report title
-    "docS": "rivt Document",                # document title
-    "divS": divS,                           # div title
+    "titleS": titleS,                           # document title
+    "docnumS": prfxS,                       # doc number
     "sectS": "",                            # section title
-    "docnumS": docbaseS[1:5],               # doc number
     "secnumI": 0,                           # section number
     "widthI": 80,                           # print width
     "equI": 1,                              # equation number
@@ -105,37 +100,31 @@ incrD = {
 
 logging.basicConfig(
     level=logging.DEBUG,
-    format="%(asctime)-8s  " + modnameS + "   %(levelname)-8s %(message)s",
+    format="%(asctime)-8s  " + baseS + "   %(levelname)-8s %(message)s",
     datefmt="%m-%d %H:%M",
     filename=errlogP,
     filemode="w")
-dshortP = Path(*Path(docP.parent).parts[-2:])
-pubshortP = Path(*Path(pubP).parts[-2:])
-prvshortP = Path(*Path(prvP).parts[-2:])
+pubshortP = Path(*Path(docP).parts[-2:])
+bshortP = Path(*Path(bakP).parts[-2:])
+
 
 if docP.exists():
-    logging.info(f"""rivt file : [{docfileS}]""")
-    logging.info(f"""rivt public path : [{pubP}]""")
-    print(f"""rivt public short path : [{pubshortP}]""")
+    logging.info(f"""rivt file : [{docS}]""")
+    logging.info(f"""rivt path : [{docP}]""")
+    print(f"""rivt short path : [{pubshortP}]""")
 else:
     logging.info(f"""rivt file path not found: {docP}""")
-if prvP.exists:
-    logging.info(f"""private path: [{prvP}]""")
-    print(f"""rivt private short path : [{prvshortP}]""")
-else:
-    logging.info(f"""private path not found: {prvP}""")
 
-logging.info(f"""log folder short path: [{prvshortP}]""")
 # write backup doc file
-with open(docP, "r") as f2:
+with open(rivtP, "r") as f2:
     rivtS = f2.read()
     rivtL = f2.readlines()
 with open(bakP, "w") as f3:
     f3.write(rivtS)
-logging.info(f"""rivt backup: [{dshortP}]""")
+logging.info(f"""rivt backup: [{bshortP}]""")
 print(" ")
 
-with open(docP, "r") as f1:
+with open(rivtP, "r") as f1:
     rvtfileS = f1.read()
     rvtfileS += rvtfileS + """\nsys.exit()\n"""
 

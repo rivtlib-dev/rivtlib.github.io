@@ -1,30 +1,30 @@
 #! python
-'''
-**rivt** is an open source engineering document markdown language for writing,
-organizing and sharing engineering documents. **rivtlib** is a Python library
-for processing rivt. It runs on any platform that supports Python 3.10 or
-later. rivtlib works with both single file documents and extensive reports with
-hundreds of files. 
+''' **rivt** is a lightweight markdown language for writing, organizing and
+sharing engineering documents. **rivtlib** is a Python library for processing
+rivt files. It runs on any platform that supports Python 3.10 or later. rivtlib
+can process single file documents, and extensive reports with hundreds of
+files. rivt and rivtlib are distributed under the open source MIT license.
 
-A rivt file is a Python file that begins with the import statement:
+A rivt file is a Python file that begins with:
 
 *import rivtlib.rivtapi as rv*
  
-which provides four API functions. Each function takes a single, triple quoted
+which imports six API functions. Each function takes a single, triple quoted
 string as an argument.
 
-rv.R(rS) - report and document configuration (Rivtinit)
+rv.R(rS) - run shell scripts (Run)
 rv.I(rS) - static text, images, tables and math (Insert)
 rv.V(rS) - equations (Values)
 rv.T(rS) - Python functions and scripts (Tools)
-rv.write() - formatted rivt document output
+rv.X(rS) - skip rivt-string processing (Exclude)
+rv.W(rS) - write formatted rivt document
 
-rv.R may be followed by arbitrary sequences of rv.I, rv.V and rv.T. When
-running in an IDE (e.g. VSCode), each function may be run interactively using
-the standard cell decorator *# %%*. Interactive output and output to stdout
-(terminal) is formatted as utf-8 text. The rv.write() function exports
-calculated values to a file for later use, and generates formatted documents
-and reports in GitHub Markdown (ghmd) and PDF.
+**rivt** is built on four open souce projects:
+
+- Python 
+- VSCode
+- Latex (TexLive)
+- Git (GitHub)
 
 In addition to rivt commands and formatting tags, the language may include
 arbitrary unicode text. It is processed by a reStructuredText (reST) wrapper.
@@ -43,45 +43,51 @@ parameters are designated with semi-colons.
  name                      Commands (VSCode snippet)
 =============== ===============================================================
 
-Run (ru)       rv.R("""label | toc;notoc,start page
+Run (rvr)            rv.R("""label | toc;notoc,start page
 
-                        ||
-                        ||
 
-                        """)
+                         """)
 
-Insert (in)         rv.I("""label | nocolor;hexvalue  
+Insert (rvi)         rv.I("""label | nocolor;hexvalue  
                         
-                        ||image (im)
-                        ||text (te)
-                        ||table (ta)
+                         | image (im)
+                         | latex (la)
+                         | sympy (sy)
+                         | text (te)
+                         | table title (ta) 
 
-                    """)
 
-Values (va)         rv.V("""label | sub;nosub 
+                         """)
+
+Values (rvv)         rv.V("""label | sub;nosub 
                 
-                        ||declare (de)
-                        =
-                        :=
+                         | image (im)
+                         | latex (la)
+                         | sympy (sy)
+                         | text (te)
+
+                         | values title (va)       
+                         | equation (e1)
+                         | eq (e2)
+
+                         =
+                         :=
+
+                         """)
+
+Tools (rvt)          rv.T("""label | summary;inline
+                
 
                         """)
 
-Tools (to)          rv.T("""label | summary;inline
-                
-                        ||
-                        ||
+Write (rvw)          rv.W(html,pdf)
+
+Exclude              rv.X("""any API function
+
+                        When a method is changed to X it is not evaluated. It
+                        may be used for comments and debugging.
 
                         """)
-
-Exclude             rv.X("""any API function
-
-                        A method changed to X is not evaluated. It may be used
-                        for comments and debugging.
-
-                    """)
-
-Write (wr)          rv.write(html,pdf)
-
 
 =============================================== ======= ========= 
        command syntax                             API    Snippet
@@ -91,6 +97,7 @@ Write (wr)          rv.write(html,pdf)
 || im | descrip | rel path, .. | .50, ..           I       im 
 || ta | descrip | rel path | 30,r;l;c              I       ta 
 || de | descrip | rel path | print;noprint         V       de 
+
 = (declare)    a = 1.2 | descrip | alt, n          V
 := (assign)    a := b + c | descrip | unit, alt | n,n     V
 
@@ -104,26 +111,28 @@ Format tags are inserted at the end of a line and may be used in I or V
 strings. Line tags format a single line and block tags apply to blocks of text.
 Use reStructuredText for bold, italic, etc. markup.
 
-===================== ==========================
-   line tags                 description               
-===================== ==========================
-text _[u]                underline                                             
-text _[bc]               bold center                      
-text _[bi]               bold italic                      
-text _[r]                right justify                    
-text _[l]                LaTeX math                       
-text _[s]                sympy math                       
-text _[bs]               bold sympy math                  
-text _[#]                footnote (autonumber)            
-text _[d]                footnote description             
-_[page]                  new page                  
+===================== ========= ==========================
+ tag                    scope       description               
+===================== ========= ==========================
+text _[u]               line        underline                                             
+text _[bc]              line        bold center                      
+text _[bi]              line        bold italic                      
+text _[bs]              line        bold sympy math                  
+text _[#]               line        footnote (autonumber)            
+text _[d]               line        footnote description             
+text _[r]               line        right justify                                       
+text _[c]               line        center                                       
+_[page]                 line        new page                  
+_[[p]]                  block       start monospace              
+_[[l]]                  block       start LaTeX              
+_[[e]]                  block       end block                
 
-==================== ========================== 
-   block tags                description        
-==================== ==========================             
-_[[p]]                  start monospace              
-_[[l]]                  start LaTeX              
-_[[e]]                  end block                
+
+When running in an IDE (e.g. VSCode), each function may be run interactively
+using the standard cell decorator *# %%*. Interactive output and output to
+stdout (terminal) is formatted as utf-8 text. The rv.write() function exports
+calculated values to a file for later use, and generates formatted documents
+and reports in GitHub Markdown (ghmd) and PDF.
 
 
 =================

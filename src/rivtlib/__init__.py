@@ -2,15 +2,17 @@
 ''' **rivt** is a lightweight markdown language for writing, organizing and
 sharing engineering documents. **rivtlib** is a Python library for processing
 rivt files. It runs on any platform that supports Python 3.10 or later. rivtlib
-can process single file documents, and extensive reports with hundreds of
-files. rivt and rivtlib are distributed under the open source MIT license.
+can process single and multiple-file documents running to hundreds of pages.
+**rivt** and **rivtlib** are distributed under the open source MIT license.
 
-A rivt file is a Python file that begins with:
+A rivt file is a Python file that imports six API functions through:
 
 *import rivtlib.rivtapi as rv*
- 
-which imports six API functions. Each function takes a single, triple quoted
-string as an argument.
+
+
+=============== ===============================================================
+ API function                   Description
+=============== ===============================================================
 
 rv.R(rS) - run shell scripts (Run)
 rv.I(rS) - static text, images, tables and math (Insert)
@@ -19,63 +21,49 @@ rv.T(rS) - Python functions and scripts (Tools)
 rv.X(rS) - skip rivt-string processing (Exclude)
 rv.W(rS) - write formatted rivt document
 
-**rivt** is built on four open souce projects:
+Each function takes a single, triple quoted string as an argument.
 
-- Python 
+**rivt** is built from four open souce projects:
+
+- Python and third party open source libraries
 - VSCode
 - Latex (TexLive)
 - Git (GitHub)
 
-In addition to rivt commands and formatting tags, the language may include
-arbitrary unicode text. It is processed by a reStructuredText (reST) wrapper.
-See https://rivt-doc.net for user manual
+In addition to file commands and formatting tags, rivt-text may include
+arbitrary unicode text. (See the user manual at https://rivt-doc.net). A rivt
+command processes files and is triggered by a line that starts with | or ||. A
+rivt tag formats a line or block of code. Commands and tags are summarized below.
 
-========
-commands
-========
+================ ===============================================================
+ name (snippet)                     Command Overview
+================ ===============================================================
 
-A rivt command processes files, links and equations and is typically triggered
-by a line that starts with ||. Commands are specific to an API function. In the
-summary elements of parameter lists are separated with commas and selection
-parameters are designated with semi-colons.
-
-=============== ===============================================================
- name                      Commands (VSCode snippet)
-=============== ===============================================================
-
-Run (rvr)            rv.R("""label | toc;notoc,start page
+Run (rvr)            rv.R("""section label | pass;redact | color;none
 
 
                          """)
 
-Insert (rvi)         rv.I("""label | nocolor;hexvalue  
+Insert (rvi)         rv.I("""section label | pass;redact | color;none
                         
-                         | image (im)
-                         | latex (la)
-                         | sympy (sy)
-                         | text (te)
-                         | table title (ta) 
-
+                         | image file
+                         | text file (text, latex, sympy, rivt)
+                         | csv file 
 
                          """)
 
-Values (rvv)         rv.V("""label | sub;nosub 
+Values (rvv)         rv.V("""section label | pass;redact | color;none
                 
-                         | image (im)
-                         | latex (la)
-                         | sympy (sy)
-                         | text (te)
-
-                         | values title (va)       
-                         | equation (e1)
-                         | eq (e2)
+                         | image file
+                         | values file
+                         | equation file
 
                          =
                          :=
 
                          """)
 
-Tools (rvt)          rv.T("""label | summary;inline
+Tools (rvt)          rv.T("""section label | pass;redact | color;none
                 
 
                         """)
@@ -89,50 +77,36 @@ Exclude              rv.X("""any API function
 
                         """)
 
-=============================================== ======= ========= 
-       command syntax                             API    Snippet
-=============================================== ======= ========= 
+Format tags are inserted at the end of a line. Line tags format a single line
+and block tags apply to blocks of text. reStructuredText may also be used for
+formatting ( e.g. bold, italic, etc.)
 
-|| te | descrip | rel path | rivt;plain;default    I       te
-|| im | descrip | rel path, .. | .50, ..           I       im 
-|| ta | descrip | rel path | 30,r;l;c              I       ta 
-|| de | descrip | rel path | print;noprint         V       de 
-
-= (declare)    a = 1.2 | descrip | alt, n          V
-:= (assign)    a := b + c | descrip | unit, alt | n,n     V
-
-|| li | url; reference | label                    I,V      li
-
-====
-tags
-====
-
-Format tags are inserted at the end of a line and may be used in I or V
-strings. Line tags format a single line and block tags apply to blocks of text.
-Use reStructuredText for bold, italic, etc. markup.
-
-===================== ========= ==========================
- tag                    scope       description               
-===================== ========= ==========================
-text _[u]               line        underline                                             
-text _[bc]              line        bold center                      
-text _[bi]              line        bold italic                      
-text _[bs]              line        bold sympy math                  
-text _[#]               line        footnote (autonumber)            
-text _[d]               line        footnote description             
-text _[r]               line        right justify                                       
-text _[c]               line        center                                       
-_[page]                 line        new page                  
-_[[p]]                  block       start monospace              
-_[[l]]                  block       start LaTeX              
-_[[e]]                  block       end block                
+===================== ========= ========================== ==================
+ tags                   scope       description               API scope  
+===================== ========= ========================== ==================
+text _[s]               line        sympy                       I
+text _[l]               line        latex                       I                      
+text _[e]               line        numbered equation           I,V                                
+text _[t]               line        numbered tables             I,V
+text _[f]               line        numbered figure             I,V
+text _[u]               line        underline                   I                           
+text _[bc]              line        bold center                 I     
+text _[bi]              line        bold italic                 I     
+text _[bs]              line        bold sympy math             I     
+text _[#]               line        footnote (autonumber)       I     
+text _[d]               line        footnote description        I     
+text _[r]               line        right justify               I                        
+text _[c]               line        center                      I                 
+_[page]                 line        new page                    I,V
+_[[p]]                  block       start monospace             I 
+_[[l]]                  block       start LaTeX                 I
+_[[e]]                  block       end block                   I
 
 
 When running in an IDE (e.g. VSCode), each function may be run interactively
 using the standard cell decorator *# %%*. Interactive output and output to
-stdout (terminal) is formatted as utf-8 text. The rv.write() function exports
-calculated values to a file for later use, and generates formatted documents
-and reports in GitHub Markdown (ghmd) and PDF.
+stdout (terminal) is formatted as utf-8 text. The rv.write() function generates
+formatted documents in text, reStructuredText (GitHub README), HTML and PDF.
 
 
 =================

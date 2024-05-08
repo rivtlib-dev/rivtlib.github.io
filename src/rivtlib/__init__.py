@@ -14,14 +14,15 @@ A rivt file is a Python file that imports six API functions through:
  API function                   Description
 =============== ===============================================================
 
-rv.R(rS) - run shell scripts (Run)
-rv.I(rS) - static text, images, tables and math (Insert)
-rv.V(rS) - equations (Values)
-rv.T(rS) - Python functions and scripts (Tools)
-rv.X(rS) - skip rivt-string processing (Exclude)
-rv.W(rS) - write formatted rivt document
+Each function takes a single, triple quoted unicode string (rS) as argument.
 
-Each function takes a single, triple quoted string as an argument.
+rv.R(rS) - execute shell scripts (Run)
+rv.I(rS) - insert static text, images, tables and math (Insert)
+rv.V(rS) - evaluate equations (Values)
+rv.T(rS) - execute Python functions and scripts (Tools)
+rv.X(rS) - skip rivt-string processing (eXclude)
+rv.W(rS) - output formatted rivt document (Write)
+
 
 **rivt** is built from four open souce projects:
 
@@ -32,50 +33,56 @@ Each function takes a single, triple quoted string as an argument.
 
 In addition to file commands and formatting tags, rivt-text may include
 arbitrary unicode text. (See the user manual at https://rivt-doc.net). A rivt
-command processes files and is triggered by a line that starts with | or ||. A
-rivt tag formats a line or block of code. Commands and tags are summarized below.
+command processes files and is triggered by a line that starts with | or ||.  A
+rivt tag formats a line or block of code. Commands and tags are summarized
+below.
 
 ================ ===============================================================
  name (snippet)                     Command Overview
 ================ ===============================================================
 
-Run (rvr)            rv.R("""section label | pass;redact | color;none
+Run (run)            rv.R("""section label | pass;redact | color;none
 
 
                          """)
 
-Insert (rvi)         rv.I("""section label | pass;redact | color;none
+Insert (ins)         rv.I("""section label | pass;redact | color;none
                         
-                         | image file
-                         | text file (text, latex, sympy, rivt)
-                         | csv file 
+                         | .png, .jpg, .svg (images)
+                         | .txt (text - plain, latex, sympy, rivt, eq)
+                         | .csv (tables) 
 
                          """)
 
-Values (rvv)         rv.V("""section label | pass;redact | color;none
+Values (val)         rv.V("""section label | pass;redact | color;none
                 
-                         | image file
-                         | values file
-                         | equation file
+                         | .png, .jpg, .svg (images)
+                         | .txt (text - plain)
+                         | .csv (tables) 
 
-                         =
-                         :=
+                         := declare
+                         = assign
 
                          """)
 
-Tools (rvt)          rv.T("""section label | pass;redact | color;none
+Tools (too)          rv.T("""section label | pass;redact | color;none
                 
 
-                        """)
+                         """)
 
-Write (rvw)          rv.W(html,pdf)
+Write (wri)          rv.W("""report;doc
+
+                         | output
+                         | files
+            
+                          """)
 
 Exclude              rv.X("""any API function
 
-                        When a method is changed to X it is not evaluated. It
-                        may be used for comments and debugging.
+                         When a method is changed to X it is not evaluated. It
+                         may be used for comments and debugging.
 
-                        """)
+                         """)
 
 Format tags are inserted at the end of a line. Line tags format a single line
 and block tags apply to blocks of text. reStructuredText may also be used for
@@ -84,24 +91,23 @@ formatting ( e.g. bold, italic, etc.)
 ===================== ========= ========================== ==================
  tags                   scope       description               API scope  
 ===================== ========= ========================== ==================
-text _[s]               line        sympy                       I
-text _[l]               line        latex                       I                      
-text _[e]               line        numbered equation           I,V                                
-text _[t]               line        numbered tables             I,V
-text _[f]               line        numbered figure             I,V
-text _[u]               line        underline                   I                           
-text _[bc]              line        bold center                 I     
-text _[bi]              line        bold italic                 I     
-text _[bs]              line        bold sympy math             I     
-text _[#]               line        footnote (autonumber)       I     
-text _[d]               line        footnote description        I     
+text _[u]               line        underline                   I                             
 text _[r]               line        right justify               I                        
 text _[c]               line        center                      I                 
-_[page]                 line        new page                    I,V
+text _[bc]              line        bold center                 I     
+text _[bi]              line        bold italic                 I
+text _[s]               line        numbered sympy              I
+text _[l]               line        numbered latex              I                           
+text _[bs]              line        bold numbered sympy         I     
+text _[bl]              line        bold numbered latex         I    
 _[[p]]                  block       start monospace             I 
 _[[l]]                  block       start LaTeX                 I
 _[[e]]                  block       end block                   I
-
+text _[e]               line        numbered equation           V                                
+text _[t]               line        numbered table              I,V
+text _[#]               line        footnote (autonumber)       I,V     
+text _[d]               line        footnote description        I,V   
+_[page]                 line        new page                    I,V
 
 When running in an IDE (e.g. VSCode), each function may be run interactively
 using the standard cell decorator *# %%*. Interactive output and output to

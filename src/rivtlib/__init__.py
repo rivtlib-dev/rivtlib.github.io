@@ -1,44 +1,47 @@
 #! python
 ''' **rivt** is a lightweight markdown language for writing, organizing and
 sharing engineering documents. **rivtlib** is a Python library for processing
-rivt files. It runs on any platform that supports Python 3.10 or later. rivtlib
-can process single and multiple-file documents running to hundreds of pages.
-**rivt** and **rivtlib** are distributed under the open source MIT license.
+rivt files. It runs on any platform that supports Python 3.11 or later.
+**rivtlib** is designed for both simple one-off documents and multi-file
+reports running to hundreds of pages. 
 
-A rivt file is a Python file that imports six API functions through:
+**rivt** and **rivtlib** are distributed under the open source MIT license and
+are designed to work as a system with four established open souce projects:
+
+- Interpreter - Python and third party open source libraries
+- IDE - VSCode and extensions
+- Typesetting - Latex TexLive Distribution
+- Version control - GitHub
+
+The rivt system can be downloaded as a portable zip file for Windows or
+installed through a shell script on all OS's. It is also available as an online
+service at https://rivtonline.net.
+
+A rivt file imports **rivtlib**, which exposes 6 API functions:
 
 *import rivtlib.rivtapi as rv*
 
-
-=============== ===============================================================
- API function                   Description
-=============== ===============================================================
-
-Each function takes a single, triple quoted unicode string (rS) as argument.
-
 rv.R(rS) - execute shell scripts (Run)
-rv.I(rS) - insert static text, images, tables and math (Insert)
-rv.V(rS) - evaluate equations (Values)
+rv.I(rS) - insert static text, images, tables and math equations (Insert)
+rv.V(rS) - evaluate values and equations (Values)
 rv.T(rS) - execute Python functions and scripts (Tools)
 rv.X(rS) - skip rivt-string processing (eXclude)
 rv.W(rS) - output formatted rivt document (Write)
 
+where rS is a triple quoted Python string. For clarity and simplicity rivt
+implements a file and folder structure, wraps the reStrucutedText markup
+language (see https://quickrestructuredtext.com), indents the input, and
+includes several commands and tags (See user manual at https://rivt.net).
 
-**rivt** is built from four open souce projects:
 
-- Python and third party open source libraries
-- VSCode
-- Latex (TexLive)
-- Git (GitHub)
+Commands
+--------
 
-In addition to file commands and formatting tags, rivt-text may include
-arbitrary unicode text. (See the user manual at https://rivt-doc.net). A rivt
-command processes files and is triggered by a line that starts with | or ||.  A
-rivt tag formats a line or block of code. Commands and tags are summarized
-below.
+A rivt command defines file processes and starts with | or || in the first
+indented column.
 
 ================ ===============================================================
- name (snippet)                     Command Overview
+ API (snippet)                     Command Overview
 ================ ===============================================================
 
 Run (run)            rv.R("""section label | pass;redact | color;none
@@ -48,20 +51,18 @@ Run (run)            rv.R("""section label | pass;redact | color;none
 
 Insert (ins)         rv.I("""section label | pass;redact | color;none
                         
-                         | .png, .jpg, .svg (images)
-                         | .txt (text - plain, latex, sympy, rivt, eq)
-                         | .csv (tables) 
+                         | .png, .jpg, .svg -- images
+                         | .txt -- plain, latex, sympy, rivt
+                         | .csv -- tables
+                         | .pdf -- append 
 
                          """)
 
 Values (val)         rv.V("""section label | pass;redact | color;none
                 
-                         | .png, .jpg, .svg (images)
-                         | .txt (text - plain)
-                         | .csv (tables) 
-
-                         := declare
-                         = assign
+                         | .png, .jpg, .svg -- images
+                         | .txt -- equations 
+                         | .csv -- values
 
                          """)
 
@@ -70,23 +71,38 @@ Tools (too)          rv.T("""section label | pass;redact | color;none
 
                          """)
 
-Write (wri)          rv.W("""report;doc
+Exclude              rv.X("""any API function
+
+                         When a function is changed to X (by changing the
+                         function letter) it is skipped (not evaluated). The
+                         function may be used for testing, debugging and
+                         comments.
+
+                         """)
+
+Write (wri)          rv.W("""doc; report
 
                          | output
                          | files
             
                           """)
 
-Exclude              rv.X("""any API function
+The rv.W() function generates formatted documents in text (.txt), HTML (.html)
+and PDF (.pdf) and formatted reports in reStructuredText (README.rst), HTML
+(.html) and PDF (.pdf)
 
-                         When a method is changed to X it is not evaluated. It
-                         may be used for comments and debugging.
+In VSCode each API function or groups of functions may be run interactively
+using the standard cell decorator *# %%*. Interactive output (and output to
+stdout when a rivt file is run from a terminal) is formatted as utf-8 text.
 
-                         """)
 
-Format tags are inserted at the end of a line. Line tags format a single line
-and block tags apply to blocks of text. reStructuredText may also be used for
-formatting ( e.g. bold, italic, etc.)
+Tags
+----
+
+A rivt tag evaluates and formats text. Line tags are added at the end of a
+line. Block tags are inserted at the beginning and end of a text block.
+reStructuredText markup may also be used for formatting
+(https://quickrestructuredtext.com).
 
 ===================== ========= ========================== ==================
  tags                   scope       description               API scope  
@@ -98,42 +114,30 @@ text _[bc]              line        bold center                 I
 text _[bi]              line        bold italic                 I
 text _[s]               line        numbered sympy              I
 text _[l]               line        numbered latex              I                           
+text _[t]               line        numbered table              I
 text _[bs]              line        bold numbered sympy         I     
 text _[bl]              line        bold numbered latex         I    
+title _[v]              line        numbered values table       V                                
+label _[e]              line        numbered equation           V                                
+var := a                line        declare value               V
+var = equation          line        assign value                V
+text _[f]               line        numbered figure             V,I
+text _[#]               line        footnote (autonumber)       V,I
+text _[d]               line        footnote description        V,I   
+_[page]                 line        new page                    V,I
 _[[p]]                  block       start monospace             I 
 _[[l]]                  block       start LaTeX                 I
 _[[e]]                  block       end block                   I
-text _[e]               line        numbered equation           V                                
-text _[t]               line        numbered table              I,V
-text _[#]               line        footnote (autonumber)       I,V     
-text _[d]               line        footnote description        I,V   
-_[page]                 line        new page                    I,V
-
-When running in an IDE (e.g. VSCode), each function may be run interactively
-using the standard cell decorator *# %%*. Interactive output and output to
-stdout (terminal) is formatted as utf-8 text. The rv.write() function generates
-formatted documents in text, reStructuredText (GitHub README), HTML and PDF.
 
 
-=================
+
+
 rivt file example
-=================
-
-File formatting conventions follow Python pep8 and ruff conventions. API
-function declarations start in column one. All other lines are indented 4
-spaces to facilitate section folding, bookmarks and legibility. The first line
-of each function defines the heading for a new document section, followed by
-section parameters. New sections may be suppressed by prepending the heading
-label with a double hyphen (--).
-
---------------------------------------
+-----------------
 
 import rivtlib.rivtapi as rv
 
-rv.R("""Introduction | notoc, 1
-
-    The Rivtinit method is the first method of a rivt file and specifies
-    repository, report and document settings.
+rv.R("""Introduction | pass; redact | nocolor
 
     The first line of any method is the heading line, which starts a new
     document section. If the section heading is preceded by two dashes (--) it
@@ -143,26 +147,17 @@ rv.R("""Introduction | notoc, 1
     of contents). The page number is the starting page number for the doc, when
     processed as a stand alone document.
 
-    The init command specifies the name of the configuration file which is read
-    from the rivt-doc folder. Report formatting can be easily modified by
-    specifying a different init file.
+    File formatting conventions follow Python pep8 and ruff conventions. API
+    function declarations start in column one. All other lines are indented 4
+    spaces to facilitate section folding, bookmarks and legibility. The first line
+    of each function defines the heading for a new document section, followed by
+    section parameters. New sections may be suppressed by prepending the heading
+    label with a double hyphen (--).
 
-    ||init | rivt01.ini
 
-    The text command inserts text from an external file. Text files may be
-    plain text or include rivt tags.
-
-    ||text | private/data/proj.txt | plain
-    
-    The append command attaches PDF files to the end of the doc.
-
-    || append | append/report1.pdf
-    || append | append/report2.pdf
-
-    
     """)
 
-rv.I("""The Insert method | nocolor 
+rv.I("""The Insert method | pass; redact | nocolor 
 
     The Insert method formats static information e.g. images and text. The
     color command specifies a background color for the section.
@@ -195,7 +190,7 @@ rv.I("""The Insert method | nocolor
 
     """)
 
-rv.V("""The Values method |  nosub 
+rv.V("""The Values method |  pass; redact | nocolor 
 
     The Values method assigns values to variables and evaluates equations. The
     sub or nosub setting specifies whether equations are also printed with
@@ -220,7 +215,7 @@ rv.V("""The Values method |  nosub
     The declare command imports values from the csv file written by rivt when
     processing values in other documents. 
 
-""")
+    """)
 
 rv.T("""The Tools method | summary
 
@@ -258,17 +253,23 @@ rv.X("""any text
 
     """) 
 
------------------------------------------------
+rv.W("""docs
 
-=======
-folders
-=======
+    """)
 
-rivtlib can process single rivt files, but typically it is used to generate
-reports. A rivt report is generated from the folder structure illustrated
-below. rivt documents are organized into divisions. Document inputs and outputs
-may be stored in or directed to publically shareable or private foldrers.
-Reports is formatted with divisions, subdivisions and sections.
+
+
+Folders
+-------
+
+rivtlib can process single rivt files with no file references, but typically it
+is used to generate reports from pre-existing files organized in the structure
+shown below.
+
+A rivt report is generated from the folder structure illustrated below. rivt
+documents are organized into divisions. Document inputs and outputs may be
+stored in or directed to publically shareable or private foldrers. Reports is
+formatted with divisions, subdivisions and sections.
 
 Fixed folder and file prefixes are shown in [ ]. Report and document headings
 are taken from the folder and file labels. Tools are available to generate
@@ -332,31 +333,12 @@ starter folder templates.
     ├── doc0201-label3.md
     └── README.txt                    (cumulative documents - searchable) 
 
-========
-rivt-doc
-========
 
-rivt-doc is an open source framework that faciliates working with rivt files.
-It includes an editor, typesetting and mnay utilities and extensions that
-reduce the steps needed to produce rivt documents. rivt-doc may be installed on
-every major OS platform as set of system programs, or as a single, portable zip
-file. The framework can also be implemented as a cloud service. It includes:
+VSCode rivt profile
+--------------------
 
-- Python 3.8 or higher 
-- rivt Python library and dependencies
-- VSCode + extensions 
-- LaTeX 
-- Github 
-
-The minimum software needed to run rivt is:
-
-- Python 3.8 or higher 
-- rivt Python library and dependencies
-
-[rivt-doc User Manual](https://www.rivt-doc.net>)
-
-============= =============================================================
-Keystroke             VSCode rivt profile shortcut description
+============= ==============================================================
+Keystroke            description
 ============= ==============================================================
 
 alt+q                rewrap paragraph with hard line feeds (80 default)
@@ -385,6 +367,7 @@ ctl+shift+s          open GitHub README search for rivt
 ctl+shift+a          commit all 
 ctl+shift+z          commit the current editor
 ctl+shift+x          post to remote   
+
 
 ============================================== ===============================
 VSCode extension                                       Description

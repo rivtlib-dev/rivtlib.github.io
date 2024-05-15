@@ -33,7 +33,6 @@ implements a file and folder structure, wraps the reStrucutedText markup
 language (see https://quickrestructuredtext.com), indents the input, and
 includes several commands and tags (See user manual at https://rivt.net).
 
-
 Commands
 --------
 
@@ -52,7 +51,8 @@ Run (run)            rv.R("""section label | pass;redact | color;none
 Insert (ins)         rv.I("""section label | pass;redact | color;none
                         
                          | .png, .jpg, .svg -- images
-                         | .txt -- plain, latex, sympy, rivt
+                         | .txt -- plain, sympy, rivt
+                         | .tex -- latex
                          | .csv -- tables
                          | .pdf -- append 
 
@@ -61,8 +61,9 @@ Insert (ins)         rv.I("""section label | pass;redact | color;none
 Values (val)         rv.V("""section label | pass;redact | color;none
                 
                          | .png, .jpg, .svg -- images
-                         | .txt -- equations 
-                         | .csv -- values
+                         | .txt -- equations, data  
+                         | .csv -- values, data
+                         | .xls -- data
 
                          """)
 
@@ -113,14 +114,15 @@ text _[c]               line        center                      I
 text _[bc]              line        bold center                 I     
 text _[bi]              line        bold italic                 I
 text _[s]               line        numbered sympy              I
-text _[l]               line        numbered latex              I                           
+text _[m]               line        numbered latex math         I                           
 text _[t]               line        numbered table              I
 text _[bs]              line        bold numbered sympy         I     
 text _[bl]              line        bold numbered latex         I    
+label _[o]              line        lookup values               V             
 title _[v]              line        numbered values table       V                                
 label _[e]              line        numbered equation           V                                
 var := a                line        declare value               V
-var = equation          line        assign value                V
+var = a + b             line        assign value                V
 text _[f]               line        numbered figure             V,I
 text _[#]               line        footnote (autonumber)       V,I
 text _[d]               line        footnote description        V,I   
@@ -128,7 +130,6 @@ _[page]                 line        new page                    V,I
 _[[p]]                  block       start monospace             I 
 _[[l]]                  block       start LaTeX                 I
 _[[e]]                  block       end block                   I
-
 
 
 

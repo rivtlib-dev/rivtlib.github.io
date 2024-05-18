@@ -59,13 +59,13 @@ def cmdlinehelp():
     """command line help"""
 
     print()
-    print("Run the following command in a rivt file folder:           ")
+    print("Run the following command in folder with a rivt file:           ")
     print()
-    print("     python -m rivtlib rivddnn-filename.py                  ")
+    print("     python -m rivtlib rivddff-filename.py                  ")
     print()
     print("The command is run in the rivt file folder.                ")
-    print("File name must match 'rivddcc-filename.py                  ")
-    print("Where dd and cc are two digit integers                     ")
+    print("File name must match 'rivddff-filename.py                  ")
+    print("Where ff are dd are two digit integers.                    ")
     print("Text output is written to stdout.                          ")
     print("Other outputs depend on file contents.                     ")
     print("See User Manual at https://rivt-doc.net for details        ")

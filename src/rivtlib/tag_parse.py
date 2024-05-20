@@ -67,9 +67,9 @@ class Tags:
         locals().update(self.localD)
         varS = str(self.lineS).split(":=")[0].strip()
         valS = str(self.lineS).split(":=")[1].strip()
-        unit1S = str(self.incrD["unitS"]).split(",")[0]
-        unit2S = str(self.incrD["unitS"]).split(",")[1]
-        descripS = str(self.incrD["descS"])
+        unit1S = str(self.labelD["unitS"]).split(",")[0]
+        unit2S = str(self.labelD["unitS"]).split(",")[1]
+        descripS = str(self.labelD["descS"])
         if unit1S.strip() != "-":
             cmdS = varS + "= " + valS + "*" + unit1S
         else:
@@ -88,10 +88,10 @@ class Tags:
         locals().update(self.localD)
         varS = str(self.lineS).split("=")[0].strip()
         valS = str(self.lineS).split("=")[1].strip()
-        unit1S = str(self.incrD["unitS"]).split(",")[0]
-        unit2S = str(self.incrD["unitS"]).split(",")[1]
-        descS = str(self.incrD["eqlabelS"])
-        precI = int(self.incrD["descS"])  # trim result
+        unit1S = str(self.labelD["unitS"]).split(",")[0]
+        unit2S = str(self.labelD["unitS"]).split(",")[1]
+        descS = str(self.labelD["eqlabelS"])
+        precI = int(self.labelD["descS"])  # trim result
         fmtS = "%." + str(precI) + "f"
         if unit1S.strip() != "-":
             if type(eval(valS)) == list:
@@ -121,7 +121,7 @@ class Tags:
         print(mdS)                      # print equation
 
         subS = " "
-        if self.incrD["subB"]:
+        if self.labelD["subB"]:
             subS = self.vsub(eqL, precI, varS, val1U)
             print(subS)                  # print with substition
 
@@ -214,9 +214,9 @@ class Tags:
         locals().update(self.localD)
         varS = str(self.lineS).split(":=")[0].strip()
         valS = str(self.lineS).split(":=")[1].strip()
-        unit1S = str(self.incrD["unitS"]).split(",")[0]
-        unit2S = str(self.incrD["unitS"]).split(",")[1]
-        descripS = str(self.incrD["descS"])
+        unit1S = str(self.labelD["unitS"]).split(",")[0]
+        unit2S = str(self.labelD["unitS"]).split(",")[1]
+        descripS = str(self.labelD["descS"])
         if unit1S.strip() != "-":
             cmdS = varS + "= " + valS + "*" + unit1S
         else:
@@ -239,10 +239,10 @@ class Tags:
         locals().update(self.localD)
         varS = str(self.lineS).split("=")[0].strip()
         valS = str(self.lineS).split("=")[1].strip()
-        unit1S = str(self.incrD["unitS"]).split(",")[0]
-        unit2S = str(self.incrD["unitS"]).split(",")[1]
-        descS = str(self.incrD["eqlabelS"])
-        precI = int(self.incrD["descS"])  # trim result
+        unit1S = str(self.labelD["unitS"]).split(",")[0]
+        unit2S = str(self.labelD["unitS"]).split(",")[1]
+        descS = str(self.labelD["eqlabelS"])
+        precI = int(self.labelD["descS"])  # trim result
         fmtS = "%." + str(precI) + "f"
         if unit1S.strip() != "-":
             if type(eval(valS)) == list:
@@ -272,7 +272,7 @@ class Tags:
         self.localD.update(locals())
 
         subS = "\n\n"
-        if self.incrD["subB"]:              # replace variables with numbers
+        if self.labelD["subB"]:              # replace variables with numbers
             subS = self.vsub(eqL, precI, varS, val1U) + "\n\n"
 
         assignL = [varS, str(val1U), unit1S, unit2S, descS]

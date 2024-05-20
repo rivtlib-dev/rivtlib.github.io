@@ -547,7 +547,7 @@ document.write(`
 
     class CmdRST(Commands):
 
-        def __init__(self, paramL, incrD, folderD,  localD):
+        def __init__(self, paramL, labelD, folderD,  localD):
 
             &quot;&quot;&quot;_summary_
 
@@ -555,9 +555,9 @@ document.write(`
 
             :type paramL: _type_
 
-            :param incrD: _description_
+            :param labelD: _description_
 
-            :type incrD: _type_
+            :type labelD: _type_
 
             :param folderD: _description_
 
@@ -577,15 +577,15 @@ document.write(`
 
             self.folderD = folderD
 
-            self.incrD = incrD
+            self.labelD = labelD
 
-            self.widthII = incrD[&quot;widthI&quot;] - 1
+            self.widthII = labelD[&quot;widthI&quot;] - 1
 
             self.paramL = paramL
 
             self.errlogP = folderD[&quot;errlogP&quot;]
 
-            modnameS = self.incrD[&quot;modnameS&quot;]
+            modnameS = self.labelD[&quot;modnameS&quot;]
 
             # print(f&quot;{modnameS=}&quot;)
 
@@ -685,9 +685,9 @@ document.write(`
 
                     xtagC = parse.RivtParseTag(
 
-                        self.folderD, self.incrD,  self.localD)
+                        self.folderD, self.labelD,  self.localD)
 
-                    xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
+                    xrstS, self.labelD, self.folderD, self.localD = xtagC.rst_parse(
 
                         txtfileL)
 
@@ -967,9 +967,9 @@ document.write(`
 
                     xtagC = parse.RivtParseTag(
 
-                        self.folderD, self.incrD,  self.localD)
+                        self.folderD, self.labelD,  self.localD)
 
-                    xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
+                    xrstS, self.labelD, self.folderD, self.localD = xtagC.rst_parse(
 
                         txtfileL)
 
@@ -1020,7 +1020,7 @@ document.write(`
 <h3>CmdRST<a class="headerlink" href="#cmdrst" title="Permalink to this heading">#</a></h3>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CmdRST</span><span class="p">(</span>
     <span class="n">paramL</span><span class="p">,</span>
-    <span class="n">incrD</span><span class="p">,</span>
+    <span class="n">labelD</span><span class="p">,</span>
     <span class="n">folderD</span><span class="p">,</span>
     <span class="n">localD</span>
 <span class="p">)</span>
@@ -1485,9 +1485,9 @@ def project(self):</p>
 
                     xtagC = parse.RivtParseTag(
 
-                        self.folderD, self.incrD,  self.localD)
+                        self.folderD, self.labelD,  self.localD)
 
-                    xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
+                    xrstS, self.labelD, self.folderD, self.localD = xtagC.rst_parse(
 
                         txtfileL)
 
@@ -1717,9 +1717,9 @@ def text(self):</p>
 
                     xtagC = parse.RivtParseTag(
 
-                        self.folderD, self.incrD,  self.localD)
+                        self.folderD, self.labelD,  self.localD)
 
-                    xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
+                    xrstS, self.labelD, self.folderD, self.localD = xtagC.rst_parse(
 
                         txtfileL)
 

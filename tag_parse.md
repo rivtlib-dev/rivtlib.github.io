@@ -121,11 +121,11 @@
 
                 valS = str(self.lineS).split(":=")[1].strip()
 
-                unit1S = str(self.incrD["unitS"]).split(",")[0]
+                unit1S = str(self.labelD["unitS"]).split(",")[0]
 
-                unit2S = str(self.incrD["unitS"]).split(",")[1]
+                unit2S = str(self.labelD["unitS"]).split(",")[1]
 
-                descripS = str(self.incrD["descS"])
+                descripS = str(self.labelD["descS"])
 
                 if unit1S.strip() != "-":
 
@@ -157,13 +157,13 @@
 
                 valS = str(self.lineS).split("=")[1].strip()
 
-                unit1S = str(self.incrD["unitS"]).split(",")[0]
+                unit1S = str(self.labelD["unitS"]).split(",")[0]
 
-                unit2S = str(self.incrD["unitS"]).split(",")[1]
+                unit2S = str(self.labelD["unitS"]).split(",")[1]
 
-                descS = str(self.incrD["eqlabelS"])
+                descS = str(self.labelD["eqlabelS"])
 
-                precI = int(self.incrD["descS"])  # trim result
+                precI = int(self.labelD["descS"])  # trim result
 
                 fmtS = "%." + str(precI) + "f"
 
@@ -213,7 +213,7 @@
 
                 subS = " "
 
-                if self.incrD["subB"]:
+                if self.labelD["subB"]:
 
                     subS = self.vsub(eqL, precI, varS, val1U)
 
@@ -385,11 +385,11 @@
 
                 valS = str(self.lineS).split(":=")[1].strip()
 
-                unit1S = str(self.incrD["unitS"]).split(",")[0]
+                unit1S = str(self.labelD["unitS"]).split(",")[0]
 
-                unit2S = str(self.incrD["unitS"]).split(",")[1]
+                unit2S = str(self.labelD["unitS"]).split(",")[1]
 
-                descripS = str(self.incrD["descS"])
+                descripS = str(self.labelD["descS"])
 
                 if unit1S.strip() != "-":
 
@@ -425,13 +425,13 @@
 
                 valS = str(self.lineS).split("=")[1].strip()
 
-                unit1S = str(self.incrD["unitS"]).split(",")[0]
+                unit1S = str(self.labelD["unitS"]).split(",")[0]
 
-                unit2S = str(self.incrD["unitS"]).split(",")[1]
+                unit2S = str(self.labelD["unitS"]).split(",")[1]
 
-                descS = str(self.incrD["eqlabelS"])
+                descS = str(self.labelD["eqlabelS"])
 
-                precI = int(self.incrD["descS"])  # trim result
+                precI = int(self.labelD["descS"])  # trim result
 
                 fmtS = "%." + str(precI) + "f"
 
@@ -485,7 +485,7 @@
 
                 subS = "\n\n"
 
-                if self.incrD["subB"]:              # replace variables with numbers
+                if self.labelD["subB"]:              # replace variables with numbers
 
                     subS = self.vsub(eqL, precI, varS, val1U) + "\n\n"
 
@@ -1256,13 +1256,13 @@ def assign(
 
                 valS = str(self.lineS).split("=")[1].strip()
 
-                unit1S = str(self.incrD["unitS"]).split(",")[0]
+                unit1S = str(self.labelD["unitS"]).split(",")[0]
 
-                unit2S = str(self.incrD["unitS"]).split(",")[1]
+                unit2S = str(self.labelD["unitS"]).split(",")[1]
 
-                descS = str(self.incrD["eqlabelS"])
+                descS = str(self.labelD["eqlabelS"])
 
-                precI = int(self.incrD["descS"])  # trim result
+                precI = int(self.labelD["descS"])  # trim result
 
                 fmtS = "%." + str(precI) + "f"
 
@@ -1316,7 +1316,7 @@ def assign(
 
                 subS = "\n\n"
 
-                if self.incrD["subB"]:              # replace variables with numbers
+                if self.labelD["subB"]:              # replace variables with numbers
 
                     subS = self.vsub(eqL, precI, varS, val1U) + "\n\n"
 
@@ -1361,11 +1361,11 @@ def declare(
 
                 valS = str(self.lineS).split(":=")[1].strip()
 
-                unit1S = str(self.incrD["unitS"]).split(",")[0]
+                unit1S = str(self.labelD["unitS"]).split(",")[0]
 
-                unit2S = str(self.incrD["unitS"]).split(",")[1]
+                unit2S = str(self.labelD["unitS"]).split(",")[1]
 
-                descripS = str(self.incrD["descS"])
+                descripS = str(self.labelD["descS"])
 
                 if unit1S.strip() != "-":
 

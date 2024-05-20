@@ -525,9 +525,9 @@ def _tocs():</p>
 
         &quot;&quot;&quot;
 
-        startS = str(incrD[&quot;pageI&quot;])
+        startS = str(labelD[&quot;pageI&quot;])
 
-        doctitleS = str(incrD[&quot;doctitleS&quot;])
+        doctitleS = str(labelD[&quot;doctitleS&quot;])
 
         with open(tfileP, &quot;r&quot;, encoding=&quot;md-8&quot;, errors=&quot;ignore&quot;) as f2:
 
@@ -583,7 +583,7 @@ def _tocs():</p>
 
             &quot;&quot;&quot;fancyhead[L]{\\normalsize\\bfseries  &quot;&quot;&quot; + doctitleS + &quot;}&quot;)
 
-        texf = texf.replace(&quot;x*x*x&quot;, &quot;[&quot; + incrD[&quot;docnumS&quot;] + &quot;]&quot;)
+        texf = texf.replace(&quot;x*x*x&quot;, &quot;[&quot; + labelD[&quot;docnumS&quot;] + &quot;]&quot;)
 
         texf = texf.replace(&quot;&quot;&quot;\\begin{tabular}&quot;&quot;&quot;, &quot;%% &quot;)
 

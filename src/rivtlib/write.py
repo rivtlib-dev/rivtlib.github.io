@@ -35,8 +35,8 @@ def _mod_tex(tfileP):
         - Modify section title and add table of contents
 
     """
-    startS = str(incrD["pageI"])
-    doctitleS = str(incrD["doctitleS"])
+    startS = str(labelD["pageI"])
+    doctitleS = str(labelD["doctitleS"])
 
     with open(tfileP, "r", encoding="md-8", errors="ignore") as f2:
         texf = f2.read()
@@ -68,7 +68,7 @@ def _mod_tex(tfileP):
     texf = texf.replace(
         """fancyhead[L]{\leftmark}""",
         """fancyhead[L]{\\normalsize\\bfseries  """ + doctitleS + "}")
-    texf = texf.replace("x*x*x", "[" + incrD["docnumS"] + "]")
+    texf = texf.replace("x*x*x", "[" + labelD["docnumS"] + "]")
     texf = texf.replace("""\\begin{tabular}""", "%% ")
     texf = texf.replace("""\\end{tabular}""", "%% ")
     texf = texf.replace(

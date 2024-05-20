@@ -57,9 +57,9 @@
 
             :type paramL: _type_
 
-            :param incrD: _description_
+            :param labelD: _description_
 
-            :type incrD: _type_
+            :type labelD: _type_
 
             :param folderD: _description_
 
@@ -75,7 +75,7 @@
 
             """
 
-            def __init__(self, lineS, incrD, folderD, tagsD, localD):
+            def __init__(self, lineS, labelD, folderD, tagsD, localD):
 
                 """convert rivt tags to md or reST
 
@@ -89,17 +89,17 @@
 
                 self.folderD = folderD
 
-                self.incrD = incrD
+                self.labelD = labelD
 
                 self.lineS = lineS
 
-                self.widthI = incrD["widthI"]
+                self.widthI = labelD["widthI"]
 
                 self.errlogP = folderD["errlogP"]
 
                 self.valL = []                         # accumulate values in list
 
-                modnameS = self.incrD["modnameS"]
+                modnameS = self.labelD["modnameS"]
 
                 # print(f"{modnameS=}")
 
@@ -211,13 +211,13 @@
 
                 """
 
-                secS = str(self.incrD["secnumI"]).zfill(2)
+                secS = str(self.labelD["secnumI"]).zfill(2)
 
                 labelS = secS + " - " + labelS + numS
 
                 # store for equation table
 
-                self.incrD["eqlabelS"] = self.lineS + " [" + numS.zfill(2) + "]"
+                self.labelD["eqlabelS"] = self.lineS + " [" + numS.zfill(2) + "]"
 
                 return labelS
 
@@ -231,7 +231,7 @@
 
                 """
 
-                ftnumI = self.incrD["noteL"].pop(0)
+                ftnumI = self.labelD["noteL"].pop(0)
 
                 lineS = "[" + str(ftnumI) + "] " + self.lineS
 
@@ -247,11 +247,11 @@
 
                 """
 
-                enumI = int(self.incrD["equI"]) + 1
+                enumI = int(self.labelD["equI"]) + 1
 
                 fillS = str(enumI).zfill(2)
 
-                wI = self.incrD["widthI"]
+                wI = self.labelD["widthI"]
 
                 refS = self.label("E", fillS)
 
@@ -261,7 +261,7 @@
 
                     + refS.rjust(wI-spcI)
 
-                self.incrD["equI"] = enumI
+                self.labelD["equI"] = enumI
 
                 return lineS
 
@@ -275,7 +275,7 @@
 
                 """
 
-                fnumI = int(self.incrD["figI"])
+                fnumI = int(self.labelD["figI"])
 
                 lineS = "Fig. " + str(fnumI) + " - " + self.lineS
 
@@ -289,11 +289,11 @@
 
                 """
 
-                ftnumI = self.incrD["footL"].pop(0)
+                ftnumI = self.labelD["footL"].pop(0)
 
-                self.incrD["noteL"].append(ftnumI + 1)
+                self.labelD["noteL"].append(ftnumI + 1)
 
-                self.incrD["footL"].append(ftnumI + 1)
+                self.labelD["footL"].append(ftnumI + 1)
 
                 lineS = self.lineS.replace("*]", "[" + str(ftnumI) + "]")
 
@@ -375,9 +375,9 @@
 
                 """
 
-                tnumI = int(self.incrD["tableI"])
+                tnumI = int(self.labelD["tableI"])
 
-                self.incrD["tableI"] = tnumI + 1
+                self.labelD["tableI"] = tnumI + 1
 
                 lineS = "Table " + str(tnumI) + " - " + self.lineS
 
@@ -411,15 +411,15 @@
 
                 """
 
-                pagenoS = str(self.incrD["pageI"])
+                pagenoS = str(self.labelD["pageI"])
 
-                rvtS = self.incrD["headuS"].replace("p##", pagenoS)
+                rvtS = self.labelD["headuS"].replace("p##", pagenoS)
 
-                self.incrD["pageI"] = int(pagenoS)+1
+                self.labelD["pageI"] = int(pagenoS)+1
 
-                lineS = "\n"+"_" * self.incrD["widthI"] + "\n" + rvtS +\
+                lineS = "\n"+"_" * self.labelD["widthI"] + "\n" + rvtS +\
 
-                        "\n"+"_" * self.incrD["widthI"] + "\n"
+                        "\n"+"_" * self.labelD["widthI"] + "\n"
 
                 return "\n" + rvtS
 
@@ -1062,7 +1062,7 @@ typecodes
 ```python3
 class TagsMD(
     lineS,
-    incrD,
+    labelD,
     folderD,
     tagsD,
     localD
@@ -1076,7 +1076,7 @@ convert rivt tags to md
 | Name | Type | Description | Default |
 |---|---|---|---|
 | paramL | _type_ | _description_ | None |
-| incrD | _type_ | _description_ | None |
+| labelD | _type_ | _description_ | None |
 | folderD | _type_ | _description_ | None |
 | localD | _type_ | _description_ | None |
 
@@ -1124,13 +1124,13 @@ def assign(
 
                 valS = str(self.lineS).split("=")[1].strip()
 
-                unit1S = str(self.incrD["unitS"]).split(",")[0]
+                unit1S = str(self.labelD["unitS"]).split(",")[0]
 
-                unit2S = str(self.incrD["unitS"]).split(",")[1]
+                unit2S = str(self.labelD["unitS"]).split(",")[1]
 
-                descS = str(self.incrD["eqlabelS"])
+                descS = str(self.labelD["eqlabelS"])
 
-                precI = int(self.incrD["descS"])  # trim result
+                precI = int(self.labelD["descS"])  # trim result
 
                 fmtS = "%." + str(precI) + "f"
 
@@ -1184,7 +1184,7 @@ def assign(
 
                 subS = "\n\n"
 
-                if self.incrD["subB"]:              # replace variables with numbers
+                if self.labelD["subB"]:              # replace variables with numbers
 
                     subS = self.vsub(eqL, precI, varS, val1U) + "\n\n"
 
@@ -1393,11 +1393,11 @@ def declare(
 
                 valS = str(self.lineS).split(":=")[1].strip()
 
-                unit1S = str(self.incrD["unitS"]).split(",")[0]
+                unit1S = str(self.labelD["unitS"]).split(",")[0]
 
-                unit2S = str(self.incrD["unitS"]).split(",")[1]
+                unit2S = str(self.labelD["unitS"]).split(",")[1]
 
-                descripS = str(self.incrD["descS"])
+                descripS = str(self.labelD["descS"])
 
                 if unit1S.strip() != "-":
 
@@ -1441,7 +1441,7 @@ footnote description _[d]
 
                 """
 
-                ftnumI = self.incrD["noteL"].pop(0)
+                ftnumI = self.labelD["noteL"].pop(0)
 
                 lineS = "[" + str(ftnumI) + "] " + self.lineS
 
@@ -1475,11 +1475,11 @@ md equation label _[e]
 
                 """
 
-                enumI = int(self.incrD["equI"]) + 1
+                enumI = int(self.labelD["equI"]) + 1
 
                 fillS = str(enumI).zfill(2)
 
-                wI = self.incrD["widthI"]
+                wI = self.labelD["widthI"]
 
                 refS = self.label("E", fillS)
 
@@ -1489,7 +1489,7 @@ md equation label _[e]
 
                     + refS.rjust(wI-spcI)
 
-                self.incrD["equI"] = enumI
+                self.labelD["equI"] = enumI
 
                 return lineS
 
@@ -1521,7 +1521,7 @@ md figure caption _[f]
 
                 """
 
-                fnumI = int(self.incrD["figI"])
+                fnumI = int(self.labelD["figI"])
 
                 lineS = "Fig. " + str(fnumI) + " - " + self.lineS
 
@@ -1547,11 +1547,11 @@ footnote number _[#]
 
                 """
 
-                ftnumI = self.incrD["footL"].pop(0)
+                ftnumI = self.labelD["footL"].pop(0)
 
-                self.incrD["noteL"].append(ftnumI + 1)
+                self.labelD["noteL"].append(ftnumI + 1)
 
-                self.incrD["footL"].append(ftnumI + 1)
+                self.labelD["footL"].append(ftnumI + 1)
 
                 lineS = self.lineS.replace("*]", "[" + str(ftnumI) + "]")
 
@@ -1619,13 +1619,13 @@ format labels for equations, tables and figures
 
                 """
 
-                secS = str(self.incrD["secnumI"]).zfill(2)
+                secS = str(self.labelD["secnumI"]).zfill(2)
 
                 labelS = secS + " - " + labelS + numS
 
                 # store for equation table
 
-                self.incrD["eqlabelS"] = self.lineS + " [" + numS.zfill(2) + "]"
+                self.labelD["eqlabelS"] = self.lineS + " [" + numS.zfill(2) + "]"
 
                 return labelS
 
@@ -1761,15 +1761,15 @@ insert new page header _[page]
 
                 """
 
-                pagenoS = str(self.incrD["pageI"])
+                pagenoS = str(self.labelD["pageI"])
 
-                rvtS = self.incrD["headuS"].replace("p##", pagenoS)
+                rvtS = self.labelD["headuS"].replace("p##", pagenoS)
 
-                self.incrD["pageI"] = int(pagenoS)+1
+                self.labelD["pageI"] = int(pagenoS)+1
 
-                lineS = "\n"+"_" * self.incrD["widthI"] + "\n" + rvtS +\
+                lineS = "\n"+"_" * self.labelD["widthI"] + "\n" + rvtS +\
 
-                        "\n"+"_" * self.incrD["widthI"] + "\n"
+                        "\n"+"_" * self.labelD["widthI"] + "\n"
 
                 return "\n" + rvtS
 
@@ -1985,9 +1985,9 @@ format table title  _[t]
 
                 """
 
-                tnumI = int(self.incrD["tableI"])
+                tnumI = int(self.labelD["tableI"])
 
-                self.incrD["tableI"] = tnumI + 1
+                self.labelD["tableI"] = tnumI + 1
 
                 lineS = "Table " + str(tnumI) + " - " + self.lineS
 

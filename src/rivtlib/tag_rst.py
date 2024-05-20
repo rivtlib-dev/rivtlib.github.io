@@ -24,7 +24,7 @@ class TagsRST(Tags):
 
     """
 
-    def __init__(self, lineS, incrD, folderD,  tagsD, localD):
+    def __init__(self, lineS, labelD, folderD,  tagsD, localD):
         """convert rivt tags to md or reST
 
         """
@@ -32,14 +32,14 @@ class TagsRST(Tags):
         self.tagsD = tagsD
         self.localD = localD
         self.folderD = folderD
-        self.incrD = incrD
+        self.labelD = labelD
         self.lineS = lineS
         self.vgap = "2"
-        self.widthI = incrD["widthI"]
+        self.widthI = labelD["widthI"]
         self.errlogP = folderD["errlogP"]
         self.valL = []                         # accumulate values in list
 
-        modnameS = self.incrD["modnameS"]
+        modnameS = self.labelD["modnameS"]
         # print(f"{modnameS=}")
         logging.basicConfig(
             level=logging.DEBUG,
@@ -138,7 +138,7 @@ class TagsRST(Tags):
             : return labelS: formatted label
             : rtype: str
         """
-        secS = str(self.incrD["secnumI"]).zfill(2)
+        secS = str(self.labelD["secnumI"]).zfill(2)
         return secS + " - " + labelS + numS
 
     def description(self):
@@ -155,7 +155,7 @@ class TagsRST(Tags):
         : return lineS: reST equation label
         : rtype: str
         """
-        enumI = int(self.incrD["equI"])
+        enumI = int(self.labelD["equI"])
         fillS = str(enumI).zfill(2)
         refS = self.label("E", fillS)
         lineS = "\n\n" + "**" + "Eq. " + str(enumI) + ": "  \
@@ -168,7 +168,7 @@ class TagsRST(Tags):
         : return lineS: figure label
         : rtype: str
         """
-        fnumI = int(self.incrD["figI"])
+        fnumI = int(self.labelD["figI"])
         fillS = str(fnumI).zfill(2)
         refS = self.label("F", fillS)
         lineS = "\n \n" + "**" + "Figure " + str(fnumI) + ": " + \
@@ -251,7 +251,7 @@ class TagsRST(Tags):
         :return lineS: figure label
         :rtype: str
         """
-        tnumI = int(self.incrD["tableI"])
+        tnumI = int(self.labelD["tableI"])
         fillS = str(tnumI).zfill(2)
         refS = self.label("T", fillS)
         lineS = "\n" + "**" + "Table " + fillS + ": " + self.lineS.strip() + \

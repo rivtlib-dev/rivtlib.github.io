@@ -37,9 +37,7 @@ rv.W(rS) - (Write) Write formatted rivt documents
 
 where rS is a triple quoted Python string. These 6 API functions implement
 
-    - input indents for clarity and code folding
-
-    - a wrapper for the reStructuredText markup language (see
+    - a reStructuredText markup language wrapper (see
     https://quickrestructuredtext.com)
 
 
@@ -57,68 +55,81 @@ Commands process files (image, equations, tables etc. ) and start with | or ||
 in the first indented column (for code folding, all rivt strings start in the
 fourth column following the API function call.) A command has the form
 
-    | label or title | /relative/path/file.typ(:s-e) | parameters
+    | label or title (tag) | /relative/path/file.typ(:start-end) | parameters
 
-where s and e are optional start and end line numbers, and the parameters
-depend on the file type. If the command starts with a double bar the referenced
-lines are also inserted into the input for faster checking.
+where options are shown in parenthesis and parameters depend on the file type.
+Starting the command with a double bar || inserts the referenced lines into the
+input for checking.
 
-================ ===============================================================
- API (snippet)                     Command Overview
-================ ===============================================================
+================================================================================
+                        Command Overview
+================================================================================
 
-Run (run)           rv.R("""function label | pass;redact | color;none
 
-                        The Run function processes shell commands.
+rv.R("""run function label | pass;redact | color;none
 
-                        """)
+    The Run function processes shell commands.
 
-Insert (ins)       rv.I(""" function label | pass;redact | color;none
+    """)
+
+
+rv.I("""Insert Function Label | pass;redact | color;none
                         
-                        The Insert function formats static objects.                     
-                        
-                        | file.png, .jpg, .svg -- formats images
-                        | file.txt -- formats plain, sympy, rivt
-                        | file.tex -- formats latex
-                        | file.csv -- formats tables
-                        | file.pdf -- appends pdf files to document 
-
-                        """)
-
-Values (val)        rv.V("""function label | pass;redact | color;none
-                
-                        The Values function 
-
-                        | file.png, .jpg, .svg -- formats images
-                        | file.txt -- formats equations, displays data  
-                        | file.csv -- formats values, displays data
-                        | file.xls -- displays data
-
-                        """)
-
-Tools (too)          rv.T("""function label | pass;redact | color;none
-                
-
-                         """)
-
-Exclude              rv.X(""" xxx | yyy | zzz
-
-                         When a function name is changed to X it is not
-                         evaluated. This function may be used for testing,
-                         debugging and comments.
-
-                         """)
-
-Write (wri)          rv.W("""function label | doc; report | sync;async
-
-                         | output
-                         | files
+    The Insert function formats static file objects.                     
             
-                          """)
+    | image label (_[i]) | /image/path/.jpg,.png,.svg | size, color
 
-The rv.W() function generates formatted docs (single files) as text (.txt),
-HTML (.html) and PDF (.pdf), and formatted reports as reStructuredText
-(used for GitHub README.rst), HTML (.html) and PDF (.pdf).
+    | table title (_[t]) | /tables/path/.csv (:start-end) | width, align
+
+    | text label | /text/path/.txt(:start-end) | plain; rivt
+
+    | equation label (_[s,l]) | /text/path/.tex,txt(:start-end) | bold; plain
+    
+    | append label | /append/path/.pdf | number; nonumber         
+
+    """)
+
+
+rv.V("""Values Function Label | pass;redact | color;none
+            
+    The Values function evaluates variables and equations.
+
+    | image label (_[i])| /image/path/.jpg,.png,.svg | size, color
+
+    | data title (_[d])| /values/path/.csv,.xls (:start-end)| [cols]
+
+    | value label (_[v])| /values/path/.csv(:start-end) | 
+
+    | equation label (_[e]) | /values/path/.txt(:start-end) | ref; noref
+
+    """)
+  
+
+rv.T("""function label | pass;redact | color;none
+                
+
+    """)
+
+
+rv.X("""xxx | yyy | zzz
+
+    The X function prevents evaluation of the function.
+    Functions may be changed to X for testing, debugging and
+    comments.
+
+    """)
+
+rv.W("""function label | doc; report | sync;async
+
+    The Write function generates formatted docs (single files)
+    as text (.txt), HTML (.html) and PDF (.pdf), and formatted
+    reports as reStructuredText (used for GitHub README.rst),
+    HTML (.html) and PDF (.pdf).
+
+    | output
+    | files
+
+    """)
 
 In VSCode each API function or sequence of functions may be run interactively
 using the standard cell decorator *# %%*. Interactive output, and output to
@@ -151,9 +162,9 @@ title _[v]              line        value table title           V
 label _[e]              line        equation label              V                                
 var :=, a               line        declare value               V
 var = a + b             line        assign value                V
-text _[f]               line        numbered figure             V,I
+text _[i]               line        numbered image              V,I
 text _[#]               line        footnote (autonumber)       V,I
-text _[d]               line        footnote description        V,I   
+text _[f]               line        footnote description        V,I   
 _[page]                 line        new page                    V,I
 _[[p]]                  block       start monospace             I 
 _[[l]]                  block       start LaTeX                 I
@@ -178,7 +189,7 @@ Report and document headings are taken from folder and file names unless
 overridden in the config file. An example folder structure is shown below.
 Required file names or prefixes are shown in [ ].
 
-Source files for rivt docs and reports are stored in 6 folders
+Source files for rivt docs are stored in 6 folders:
 
 - append
 - images
@@ -187,9 +198,10 @@ Source files for rivt docs and reports are stored in 6 folders
 - text
 - values
 
-Output files are stored in the *write* folder. Source files may be stored in
-separate sub-folders for simplicity and to allow separation of public and
-private date.
+rivt reports are defined as collections of docs in the config.ini. Doc files
+are stored in the *write* folder. Source files are stored in user-defined
+sub-folders for organization and to allow separation of public and private
+data.
 
 [rivt]-Project-Name/               
     ├── [append]/            
@@ -238,49 +250,43 @@ private date.
         └── val02/                    
             ├── values3.csv      
             └── values4.csv       
-    ├── [write]/                        (rivt output)
-        ├── [html]/                  
-            └── riv0101-codes.html
-                riv0102-loads.html
-                riv0201-walls.html
-                riv0201-frames.html
-                Project-Name.html        
-        ├── [pdf]/                          
-            └── riv0101-codes.pdf
-                riv0102-loads.pdf
-                riv0201-walls.pdf
-                riv0201-frames.pdf
-                Project-Name.pdf                
+    ├── [write]/                        (output files)    
+        ├── [html]/                     
+            └── riv0101-codes.html      (html files)
+                riv0202-frames.html
+                Project-Name.html       (html report) 
+        ├── [pdf]/                      
+            └── riv0101-codes.pdf       (pdf files)        
+                riv0202-frames.pdf
+                Project-Name.pdf        (pdf report)        
         ├── [rivt-redacted]/            
-            └── README.rst              (redacted GitHub searchable report)
-                riv0000x-report.py      (redacted input files)
-                riv0101x-codes.py
+            └── README.txt              (redacted report)
+                riv0101x-codes.py       (redacted files)
                 riv0102x-loads.py
-                riv0201x-walls.py
-                riv0201x-frames.py   
-        ├── [temp]/                          
-            └── temp-files.txt
-        └── [text]/  
-            └── riv0000-report.txt
-                riv0101-codes.txt
-                riv0102-loads.txt
-                riv0201-walls.txt
+                riv0201x-walls.py       
+        ├── [temp]/                     (temp files)     
+            └── temp-files.tex
+        └── [text]/                     
+            └── riv0101-codes.txt       (text output)
                 riv0201-frames.txt
     └── config.ini                      (rivt config file)
-        README.rst                      (GitHub searchable rivt report)
+        README.txt                      (searchable report in public repo)
         riv0000-report.py               (rivt input files)
         riv0101-codes.py
         riv0102-loads.py
         riv0201-walls.py
-        riv0201-frames.py
+        riv0202-frames.py
 
 
 Example rivt file
------------------
+-----------------------------------------------------------------------------
+API functions start in column 1. rivt-strings are indented 4 spaces (for
+legibility and code folding)
+
 
 import rivtlib.rivtapi as rv
 
-rv.R("""Introduction | pass; redact | nocolor; color code
+rv.R("""Run function | pass; redact | nocolor; color code
 
     The Run function processes shell commands.
 
@@ -290,14 +296,13 @@ rv.R("""Introduction | pass; redact | nocolor; color code
     section. If the section heading is preceded by two dashes (--) it becomes a
     location reference without starting a new section. 
     
-    File formatting follows pep8 and ruff. API functions
-    start in column one. All other lines are indented 4 spaces to
-    facilitate section folding, bookmarks and legibility.
+    File formatting follows pep8 and ruff. API functions start in column one.
+    All other lines are indented 4 spaces to facilitate section folding,
+    bookmarks and legibility.
 
-    
     """)
 
-rv.I("""The Insert method | pass; redact | nocolor 
+rv.I("""Insert function | pass; redact | nocolor 
 
     The Insert function formats static objects including images, tables,
     equations and text.
@@ -330,7 +335,7 @@ rv.I("""The Insert method | pass; redact | nocolor
 
     """)
 
-rv.V("""The Values method |  pass; redact | nocolor 
+rv.V("""Values function |  pass; redact | nocolor 
 
     The Values fucntion evaluates variables and equations. 
     
@@ -355,11 +360,12 @@ rv.V("""The Values method |  pass; redact | nocolor
 
     """)
 
-rv.T("""The Tools method | pass; redact | nocolor
+rv.T("""Tools function | pass; redact | nocolor
 
     The Tools function processes Python code.
         
     """)
+
 
 rv.X("""Any text 
 
@@ -368,7 +374,7 @@ rv.X("""Any text
 
     """) 
 
-rv.W("""Doc labels | pass; redact | nocolor
+rv.W("""Write function | pass; redact | nocolor
 
     The Write function generates docs and reports.
 
@@ -379,13 +385,19 @@ rv.W("""Doc labels | pass; redact | nocolor
     """)
 
 
+VSCode rivt profile
+-------------------
 
-rivt profile for VSCode
------------------------
+============== ==============================================================
+Snippets/Keys            description
+============== ==============================================================
 
-============= ==============================================================
-Keystrokes            description
-============= ==============================================================
+run             API Run function
+ins             API Insert function   
+val             API Values function
+too             API Tools function
+wri             API Write function
+
 
 alt+q                rewrap paragraph with hard line feeds (80 default)
 alt+p                open file under cursor
@@ -415,8 +427,6 @@ ctl+shift+s          open GitHub README search for rivt
 ctl+shift+a          commit all 
 ctl+shift+z          commit the current editor
 ctl+shift+x          post to remote   
-rivt file example
-
 
 ============================================== ===============================
 Extensions                                       description
@@ -442,7 +452,7 @@ oijaz.unicode-latex                                 unicode symbols from latex
 jsynowiec.vscode-insertdatestring                   insert date string
 janisdd.vscode-edit-csv                             csv editor
 
-VIEWER
+VIEWS
 GrapeCity.gc-excelviewer                            excel viewer
 SimonSiefke.svg-preview                             svg viewer
 tomoki1207.pdf                                      pdf viewer

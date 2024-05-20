@@ -53,7 +53,7 @@
 
         class CmdRST(Commands):
 
-            def __init__(self, paramL, incrD, folderD,  localD):
+            def __init__(self, paramL, labelD, folderD,  localD):
 
                 """_summary_
 
@@ -61,9 +61,9 @@
 
                 :type paramL: _type_
 
-                :param incrD: _description_
+                :param labelD: _description_
 
-                :type incrD: _type_
+                :type labelD: _type_
 
                 :param folderD: _description_
 
@@ -83,15 +83,15 @@
 
                 self.folderD = folderD
 
-                self.incrD = incrD
+                self.labelD = labelD
 
-                self.widthII = incrD["widthI"] - 1
+                self.widthII = labelD["widthI"] - 1
 
                 self.paramL = paramL
 
                 self.errlogP = folderD["errlogP"]
 
-                modnameS = self.incrD["modnameS"]
+                modnameS = self.labelD["modnameS"]
 
                 # print(f"{modnameS=}")
 
@@ -191,9 +191,9 @@
 
                         xtagC = parse.RivtParseTag(
 
-                            self.folderD, self.incrD,  self.localD)
+                            self.folderD, self.labelD,  self.localD)
 
-                        xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
+                        xrstS, self.labelD, self.folderD, self.localD = xtagC.rst_parse(
 
                             txtfileL)
 
@@ -473,9 +473,9 @@
 
                         xtagC = parse.RivtParseTag(
 
-                            self.folderD, self.incrD,  self.localD)
+                            self.folderD, self.labelD,  self.localD)
 
-                        xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
+                        xrstS, self.labelD, self.folderD, self.localD = xtagC.rst_parse(
 
                             txtfileL)
 
@@ -526,7 +526,7 @@ greeks
 ```python3
 class CmdRST(
     paramL,
-    incrD,
+    labelD,
     folderD,
     localD
 )
@@ -982,9 +982,9 @@ insert project information from csv, xlsx or syk
 
                         xtagC = parse.RivtParseTag(
 
-                            self.folderD, self.incrD,  self.localD)
+                            self.folderD, self.labelD,  self.localD)
 
-                        xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
+                        xrstS, self.labelD, self.folderD, self.localD = xtagC.rst_parse(
 
                             txtfileL)
 
@@ -1208,9 +1208,9 @@ insert text from file
 
                         xtagC = parse.RivtParseTag(
 
-                            self.folderD, self.incrD,  self.localD)
+                            self.folderD, self.labelD,  self.localD)
 
-                        xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
+                        xrstS, self.labelD, self.folderD, self.localD = xtagC.rst_parse(
 
                             txtfileL)
 

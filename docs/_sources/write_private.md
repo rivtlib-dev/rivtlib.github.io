@@ -65,9 +65,9 @@
 
             """
 
-            startS = str(incrD["pageI"])
+            startS = str(labelD["pageI"])
 
-            doctitleS = str(incrD["doctitleS"])
+            doctitleS = str(labelD["doctitleS"])
 
             with open(tfileP, "r", encoding="md-8", errors="ignore") as f2:
 
@@ -123,7 +123,7 @@
 
                 """fancyhead[L]{\\normalsize\\bfseries  """ + doctitleS + "}")
 
-            texf = texf.replace("x*x*x", "[" + incrD["docnumS"] + "]")
+            texf = texf.replace("x*x*x", "[" + labelD["docnumS"] + "]")
 
             texf = texf.replace("""\\begin{tabular}""", "%% ")
 

@@ -8,7 +8,7 @@ from numpy import *
 
 
 class Commands():
-    """common methods for rivt to md, utf and reST
+    """common methods for rivt to utf and reST
 
         ======================================================== ===========
                         command syntax                              scope

@@ -545,13 +545,13 @@ import csv</p>
 
         &quot;&quot;&quot;format rivt-text strings for utf, md or rst&quot;&quot;&quot;
 
-        def __init__(self, methS, folderD, incrD,  rivtD):
+        def __init__(self, methS, folderD, labelD,  rivtD):
 
             &quot;&quot;&quot;process rivt-text to md8 or reST string
 
                 :param dict folderD: folder paths
 
-                :param dict incrD: numbers that increment
+                :param dict labelD: numbers that increment
 
                 :param dict outputS: output type
 
@@ -563,7 +563,7 @@ import csv</p>
 
             self.folderD = folderD  # folder paths
 
-            self.incrD = incrD      # incrementing formats
+            self.labelD = labelD      # incrementing formats
 
             self.errlogP = folderD[&quot;errlogP&quot;]
 
@@ -671,7 +671,7 @@ import csv</p>
 
                 :return rstS: reST formatted string
 
-                :return incrD: increment references
+                :return labelD: increment references
 
                 :return folderD: folder paths
 
@@ -681,7 +681,7 @@ import csv</p>
 
                 :rtype folderD: dictionary
 
-                :rtype incrD: dictionary
+                :rtype labelD: dictionary
 
             &quot;&quot;&quot;
 
@@ -735,19 +735,19 @@ import csv</p>
 
                     rvtS = tag_utf.TagsUTF(lineS, tagS,
 
-                                           self.incrD, self.folderD,  self.rivtD)
+                                           self.labelD, self.folderD,  self.rivtD)
 
                     xutfS += rvtS + &quot;\n&quot;
 
                     rvtS = tag_md.TagsMD(lineS, tagS,
 
-                                         self.incrD, self.folderD,  self.rivtD)
+                                         self.labelD, self.folderD,  self.rivtD)
 
                     xmdS += rvtS + &quot;\n&quot;
 
                     rvtS = tag_rst.TagsRST(lineS, tagS,
 
-                                           self.incrD, self.folderD,  self.rivtD)
+                                           self.labelD, self.folderD,  self.rivtD)
 
                     xrstS += rvtS + &quot;\n&quot;
 
@@ -805,7 +805,7 @@ import csv</p>
 
                         rvtC = cmd_utf.CmdUTF(
 
-                            parL, self.incrD, self.folderD, self.rivtD)
+                            parL, self.labelD, self.folderD, self.rivtD)
 
                         utfS = rvtC.cmd_parse(cmdS)
 
@@ -815,7 +815,7 @@ import csv</p>
 
                         rvtC = cmd_md.CmdMD(
 
-                            parL, self.incrD, self.folderD, self.rivtD)
+                            parL, self.labelD, self.folderD, self.rivtD)
 
                         mdS = rvtC.cmd_parse(cmdS)
 
@@ -825,7 +825,7 @@ import csv</p>
 
                         rvtC = cmd_rst.CmdRST(
 
-                            parL, self.incrD, self.folderD, self.rivtD)
+                            parL, self.labelD, self.folderD, self.rivtD)
 
                         reS = rvtC.cmd_parse(cmdS)
 
@@ -845,7 +845,7 @@ import csv</p>
 
                     if tagS in self.tagsD:
 
-                        rvtC = tag_utf.TagsUTF(lineS, self.incrD, self.folderD,
+                        rvtC = tag_utf.TagsUTF(lineS, self.labelD, self.folderD,
 
                                                self.tagsD, self.rivtD)
 
@@ -853,7 +853,7 @@ import csv</p>
 
                         xutfS += utfxS + &quot;\n&quot;
 
-                        rvtC = tag_md.TagsMD(lineS, self.incrD, self.folderD,
+                        rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
 
                                              self.tagsD, self.rivtD)
 
@@ -861,7 +861,7 @@ import csv</p>
 
                         xmdS += mdS + &quot;\n&quot;
 
-                        rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                        rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
 
                                                self.tagsD, self.rivtD)
 
@@ -877,11 +877,11 @@ import csv</p>
 
                     lineS = usL[0]
 
-                    self.incrD[&quot;unitS&quot;] = usL[1].strip()
+                    self.labelD[&quot;unitS&quot;] = usL[1].strip()
 
-                    self.incrD[&quot;descS&quot;] = usL[2].strip()
+                    self.labelD[&quot;descS&quot;] = usL[2].strip()
 
-                    rvtC = tag_md.TagsMD(lineS, self.incrD, self.folderD,
+                    rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
 
                                          self.localD)
 
@@ -891,7 +891,7 @@ import csv</p>
 
                         blockevalL.append(rvtC.tag_parse(&quot;:=&quot;))
 
-                        rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                        rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
 
                                                self.localD)
 
@@ -911,7 +911,7 @@ import csv</p>
 
                         blockevalL.append(eqL[0])
 
-                        rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                        rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
 
                                                self.localD)
 
@@ -939,7 +939,7 @@ import csv</p>
 
                 writecsv.writerows(vtableL)
 
-            return (xutfS, xmdS, xrstS,  self.incrD, self.folderD, self.rivtD)
+            return (xutfS, xmdS, xrstS,  self.labelD, self.folderD, self.rivtD)
 
         def atable(self, tblL, hdreL, tblfmt, alignaL):
 
@@ -1528,7 +1528,7 @@ import csv</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RivtParse</span><span class="p">(</span>
     <span class="n">methS</span><span class="p">,</span>
     <span class="n">folderD</span><span class="p">,</span>
-    <span class="n">incrD</span><span class="p">,</span>
+    <span class="n">labelD</span><span class="p">,</span>
     <span class="n">rivtD</span>
 <span class="p">)</span>
 </pre></div>
@@ -1770,7 +1770,7 @@ def str_parse(self, strL):</p>
 
                 :return rstS: reST formatted string
 
-                :return incrD: increment references
+                :return labelD: increment references
 
                 :return folderD: folder paths
 
@@ -1780,7 +1780,7 @@ def str_parse(self, strL):</p>
 
                 :rtype folderD: dictionary
 
-                :rtype incrD: dictionary
+                :rtype labelD: dictionary
 
             &quot;&quot;&quot;
 
@@ -1834,19 +1834,19 @@ def str_parse(self, strL):</p>
 
                     rvtS = tag_utf.TagsUTF(lineS, tagS,
 
-                                           self.incrD, self.folderD,  self.rivtD)
+                                           self.labelD, self.folderD,  self.rivtD)
 
                     xutfS += rvtS + &quot;\n&quot;
 
                     rvtS = tag_md.TagsMD(lineS, tagS,
 
-                                         self.incrD, self.folderD,  self.rivtD)
+                                         self.labelD, self.folderD,  self.rivtD)
 
                     xmdS += rvtS + &quot;\n&quot;
 
                     rvtS = tag_rst.TagsRST(lineS, tagS,
 
-                                           self.incrD, self.folderD,  self.rivtD)
+                                           self.labelD, self.folderD,  self.rivtD)
 
                     xrstS += rvtS + &quot;\n&quot;
 
@@ -1904,7 +1904,7 @@ def str_parse(self, strL):</p>
 
                         rvtC = cmd_utf.CmdUTF(
 
-                            parL, self.incrD, self.folderD, self.rivtD)
+                            parL, self.labelD, self.folderD, self.rivtD)
 
                         utfS = rvtC.cmd_parse(cmdS)
 
@@ -1914,7 +1914,7 @@ def str_parse(self, strL):</p>
 
                         rvtC = cmd_md.CmdMD(
 
-                            parL, self.incrD, self.folderD, self.rivtD)
+                            parL, self.labelD, self.folderD, self.rivtD)
 
                         mdS = rvtC.cmd_parse(cmdS)
 
@@ -1924,7 +1924,7 @@ def str_parse(self, strL):</p>
 
                         rvtC = cmd_rst.CmdRST(
 
-                            parL, self.incrD, self.folderD, self.rivtD)
+                            parL, self.labelD, self.folderD, self.rivtD)
 
                         reS = rvtC.cmd_parse(cmdS)
 
@@ -1944,7 +1944,7 @@ def str_parse(self, strL):</p>
 
                     if tagS in self.tagsD:
 
-                        rvtC = tag_utf.TagsUTF(lineS, self.incrD, self.folderD,
+                        rvtC = tag_utf.TagsUTF(lineS, self.labelD, self.folderD,
 
                                                self.tagsD, self.rivtD)
 
@@ -1952,7 +1952,7 @@ def str_parse(self, strL):</p>
 
                         xutfS += utfxS + &quot;\n&quot;
 
-                        rvtC = tag_md.TagsMD(lineS, self.incrD, self.folderD,
+                        rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
 
                                              self.tagsD, self.rivtD)
 
@@ -1960,7 +1960,7 @@ def str_parse(self, strL):</p>
 
                         xmdS += mdS + &quot;\n&quot;
 
-                        rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                        rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
 
                                                self.tagsD, self.rivtD)
 
@@ -1976,11 +1976,11 @@ def str_parse(self, strL):</p>
 
                     lineS = usL[0]
 
-                    self.incrD[&quot;unitS&quot;] = usL[1].strip()
+                    self.labelD[&quot;unitS&quot;] = usL[1].strip()
 
-                    self.incrD[&quot;descS&quot;] = usL[2].strip()
+                    self.labelD[&quot;descS&quot;] = usL[2].strip()
 
-                    rvtC = tag_md.TagsMD(lineS, self.incrD, self.folderD,
+                    rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
 
                                          self.localD)
 
@@ -1990,7 +1990,7 @@ def str_parse(self, strL):</p>
 
                         blockevalL.append(rvtC.tag_parse(&quot;:=&quot;))
 
-                        rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                        rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
 
                                                self.localD)
 
@@ -2010,7 +2010,7 @@ def str_parse(self, strL):</p>
 
                         blockevalL.append(eqL[0])
 
-                        rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                        rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
 
                                                self.localD)
 
@@ -2038,7 +2038,7 @@ def str_parse(self, strL):</p>
 
                 writecsv.writerows(vtableL)
 
-            return (xutfS, xmdS, xrstS,  self.incrD, self.folderD, self.rivtD)
+            return (xutfS, xmdS, xrstS,  self.labelD, self.folderD, self.rivtD)
 </pre></div>
 </div>
 </section>

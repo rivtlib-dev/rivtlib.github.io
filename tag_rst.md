@@ -45,7 +45,7 @@
 
             """
 
-            def __init__(self, lineS, incrD, folderD,  tagsD, localD):
+            def __init__(self, lineS, labelD, folderD,  tagsD, localD):
 
                 """convert rivt tags to md or reST
 
@@ -57,19 +57,19 @@
 
                 self.folderD = folderD
 
-                self.incrD = incrD
+                self.labelD = labelD
 
                 self.lineS = lineS
 
                 self.vgap = "2"
 
-                self.widthI = incrD["widthI"]
+                self.widthI = labelD["widthI"]
 
                 self.errlogP = folderD["errlogP"]
 
                 self.valL = []                         # accumulate values in list
 
-                modnameS = self.incrD["modnameS"]
+                modnameS = self.labelD["modnameS"]
 
                 # print(f"{modnameS=}")
 
@@ -227,7 +227,7 @@
 
                 """
 
-                secS = str(self.incrD["secnumI"]).zfill(2)
+                secS = str(self.labelD["secnumI"]).zfill(2)
 
                 return secS + " - " + labelS + numS
 
@@ -253,7 +253,7 @@
 
                 """
 
-                enumI = int(self.incrD["equI"])
+                enumI = int(self.labelD["equI"])
 
                 fillS = str(enumI).zfill(2)
 
@@ -275,7 +275,7 @@
 
                 """
 
-                fnumI = int(self.incrD["figI"])
+                fnumI = int(self.labelD["figI"])
 
                 fillS = str(fnumI).zfill(2)
 
@@ -403,7 +403,7 @@
 
                 """
 
-                tnumI = int(self.incrD["tableI"])
+                tnumI = int(self.labelD["tableI"])
 
                 fillS = str(tnumI).zfill(2)
 
@@ -1020,7 +1020,7 @@ typecodes
 ```python3
 class TagsRST(
     lineS,
-    incrD,
+    labelD,
     folderD,
     tagsD,
     localD
@@ -1073,13 +1073,13 @@ def assign(
 
                 valS = str(self.lineS).split("=")[1].strip()
 
-                unit1S = str(self.incrD["unitS"]).split(",")[0]
+                unit1S = str(self.labelD["unitS"]).split(",")[0]
 
-                unit2S = str(self.incrD["unitS"]).split(",")[1]
+                unit2S = str(self.labelD["unitS"]).split(",")[1]
 
-                descS = str(self.incrD["eqlabelS"])
+                descS = str(self.labelD["eqlabelS"])
 
-                precI = int(self.incrD["descS"])  # trim result
+                precI = int(self.labelD["descS"])  # trim result
 
                 fmtS = "%." + str(precI) + "f"
 
@@ -1133,7 +1133,7 @@ def assign(
 
                 subS = "\n\n"
 
-                if self.incrD["subB"]:              # replace variables with numbers
+                if self.labelD["subB"]:              # replace variables with numbers
 
                     subS = self.vsub(eqL, precI, varS, val1U) + "\n\n"
 
@@ -1358,11 +1358,11 @@ def declare(
 
                 valS = str(self.lineS).split(":=")[1].strip()
 
-                unit1S = str(self.incrD["unitS"]).split(",")[0]
+                unit1S = str(self.labelD["unitS"]).split(",")[0]
 
-                unit2S = str(self.incrD["unitS"]).split(",")[1]
+                unit2S = str(self.labelD["unitS"]).split(",")[1]
 
-                descripS = str(self.incrD["descS"])
+                descripS = str(self.labelD["descS"])
 
                 if unit1S.strip() != "-":
 
@@ -1436,7 +1436,7 @@ reST equation label _[e]
 
                 """
 
-                enumI = int(self.incrD["equI"])
+                enumI = int(self.labelD["equI"])
 
                 fillS = str(enumI).zfill(2)
 
@@ -1476,7 +1476,7 @@ figure label _[f]
 
                 """
 
-                fnumI = int(self.incrD["figI"])
+                fnumI = int(self.labelD["figI"])
 
                 fillS = str(fnumI).zfill(2)
 
@@ -1652,7 +1652,7 @@ format labels for equations, tables and figures
 
                 """
 
-                secS = str(self.incrD["secnumI"]).zfill(2)
+                secS = str(self.labelD["secnumI"]).zfill(2)
 
                 return secS + " - " + labelS + numS
 
@@ -1940,7 +1940,7 @@ table label _[t]
 
                 """
 
-                tnumI = int(self.incrD["tableI"])
+                tnumI = int(self.labelD["tableI"])
 
                 fillS = str(tnumI).zfill(2)
 

@@ -607,11 +607,11 @@ import sympy as sp</p>
 
             valS = str(self.lineS).split(&quot;:=&quot;)[1].strip()
 
-            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+            unit1S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+            unit2S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-            descripS = str(self.incrD[&quot;descS&quot;])
+            descripS = str(self.labelD[&quot;descS&quot;])
 
             if unit1S.strip() != &quot;-&quot;:
 
@@ -643,13 +643,13 @@ import sympy as sp</p>
 
             valS = str(self.lineS).split(&quot;=&quot;)[1].strip()
 
-            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+            unit1S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+            unit2S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-            descS = str(self.incrD[&quot;eqlabelS&quot;])
+            descS = str(self.labelD[&quot;eqlabelS&quot;])
 
-            precI = int(self.incrD[&quot;descS&quot;])  # trim result
+            precI = int(self.labelD[&quot;descS&quot;])  # trim result
 
             fmtS = &quot;%.&quot; + str(precI) + &quot;f&quot;
 
@@ -699,7 +699,7 @@ import sympy as sp</p>
 
             subS = &quot; &quot;
 
-            if self.incrD[&quot;subB&quot;]:
+            if self.labelD[&quot;subB&quot;]:
 
                 subS = self.vsub(eqL, precI, varS, val1U)
 
@@ -871,11 +871,11 @@ import sympy as sp</p>
 
             valS = str(self.lineS).split(&quot;:=&quot;)[1].strip()
 
-            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+            unit1S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+            unit2S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-            descripS = str(self.incrD[&quot;descS&quot;])
+            descripS = str(self.labelD[&quot;descS&quot;])
 
             if unit1S.strip() != &quot;-&quot;:
 
@@ -911,13 +911,13 @@ import sympy as sp</p>
 
             valS = str(self.lineS).split(&quot;=&quot;)[1].strip()
 
-            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+            unit1S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+            unit2S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-            descS = str(self.incrD[&quot;eqlabelS&quot;])
+            descS = str(self.labelD[&quot;eqlabelS&quot;])
 
-            precI = int(self.incrD[&quot;descS&quot;])  # trim result
+            precI = int(self.labelD[&quot;descS&quot;])  # trim result
 
             fmtS = &quot;%.&quot; + str(precI) + &quot;f&quot;
 
@@ -971,7 +971,7 @@ import sympy as sp</p>
 
             subS = &quot;\n\n&quot;
 
-            if self.incrD[&quot;subB&quot;]:              # replace variables with numbers
+            if self.labelD[&quot;subB&quot;]:              # replace variables with numbers
 
                 subS = self.vsub(eqL, precI, varS, val1U) + &quot;\n\n&quot;
 
@@ -1605,13 +1605,13 @@ def assign(self):</p>
 
             valS = str(self.lineS).split(&quot;=&quot;)[1].strip()
 
-            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+            unit1S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+            unit2S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-            descS = str(self.incrD[&quot;eqlabelS&quot;])
+            descS = str(self.labelD[&quot;eqlabelS&quot;])
 
-            precI = int(self.incrD[&quot;descS&quot;])  # trim result
+            precI = int(self.labelD[&quot;descS&quot;])  # trim result
 
             fmtS = &quot;%.&quot; + str(precI) + &quot;f&quot;
 
@@ -1665,7 +1665,7 @@ def assign(self):</p>
 
             subS = &quot;\n\n&quot;
 
-            if self.incrD[&quot;subB&quot;]:              # replace variables with numbers
+            if self.labelD[&quot;subB&quot;]:              # replace variables with numbers
 
                 subS = self.vsub(eqL, precI, varS, val1U) + &quot;\n\n&quot;
 
@@ -1707,11 +1707,11 @@ def declare(self):</p>
 
             valS = str(self.lineS).split(&quot;:=&quot;)[1].strip()
 
-            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+            unit1S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+            unit2S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-            descripS = str(self.incrD[&quot;descS&quot;])
+            descripS = str(self.labelD[&quot;descS&quot;])
 
             if unit1S.strip() != &quot;-&quot;:
 

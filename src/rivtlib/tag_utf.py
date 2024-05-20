@@ -30,8 +30,8 @@ class TagsUTF(Tags):
 
     :param paramL: _description_
     :type paramL: _type_
-    :param incrD: _description_
-    :type incrD: _type_
+    :param labelD: _description_
+    :type labelD: _type_
     :param folderD: _description_
     :type folderD: _type_
     :param localD: _description_
@@ -40,7 +40,7 @@ class TagsUTF(Tags):
     :rtype: _type_
     """
 
-    def __init__(self, lineS, incrD, folderD, tagsD, localD):
+    def __init__(self, lineS, labelD, folderD, tagsD, localD):
         """convert rivt tags to md or reST
 
         """
@@ -49,13 +49,13 @@ class TagsUTF(Tags):
         self.tagsD = tagsD
         self.localD = localD
         self.folderD = folderD
-        self.incrD = incrD
+        self.labelD = labelD
         self.lineS = lineS
-        self.widthI = incrD["widthI"]
+        self.widthI = labelD["widthI"]
         self.errlogP = folderD["errlogP"]
         self.valL = []                         # accumulate values in list
 
-        modnameS = self.incrD["modnameS"]
+        modnameS = self.labelD["modnameS"]
         # print(f"{modnameS=}")
         logging.basicConfig(
             level=logging.DEBUG,
@@ -157,10 +157,10 @@ class TagsUTF(Tags):
             :return labelS: formatted label
             :rtype: str
         """
-        secS = str(self.incrD["secnumI"]).zfill(2)
+        secS = str(self.labelD["secnumI"]).zfill(2)
         labelS = secS + " - " + labelS + numS
         # store for equation table
-        self.incrD["eqlabelS"] = self.lineS + " [" + numS.zfill(2) + "]"
+        self.labelD["eqlabelS"] = self.lineS + " [" + numS.zfill(2) + "]"
         return labelS
 
     def description(self):
@@ -169,7 +169,7 @@ class TagsUTF(Tags):
         :return lineS: footnote
         :rtype: str
         """
-        ftnumI = self.incrD["noteL"].pop(0)
+        ftnumI = self.labelD["noteL"].pop(0)
         lineS = "[" + str(ftnumI) + "] " + self.lineS
         print(lineS)
         return lineS
@@ -181,14 +181,14 @@ class TagsUTF(Tags):
         :rtype: str
         """
 
-        enumI = int(self.incrD["equI"]) + 1
+        enumI = int(self.labelD["equI"]) + 1
         fillS = str(enumI).zfill(2)
-        wI = self.incrD["widthI"]
+        wI = self.labelD["widthI"]
         refS = self.label("E", fillS)
         spcI = len("Equ. " + fillS + " - " + self.lineS.strip())
         lineS = "Equ. " + fillS + " - " + self.lineS.strip() \
             + refS.rjust(wI-spcI)
-        self.incrD["equI"] = enumI
+        self.labelD["equI"] = enumI
 
         print(lineS)
         return lineS
@@ -200,8 +200,8 @@ class TagsUTF(Tags):
         :rtype: str
         """
 
-        fnumI = int(self.incrD["figI"])
-        self.incrD["figI"] = fnumI + 1
+        fnumI = int(self.labelD["figI"])
+        self.labelD["figI"] = fnumI + 1
         lineS = "Fig. " + str(fnumI) + " - " + self.lineS
 
         print(lineS + "\n")
@@ -212,9 +212,9 @@ class TagsUTF(Tags):
 
 
         """
-        ftnumI = self.incrD["footL"].pop(0)
-        self.incrD["noteL"].append(ftnumI + 1)
-        self.incrD["footL"].append(ftnumI + 1)
+        ftnumI = self.labelD["footL"].pop(0)
+        self.labelD["noteL"].append(ftnumI + 1)
+        self.labelD["footL"].append(ftnumI + 1)
         lineS = self.lineS.replace("*]", "[" + str(ftnumI) + "]")
         print(lineS)
         return lineS
@@ -264,8 +264,8 @@ class TagsUTF(Tags):
         :return lineS: md table title
         :rtype: str
         """
-        tnumI = int(self.incrD["tableI"])
-        self.incrD["tableI"] = tnumI + 1
+        tnumI = int(self.labelD["tableI"])
+        self.labelD["tableI"] = tnumI + 1
         lineS = "Table " + str(tnumI) + " - " + self.lineS
         print(lineS)
         return lineS
@@ -287,11 +287,11 @@ class TagsUTF(Tags):
         :return lineS: page header
         :rtype: str
         """
-        pagenoS = str(self.incrD["pageI"])
-        rvtS = self.incrD["headuS"].replace("p##", pagenoS)
-        self.incrD["pageI"] = int(pagenoS)+1
-        lineS = "\n"+"_" * self.incrD["widthI"] + "\n" + rvtS +\
-                "\n"+"_" * self.incrD["widthI"] + "\n"
+        pagenoS = str(self.labelD["pageI"])
+        rvtS = self.labelD["headuS"].replace("p##", pagenoS)
+        self.labelD["pageI"] = int(pagenoS)+1
+        lineS = "\n"+"_" * self.labelD["widthI"] + "\n" + rvtS +\
+                "\n"+"_" * self.labelD["widthI"] + "\n"
         return "\n" + rvtS
 
     def underline(self):

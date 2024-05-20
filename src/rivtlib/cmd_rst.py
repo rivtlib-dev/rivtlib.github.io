@@ -27,13 +27,13 @@ from rivtlib.units import *
 
 class CmdRST(Commands):
 
-    def __init__(self, paramL, incrD, folderD,  localD):
+    def __init__(self, paramL, labelD, folderD,  localD):
         """_summary_
 
         :param paramL: _description_
         :type paramL: _type_
-        :param incrD: _description_
-        :type incrD: _type_
+        :param labelD: _description_
+        :type labelD: _type_
         :param folderD: _description_
         :type folderD: _type_
         :param localD: _description_
@@ -44,12 +44,12 @@ class CmdRST(Commands):
 
         self.localD = localD
         self.folderD = folderD
-        self.incrD = incrD
-        self.widthII = incrD["widthI"] - 1
+        self.labelD = labelD
+        self.widthII = labelD["widthI"] - 1
         self.paramL = paramL
         self.errlogP = folderD["errlogP"]
 
-        modnameS = self.incrD["modnameS"]
+        modnameS = self.labelD["modnameS"]
         # print(f"{modnameS=}")
         logging.basicConfig(
             level=logging.DEBUG,
@@ -105,8 +105,8 @@ class CmdRST(Commands):
                 pass
             elif txttypeS == "tags":
                 xtagC = parse.RivtParseTag(
-                    self.folderD, self.incrD,  self.localD)
-                xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
+                    self.folderD, self.labelD,  self.localD)
+                xrstS, self.labelD, self.folderD, self.localD = xtagC.rst_parse(
                     txtfileL)
                 return xrstS
         else:
@@ -257,8 +257,8 @@ class CmdRST(Commands):
                 pass
             elif txttypeS == "tags":
                 xtagC = parse.RivtParseTag(
-                    self.folderD, self.incrD,  self.localD)
-                xrstS, self.incrD, self.folderD, self.localD = xtagC.rst_parse(
+                    self.folderD, self.labelD,  self.localD)
+                xrstS, self.labelD, self.folderD, self.localD = xtagC.rst_parse(
                     txtfileL)
                 return xrstS
         elif extS == ".html":

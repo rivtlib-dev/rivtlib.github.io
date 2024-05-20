@@ -23,13 +23,13 @@ from rivtlib.units import *
 
 class CmdUTF(Commands):
 
-    def __init__(self, paramL, incrD, folderD,  localD):
+    def __init__(self, paramL, labelD, folderD,  localD):
         """_summary_
 
         :param paramL: _description_
         :type paramL: _type_
-        :param incrD: _description_
-        :type incrD: _type_
+        :param labelD: _description_
+        :type labelD: _type_
         :param folderD: _description_
         :type folderD: _type_
         :param localD: _description_
@@ -40,12 +40,12 @@ class CmdUTF(Commands):
 
         self.localD = localD
         self.folderD = folderD
-        self.incrD = incrD
-        self.widthII = incrD["widthI"] - 1
+        self.labelD = labelD
+        self.widthII = labelD["widthI"] - 1
         self.paramL = paramL
         self.errlogP = folderD["errlogP"]
 
-        modnameS = self.incrD["modnameS"]
+        modnameS = self.labelD["modnameS"]
         # print(f"{modnameS=}")
         logging.basicConfig(
             level=logging.DEBUG,
@@ -187,8 +187,8 @@ class CmdUTF(Commands):
                 pass
             elif txttypeS == "rivttags":
                 xtagC = parse.RivtParseTag(
-                    self.folderD, self.incrD,  self.localD)
-                xmdS, self.incrD, self.folderD, self.localD = xtagC.md_parse(
+                    self.folderD, self.labelD,  self.localD)
+                xmdS, self.labelD, self.folderD, self.localD = xtagC.md_parse(
                     txtfileL)
                 return xmdS
         elif extS == ".html":

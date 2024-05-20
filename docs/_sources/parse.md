@@ -61,13 +61,13 @@
 
             """format rivt-text strings for utf, md or rst"""
 
-            def __init__(self, methS, folderD, incrD,  rivtD):
+            def __init__(self, methS, folderD, labelD,  rivtD):
 
                 """process rivt-text to md8 or reST string
 
                     :param dict folderD: folder paths
 
-                    :param dict incrD: numbers that increment
+                    :param dict labelD: numbers that increment
 
                     :param dict outputS: output type
 
@@ -79,7 +79,7 @@
 
                 self.folderD = folderD  # folder paths
 
-                self.incrD = incrD      # incrementing formats
+                self.labelD = labelD      # incrementing formats
 
                 self.errlogP = folderD["errlogP"]
 
@@ -187,7 +187,7 @@
 
                     :return rstS: reST formatted string
 
-                    :return incrD: increment references
+                    :return labelD: increment references
 
                     :return folderD: folder paths
 
@@ -197,7 +197,7 @@
 
                     :rtype folderD: dictionary
 
-                    :rtype incrD: dictionary
+                    :rtype labelD: dictionary
 
                 """
 
@@ -251,19 +251,19 @@
 
                         rvtS = tag_utf.TagsUTF(lineS, tagS,
 
-                                               self.incrD, self.folderD,  self.rivtD)
+                                               self.labelD, self.folderD,  self.rivtD)
 
                         xutfS += rvtS + "\n"
 
                         rvtS = tag_md.TagsMD(lineS, tagS,
 
-                                             self.incrD, self.folderD,  self.rivtD)
+                                             self.labelD, self.folderD,  self.rivtD)
 
                         xmdS += rvtS + "\n"
 
                         rvtS = tag_rst.TagsRST(lineS, tagS,
 
-                                               self.incrD, self.folderD,  self.rivtD)
+                                               self.labelD, self.folderD,  self.rivtD)
 
                         xrstS += rvtS + "\n"
 
@@ -321,7 +321,7 @@
 
                             rvtC = cmd_utf.CmdUTF(
 
-                                parL, self.incrD, self.folderD, self.rivtD)
+                                parL, self.labelD, self.folderD, self.rivtD)
 
                             utfS = rvtC.cmd_parse(cmdS)
 
@@ -331,7 +331,7 @@
 
                             rvtC = cmd_md.CmdMD(
 
-                                parL, self.incrD, self.folderD, self.rivtD)
+                                parL, self.labelD, self.folderD, self.rivtD)
 
                             mdS = rvtC.cmd_parse(cmdS)
 
@@ -341,7 +341,7 @@
 
                             rvtC = cmd_rst.CmdRST(
 
-                                parL, self.incrD, self.folderD, self.rivtD)
+                                parL, self.labelD, self.folderD, self.rivtD)
 
                             reS = rvtC.cmd_parse(cmdS)
 
@@ -361,7 +361,7 @@
 
                         if tagS in self.tagsD:
 
-                            rvtC = tag_utf.TagsUTF(lineS, self.incrD, self.folderD,
+                            rvtC = tag_utf.TagsUTF(lineS, self.labelD, self.folderD,
 
                                                    self.tagsD, self.rivtD)
 
@@ -369,7 +369,7 @@
 
                             xutfS += utfxS + "\n"
 
-                            rvtC = tag_md.TagsMD(lineS, self.incrD, self.folderD,
+                            rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
 
                                                  self.tagsD, self.rivtD)
 
@@ -377,7 +377,7 @@
 
                             xmdS += mdS + "\n"
 
-                            rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                            rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
 
                                                    self.tagsD, self.rivtD)
 
@@ -393,11 +393,11 @@
 
                         lineS = usL[0]
 
-                        self.incrD["unitS"] = usL[1].strip()
+                        self.labelD["unitS"] = usL[1].strip()
 
-                        self.incrD["descS"] = usL[2].strip()
+                        self.labelD["descS"] = usL[2].strip()
 
-                        rvtC = tag_md.TagsMD(lineS, self.incrD, self.folderD,
+                        rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
 
                                              self.localD)
 
@@ -407,7 +407,7 @@
 
                             blockevalL.append(rvtC.tag_parse(":="))
 
-                            rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                            rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
 
                                                    self.localD)
 
@@ -427,7 +427,7 @@
 
                             blockevalL.append(eqL[0])
 
-                            rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                            rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
 
                                                    self.localD)
 
@@ -455,7 +455,7 @@
 
                     writecsv.writerows(vtableL)
 
-                return (xutfS, xmdS, xrstS,  self.incrD, self.folderD, self.rivtD)
+                return (xutfS, xmdS, xrstS,  self.labelD, self.folderD, self.rivtD)
 
             def atable(self, tblL, hdreL, tblfmt, alignaL):
 
@@ -1183,7 +1183,7 @@ typecodes
 class RivtParse(
     methS,
     folderD,
-    incrD,
+    labelD,
     rivtD
 )
 ```
@@ -1415,7 +1415,7 @@ parse method string line by line starting with second line
 
                     :return rstS: reST formatted string
 
-                    :return incrD: increment references
+                    :return labelD: increment references
 
                     :return folderD: folder paths
 
@@ -1425,7 +1425,7 @@ parse method string line by line starting with second line
 
                     :rtype folderD: dictionary
 
-                    :rtype incrD: dictionary
+                    :rtype labelD: dictionary
 
                 """
 
@@ -1479,19 +1479,19 @@ parse method string line by line starting with second line
 
                         rvtS = tag_utf.TagsUTF(lineS, tagS,
 
-                                               self.incrD, self.folderD,  self.rivtD)
+                                               self.labelD, self.folderD,  self.rivtD)
 
                         xutfS += rvtS + "\n"
 
                         rvtS = tag_md.TagsMD(lineS, tagS,
 
-                                             self.incrD, self.folderD,  self.rivtD)
+                                             self.labelD, self.folderD,  self.rivtD)
 
                         xmdS += rvtS + "\n"
 
                         rvtS = tag_rst.TagsRST(lineS, tagS,
 
-                                               self.incrD, self.folderD,  self.rivtD)
+                                               self.labelD, self.folderD,  self.rivtD)
 
                         xrstS += rvtS + "\n"
 
@@ -1549,7 +1549,7 @@ parse method string line by line starting with second line
 
                             rvtC = cmd_utf.CmdUTF(
 
-                                parL, self.incrD, self.folderD, self.rivtD)
+                                parL, self.labelD, self.folderD, self.rivtD)
 
                             utfS = rvtC.cmd_parse(cmdS)
 
@@ -1559,7 +1559,7 @@ parse method string line by line starting with second line
 
                             rvtC = cmd_md.CmdMD(
 
-                                parL, self.incrD, self.folderD, self.rivtD)
+                                parL, self.labelD, self.folderD, self.rivtD)
 
                             mdS = rvtC.cmd_parse(cmdS)
 
@@ -1569,7 +1569,7 @@ parse method string line by line starting with second line
 
                             rvtC = cmd_rst.CmdRST(
 
-                                parL, self.incrD, self.folderD, self.rivtD)
+                                parL, self.labelD, self.folderD, self.rivtD)
 
                             reS = rvtC.cmd_parse(cmdS)
 
@@ -1589,7 +1589,7 @@ parse method string line by line starting with second line
 
                         if tagS in self.tagsD:
 
-                            rvtC = tag_utf.TagsUTF(lineS, self.incrD, self.folderD,
+                            rvtC = tag_utf.TagsUTF(lineS, self.labelD, self.folderD,
 
                                                    self.tagsD, self.rivtD)
 
@@ -1597,7 +1597,7 @@ parse method string line by line starting with second line
 
                             xutfS += utfxS + "\n"
 
-                            rvtC = tag_md.TagsMD(lineS, self.incrD, self.folderD,
+                            rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
 
                                                  self.tagsD, self.rivtD)
 
@@ -1605,7 +1605,7 @@ parse method string line by line starting with second line
 
                             xmdS += mdS + "\n"
 
-                            rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                            rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
 
                                                    self.tagsD, self.rivtD)
 
@@ -1621,11 +1621,11 @@ parse method string line by line starting with second line
 
                         lineS = usL[0]
 
-                        self.incrD["unitS"] = usL[1].strip()
+                        self.labelD["unitS"] = usL[1].strip()
 
-                        self.incrD["descS"] = usL[2].strip()
+                        self.labelD["descS"] = usL[2].strip()
 
-                        rvtC = tag_md.TagsMD(lineS, self.incrD, self.folderD,
+                        rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
 
                                              self.localD)
 
@@ -1635,7 +1635,7 @@ parse method string line by line starting with second line
 
                             blockevalL.append(rvtC.tag_parse(":="))
 
-                            rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                            rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
 
                                                    self.localD)
 
@@ -1655,7 +1655,7 @@ parse method string line by line starting with second line
 
                             blockevalL.append(eqL[0])
 
-                            rvtC = tag_rst.TagsRST(lineS, self.incrD, self.folderD,
+                            rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
 
                                                    self.localD)
 
@@ -1683,4 +1683,4 @@ parse method string line by line starting with second line
 
                     writecsv.writerows(vtableL)
 
-                return (xutfS, xmdS, xrstS,  self.incrD, self.folderD, self.rivtD)
+                return (xutfS, xmdS, xrstS,  self.labelD, self.folderD, self.rivtD)

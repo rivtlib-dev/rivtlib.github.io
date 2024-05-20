@@ -560,7 +560,7 @@ import csv</p>
 
         &quot;&quot;&quot;
 
-        def __init__(self, lineS, incrD, folderD,  tagsD, localD):
+        def __init__(self, lineS, labelD, folderD,  tagsD, localD):
 
             &quot;&quot;&quot;convert rivt tags to md or reST
 
@@ -572,19 +572,19 @@ import csv</p>
 
             self.folderD = folderD
 
-            self.incrD = incrD
+            self.labelD = labelD
 
             self.lineS = lineS
 
             self.vgap = &quot;2&quot;
 
-            self.widthI = incrD[&quot;widthI&quot;]
+            self.widthI = labelD[&quot;widthI&quot;]
 
             self.errlogP = folderD[&quot;errlogP&quot;]
 
             self.valL = []                         # accumulate values in list
 
-            modnameS = self.incrD[&quot;modnameS&quot;]
+            modnameS = self.labelD[&quot;modnameS&quot;]
 
             # print(f&quot;{modnameS=}&quot;)
 
@@ -742,7 +742,7 @@ import csv</p>
 
             &quot;&quot;&quot;
 
-            secS = str(self.incrD[&quot;secnumI&quot;]).zfill(2)
+            secS = str(self.labelD[&quot;secnumI&quot;]).zfill(2)
 
             return secS + &quot; - &quot; + labelS + numS
 
@@ -768,7 +768,7 @@ import csv</p>
 
             &quot;&quot;&quot;
 
-            enumI = int(self.incrD[&quot;equI&quot;])
+            enumI = int(self.labelD[&quot;equI&quot;])
 
             fillS = str(enumI).zfill(2)
 
@@ -790,7 +790,7 @@ import csv</p>
 
             &quot;&quot;&quot;
 
-            fnumI = int(self.incrD[&quot;figI&quot;])
+            fnumI = int(self.labelD[&quot;figI&quot;])
 
             fillS = str(fnumI).zfill(2)
 
@@ -918,7 +918,7 @@ import csv</p>
 
             &quot;&quot;&quot;
 
-            tnumI = int(self.incrD[&quot;tableI&quot;])
+            tnumI = int(self.labelD[&quot;tableI&quot;])
 
             fillS = str(tnumI).zfill(2)
 
@@ -1396,7 +1396,7 @@ import csv</p>
 <h3>TagsRST<a class="headerlink" href="#tagsrst" title="Permalink to this heading">#</a></h3>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TagsRST</span><span class="p">(</span>
     <span class="n">lineS</span><span class="p">,</span>
-    <span class="n">incrD</span><span class="p">,</span>
+    <span class="n">labelD</span><span class="p">,</span>
     <span class="n">folderD</span><span class="p">,</span>
     <span class="n">tagsD</span><span class="p">,</span>
     <span class="n">localD</span>
@@ -1454,13 +1454,13 @@ def assign(self):</p>
 
             valS = str(self.lineS).split(&quot;=&quot;)[1].strip()
 
-            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+            unit1S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+            unit2S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-            descS = str(self.incrD[&quot;eqlabelS&quot;])
+            descS = str(self.labelD[&quot;eqlabelS&quot;])
 
-            precI = int(self.incrD[&quot;descS&quot;])  # trim result
+            precI = int(self.labelD[&quot;descS&quot;])  # trim result
 
             fmtS = &quot;%.&quot; + str(precI) + &quot;f&quot;
 
@@ -1514,7 +1514,7 @@ def assign(self):</p>
 
             subS = &quot;\n\n&quot;
 
-            if self.incrD[&quot;subB&quot;]:              # replace variables with numbers
+            if self.labelD[&quot;subB&quot;]:              # replace variables with numbers
 
                 subS = self.vsub(eqL, precI, varS, val1U) + &quot;\n\n&quot;
 
@@ -1753,11 +1753,11 @@ def declare(self):</p>
 
             valS = str(self.lineS).split(&quot;:=&quot;)[1].strip()
 
-            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+            unit1S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+            unit2S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-            descripS = str(self.incrD[&quot;descS&quot;])
+            descripS = str(self.labelD[&quot;descS&quot;])
 
             if unit1S.strip() != &quot;-&quot;:
 
@@ -1841,7 +1841,7 @@ def equation(self):</p>
 
             &quot;&quot;&quot;
 
-            enumI = int(self.incrD[&quot;equI&quot;])
+            enumI = int(self.labelD[&quot;equI&quot;])
 
             fillS = str(enumI).zfill(2)
 
@@ -1886,7 +1886,7 @@ def figure(self):</p>
 
             &quot;&quot;&quot;
 
-            fnumI = int(self.incrD[&quot;figI&quot;])
+            fnumI = int(self.labelD[&quot;figI&quot;])
 
             fillS = str(fnumI).zfill(2)
 
@@ -2087,7 +2087,7 @@ def label(self, labelS, numS):</p>
 
             &quot;&quot;&quot;
 
-            secS = str(self.incrD[&quot;secnumI&quot;]).zfill(2)
+            secS = str(self.labelD[&quot;secnumI&quot;]).zfill(2)
 
             return secS + &quot; - &quot; + labelS + numS
 </pre></div>
@@ -2404,7 +2404,7 @@ def table(self):</p>
 
             &quot;&quot;&quot;
 
-            tnumI = int(self.incrD[&quot;tableI&quot;])
+            tnumI = int(self.labelD[&quot;tableI&quot;])
 
             fillS = str(tnumI).zfill(2)
 

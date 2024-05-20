@@ -570,9 +570,9 @@ document.write(`
 
         :type paramL: _type_
 
-        :param incrD: _description_
+        :param labelD: _description_
 
-        :type incrD: _type_
+        :type labelD: _type_
 
         :param folderD: _description_
 
@@ -588,7 +588,7 @@ document.write(`
 
         &quot;&quot;&quot;
 
-        def __init__(self, lineS, incrD, folderD, tagsD, localD):
+        def __init__(self, lineS, labelD, folderD, tagsD, localD):
 
             &quot;&quot;&quot;convert rivt tags to md or reST
 
@@ -602,17 +602,17 @@ document.write(`
 
             self.folderD = folderD
 
-            self.incrD = incrD
+            self.labelD = labelD
 
             self.lineS = lineS
 
-            self.widthI = incrD[&quot;widthI&quot;]
+            self.widthI = labelD[&quot;widthI&quot;]
 
             self.errlogP = folderD[&quot;errlogP&quot;]
 
             self.valL = []                         # accumulate values in list
 
-            modnameS = self.incrD[&quot;modnameS&quot;]
+            modnameS = self.labelD[&quot;modnameS&quot;]
 
             # print(f&quot;{modnameS=}&quot;)
 
@@ -724,13 +724,13 @@ document.write(`
 
             &quot;&quot;&quot;
 
-            secS = str(self.incrD[&quot;secnumI&quot;]).zfill(2)
+            secS = str(self.labelD[&quot;secnumI&quot;]).zfill(2)
 
             labelS = secS + &quot; - &quot; + labelS + numS
 
             # store for equation table
 
-            self.incrD[&quot;eqlabelS&quot;] = self.lineS + &quot; [&quot; + numS.zfill(2) + &quot;]&quot;
+            self.labelD[&quot;eqlabelS&quot;] = self.lineS + &quot; [&quot; + numS.zfill(2) + &quot;]&quot;
 
             return labelS
 
@@ -744,7 +744,7 @@ document.write(`
 
             &quot;&quot;&quot;
 
-            ftnumI = self.incrD[&quot;noteL&quot;].pop(0)
+            ftnumI = self.labelD[&quot;noteL&quot;].pop(0)
 
             lineS = &quot;[&quot; + str(ftnumI) + &quot;] &quot; + self.lineS
 
@@ -760,11 +760,11 @@ document.write(`
 
             &quot;&quot;&quot;
 
-            enumI = int(self.incrD[&quot;equI&quot;]) + 1
+            enumI = int(self.labelD[&quot;equI&quot;]) + 1
 
             fillS = str(enumI).zfill(2)
 
-            wI = self.incrD[&quot;widthI&quot;]
+            wI = self.labelD[&quot;widthI&quot;]
 
             refS = self.label(&quot;E&quot;, fillS)
 
@@ -774,7 +774,7 @@ document.write(`
 
                 + refS.rjust(wI-spcI)
 
-            self.incrD[&quot;equI&quot;] = enumI
+            self.labelD[&quot;equI&quot;] = enumI
 
             return lineS
 
@@ -788,7 +788,7 @@ document.write(`
 
             &quot;&quot;&quot;
 
-            fnumI = int(self.incrD[&quot;figI&quot;])
+            fnumI = int(self.labelD[&quot;figI&quot;])
 
             lineS = &quot;Fig. &quot; + str(fnumI) + &quot; - &quot; + self.lineS
 
@@ -802,11 +802,11 @@ document.write(`
 
             &quot;&quot;&quot;
 
-            ftnumI = self.incrD[&quot;footL&quot;].pop(0)
+            ftnumI = self.labelD[&quot;footL&quot;].pop(0)
 
-            self.incrD[&quot;noteL&quot;].append(ftnumI + 1)
+            self.labelD[&quot;noteL&quot;].append(ftnumI + 1)
 
-            self.incrD[&quot;footL&quot;].append(ftnumI + 1)
+            self.labelD[&quot;footL&quot;].append(ftnumI + 1)
 
             lineS = self.lineS.replace(&quot;*]&quot;, &quot;[&quot; + str(ftnumI) + &quot;]&quot;)
 
@@ -888,9 +888,9 @@ document.write(`
 
             &quot;&quot;&quot;
 
-            tnumI = int(self.incrD[&quot;tableI&quot;])
+            tnumI = int(self.labelD[&quot;tableI&quot;])
 
-            self.incrD[&quot;tableI&quot;] = tnumI + 1
+            self.labelD[&quot;tableI&quot;] = tnumI + 1
 
             lineS = &quot;Table &quot; + str(tnumI) + &quot; - &quot; + self.lineS
 
@@ -924,15 +924,15 @@ document.write(`
 
             &quot;&quot;&quot;
 
-            pagenoS = str(self.incrD[&quot;pageI&quot;])
+            pagenoS = str(self.labelD[&quot;pageI&quot;])
 
-            rvtS = self.incrD[&quot;headuS&quot;].replace(&quot;p##&quot;, pagenoS)
+            rvtS = self.labelD[&quot;headuS&quot;].replace(&quot;p##&quot;, pagenoS)
 
-            self.incrD[&quot;pageI&quot;] = int(pagenoS)+1
+            self.labelD[&quot;pageI&quot;] = int(pagenoS)+1
 
-            lineS = &quot;\n&quot;+&quot;_&quot; * self.incrD[&quot;widthI&quot;] + &quot;\n&quot; + rvtS +\
+            lineS = &quot;\n&quot;+&quot;_&quot; * self.labelD[&quot;widthI&quot;] + &quot;\n&quot; + rvtS +\
 
-                    &quot;\n&quot;+&quot;_&quot; * self.incrD[&quot;widthI&quot;] + &quot;\n&quot;
+                    &quot;\n&quot;+&quot;_&quot; * self.labelD[&quot;widthI&quot;] + &quot;\n&quot;
 
             return &quot;\n&quot; + rvtS
 
@@ -1436,7 +1436,7 @@ document.write(`
 <h3>TagsMD<a class="headerlink" href="#tagsmd" title="Permalink to this heading">#</a></h3>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TagsMD</span><span class="p">(</span>
     <span class="n">lineS</span><span class="p">,</span>
-    <span class="n">incrD</span><span class="p">,</span>
+    <span class="n">labelD</span><span class="p">,</span>
     <span class="n">folderD</span><span class="p">,</span>
     <span class="n">tagsD</span><span class="p">,</span>
     <span class="n">localD</span>
@@ -1460,7 +1460,7 @@ document.write(`
 <td><p><em>description</em></p></td>
 <td><p>None</p></td>
 </tr>
-<tr class="row-odd"><td><p>incrD</p></td>
+<tr class="row-odd"><td><p>labelD</p></td>
 <td><p><em>type</em></p></td>
 <td><p><em>description</em></p></td>
 <td><p>None</p></td>
@@ -1528,13 +1528,13 @@ def assign(self):</p>
 
             valS = str(self.lineS).split(&quot;=&quot;)[1].strip()
 
-            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+            unit1S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+            unit2S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-            descS = str(self.incrD[&quot;eqlabelS&quot;])
+            descS = str(self.labelD[&quot;eqlabelS&quot;])
 
-            precI = int(self.incrD[&quot;descS&quot;])  # trim result
+            precI = int(self.labelD[&quot;descS&quot;])  # trim result
 
             fmtS = &quot;%.&quot; + str(precI) + &quot;f&quot;
 
@@ -1588,7 +1588,7 @@ def assign(self):</p>
 
             subS = &quot;\n\n&quot;
 
-            if self.incrD[&quot;subB&quot;]:              # replace variables with numbers
+            if self.labelD[&quot;subB&quot;]:              # replace variables with numbers
 
                 subS = self.vsub(eqL, precI, varS, val1U) + &quot;\n\n&quot;
 
@@ -1812,11 +1812,11 @@ def declare(self):</p>
 
             valS = str(self.lineS).split(&quot;:=&quot;)[1].strip()
 
-            unit1S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
+            unit1S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[0]
 
-            unit2S = str(self.incrD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
+            unit2S = str(self.labelD[&quot;unitS&quot;]).split(&quot;,&quot;)[1]
 
-            descripS = str(self.incrD[&quot;descS&quot;])
+            descripS = str(self.labelD[&quot;descS&quot;])
 
             if unit1S.strip() != &quot;-&quot;:
 
@@ -1865,7 +1865,7 @@ def description(self):</p>
 
             &quot;&quot;&quot;
 
-            ftnumI = self.incrD[&quot;noteL&quot;].pop(0)
+            ftnumI = self.labelD[&quot;noteL&quot;].pop(0)
 
             lineS = &quot;[&quot; + str(ftnumI) + &quot;] &quot; + self.lineS
 
@@ -1904,11 +1904,11 @@ def equation(self):</p>
 
             &quot;&quot;&quot;
 
-            enumI = int(self.incrD[&quot;equI&quot;]) + 1
+            enumI = int(self.labelD[&quot;equI&quot;]) + 1
 
             fillS = str(enumI).zfill(2)
 
-            wI = self.incrD[&quot;widthI&quot;]
+            wI = self.labelD[&quot;widthI&quot;]
 
             refS = self.label(&quot;E&quot;, fillS)
 
@@ -1918,7 +1918,7 @@ def equation(self):</p>
 
                 + refS.rjust(wI-spcI)
 
-            self.incrD[&quot;equI&quot;] = enumI
+            self.labelD[&quot;equI&quot;] = enumI
 
             return lineS
 </pre></div>
@@ -1955,7 +1955,7 @@ def figure(self):</p>
 
             &quot;&quot;&quot;
 
-            fnumI = int(self.incrD[&quot;figI&quot;])
+            fnumI = int(self.labelD[&quot;figI&quot;])
 
             lineS = &quot;Fig. &quot; + str(fnumI) + &quot; - &quot; + self.lineS
 
@@ -1979,11 +1979,11 @@ def foot(self):</p>
 
             &quot;&quot;&quot;
 
-            ftnumI = self.incrD[&quot;footL&quot;].pop(0)
+            ftnumI = self.labelD[&quot;footL&quot;].pop(0)
 
-            self.incrD[&quot;noteL&quot;].append(ftnumI + 1)
+            self.labelD[&quot;noteL&quot;].append(ftnumI + 1)
 
-            self.incrD[&quot;footL&quot;].append(ftnumI + 1)
+            self.labelD[&quot;footL&quot;].append(ftnumI + 1)
 
             lineS = self.lineS.replace(&quot;*]&quot;, &quot;[&quot; + str(ftnumI) + &quot;]&quot;)
 
@@ -2061,13 +2061,13 @@ def label(self, labelS, numS):</p>
 
             &quot;&quot;&quot;
 
-            secS = str(self.incrD[&quot;secnumI&quot;]).zfill(2)
+            secS = str(self.labelD[&quot;secnumI&quot;]).zfill(2)
 
             labelS = secS + &quot; - &quot; + labelS + numS
 
             # store for equation table
 
-            self.incrD[&quot;eqlabelS&quot;] = self.lineS + &quot; [&quot; + numS.zfill(2) + &quot;]&quot;
+            self.labelD[&quot;eqlabelS&quot;] = self.lineS + &quot; [&quot; + numS.zfill(2) + &quot;]&quot;
 
             return labelS
 </pre></div>
@@ -2216,15 +2216,15 @@ def page(self):</p>
 
             &quot;&quot;&quot;
 
-            pagenoS = str(self.incrD[&quot;pageI&quot;])
+            pagenoS = str(self.labelD[&quot;pageI&quot;])
 
-            rvtS = self.incrD[&quot;headuS&quot;].replace(&quot;p##&quot;, pagenoS)
+            rvtS = self.labelD[&quot;headuS&quot;].replace(&quot;p##&quot;, pagenoS)
 
-            self.incrD[&quot;pageI&quot;] = int(pagenoS)+1
+            self.labelD[&quot;pageI&quot;] = int(pagenoS)+1
 
-            lineS = &quot;\n&quot;+&quot;_&quot; * self.incrD[&quot;widthI&quot;] + &quot;\n&quot; + rvtS +\
+            lineS = &quot;\n&quot;+&quot;_&quot; * self.labelD[&quot;widthI&quot;] + &quot;\n&quot; + rvtS +\
 
-                    &quot;\n&quot;+&quot;_&quot; * self.incrD[&quot;widthI&quot;] + &quot;\n&quot;
+                    &quot;\n&quot;+&quot;_&quot; * self.labelD[&quot;widthI&quot;] + &quot;\n&quot;
 
             return &quot;\n&quot; + rvtS
 </pre></div>
@@ -2481,9 +2481,9 @@ def table(self):</p>
 
             &quot;&quot;&quot;
 
-            tnumI = int(self.incrD[&quot;tableI&quot;])
+            tnumI = int(self.labelD[&quot;tableI&quot;])
 
-            self.incrD[&quot;tableI&quot;] = tnumI + 1
+            self.labelD[&quot;tableI&quot;] = tnumI + 1
 
             lineS = &quot;Table &quot; + str(tnumI) + &quot; - &quot; + self.lineS
 

@@ -20,10 +20,10 @@ from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
 from rivtlib import units
 from rivtlib import cmd_utf
-from rivtlib import cmd_md
+from rivtlib import cmd_gen
 from rivtlib import cmd_rst
 from rivtlib import tag_utf
-from rivtlib import tag_md
+from rivtlib import tag_gen
 from rivtlib import tag_rst
 
 # tabulate.PRESERVE_WHITESPACE = True
@@ -87,6 +87,10 @@ class RivtParse:
 
             self.tagsD = {}
 
+        elif methS == "W":
+            self.cmdL = []
+
+            self.tagsD = {}
         else:
             pass
 

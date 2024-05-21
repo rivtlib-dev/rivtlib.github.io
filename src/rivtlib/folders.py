@@ -1,14 +1,14 @@
 """parse rivtlib folder structure"""
 
 
-def get_div_files(cur_dirP):
-    """list of rivt file paths in div
+def get_riv_files(cur_dirP):
+    """list of rivt files
     """
 
     docpathP = Path(os.getcwd())
     for fileS in os.listdir(docpathP):
         # print(fileS)
-        if fnmatch.fnmatch(fileS, "rivt??-*.py"):
+        if fnmatch.fnmatch(fileS, "riv????-*.py"):
             docfileS = fileS
             docP = Path(docpathP, docfileS)
             # print(docP)
@@ -16,9 +16,6 @@ def get_div_files(cur_dirP):
     if docfileS == "xx":
         print("INFO     rivt file not found")
         exit()
-
-# find data and function file
-# dataP = Path(fnmatch.fnmatch(argfileS, "rivt??-*.py"))
 
 
 # files and paths

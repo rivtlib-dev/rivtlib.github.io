@@ -42,10 +42,10 @@ from datetime import datetime, time
 
 from rivtlib import parse
 from rivtlib import folders
-from rivtlib import write
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
+# get rivt file path
 docP = Path(os.getcwd())
 if __name__ == "rivtlib.rivtapi":
     argfileS = Path(__main__.__file__)
@@ -62,12 +62,15 @@ else:
     sys.exit()
 
 
-def _section_set(rS, methS):
+def _sections(rS):
     """format section titles and update dictionaries
+
+
+
 
     :param rS: first line of string
     :type rS: str
-    :param methS: rivt method
+    :param apiS: api function
     :type methS: str
     :return: section title
     :rtype: str
@@ -79,11 +82,10 @@ def _section_set(rS, methS):
     hdreadS = """"""
     hdutfS = """"""""
 
-    rsL = rS.split("|")
-    titleS = rsL[0].strip()
-    if methS == "R":
-        labelD["tocS"] = rsL[1].strip()  # set redaction
-        labelD["pageI"] = int(rsL[2])    # set background color
+    rsL = rS.split("|")              # function string as list
+    titleS = rsL[0].strip()          #
+    labelD["tocS"] = rsL[1].strip()  # set redaction
+    labelD["pageI"] = int(rsL[2])    # set background color
     if rS.strip()[0:2] == "--":         # omit section heading
         return "\n", "\n", "\n"
 
@@ -117,7 +119,7 @@ def _section_set(rS, methS):
 
 
 def _rivt_parse(rS, mS):
-    """call parse class and build formatted strings
+    """call parse.RivtParse on API function strings
 
     :param rS: rivt string
     :type rS: str
@@ -130,7 +132,7 @@ def _rivt_parse(rS, mS):
     # section headings
     xmdS = xrstS = xutfS = ""
     rL = rS.split("\n")
-    hutfS, hmdS, hrstS = _section_set(rL[0], mS)
+    hutfS, hmdS, hrstS = _sections(rL[0], mS)
     utfS += hutfS
     mdS += hmdS
     rstS += hrstS
@@ -143,7 +145,7 @@ def _rivt_parse(rS, mS):
 
 
 def R(rS):
-    """format Repo string
+    """process Run string
 
         : param rS: repo string
         : type rS: str
@@ -189,6 +191,15 @@ def T(rS):
     rivtD.update(locals())
 
 
+def W(rS):
+    """write output files
+
+    :param formatS: comma separated output types: 'utf,md,pdf' 
+    :type formatS: str
+    """
+    pass
+
+
 def X(rS):
     """skip string - do not format
     """
@@ -196,62 +207,3 @@ def X(rS):
     rL = rS.split("\n")
     print("\n skip section: " + rL[0] + "\n")
     pass
-
-
-def W(rS):
-    """write output files
-
-    :param formatS: comma separated output types: 'utf,md,pdf' 
-    :type formatS: str
-    """
-
-    global utfS, rstS, labelD, folderD
-
-    print(f" -------- write doc files: [{docfileS}] --------- ")
-    logging.info(f"""write doc files: [{docfileS}]""")
-
-    formatL = formatS.split(",")
-    docmdS = "README.md"
-    docmdP = Path(docP.parent / docmdS)
-    docutfP = Path(docP.parent / docutfS)
-    rstfileP = Path(docP.parent, docbaseS + ".rst")
-    # eshortP = Path(*Path(rstfileP).parts[-3:])
-
-    print("", flush=True)
-
-    if "md" in formatL:                          # save md file
-        with open(docmdP, "w", encoding='utf-8') as f1:
-            f1.write(mdS)
-            # with open(_rstfile, "wb") as f1:
-            #   f1.write(rstcalcS.encode("md-8"))
-            # f1 = open(_rstfile, "r", encoding="md-8", errors="ignore")
-        print(f"markdown written: {dshortP}\README.md")
-        logging.info(f"""markdown written: {dshortP}\README.md""")
-    print("", flush=True)
-
-    if "utf" in formatL:                          # save utf file
-        with open(docmdP, "w", encoding='utf-8') as f1:
-            f1.write(mdS)
-            # with open(_rstfile, "wb") as f1:
-            #   f1.write(rstcalcS.encode("md-8"))
-            # f1 = open(_rstfile, "r", encoding="md-8", errors="ignore")
-        print(f"markdown written: {dshortP}\README.md")
-        logging.info(f"""markdown written: {dshortP}\README.md""")
-    print("", flush=True)
-
-    if "pdf" in formatL:                           # save pdf file
-        with open(rstfileP, "w", encoding='md-8') as f2:
-            f2.write(rstS)
-        logging.info(f"reST written: {rstfileP}")
-        print(f"reST written: {rstfileP}")
-        logging.info(f"start PDF file process: {rstfileP}")
-        print("start PDF file process: {rstfileP}")
-        pdfstyleS = i.split(":")[1].strip()
-        styleP = Path(prvP, pdfstyleS)
-        folderD["styleP"] = styleP
-        logging.info(f"PDF style file: {styleP}")
-        print(f"PDF style file: {styleP}")
-        pdffileP = _rest2tex(rstS)
-        logging.info(f"PDF doc written: {pdffileP}")
-        print(f"PDF doc written: {pdffileP}")
-    sys.exit()

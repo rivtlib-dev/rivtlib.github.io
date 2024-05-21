@@ -35,31 +35,31 @@ rv.T(rS) - (Tools) Execute Python functions and scripts
 rv.X(rS) - (eXclude) Skip rivt-string processing 
 rv.W(rS) - (Write) Write formatted rivt documents 
 
-where rS is a triple quoted Python string. These 6 API functions implement
+where rS is a triple quoted Python string. 
 
-    - a reStructuredText markup language wrapper (see
-    https://quickrestructuredtext.com)
+The 6 API functions implement:
 
+    - reStructuredText markup wrapper (see https://quickrestructuredtext.com)
 
-    - two dozen commands and tags for processing files and
-    formatting output.
+    - folder and file structure
 
-**rivt** commands and tags are summarized below. Further details are provided
-in the user manual (https://rivt.net).
+    - commands and tags for processing files and formatting output
+    
+**rivt** commands and tags are summarized below. See the user manual at
+https://rivt.net for futher details.
 
 
 Commands - file processing
 --------------------------
 
-Commands process files (image, equations, tables etc. ) and start with | or ||
-in the first indented column (for code folding, all rivt strings start in the
-fourth column following the API function call.) A command has the form
+rivt commands process files e.g. image, equations, tables etc. They start with
+a single or double bar (| or ||) and have the form:
 
-    | label or title (tag) | /relative/path/file.typ(:start-end) | parameters
+    | (--) label or title (tag) | /relative/path/file.typ(:start-end) | params
 
-where options are shown in parenthesis and parameters depend on the file type.
-Starting the command with a double bar || inserts the referenced lines into the
-input for checking.
+where options are shown in parenthesis and the parameters depend on the file
+type. A double bar (||) optionally inserts the referenced file lines into the
+input for legiblity and checking.
 
 ================================================================================
                         Command Overview
@@ -105,7 +105,7 @@ rv.V("""Values Function Label | pass;redact | color;none
     """)
   
 
-rv.T("""function label | pass;redact | color;none
+rv.T("""Tools function label | pass;redact | color;none
                 
 
     """)
@@ -119,7 +119,7 @@ rv.X("""xxx | yyy | zzz
 
     """)
 
-rv.W("""function label | doc; report | sync;async
+rv.W("""Write function label | pass;redact | color;none
 
     The Write function generates formatted docs (single files)
     as text (.txt), HTML (.html) and PDF (.pdf), and formatted
@@ -131,18 +131,18 @@ rv.W("""function label | doc; report | sync;async
 
     """)
 
-In VSCode each API function or sequence of functions may be run interactively
-using the standard cell decorator *# %%*. Interactive output, and output to
-stdout when a rivt file is run from a terminal, is formatted as utf-8 text.
+Within VSCode an API function or sequence of functions may be run interactively
+using the standard cell decorator *# %%*. Interactive output is formatted as
+utf-8 text, as is output to stdout when a rivt file is run from a terminal.
 
 
-Tags - text formatting
-----------------------
+Tags - formatting
+-----------------
 
-A rivt tag evaluates and/or formats text. Line tags are added at the end of a
-line. Block tags are inserted at the beginning and end of a text block.
-reStructuredText markup may also be used for formatting
-(see https://quickrestructuredtext.com).
+A rivt tag evaluates and/or formats rivt text. Line tags are added at the end
+of a line. Block tags are inserted at the start and end of a text block.
+reStructuredText markup may also be used for formatting (see
+https://quickrestructuredtext.com).
 
 ===================== ========= ========================== ==================
  tags                   scope       description               API scope  
@@ -166,8 +166,8 @@ text _[i]               line        numbered image              V,I
 text _[#]               line        footnote (autonumber)       V,I
 text _[f]               line        footnote description        V,I   
 _[page]                 line        new page                    V,I
-_[[p]]                  block       start monospace             I 
-_[[l]]                  block       start LaTeX                 I
+_[[p]]                  block       start monospace block       I 
+_[[l]]                  block       start LaTeX block           I
 _[[e]]                  block       end block                   I
 
 
@@ -281,8 +281,8 @@ data.
 Example rivt file
 -----------------------------------------------------------------------------
 API functions start in column 1. rivt-strings are indented 4 spaces (for
-legibility and code folding)
-
+legibility and code folding).A rivt doc is assembled by each function in order
+of the input order. Each function also, optionally, defines a doc section.
 
 import rivtlib.rivtapi as rv
 

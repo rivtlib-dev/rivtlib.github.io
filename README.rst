@@ -32,19 +32,24 @@ file.  A rivt report (report) is an organized collection of rivt docs.
 **rivtlib** organizes and generates both single file docs and large reports.
 
 A rivt file is a Python file that imports **rivtlib**, which in turn exposes 
-6 API functions that process a single unicode, rivt-string (rS).
+6 API functions that process a single unicode, rivt-string (rS)::
 
-*import rivtlib.rivtapi as rv*
+    import rivtlib.rivtapi as rv
 
-rv.R(rS) - (Run) Execute shell scripts 
-rv.I(rS) - (Insert) Insert static text, images, tables and math equations 
-rv.V(rS) - (Values) Evaluate values and equations 
-rv.T(rS) - (Tools) Execute external Python functions and scripts 
-rv.X(rS) - (eXclude) Skip rivt processing 
-rv.W(rS) - (Write) Write formatted rivt documents 
+    rv.R(rS) - (Run) Execute shell scripts 
 
-The API functions implement (futher details at https:\\rivtdocs.net)::
+    rv.I(rS) - (Insert) Insert static text, images, tables and math equations 
 
+    rv.V(rS) - (Values) Evaluate values and equations 
+
+    rv.T(rS) - (Tools) Execute external Python functions and scripts 
+
+    rv.X(rS) - (eXclude) Skip rivt processing 
+
+    rv.W(rS) - (Write) Write formatted rivt documents 
+
+
+These API functions implement (details at https:\\rivtdocs.net)::
 
     - a reStructuredText markup wrapper (see https://quickrestructuredtext.com)
 
@@ -57,81 +62,81 @@ Commands - file processing
 --------------------------
 
 rivt commands process files e.g. image, equations, tables etc. They start with
-a single or double bar (| or ||) and have the form:
+a single or double bar (| or ||) and have the form::
 
     | (--) label or title (tag) | /relative/path/file.typ(:start-end) | params
 
+
 where options are shown in parenthesis and the parameters depend on the file
 type. A double bar (||) optionally inserts the referenced file lines into the
-input for legiblity and checking. Avialable commands   
-
-Commands - Overview
---------------------
-
-rv.R("""run function label | pass;redact | color;none
-
-    The Run function processes shell commands.
-
-    """)
+input for legiblity and checking. Avialable commands for each API function include::  
 
 
-rv.I("""Insert Function Label | pass;redact | color;none
-                        
-    The Insert function formats static file objects.                     
-            
-    | image label (_[i]) | /image/path/.jpg,.png,.svg | size, color
-
-    | table title (_[t]) | /tables/path/.csv (:start-end) | width, align
-
-    | text label | /text/path/.txt(:start-end) | plain; rivt
-
-    | equation label (_[s,l]) | /text/path/.tex,txt(:start-end) | bold; plain
+    rv.R("""run function label | pass;redact | color;none
     
-    | append label | /append/path/.pdf | number; nonumber         
-
-    """)
-
-
-rv.V("""Values Function Label | pass;redact | color;none
-            
-    The Values function evaluates variables and equations.
-
-    | image label (_[i])| /image/path/.jpg,.png,.svg | size, color
-
-    | data title (_[d])| /values/path/.csv,.xls (:start-end)| [cols]
-
-    | value label (_[v])| /values/path/.csv(:start-end) | 
-
-    | equation label (_[e]) | /values/path/.txt(:start-end) | ref; noref
-
-    """)
-  
-
-rv.T("""Tools function label | pass;redact | color;none
+        The Run function processes shell commands.
+    
+        """)
+    
+    
+    rv.I("""Insert Function Label | pass;redact | color;none
+                            
+        The Insert function formats static file objects.                     
                 
+        | image label (_[i]) | /image/path/.jpg,.png,.svg | size, color
+    
+        | table title (_[t]) | /tables/path/.csv (:start-end) | width, align
+    
+        | text label | /text/path/.txt(:start-end) | plain; rivt
+    
+        | equation label (_[s,l]) | /text/path/.tex,txt(:start-end) | bold; plain
+        
+        | append label | /append/path/.pdf | number; nonumber         
+    
+        """)
+    
+    
+    rv.V("""Values Function Label | pass;redact | color;none
+                
+        The Values function evaluates variables and equations.
+    
+        | image label (_[i])| /image/path/.jpg,.png,.svg | size, color
+    
+        | data title (_[d])| /values/path/.csv,.xls (:start-end)| [cols]
+    
+        | value label (_[v])| /values/path/.csv(:start-end) | 
+    
+        | equation label (_[e]) | /values/path/.txt(:start-end) | ref; noref
+    
+        """)
+      
+    
+    rv.T("""Tools function label | pass;redact | color;none
+                    
+    
+        """)
+    
+    
+    rv.X("""xxx | yyy | zzz
+    
+        The X function prevents evaluation of the function.
+        Functions may be changed to X for testing, debugging and
+        comments.
+    
+        """)
+    
+    rv.W("""Write function label | pass;redact | color;none
+    
+        The Write function generates formatted docs (single files)
+        as text (.txt), HTML (.html) and PDF (.pdf), and formatted
+        reports as reStructuredText (used for GitHub README.rst),
+        HTML (.html) and PDF (.pdf).
+    
+        | output
+        | files
+    
+        """)
 
-    """)
-
-
-rv.X("""xxx | yyy | zzz
-
-    The X function prevents evaluation of the function.
-    Functions may be changed to X for testing, debugging and
-    comments.
-
-    """)
-
-rv.W("""Write function label | pass;redact | color;none
-
-    The Write function generates formatted docs (single files)
-    as text (.txt), HTML (.html) and PDF (.pdf), and formatted
-    reports as reStructuredText (used for GitHub README.rst),
-    HTML (.html) and PDF (.pdf).
-
-    | output
-    | files
-
-    """)
 
 Within VSCode an API function or sequence of functions may be run interactively
 using the standard cell decorator *# %%*. Interactive output is formatted as

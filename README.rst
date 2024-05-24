@@ -1,17 +1,18 @@
 **rivt** is a lightweight markup language for writing, organizing and
-sharing engineering documents and reports. It is designed to be legible,
-flexible and efficient. **rivt** is also the name of an open source framework
+sharing engineering documents and reports. Its goal is to be a legible and
+efficient language for preparing engineering reports that rely on standard, 
+codified design methods. These reports include peer review, government permits 
+and test results.  *rivt** is also the name of the open source framework
 used for producing rivt documents.
 
-**rivtlib** is a Python library that processes rivt files and is distributed
-under the open source MIT license. It runs on platforms that support Python
-3.11 or later and works within a framework of five established, open souce
-technologies:
+**rivtlib** is a Python library, distributed under the open source MIT license, that 
+processes rivt files. It runs on platforms that support Python 3.11 or later and is designed 
+to work in a framework of five, established, open souce technologies:
 
 - Language: Python with open source libraries including **rivtlib**
 - IDE: VSCode and extensions
 - Typesetting: Latex TexLive Distribution
-- Diagrams: QCAD
+- Diagramming: QCAD
 - Version control: GitHub
 
 The **rivt** framework can be downloaded as a portable Windows zip file or
@@ -58,12 +59,10 @@ a single or double bar (| or ||) and have the form:
 
 where options are shown in parenthesis and the parameters depend on the file
 type. A double bar (||) optionally inserts the referenced file lines into the
-input for legiblity and checking.
+input for legiblity and checking. Avialable commands   
 
-================================================================================
-                        Command Overview
-================================================================================
-
+Commands - Overview
+--------------------
 
 rv.R("""run function label | pass;redact | color;none
 

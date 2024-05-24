@@ -444,6 +444,7 @@ ctl+shift+s          open GitHub README search for rivt
 ctl+shift+a          commit all 
 ctl+shift+z          commit the current editor
 ctl+shift+x          post to remote   
+============== ==============================================================
 
 
 ============================================== ===============================

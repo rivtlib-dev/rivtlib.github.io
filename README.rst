@@ -168,7 +168,7 @@ _[page]                 line        new page                    V,I
 _[[p]]                  block       start monospace block       I 
 _[[l]]                  block       start LaTeX block           I
 _[[e]]                  block       end block                   I
-
+===================== ========= ========================== ==================
 
 
 Folders 
@@ -199,82 +199,82 @@ Source files for rivt docs are stored in 6 folders:
 
 rivt reports are defined as collections of docs in the config.ini. Doc files
 are stored in the *write* folder. Source files are stored in user-defined
-sub-folders for organization and to allow separation of public and private
-data.
+sub-folders for organization and separation of public and private data::
 
-[rivt]-Project-Name/               
-    ├── [append]/            
-        ├── app01/  
-        └── app02/  
-            ├── attach3.pdf                   
-            └── attach4.pdf
-    ├── [images]/            
-        ├── img01/  
-        └── img02/  
-            ├── image3.jpg                   
-            └── image4.jpg
-    ├── [scripts]/
-        ├── py01/                 
-        └── py02/  
-            ├── function3.py
-            └── function4.py               
-        ├── run01/  
-        └── run02/  
-            ├── script3.bat
-            └── script4.sh  
-    ├── [tables]/            
-        ├── tbl01/  
-        └── tbl02/  
-            ├── table3.csv                   
-            └── table4.csv
-    ├── [text]/            
-        ├── tex01/  
-        ├── tex02/  
-            ├── latex3.tex
-            └── latex4.tex
-        ├── txt01/  
-        └── txt02/  
-            ├── text3.txt                   
-            └── text4.txt
-    ├── [values]/                 
-        ├── dat01/  
-        ├── dat02/  
-            ├── table3.csv                   
-            └── table4.csv
-        ├── equ01/                      
-        ├── equ02/                    
-            ├── equation1.txt      
-            └── equation2.txt       
-        ├── val01/                    
-        └── val02/                    
-            ├── values3.csv      
-            └── values4.csv       
-    ├── [write]/                        (output files)    
-        ├── [html]/                     
-            └── riv0101-codes.html      (html files)
-                riv0202-frames.html
-                Project-Name.html       (html report) 
-        ├── [pdf]/                      
-            └── riv0101-codes.pdf       (pdf files)        
-                riv0202-frames.pdf
-                Project-Name.pdf        (pdf report)        
-        ├── [rivt-redacted]/            
-            └── README.txt              (redacted report)
-                riv0101x-codes.py       (redacted files)
-                riv0102x-loads.py
-                riv0201x-walls.py       
-        ├── [temp]/                     (temp files)     
-            └── temp-files.tex
-        └── [text]/                     
-            └── riv0101-codes.txt       (text output)
-                riv0201-frames.txt
-    └── config.ini                      (rivt config file)
-        README.txt                      (searchable report in public repo)
-        riv0000-report.py               (rivt input files)
-        riv0101-codes.py
-        riv0102-loads.py
-        riv0201-walls.py
-        riv0202-frames.py
+
+    [rivt]-Project-Name/               
+        ├── [append]/            
+            ├── app01/  
+            └── app02/  
+                ├── attach3.pdf                   
+                └── attach4.pdf
+        ├── [images]/            
+            ├── img01/  
+            └── img02/  
+                ├── image3.jpg                   
+                └── image4.jpg
+        ├── [scripts]/
+            ├── py01/                 
+            └── py02/  
+                ├── function3.py
+                └── function4.py               
+            ├── run01/  
+            └── run02/  
+                ├── script3.bat
+                └── script4.sh  
+        ├── [tables]/            
+            ├── tbl01/  
+            └── tbl02/  
+                ├── table3.csv                   
+                └── table4.csv
+        ├── [text]/            
+            ├── tex01/  
+            ├── tex02/  
+                ├── latex3.tex
+                └── latex4.tex
+            ├── txt01/  
+            └── txt02/  
+                ├── text3.txt                   
+                └── text4.txt
+        ├── [values]/                 
+            ├── dat01/  
+            ├── dat02/  
+                ├── table3.csv                   
+                └── table4.csv
+            ├── equ01/                      
+            ├── equ02/                    
+                ├── equation1.txt      
+                └── equation2.txt       
+            ├── val01/                    
+            └── val02/                    
+                ├── values3.csv      
+                └── values4.csv       
+        ├── [write]/                        (output files)    
+            ├── [html]/                     
+                └── riv0101-codes.html      (html files)
+                    riv0202-frames.html
+                    Project-Name.html       (html report) 
+            ├── [pdf]/                      
+                └── riv0101-codes.pdf       (pdf files)        
+                    riv0202-frames.pdf
+                    Project-Name.pdf        (pdf report)        
+            ├── [rivt-redacted]/            
+                └── README.txt              (redacted report)
+                    riv0101x-codes.py       (redacted files)
+                    riv0102x-loads.py
+                    riv0201x-walls.py       
+            ├── [temp]/                     (temp files)     
+                └── temp-files.tex
+            └── [text]/                     
+                └── riv0101-codes.txt       (text output)
+                    riv0201-frames.txt
+        └── config.ini                      (rivt config file)
+            README.txt                      (searchable report in public repo)
+            riv0000-report.py               (rivt input files)
+            riv0101-codes.py
+            riv0102-loads.py
+            riv0201-walls.py
+            riv0202-frames.py
 
 
 Example rivt file

@@ -409,18 +409,18 @@ VSCode rivt profile
 Snippets/Keys            description
 ============== ==============================================================
 
-run             API Run function
-ins             API Insert function   
-val             API Values function
-too             API Tools function
-wri             API Write function
+run            API Run function
+ins            API Insert function   
+val            API Values function
+too            API Tools function
+wri            API Write function
 
 
-alt+q                rewrap paragraph with hard line feeds (80 default)
-alt+p                open file under cursor
-alt+.                select correct spelling under cursor
-alt+8                insert date
-alt+9                insert time
+alt+q          rewrap paragraph with hard line feeds (80 default)
+alt+p          open file under cursor
+alt+.          select correct spelling under cursor
+alt+8          insert date
+alt+9          insert time
 
 ctl+1                focus on first editor
 ctl+2                focus on next editor
@@ -444,6 +444,7 @@ ctl+shift+s          open GitHub README search for rivt
 ctl+shift+a          commit all 
 ctl+shift+z          commit the current editor
 ctl+shift+x          post to remote   
+
 
 ============================================== ===============================
 Extensions                                       description

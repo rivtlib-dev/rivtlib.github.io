@@ -1,5 +1,5 @@
-rivt
-====
+rivt and rivtlib
+================
 
 **rivt** is a lightweight markup language for writing, organizing and
 sharing engineering documents and reports. Its goal is to be a legible and
@@ -8,23 +8,25 @@ codified design and analysis methods. These types of reports include peer review
 government  permits and test results.  **rivt** is also the name of the open 
 source framework used for producing rivt documents.
 
-**rivtlib** is a Python library , that  processes rivt files and is distributed under the 
-open source MIT license. It runs on platforms that support Python 3.11 or later and is 
-designed to work in a framework of five, established open souce technologies::
+**rivtlib** is a Python library , that processes rivt files and is distributed under the 
+open source MIT license. 
+
+rivtzip and rivtonline
+----------------------
+
+**rivtlib** runs on platforms that support Python 3.11 or later and is 
+designed to work with five, established open souce technologies::
 
     - Language : Python with open source libraries including **rivtlib**
 
     - IDE : VSCode and extensions
     
-    - Typesetting : Latex TexLive Distribution
+    - Typesetting : LaTeX TexLive Distribution
     
     - Diagramming : QCAD
     
     - Version control : GitHub
 
-
-rivtzip and rivtonline
-----------------------
 
 The rivt framework may be downloaded as a portable Windows zip file or
 installed through OS specific shell scripts (https://rivtzip.net). It is also
@@ -33,8 +35,8 @@ available as an online service (https://rivtonline.net).
 Definitions
 -----------
 
-A rivt document (doc) is formatted text, HTML or PDF ouput from a rivt
-file.  A rivt report (report) is an organized collection of rivt docs.
+A rivt document (doc) is formatted rivt file output as text, HTML or PDF.  A rivt report 
+(report) is an organized collection of rivt docs in the same three formats.
 **rivtlib** organizes and generates both single file docs and large reports.
 
 A rivt file is a Python file that imports **rivtlib**, which in turn exposes 
@@ -87,7 +89,6 @@ input for legiblity and checking. Available commands for each API function inclu
     
         """)
     
-    
     rv.I("""Insert Function Label | pass;redact | color;none
                             
         The Insert function formats static file objects.                     
@@ -104,7 +105,6 @@ input for legiblity and checking. Available commands for each API function inclu
     
         """)
     
-    
     rv.V("""Values Function Label | pass;redact | color;none
                 
         The Values function evaluates variables and equations.
@@ -118,13 +118,11 @@ input for legiblity and checking. Available commands for each API function inclu
         | equation label (_[e]) | /values/path/.txt(:start-end) | ref; noref
     
         """)
-      
     
     rv.T("""Tools function label | pass;redact | color;none
                     
-    
+
         """)
-    
     
     rv.X("""xxx | yyy | zzz
     

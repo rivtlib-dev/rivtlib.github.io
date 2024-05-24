@@ -36,7 +36,7 @@ file.  A rivt report (report) is an organized collection of rivt docs.
 
 A rivt file is a Python file that imports **rivtlib**, which in turn exposes 
 6 API functions that process a single triple-quoted, rivt-string (rS). Each 
-rivt-string is a unicode string containing text, commands and tags::
+rivt-string is unicode containing arbitrary text, commands and tags::
 
     import rivtlib.rivtapi as rv
 

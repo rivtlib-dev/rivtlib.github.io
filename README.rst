@@ -73,7 +73,7 @@ a single or double bar (| or ||) and have the form::
 
 where options are shown in parenthesis and the parameters depend on the file
 type. A double bar (||) optionally inserts the referenced file lines into the
-input for legiblity and checking. Avialable commands for each API function include::  
+input for legiblity and checking. Available commands for each API function include::  
 
 
     rv.R("""run function label | pass;redact | color;none

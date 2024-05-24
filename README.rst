@@ -27,8 +27,8 @@ The rivt framework may be downloaded as a portable Windows zip file or
 installed through OS specific shell scripts (https://rivtzip.net). It is also
 available as an online service (https://rivtonline.net).
 
-Terms
------
+Definitions
+-----------
 
 A rivt document (doc) is formatted text, HTML or PDF ouput from a rivt
 file.  A rivt report (report) is an organized collection of rivt docs.
@@ -53,13 +53,15 @@ rivt-string is unicode containing arbitrary text, commands and tags::
     rv.W(rS) - (Write) Write formatted rivt documents 
 
 
-These API functions implement (details at https:\\rivtdocs.net)::
+These API functions implement the following (details at https:\\rivtdocs.net)::
+
+    - a document and report structure
+
+    - a folder and file structure
+
+    - commands and tags for processing source files and formatting output
 
     - a reStructuredText markup wrapper (see https://quickrestructuredtext.com)
-
-    - a folder and file structure for source files
-
-    - commands and tags for processing files and formatting output
 
 
 Commands (file processing)

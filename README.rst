@@ -451,6 +451,7 @@ ctl+shift+x          post to remote
 Extensions                                       description
 ============================================== ===============================
 **Add Buttons**
+------------------
 tombonnike.vscode-status-bar-format-toggle          format button
 gsppvo.vscode-commandbar                            command buttons
 AdamAnand.adamstool                                 command buttons
@@ -459,6 +460,7 @@ Ho-Wan.setting-toggle                               toggle settings
 yasukotelin.toggle-panel                            toggle panel
 fabiospampinato.vscode-commands                     user command buttons
 jerrygoyal.shortcut-menu-bar                        menu bar
+
 **Format Text**
 henryclayton.context-menu-toggle-comments           toggle comments
 TroelsDamgaard.reflow-paragraph                     wrap paragraph

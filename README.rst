@@ -10,7 +10,7 @@ used for producing rivt documents.
 
 **rivtlib** is a Python library , that  processes rivt files and is distributed under the 
 open source MIT license. It runs on platforms that support Python 3.11 or later and is 
-designed to work in a framework of five, established, open souce technologies::
+designed to work in a framework of five, established open souce technologies::
 
     - Language : Python with open source libraries including **rivtlib**
 

@@ -450,8 +450,7 @@ ctl+shift+x          post to remote
 ============================================== ===============================
 Extensions                                       description
 ============================================== ===============================
-**Add Buttons**
-------------------
+**Add Buttons**                                ------------------    
 tombonnike.vscode-status-bar-format-toggle          format button
 gsppvo.vscode-commandbar                            command buttons
 AdamAnand.adamstool                                 command buttons
@@ -460,8 +459,7 @@ Ho-Wan.setting-toggle                               toggle settings
 yasukotelin.toggle-panel                            toggle panel
 fabiospampinato.vscode-commands                     user command buttons
 jerrygoyal.shortcut-menu-bar                        menu bar
-
-**Format Text**
+**Format Text**                                ------------------
 henryclayton.context-menu-toggle-comments           toggle comments
 TroelsDamgaard.reflow-paragraph                     wrap paragraph
 streetsidesoftware.code-spell-checker               spell check
@@ -470,7 +468,7 @@ njpwerner.autodocstring                             insert doc string
 oijaz.unicode-latex                                 unicode symbols from latex
 jsynowiec.vscode-insertdatestring                   insert date string
 janisdd.vscode-edit-csv                             csv editor
-
+**Format Views**                                ------------------
 GrapeCity.gc-excelviewer                            excel viewer
 SimonSiefke.svg-preview                             svg viewer
 tomoki1207.pdf                                      pdf viewer

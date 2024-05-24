@@ -1,5 +1,5 @@
 rivt
-----
+====
 
 **rivt** is a lightweight markup language for writing, organizing and
 sharing engineering documents and reports. Its goal is to be a legible and
@@ -154,32 +154,32 @@ of a line. Block tags are inserted at the start and end of a text block.
 reStructuredText markup may also be used for formatting (see
 https://quickrestructuredtext.com).
 
-===================== ========= ========================== ==================
- tags                   scope       description               API scope  
-===================== ========= ========================== ==================
-text _[u]               line        underline                   I                             
-text _[r]               line        right justify               I                        
-text _[c]               line        center                      I                 
-text _[bc]              line        bold center                 I     
-text _[bi]              line        bold italic                 I
-text _[s]               line        sympy math equation         I
-text _[x]               line        latex math equation         I                           
-text _[t]               line        table title                 I
-text _[bs]              line        bold numbered sympy         I     
-text _[bl]              line        bold numbered latex         I    
-label _[o]              line        values lookup               V             
-title _[v]              line        value table title           V                                
-label _[e]              line        equation label              V                                
-var :=, a               line        declare value               V
-var = a + b             line        assign value                V
-text _[i]               line        numbered image              V,I
-text _[#]               line        footnote (autonumber)       V,I
-text _[f]               line        footnote description        V,I   
-_[page]                 line        new page                    V,I
-_[[p]]                  block       start monospace block       I 
-_[[l]]                  block       start LaTeX block           I
-_[[e]]                  block       end block                   I
-===================== ========= ========================== ==================
+=========== ===== ========================== =====
+ tags       scope       description          scope  
+=========== ===== ========================== =====
+text _[u]   line  underline                  I                             
+text _[r]   line  right justify              I                        
+text _[c]   line  center                     I                 
+text _[bc]  line  bold center                I     
+text _[bi]  line  bold italic                I
+text _[s]   line  sympy math equation        I
+text _[x]   line  latex math equation        I                           
+text _[t]   line  table title                I
+text _[bs]  line  bold numbered sympy        I     
+text _[bl]  line  bold numbered latex        I    
+label _[o]  line  values lookup              V             
+title _[v]  line  value table title          V                                
+label _[e]  line  equation label             V                                
+var :=, a   line  declare value              V
+var = a + b line  assign value               V
+text _[i]   line  numbered image             V,I
+text _[#]   line  footnote (autonumber)      V,I
+text _[f]   line  footnote description       V,I   
+_[page]     line  new page                   V,I
+_[[p]]      block start monospace block      I 
+_[[l]]      block start LaTeX block          I
+_[[e]]      block end block                  I
+=========== ===== ========================== =====
 
 
 Folders 
@@ -199,22 +199,22 @@ Report and document headings are taken from folder and file names unless
 overridden in the config file. An example folder structure is shown below.
 Required file names or prefixes are shown in [ ].
 
-Source files for rivt docs are stored in 6 folders:
+Source files for rivt docs are stored in 6 folders::
 
-- append
-- images
-- scripts
-- tables
-- text
-- values
+    - append
+    - images
+    - scripts
+    - tables
+    - text
+    - values
 
-rivt reports are defined as collections of docs in the config.ini. Doc files
-are stored in the *write* folder. Source files are stored in user-defined
+rivt reports are collections of docs defined in the config.ini. Doc and report 
+files are stored in the *write* folder. Source files are stored in user-defined
 sub-folders for organization and separation of public and private data::
 
 
     [rivt]-Project-Name/               
-        ├── [append]/            
+        ├── [append]/                      (source files)
             ├── app01/  
             └── app02/  
                 ├── attach3.pdf                   
@@ -269,18 +269,24 @@ sub-folders for organization and separation of public and private data::
                 └── riv0101-codes.pdf       (pdf files)        
                     riv0202-frames.pdf
                     Project-Name.pdf        (pdf report)        
-            ├── [rivt-redacted]/            
-                └── README.txt              (redacted report)
-                    riv0101x-codes.py       (redacted files)
-                    riv0102x-loads.py
-                    riv0201x-walls.py       
             ├── [temp]/                     (temp files)     
                 └── temp-files.tex
-            └── [text]/                     
+            ├── [text]/                     
                 └── riv0101-codes.txt       (text output)
                     riv0201-frames.txt
+            └── [xrivt-redacted]/            
+                └── README.txt              (searchable redacted report)
+                    riv0101x-codes.py       (redacted files)
+                    riv0102x-loads.py
+                    riv0201x-walls.py
+                ├── [append]                (redacted source files)
+                ├── [images]
+                ├── [scripts] 
+                ├── [tables] 
+                ├── [text]
+                └── [values]
         └── config.ini                      (rivt config file)
-            README.txt                      (searchable report in public repo)
+            README.txt                      (searchable report)
             riv0000-report.py               (rivt input files)
             riv0101-codes.py
             riv0102-loads.py
@@ -289,110 +295,111 @@ sub-folders for organization and separation of public and private data::
 
 
 Example rivt file
------------------------------------------------------------------------------
-API functions start in column 1. rivt-strings are indented 4 spaces (for
-legibility and code folding).A rivt doc is assembled by each function in order
-of the input order. Each function also, optionally, defines a doc section.
+-----------------
 
-import rivtlib.rivtapi as rv
+API functions start in the first column. rivt-strings are then indented 4 spaces 
+for legibility and structured folding).  A rivt doc is assembled from each function 
+in the order of input. Each function, optionally, defines a doc section::
 
-rv.R("""Run function | pass; redact | nocolor; color code
-
-    The Run function processes shell commands.
-
-    Each API function defines a new document section. The first line is a heading
-    line which includes the section heading, a parameter for redacting sections
-    for sharing on GitHub and a parameter for a background color for the
-    section. If the section heading is preceded by two dashes (--) it becomes a
-    location reference without starting a new section. 
+    import rivtlib.rivtapi as rv
     
-    File formatting follows pep8 and ruff. API functions start in column one.
-    All other lines are indented 4 spaces to facilitate section folding,
-    bookmarks and legibility.
-
-    """)
-
-rv.I("""Insert function | pass; redact | nocolor 
-
-    The Insert function formats static objects including images, tables,
-    equations and text.
-
-    ||text | data01/describe.txt | rivt     
-
-    The table command inserts and formats tabular data from csv or xls files.
-    The _[t] tag formats and autonumbers table titles.
-
-    A table title  _[t]
-    || table | data/file.csv | 60,r
-
-    The image command inserts and formats image data from png or jpg files. The
-    _[f] tag formats and autonumbers figures.
+    rv.R("""Run function | pass; redact | nocolor; color code
+    
+        The Run function processes shell commands.
+    
+        Each API function defines a new document section. The first line is a heading
+        line which includes the section heading, a parameter for redacting sections
+        for sharing on GitHub and a parameter for a background color for the
+        section. If the section heading is preceded by two dashes (--) it becomes a
+        location reference without starting a new section. 
         
-    A figure caption _[f]
-    || image | data/f1.png | 50
-
-    Two images may be placed side by side as follows:
-
-    The first figure caption  _[f]
-    The second figure caption  _[f]
-    || image | private/image/f2.png, private/image/f3.png | 45,35
+        File formatting follows pep8 and ruff. API functions start in column one.
+        All other lines are indented 4 spaces to facilitate section folding,
+        bookmarks and legibility.
     
-    The tags _[x] and _[s] format LaTeX and sympy equations:
-
-    \gamma = \frac{5}{x+y} + 3  _[x] 
-
-    x = 32 + (y/2)  _[s]
-
-    """)
-
-rv.V("""Values function |  pass; redact | nocolor 
-
-    The Values fucntion evaluates variables and equations. 
+        """)
     
-    The equal tag declares a value. A sequence of declared values terminated
-    with a blank line is formatted as a table.
+    rv.I("""Insert function | pass; redact | nocolor 
     
-    Example of assignment list _[t]
-    f1 = 10.1 * LBF |LBF, N| a force value
-    d1 = 12.1 * IN  |IN, CM| a length value
-
-    An equation tag provides an equation description and number. A colon-equal
-    tag assigns a value and specifies the result units and the output decimal
-    places printed in the result and equation.
-
-    Example equation - Area of circle  _[e]
-    a1 := 3.14(d1/2)^2 | IN^2, CM^2 | 1,2
-
-    || declare | data01/values02.csv
+        The Insert function formats static objects including images, tables,
+        equations and text.
     
-    The declare command imports values from the csv file written by rivt when
-    processing values in other documents. 
-
-    """)
-
-rv.T("""Tools function | pass; redact | nocolor
-
-    The Tools function processes Python code.
+        ||text | data01/describe.txt | rivt     
+    
+        The table command inserts and formats tabular data from csv or xls files.
+        The _[t] tag formats and autonumbers table titles.
+    
+        A table title  _[t]
+        || table | data/file.csv | 60,r
+    
+        The image command inserts and formats image data from png or jpg files. The
+        _[f] tag formats and autonumbers figures.
+            
+        A figure caption _[f]
+        || image | data/f1.png | 50
+    
+        Two images may be placed side by side as follows:
+    
+        The first figure caption  _[f]
+        The second figure caption  _[f]
+        || image | private/image/f2.png, private/image/f3.png | 45,35
         
-    """)
-
-
-rv.X("""Any text 
-
-    Changing a function to X skips evaluation of that function. Its purposes
-    include review commenting and debugging.
-
-    """) 
-
-rv.W("""Write function | pass; redact | nocolor
-
-    The Write function generates docs and reports.
-
-    | docs |
- 
-    | report |
-
-    """)
+        The tags _[x] and _[s] format LaTeX and sympy equations:
+    
+        \gamma = \frac{5}{x+y} + 3  _[x] 
+    
+        x = 32 + (y/2)  _[s]
+    
+        """)
+    
+    rv.V("""Values function |  pass; redact | nocolor 
+    
+        The Values fucntion evaluates variables and equations. 
+        
+        The equal tag declares a value. A sequence of declared values terminated
+        with a blank line is formatted as a table.
+        
+        Example of assignment list _[t]
+        f1 = 10.1 * LBF |LBF, N| a force value
+        d1 = 12.1 * IN  |IN, CM| a length value
+    
+        An equation tag provides an equation description and number. A colon-equal
+        tag assigns a value and specifies the result units and the output decimal
+        places printed in the result and equation.
+    
+        Example equation - Area of circle  _[e]
+        a1 := 3.14(d1/2)^2 | IN^2, CM^2 | 1,2
+    
+        || declare | data01/values02.csv
+        
+        The declare command imports values from the csv file written by rivt when
+        processing values in other documents. 
+    
+        """)
+    
+    rv.T("""Tools function | pass; redact | nocolor
+    
+        The Tools function processes Python code.
+            
+        """)
+    
+    
+    rv.X("""Any text 
+    
+        Changing a function to X skips evaluation of that function. Its purposes
+        include review commenting and debugging.
+    
+        """) 
+    
+    rv.W("""Write function | pass; redact | nocolor
+    
+        The Write function generates docs and reports.
+    
+        | docs |
+     
+        | report |
+    
+        """)
 
 
 VSCode rivt profile

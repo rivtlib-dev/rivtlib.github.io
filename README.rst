@@ -8,9 +8,9 @@ codified design methods. These types of reports include peer review, government
 permits and test results.  **rivt** is also the name of the open source framework
 used for producing rivt documents.
 
-**rivtlib** is a Python library, distributed under the open source MIT license, that 
-processes rivt files. It runs on platforms that support Python 3.11 or later and is designed 
-to work in a framework of five, established, open souce technologies::
+**rivtlib** is a Python library , that  processes rivt files and is distributed under the 
+open source MIT license. It runs on platforms that support Python 3.11 or later and is 
+designed to work in a framework of five, established, open souce technologies::
 
     - Language : Python with open source libraries including **rivtlib**
 

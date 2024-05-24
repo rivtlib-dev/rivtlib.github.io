@@ -27,12 +27,16 @@ The rivt framework may be downloaded as a portable Windows zip file or
 installed through OS specific shell scripts (https://rivtzip.net). It is also
 available as an online service (https://rivtonline.net).
 
+Terms
+-----
+
 A rivt document (doc) is formatted text, HTML or PDF ouput from a rivt
 file.  A rivt report (report) is an organized collection of rivt docs.
 **rivtlib** organizes and generates both single file docs and large reports.
 
 A rivt file is a Python file that imports **rivtlib**, which in turn exposes 
-6 API functions that process a single unicode, rivt-string (rS)::
+6 API functions that process a single triple-quoted, rivt-string (rS). Each 
+rivt-string is a unicode string containing text, commands and tags::
 
     import rivtlib.rivtapi as rv
 
@@ -129,8 +133,7 @@ input for legiblity and checking. Avialable commands for each API function inclu
     
         The Write function generates formatted docs (single files)
         as text (.txt), HTML (.html) and PDF (.pdf), and formatted
-        reports as reStructuredText (used for GitHub README.rst),
-        HTML (.html) and PDF (.pdf).
+        reports as text (README.txt), HTML (.html) and PDF (.pdf).
     
         | output
         | files

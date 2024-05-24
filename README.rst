@@ -62,7 +62,7 @@ These API functions implement (details at https:\\rivtdocs.net)::
     - commands and tags for processing files and formatting output
 
 
-Commands - file processing
+Commands (file processing)
 --------------------------
 
 rivt commands process files e.g. image, equations, tables etc. They start with
@@ -146,7 +146,7 @@ using the standard cell decorator *# %%*. Interactive output, and output to stdo
 when a rivt file is run from the terminal, is formatted as utf-8 text.
 
 
-Tags - formatting
+Tags (formatting)
 -----------------
 
 A rivt tag evaluates and/or formats rivt text. Line tags are added at the end

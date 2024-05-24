@@ -4,9 +4,9 @@ rivt
 **rivt** is a lightweight markup language for writing, organizing and
 sharing engineering documents and reports. Its goal is to be a legible and
 efficient language for preparing engineering reports that rely on standard, 
-codified design methods. These types of reports include peer review, government 
-permits and test results.  **rivt** is also the name of the open source framework
-used for producing rivt documents.
+codified design and analysis methods. These types of reports include peer review, 
+government  permits and test results.  **rivt** is also the name of the open 
+source framework used for producing rivt documents.
 
 **rivtlib** is a Python library , that  processes rivt files and is distributed under the 
 open source MIT license. It runs on platforms that support Python 3.11 or later and is 
@@ -22,6 +22,9 @@ designed to work in a framework of five, established open souce technologies::
     
     - Version control : GitHub
 
+
+rivtzip and rivtonline
+----------------------
 
 The rivt framework may be downloaded as a portable Windows zip file or
 installed through OS specific shell scripts (https://rivtzip.net). It is also

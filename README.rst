@@ -209,8 +209,8 @@ Source files for rivt docs are stored in 6 folders::
     - values
 
 rivt reports are collections of docs defined in the config.ini. Doc and report 
-files are stored in the *write* folder. Source files are stored in user-defined
-sub-folders for organization and separation of public and private data::
+ouptu files are stored in the *write* folder. Source files are stored in user-defined
+sub-folders intended for organization and separation of public from private data::
 
 
     [rivt]-Project-Name/               

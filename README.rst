@@ -9,11 +9,11 @@ used for producing rivt documents.
 processes rivt files. It runs on platforms that support Python 3.11 or later and is designed 
 to work in a framework of five, established, open souce technologies:
 
-- Language: Python with open source libraries including **rivtlib**
-- IDE: VSCode and extensions
-- Typesetting: Latex TexLive Distribution
-- Diagramming: QCAD
-- Version control: GitHub
+- **Language** : Python with open source libraries including **rivtlib**
+- **IDE** : VSCode and extensions
+- **Typesetting** : Latex TexLive Distribution
+- **Diagramming** : QCAD
+- **Version control** : GitHub
 
 The **rivt** framework can be downloaded as a portable Windows zip file or
 installed through OS specific shell scripts (https://rivtcode.net). It is also

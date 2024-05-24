@@ -142,8 +142,8 @@ input for legiblity and checking. Available commands for each API function inclu
 
 
 Within VSCode an API function or sequence of functions may be run interactively
-using the standard cell decorator *# %%*. Interactive output is formatted as
-utf-8 text, as is output to stdout when a rivt file is run from a terminal.
+using the standard cell decorator *# %%*. Interactive output, and output to stdout 
+when a rivt file is run from the terminal, is formatted as utf-8 text.
 
 
 Tags - formatting

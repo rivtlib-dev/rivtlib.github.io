@@ -387,7 +387,7 @@ in the order of input. Each function, optionally, defines a doc section::
     rv.X("""Any text 
     
         Changing a function to X skips evaluation of that function. Its purposes
-        include review commenting and debugging.
+        include review comments and debugging.
     
         """) 
     

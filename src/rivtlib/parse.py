@@ -91,7 +91,6 @@ class RivtParse:
 #        return hdutfS, hdmdS, hdrstS
 
         utfS += hutfS
-        mdS += hmdS
         rstS += hrstS
 
         # valid commands and tags

@@ -30,10 +30,10 @@ from rivtlib import tag_rst
 
 
 class RivtParse:
-    """format rivt-strings to utf and rst"""
+    """format rivt-strings as utf and rst"""
 
     def __init__(self, methS, folderD, labelD,  rivtD):
-        """process rivt-strings to utf and reST line by line
+        """ rivt-strings as utf and reST line by line
 
             :param dict folderD: folder paths
             :param dict labelD: numbers that increment
@@ -47,19 +47,58 @@ class RivtParse:
         self.errlogP = folderD["errlogP"]
         self.methS = methS
 
+        hdrstS = """"""
+        hdreadS = """"""
+        hdutfS = """"""""
+
+        # section headings
+        xmdS = xrstS = xutfS = ""
+        rL = rS.split("\n")
+
+        rsL = rS.split("|")              # function string as list
+        titleS = rsL[0].strip()          #
+        labelD["tocS"] = rsL[1].strip()  # set redaction
+        labelD["pageI"] = int(rsL[2])    # set background color
+        if rS.strip()[0:2] == "--":         # omit section heading
+            return "\n", "\n", "\n"
+
+        headS = datetime.now().strftime("%Y-%m-%d | %I:%M%p") + "\n"
+        labelD["docS"] = titleS
+        bordrS = labelD["widthI"] * "="
+        hdutfS = (headS + "\n" + bordrS + "\n" + titleS + "\n" + bordrS + "\n")
+        hdmdS = (headS + "\n## " + titleS + "\n")
+
+        snumI = labelD["secnumI"] + 1
+        labelD["secnumI"] = snumI
+        docnumS = labelD["docnumS"]
+        dnumS = docnumS + "-[" + str(snumI) + "]"
+        headS = dnumS + " " + titleS
+        bordrS = labelD["widthI"] * "-"
+
+        hdutfS = bordrS + "\n" + headS + "\n" + bordrS + "\n"
+        hdmdS = "### " + headS + "\n"
+        hdrstS += (
+            ".. raw:: latex"
+            + "   \n\n ?x?vspace{.2in} "
+            + "   ?x?begin{tcolorbox} "
+            + "   ?x?textbf{ " + titleS + "}"
+            + "   ?x?hfill?x?textbf{SECTION " + dnumS + " }"
+            + "   ?x?end{tcolorbox}"
+            + "   \n" + "   ?x?newline" + "   ?x?vspace{.05in}"
+            + "\n\n")
+
+#        print(hdutfS)
+#        return hdutfS, hdmdS, hdrstS
+
+        utfS += hutfS
+        mdS += hmdS
+        rstS += hrstS
+
         # valid commands and tags
         if methS == "R":
-            self.cmdL = ["append", "github", "project"]
+            self.cmdL = ["run", "process"]
 
-            self.tagsD = {"b]": "bold", "i]": "italic", "u]": "underline",
-                          "c]": "center", "r]": "right",
-                          "e]": "equation", "f]": "figure", "t]": "table",
-                          "#]": "foot", "d]": "description",
-                          "l]": "latex", "s]": "sympy",
-                          "link]": "link", "line]": "line", "page]": "page",
-                          "[c]]": "centerblk",  "[p]]": "plainblk",
-                          "[l]]": "latexblk", "[m]]": "mathblk",
-                          "[o]]": "codeblk", "[q]]": "quitblk"}
+            self.tagsD = {"link]": "link", "line]": "line", "page]": "page"}
 
         elif methS == "I":
             self.cmdL = ["image", "table", "text"]

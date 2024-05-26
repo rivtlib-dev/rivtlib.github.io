@@ -45,7 +45,7 @@ from rivtlib import folders
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
-# get rivt file path
+# rivt file path
 docP = Path(os.getcwd())
 if __name__ == "rivtlib.rivtapi":
     argfileS = Path(__main__.__file__)
@@ -62,63 +62,7 @@ else:
     sys.exit()
 
 
-def _sections(rS):
-    """format section titles and update dictionaries
-
-
-
-
-    :param rS: first line of string
-    :type rS: str
-    :param apiS: api function
-    :type methS: str
-    :return: section title
-    :rtype: str
-    """
-
-    global rivtS, rstS, labelD, folderD
-
-    hdrstS = """"""
-    hdreadS = """"""
-    hdutfS = """"""""
-
-    rsL = rS.split("|")              # function string as list
-    titleS = rsL[0].strip()          #
-    labelD["tocS"] = rsL[1].strip()  # set redaction
-    labelD["pageI"] = int(rsL[2])    # set background color
-    if rS.strip()[0:2] == "--":         # omit section heading
-        return "\n", "\n", "\n"
-
-    headS = datetime.now().strftime("%Y-%m-%d | %I:%M%p") + "\n"
-    labelD["docS"] = titleS
-    bordrS = labelD["widthI"] * "="
-    hdutfS = (headS + "\n" + bordrS + "\n" + titleS + "\n" + bordrS + "\n")
-    hdmdS = (headS + "\n## " + titleS + "\n")
-
-    snumI = labelD["secnumI"] + 1
-    labelD["secnumI"] = snumI
-    docnumS = labelD["docnumS"]
-    dnumS = docnumS + "-[" + str(snumI) + "]"
-    headS = dnumS + " " + titleS
-    bordrS = labelD["widthI"] * "-"
-
-    hdutfS = bordrS + "\n" + headS + "\n" + bordrS + "\n"
-    hdmdS = "### " + headS + "\n"
-    hdrstS += (
-        ".. raw:: latex"
-        + "   \n\n ?x?vspace{.2in} "
-        + "   ?x?begin{tcolorbox} "
-        + "   ?x?textbf{ " + titleS + "}"
-        + "   ?x?hfill?x?textbf{SECTION " + dnumS + " }"
-        + "   ?x?end{tcolorbox}"
-        + "   \n" + "   ?x?newline" + "   ?x?vspace{.05in}"
-        + "\n\n")
-
-    print(hdutfS)
-    return hdutfS, hdmdS, hdrstS
-
-
-def _rivt_parse(rS, mS):
+def _rivt_parse(mS, rS):
     """call parse.RivtParse on API function strings
 
     :param rS: rivt string
@@ -127,18 +71,10 @@ def _rivt_parse(rS, mS):
     :type mS: str
     """
 
-    global readS, xreadS, rstS, labelD, folderD, rivtD
+    global rstS, labelD, folderD, rivtD
 
-    # section headings
-    xmdS = xrstS = xutfS = ""
-    rL = rS.split("\n")
-    hutfS, hmdS, hrstS = _sections(rL[0], mS)
-    utfS += hutfS
-    mdS += hmdS
-    rstS += hrstS
-
-    # rivt string
-    parseC = parse.RivtParse(mS, folderD, labelD,  rivtD)
+    rL = rS.split()
+    parseC = parse.RivtParse(mS, rL[0], folderD, labelD,  rivtD)
     xutfS, xrstS, labelD, folderD, rivtD = parseC.str_parse(rL[1:])
     utfS += xutfS
     rstS += xrstS
@@ -150,9 +86,9 @@ def R(rS):
         : param rS: repo string
         : type rS: str
     """
-    global utfS, rstS, labelD, folderD
+    global readS, xreadS, utfS, rstS, labelD, folderD
 
-    _rivt_parse(rS, "R")
+    _rivt_parse("R", rS)
 
 
 def I(rS):
@@ -161,7 +97,7 @@ def I(rS):
         : param rS: insert string
         : type rS: str
     """
-    global utfS, rstS, labelD, folderD
+    global readS, xreadS, utfS, rstS, labelD, folderD
 
     _rivt_parse(rS, "I")
 
@@ -172,7 +108,7 @@ def V(rS):
         :param rS: value string
         :type rS: str
     """
-    global utfS, rstS, labelD, folderD, rivtD
+    global readS, xreadS, utfS, rstS, labelD, folderD, rivtD
 
     locals().update(rivtD)
     _rivt_parse(rS, "V")

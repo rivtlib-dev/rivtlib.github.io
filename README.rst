@@ -35,14 +35,11 @@ It is also available as an online service (https://rivtonline.net).
 Definitions
 -----------
 
-A rivt document (doc) is formatted rivt file output as text, HTML or PDF. A
-rivt report (report) is an organized collection of rivt docs in the same three
-formats. **rivtlib** organizes and generates both single file docs and large
-reports.
+**rivt files**
 
 A rivt file is a Python file that imports **rivtlib**, which in turn exposes 
 6 API functions that process a single triple-quoted, rivt-string (rS). Each 
-rivt-string is unicode containing arbitrary text, commands and tags::
+rivt-string is a unicode sring containing arbitrary text, commands and tags::
 
     import rivtlib.rivtapi as rv
 
@@ -69,11 +66,18 @@ These API functions implement the following (details at https:\\rivtdocs.net)::
 
     - a reStructuredText markup wrapper (see https://quickrestructuredtext.com)
 
+**rivt docs and reports**
+
+A rivt document (doc) is the formatted output of a rivt file as text, HTML or
+PDF. A rivt report (report) is an organized collection of rivt docs.
+**rivtlib** generates both single file docs and large reports.
+
+
 
 Commands (file processing)
 --------------------------
 
-rivt commands process files e.g. image, equations, tables etc. They start with
+rivt commands process files e.g. imagea, equations, tables etc. They start with
 a single or double bar (| or ||) and have the form::
 
     | (--) label or title (tag) | /relative/path/file.typ(:start-end) | params
@@ -84,13 +88,13 @@ type. A double bar (||) optionally inserts the referenced file lines into the
 input for legiblity and checking. Available commands for each API function include::  
 
 
-    rv.R("""run function label | pass;redact | color;none
+    rv.R("""run function label | include; redact | color;none
     
         The Run function processes shell commands.
     
         """)
     
-    rv.I("""Insert Function Label | pass;redact | color;none
+    rv.I("""Insert Function Label | include; redact | color;none
                             
         The Insert function formats static file objects.                     
                 
@@ -106,7 +110,7 @@ input for legiblity and checking. Available commands for each API function inclu
     
         """)
     
-    rv.V("""Values Function Label | pass;redact | color;none
+    rv.V("""Values Function Label | include; redact | color;none
                 
         The Values function evaluates variables and equations.
     
@@ -120,7 +124,7 @@ input for legiblity and checking. Available commands for each API function inclu
     
         """)
     
-    rv.T("""Tools function label | pass;redact | color;none
+    rv.T("""Tools function label | include; redact | color;none
                     
 
         """)
@@ -171,11 +175,15 @@ text _[x]   line  latex math equation        I
 text _[t]   line  table title                I
 text _[bs]  line  bold numbered sympy        I     
 text _[bl]  line  bold numbered latex        I    
-label _[o]  line  values lookup              V             
+label _[t]  line  values lookup              V             
 title _[v]  line  value table title          V                                
 label _[e]  line  equation label             V                                
 var :=, a   line  declare value              V
 var = a + b line  assign value               V
+var <= n    line  check if true              V
+var >= n    line  check if true              V
+var < n     line  check if true              V
+var > n     line  check if true              V
 text _[i]   line  numbered image             V,I
 text _[#]   line  footnote (autonumber)      V,I
 text _[f]   line  footnote description       V,I   

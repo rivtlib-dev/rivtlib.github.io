@@ -1,5 +1,5 @@
-rivt and rivtlib
-================
+**rivt, rivtlib, rivtzip, rivtonline**
+---------------------------------------------
 
 **rivt** is a lightweight markup language for writing, organizing and sharing
 engineering documents and reports. Its goal is to be a legible and efficient
@@ -8,29 +8,29 @@ design and analysis methods. These types of reports include peer review,
 government permits and test results. **rivt** is also the name of the open
 source framework used for producing rivt documents.
 
-**rivtlib** is a Python library , that processes rivt files and is distributed
-under the open source MIT license.
 
-rivtzip and rivtonline
-----------------------
+**rivtlib** is a Python library that processes rivt files and is distributed
+under the open source MIT license. It runs on platforms that support Python
+3.11 or later and is designed to work within a framework of five, established, open souce
+technologies: Python, VSCode, LaTeX, QCAD and Github.
 
-**rivtlib** runs on platforms that support Python 3.11 or later and is 
-designed to work with five, established open souce technologies::
+The rivt framework includes a programming language, IDE, typesetting compiler,
+CAD diagramming, and version control::
 
-    - Language : Python with open source libraries including **rivtlib**
+    - Language: Python with open source libraries including **rivtlib**
 
-    - IDE : VSCode and extensions
+    - IDE: VSCode and extensions
     
-    - Typesetting : LaTeX TexLive Distribution
+    - Typesetting: LaTeX TexLive Distribution
     
-    - Diagramming : QCAD
+    - Diagramming: QCAD
     
-    - Version control : GitHub
+    - Version control: GitHub
 
 
-The rivt framework may be downloaded as a portable Windows zip file or
-installed through OS specific shell scripts (https://rivtzip.net). It is also
-available as an online service (https://rivtonline.net).
+The framework may be downloaded as a single, portable Windows zip file or
+installed individually through OS specific shell scripts (https://rivtzip.net).
+It is also available as an online service (https://rivtonline.net).
 
 Definitions
 -----------
@@ -408,31 +408,26 @@ in the order of input. Each function, optionally, defines a doc section::
 
 
 VSCode rivt profile
--------------------
+---------------------
 
-============== ==============================================================
-Snippets/Keys            description
-============== ==============================================================
-
-run            API Run function
-ins            API Insert function   
-val            API Values function
-too            API Tools function
-wri            API Write function
-
-
-alt+q          rewrap paragraph with hard line feeds (80 default)
-alt+p          open file under cursor
-alt+.          select correct spelling under cursor
-alt+8          insert date
-alt+9          insert time
-
+================= ===========================================================
+Snippets - Keys            description
+================= ===========================================================
+run                  API Run function
+ins                  API Insert function   
+val                  API Values function
+too                  API Tools function
+wri                  API Write function
+alt+q                rewrap paragraph with hard line feeds (80 default)
+alt+p                open file under cursor
+alt+.                select correct spelling under cursor
+alt+8                insert date
+alt+9                insert time
 ctl+1                focus on first editor
 ctl+2                focus on next editor
 ctl+3                focus on previous editor
 ctl+8                focus on explorer pane
 ctl+9                focus on github pane    
-
 ctl+alt+x            reload window
 ctl+alt+[            reload window
 ctl+alt+]            unfold all code
@@ -443,19 +438,17 @@ ctl+alt+t            toggle local fold
 ctl+alt+e            toggle explorer sort order
 ctl+alt+s            toggle spell check
 ctl+alt+g            next editor group
-
 ctl+shift+u          open URL under cursor in browser
 ctl+shift+s          open GitHub README search for rivt
 ctl+shift+a          commit all 
 ctl+shift+z          commit the current editor
-ctl+shift+x          post to remote   
-============== ==============================================================
-
-
+ctl+shift+x          post to remote 
+================= ===========================================================
+  
 ============================================== ===============================
 Extensions                                       description
 ============================================== ===============================
-**Add Buttons**                                ------------------    
+**Add Buttons**                                 -
 tombonnike.vscode-status-bar-format-toggle          format button
 gsppvo.vscode-commandbar                            command buttons
 AdamAnand.adamstool                                 command buttons
@@ -464,7 +457,7 @@ Ho-Wan.setting-toggle                               toggle settings
 yasukotelin.toggle-panel                            toggle panel
 fabiospampinato.vscode-commands                     user command buttons
 jerrygoyal.shortcut-menu-bar                        menu bar
-**Format Text**                                ------------------
+**Format Text**                                -
 henryclayton.context-menu-toggle-comments           toggle comments
 TroelsDamgaard.reflow-paragraph                     wrap paragraph
 streetsidesoftware.code-spell-checker               spell check
@@ -473,7 +466,7 @@ njpwerner.autodocstring                             insert doc string
 oijaz.unicode-latex                                 unicode symbols from latex
 jsynowiec.vscode-insertdatestring                   insert date string
 janisdd.vscode-edit-csv                             csv editor
-**Format Views**                                ------------------
+**Format Views**                                -
 GrapeCity.gc-excelviewer                            excel viewer
 SimonSiefke.svg-preview                             svg viewer
 tomoki1207.pdf                                      pdf viewer

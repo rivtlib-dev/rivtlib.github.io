@@ -39,14 +39,14 @@ where rS is a triple quoted Python string.
 
 The 6 API functions implement:
 
-    - reStructuredText markup wrapper (see https://quickrestructuredtext.com)
+    - wrapper for reStructuredText markup (see https://quickrestructuredtext.com)
 
-    - folder and file structure
+    - a folder and file structure
 
     - commands and tags for processing files and formatting output
     
 **rivt** commands and tags are summarized below. See the user manual at
-https://rivt.net for futher details.
+https://rivtdocs.net for futher details.
 
 
 Commands - file processing
@@ -57,8 +57,8 @@ a single or double bar (| or ||) and have the form:
 
     | (--) label or title (tag) | /relative/path/file.typ(:start-end) | params
 
-where options are shown in parenthesis and the parameters depend on the file
-type. A double bar (||) optionally inserts the referenced file lines into the
+where options are shown in parenthesis and parameters depend on the file type.
+A leading double bar (||) optionally inserts the referenced file lines into the
 input for legiblity and checking.
 
 ================================================================================
@@ -77,13 +77,13 @@ rv.I("""Insert Function Label | pass;redact | color;none
                         
     The Insert function formats static file objects.                     
             
-    | image label (_[i]) | /image/path/.jpg,.png,.svg | size, color
+    | image label (_[i]) | /image/path/.jpg;.png;.svg | size, color
 
     | table title (_[t]) | /tables/path/.csv (:start-end) | width, align
 
     | text label | /text/path/.txt(:start-end) | plain; rivt
 
-    | equation label (_[s,l]) | /text/path/.tex,txt(:start-end) | bold; plain
+    | equation label (_[s,l]) | /text/path/.tex;txt(:start-end) | bold; plain
     
     | append label | /append/path/.pdf | number; nonumber         
 
@@ -94,9 +94,9 @@ rv.V("""Values Function Label | pass;redact | color;none
             
     The Values function evaluates variables and equations.
 
-    | image label (_[i])| /image/path/.jpg,.png,.svg | size, color
+    | image label (_[i])| /image/path/.jpg;.png;.svg | size, color
 
-    | data title (_[d])| /values/path/.csv,.xls (:start-end)| [cols]
+    | data title (_[d])| /values/path/.csv;.xls (:start-end)| [cols]
 
     | value label (_[v])| /values/path/.csv(:start-end) | 
 
@@ -169,7 +169,7 @@ _[page]                 line        new page                    V,I
 _[[p]]                  block       start monospace block       I 
 _[[l]]                  block       start LaTeX block           I
 _[[e]]                  block       end block                   I
-
+===================== ========= ========================== ==================
 
 
 Folders 
@@ -198,10 +198,10 @@ Source files for rivt docs are stored in 6 folders:
 - text
 - values
 
-rivt reports are defined as collections of docs in the config.ini. Doc files
-are stored in the *write* folder. Source files are stored in user-defined
-sub-folders for organization and to allow separation of public and private
-data.
+Doc files are the text, PDF or HTML output of a rivt file that are stored in
+the *write* folder. rivt reports are collections of docs specified in the
+config.ini. Resource files are stored in user-defined sub-folders which
+organize the data allow for separation of public and private data.
 
 [rivt]-Project-Name/               
     ├── [append]/            
@@ -259,16 +259,16 @@ data.
             └── riv0101-codes.pdf       (pdf files)        
                 riv0202-frames.pdf
                 Project-Name.pdf        (pdf report)        
-        ├── [rivt-redacted]/            
-            └── README.txt              (redacted report)
-                riv0101x-codes.py       (redacted files)
-                riv0102x-loads.py
-                riv0201x-walls.py       
         ├── [temp]/                     (temp files)     
             └── temp-files.tex
         └── [text]/                     
             └── riv0101-codes.txt       (text output)
                 riv0201-frames.txt
+        └── [xrivt-redacted]/            
+            └── README.txt              (redacted report)
+                xriv0101-codes.py       (redacted files)
+                xriv0102-loads.py
+                xriv0201-walls.py       
     └── config.ini                      (rivt config file)
         README.txt                      (searchable report in public repo)
         riv0000-report.py               (rivt input files)
@@ -290,11 +290,12 @@ rv.R("""Run function | pass; redact | nocolor; color code
 
     The Run function processes shell commands.
 
-    Each API function defines a new document section. The first line is a heading
-    line which includes the section heading, a parameter for redacting sections
-    for sharing on GitHub and a parameter for a background color for the
-    section. If the section heading is preceded by two dashes (--) it becomes a
-    location reference without starting a new section. 
+    Each API function defines a new document section. The first line is a
+    heading line which includes the section heading, a parameter for redacting
+    sections in a mirror file intended for public sharing, and a parameter for
+    the background color for the section. If the section heading is preceded by
+    two dashes (--) the section is continued from the prior section without
+    introducting a new number.
     
     File formatting follows pep8 and ruff. API functions start in column one.
     All other lines are indented 4 spaces to facilitate section folding,
@@ -427,6 +428,8 @@ ctl+shift+s          open GitHub README search for rivt
 ctl+shift+a          commit all 
 ctl+shift+z          commit the current editor
 ctl+shift+x          post to remote   
+============== ==============================================================
+
 
 ============================================== ===============================
 Extensions                                       description
@@ -506,4 +509,5 @@ lextudio.restructuredtext                           restructured text tools
 trond-snekvik.simple-rst                            restructured syntax
 yzane.markdown-pdf                                  markdown to pdf
 yzhang.markdown-all-in-one                          markdown tools
+============================================== ===============================
 '''

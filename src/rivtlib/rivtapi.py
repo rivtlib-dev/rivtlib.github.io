@@ -15,13 +15,16 @@ rv.W(rS) - (Write) Write formatted document
 where rS is a triple quoted Python string.
 
 Variable types are indicated by the last letter of the variable name
-S = string
+
+A = array
+B = boolean
+C = class instance
 D = dictionary
 F = float
 I = integer
+L = list
 P = path
-C = class instance
-
+S = string
 """
 
 import __main__
@@ -59,8 +62,7 @@ else:
     print(f"INFO     dd and ss are two digit integers")
     sys.exit()
 
-
-# initialize variables
+# initialize global variables
 rstS = utfS = """"""  # rst and utf output strings
 labelD = folderD = rivtD = {}  # label, folder and rivt dictionaries
 
@@ -74,6 +76,9 @@ def rivt_parse(mS, rS):
     :param mS: rivt string method - R,I,V,T or X
     :param utfS: utf output string
     :param rstS: rst output string
+    :param labelD: label dictionary
+    :param folderD: folder dictionary
+    :param rivtD: rivt values dictionary      
     """
 
     global utfS, rstS, labelD, folderD, rivtD
@@ -81,6 +86,8 @@ def rivt_parse(mS, rS):
     rL = rS.split()
     parseC = parse.RivtParse(mS, rL[0], folderD, labelD,  rivtD)
     xutfS, xrstS, labelD, folderD, rivtD = parseC.str_parse(rL[1:])
+
+    # accumulate processed strings
     utfS += xutfS
     rstS += xrstS
 

@@ -4,7 +4,7 @@
 The rivt API exposes 6 functions:
 
 import rivtlib.rivtapi as rv 
-# rS is a triple quoted Python string (rivt string)
+# where rS is a triple quoted Python string (rivt string)
 
 rv.R(rS) - (Run) Execute shell scripts 
 rv.I(rS) - (Insert) Insert static text, math, images and tables
@@ -13,7 +13,8 @@ rv.T(rS) - (Tools) Execute Python functions and scripts
 rv.X(rS) - (eXclude) Skip string processing 
 rv.W(rS) - (Write) Write formatted document 
 
-Variable types are identified by the last letter of the variable name
+In the rivtlib code base the variable types are identified by the last letter
+of the variable name using the following convention:
 
 A = array
 B = boolean

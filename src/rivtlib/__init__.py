@@ -1,5 +1,9 @@
 #! python
-''' **rivt** is a lightweight markup language for writing, organizing and
+''' 
+rivt and rivtlib
+----------------
+
+**rivt** is a lightweight markup language for writing, organizing and
 sharing engineering documents and reports. It is designed to be legible,
 flexible and efficient. **rivt** is also the name of an open source framework
 used for producing rivt documents.
@@ -26,16 +30,16 @@ file. A rivt report (report) is an organized collection of rivt docs.
 A rivt file is a Python file that imports **rivtlib** and its 6 API
 functions:
 
-*import rivtlib.rivtapi as rv*
+*import rivtlib.rivtapi as rv* 
+# where rS is a triple quoted Python rivt-string
 
-rv.R(rS) - (Run) Execute shell scripts 
+rv.R(rS) - (Run) Run shell scripts 
 rv.I(rS) - (Insert) Insert static text, images, tables and math equations 
-rv.V(rS) - (Values) Evaluate values and equations 
-rv.T(rS) - (Tools) Execute Python functions and scripts 
+rv.V(rS) - (Values) Evaluate tables, values and equations 
+rv.T(rS) - (Tools) Execute Python functions
 rv.X(rS) - (eXclude) Skip rivt-string processing 
 rv.W(rS) - (Write) Write formatted rivt documents 
 
-where rS is a triple quoted Python string. 
 
 The 6 API functions implement:
 
@@ -49,6 +53,44 @@ The 6 API functions implement:
 https://rivtdocs.net for futher details.
 
 
+
+Tags: formatting
+-----------------
+
+Tags evaluate and format rivt strings. Line tags are inserted at the end
+of a line and block tags at the start and end of a text block.
+reStructuredText markup may also be used for formatting (see
+https://quickrestructuredtext.com).
+
+===================== ========= ========================== ==================
+ tags                   scope       description               API scope  
+===================== ========= ========================== ==================
+text _[u]               line        underline                   I                             
+text _[r]               line        right justify               I                        
+text _[c]               line        center                      I                 
+text _[bc]              line        bold center                 I     
+text _[bi]              line        bold italic                 I
+title _[t]              line        table title                 I
+equation _[s]           line        sympy math equation         I
+equation _[x]           line        latex math equation         I                           
+equation _[bs]          line        bold numbered sympy         I     
+equation _[bl]          line        bold numbered latex         I    
+_[[p]]                  block       start monospace block       I 
+_[[l]]                  block       start LaTeX block           I
+_[[e]]                  block       end block                   I
+label _[t]              line        lookup table title          V             
+title _[v]              line        value table title           V                                
+label _[e]              line        equation label              V                                
+var :=, a               line        declare value               V
+var = a + b             line        assign value                V
+text _[f]               line        numbered figure             V,I
+text _[#]               line        footnote (autonumber)       V,I
+text _[d]               line        footnote description        V,I   
+_[page]                 line        new page                    V,I
+===================== ========= ========================== ==================
+
+
+
 Commands: file processing
 --------------------------
 
@@ -60,6 +102,11 @@ a single or double bar (| or ||) and have the form:
 where options are shown in parenthesis and parameters depend on the file type.
 A leading double bar (||) optionally inserts the referenced file lines into the
 input for legiblity and checking.
+
+Command are shown below in the context of an API function. Within VSCode an API
+function or sequence of functions may be run interactively using the standard
+cell decorator *# %%*. Interactive output is formatted as utf-8 text, as is
+output to stdout when a rivt file is run from a terminal.
 
 ================================================================================
                         Command Overview
@@ -99,7 +146,7 @@ rv.I("""Insert Function Label | pass;redact | color;none
 
 rv.V("""Values Function Label | pass;redact | color;none
             
-    The Values function evaluates tables, variables and equations from files.
+    The Values function evaluates lookup tables, variables and equations from files.
 
     | image label (_[i])| /image/path/.jpg;.png;.svg | size, color
 
@@ -123,92 +170,56 @@ rv.T("""Tools function label | pass;redact | color;none
     """)
 
 
-rv.X("""xxx | yyy | zzz
+rv.X("""  |   |
 
-    The X function prevents evaluation of the function.
-    Functions may be changed to X for testing, debugging and
-    comments.
+    The X function prevents evaluation of the function. Any API function may be
+    changed to X for flow control, testing, debugging and comments.
 
     """)
 
 rv.W("""Write function label | pass;redact | color;none
 
-    The Write function generates formatted docs (single files)
-    as text (.txt), HTML (.html) and PDF (.pdf), and formatted
-    reports as reStructuredText (used for GitHub README.rst),
-    HTML (.html) and PDF (.pdf).
+    The Write function generates a formatted doc file from a rivt file as text,
+    HTML and PDF. It generates reports based on config file settings as
+    README.txt, HTML and PDF.
 
     | output
+    
     | files
 
     """)
 
-Within VSCode an API function or sequence of functions may be run interactively
-using the standard cell decorator *# %%*. Interactive output is formatted as
-utf-8 text, as is output to stdout when a rivt file is run from a terminal.
+Folders: document organization 
+------------------------------
 
-
-Tags: formatting
------------------
-
-A rivt tag evaluates and/or formats rivt text. Line tags are added at the end
-of a line. Block tags are inserted at the start and end of a text block.
-reStructuredText markup may also be used for formatting (see
-https://quickrestructuredtext.com).
-
-===================== ========= ========================== ==================
- tags                   scope       description               API scope  
-===================== ========= ========================== ==================
-text _[u]               line        underline                   I                             
-text _[r]               line        right justify               I                        
-text _[c]               line        center                      I                 
-text _[bc]              line        bold center                 I     
-text _[bi]              line        bold italic                 I
-text _[s]               line        sympy math equation         I
-text _[x]               line        latex math equation         I                           
-text _[t]               line        table title                 I
-text _[bs]              line        bold numbered sympy         I     
-text _[bl]              line        bold numbered latex         I    
-label _[o]              line        values lookup               V             
-title _[v]              line        value table title           V                                
-label _[e]              line        equation label              V                                
-var :=, a               line        declare value               V
-var = a + b             line        assign value                V
-text _[i]               line        numbered image              V,I
-text _[#]               line        footnote (autonumber)       V,I
-text _[f]               line        footnote description        V,I   
-_[page]                 line        new page                    V,I
-_[[p]]                  block       start monospace block       I 
-_[[l]]                  block       start LaTeX block           I
-_[[e]]                  block       end block                   I
-===================== ========= ========================== ==================
-
-
-Folders 
-------- 
-
-**rivt** implements a file and folder structure to simplify file access. rivt
-docs are idenfiifed by a unique rivt file number used for organizing reports.
-Each rivt file starts with rivddss- where dd is a two digit division number and
-ss is a two digit subdivision number e.g., riv0203-loads.py is the third
-subdivision of division two.
-
-To facilitate file sharing, specified document inputs and outputs may be
-directed to public folders during processing. The privacy level may be set at
-for each API function in a doc or at the rivt file level.
+**rivt** implements a file and folder structure to simplify file sharing and
+control. The privacy level of document inputs and outputs may be may be set at
+the file or API function level. Each rivt file (and doc) is idenfiifed by a
+unique rivt file prefix with the form rivddss-filename where dd is a two digit
+division number and ss is a two digit subdivision number e.g., riv0203-loads.py
+is the third subdivision of division two. Editing the rivt number also changes
+the report organization.
 
 Report and document headings are taken from folder and file names unless
 overridden in the config file. An example folder structure is shown below.
 Required file names or prefixes are shown in [ ].
 
-Source files for rivt docs are stored in 6 folders:
+Source files for rivt docs are stored in 6 folders::
 
-- append
-- images
-- scripts
-- tables
-- text
-- values
+    - append
+    - images
+    - scripts
+    - tables
+    - text
+    - values
+
+Output is written to the write folder with 4 sub-folders::
+
+    - html
+    - pdf
+    - text
+    - temp
+    - xrivt
 
 Doc files are the text, PDF or HTML output of a rivt file that are stored in
 the *write* folder. rivt reports are collections of docs specified in the

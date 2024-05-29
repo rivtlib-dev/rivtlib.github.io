@@ -49,7 +49,7 @@ The 6 API functions implement:
 https://rivtdocs.net for futher details.
 
 
-Commands - file processing
+Commands: file processing
 --------------------------
 
 rivt commands process files e.g. image, equations, tables etc. They start with
@@ -69,34 +69,41 @@ input for legiblity and checking.
 rv.R("""run function label | pass;redact | color;none
 
     The Run function processes shell commands.
-
+    
+    | run |
+    
+    | capture | 
+    
+    | edit |
+    
     """)
 
 
 rv.I("""Insert Function Label | pass;redact | color;none
                         
-    The Insert function formats static file objects.                     
+    The Insert function formats static file objects including equations,
+    images, tables and text.
             
-    | image label (_[i]) | /image/path/.jpg;.png;.svg | size, color
-
-    | table title (_[t]) | /tables/path/.csv (:start-end) | width, align
-
-    | text label | /text/path/.txt(:start-end) | plain; rivt
+    | append label | /append/path/.pdf | number; nonumber       
 
     | equation label (_[s,l]) | /text/path/.tex;txt(:start-end) | bold; plain
     
-    | append label | /append/path/.pdf | number; nonumber         
+    | image label (_[i]) | /image/path/.jpg;.png;.svg | size, color
+
+    | table title (_[t]) | /tables/path/.csv;.xls (:start-end) | width, align
+
+    | text label | /text/path/.txt(:start-end) | plain; rivt
 
     """)
 
 
 rv.V("""Values Function Label | pass;redact | color;none
             
-    The Values function evaluates variables and equations.
+    The Values function evaluates tables, variables and equations from files.
 
     | image label (_[i])| /image/path/.jpg;.png;.svg | size, color
 
-    | data title (_[d])| /values/path/.csv;.xls (:start-end)| [cols]
+    | table title (_[t])| /tables/path/.csv;.xls (:start-end) | [cols]
 
     | value label (_[v])| /values/path/.csv(:start-end) | 
 
@@ -106,7 +113,12 @@ rv.V("""Values Function Label | pass;redact | color;none
   
 
 rv.T("""Tools function label | pass;redact | color;none
+
+        The Tools function imports and evaluates functions.
                 
+        | function label (_[f]) | /scripts/path/.py | function name; file
+        
+        f1(x)
 
     """)
 
@@ -136,7 +148,7 @@ using the standard cell decorator *# %%*. Interactive output is formatted as
 utf-8 text, as is output to stdout when a rivt file is run from a terminal.
 
 
-Tags - formatting
+Tags: formatting
 -----------------
 
 A rivt tag evaluates and/or formats rivt text. Line tags are added at the end

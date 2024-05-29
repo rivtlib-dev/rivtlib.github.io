@@ -162,6 +162,7 @@ of a line. Block tags are inserted at the start and end of a text block.
 reStructuredText markup may also be used for formatting (see
 https://quickrestructuredtext.com).
 
+
 =========== ===== ========================== =====
  tags       scope       description          scope  
 =========== ===== ========================== =====
@@ -245,7 +246,11 @@ from private data::
             ├── run01/  
             └── run02/  
                 ├── script3.bat
-                └── script4.sh  
+                └── script4.sh
+            ├── qcad01/  
+            └── qcad02/  
+                ├── script3.bat
+                └── script4.sh              
         ├── [tables]/            
             ├── tbl01/  
             └── tbl02/  
@@ -415,11 +420,13 @@ in the order of input. Each function, optionally, defines a doc section::
         """)
 
 
-VSCode rivt profile
----------------------
+VSCode profile for rivt
+------------------------
+
+**Snippets and Keyboard Shortcuts**
 
 ================= ===========================================================
-Snippets - Keys            description
+Snippets - Keys            Description
 ================= ===========================================================
 run                  API Run function
 ins                  API Insert function   
@@ -453,8 +460,11 @@ ctl+shift+z          commit the current editor
 ctl+shift+x          post to remote 
 ================= ===========================================================
   
+
+**Extensions**
+
 ============================================== ===============================
-Extensions                                       description
+Extensions                                       Description
 ============================================== ===============================
 **Add Buttons**                                 -
 tombonnike.vscode-status-bar-format-toggle          format button

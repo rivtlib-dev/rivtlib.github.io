@@ -1,27 +1,23 @@
 **rivt, rivtlib, rivtzip, rivtonline**
 ---------------------------------------------
 
-**rivt** is a lightweight markup language for writing, organizing and sharing
-engineering documents and reports. Its goal is to be a legible and efficient
-language for preparing engineering reports that rely on standard, codified
-design and analysis methods. These types of reports include peer review,
-government permits and test results. **rivt** is also the name of the open
-source framework used for producing rivt documents.
-
+**rivt** is a lightweight markup language and open source framework for writing
+and assembling engineering documents and reports. It simplifies the process of
+producing engineering reports and calculations by simplifying the process of
+recombining and modifying previous work.
 
 **rivtlib** is a Python library that processes rivt files and is distributed
 under the open source MIT license. It runs on platforms that support Python
 3.11 or later and is designed to work within a framework of five, established, open souce
 technologies: Python, VSCode, LaTeX, QCAD and Github.
 
-The rivt framework includes a programming language, IDE, typesetting compiler,
-CAD diagramming, and version control::
+The **rivt** framework includes:: 
 
-    - Language: Python with open source libraries including **rivtlib**
+    - Language: Python and open source libraries including **rivtlib**
 
     - IDE: VSCode and extensions
     
-    - Typesetting: LaTeX TexLive Distribution
+    - Typesetting: LaTeX - TexLive Distribution
     
     - Diagramming: QCAD
     
@@ -29,19 +25,35 @@ CAD diagramming, and version control::
 
 
 The framework may be downloaded as a single, portable Windows zip file or
-installed individually through OS specific shell scripts (https://rivtzip.net).
-It is also available as an online service (https://rivtonline.net).
+installed as individual system programs through OS specific shell scripts
+(https://rivtzip.net). It is also available as an online service
+(https://rivtonline.net).
 
 Definitions
 -----------
 
-**rivt files**
+**rivt file**
 
-A rivt file is a Python file that imports **rivtlib**, which in turn exposes 
-6 API functions that process a single triple-quoted, rivt-string (rS). Each 
-rivt-string is a unicode sring containing arbitrary text, commands and tags::
+A rivt file is a Python file that imports **rivtlib**. ::
 
     import rivtlib.rivtapi as rv
+
+
+rivtlib exposes 6 API funcions that operate on a single triple-quoted
+rivt-string. Each rivt-string (rS) is a unicode string containing arbitrary
+text, and rivt commands and tags. In general these API functions implement the
+following (user manual at https:\\rivtdocs.net):
+
+    - a document and report structure
+
+    - a folder and file structure
+
+    - commands and tags for processing source files and formatting output
+
+    - a reStructuredText markup wrapper (see https://quickrestructuredtext.com)
+
+    
+The 6 functions are::
 
     rv.R(rS) - (Run) Execute shell scripts 
 
@@ -56,15 +68,7 @@ rivt-string is a unicode sring containing arbitrary text, commands and tags::
     rv.W(rS) - (Write) Write formatted rivt documents 
 
 
-These API functions implement the following (details at https:\\rivtdocs.net)::
 
-    - a document and report structure
-
-    - a folder and file structure
-
-    - commands and tags for processing source files and formatting output
-
-    - a reStructuredText markup wrapper (see https://quickrestructuredtext.com)
 
 **rivt docs and reports**
 
@@ -88,7 +92,7 @@ type. A double bar (||) optionally inserts the referenced file lines into the
 input for legiblity and checking. Available commands for each API function include::  
 
 
-    rv.R("""run function label | include; redact | color;none
+    rv.R("""Run function label | include; redact | color;none
     
         The Run function processes shell commands.
     

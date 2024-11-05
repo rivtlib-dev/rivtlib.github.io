@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path(".").resolve()))
 
-project = 'rivt'
+project = 'rivtlib docs'
 copyright = '2023 StructureLabs'
 author = 'rholland'
 release = '0.1'

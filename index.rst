@@ -7,21 +7,25 @@
     :alt: rivt logo
 
 
-==============================
-rivtlib library documentation
-==============================
+===============
+rivtlib library
+===============
 
 **rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
 library for writing and organizing engineering documents and calculations. It
-uses the **rivt** markup language which emphasizes reuse of existing documents.
-The **rivt User and API manual** is `here <https://rivt-doc.net>`_.
+implements the **rivt** markup language designed to simplify editing and reuse of
+existing files which is described here `rivt User Manual <https://rivt-doc.net>`_.
+
+The following sections document the Python rivtlib code
+`repo <https://github.com/rivtlib/rivtlib.github.io/tree/main/src/rivtlib>`_
 
 some text
 
 .. toctree::
     :maxdepth: 2
-    :caption: section 1
+    :caption: initialize program
 
+    setup.py
     write_pdf.md
     folders.md
     __init__.md

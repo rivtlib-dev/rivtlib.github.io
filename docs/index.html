@@ -218,6 +218,10 @@
   
 
   
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
 </div>
 
     </header>
@@ -435,7 +439,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -451,6 +457,14 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-library-for-engineering-documents">Python library for engineering documents</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -465,7 +479,8 @@
 </figure>
 <section id="rivtlib">
 <h1>rivtlib<a class="headerlink" href="#rivtlib" title="Permalink to this heading">#</a></h1>
-<p><strong>A Python library for engineering documents</strong></p>
+<section id="python-library-for-engineering-documents">
+<h2>Python library for engineering documents<a class="headerlink" href="#python-library-for-engineering-documents" title="Permalink to this heading">#</a></h2>
 <p><strong>rivtlib</strong> is a Python <a class="reference external" href="https://opensource.org/license/mit/">open source</a>
 library for writing and publishing engineering documents using the <strong>rivt</strong>
 markup language described here <a class="reference external" href="https://rivt-doc.net">rivt User Manual</a>.
@@ -504,6 +519,7 @@ and files. The following sections document the <strong>rivtlib.py</strong> code 
 </ul>
 </div>
 </section>
+</section>
 
 
                 </article>
@@ -531,6 +547,22 @@ and files. The following sections document the <strong>rivtlib.py</strong> code 
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-library-for-engineering-documents">Python library for engineering documents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

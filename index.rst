@@ -11,7 +11,8 @@
 rivtlib
 ========
 
-**A Python library for engineering documents**
+Python library for engineering documents
+-----------------------------------------------
 
 **rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
 library for writing and publishing engineering documents using the **rivt**

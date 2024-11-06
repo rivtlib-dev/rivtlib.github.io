@@ -16,7 +16,7 @@ library for writing and organizing engineering documents and calculations. It
 implements the **rivt** markup language designed to simplify editing and reuse of
 existing files which is described here `rivt User Manual <https://rivt-doc.net>`_.
 
-The following sections document the rivtlib code on
+The following sections document the rivtlib.py code stored at
 `GitHub <https://github.com/rivtlib/rivtlib.github.io/tree/main/src/rivtlib>`_
 
 some text 123

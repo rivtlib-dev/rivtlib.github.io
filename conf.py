@@ -20,15 +20,11 @@ source_suffix = ['.rst', '.md']
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-html_context = {
-    "default_mode": "auto"
-}
-html_sidebars = {
-    "**": ["sbt-sidebar-nav.html"]
-}
 html_theme = 'sphinx_book_theme'
 html_static_path = ['_static', '_static/img/']
 html_logo = "_static/img/rivtpy64.png"
+html_context = {"default_mode": "auto"}
+html_sidebars = {"**": ["sbt-sidebar-nav.html"]}
 
 html_theme_options = {
     "show_nav_level": 2,
@@ -42,7 +38,6 @@ html_theme_options = {
     "primary_sidebar_end": ["indices.html"],
     "footer_start": ["copyright"],
     "footer_end": [],
-    "palette": {"primary": "black"},
     "logo": {
         "image_dark": "_static/img/rivtpy64.png",
     }
@@ -55,9 +50,5 @@ favicons = [
 
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
-
-# -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
-
-# -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

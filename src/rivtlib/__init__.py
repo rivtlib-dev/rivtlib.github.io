@@ -27,11 +27,11 @@ A rivt document (doc) is a text, HTML or PDF ouput file from a processed rivt
 file. A rivt report (report) is an organized collection of rivt docs.
 **rivtlib** organizes and generates both large reports and single file docs.
 
-A rivt file is a Python file that imports **rivtlib** and its 6 API
-functions:
+A rivt file is a Python file that imports **rivtlib** 
 
-*import rivtlib.rivtapi as rv* 
-# where rS is a triple quoted Python rivt-string
+**import rivtlib.rivtapi as rv**
+
+which exposes 6 API functions and **rS** is a triple quoted rivt-string
 
 rv.R(rS) - (Run) Run shell scripts 
 rv.I(rS) - (Insert) Insert static text, images, tables and math equations 
@@ -39,4 +39,5 @@ rv.V(rS) - (Values) Evaluate tables, values and equations
 rv.T(rS) - (Tools) Execute Python functions
 rv.X(rS) - (eXclude) Skip rivt-string processing 
 rv.W(rS) - (Write) Write formatted rivt documents 
+
 '''

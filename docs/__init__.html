@@ -175,10 +175,6 @@
   
 
   
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
-  
 </div>
 
     </header>
@@ -227,7 +223,6 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Module <strong>init</strong></a></li>
-
 </ul>
 
     </div>
@@ -355,9 +350,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -373,16 +366,6 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Module <strong>init</strong></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#where-rs-is-a-triple-quoted-python-rivt-string">where rS is a triple quoted Python rivt-string</a></li>
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -417,12 +400,9 @@ available as an online service at https://rivtonline.net.</p>
 <p>A rivt document (doc) is a text, HTML or PDF ouput file from a processed rivt
 file. A rivt report (report) is an organized collection of rivt docs.
 <strong>rivtlib</strong> organizes and generates both large reports and single file docs.</p>
-<p>A rivt file is a Python file that imports <strong>rivtlib</strong> and its 6 API
-functions:</p>
-<p><em>import rivtlib.rivtapi as rv</em></p>
-</section>
-<section id="where-rs-is-a-triple-quoted-python-rivt-string">
-<h1>where rS is a triple quoted Python rivt-string<a class="headerlink" href="#where-rs-is-a-triple-quoted-python-rivt-string" title="Permalink to this heading">#</a></h1>
+<p>A rivt file is a Python file that imports <strong>rivtlib</strong></p>
+<p><strong>import rivtlib.rivtapi as rv</strong></p>
+<p>which exposes 6 API functions and <strong>rS</strong> is a triple quoted rivt-string</p>
 <p>rv.R(rS) - (Run) Run shell scripts
 rv.I(rS) - (Insert) Insert static text, images, tables and math equations
 rv.V(rS) - (Values) Evaluate tables, values and equations
@@ -475,13 +455,11 @@ rv.W(rS) - (Write) Write formatted rivt documents</p>
 
     **rivtlib** organizes and generates both large reports and single file docs.
 
-    A rivt file is a Python file that imports **rivtlib** and its 6 API
+    A rivt file is a Python file that imports **rivtlib** 
 
-    functions:
+    **import rivtlib.rivtapi as rv**
 
-    *import rivtlib.rivtapi as rv* 
-
-    # where rS is a triple quoted Python rivt-string
+    which exposes 6 API functions and **rS** is a triple quoted rivt-string
 
     rv.R(rS) - (Run) Run shell scripts 
 
@@ -526,24 +504,6 @@ rv.W(rS) - (Write) Write formatted rivt documents</p>
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Module <strong>init</strong></a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#where-rs-is-a-triple-quoted-python-rivt-string">where rS is a triple quoted Python rivt-string</a></li>
-</ul>
-
-  </nav></div>
-
-</div></div>
               
             
           </div>

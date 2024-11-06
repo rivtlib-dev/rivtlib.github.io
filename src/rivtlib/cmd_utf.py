@@ -23,7 +23,6 @@ from tabulate import tabulate
 from pathlib import Path
 from datetime import datetime
 from rivtlib import parse
-from rivtlib.cmd_parse import Commands
 from rivtlib.units import *
 
 
@@ -424,7 +423,7 @@ def text(self):
         pass
 
 
-class CmdUTF(Commands):
+class CmdUTF():
 
     def __init__(self, paramL, labelD, folderD,  localD):
         """_summary_

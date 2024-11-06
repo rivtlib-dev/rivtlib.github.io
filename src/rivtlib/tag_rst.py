@@ -16,10 +16,9 @@ from sympy.core.alphabets import greeks
 from sympy.parsing.latex import parse_latex
 from tabulate import tabulate
 from rivtlib.units import *
-from rivtlib.tag_parse import Tags
 
 
-class TagsRST(Tags):
+class TagsRST():
     """convert rivt tags to reST
 
     """

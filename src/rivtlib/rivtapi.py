@@ -65,14 +65,12 @@ else:
 rstS = utfS = """"""  # rst and utf output strings
 labelD = folderD = rivtD = {}  # label, folder and rivt dictionaries
 
-global utfS, rstS, labelD, folderD, rivtD
-
 
 def rivt_parse(mS, rS):
     """call parsing class for specified API function
 
-    :param rS: rivt string
     :param mS: rivt string method - R,I,V,T or X
+    :param rS: rivt string
     :param utfS: utf output string
     :param rstS: rst output string
     :param labelD: label dictionary

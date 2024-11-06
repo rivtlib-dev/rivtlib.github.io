@@ -22,10 +22,9 @@ from sympy.parsing.latex import parse_latex as parsx
 from tabulate import tabulate
 from rivtlib import parse
 from rivtlib.units import *
-from rivtlib.tag_parse import Tags
 
 
-class Tags:
+class Tags():
     """subclass - convert rivt tags to MD or reST
 
             ============================ =======================================

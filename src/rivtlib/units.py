@@ -3,6 +3,8 @@
     Add new units to end of file
 """
 
+from rivtlib.unum.core import Unum
+from rivtlib.unum.core import new_unit
 import importlib.util
 import sys
 from pathlib import Path
@@ -10,14 +12,14 @@ from pathlib import Path
 # from rivt.unum.core import *
 # from rivt.unum.utils import *
 # from rivt.unum.utils import uarray
-from rivtlib.unum.core import new_unit
-from rivtlib.unum.core import Unum
 
 rvpath = importlib.util.find_spec("rivtlib")
 rivpath = Path(rvpath.origin).parent
 unumpath = Path(rivpath, "unum")
 sys.path.append(str(rivpath))
 sys.path.append(str(unumpath))
+
+
 # print(sys.path)
 # print(dir())
 

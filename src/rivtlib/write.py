@@ -1,3 +1,5 @@
+import time
+import os
 global utfS, rstS, labelD, folderD
 
 print(f" -------- write doc files: [{docfileS}] --------- ")
@@ -10,44 +12,44 @@ docutfP = Path(docP.parent / docutfS)
 rstfileP = Path(docP.parent, docbaseS + ".rst")
   # eshortP = Path(*Path(rstfileP).parts[-3:])
 
-  print("", flush=True)
+print("", flush=True)
 
-   if "md" in formatL:                          # save md file
-        with open(docmdP, "w", encoding='utf-8') as f1:
-            f1.write(mdS)
-            # with open(_rstfile, "wb") as f1:
-            #   f1.write(rstcalcS.encode("md-8"))
-            # f1 = open(_rstfile, "r", encoding="md-8", errors="ignore")
-        print(f"markdown written: {dshortP}\README.md")
-        logging.info(f"""markdown written: {dshortP}\README.md""")
-    print("", flush=True)
+if "md" in formatL:                          # save md file
+    with open(docmdP, "w", encoding='utf-8') as f1:
+        f1.write(mdS)
+        # with open(_rstfile, "wb") as f1:
+        #   f1.write(rstcalcS.encode("md-8"))
+        # f1 = open(_rstfile, "r", encoding="md-8", errors="ignore")
+    print(f"markdown written: {dshortP}\README.md")
+    logging.info(f"""markdown written: {dshortP}\README.md""")
+print("", flush=True)
 
-    if "utf" in formatL:                          # save utf file
-        with open(docmdP, "w", encoding='utf-8') as f1:
-            f1.write(mdS)
-            # with open(_rstfile, "wb") as f1:
-            #   f1.write(rstcalcS.encode("md-8"))
-            # f1 = open(_rstfile, "r", encoding="md-8", errors="ignore")
-        print(f"markdown written: {dshortP}\README.md")
-        logging.info(f"""markdown written: {dshortP}\README.md""")
-    print("", flush=True)
+if "utf" in formatL:                          # save utf file
+    with open(docmdP, "w", encoding='utf-8') as f1:
+        f1.write(mdS)
+        # with open(_rstfile, "wb") as f1:
+        #   f1.write(rstcalcS.encode("md-8"))
+        # f1 = open(_rstfile, "r", encoding="md-8", errors="ignore")
+    print(f"markdown written: {dshortP}\README.md")
+    logging.info(f"""markdown written: {dshortP}\README.md""")
+print("", flush=True)
 
-    if "pdf" in formatL:                           # save pdf file
-        with open(rstfileP, "w", encoding='md-8') as f2:
-            f2.write(rstS)
-        logging.info(f"reST written: {rstfileP}")
-        print(f"reST written: {rstfileP}")
-        logging.info(f"start PDF file process: {rstfileP}")
-        print("start PDF file process: {rstfileP}")
-        pdfstyleS = i.split(":")[1].strip()
-        styleP = Path(prvP, pdfstyleS)
-        folderD["styleP"] = styleP
-        logging.info(f"PDF style file: {styleP}")
-        print(f"PDF style file: {styleP}")
-        pdffileP = _rest2tex(rstS)
-        logging.info(f"PDF doc written: {pdffileP}")
-        print(f"PDF doc written: {pdffileP}")
-    sys.exit()
+if "pdf" in formatL:                           # save pdf file
+    with open(rstfileP, "w", encoding='md-8') as f2:
+        f2.write(rstS)
+    logging.info(f"reST written: {rstfileP}")
+    print(f"reST written: {rstfileP}")
+    logging.info(f"start PDF file process: {rstfileP}")
+    print("start PDF file process: {rstfileP}")
+    pdfstyleS = i.split(":")[1].strip()
+    styleP = Path(prvP, pdfstyleS)
+    folderD["styleP"] = styleP
+    logging.info(f"PDF style file: {styleP}")
+    print(f"PDF style file: {styleP}")
+    pdffileP = _rest2tex(rstS)
+    logging.info(f"PDF doc written: {pdffileP}")
+    print(f"PDF doc written: {pdffileP}")
+sys.exit()
 
 
 def _tocs():
@@ -242,10 +244,6 @@ def _rest2tex(rstfileS):
 """ rivt write methods for pdf and html files"""
 
 
-
-
-import os
-import time
 def write_md(mdS):
     pass
 

@@ -24,7 +24,7 @@ from rivtlib import parse
 from rivtlib.units import *
 
 
-class CmdRST(Commands):
+class CmdRST():
 
     def __init__(self, paramL, labelD, folderD,  localD):
         """_summary_

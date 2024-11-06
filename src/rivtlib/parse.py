@@ -28,7 +28,7 @@ from rivtlib import tag_rst
 
 
 class RivtParse:
-    """format rivt-strings as utf and rst"""
+    """format rivt-strings as utf and rst files"""
 
     def __init__(self, methS, folderD, labelD,  rivtD):
         """ rivt-strings as utf and reST line by line

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
     <link href="_static/favicon-32x32.png" sizes="32x32" rel="icon" type="image/png">
     <link href="_static/favicon-16x16.png" sizes="16x16" rel="icon" type="image/png">
-    <title>rivtlib &#8212; rivtlib docs 0.1 documentation</title>
+    <title>Python library for engineering documents &#8212; rivtlib docs 0.1 documentation</title>
   
   
   
@@ -153,6 +153,13 @@
 
 
 <li class="nav-item ">
+  <a class="nav-link nav-internal" href="parse.html">
+    Module parse
+  </a>
+</li>
+
+
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="tag_utf.html">
     Module tag_utf
   </a>
@@ -165,19 +172,19 @@
   </a>
 </li>
 
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="tag_rst.html">
-    Module tag_rst
-  </a>
-</li>
-
             <li class="nav-item dropdown">
                 <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links">
                     More
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="tag_rst.html">
+    Module tag_rst
+  </a>
+</li>
+
+
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="cmd_rst.html">
     Module cmd_rst
@@ -218,10 +225,6 @@
   
 
   
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
-  
 </div>
 
     </header>
@@ -260,6 +263,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="units.html">
     Module units
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parse.html">
+    Module parse
   </a>
 </li>
 
@@ -308,6 +318,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="__init__.html">Module <strong>init</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="units.html">Module units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parse.html">Module parse</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tag_utf.html">Module tag_utf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cmd_utf.html">Module cmd_utf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tag_rst.html">Module tag_rst</a></li>
@@ -439,9 +450,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -452,19 +461,11 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>rivtlib</h1>
+    <h1>Python library for engineering documents</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-library-for-engineering-documents">Python library for engineering documents</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -477,10 +478,10 @@
   <figure class="align-center" style="width: 300px">
 <a class="dark-light reference internal image-reference" href="_images/rivtpy3.png"><img alt="rivt logo" class="dark-light" src="_images/rivtpy3.png" style="width: 120.0px; height: 86.0px;" /></a>
 </figure>
-<section id="rivtlib">
-<h1>rivtlib<a class="headerlink" href="#rivtlib" title="Permalink to this heading">#</a></h1>
+<p>{.center}
+# rivtlib2</p>
 <section id="python-library-for-engineering-documents">
-<h2>Python library for engineering documents<a class="headerlink" href="#python-library-for-engineering-documents" title="Permalink to this heading">#</a></h2>
+<h1>Python library for engineering documents<a class="headerlink" href="#python-library-for-engineering-documents" title="Permalink to this heading">#</a></h1>
 <p><strong>rivtlib</strong> is a Python <a class="reference external" href="https://opensource.org/license/mit/">open source</a>
 library for writing and publishing engineering documents using the <strong>rivt</strong>
 markup language described here <a class="reference external" href="https://rivt-doc.net">rivt User Manual</a>.
@@ -493,6 +494,11 @@ and files. The following sections document the <strong>rivtlib.py</strong> code 
 <li class="toctree-l1"><a class="reference internal" href="__init__.html">Module <strong>init</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="units.html">Module units</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="units.html#variables">Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parse.html">Module parse</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="parse.html#variables">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parse.html#classes">Classes</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tag_utf.html">Module tag_utf</a><ul>
@@ -518,7 +524,6 @@ and files. The following sections document the <strong>rivtlib.py</strong> code 
 </li>
 </ul>
 </div>
-</section>
 </section>
 
 
@@ -547,22 +552,6 @@ and files. The following sections document the <strong>rivtlib.py</strong> code 
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-library-for-engineering-documents">Python library for engineering documents</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

@@ -9,7 +9,7 @@ release = '0.1'
 
 myst_heading_anchors = 3
 
-myst_enable_extensions = ['substitution', 'deflist',
+myst_enable_extensions = ['substitution', 'deflist', 'attrs_block'
                           'html_image', 'amsmath']
 
 extensions = ['myst_parser', 'sphinx.ext.githubpages',

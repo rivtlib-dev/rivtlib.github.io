@@ -7,9 +7,8 @@
     :alt: rivt logo
 
 
-========
-rivtlib
-========
+{.center}
+# rivtlib2
 
 Python library for engineering documents
 -----------------------------------------------
@@ -31,6 +30,7 @@ and files. The following sections document the **rivtlib.py** code stored at
     units.md
     rivtapi.md
     folders.md
+    parse.md
     tag_utf.md
     cmd_utf.md
     tag_rst.md

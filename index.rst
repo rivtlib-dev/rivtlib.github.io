@@ -20,31 +20,18 @@ markup language described here `rivt User Manual <https://rivt-doc.net>`_.
 and files. The following sections document the **rivtlib.py** code stored at
 `GitHub <https://github.com/rivtlib/rivtlib.github.io/tree/main/src/rivtlib>`_
 
-=================
-Table of Contents
-=================
 
 .. toctree::
     :maxdepth: 2
-    :caption:
+    :caption: Table of Contents
 
     __init__.md
     __main__.md
     units.md
     rivtapi.md
     folders.md
-
-.. toctree::
-    :maxdepth: 2
-    :caption: 
-
     tag_utf.md
     cmd_utf.md
     tag_rst.md
     cmd_rst.md
-
-.. toctree::
-    :maxdepth: 2
-    :caption: 
-
     write.md

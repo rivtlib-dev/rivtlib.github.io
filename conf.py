@@ -42,7 +42,7 @@ html_theme_options = {
     "primary_sidebar_end": ["indices.html"],
     "footer_start": ["copyright"],
     "footer_end": [],
-
+    "palette": {"primary": "black"},
     "logo": {
         "image_dark": "_static/img/rivtpy64.png",
     }

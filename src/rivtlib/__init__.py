@@ -1,4 +1,3 @@
-#! python
 ''' 
 rivt API
 --------
@@ -33,11 +32,14 @@ A rivt file is a Python file that imports **rivtlib**
 
 which exposes 6 API functions and **rS** is a triple quoted rivt-string
 
+::
+
 rv.R(rS) - (Run) Run shell scripts 
 rv.I(rS) - (Insert) Insert static text, images, tables and math equations 
 rv.V(rS) - (Values) Evaluate tables, values and equations 
 rv.T(rS) - (Tools) Execute Python functions
 rv.X(rS) - (eXclude) Skip rivt-string processing 
 rv.W(rS) - (Write) Write formatted rivt documents 
+
 
 '''

@@ -1,27 +1,26 @@
-"""run **rivtlib** as library or script
+"""rivtlib
 
-**rivtlib** is designed to be run within an IDE but may be run from the
-command line as:
+rivtlib is generally run in an IDE. When run from the command line within the
+file folder:
 
-    python -m rivtlib rel-path/rivtnn-filename.py
+    python -m rivtlib rivtnn-filename.py
 
-where where *nn* is an integer used for report organization and *rel-path* is
-relative to the rivt project folder. If rel-path is omitted then the file is
-assumed to be located in the folder where the command was invoked. See **rivt User
-Manual** at https://rivt-doc.net for details.
+where *rivtnn-* is a rquired prefix for report organization and *nn* is an
+integer. See **rivt User Manual** at https://rivt.info for details.
 
-The code base uses a last letter naming convention for signaling variable
-types:
+The code base uses a last letter naming convention for indicating variable
+types where: 
 
-A = array
-B = boolean
-C = class instance
-D = dictionary
-F = float
-I = integer
-L = list
-P = path
+A = array 
+B = boolean 
+C = class instance 
+D = dictionary 
+F = float 
+I = integer 
+L = list 
+P = path 
 S = string
+
 """
 __version__ = "a.b.c"
 __author__ = "rhholand"

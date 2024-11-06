@@ -21,7 +21,6 @@ from tabulate import tabulate
 from pathlib import Path
 from datetime import datetime
 from rivtlib import parse
-from rivtlib.cmd_parse import Commands
 from rivtlib.units import *
 
 

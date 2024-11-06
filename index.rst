@@ -7,23 +7,26 @@
     :alt: rivt logo
 
 
-========================
-rivtlib - Python library
-========================
+========
+rivtlib
+========
+
+**A Python library for engineering documents**
 
 **rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
-library for writing and organizing engineering documents and calculations. It
-implements the **rivt** markup language designed to simplify editing and reuse of
-existing files which is described here `rivt User Manual <https://rivt-doc.net>`_.
-
-The following sections document the rivtlib.py code stored at
+library for writing and publishing engineering documents using the **rivt**
+markup language described here `rivt User Manual <https://rivt-doc.net>`_.
+**rivt** is designed to simplify reuse and recombination of existing documents
+and files. The following sections document the **rivtlib.py** code stored at
 `GitHub <https://github.com/rivtlib/rivtlib.github.io/tree/main/src/rivtlib>`_
 
-some text 123
+=================
+Table of Contents
+=================
 
 .. toctree::
     :maxdepth: 2
-    :caption: initialize
+    :caption:
 
     __init__.md
     __main__.md
@@ -33,7 +36,7 @@ some text 123
 
 .. toctree::
     :maxdepth: 2
-    :caption: process
+    :caption: 
 
     tag_utf.md
     cmd_utf.md
@@ -42,6 +45,6 @@ some text 123
 
 .. toctree::
     :maxdepth: 2
-    :caption: document
+    :caption: 
 
     write.md

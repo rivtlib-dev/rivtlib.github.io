@@ -16,14 +16,13 @@ extensions = ['myst_parser', 'sphinx.ext.githubpages',
               "sphinxcontrib.jquery", 'sphinx_copybutton', 'sphinx_favicon']
 
 source_suffix = ['.rst', '.md']
-
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-html_theme = 'sphinx_book_theme'
 html_static_path = ['_static', '_static/img/']
-html_logo = "_static/img/rivtpy64.png"
 html_context = {"default_mode": "auto"}
+html_theme = 'sphinx_book_theme'
+html_logo = "_static/img/rivtpy64.png"
 html_sidebars = {"**": ["sbt-sidebar-nav.html"]}
 
 html_theme_options = {

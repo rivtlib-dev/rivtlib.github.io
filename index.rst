@@ -7,9 +7,8 @@
     :alt: rivt logo
 
 
-========
-rivtlib
-========
+{.center}
+# rivtlib
 
 Python library for engineering documents
 -----------------------------------------------

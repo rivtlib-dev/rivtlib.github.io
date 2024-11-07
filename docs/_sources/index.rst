@@ -6,12 +6,23 @@
     :align: center
     :alt: rivt logo
 
+.. raw:: html
 
-{.center}
-# rivtlib2
+    <embed>
+        <head>
+        <style>
+        h1 {text-align: center;}
+        </style>
+        </head>
+        <body>
 
-Python library for engineering documents
------------------------------------------------
+        <h1>rivtlib</h1>
+        </body>
+    </embed>
+
+
+**Python library for engineering documents**
+
 
 **rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
 library for writing and publishing engineering documents using the **rivt**

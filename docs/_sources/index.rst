@@ -9,20 +9,11 @@
 .. raw:: html
 
     <embed>
-        <head>
-        <style>
-        h1 {text-align: center;}
-        </style>
-        </head>
-        <body>
-
-        <h1>rivtlib</h1>
-        </body>
+        <h1 style="font-size:2em; text-align:center"> rivtlib </h1>
     </embed>
 
 
-**Python library for engineering documents**
-
+**A Python library for engineering documents**
 
 **rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
 library for writing and publishing engineering documents using the **rivt**
@@ -33,7 +24,7 @@ and files. The following sections document the **rivtlib.py** code stored at
 
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 3
     :caption: Table of Contents
 
     __init__.md

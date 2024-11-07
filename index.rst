@@ -10,6 +10,7 @@
 
     <embed>
         <h1 style="font-size:2em; text-align:center"> rivtlib </h1>
+        <hr>
     </embed>
 
 

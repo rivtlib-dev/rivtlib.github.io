@@ -11,7 +11,7 @@
     <embed>
         <h1 style="font-size:2em; text-align:center"> rivtlib </h1>
         
-        <hr width="100%" size="5" color="Grey" noshade>
+        <hr width="100%" size="6" color="Grey" noshade>
 
     </embed>
 

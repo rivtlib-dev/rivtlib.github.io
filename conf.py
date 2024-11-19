@@ -29,12 +29,6 @@ html_theme_options = {
     "show_nav_level": 2,
     "show_toc_level": 3,
     "navigation_depth": 3,
-    "navbar_align": "left",
-    "navbar_persistent": ["search-button"],
-    "navbar_start": ["navbar-logo"],
-    "navbar_center": ["navbar-nav"],
-    "navbar_end": ["navbar-icon-links"],
-    "primary_sidebar_end": ["indices.html"],
     "footer_start": ["copyright"],
     "footer_end": [],
     "logo": {

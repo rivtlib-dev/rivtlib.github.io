@@ -51,14 +51,17 @@ if __name__ == "rivtlib.rivtapi":
     argfileS = Path(__main__.__file__)
     rivS = argfileS.name
     print(f"{argfileS=}")
-if fnmatch.fnmatch(docS, "riv????-*.py"):
-    rivP = Path(curP, rivS)
-    print(f"{rivS=}")
-    print(f"{curP=}")
+    if fnmatch.fnmatch(rivS, "riv????-*.py"):
+        rivP = Path(curP, rivS)
+        print(f"{rivS=}")
+        print(f"{curP=}")
+    else:
+        print(f"INFO     rivt file - {rivS}")
+        print(f"INFO     The name must match 'rivddss-filename.py' where")
+        print(f"INFO     dd and ss are two digit integers")
+        sys.exit()
 else:
-    print(f"INFO     rivt file - {rivS}")
-    print(f"INFO     The name must match 'rivddss-filename.py' where")
-    print(f"INFO     dd and ss are two digit integers")
+    print(f"INFO  file path does not include a rivt file  - {curP}")
     sys.exit()
 
 # initialize global variables

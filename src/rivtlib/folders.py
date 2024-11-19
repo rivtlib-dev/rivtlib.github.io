@@ -1,6 +1,14 @@
 """parse rivtlib folder structure"""
 
 
+from pathlib import Path
+import os
+import fnmatch
+
+docS = "x.py"
+docP = "/"
+
+
 def get_riv_files(cur_dirP):
     """list of rivt files
     """

@@ -25,7 +25,7 @@ Manual <https://rivt-doc.net>`_.  For  **rivtlib.py** source code see `GitHub
 
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
     :caption: Source Code Documentation
 
     __init__.md

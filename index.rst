@@ -9,10 +9,9 @@
 .. raw:: html
 
     <embed>
-        <h1 style="font-size:2em; text-align:center"> rivtlib </h1>
+        <h1 style="font-size:2em; text-align:center"> rivtlib.net </h1>
         
         <hr width="100%" size="6" color="LightGrey" noshade>
-
     </embed>
 
 

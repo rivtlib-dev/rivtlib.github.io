@@ -1,0 +1,1432 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" data-theme="auto">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="_static/favicon-32x32.png" sizes="32x32" rel="icon" type="image/png">
+    <link href="_static/favicon-16x16.png" sizes="16x16" rel="icon" type="image/png">
+    <title>rivt, rivtlib, rivtzip, rivtonline &#8212; rivtlib docs 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "auto";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/jquery.js?v=5d32c60e"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'README';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="auto">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/rivtpy64.png" class="logo__image only-light" alt="rivtlib docs 0.1 documentation - Home"/>
+    <img src="_static/rivtpy64.png" class="logo__image only-dark pst-js-only" alt="rivtlib docs 0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="__init__.html">
+    Module init
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="units.html">
+    Module units
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parse.html">
+    Module parse
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tag_utf.html">
+    Module tag_utf
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="cmd_utf.html">
+    Module cmd_utf
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="tag_rst.html">
+    Module tag_rst
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="cmd_rst.html">
+    Module cmd_rst
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="__init__.html">
+    Module init
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="units.html">
+    Module units
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parse.html">
+    Module parse
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tag_utf.html">
+    Module tag_utf
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="cmd_utf.html">
+    Module cmd_utf
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tag_rst.html">
+    Module tag_rst
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="cmd_rst.html">
+    Module cmd_rst
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="__init__.html">Module <strong>init</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="units.html">Module units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parse.html">Module parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tag_utf.html">Module tag_utf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmd_utf.html">Module cmd_utf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tag_rst.html">Module tag_rst</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmd_rst.html">Module cmd_rst</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><nav class="sidebar-indices-items" aria-labelledby="pst-indices-navigation-heading-2">
+  <p id="pst-indices-navigation-heading-2" class="sidebar-indices-items__title" role="heading" aria-level="1">Indices</p>
+  <ul class="indices-link">
+        <li class="toctree-l1">
+          <a class="reference internal"
+             href="genindex.html"
+             accesskey="I">General Index</a>
+        </li>
+  </ul>
+</nav></div>
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/README.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>rivt, rivtlib, rivtzip, rivtonline</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><strong>rivt, rivtlib, rivtzip, rivtonline</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#definitions">Definitions</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#commands-file-processing">Commands (file processing)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#tags-formatting">Tags (formatting)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#folders">Folders</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-rivt-file">Example rivt file</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#vscode-profile-for-rivt">VSCode profile for rivt</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="rivt-rivtlib-rivtzip-rivtonline">
+<h1><strong>rivt, rivtlib, rivtzip, rivtonline</strong><a class="headerlink" href="#rivt-rivtlib-rivtzip-rivtonline" title="Link to this heading">#</a></h1>
+<p><strong>rivt</strong> is a lightweight markup language and open source framework for writing
+and assembling engineering documents and reports. It simplifies the process of
+producing engineering reports and calculations by simplifying the process of
+recombining and modifying previous work.</p>
+<p><strong>rivtlib</strong> is a Python library that processes rivt files and is distributed
+under the open source MIT license. It runs on platforms that support Python
+3.11 or later and is designed to work within a framework of five, established, open souce
+technologies: Python, VSCode, LaTeX, QCAD and Github.</p>
+<p>The <strong>rivt</strong> framework includes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">Language</span><span class="p">:</span> <span class="n">Python</span> <span class="ow">and</span> <span class="nb">open</span> <span class="n">source</span> <span class="n">libraries</span> <span class="n">including</span> <span class="o">**</span><span class="n">rivtlib</span><span class="o">**</span>
+
+<span class="o">-</span> <span class="n">IDE</span><span class="p">:</span> <span class="n">VSCode</span> <span class="ow">and</span> <span class="n">extensions</span>
+
+<span class="o">-</span> <span class="n">Typesetting</span><span class="p">:</span> <span class="n">LaTeX</span> <span class="o">-</span> <span class="n">TexLive</span> <span class="n">Distribution</span>
+
+<span class="o">-</span> <span class="n">Diagramming</span><span class="p">:</span> <span class="n">QCAD</span>
+
+<span class="o">-</span> <span class="n">Version</span> <span class="n">control</span><span class="p">:</span> <span class="n">GitHub</span>
+</pre></div>
+</div>
+<p>The framework may be downloaded as a single, portable Windows zip file or
+installed as individual system programs through OS specific shell scripts
+(<a class="reference external" href="https://rivtzip.net">https://rivtzip.net</a>). It is also available as an online service
+(<a class="reference external" href="https://rivtonline.net">https://rivtonline.net</a>).</p>
+</section>
+<section id="definitions">
+<h1>Definitions<a class="headerlink" href="#definitions" title="Link to this heading">#</a></h1>
+<p><strong>rivt file</strong></p>
+<p>A rivt file is a Python file that imports <strong>rivtlib</strong>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rivtlib.rivtapi</span> <span class="k">as</span> <span class="nn">rv</span>
+</pre></div>
+</div>
+<p>rivtlib exposes 6 API funcions that operate on a single triple-quoted
+rivt-string. Each rivt-string (rS) is a unicode string containing arbitrary
+text, and rivt commands and tags. In general these API functions implement the
+following (user manual at https:\rivtdocs.net):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>a document and report structure</p></li>
+<li><p>a folder and file structure</p></li>
+<li><p>commands and tags for processing source files and formatting output</p></li>
+<li><p>a reStructuredText markup wrapper (see <a class="reference external" href="https://quickrestructuredtext.com">https://quickrestructuredtext.com</a>)</p></li>
+</ul>
+</div></blockquote>
+<p>The 6 functions are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rv</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="n">rS</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Run</span><span class="p">)</span> <span class="n">Execute</span> <span class="n">shell</span> <span class="n">scripts</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">I</span><span class="p">(</span><span class="n">rS</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Insert</span><span class="p">)</span> <span class="n">Insert</span> <span class="n">static</span> <span class="n">text</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">tables</span> <span class="ow">and</span> <span class="n">math</span> <span class="n">equations</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">V</span><span class="p">(</span><span class="n">rS</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Values</span><span class="p">)</span> <span class="n">Evaluate</span> <span class="n">values</span> <span class="ow">and</span> <span class="n">equations</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">T</span><span class="p">(</span><span class="n">rS</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Tools</span><span class="p">)</span> <span class="n">Execute</span> <span class="n">external</span> <span class="n">Python</span> <span class="n">functions</span> <span class="ow">and</span> <span class="n">scripts</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="n">rS</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">eXclude</span><span class="p">)</span> <span class="n">Skip</span> <span class="n">rivt</span> <span class="n">processing</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">W</span><span class="p">(</span><span class="n">rS</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Write</span><span class="p">)</span> <span class="n">Write</span> <span class="n">formatted</span> <span class="n">rivt</span> <span class="n">documents</span>
+</pre></div>
+</div>
+<p><strong>rivt docs and reports</strong></p>
+<p>A rivt document (doc) is the formatted output of a rivt file as text, HTML or
+PDF. A rivt report (report) is an organized collection of rivt docs.
+<strong>rivtlib</strong> generates both single file docs and large reports.</p>
+</section>
+<section id="commands-file-processing">
+<h1>Commands (file processing)<a class="headerlink" href="#commands-file-processing" title="Link to this heading">#</a></h1>
+<p>rivt commands process files e.g. imagea, equations, tables etc. They start with
+a single or double bar (| or ||) and have the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="p">(</span><span class="o">--</span><span class="p">)</span> <span class="n">label</span> <span class="ow">or</span> <span class="n">title</span> <span class="p">(</span><span class="n">tag</span><span class="p">)</span> <span class="o">|</span> <span class="o">/</span><span class="n">relative</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">file</span><span class="o">.</span><span class="n">typ</span><span class="p">(:</span><span class="n">start</span><span class="o">-</span><span class="n">end</span><span class="p">)</span> <span class="o">|</span> <span class="n">params</span>
+</pre></div>
+</div>
+<p>where options are shown in parenthesis and the parameters depend on the file
+type. A double bar (||) optionally inserts the referenced file lines into the
+input for legiblity and checking. Available commands for each API function include:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rv</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Run function label | include; redact | color;none</span>
+
+<span class="s2">    The Run function processes shell commands.</span>
+
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">I</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Insert Function Label | include; redact | color;none</span>
+
+<span class="s2">    The Insert function formats static file objects.</span>
+
+<span class="s2">    | image label (_[i]) | /image/path/.jpg,.png,.svg | size, color</span>
+
+<span class="s2">    | table title (_[t]) | /tables/path/.csv (:start-end) | width, align</span>
+
+<span class="s2">    | text label | /text/path/.txt(:start-end) | plain; rivt</span>
+
+<span class="s2">    | equation label (_[s,l]) | /text/path/.tex,txt(:start-end) | bold; plain</span>
+
+<span class="s2">    | append label | /append/path/.pdf | number; nonumber</span>
+
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">V</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Values Function Label | include; redact | color;none</span>
+
+<span class="s2">    The Values function evaluates variables and equations.</span>
+
+<span class="s2">    | image label (_[i])| /image/path/.jpg,.png,.svg | size, color</span>
+
+<span class="s2">    | data title (_[d])| /values/path/.csv,.xls (:start-end)| [cols]</span>
+
+<span class="s2">    | value label (_[v])| /values/path/.csv(:start-end) |</span>
+
+<span class="s2">    | equation label (_[e]) | /values/path/.txt(:start-end) | ref; noref</span>
+
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">T</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Tools function label | include; redact | color;none</span>
+
+
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;xxx | yyy | zzz</span>
+
+<span class="s2">    The X function prevents evaluation of the function.</span>
+<span class="s2">    Functions may be changed to X for testing, debugging and</span>
+<span class="s2">    comments.</span>
+
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">W</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Write function label | pass;redact | color;none</span>
+
+<span class="s2">    The Write function generates formatted docs (single files)</span>
+<span class="s2">    as text (.txt), HTML (.html) and PDF (.pdf), and formatted</span>
+<span class="s2">    reports as text (README.txt), HTML (.html) and PDF (.pdf).</span>
+
+<span class="s2">    | output</span>
+<span class="s2">    | files</span>
+
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Within VSCode an API function or sequence of functions may be run interactively
+using the standard cell decorator <em># %%</em>. Interactive output, and output to stdout
+when a rivt file is run from the terminal, is formatted as utf-8 text.</p>
+</section>
+<section id="tags-formatting">
+<h1>Tags (formatting)<a class="headerlink" href="#tags-formatting" title="Link to this heading">#</a></h1>
+<p>A rivt tag evaluates and/or formats rivt text. Line tags are added at the end
+of a line. Block tags are inserted at the start and end of a text block.
+reStructuredText markup may also be used for formatting (see
+<a class="reference external" href="https://quickrestructuredtext.com">https://quickrestructuredtext.com</a>).</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>tags</p></th>
+<th class="head"><p>scope</p></th>
+<th class="head"><p>description</p></th>
+<th class="head"><p>scope</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>text _[u]</p></td>
+<td><p>line</p></td>
+<td><p>underline</p></td>
+<td><p>I</p></td>
+</tr>
+<tr class="row-odd"><td><p>text _[r]</p></td>
+<td><p>line</p></td>
+<td><p>right justify</p></td>
+<td><p>I</p></td>
+</tr>
+<tr class="row-even"><td><p>text _[c]</p></td>
+<td><p>line</p></td>
+<td><p>center</p></td>
+<td><p>I</p></td>
+</tr>
+<tr class="row-odd"><td><p>text _[bc]</p></td>
+<td><p>line</p></td>
+<td><p>bold center</p></td>
+<td><p>I</p></td>
+</tr>
+<tr class="row-even"><td><p>text _[bi]</p></td>
+<td><p>line</p></td>
+<td><p>bold italic</p></td>
+<td><p>I</p></td>
+</tr>
+<tr class="row-odd"><td><p>text _[s]</p></td>
+<td><p>line</p></td>
+<td><p>sympy math equation</p></td>
+<td><p>I</p></td>
+</tr>
+<tr class="row-even"><td><p>text _[x]</p></td>
+<td><p>line</p></td>
+<td><p>latex math equation</p></td>
+<td><p>I</p></td>
+</tr>
+<tr class="row-odd"><td><p>text _[t]</p></td>
+<td><p>line</p></td>
+<td><p>table title</p></td>
+<td><p>I</p></td>
+</tr>
+<tr class="row-even"><td><p>text _[bs]</p></td>
+<td><p>line</p></td>
+<td><p>bold numbered sympy</p></td>
+<td><p>I</p></td>
+</tr>
+<tr class="row-odd"><td><p>text _[bl]</p></td>
+<td><p>line</p></td>
+<td><p>bold numbered latex</p></td>
+<td><p>I</p></td>
+</tr>
+<tr class="row-even"><td><p>label _[t]</p></td>
+<td><p>line</p></td>
+<td><p>values lookup</p></td>
+<td><p>V</p></td>
+</tr>
+<tr class="row-odd"><td><p>title _[v]</p></td>
+<td><p>line</p></td>
+<td><p>value table title</p></td>
+<td><p>V</p></td>
+</tr>
+<tr class="row-even"><td><p>label _[e]</p></td>
+<td><p>line</p></td>
+<td><p>equation label</p></td>
+<td><p>V</p></td>
+</tr>
+<tr class="row-odd"><td><p>var :=, a</p></td>
+<td><p>line</p></td>
+<td><p>declare value</p></td>
+<td><p>V</p></td>
+</tr>
+<tr class="row-even"><td><p>var = a + b</p></td>
+<td><p>line</p></td>
+<td><p>assign value</p></td>
+<td><p>V</p></td>
+</tr>
+<tr class="row-odd"><td><p>var &lt;= n</p></td>
+<td><p>line</p></td>
+<td><p>check if true</p></td>
+<td><p>V</p></td>
+</tr>
+<tr class="row-even"><td><p>var &gt;= n</p></td>
+<td><p>line</p></td>
+<td><p>check if true</p></td>
+<td><p>V</p></td>
+</tr>
+<tr class="row-odd"><td><p>var &lt; n</p></td>
+<td><p>line</p></td>
+<td><p>check if true</p></td>
+<td><p>V</p></td>
+</tr>
+<tr class="row-even"><td><p>var &gt; n</p></td>
+<td><p>line</p></td>
+<td><p>check if true</p></td>
+<td><p>V</p></td>
+</tr>
+<tr class="row-odd"><td><p>text _[i]</p></td>
+<td><p>line</p></td>
+<td><p>numbered image</p></td>
+<td><p>V,I</p></td>
+</tr>
+<tr class="row-even"><td><p>text _[#]</p></td>
+<td><p>line</p></td>
+<td><p>footnote (autonumber)</p></td>
+<td><p>V,I</p></td>
+</tr>
+<tr class="row-odd"><td><p>text _[f]</p></td>
+<td><p>line</p></td>
+<td><p>footnote description</p></td>
+<td><p>V,I</p></td>
+</tr>
+<tr class="row-even"><td><p>_[page]</p></td>
+<td><p>line</p></td>
+<td><p>new page</p></td>
+<td><p>V,I</p></td>
+</tr>
+<tr class="row-odd"><td><p>_[[p]]</p></td>
+<td><p>block</p></td>
+<td><p>start monospace block</p></td>
+<td><p>I</p></td>
+</tr>
+<tr class="row-even"><td><p>_[[l]]</p></td>
+<td><p>block</p></td>
+<td><p>start LaTeX block</p></td>
+<td><p>I</p></td>
+</tr>
+<tr class="row-odd"><td><p>_[[e]]</p></td>
+<td><p>block</p></td>
+<td><p>end block</p></td>
+<td><p>I</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="folders">
+<h1>Folders<a class="headerlink" href="#folders" title="Link to this heading">#</a></h1>
+<p><strong>rivt</strong> implements a file and folder structure to simplify file access. rivt
+docs are idenfiifed by a unique rivt file number used for organizing reports.
+Each rivt file starts with rivddss- where dd is a two digit division number and
+ss is a two digit subdivision number e.g., riv0203-loads.py is the third
+subdivision of division two.</p>
+<p>To facilitate file sharing, specified document inputs and outputs may be
+directed to public folders during processing. The privacy level may be set at
+for each API function in a doc or at the rivt file level.</p>
+<p>Report and document headings are taken from folder and file names unless
+overridden in the config file. An example folder structure is shown below.
+Required file names or prefixes are shown in [ ].</p>
+<p>Source files for rivt docs are stored in 6 folders:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">append</span>
+<span class="o">-</span> <span class="n">images</span>
+<span class="o">-</span> <span class="n">scripts</span>
+<span class="o">-</span> <span class="n">tables</span>
+<span class="o">-</span> <span class="n">text</span>
+<span class="o">-</span> <span class="n">values</span>
+</pre></div>
+</div>
+<p>rivt reports are collections of docs defined in the config.ini. Doc and report
+ouptu files are stored in the <em>write</em> folder. Source files are stored in
+user-defined sub-folders intended for organization and separation of public
+from private data:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[rivt]-Project-Name/
+    ├── [append]/                      (source files)
+        ├── app01/
+        └── app02/
+            ├── attach3.pdf
+            └── attach4.pdf
+    ├── [images]/
+        ├── img01/
+        └── img02/
+            ├── image3.jpg
+            └── image4.jpg
+    ├── [scripts]/
+        ├── py01/
+        └── py02/
+            ├── function3.py
+            └── function4.py
+        ├── run01/
+        └── run02/
+            ├── script3.bat
+            └── script4.sh
+        ├── qcad01/
+        └── qcad02/
+            ├── script3.bat
+            └── script4.sh
+    ├── [tables]/
+        ├── tbl01/
+        └── tbl02/
+            ├── table3.csv
+            └── table4.csv
+    ├── [text]/
+        ├── tex01/
+        ├── tex02/
+            ├── latex3.tex
+            └── latex4.tex
+        ├── txt01/
+        └── txt02/
+            ├── text3.txt
+            └── text4.txt
+    ├── [values]/
+        ├── dat01/
+        ├── dat02/
+            ├── table3.csv
+            └── table4.csv
+        ├── equ01/
+        ├── equ02/
+            ├── equation1.txt
+            └── equation2.txt
+        ├── val01/
+        └── val02/
+            ├── values3.csv
+            └── values4.csv
+    ├── [write]/                        (output files)
+        ├── [html]/
+            └── riv0101-codes.html      (html files)
+                riv0202-frames.html
+                Project-Name.html       (html report)
+        ├── [pdf]/
+            └── riv0101-codes.pdf       (pdf files)
+                riv0202-frames.pdf
+                Project-Name.pdf        (pdf report)
+        ├── [temp]/                     (temp files)
+            └── temp-files.tex
+        ├── [text]/
+            └── riv0101-codes.txt       (text output)
+                riv0201-frames.txt
+        └── [xrivt-redacted]/
+            └── README.txt              (searchable redacted report)
+                riv0101x-codes.py       (redacted files)
+                riv0102x-loads.py
+                riv0201x-walls.py
+            ├── [append]                (redacted source files)
+            ├── [images]
+            ├── [scripts]
+            ├── [tables]
+            ├── [text]
+            └── [values]
+    └── config.ini                      (rivt config file)
+        README.txt                      (searchable report)
+        riv0000-report.py               (rivt input files)
+        riv0101-codes.py
+        riv0102-loads.py
+        riv0201-walls.py
+        riv0202-frames.py
+</pre></div>
+</div>
+</section>
+<section id="example-rivt-file">
+<h1>Example rivt file<a class="headerlink" href="#example-rivt-file" title="Link to this heading">#</a></h1>
+<p>API functions start in the first column. rivt-strings are then indented 4 spaces
+for legibility and structured folding).  A rivt doc is assembled from each function
+in the order of input. Each function, optionally, defines a doc section:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rivtlib.rivtapi</span> <span class="k">as</span> <span class="nn">rv</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">R</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Run function | pass; redact | nocolor; color code</span>
+
+<span class="s2">    The Run function processes shell commands.</span>
+
+<span class="s2">    Each API function defines a new document section. The first line is a heading</span>
+<span class="s2">    line which includes the section heading, a parameter for redacting sections</span>
+<span class="s2">    for sharing on GitHub and a parameter for a background color for the</span>
+<span class="s2">    section. If the section heading is preceded by two dashes (--) it becomes a</span>
+<span class="s2">    location reference without starting a new section.</span>
+
+<span class="s2">    File formatting follows pep8 and ruff. API functions start in column one.</span>
+<span class="s2">    All other lines are indented 4 spaces to facilitate section folding,</span>
+<span class="s2">    bookmarks and legibility.</span>
+
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">I</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Insert function | pass; redact | nocolor</span>
+
+<span class="s2">    The Insert function formats static objects including images, tables,</span>
+<span class="s2">    equations and text.</span>
+
+<span class="s2">    ||text | data01/describe.txt | rivt</span>
+
+<span class="s2">    The table command inserts and formats tabular data from csv or xls files.</span>
+<span class="s2">    The _[t] tag formats and autonumbers table titles.</span>
+
+<span class="s2">    A table title  _[t]</span>
+<span class="s2">    || table | data/file.csv | 60,r</span>
+
+<span class="s2">    The image command inserts and formats image data from png or jpg files. The</span>
+<span class="s2">    _[f] tag formats and autonumbers figures.</span>
+
+<span class="s2">    A figure caption _[f]</span>
+<span class="s2">    || image | data/f1.png | 50</span>
+
+<span class="s2">    Two images may be placed side by side as follows:</span>
+
+<span class="s2">    The first figure caption  _[f]</span>
+<span class="s2">    The second figure caption  _[f]</span>
+<span class="s2">    || image | private/image/f2.png, private/image/f3.png | 45,35</span>
+
+<span class="s2">    The tags _[x] and _[s] format LaTeX and sympy equations:</span>
+
+<span class="s2">    \gamma = </span><span class="se">\f</span><span class="s2">rac</span><span class="si">{5}</span><span class="s2">{x+y} + 3  _[x]</span>
+
+<span class="s2">    x = 32 + (y/2)  _[s]</span>
+
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">V</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Values function |  pass; redact | nocolor</span>
+
+<span class="s2">    The Values fucntion evaluates variables and equations.</span>
+
+<span class="s2">    The equal tag declares a value. A sequence of declared values terminated</span>
+<span class="s2">    with a blank line is formatted as a table.</span>
+
+<span class="s2">    Example of assignment list _[t]</span>
+<span class="s2">    f1 = 10.1 * LBF |LBF, N| a force value</span>
+<span class="s2">    d1 = 12.1 * IN  |IN, CM| a length value</span>
+
+<span class="s2">    An equation tag provides an equation description and number. A colon-equal</span>
+<span class="s2">    tag assigns a value and specifies the result units and the output decimal</span>
+<span class="s2">    places printed in the result and equation.</span>
+
+<span class="s2">    Example equation - Area of circle  _[e]</span>
+<span class="s2">    a1 := 3.14(d1/2)^2 | IN^2, CM^2 | 1,2</span>
+
+<span class="s2">    || declare | data01/values02.csv</span>
+
+<span class="s2">    The declare command imports values from the csv file written by rivt when</span>
+<span class="s2">    processing values in other documents.</span>
+
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">T</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Tools function | pass; redact | nocolor</span>
+
+<span class="s2">    The Tools function processes Python code.</span>
+
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+
+<span class="n">rv</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Any text</span>
+
+<span class="s2">    Changing a function to X skips evaluation of that function. Its purposes</span>
+<span class="s2">    include review comments and debugging.</span>
+
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">rv</span><span class="o">.</span><span class="n">W</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Write function | pass; redact | nocolor</span>
+
+<span class="s2">    The Write function generates docs and reports.</span>
+
+<span class="s2">    | docs |</span>
+
+<span class="s2">    | report |</span>
+
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="vscode-profile-for-rivt">
+<h1>VSCode profile for rivt<a class="headerlink" href="#vscode-profile-for-rivt" title="Link to this heading">#</a></h1>
+<p><strong>Snippets and Keyboard Shortcuts</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Snippets - Keys</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>run</p></td>
+<td><p>API Run function</p></td>
+</tr>
+<tr class="row-odd"><td><p>ins</p></td>
+<td><p>API Insert function</p></td>
+</tr>
+<tr class="row-even"><td><p>val</p></td>
+<td><p>API Values function</p></td>
+</tr>
+<tr class="row-odd"><td><p>too</p></td>
+<td><p>API Tools function</p></td>
+</tr>
+<tr class="row-even"><td><p>wri</p></td>
+<td><p>API Write function</p></td>
+</tr>
+<tr class="row-odd"><td><p>alt+q</p></td>
+<td><p>rewrap paragraph with hard line feeds (80 default)</p></td>
+</tr>
+<tr class="row-even"><td><p>alt+p</p></td>
+<td><p>open file under cursor</p></td>
+</tr>
+<tr class="row-odd"><td><p>alt+.</p></td>
+<td><p>select correct spelling under cursor</p></td>
+</tr>
+<tr class="row-even"><td><p>alt+8</p></td>
+<td><p>insert date</p></td>
+</tr>
+<tr class="row-odd"><td><p>alt+9</p></td>
+<td><p>insert time</p></td>
+</tr>
+<tr class="row-even"><td><p>ctl+1</p></td>
+<td><p>focus on first editor</p></td>
+</tr>
+<tr class="row-odd"><td><p>ctl+2</p></td>
+<td><p>focus on next editor</p></td>
+</tr>
+<tr class="row-even"><td><p>ctl+3</p></td>
+<td><p>focus on previous editor</p></td>
+</tr>
+<tr class="row-odd"><td><p>ctl+8</p></td>
+<td><p>focus on explorer pane</p></td>
+</tr>
+<tr class="row-even"><td><p>ctl+9</p></td>
+<td><p>focus on github pane</p></td>
+</tr>
+<tr class="row-odd"><td><p>ctl+alt+x</p></td>
+<td><p>reload window</p></td>
+</tr>
+<tr class="row-even"><td><p>ctl+alt+[</p></td>
+<td><p>reload window</p></td>
+</tr>
+<tr class="row-odd"><td><p>ctl+alt+]</p></td>
+<td><p>unfold all code</p></td>
+</tr>
+<tr class="row-even"><td><p>ctl+alt+u</p></td>
+<td><p>unfold all code</p></td>
+</tr>
+<tr class="row-odd"><td><p>ctl+alt+f</p></td>
+<td><p>fold code level 2 (rivt sections visible)</p></td>
+</tr>
+<tr class="row-even"><td><p>ctl+alt+a</p></td>
+<td><p>fold code - all levels</p></td>
+</tr>
+<tr class="row-odd"><td><p>ctl+alt+t</p></td>
+<td><p>toggle local fold</p></td>
+</tr>
+<tr class="row-even"><td><p>ctl+alt+e</p></td>
+<td><p>toggle explorer sort order</p></td>
+</tr>
+<tr class="row-odd"><td><p>ctl+alt+s</p></td>
+<td><p>toggle spell check</p></td>
+</tr>
+<tr class="row-even"><td><p>ctl+alt+g</p></td>
+<td><p>next editor group</p></td>
+</tr>
+<tr class="row-odd"><td><p>ctl+shift+u</p></td>
+<td><p>open URL under cursor in browser</p></td>
+</tr>
+<tr class="row-even"><td><p>ctl+shift+s</p></td>
+<td><p>open GitHub README search for rivt</p></td>
+</tr>
+<tr class="row-odd"><td><p>ctl+shift+a</p></td>
+<td><p>commit all</p></td>
+</tr>
+<tr class="row-even"><td><p>ctl+shift+z</p></td>
+<td><p>commit the current editor</p></td>
+</tr>
+<tr class="row-odd"><td><p>ctl+shift+x</p></td>
+<td><p>post to remote</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Extensions</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Extensions</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Add Buttons</strong></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>tombonnike.vscode-status-bar-format-toggle</p></td>
+<td><p>format button</p></td>
+</tr>
+<tr class="row-even"><td><p>gsppvo.vscode-commandbar</p></td>
+<td><p>command buttons</p></td>
+</tr>
+<tr class="row-odd"><td><p>AdamAnand.adamstool</p></td>
+<td><p>command buttons</p></td>
+</tr>
+<tr class="row-even"><td><p>nanlei.save-all</p></td>
+<td><p>save all button</p></td>
+</tr>
+<tr class="row-odd"><td><p>Ho-Wan.setting-toggle</p></td>
+<td><p>toggle settings</p></td>
+</tr>
+<tr class="row-even"><td><p>yasukotelin.toggle-panel</p></td>
+<td><p>toggle panel</p></td>
+</tr>
+<tr class="row-odd"><td><p>fabiospampinato.vscode-commands</p></td>
+<td><p>user command buttons</p></td>
+</tr>
+<tr class="row-even"><td><p>jerrygoyal.shortcut-menu-bar</p></td>
+<td><p>menu bar</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Format Text</strong></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>henryclayton.context-menu-toggle-comments</p></td>
+<td><p>toggle comments</p></td>
+</tr>
+<tr class="row-odd"><td><p>TroelsDamgaard.reflow-paragraph</p></td>
+<td><p>wrap paragraph</p></td>
+</tr>
+<tr class="row-even"><td><p>streetsidesoftware.code-spell-checker</p></td>
+<td><p>spell check</p></td>
+</tr>
+<tr class="row-odd"><td><p>jmviz.quote-list</p></td>
+<td><p>quote elements in a list</p></td>
+</tr>
+<tr class="row-even"><td><p>njpwerner.autodocstring</p></td>
+<td><p>insert doc string</p></td>
+</tr>
+<tr class="row-odd"><td><p>oijaz.unicode-latex</p></td>
+<td><p>unicode symbols from latex</p></td>
+</tr>
+<tr class="row-even"><td><p>jsynowiec.vscode-insertdatestring</p></td>
+<td><p>insert date string</p></td>
+</tr>
+<tr class="row-odd"><td><p>janisdd.vscode-edit-csv</p></td>
+<td><p>csv editor</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Format Views</strong></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>GrapeCity.gc-excelviewer</p></td>
+<td><p>excel viewer</p></td>
+</tr>
+<tr class="row-even"><td><p>SimonSiefke.svg-preview</p></td>
+<td><p>svg viewer</p></td>
+</tr>
+<tr class="row-odd"><td><p>tomoki1207.pdf</p></td>
+<td><p>pdf viewer</p></td>
+</tr>
+<tr class="row-even"><td><p>RandomFractalsInc.vscode-data-preview</p></td>
+<td><p>data viewing tools</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fr43nk.seito-openfile</p></td>
+<td><p>open file from path</p></td>
+</tr>
+<tr class="row-even"><td><p>vikyd.vscode-fold-level</p></td>
+<td><p>line folding tool</p></td>
+</tr>
+<tr class="row-odd"><td><p>file-icons.file-icons</p></td>
+<td><p>icon library</p></td>
+</tr>
+<tr class="row-even"><td><p>tintinweb.vscode-inline-bookmarks</p></td>
+<td><p>inline bookmarks</p></td>
+</tr>
+<tr class="row-odd"><td><p>alefragnani.project-manager</p></td>
+<td><p>folder, project management</p></td>
+</tr>
+<tr class="row-even"><td><p>Anjali.clipboard-history</p></td>
+<td><p>clipboard history</p></td>
+</tr>
+<tr class="row-odd"><td><p>dionmunk.vscode-notes</p></td>
+<td><p>notepad</p></td>
+</tr>
+<tr class="row-even"><td><p>hbenl.vscode-test-explorer</p></td>
+<td><p>test explorer</p></td>
+</tr>
+<tr class="row-odd"><td><p>mightycoco.fsdeploy</p></td>
+<td><p>save file to second location</p></td>
+</tr>
+<tr class="row-even"><td><p>lyzerk.linecounter</p></td>
+<td><p>count lines in files</p></td>
+</tr>
+<tr class="row-odd"><td><p>sandcastle.vscode-open</p></td>
+<td><p>open files in default app</p></td>
+</tr>
+<tr class="row-even"><td><p>zjffun.snippetsmanager</p></td>
+<td><p>snippet manager</p></td>
+</tr>
+<tr class="row-odd"><td><p>spmeesseman.vscode-taskexplorer</p></td>
+<td><p>task explorer</p></td>
+</tr>
+<tr class="row-even"><td><p>GitHub.codespaces</p></td>
+<td><p>run files in codespaces</p></td>
+</tr>
+<tr class="row-odd"><td><p>GitHub.remotehub</p></td>
+<td><p>run remote files</p></td>
+</tr>
+<tr class="row-even"><td><p>ettoreciprian.vscode-websearch</p></td>
+<td><p>search github within VSCode</p></td>
+</tr>
+<tr class="row-odd"><td><p>donjayamanne.githistory</p></td>
+<td><p>git history</p></td>
+</tr>
+<tr class="row-even"><td><p>MichaelCurrin.auto-commit-msg</p></td>
+<td><p>git auto commit message</p></td>
+</tr>
+<tr class="row-odd"><td><p>github.vscode-github-actions</p></td>
+<td><p>github actions</p></td>
+</tr>
+<tr class="row-even"><td><p>GitHub.vscode-pull-request-github</p></td>
+<td><p>github pull request</p></td>
+</tr>
+<tr class="row-odd"><td><p>k9982874.github-gist-explorer</p></td>
+<td><p>gist explorer</p></td>
+</tr>
+<tr class="row-even"><td><p>vsls-contrib.gistfs</p></td>
+<td><p>gist tools</p></td>
+</tr>
+<tr class="row-odd"><td><p>ms-python.autopep8</p></td>
+<td><p>python pep8 formatting</p></td>
+</tr>
+<tr class="row-even"><td><p>ms-python.isort</p></td>
+<td><p>python sort imports</p></td>
+</tr>
+<tr class="row-odd"><td><p>donjayamanne.python-environment-manager</p></td>
+<td><p>python library list</p></td>
+</tr>
+<tr class="row-even"><td><p>ms-python.python</p></td>
+<td><p>python tools</p></td>
+</tr>
+<tr class="row-odd"><td><p>ms-python.vscode-pylance</p></td>
+<td><p>python language server</p></td>
+</tr>
+<tr class="row-even"><td><p>ms-toolsai.jupyter</p></td>
+<td><p>jupyter tools</p></td>
+</tr>
+<tr class="row-odd"><td><p>ms-toolsai.jupyter-keymap</p></td>
+<td><p>jupyter tools</p></td>
+</tr>
+<tr class="row-even"><td><p>ms-toolsai.jupyter-renderers</p></td>
+<td><p>jupyter tools</p></td>
+</tr>
+<tr class="row-odd"><td><p>ms-toolsai.vscode-jupyter-cell-tags</p></td>
+<td><p>jupyter tools</p></td>
+</tr>
+<tr class="row-even"><td><p>ms-toolsai.vscode-jupyter-slideshow</p></td>
+<td><p>jupyter tools</p></td>
+</tr>
+<tr class="row-odd"><td><p>qwtel.sqlite-viewer</p></td>
+<td><p>sqlite tools</p></td>
+</tr>
+<tr class="row-even"><td><p>RDebugger.r-debugger</p></td>
+<td><p>R tools</p></td>
+</tr>
+<tr class="row-odd"><td><p>REditorSupport.r</p></td>
+<td><p>R tools</p></td>
+</tr>
+<tr class="row-even"><td><p>ms-vscode-remote.remote-wsl</p></td>
+<td><p>windows linux tools</p></td>
+</tr>
+<tr class="row-odd"><td><p>James-Yu.latex-workshop</p></td>
+<td><p>latex tools</p></td>
+</tr>
+<tr class="row-even"><td><p>lextudio.restructuredtext</p></td>
+<td><p>restructured text tools</p></td>
+</tr>
+<tr class="row-odd"><td><p>trond-snekvik.simple-rst</p></td>
+<td><p>restructured syntax</p></td>
+</tr>
+<tr class="row-even"><td><p>yzane.markdown-pdf</p></td>
+<td><p>markdown to pdf</p></td>
+</tr>
+<tr class="row-odd"><td><p>yzhang.markdown-all-in-one</p></td>
+<td><p>markdown tools</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><strong>rivt, rivtlib, rivtzip, rivtonline</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#definitions">Definitions</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#commands-file-processing">Commands (file processing)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#tags-formatting">Tags (formatting)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#folders">Folders</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example-rivt-file">Example rivt file</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#vscode-profile-for-rivt">VSCode profile for rivt</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By rholland
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023 StructureLabs.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2023 StructureLabs.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

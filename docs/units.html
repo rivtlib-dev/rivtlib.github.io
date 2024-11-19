@@ -1,0 +1,1069 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" data-theme="auto">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="_static/favicon-32x32.png" sizes="32x32" rel="icon" type="image/png">
+    <link href="_static/favicon-16x16.png" sizes="16x16" rel="icon" type="image/png">
+    <title>Module units &#8212; rivtlib docs 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "auto";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/jquery.js?v=5d32c60e"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="_static/documentation_options.js?v=e1a75a79"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'units';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Module parse" href="parse.html" />
+    <link rel="prev" title="Module init" href="__init__.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="auto">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/rivtpy64.png" class="logo__image only-light" alt="rivtlib docs 0.1 documentation - Home"/>
+    <img src="_static/rivtpy64.png" class="logo__image only-dark pst-js-only" alt="rivtlib docs 0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="__init__.html">
+    Module init
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Module units
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parse.html">
+    Module parse
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tag_utf.html">
+    Module tag_utf
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="cmd_utf.html">
+    Module cmd_utf
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="tag_rst.html">
+    Module tag_rst
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="cmd_rst.html">
+    Module cmd_rst
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="__init__.html">
+    Module init
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Module units
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parse.html">
+    Module parse
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tag_utf.html">
+    Module tag_utf
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="cmd_utf.html">
+    Module cmd_utf
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tag_rst.html">
+    Module tag_rst
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="cmd_rst.html">
+    Module cmd_rst
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="__init__.html">Module <strong>init</strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Module units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parse.html">Module parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tag_utf.html">Module tag_utf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmd_utf.html">Module cmd_utf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tag_rst.html">Module tag_rst</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmd_rst.html">Module cmd_rst</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item"><nav class="sidebar-indices-items" aria-labelledby="pst-indices-navigation-heading-2">
+  <p id="pst-indices-navigation-heading-2" class="sidebar-indices-items__title" role="heading" aria-level="1">Indices</p>
+  <ul class="indices-link">
+        <li class="toctree-l1">
+          <a class="reference internal"
+             href="genindex.html"
+             accesskey="I">General Index</a>
+        </li>
+  </ul>
+</nav></div>
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/units.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Module units</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-units">
+<h1>Module units<a class="headerlink" href="#module-units" title="Link to this heading">#</a></h1>
+<p>Unit definitions</p>
+<p>Add new units to end of file</p>
+<p>??? example “View Source”
+“””Unit definitions</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>        Add new units to end of file
+
+    &quot;&quot;&quot;
+
+    from rivtlib.unum.core import Unum
+
+    from rivtlib.unum.core import new_unit
+
+    import importlib.util
+
+    import sys
+
+    from pathlib import Path
+
+    # from rivt.unum.core import *
+
+    # from rivt.unum.utils import *
+
+    # from rivt.unum.utils import uarray
+
+    rvpath = importlib.util.find_spec(&quot;rivtlib&quot;)
+
+    rivpath = Path(rvpath.origin).parent
+
+    unumpath = Path(rivpath, &quot;unum&quot;)
+
+    sys.path.append(str(rivpath))
+
+    sys.path.append(str(unumpath))
+
+    
+
+    # print(sys.path)
+
+    # print(dir())
+
+    Unum.set_format(
+
+        mul_separator=&quot; &quot;,
+
+        div_separator=&quot;&quot;,
+
+        unit_format=&quot;%s&quot;,
+
+        value_format=&quot;%.2f&quot;,
+
+        unitless=&quot;&quot;,  # hide empty
+
+        superscript=False,
+
+        auto_norm=True
+
+    )
+
+    # standard SI units ==== DO NOT MODIFY BETWEEN DOUBLE LINES  ============
+
+    #
+
+    # temperature - relative degree size, not offset ------------------------
+
+    K = new_unit(&quot;K&quot;, 0, &quot;kelvin&quot;)
+
+    CELSIUS = new_unit(&quot;deg C&quot;, K, &quot;degree Celsius&quot;)
+
+    FAHR = new_unit(&quot;degF&quot;, K * 9.0 / 5, &quot;degree Fahrenheit&quot;)
+
+    # time
+
+    SEC = S = new_unit(&quot;s&quot;, 0, &quot;second&quot;)
+
+    HZ = new_unit(&quot;Hz&quot;, 1 / S, &quot;hertz&quot;)
+
+    # length
+
+    M = new_unit(&quot;m&quot;, 0, &quot;meter&quot;)
+
+    NM = new_unit(&quot;nm&quot;, 10**-9 * M, &quot;nanometer&quot;)
+
+    UM = new_unit(&quot;um&quot;, 10**-6 * M, &quot;micrometer&quot;)
+
+    MM = new_unit(&quot;mm&quot;, 10**-3 * M, &quot;millimeter&quot;)
+
+    CM = new_unit(&quot;cm&quot;, 10**-2 * M, &quot;centimeter&quot;)
+
+    DM = new_unit(&quot;dm&quot;, 10**-1 * M, &quot;decimeter&quot;)
+
+    # mass
+
+    KG = new_unit(&quot;kg&quot;, 0, &quot;kilogram&quot;)
+
+    GRAM = new_unit(&quot;gram&quot;, 10**-3 * KG, &quot;gram&quot;)
+
+    RAD = new_unit(&quot;rad&quot;, M / M, &quot;radian&quot;)
+
+    SR = new_unit(&quot;sr&quot;, M**2 / M**2, &quot;steradian&quot;)
+
+    MOL = new_unit(&quot;mol&quot;, 0, &quot;mole&quot;)
+
+    # force
+
+    N = new_unit(&quot;N&quot;, M * KG / S**2, &quot;newton&quot;)
+
+    CD = new_unit(&quot;cd&quot;, 0, &quot;candela&quot;)
+
+    LM = new_unit(&quot;lm&quot;, CD * SR, &quot;lumen&quot;)
+
+    LX = new_unit(&quot;lx&quot;, LM / M**2, &quot;lux&quot;)
+
+    # charge
+
+    J = new_unit(&quot;J&quot;, N * M, &quot;joule&quot;)
+
+    W = new_unit(&quot;W&quot;, J / S, &quot;watt&quot;)
+
+    A = new_unit(&quot;A&quot;, 0, &quot;ampere&quot;)
+
+    MA = new_unit(&quot;mA&quot;, 10**-3 * A, &quot;milliampere&quot;)
+
+    C = new_unit(&quot;C&quot;, S * A, &quot;coulomb&quot;)
+
+    VO = new_unit(&quot;V&quot;, W / A, &quot;volt&quot;)
+
+    F = new_unit(&quot;F&quot;, C / VO, &quot;farad&quot;)
+
+    OHM = new_unit(&quot;ohm&quot;, VO / A, &quot;ohm&quot;)
+
+    SIEMENS = new_unit(&quot;siemens&quot;, A / VO, &quot;siemens&quot;)
+
+    WB = new_unit(&quot;Wb&quot;, VO * SIEMENS, &quot;weber&quot;)
+
+    TS = new_unit(&quot;TS&quot;, WB / M**2, &quot;tesla&quot;)
+
+    HENRY = new_unit(&quot;H&quot;, WB / A, &quot;henry&quot;)
+
+    # ============  DO NOT MODIFY ABOVE THIS LINE  =============================
+
+    #
+
+    # metric --------------------------------
+
+    #
+
+    G = new_unit(&quot;G&quot;, 9.80665 * M / S**2, &quot;gravity acceleration&quot;)
+
+    # pressure
+
+    PA = new_unit(&quot;Pa&quot;, N / M**2, &quot;pascal&quot;)
+
+    MPA = new_unit(&quot;MPa&quot;, PA * (10**6), &quot;megapascals&quot;)
+
+    KPA = new_unit(&quot;KPa&quot;, PA * (10**3), &quot;kilopascals&quot;)
+
+    # force
+
+    KN = new_unit(&quot;KN&quot;, N * (10**3), &quot;kilonewton&quot;)
+
+    MN = new_unit(&quot;MN&quot;, N * (10**6), &quot;meganewton&quot;)
+
+    KM = new_unit(&quot;KM&quot;, M * (10**3), &quot;kilometer&quot;)
+
+    KNCM = new_unit(&quot;KNcM&quot;, KN / (M**3), &quot;kilonewton per cubic meter&quot;)
+
+    # area
+
+    SM = new_unit(&quot;SM&quot;, (M**2), &quot;square meter&quot;)
+
+    SCM = new_unit(&quot;SCM&quot;, (CM**2), &quot;square centimeter&quot;)
+
+    #
+
+    # imperial------------------------------
+
+    #
+
+    # length
+
+    IN = new_unit(&quot;in&quot;, M / 39.370079, &quot;inch&quot;)
+
+    FT = new_unit(&quot;ft&quot;, M / 3.2808399, &quot;foot&quot;)
+
+    MILES = new_unit(&quot;miles&quot;, FT * 5280, &quot;miles&quot;)
+
+    # mass
+
+    LBM = new_unit(&quot;lbm&quot;, KG / 2.2046226, &quot;pound-mass&quot;)
+
+    # force
+
+    LBF = new_unit(&quot;lbs&quot;, 4.4482216 * N, &quot;pound-force&quot;)
+
+    KIPS = new_unit(&quot;kips&quot;, LBF * 1000.0, &quot;kilopounds&quot;)
+
+    KIP = new_unit(&quot;kip&quot;, LBF * 1000.0, &quot;kilopound&quot;)
+
+    # moment
+
+    FT_KIPS = new_unit(&quot;ft-kips&quot;, FT * LBF * 1000.0, &quot;foot-kips&quot;)
+
+    IN_KIPS = new_unit(&quot;in-kips&quot;, IN * LBF * 1000.0, &quot;inch-kips&quot;)
+
+    # area
+
+    SF = new_unit(&quot;sf&quot;, FT**2, &quot;square feet&quot;)
+
+    SQIN = new_unit(&quot;sqin&quot;, IN**2, &quot;square feet&quot;)
+
+    # pressure
+
+    PSF = new_unit(&quot;psf&quot;, LBF / FT**2, &quot;pounds per square foot&quot;)
+
+    PSI = new_unit(&quot;psi&quot;, LBF / IN**2, &quot;pounds per square inch&quot;)
+
+    KSF = new_unit(&quot;ksf&quot;, KIPS / FT**2, &quot;kips per square foot&quot;)
+
+    KSI = new_unit(&quot;ksi&quot;, KIPS / IN**2, &quot;kips per square inch&quot;)
+
+    # density
+
+    PCI = new_unit(&quot;pci&quot;, LBF / IN**3, &quot;pounds per cubic inch&quot;)
+
+    PCF = new_unit(&quot;pcf&quot;, LBF / FT**3, &quot;pounds per cubic ft&quot;)
+
+    # line loads
+
+    KLI = new_unit(&quot;kips/in&quot;, KIPS / IN, &quot;kips per inch&quot;)
+
+    PLI = new_unit(&quot;lbf/in&quot;, LBF / IN, &quot;pounds per inch&quot;)
+
+    PLF = new_unit(&quot;lbf/ft&quot;, LBF / FT, &quot;pounds per foot&quot;)
+
+    KLF = new_unit(&quot;kips/ft&quot;, KIPS / FT, &quot;kips per foot&quot;)
+
+    # time
+
+    HR = new_unit(&quot;hr&quot;, 60 * 60 * S, &quot;hours&quot;)
+
+    # velocity
+
+    MPH = new_unit(&quot;mph&quot;, MILES / HR, &quot;miles per hour&quot;)
+
+    FPS = new_unit(&quot;fps&quot;, FT / SEC, &quot;feet per second&quot;)
+</pre></div>
+</div>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading">#</a></h2>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">C</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">CD</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">CELSIUS</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">CM</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">DM</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">F</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FAHR</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FPS</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FT</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FT_KIPS</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">GRAM</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">HENRY</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">HR</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">HZ</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">IN</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">IN_KIPS</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">J</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">KG</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">KIP</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">KIPS</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">KLF</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">KLI</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">KM</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">KN</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">KNCM</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">KPA</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">KSF</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">KSI</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">LBF</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">LBM</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">LM</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">LX</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">M</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MA</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MILES</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MM</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MN</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MOL</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MPA</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MPH</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">NM</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">OHM</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">PA</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">PCF</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">PCI</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">PLF</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">PLI</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">PSF</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">PSI</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">RAD</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SCM</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SF</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SIEMENS</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SM</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SQIN</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SR</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">TS</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">UM</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">VO</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">W</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">WB</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">rivpath</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">rvpath</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">unumpath</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="__init__.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Module <strong>init</strong></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="parse.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Module parse</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By rholland
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023 StructureLabs.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2023 StructureLabs.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

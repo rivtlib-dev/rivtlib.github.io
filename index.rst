@@ -15,18 +15,18 @@
     </embed>
 
 
-**A Python library for engineering documents**
+**rivtlib.py Documentation**
 
 **rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
 library for writing and publishing engineering documents, with an emphasis on
-document reuse. It implements the **rivt** markup language described here `rivt User
-Manual <https://rivt-doc.net>`_.  For  **rivtlib.py** source code see `GitHub
-<https://github.com/rivtlib/rivtlib.github.io/tree/main/src/rivtlib>`_
+document reuse. It implements the **rivt** markup language and API described
+here `rivt User Manual <https://rivt-doc.net>`_.  The **rivtlib.py** source code
+is here `GitHub <https://github.com/rivtlib/rivtlib.github.io/tree/main/src/rivtlib>`_
 
 
 .. toctree::
     :maxdepth: 1
-    :caption: Source Code Documentation
+    :caption: Python Modules
 
     __init__.md
     __main__.md

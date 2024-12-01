@@ -13,7 +13,10 @@ myst_enable_extensions = ['substitution', 'deflist', 'attrs_block',
                           'html_image', 'amsmath']
 
 extensions = ['myst_parser', 'sphinx.ext.githubpages',
-              "sphinxcontrib.jquery", 'sphinx_copybutton', 'sphinx_favicon']
+              "sphinxcontrib.jquery", 'sphinx_copybutton',
+              'sphinx_favicon', 'sphinx.ext.duration',
+              'sphinx.ext.doctest', 'sphinx.ext.autodoc']
+
 html_theme = 'pydata_sphinx_theme'
 html_sidebars = {"**": []}
 source_suffix = ['.rst', '.md']

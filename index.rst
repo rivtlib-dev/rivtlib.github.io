@@ -21,7 +21,7 @@
 library for writing and publishing engineering documents, with an emphasis on
 document reuse. It implements the **rivt** markup language and API described
 here `rivt User Manual <https://rivt-doc.net>`_.  The **rivtlib.py** source code
-is here `GitHub <https://github.com/rivtlib/rivtlib.github.io/tree/main/src/rivtlib>`_
+is here `GitHub <https://github.com/rivtlib-net/rivtlib/>`_
 
 
 .. toctree::
@@ -29,4 +29,4 @@ is here `GitHub <https://github.com/rivtlib/rivtlib.github.io/tree/main/src/rivt
 
     parse.rst
 
-    
+

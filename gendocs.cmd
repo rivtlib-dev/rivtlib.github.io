@@ -2,7 +2,7 @@ echo Y | rmdir docs /S
 mkdir docs
 mkdir docs/src
 echo F | xcopy /y E:\python313\Lib\site-packages\rivtlib\*.* .\docs\src\ 
-cd pdocs
+cd docs
 python -m pydoc -w .\src\cmd_rst.py
 python -m pydoc -w .\src\cmd_utf.py
 python -m pydoc -w .\src\rivtlib\parse.py
@@ -15,6 +15,7 @@ python -m pydoc -w .\src\rivtlib\write.py
 python -m pydoc -w .\src\rivtlib\units.py
 python -m pydoc -w .\src\rivtlib\__init__.py
 python -m pydoc -w .\src\rivtlib\__main__.py
+echo F | xcopy /y .\*.* ..\docs\ 
 cd ..
 sphinx-build . docs
 echo F | xcopy /y CNAME .\docs\CNAME

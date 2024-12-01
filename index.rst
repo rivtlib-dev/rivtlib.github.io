@@ -26,16 +26,7 @@ is here `GitHub <https://github.com/rivtlib/rivtlib.github.io/tree/main/src/rivt
 
 .. toctree::
     :maxdepth: 1
-    :caption: Python Modules
 
-    __init__.md
-    __main__.md
-    units.md
-    rivtapi.md
-    folders.md
-    parse.md
-    tag_utf.md
-    cmd_utf.md
-    tag_rst.md
-    cmd_rst.md
-    write.md
+    parse.rst
+
+    

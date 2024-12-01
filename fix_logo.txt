@@ -1,2 +1,0 @@
-       <img class="logo" src="_static/img/riv02.png">
-   

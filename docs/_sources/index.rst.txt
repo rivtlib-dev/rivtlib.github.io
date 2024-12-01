@@ -27,6 +27,6 @@ is here `GitHub <https://github.com/rivtlib-net/rivtlib/>`_
 .. toctree::
     :maxdepth: 1
 
-    parse.rst
+    parse-mod.rst
 
 

@@ -2,7 +2,7 @@
 parse test file
 ===============
 
-test of parse file
+test of parse file 2
 
 .. raw:: html
-   :file: /code/parse.html
+   :file: /docs/code/parse.html

@@ -2,7 +2,7 @@
 units.py
 ==========
 
-Define calculation units
+Defines calculation units
 
 .. raw:: html
    :file: units.html

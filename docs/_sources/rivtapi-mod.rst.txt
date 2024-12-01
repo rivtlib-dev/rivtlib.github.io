@@ -1,8 +1,8 @@
 
-units.py
+rivtapi.py
 ==========
 
-Defines calculation units
+Defines rivt API
 
 .. raw:: html
    :file: units.html

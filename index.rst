@@ -19,9 +19,9 @@
 
 **rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
 package for writing and publishing engineering documents, with an emphasis on
-document reuse. It implements the **rivt** markup language and API described in
-the **rivt User Manual** at `rivt.info  <https://rivt.info>`_.  The source code
-is here `GitHub <https://github.com/rivtlib-net/rivtlib/>`_.
+document reuse. It implements the **rivt** markup language and API described
+here `rivt.info  <https://rivt.info>`_.  The source code is here `GitHub
+<https://github.com/rivtlib-net/rivtlib/>`_.
 
 
 .. toctree::
@@ -30,6 +30,8 @@ is here `GitHub <https://github.com/rivtlib-net/rivtlib/>`_.
     folders-mod.rst
     parse-mod.rst
     units-mod.rst
-
+    cmd_utf-mod.rst
+    cmd_rst-mod.rst
+    rivtapi-mod.rst
 
 

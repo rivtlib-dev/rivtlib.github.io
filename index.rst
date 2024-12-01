@@ -15,12 +15,12 @@
     </embed>
 
 
-**rivtlib.py Documentation**
+**rivtlib Documentation**
 
 **rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
-library for writing and publishing engineering documents, with an emphasis on
-document reuse. It implements the **rivt** markup language and API described
-here `rivt User Manual <https://rivt-doc.net>`_.  The **rivtlib.py** source code
+package for writing and publishing engineering documents, with an emphasis on
+document reuse. It implements the **rivt** markup language and API described in
+the **rivt User Manual** at `rivt.info  <https://rivt.info>`_.  The source code
 is here `GitHub <https://github.com/rivtlib-net/rivtlib/>`_
 
 

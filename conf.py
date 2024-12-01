@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path(".").resolve()))
 
-project = 'rivtlib docs'
+project = 'rivtlib.net'
 copyright = '2023 StructureLabs'
 author = 'rholland'
 release = '0.1'
@@ -14,18 +14,16 @@ myst_enable_extensions = ['substitution', 'deflist', 'attrs_block',
 
 extensions = ['myst_parser', 'sphinx.ext.githubpages',
               "sphinxcontrib.jquery", 'sphinx_copybutton', 'sphinx_favicon']
-
+html_theme = 'pydata_sphinx_theme'
+html_sidebars = {"**": []}
 source_suffix = ['.rst', '.md']
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_static_path = ['_static', '_static/img/']
 html_context = {"default_mode": "auto"}
-html_theme = 'sphinx_book_theme'
 html_logo = "_static/img/rivtpy64.png"
-
 html_theme_options = {
-    "home_page_in_toc": True,
     "show_nav_level": 2,
     "show_toc_level": 3,
     "navigation_depth": 3,
@@ -33,6 +31,7 @@ html_theme_options = {
     "footer_end": [],
     "logo": {
         "image_dark": "_static/img/rivtpy64.png",
+        "image_light": "_static/img/rivtpy64.png",
     }
 }
 

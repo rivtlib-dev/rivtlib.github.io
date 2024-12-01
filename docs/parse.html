@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="_static/favicon-32x32.png" sizes="64x64" rel="icon" type="image/png">
     <link href="_static/favicon-16x16.png" sizes="64x64" rel="icon" type="image/png">
-    <title>Module parse &#8212; rivtlib.net 0.1 documentation</title>
+    <title>&lt;no title&gt; &#8212; rivtlib.net 0.1 documentation</title>
   
   
   
@@ -137,7 +137,7 @@
     
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="#">
-    Module parse
+    <no title>
   </a>
 </li>
 
@@ -216,7 +216,7 @@
     
 <li class="nav-item current active">
   <a class="nav-link nav-internal" href="#">
-    Module parse
+    <no title>
   </a>
 </li>
 
@@ -272,7 +272,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Module parse</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">&lt;no title&gt;</span></li>
   </ul>
 </nav>
 </div>
@@ -289,1633 +289,244 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-parse">
-<h1>Module parse<a class="headerlink" href="#module-parse" title="Link to this heading">#</a></h1>
-<p>??? example “View Source”
-import csv</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    import logging
+  <p>test file</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module parse</title>
+</head><body>
 
-    import re
-
-    import sys
-
-    import warnings
-
-    from io import StringIO
-
-    from pathlib import Path
-
-    import matplotlib.image as mpimg
-
-    import matplotlib.pyplot as plt
-
-    import numpy.linalg as la
-
-    import pandas as pd
-
-    import sympy as sp
-
-    from IPython.display import Image as _Image
-
-    from IPython.display import display as _display
-
-    from numpy import *
-
-    from sympy.abc import _clash2
-
-    from sympy.core.alphabets import greeks
-
-    from sympy.parsing.latex import parse_latex
-
-    from tabulate import tabulate
-
-    from rivtlib import units
-
-    from rivtlib import cmd_utf
-
-    from rivtlib import cmd_rst
-
-    from rivtlib import tag_utf
-
-    from rivtlib import tag_rst
-
-    # tabulate.PRESERVE_WHITESPACE = True
-
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title">parse</strong> (version 2.1.3)</td>
+<td class="extra"><a href=".">index</a><br><a href="file:e%3A%5Cgit%5Crivtlib%5Cparse.py">e:\git\rivtlib\parse.py</a></td></tr></table>
+    <p></p>
+<p>
+<table class="section">
+<tr class="decor pkg-content-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
     
-
-    class RivtParse:
-
-        &quot;&quot;&quot;format rivt-strings as utf and rst files&quot;&quot;&quot;
-
-        def __init__(self, methS, folderD, labelD,  rivtD):
-
-            &quot;&quot;&quot; rivt-strings as utf and reST line by line
-
-                :param dict folderD: folder paths
-
-                :param dict labelD: numbers that increment
-
-                :param dict outputS: output type
-
-                :param dict outputS: output type
-
-            &quot;&quot;&quot;
-
-            self.rivtD = rivtD
-
-            self.folderD = folderD  # folder paths
-
-            self.labelD = labelD      # incrementing formats
-
-            self.errlogP = folderD[&quot;errlogP&quot;]
-
-            self.methS = methS
-
-            hdrstS = &quot;&quot;&quot;&quot;&quot;&quot;
-
-            hdreadS = &quot;&quot;&quot;&quot;&quot;&quot;
-
-            hdutfS = &quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;
-
-            # section headings
-
-            xmdS = xrstS = xutfS = &quot;&quot;
-
-            rL = rS.split(&quot;\n&quot;)
-
-            rsL = rS.split(&quot;|&quot;)              # function string as list
-
-            titleS = rsL[0].strip()          #
-
-            labelD[&quot;tocS&quot;] = rsL[1].strip()  # set redaction
-
-            labelD[&quot;pageI&quot;] = int(rsL[2])    # set background color
-
-            if rS.strip()[0:2] == &quot;--&quot;:         # omit section heading
-
-                return &quot;\n&quot;, &quot;\n&quot;, &quot;\n&quot;
-
-            headS = datetime.now().strftime(&quot;%Y-%m-%d | %I:%M%p&quot;) + &quot;\n&quot;
-
-            labelD[&quot;docS&quot;] = titleS
-
-            bordrS = labelD[&quot;widthI&quot;] * &quot;=&quot;
-
-            hdutfS = (headS + &quot;\n&quot; + bordrS + &quot;\n&quot; + titleS + &quot;\n&quot; + bordrS + &quot;\n&quot;)
-
-            hdmdS = (headS + &quot;\n## &quot; + titleS + &quot;\n&quot;)
-
-            snumI = labelD[&quot;secnumI&quot;] + 1
-
-            labelD[&quot;secnumI&quot;] = snumI
-
-            docnumS = labelD[&quot;docnumS&quot;]
-
-            dnumS = docnumS + &quot;-[&quot; + str(snumI) + &quot;]&quot;
-
-            headS = dnumS + &quot; &quot; + titleS
-
-            bordrS = labelD[&quot;widthI&quot;] * &quot;-&quot;
-
-            hdutfS = bordrS + &quot;\n&quot; + headS + &quot;\n&quot; + bordrS + &quot;\n&quot;
-
-            hdmdS = &quot;### &quot; + headS + &quot;\n&quot;
-
-            hdrstS += (
-
-                &quot;.. raw:: latex&quot;
-
-                + &quot;   \n\n ?x?vspace{.2in} &quot;
-
-                + &quot;   ?x?begin{tcolorbox} &quot;
-
-                + &quot;   ?x?textbf{ &quot; + titleS + &quot;}&quot;
-
-                + &quot;   ?x?hfill?x?textbf{SECTION &quot; + dnumS + &quot; }&quot;
-
-                + &quot;   ?x?end{tcolorbox}&quot;
-
-                + &quot;   \n&quot; + &quot;   ?x?newline&quot; + &quot;   ?x?vspace{.05in}&quot;
-
-                + &quot;\n\n&quot;)
-
-    #        print(hdutfS)
-
-    #        return hdutfS, hdmdS, hdrstS
-
-            utfS += hutfS
-
-            rstS += hrstS
-
-            # valid commands and tags
-
-            if methS == &quot;R&quot;:
-
-                self.cmdL = [&quot;run&quot;, &quot;process&quot;]
-
-                self.tagsD = {&quot;link]&quot;: &quot;link&quot;, &quot;line]&quot;: &quot;line&quot;, &quot;page]&quot;: &quot;page&quot;}
-
-            elif methS == &quot;I&quot;:
-
-                self.cmdL = [&quot;image&quot;, &quot;table&quot;, &quot;text&quot;]
-
-                self.tagsD = {&quot;b]&quot;: &quot;bold&quot;, &quot;i]&quot;: &quot;italic&quot;, &quot;u]&quot;: &quot;underline&quot;,
-
-                              &quot;c]&quot;: &quot;center&quot;, &quot;r]&quot;: &quot;right&quot;,
-
-                              &quot;e]&quot;: &quot;equation&quot;, &quot;f]&quot;: &quot;figure&quot;, &quot;t]&quot;: &quot;table&quot;,
-
-                              &quot;#]&quot;: &quot;foot&quot;, &quot;d]&quot;: &quot;description&quot;,
-
-                              &quot;l]&quot;: &quot;latex&quot;, &quot;s]&quot;: &quot;sympy&quot;,
-
-                              &quot;link]&quot;: &quot;link&quot;, &quot;line]&quot;: &quot;line&quot;, &quot;page]&quot;: &quot;page&quot;,
-
-                              &quot;[c]]&quot;: &quot;centerblk&quot;,  &quot;[p]]&quot;: &quot;plainblk&quot;,
-
-                              &quot;[l]]&quot;: &quot;latexblk&quot;, &quot;[m]]&quot;: &quot;mathblk&quot;,
-
-                              &quot;[o]]&quot;: &quot;codeblk&quot;, &quot;[q]]&quot;: &quot;quitblk&quot;}
-
-            elif methS == &quot;V&quot;:
-
-                self.cmdL = [&quot;image&quot;, &quot;table&quot;, &quot;text&quot;, &quot;assign&quot;, &quot;declare&quot;]
-
-                self.tagsD = {&quot;e]&quot;: &quot;equation&quot;, &quot;f]&quot;: &quot;figure&quot;, &quot;t]&quot;: &quot;table&quot;,
-
-                              &quot;#]&quot;: &quot;foot&quot;, &quot;d]&quot;: &quot;description&quot;,
-
-                              &quot;l]&quot;: &quot;latex&quot;, &quot;s]&quot;: &quot;sympy&quot;,
-
-                              &quot;:=&quot;: &quot;declare&quot;,  &quot;=&quot;: &quot;assign&quot;}
-
-            elif methS == &quot;T&quot;:
-
-                self.cmdL = []
-
-                self.tagsD = {}
-
-            elif methS == &quot;W&quot;:
-
-                self.cmdL = []
-
-                self.tagsD = {}
-
-            else:
-
-                pass
-
-            modnameS = __name__.split(&quot;.&quot;)[1]
-
-            # print(f&quot;{modnameS=}&quot;)
-
-            logging.basicConfig(
-
-                level=logging.DEBUG,
-
-                format=&quot;%(asctime)-8s  &quot; + modnameS +
-
-                &quot;   %(levelname)-8s %(message)s&quot;,
-
-                datefmt=&quot;%m-%d %H:%M&quot;,
-
-                filename=self.errlogP,
-
-                filemode=&quot;w&quot;,
-
-            )
-
-            warnings.filterwarnings(&quot;ignore&quot;)
-
-            # self.rivtD.update(locals())
-
-        def str_parse(self, strL):
-
-            &quot;&quot;&quot;parse method string line by line starting with second line
-
-                :param list strL: split method string
-
-                :return mdS: md formatted string
-
-                :return rstS: reST formatted string
-
-                :return labelD: increment references
-
-                :return folderD: folder paths
-
-                :rtype mdS: string
-
-                :rtype rstS: string
-
-                :rtype folderD: dictionary
-
-                :rtype labelD: dictionary
-
-            &quot;&quot;&quot;
-
-            xutfS = &quot;&quot;&quot;&quot;&quot;&quot;      # utfS local string
-
-            xmdS = &quot;&quot;&quot;&quot;&quot;&quot;       # mdS local string
-
-            xrstS = &quot;&quot;&quot;&quot;&quot;&quot;      # rstS local string
-
-            uS = &quot;&quot;&quot;&quot;&quot;&quot;         # raw local line
-
-            blockB = False
-
-            # table alignment
-
-            hdrdL = [&quot;variable&quot;, &quot;value&quot;, &quot;[value]&quot;, &quot;description&quot;]
-
-            aligndL = [&quot;left&quot;, &quot;right&quot;, &quot;right&quot;, &quot;left&quot;]
-
-            hdraL = [&quot;variable&quot;, &quot;value&quot;, &quot;[value]&quot;, &quot;description [eq. number]&quot;]
-
-            alignaL = [&quot;left&quot;, &quot;right&quot;, &quot;right&quot;, &quot;left&quot;]
-
-            blockevalL = []     # current value table
-
-            blockevalB = False  # stop accumulation of values
-
-            vtableL = []        # value table for export
-
-            eqL = []            # equation result table
-
-            lineS = &quot;&quot;
-
-            for uS in strL:
-
-                # print(f&quot;{blockassignB=}&quot;)
-
-                # print(f&quot;{uS=}&quot;)
-
-                uS = uS[4:]                                # remove indent
-
-                if blockB:                                 # accumulate block
-
-                    lineS += uS
-
-                    continue
-
-                if blockB and uS.strip() == &quot;[q]]&quot;:        # end of block
-
-                    tagS = self.tagsD[&quot;[q]&quot;]
-
-                    rvtS = tag_utf.TagsUTF(lineS, tagS,
-
-                                           self.labelD, self.folderD,  self.rivtD)
-
-                    xutfS += rvtS + &quot;\n&quot;
-
-                    rvtS = tag_md.TagsMD(lineS, tagS,
-
-                                         self.labelD, self.folderD,  self.rivtD)
-
-                    xmdS += rvtS + &quot;\n&quot;
-
-                    rvtS = tag_rst.TagsRST(lineS, tagS,
-
-                                           self.labelD, self.folderD,  self.rivtD)
-
-                    xrstS += rvtS + &quot;\n&quot;
-
-                    blockB = False
-
-                if blockevalB and len(uS.strip()) &lt; 2:    # value tables
-
-                    vtableL += blockevalL
-
-                    if tfS == &quot;declare&quot;:
-
-                        vutfS = self.dtable(blockevalL, hdrdL,
-
-                                            &quot;rst&quot;, aligndL) + &quot;\n\n&quot;
-
-                        vmdS = self.dtable(blockevalL, hdrdL,
-
-                                           &quot;html&quot;, aligndL) + &quot;\n\n&quot;
-
-                        xutfS += vutfS
-
-                        xmdS += vmdS
-
-                        xrstS += vutfS
-
-                    if tfS == &quot;assign&quot;:
-
-                        vutfS = self.dtable(blockevalL, hdrdL,
-
-                                            &quot;rst&quot;, aligndL) + &quot;\n\n&quot;
-
-                        vmdS = self.atable(blockevalL, hdraL,
-
-                                           &quot;html&quot;, alignaL) + &quot;\n\n&quot;
-
-                        xutfS += vutfS
-
-                        xmdS += vmdS
-
-                        xrstS += vutfS
-
-                    blockevalL = []
-
-                    blockevalB = False
-
-                elif uS[0:2] == &quot;||&quot;:                      # commands
-
-                    usL = uS[2:].split(&quot;|&quot;)
-
-                    parL = usL[1:]
-
-                    cmdS = usL[0].strip()
-
-                    if cmdS in self.cmdL:
-
-                        rvtC = cmd_utf.CmdUTF(
-
-                            parL, self.labelD, self.folderD, self.rivtD)
-
-                        utfS = rvtC.cmd_parse(cmdS)
-
-                        # print(f&quot;{utfS=}&quot;)
-
-                        xutfS += utfS
-
-                        rvtC = cmd_md.CmdMD(
-
-                            parL, self.labelD, self.folderD, self.rivtD)
-
-                        mdS = rvtC.cmd_parse(cmdS)
-
-                        # print(f&quot;{mdS=}&quot;)
-
-                        xmdS += mdS
-
-                        rvtC = cmd_rst.CmdRST(
-
-                            parL, self.labelD, self.folderD, self.rivtD)
-
-                        reS = rvtC.cmd_parse(cmdS)
-
-                        xrstS += reS
-
-                elif &quot;_[&quot; in uS:                           # line tag
-
-                    usL = uS.split(&quot;_[&quot;)
-
-                    lineS = usL[0]
-
-                    tagS = usL[1].strip()
-
-                    if tagS[0] == &quot;[&quot;:                     # block tag
-
-                        blockB = True
-
-                    if tagS in self.tagsD:
-
-                        rvtC = tag_utf.TagsUTF(lineS, self.labelD, self.folderD,
-
-                                               self.tagsD, self.rivtD)
-
-                        utfxS = rvtC.tag_parse(tagS)
-
-                        xutfS += utfxS + &quot;\n&quot;
-
-                        rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
-
-                                             self.tagsD, self.rivtD)
-
-                        mdS = rvtC.tag_parse(tagS)
-
-                        xmdS += mdS + &quot;\n&quot;
-
-                        rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
-
-                                               self.tagsD, self.rivtD)
-
-                        reS = rvtC.tag_parse(tagS)
-
-                        xrstS += reS + &quot;\n&quot;
-
-                elif &quot;=&quot; in uS and self.methS == &quot;V&quot;:       # equation tag
-
-                    # print(f&quot;{uS=}&quot;)
-
-                    usL = uS.split(&quot;|&quot;)
-
-                    lineS = usL[0]
-
-                    self.labelD[&quot;unitS&quot;] = usL[1].strip()
-
-                    self.labelD[&quot;descS&quot;] = usL[2].strip()
-
-                    rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
-
-                                         self.localD)
-
-                    if &quot;:=&quot; in uS:                         # declare tag
-
-                        tfS = &quot;declare&quot;
-
-                        blockevalL.append(rvtC.tag_parse(&quot;:=&quot;))
-
-                        rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
-
-                                               self.localD)
-
-                        eqL = rvtC.tag_parse(&quot;:=&quot;)
-
-                        blockevalB = True
-
-                        continue
-
-                    else:
-
-                        tfS = &quot;assign&quot;                     # assign tag
-
-                        eqL = rvtC.tag_parse(&quot;=&quot;)
-
-                        mdS += eqL[1]
-
-                        blockevalL.append(eqL[0])
-
-                        rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
-
-                                               self.localD)
-
-                        eqL = rvtC.tag_parse(&quot;=&quot;)
-
-                        rstS += eqL[1]
-
-                        blockevalB = True
-
-                        continue
-
-                else:
-
-                    print(uS)       # pass unformatted string
-
-            # export values
-
-            valP = Path(self.folderD[&quot;dataP&quot;], self.folderD[&quot;valfileS&quot;])
-
-            with open(valP, &quot;w&quot;, newline=&quot;&quot;) as f:
-
-                writecsv = csv.writer(f)
-
-                writecsv.writerow(hdraL)
-
-                writecsv.writerows(vtableL)
-
-            return (xutfS, xmdS, xrstS,  self.labelD, self.folderD, self.rivtD)
-
-        def atable(self, tblL, hdreL, tblfmt, alignaL):
-
-            &quot;&quot;&quot;write assign values table&quot;&quot;&quot;
-
-            locals().update(self.rivtD)
-
-            valL = []
-
-            for vaL in tblL:
-
-                varS = vaL[0].strip()
-
-                valS = vaL[1].strip()
-
-                unit1S, unit2S = vaL[2], vaL[3]
-
-                descripS = vaL[4].strip()
-
-                if unit1S != &quot;-&quot;:
-
-                    if type(eval(valS)) == list:
-
-                        val1U = array(eval(valS)) * eval(unit1S)
-
-                        val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
-
-                    else:
-
-                        cmdS = varS + &quot;= &quot; + valS
-
-                        exec(cmdS, globals(), locals())
-
-                        valU = eval(varS)
-
-                        val1U = str(valU.cast_unit(eval(unit1S)))
-
-                        val2U = str(valU.cast_unit(eval(unit2S)))
-
-                else:
-
-                    cmdS = varS + &quot;= &quot; + valS
-
-                    exec(cmdS, globals(), locals())
-
-                    valU = eval(varS)
-
-                    val1U = str(valU)
-
-                    val2U = str(valU)
-
-                valL.append([varS, val1U, val2U, descripS])
-
-            sys.stdout.flush()
-
-            old_stdout = sys.stdout
-
-            output = StringIO()
-
-            output.write(
-
-                tabulate(
-
-                    valL, tablefmt=tblfmt, headers=hdreL,
-
-                    showindex=False,  colalign=alignaL))
-
-            mdS = output.getvalue()
-
-            sys.stdout = old_stdout
-
-            sys.stdout.flush()
-
-            self.localD.update(locals())
-
-            print(&quot;\n&quot; + mdS+&quot;\n&quot;)
-
-            return mdS
-
-        def dtable(self, tblL, hdrvL, tblfmt, alignvL):
-
-            &quot;&quot;&quot;write declare values table&quot;&quot;&quot;
-
-            locals().update(self.rivtD)
-
-            valL = []
-
-            for vaL in tblL:
-
-                varS = vaL[0].strip()
-
-                valS = vaL[1].strip()
-
-                unit1S, unit2S = vaL[2], vaL[3]
-
-                descripS = vaL[4].strip()
-
-                if unit1S != &quot;-&quot;:
-
-                    if type(eval(valS)) == list:
-
-                        val1U = array(eval(valS)) * eval(unit1S)
-
-                        val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
-
-                    else:
-
-                        cmdS = varS + &quot;= &quot; + valS + &quot; * &quot; + unit1S
-
-                        exec(cmdS, globals(), locals())
-
-                        valU = eval(varS)
-
-                        val1U = str(valU.cast_unit(eval(unit1S)))
-
-                        val2U = str(valU.cast_unit(eval(unit2S)))
-
-                else:
-
-                    cmdS = varS + &quot;= &quot; + valS
-
-                    exec(cmdS, globals(), locals())
-
-                    valU = eval(varS)
-
-                    val1U = str(valU)
-
-                    val2U = str(valU)
-
-                valL.append([varS, val1U, val2U, descripS])
-
-            sys.stdout.flush()
-
-            old_stdout = sys.stdout
-
-            output = StringIO()
-
-            output.write(
-
-                tabulate(
-
-                    valL, tablefmt=tblfmt, headers=hdrvL,
-
-                    showindex=False,  colalign=alignvL))
-
-            mdS = output.getvalue()
-
-            sys.stdout = old_stdout
-
-            sys.stdout.flush()
-
-            self.rivtD.update(locals())
-
-            print(&quot;\n&quot; + mdS+&quot;\n&quot;)
-
-            return mdS
-</pre></div>
-</div>
-<section id="variables">
-<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading">#</a></h2>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ALLOW_THREADS</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">BUFSIZE</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">CLIP</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_CALL</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_DEFAULT</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_IGNORE</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_LOG</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_PRINT</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_RAISE</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ERR_WARN</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FLOATING_POINT_SUPPORT</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FPE_DIVIDEBYZERO</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FPE_INVALID</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FPE_OVERFLOW</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">FPE_UNDERFLOW</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">False_</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">Inf</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">Infinity</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAXDIMS</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAY_SHARE_BOUNDS</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAY_SHARE_EXACT</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">NAN</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">NINF</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">NZERO</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">NaN</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">PINF</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">PZERO</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">RAISE</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SHIFT_DIVIDEBYZERO</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SHIFT_INVALID</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SHIFT_OVERFLOW</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">SHIFT_UNDERFLOW</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ScalarType</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">True_</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">UFUNC_BUFSIZE_DEFAULT</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">UFUNC_PYVALS_NAME</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">WRAP</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">absolute</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">add</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arccos</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arccosh</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arcsin</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arcsinh</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arctan</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arctan2</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">arctanh</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">bitwise_and</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">bitwise_not</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">bitwise_or</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">bitwise_xor</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cbrt</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ceil</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">conj</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">conjugate</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">copysign</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cos</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cosh</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">deg2rad</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">degrees</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">divide</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">divmod</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">e</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">equal</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">euler_gamma</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">exp2</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">expm1</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">fabs</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">float_power</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">floor</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">floor_divide</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">fmax</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">fmin</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">fmod</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">frexp</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">gcd</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">greater</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">greater_equal</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">greeks</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">heaviside</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">hypot</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">inf</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">infty</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">invert</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">isfinite</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">isinf</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">isnan</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">isnat</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">lcm</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ldexp</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">left_shift</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">less</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">less_equal</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">little_endian</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">log</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">log10</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">log1p</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">log2</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logaddexp</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logaddexp2</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logical_and</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logical_not</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logical_or</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">logical_xor</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">matmul</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">maximum</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">minimum</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">mod</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">modf</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">multiply</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">nan</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">negative</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">newaxis</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">nextafter</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">not_equal</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">pi</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">positive</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">power</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">rad2deg</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">radians</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">reciprocal</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">remainder</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">right_shift</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">rint</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">sctypeDict</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">sctypes</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">sign</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">signbit</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">sin</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">sinh</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">spacing</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">sqrt</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">square</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">subtract</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">tan</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">tanh</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">tracemalloc_domain</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">true_divide</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">trunc</span>
-</pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">typecodes</span>
-</pre></div>
-</div>
-</section>
-<section id="classes">
-<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
-<section id="rivtparse">
-<h3>RivtParse<a class="headerlink" href="#rivtparse" title="Link to this heading">#</a></h3>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RivtParse</span><span class="p">(</span>
-    <span class="n">methS</span><span class="p">,</span>
-    <span class="n">folderD</span><span class="p">,</span>
-    <span class="n">labelD</span><span class="p">,</span>
-    <span class="n">rivtD</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>format rivt-strings as utf and rst files</p>
-<section id="methods">
-<h4>Methods<a class="headerlink" href="#methods" title="Link to this heading">#</a></h4>
-</section>
-<section id="atable">
-<h4>atable<a class="headerlink" href="#atable" title="Link to this heading">#</a></h4>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">atable</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span>
-    <span class="n">tblL</span><span class="p">,</span>
-    <span class="n">hdreL</span><span class="p">,</span>
-    <span class="n">tblfmt</span><span class="p">,</span>
-    <span class="n">alignaL</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>write assign values table</p>
-<p>??? example “View Source”
-def atable(self, tblL, hdreL, tblfmt, alignaL):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;write assign values table&quot;&quot;&quot;
-
-            locals().update(self.rivtD)
-
-            valL = []
-
-            for vaL in tblL:
-
-                varS = vaL[0].strip()
-
-                valS = vaL[1].strip()
-
-                unit1S, unit2S = vaL[2], vaL[3]
-
-                descripS = vaL[4].strip()
-
-                if unit1S != &quot;-&quot;:
-
-                    if type(eval(valS)) == list:
-
-                        val1U = array(eval(valS)) * eval(unit1S)
-
-                        val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
-
-                    else:
-
-                        cmdS = varS + &quot;= &quot; + valS
-
-                        exec(cmdS, globals(), locals())
-
-                        valU = eval(varS)
-
-                        val1U = str(valU.cast_unit(eval(unit1S)))
-
-                        val2U = str(valU.cast_unit(eval(unit2S)))
-
-                else:
-
-                    cmdS = varS + &quot;= &quot; + valS
-
-                    exec(cmdS, globals(), locals())
-
-                    valU = eval(varS)
-
-                    val1U = str(valU)
-
-                    val2U = str(valU)
-
-                valL.append([varS, val1U, val2U, descripS])
-
-            sys.stdout.flush()
-
-            old_stdout = sys.stdout
-
-            output = StringIO()
-
-            output.write(
-
-                tabulate(
-
-                    valL, tablefmt=tblfmt, headers=hdreL,
-
-                    showindex=False,  colalign=alignaL))
-
-            mdS = output.getvalue()
-
-            sys.stdout = old_stdout
-
-            sys.stdout.flush()
-
-            self.localD.update(locals())
-
-            print(&quot;\n&quot; + mdS+&quot;\n&quot;)
-
-            return mdS
-</pre></div>
-</div>
-</section>
-<section id="dtable">
-<h4>dtable<a class="headerlink" href="#dtable" title="Link to this heading">#</a></h4>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dtable</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span>
-    <span class="n">tblL</span><span class="p">,</span>
-    <span class="n">hdrvL</span><span class="p">,</span>
-    <span class="n">tblfmt</span><span class="p">,</span>
-    <span class="n">alignvL</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>write declare values table</p>
-<p>??? example “View Source”
-def dtable(self, tblL, hdrvL, tblfmt, alignvL):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;write declare values table&quot;&quot;&quot;
-
-            locals().update(self.rivtD)
-
-            valL = []
-
-            for vaL in tblL:
-
-                varS = vaL[0].strip()
-
-                valS = vaL[1].strip()
-
-                unit1S, unit2S = vaL[2], vaL[3]
-
-                descripS = vaL[4].strip()
-
-                if unit1S != &quot;-&quot;:
-
-                    if type(eval(valS)) == list:
-
-                        val1U = array(eval(valS)) * eval(unit1S)
-
-                        val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
-
-                    else:
-
-                        cmdS = varS + &quot;= &quot; + valS + &quot; * &quot; + unit1S
-
-                        exec(cmdS, globals(), locals())
-
-                        valU = eval(varS)
-
-                        val1U = str(valU.cast_unit(eval(unit1S)))
-
-                        val2U = str(valU.cast_unit(eval(unit2S)))
-
-                else:
-
-                    cmdS = varS + &quot;= &quot; + valS
-
-                    exec(cmdS, globals(), locals())
-
-                    valU = eval(varS)
-
-                    val1U = str(valU)
-
-                    val2U = str(valU)
-
-                valL.append([varS, val1U, val2U, descripS])
-
-            sys.stdout.flush()
-
-            old_stdout = sys.stdout
-
-            output = StringIO()
-
-            output.write(
-
-                tabulate(
-
-                    valL, tablefmt=tblfmt, headers=hdrvL,
-
-                    showindex=False,  colalign=alignvL))
-
-            mdS = output.getvalue()
-
-            sys.stdout = old_stdout
-
-            sys.stdout.flush()
-
-            self.rivtD.update(locals())
-
-            print(&quot;\n&quot; + mdS+&quot;\n&quot;)
-
-            return mdS
-</pre></div>
-</div>
-</section>
-<section id="str-parse">
-<h4>str_parse<a class="headerlink" href="#str-parse" title="Link to this heading">#</a></h4>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">str_parse</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span>
-    <span class="n">strL</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>parse method string line by line starting with second line</p>
-<p><strong>Parameters:</strong></p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Default</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>strL</p></td>
-<td><p>list</p></td>
-<td><p>split method string</p></td>
-<td><p>None</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><strong>Returns:</strong></p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Type</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>mdS</p></td>
-<td><p>md formatted string</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>??? example “View Source”
-def str_parse(self, strL):</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>            &quot;&quot;&quot;parse method string line by line starting with second line
-
-                :param list strL: split method string
-
-                :return mdS: md formatted string
-
-                :return rstS: reST formatted string
-
-                :return labelD: increment references
-
-                :return folderD: folder paths
-
-                :rtype mdS: string
-
-                :rtype rstS: string
-
-                :rtype folderD: dictionary
-
-                :rtype labelD: dictionary
-
-            &quot;&quot;&quot;
-
-            xutfS = &quot;&quot;&quot;&quot;&quot;&quot;      # utfS local string
-
-            xmdS = &quot;&quot;&quot;&quot;&quot;&quot;       # mdS local string
-
-            xrstS = &quot;&quot;&quot;&quot;&quot;&quot;      # rstS local string
-
-            uS = &quot;&quot;&quot;&quot;&quot;&quot;         # raw local line
-
-            blockB = False
-
-            # table alignment
-
-            hdrdL = [&quot;variable&quot;, &quot;value&quot;, &quot;[value]&quot;, &quot;description&quot;]
-
-            aligndL = [&quot;left&quot;, &quot;right&quot;, &quot;right&quot;, &quot;left&quot;]
-
-            hdraL = [&quot;variable&quot;, &quot;value&quot;, &quot;[value]&quot;, &quot;description [eq. number]&quot;]
-
-            alignaL = [&quot;left&quot;, &quot;right&quot;, &quot;right&quot;, &quot;left&quot;]
-
-            blockevalL = []     # current value table
-
-            blockevalB = False  # stop accumulation of values
-
-            vtableL = []        # value table for export
-
-            eqL = []            # equation result table
-
-            lineS = &quot;&quot;
-
-            for uS in strL:
-
-                # print(f&quot;{blockassignB=}&quot;)
-
-                # print(f&quot;{uS=}&quot;)
-
-                uS = uS[4:]                                # remove indent
-
-                if blockB:                                 # accumulate block
-
-                    lineS += uS
-
-                    continue
-
-                if blockB and uS.strip() == &quot;[q]]&quot;:        # end of block
-
-                    tagS = self.tagsD[&quot;[q]&quot;]
-
-                    rvtS = tag_utf.TagsUTF(lineS, tagS,
-
-                                           self.labelD, self.folderD,  self.rivtD)
-
-                    xutfS += rvtS + &quot;\n&quot;
-
-                    rvtS = tag_md.TagsMD(lineS, tagS,
-
-                                         self.labelD, self.folderD,  self.rivtD)
-
-                    xmdS += rvtS + &quot;\n&quot;
-
-                    rvtS = tag_rst.TagsRST(lineS, tagS,
-
-                                           self.labelD, self.folderD,  self.rivtD)
-
-                    xrstS += rvtS + &quot;\n&quot;
-
-                    blockB = False
-
-                if blockevalB and len(uS.strip()) &lt; 2:    # value tables
-
-                    vtableL += blockevalL
-
-                    if tfS == &quot;declare&quot;:
-
-                        vutfS = self.dtable(blockevalL, hdrdL,
-
-                                            &quot;rst&quot;, aligndL) + &quot;\n\n&quot;
-
-                        vmdS = self.dtable(blockevalL, hdrdL,
-
-                                           &quot;html&quot;, aligndL) + &quot;\n\n&quot;
-
-                        xutfS += vutfS
-
-                        xmdS += vmdS
-
-                        xrstS += vutfS
-
-                    if tfS == &quot;assign&quot;:
-
-                        vutfS = self.dtable(blockevalL, hdrdL,
-
-                                            &quot;rst&quot;, aligndL) + &quot;\n\n&quot;
-
-                        vmdS = self.atable(blockevalL, hdraL,
-
-                                           &quot;html&quot;, alignaL) + &quot;\n\n&quot;
-
-                        xutfS += vutfS
-
-                        xmdS += vmdS
-
-                        xrstS += vutfS
-
-                    blockevalL = []
-
-                    blockevalB = False
-
-                elif uS[0:2] == &quot;||&quot;:                      # commands
-
-                    usL = uS[2:].split(&quot;|&quot;)
-
-                    parL = usL[1:]
-
-                    cmdS = usL[0].strip()
-
-                    if cmdS in self.cmdL:
-
-                        rvtC = cmd_utf.CmdUTF(
-
-                            parL, self.labelD, self.folderD, self.rivtD)
-
-                        utfS = rvtC.cmd_parse(cmdS)
-
-                        # print(f&quot;{utfS=}&quot;)
-
-                        xutfS += utfS
-
-                        rvtC = cmd_md.CmdMD(
-
-                            parL, self.labelD, self.folderD, self.rivtD)
-
-                        mdS = rvtC.cmd_parse(cmdS)
-
-                        # print(f&quot;{mdS=}&quot;)
-
-                        xmdS += mdS
-
-                        rvtC = cmd_rst.CmdRST(
-
-                            parL, self.labelD, self.folderD, self.rivtD)
-
-                        reS = rvtC.cmd_parse(cmdS)
-
-                        xrstS += reS
-
-                elif &quot;_[&quot; in uS:                           # line tag
-
-                    usL = uS.split(&quot;_[&quot;)
-
-                    lineS = usL[0]
-
-                    tagS = usL[1].strip()
-
-                    if tagS[0] == &quot;[&quot;:                     # block tag
-
-                        blockB = True
-
-                    if tagS in self.tagsD:
-
-                        rvtC = tag_utf.TagsUTF(lineS, self.labelD, self.folderD,
-
-                                               self.tagsD, self.rivtD)
-
-                        utfxS = rvtC.tag_parse(tagS)
-
-                        xutfS += utfxS + &quot;\n&quot;
-
-                        rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
-
-                                             self.tagsD, self.rivtD)
-
-                        mdS = rvtC.tag_parse(tagS)
-
-                        xmdS += mdS + &quot;\n&quot;
-
-                        rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
-
-                                               self.tagsD, self.rivtD)
-
-                        reS = rvtC.tag_parse(tagS)
-
-                        xrstS += reS + &quot;\n&quot;
-
-                elif &quot;=&quot; in uS and self.methS == &quot;V&quot;:       # equation tag
-
-                    # print(f&quot;{uS=}&quot;)
-
-                    usL = uS.split(&quot;|&quot;)
-
-                    lineS = usL[0]
-
-                    self.labelD[&quot;unitS&quot;] = usL[1].strip()
-
-                    self.labelD[&quot;descS&quot;] = usL[2].strip()
-
-                    rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
-
-                                         self.localD)
-
-                    if &quot;:=&quot; in uS:                         # declare tag
-
-                        tfS = &quot;declare&quot;
-
-                        blockevalL.append(rvtC.tag_parse(&quot;:=&quot;))
-
-                        rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
-
-                                               self.localD)
-
-                        eqL = rvtC.tag_parse(&quot;:=&quot;)
-
-                        blockevalB = True
-
-                        continue
-
-                    else:
-
-                        tfS = &quot;assign&quot;                     # assign tag
-
-                        eqL = rvtC.tag_parse(&quot;=&quot;)
-
-                        mdS += eqL[1]
-
-                        blockevalL.append(eqL[0])
-
-                        rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
-
-                                               self.localD)
-
-                        eqL = rvtC.tag_parse(&quot;=&quot;)
-
-                        rstS += eqL[1]
-
-                        blockevalB = True
-
-                        continue
-
-                else:
-
-                    print(uS)       # pass unformatted string
-
-            # export values
-
-            valP = Path(self.folderD[&quot;dataP&quot;], self.folderD[&quot;valfileS&quot;])
-
-            with open(valP, &quot;w&quot;, newline=&quot;&quot;) as f:
-
-                writecsv = csv.writer(f)
-
-                writecsv.writerow(hdraL)
-
-                writecsv.writerows(vtableL)
-
-            return (xutfS, xmdS, xrstS,  self.labelD, self.folderD, self.rivtD)
-</pre></div>
-</div>
-</section>
-</section>
-</section>
-</section>
-
+<tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="numpy.char.html">numpy.char</a><br>
+<a href="rivtlib.cmd_rst.html">rivtlib.cmd_rst</a><br>
+<a href="rivtlib.cmd_utf.html">rivtlib.cmd_utf</a><br>
+<a href="numpy.core.html">numpy.core</a><br>
+<a href="csv.html">csv</a><br>
+<a href="numpy.ctypeslib.html">numpy.ctypeslib</a><br>
+<a href="numpy.dtypes.html">numpy.dtypes</a><br>
+<a href="numpy.lib.scimath.html">numpy.lib.scimath</a><br>
+</td><td class="multicolumn"><a href="numpy.exceptions.html">numpy.exceptions</a><br>
+<a href="numpy.f2py.html">numpy.f2py</a><br>
+<a href="numpy.fft.html">numpy.fft</a><br>
+<a href="numpy.linalg.html">numpy.linalg</a><br>
+<a href="numpy.lib.html">numpy.lib</a><br>
+<a href="numpy.linalg.html">numpy.linalg</a><br>
+<a href="logging.html">logging</a><br>
+<a href="numpy.ma.html">numpy.ma</a><br>
+</td><td class="multicolumn"><a href="matplotlib.image.html">matplotlib.image</a><br>
+<a href="pandas.html">pandas</a><br>
+<a href="matplotlib.pyplot.html">matplotlib.pyplot</a><br>
+<a href="numpy.polynomial.html">numpy.polynomial</a><br>
+<a href="numpy.random.html">numpy.random</a><br>
+<a href="re.html">re</a><br>
+<a href="numpy.rec.html">numpy.rec</a><br>
+<a href="sympy.html">sympy</a><br>
+</td><td class="multicolumn"><a href="numpy.strings.html">numpy.strings</a><br>
+<a href="sys.html">sys</a><br>
+<a href="rivtlib.tag_rst.html">rivtlib.tag_rst</a><br>
+<a href="rivtlib.tag_utf.html">rivtlib.tag_utf</a><br>
+<a href="numpy.testing.html">numpy.testing</a><br>
+<a href="numpy.typing.html">numpy.typing</a><br>
+<a href="rivtlib.units.html">rivtlib.units</a><br>
+<a href="warnings.html">warnings</a><br>
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="parse.html#RivtParse">RivtParse</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="RivtParse">class <strong>RivtParse</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#RivtParse">RivtParse</a>(methS,&nbsp;folderD,&nbsp;labelD,&nbsp;rivtD)<br>
+&nbsp;<br>
+format&nbsp;rivt-strings&nbsp;as&nbsp;utf&nbsp;and&nbsp;rst&nbsp;files<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="RivtParse-__init__"><strong>__init__</strong></a>(self, methS, folderD, labelD, rivtD)</dt><dd><span class="code">rivt-strings&nbsp;as&nbsp;utf&nbsp;and&nbsp;reST&nbsp;line&nbsp;by&nbsp;line<br>
+&nbsp;<br>
+:param&nbsp;dict&nbsp;folderD:&nbsp;folder&nbsp;paths<br>
+:param&nbsp;dict&nbsp;labelD:&nbsp;numbers&nbsp;that&nbsp;increment<br>
+:param&nbsp;dict&nbsp;outputS:&nbsp;output&nbsp;type<br>
+:param&nbsp;dict&nbsp;outputS:&nbsp;output&nbsp;type</span></dd></dl>
+
+<dl><dt><a name="RivtParse-atable"><strong>atable</strong></a>(self, tblL, hdreL, tblfmt, alignaL)</dt><dd><span class="code">write&nbsp;assign&nbsp;values&nbsp;table</span></dd></dl>
+
+<dl><dt><a name="RivtParse-dtable"><strong>dtable</strong></a>(self, tblL, hdrvL, tblfmt, alignvL)</dt><dd><span class="code">write&nbsp;declare&nbsp;values&nbsp;table</span></dd></dl>
+
+<dl><dt><a name="RivtParse-str_parse"><strong>str_parse</strong></a>(self, strL)</dt><dd><span class="code">parse&nbsp;method&nbsp;string&nbsp;line&nbsp;by&nbsp;line&nbsp;starting&nbsp;with&nbsp;second&nbsp;line<br>
+&nbsp;<br>
+:param&nbsp;list&nbsp;strL:&nbsp;split&nbsp;method&nbsp;string<br>
+:return&nbsp;mdS:&nbsp;md&nbsp;formatted&nbsp;string<br>
+:return&nbsp;rstS:&nbsp;reST&nbsp;formatted&nbsp;string<br>
+:return&nbsp;labelD:&nbsp;increment&nbsp;references<br>
+:return&nbsp;folderD:&nbsp;folder&nbsp;paths<br>
+:rtype&nbsp;mdS:&nbsp;string<br>
+:rtype&nbsp;rstS:&nbsp;string<br>
+:rtype&nbsp;folderD:&nbsp;dictionary<br>
+:rtype&nbsp;labelD:&nbsp;dictionary</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>False_</strong> = np.False_<br>
+<strong>ScalarType</strong> = (&lt;class 'int'&gt;, &lt;class 'float'&gt;, &lt;class 'complex'&gt;, &lt;class 'bool'&gt;, &lt;class 'bytes'&gt;, &lt;class 'str'&gt;, &lt;class 'memoryview'&gt;, &lt;class 'numpy.bool'&gt;, &lt;class 'numpy.complex64'&gt;, &lt;class 'numpy.clongdouble'&gt;, &lt;class 'numpy.complex128'&gt;, &lt;class 'numpy.float16'&gt;, &lt;class 'numpy.float32'&gt;, &lt;class 'numpy.float64'&gt;, &lt;class 'numpy.longdouble'&gt;, &lt;class 'numpy.int8'&gt;, &lt;class 'numpy.int16'&gt;, &lt;class 'numpy.intc'&gt;, &lt;class 'numpy.int32'&gt;, &lt;class 'numpy.int64'&gt;, ...)<br>
+<strong>True_</strong> = np.True_<br>
+<strong>abs</strong> = &lt;ufunc 'absolute'&gt;<br>
+<strong>absolute</strong> = &lt;ufunc 'absolute'&gt;<br>
+<strong>acos</strong> = &lt;ufunc 'arccos'&gt;<br>
+<strong>acosh</strong> = &lt;ufunc 'arccosh'&gt;<br>
+<strong>add</strong> = &lt;ufunc 'add'&gt;<br>
+<strong>arccos</strong> = &lt;ufunc 'arccos'&gt;<br>
+<strong>arccosh</strong> = &lt;ufunc 'arccosh'&gt;<br>
+<strong>arcsin</strong> = &lt;ufunc 'arcsin'&gt;<br>
+<strong>arcsinh</strong> = &lt;ufunc 'arcsinh'&gt;<br>
+<strong>arctan</strong> = &lt;ufunc 'arctan'&gt;<br>
+<strong>arctan2</strong> = &lt;ufunc 'arctan2'&gt;<br>
+<strong>arctanh</strong> = &lt;ufunc 'arctanh'&gt;<br>
+<strong>asin</strong> = &lt;ufunc 'arcsin'&gt;<br>
+<strong>asinh</strong> = &lt;ufunc 'arcsinh'&gt;<br>
+<strong>atan</strong> = &lt;ufunc 'arctan'&gt;<br>
+<strong>atan2</strong> = &lt;ufunc 'arctan2'&gt;<br>
+<strong>atanh</strong> = &lt;ufunc 'arctanh'&gt;<br>
+<strong>bitwise_and</strong> = &lt;ufunc 'bitwise_and'&gt;<br>
+<strong>bitwise_count</strong> = &lt;ufunc 'bitwise_count'&gt;<br>
+<strong>bitwise_invert</strong> = &lt;ufunc 'invert'&gt;<br>
+<strong>bitwise_left_shift</strong> = &lt;ufunc 'left_shift'&gt;<br>
+<strong>bitwise_not</strong> = &lt;ufunc 'invert'&gt;<br>
+<strong>bitwise_or</strong> = &lt;ufunc 'bitwise_or'&gt;<br>
+<strong>bitwise_right_shift</strong> = &lt;ufunc 'right_shift'&gt;<br>
+<strong>bitwise_xor</strong> = &lt;ufunc 'bitwise_xor'&gt;<br>
+<strong>c_</strong> = &lt;numpy.lib._index_tricks_impl.CClass object&gt;<br>
+<strong>cbrt</strong> = &lt;ufunc 'cbrt'&gt;<br>
+<strong>ceil</strong> = &lt;ufunc 'ceil'&gt;<br>
+<strong>conj</strong> = &lt;ufunc 'conjugate'&gt;<br>
+<strong>conjugate</strong> = &lt;ufunc 'conjugate'&gt;<br>
+<strong>copysign</strong> = &lt;ufunc 'copysign'&gt;<br>
+<strong>cos</strong> = &lt;ufunc 'cos'&gt;<br>
+<strong>cosh</strong> = &lt;ufunc 'cosh'&gt;<br>
+<strong>deg2rad</strong> = &lt;ufunc 'deg2rad'&gt;<br>
+<strong>degrees</strong> = &lt;ufunc 'degrees'&gt;<br>
+<strong>divide</strong> = &lt;ufunc 'divide'&gt;<br>
+<strong>divmod</strong> = &lt;ufunc 'divmod'&gt;<br>
+<strong>e</strong> = 2.718281828459045<br>
+<strong>equal</strong> = &lt;ufunc 'equal'&gt;<br>
+<strong>euler_gamma</strong> = 0.5772156649015329<br>
+<strong>exp</strong> = &lt;ufunc 'exp'&gt;<br>
+<strong>exp2</strong> = &lt;ufunc 'exp2'&gt;<br>
+<strong>expm1</strong> = &lt;ufunc 'expm1'&gt;<br>
+<strong>fabs</strong> = &lt;ufunc 'fabs'&gt;<br>
+<strong>float_power</strong> = &lt;ufunc 'float_power'&gt;<br>
+<strong>floor</strong> = &lt;ufunc 'floor'&gt;<br>
+<strong>floor_divide</strong> = &lt;ufunc 'floor_divide'&gt;<br>
+<strong>fmax</strong> = &lt;ufunc 'fmax'&gt;<br>
+<strong>fmin</strong> = &lt;ufunc 'fmin'&gt;<br>
+<strong>fmod</strong> = &lt;ufunc 'fmod'&gt;<br>
+<strong>frexp</strong> = &lt;ufunc 'frexp'&gt;<br>
+<strong>gcd</strong> = &lt;ufunc 'gcd'&gt;<br>
+<strong>greater</strong> = &lt;ufunc 'greater'&gt;<br>
+<strong>greater_equal</strong> = &lt;ufunc 'greater_equal'&gt;<br>
+<strong>greeks</strong> = ('alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta', 'eta', 'theta', 'iota', 'kappa', 'lambda', 'mu', 'nu', 'xi', 'omicron', 'pi', 'rho', 'sigma', 'tau', 'upsilon', ...)<br>
+<strong>heaviside</strong> = &lt;ufunc 'heaviside'&gt;<br>
+<strong>hypot</strong> = &lt;ufunc 'hypot'&gt;<br>
+<strong>index_exp</strong> = &lt;numpy.lib._index_tricks_impl.IndexExpression object&gt;<br>
+<strong>inf</strong> = inf<br>
+<strong>invert</strong> = &lt;ufunc 'invert'&gt;<br>
+<strong>isfinite</strong> = &lt;ufunc 'isfinite'&gt;<br>
+<strong>isinf</strong> = &lt;ufunc 'isinf'&gt;<br>
+<strong>isnan</strong> = &lt;ufunc 'isnan'&gt;<br>
+<strong>isnat</strong> = &lt;ufunc 'isnat'&gt;<br>
+<strong>lcm</strong> = &lt;ufunc 'lcm'&gt;<br>
+<strong>ldexp</strong> = &lt;ufunc 'ldexp'&gt;<br>
+<strong>left_shift</strong> = &lt;ufunc 'left_shift'&gt;<br>
+<strong>less</strong> = &lt;ufunc 'less'&gt;<br>
+<strong>less_equal</strong> = &lt;ufunc 'less_equal'&gt;<br>
+<strong>little_endian</strong> = True<br>
+<strong>log</strong> = &lt;ufunc 'log'&gt;<br>
+<strong>log10</strong> = &lt;ufunc 'log10'&gt;<br>
+<strong>log1p</strong> = &lt;ufunc 'log1p'&gt;<br>
+<strong>log2</strong> = &lt;ufunc 'log2'&gt;<br>
+<strong>logaddexp</strong> = &lt;ufunc 'logaddexp'&gt;<br>
+<strong>logaddexp2</strong> = &lt;ufunc 'logaddexp2'&gt;<br>
+<strong>logical_and</strong> = &lt;ufunc 'logical_and'&gt;<br>
+<strong>logical_not</strong> = &lt;ufunc 'logical_not'&gt;<br>
+<strong>logical_or</strong> = &lt;ufunc 'logical_or'&gt;<br>
+<strong>logical_xor</strong> = &lt;ufunc 'logical_xor'&gt;<br>
+<strong>matmul</strong> = &lt;ufunc 'matmul'&gt;<br>
+<strong>maximum</strong> = &lt;ufunc 'maximum'&gt;<br>
+<strong>mgrid</strong> = &lt;numpy.lib._index_tricks_impl.MGridClass object&gt;<br>
+<strong>minimum</strong> = &lt;ufunc 'minimum'&gt;<br>
+<strong>mod</strong> = &lt;ufunc 'remainder'&gt;<br>
+<strong>modf</strong> = &lt;ufunc 'modf'&gt;<br>
+<strong>multiply</strong> = &lt;ufunc 'multiply'&gt;<br>
+<strong>nan</strong> = nan<br>
+<strong>negative</strong> = &lt;ufunc 'negative'&gt;<br>
+<strong>newaxis</strong> = None<br>
+<strong>nextafter</strong> = &lt;ufunc 'nextafter'&gt;<br>
+<strong>not_equal</strong> = &lt;ufunc 'not_equal'&gt;<br>
+<strong>ogrid</strong> = &lt;numpy.lib._index_tricks_impl.OGridClass object&gt;<br>
+<strong>pi</strong> = 3.141592653589793<br>
+<strong>positive</strong> = &lt;ufunc 'positive'&gt;<br>
+<strong>pow</strong> = &lt;ufunc 'power'&gt;<br>
+<strong>power</strong> = &lt;ufunc 'power'&gt;<br>
+<strong>r_</strong> = &lt;numpy.lib._index_tricks_impl.RClass object&gt;<br>
+<strong>rad2deg</strong> = &lt;ufunc 'rad2deg'&gt;<br>
+<strong>radians</strong> = &lt;ufunc 'radians'&gt;<br>
+<strong>reciprocal</strong> = &lt;ufunc 'reciprocal'&gt;<br>
+<strong>remainder</strong> = &lt;ufunc 'remainder'&gt;<br>
+<strong>right_shift</strong> = &lt;ufunc 'right_shift'&gt;<br>
+<strong>rint</strong> = &lt;ufunc 'rint'&gt;<br>
+<strong>s_</strong> = &lt;numpy.lib._index_tricks_impl.IndexExpression object&gt;<br>
+<strong>sctypeDict</strong> = {'a': &lt;class 'numpy.bytes_'&gt;, 'bool': &lt;class 'numpy.bool'&gt;, 'bool_': &lt;class 'numpy.bool'&gt;, 'byte': &lt;class 'numpy.int8'&gt;, 'bytes': &lt;class 'numpy.bytes_'&gt;, 'bytes_': &lt;class 'numpy.bytes_'&gt;, 'cdouble': &lt;class 'numpy.complex128'&gt;, 'clongdouble': &lt;class 'numpy.clongdouble'&gt;, 'complex': &lt;class 'numpy.complex128'&gt;, 'complex128': &lt;class 'numpy.complex128'&gt;, ...}<br>
+<strong>sign</strong> = &lt;ufunc 'sign'&gt;<br>
+<strong>signbit</strong> = &lt;ufunc 'signbit'&gt;<br>
+<strong>sin</strong> = &lt;ufunc 'sin'&gt;<br>
+<strong>sinh</strong> = &lt;ufunc 'sinh'&gt;<br>
+<strong>spacing</strong> = &lt;ufunc 'spacing'&gt;<br>
+<strong>sqrt</strong> = &lt;ufunc 'sqrt'&gt;<br>
+<strong>square</strong> = &lt;ufunc 'square'&gt;<br>
+<strong>subtract</strong> = &lt;ufunc 'subtract'&gt;<br>
+<strong>tan</strong> = &lt;ufunc 'tan'&gt;<br>
+<strong>tanh</strong> = &lt;ufunc 'tanh'&gt;<br>
+<strong>test</strong> = &lt;numpy._pytesttester.PytestTester object&gt;<br>
+<strong>true_divide</strong> = &lt;ufunc 'divide'&gt;<br>
+<strong>trunc</strong> = &lt;ufunc 'trunc'&gt;<br>
+<strong>typecodes</strong> = {'All': '?bhilqnpBHILQNPefdgFDGSUVOMm', 'AllFloat': 'efdgFDG', 'AllInteger': 'bBhHiIlLqQnNpP', 'Character': 'c', 'Complex': 'FDG', 'Datetime': 'Mm', 'Float': 'efdg', 'Integer': 'bhilqnp', 'UnsignedInteger': 'BHILQNP'}<br>
+<strong>vecdot</strong> = &lt;ufunc 'vecdot'&gt;</td></tr></table>
+</body></html>
 
                 </article>
               
@@ -1953,25 +564,15 @@ def str_parse(self, strL):</p>
     <i class="fa-solid fa-list"></i> On this page
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtparse">RivtParse</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#atable">atable</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dtable">dtable</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#str-parse">str_parse</a></li>
+    <ul class="simple visible nav section-nav flex-column">
 </ul>
-</li>
-</ul>
-</li>
-</ul>
+
   </nav></div>
 
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="_sources/parse.md.txt">
+    <a href="_sources/parse.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

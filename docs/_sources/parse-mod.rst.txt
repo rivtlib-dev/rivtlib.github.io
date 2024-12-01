@@ -1,8 +1,8 @@
 
-parse test file
-===============
+parse.py
+========
 
-test of parse file 3
+Parses rivt functions
 
 .. raw:: html
    :file: parse.html

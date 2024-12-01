@@ -1,8 +1,8 @@
 
-cmd_rst.py
+tag_rst.py
 ==========
 
 Converts commands to rst
 
 .. raw:: html
-   :file: cmd_rst.html
+   :file: tag_rst.html

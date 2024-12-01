@@ -35,3 +35,5 @@ here `rivt.info  <https://rivt.info>`_.  The source code is here `GitHub
     tag_utf-mod.rst
     tag_rst-mod.rst
     units-mod.rst
+    __main__-mod.rst
+    __init__-mod.rst

@@ -1,4 +1,5 @@
 echo Y | rmdir docs /S
+del *.html
 mkdir docs
 mkdir docs\code
 echo F | xcopy /y E:\python313\Lib\site-packages\rivtlib\*.* .\docs\code

@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="_static/favicon-32x32.png" sizes="64x64" rel="icon" type="image/png">
     <link href="_static/favicon-16x16.png" sizes="64x64" rel="icon" type="image/png">
-    <title>Module init &#8212; rivtlib.net 0.1 documentation</title>
+    <title>__init__.py &#8212; rivtlib.net 0.1 documentation</title>
   
   
   
@@ -47,9 +47,11 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '__init__';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '__main__-mod';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="__init__.py" href="__init__-mod.html" />
+    <link rel="prev" title="units.py" href="units-mod.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -164,7 +166,7 @@
 
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="cmd_rst-mod.html">
-    tag_rst.py
+    cmd_rst.py
   </a>
 </li>
 
@@ -191,6 +193,20 @@
 <li class=" ">
   <a class="nav-link dropdown-item nav-internal" href="units-mod.html">
     units.py
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="#">
+    __init__.py
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="__init__-mod.html">
+    __init__.py
   </a>
 </li>
 
@@ -254,8 +270,6 @@
       
       
       
-        
-      
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
         
@@ -302,7 +316,7 @@
 
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="cmd_rst-mod.html">
-    tag_rst.py
+    cmd_rst.py
   </a>
 </li>
 
@@ -324,6 +338,20 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="units-mod.html">
     units.py
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    __init__.py
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="__init__-mod.html">
+    __init__.py
   </a>
 </li>
 
@@ -379,7 +407,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Module <strong>init</strong></span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">__init__.py</span></li>
   </ul>
 </nav>
 </div>
@@ -396,110 +424,9 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-init">
-<h1>Module <strong>init</strong><a class="headerlink" href="#module-init" title="Link to this heading">#</a></h1>
-<p>rivt API</p>
-<hr class="docutils" />
-<p><strong>rivt</strong> is a lightweight markup language for writing, organizing and
-sharing engineering documents and reports. It is designed to be legible,
-flexible and efficient. <strong>rivt</strong> is also the name of an open source framework
-used for producing rivt documents.</p>
-<p><strong>rivtlib</strong> is a Python library that processes rivt files and is distributed
-under the open source MIT license. It runs on platforms that support Python
-3.11 or later and works within a framework of five established, open souce
-technologies:</p>
-<ul class="simple">
-<li><p>Language: Python with open source libraries including <strong>rivtlib</strong></p></li>
-<li><p>IDE: VSCode and extensions</p></li>
-<li><p>Typesetting: Latex TexLive Distribution</p></li>
-<li><p>Diagrams: QCAD</p></li>
-<li><p>Version control: GitHub</p></li>
-</ul>
-<p>The <strong>rivt</strong> framework can be downloaded as a portable Windows zip file or
-installed through OS specific shell scripts (https://rivtcode.net). It is also
-available as an online service at https://rivtonline.net.</p>
-<p>A rivt document (doc) is a text, HTML or PDF ouput file from a processed rivt
-file. A rivt report (report) is an organized collection of rivt docs.
-<strong>rivtlib</strong> organizes and generates both large reports and single file docs.</p>
-<p>A rivt file is a Python file that imports <strong>rivtlib</strong></p>
-<p><strong>import rivtlib.rivtapi as rv</strong></p>
-<p>which exposes 6 API functions and <strong>rS</strong> is a triple quoted rivt-string</p>
-<p>::</p>
-<p>rv.R(rS) - (Run) Run shell scripts
-rv.I(rS) - (Insert) Insert static text, images, tables and math equations
-rv.V(rS) - (Values) Evaluate tables, values and equations
-rv.T(rS) - (Tools) Execute Python functions
-rv.X(rS) - (eXclude) Skip rivt-string processing
-rv.W(rS) - (Write) Write formatted rivt documents</p>
-<p>??? example “View Source”
-‘’’</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    rivt API
-
-    --------
-
-    **rivt** is a lightweight markup language for writing, organizing and
-
-    sharing engineering documents and reports. It is designed to be legible,
-
-    flexible and efficient. **rivt** is also the name of an open source framework
-
-    used for producing rivt documents.
-
-    **rivtlib** is a Python library that processes rivt files and is distributed
-
-    under the open source MIT license. It runs on platforms that support Python
-
-    3.11 or later and works within a framework of five established, open souce
-
-    technologies:
-
-    - Language: Python with open source libraries including **rivtlib**
-
-    - IDE: VSCode and extensions
-
-    - Typesetting: Latex TexLive Distribution
-
-    - Diagrams: QCAD
-
-    - Version control: GitHub
-
-    The **rivt** framework can be downloaded as a portable Windows zip file or
-
-    installed through OS specific shell scripts (https://rivtcode.net). It is also
-
-    available as an online service at https://rivtonline.net.
-
-    A rivt document (doc) is a text, HTML or PDF ouput file from a processed rivt
-
-    file. A rivt report (report) is an organized collection of rivt docs.
-
-    **rivtlib** organizes and generates both large reports and single file docs.
-
-    A rivt file is a Python file that imports **rivtlib** 
-
-    **import rivtlib.rivtapi as rv**
-
-    which exposes 6 API functions and **rS** is a triple quoted rivt-string
-
-    ::
-
-    rv.R(rS) - (Run) Run shell scripts 
-
-    rv.I(rS) - (Insert) Insert static text, images, tables and math equations 
-
-    rv.V(rS) - (Values) Evaluate tables, values and equations 
-
-    rv.T(rS) - (Tools) Execute Python functions
-
-    rv.X(rS) - (eXclude) Skip rivt-string processing 
-
-    rv.W(rS) - (Write) Write formatted rivt documents 
-
-    
-
-    &#39;&#39;&#39;
-</pre></div>
-</div>
+  <section id="init-py">
+<h1>__init__.py<a class="headerlink" href="#init-py" title="Link to this heading">#</a></h1>
+<p>Package __main__</p>
 </section>
 
 
@@ -512,6 +439,24 @@ rv.W(rS) - (Write) Write formatted rivt documents</p>
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="units-mod.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">units.py</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="__init__-mod.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">__init__.py</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -526,7 +471,7 @@ rv.W(rS) - (Write) Write formatted rivt documents</p>
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="_sources/__init__.md.txt">
+    <a href="_sources/__main__-mod.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

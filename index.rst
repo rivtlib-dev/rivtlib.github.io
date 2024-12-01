@@ -21,12 +21,15 @@
 package for writing and publishing engineering documents, with an emphasis on
 document reuse. It implements the **rivt** markup language and API described in
 the **rivt User Manual** at `rivt.info  <https://rivt.info>`_.  The source code
-is here `GitHub <https://github.com/rivtlib-net/rivtlib/>`_
+is here `GitHub <https://github.com/rivtlib-net/rivtlib/>`_.
 
 
 .. toctree::
     :maxdepth: 1
 
+    folders-mod.rst
     parse-mod.rst
+    units-mod.rst
+
 
 

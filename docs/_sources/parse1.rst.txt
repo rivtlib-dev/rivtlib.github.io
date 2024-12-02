@@ -2,7 +2,7 @@ parse1
 ======
 
 
-..raw:: html
+.. raw:: html
 
     :file: parse.html
 

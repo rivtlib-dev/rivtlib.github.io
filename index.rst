@@ -27,13 +27,6 @@ here `rivt.info  <https://rivt.info>`_.  The source code is here `GitHub
 .. toctree::
     :maxdepth: 1
 
-    rivtapi-mod.rst
-    folders-mod.rst
-    parse-mod.rst
-    cmd_utf-mod.rst
-    cmd_rst-mod.rst
-    tag_utf-mod.rst
-    tag_rst-mod.rst
     units-mod.rst
-    __main__-mod.rst
-    __init__-mod.rst
+    parse-mod.rst
+

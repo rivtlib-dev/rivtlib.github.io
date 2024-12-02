@@ -1,8 +1,0 @@
-
-units.py
-==========
-
-Defines calculation units
-
-.. raw:: html
-   :file: units.html

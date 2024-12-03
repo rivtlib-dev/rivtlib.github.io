@@ -1,5 +1,5 @@
-cmd_utf.rst
-===========
+cmd_utf
+=======
 
 folders test
 

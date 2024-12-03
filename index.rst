@@ -27,6 +27,6 @@ here `rivt.info  <https://rivt.info>`_.  The source code is here `GitHub
 .. toctree::
     :maxdepth: 1
 
-    units1.rst
-    parse1.rst
+    units.rst
+    parse.rst
 

@@ -17,14 +17,14 @@ extensions = ['myst_parser', 'sphinx.ext.githubpages',
               'sphinx_favicon', 'sphinx.ext.duration',
               'sphinx.ext.doctest', 'sphinx.ext.autodoc']
 
-html_theme = 'pydata_sphinx_theme'
-html_sidebars = {"**": []}
-source_suffix = ['.rst', '.md']
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+source_suffix = ['.rst', '.md']
 
+html_theme = 'pydata_sphinx_theme'
+html_context = {"default_mode": "light"}
+html_sidebars = {"**": []}
 html_static_path = ['_static', '_static/img/']
-html_context = {"default_mode": "auto"}
 html_logo = "_static/img/rivtpy64.png"
 html_theme_options = {
     "show_nav_level": 2,
@@ -42,8 +42,3 @@ favicons = [
     {"href": "favicon-32x32.png"},
     {"href": "favicon-16x16.png"},
 ]
-
-# For the full list of built-in configuration values, see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="_static/favicon-32x32.png" sizes="64x64" rel="icon" type="image/png">
     <link href="_static/favicon-16x16.png" sizes="64x64" rel="icon" type="image/png">
-    <title>parse &#8212; rivtlib.net 0.1 documentation</title>
+    <title>tag_rst &#8212; rivtlib.net 0.1 documentation</title>
   
   
   
@@ -47,11 +47,11 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'parse';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tag_rst';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="tag_rst" href="tag_rst.html" />
-    <link rel="prev" title="units" href="units.html" />
+    <link rel="next" title="tag_utf" href="tag_utf.html" />
+    <link rel="prev" title="parse" href="parse.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -141,15 +141,15 @@
 </li>
 
 
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parse.html">
     parse
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="tag_rst.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
     tag_rst
   </a>
 </li>
@@ -263,15 +263,15 @@
 </li>
 
 
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parse.html">
     parse
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="tag_rst.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
     tag_rst
   </a>
 </li>
@@ -349,7 +349,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">parse</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">tag_rst</span></li>
   </ul>
 </nav>
 </div>
@@ -366,17 +366,17 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="parse">
-<h1>parse<a class="headerlink" href="#parse" title="Link to this heading">#</a></h1>
-<p>parse test</p>
+  <section id="tag-rst">
+<h1>tag_rst<a class="headerlink" href="#tag-rst" title="Link to this heading">#</a></h1>
+<p>tag rst test</p>
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <meta name="generator" content="pdoc3 0.11.3">
-<title>parse API documentation</title>
-<meta name="description" content="parse module">
+<title>tag_rst API documentation</title>
+<meta name="description" content="">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
@@ -393,10 +393,9 @@ hljs.highlightAll();
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>parse</code></h1>
+<h1 class="title">Module <code>tag_rst</code></h1>
 </header>
 <section id="section-intro">
-<p>parse module</p>
 </section>
 <section>
 </section>
@@ -407,125 +406,38 @@ hljs.highlightAll();
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="parse.RivtParse"><code class="flex name class">
-<span>class <span class="ident">RivtParse</span></span>
-<span>(</span><span>methS, folderD, labelD, rivtD)</span>
+<dt id="tag_rst.TagsRST"><code class="flex name class">
+<span>class <span class="ident">TagsRST</span></span>
+<span>(</span><span>lineS, labelD, folderD, tagsD, localD)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>format rivt-strings as utf and rst files</p>
-<p>rivt-strings as utf and reST line by line</p>
-<p>:param dict folderD: folder paths
-:param dict labelD: numbers that increment
-:param dict outputS: output type
-:param dict outputS: output type</p></div>
+<div class="desc"><p>convert rivt tags to reST</p>
+<p>convert rivt tags to md or reST</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class RivtParse:
-    &#34;&#34;&#34;format rivt-strings as utf and rst files&#34;&#34;&#34;
+<pre><code class="python">class TagsRST():
+    &#34;&#34;&#34;convert rivt tags to reST
 
-    def __init__(self, methS, folderD, labelD,  rivtD):
-        &#34;&#34;&#34; rivt-strings as utf and reST line by line
+    &#34;&#34;&#34;
 
-            :param dict folderD: folder paths
-            :param dict labelD: numbers that increment
-            :param dict outputS: output type
-            :param dict outputS: output type
+    def __init__(self, lineS, labelD, folderD,  tagsD, localD):
+        &#34;&#34;&#34;convert rivt tags to md or reST
+
         &#34;&#34;&#34;
 
-        self.rivtD = rivtD
-        self.folderD = folderD  # folder paths
-        self.labelD = labelD      # incrementing formats
+        self.tagsD = tagsD
+        self.localD = localD
+        self.folderD = folderD
+        self.labelD = labelD
+        self.lineS = lineS
+        self.vgap = &#34;2&#34;
+        self.widthI = labelD[&#34;widthI&#34;]
         self.errlogP = folderD[&#34;errlogP&#34;]
-        self.methS = methS
+        self.valL = []                         # accumulate values in list
 
-        hdrstS = &#34;&#34;&#34;&#34;&#34;&#34;
-        hdreadS = &#34;&#34;&#34;&#34;&#34;&#34;
-        hdutfS = &#34;&#34;&#34;&#34;&#34;&#34;&#34;&#34;
-
-        # section headings
-        xmdS = xrstS = xutfS = &#34;&#34;
-        rL = rS.split(&#34;\n&#34;)
-
-        rsL = rS.split(&#34;|&#34;)              # function string as list
-        titleS = rsL[0].strip()          #
-        labelD[&#34;tocS&#34;] = rsL[1].strip()  # set redaction
-        labelD[&#34;pageI&#34;] = int(rsL[2])    # set background color
-        if rS.strip()[0:2] == &#34;--&#34;:         # omit section heading
-            return &#34;\n&#34;, &#34;\n&#34;, &#34;\n&#34;
-
-        headS = datetime.now().strftime(&#34;%Y-%m-%d | %I:%M%p&#34;) + &#34;\n&#34;
-        labelD[&#34;docS&#34;] = titleS
-        bordrS = labelD[&#34;widthI&#34;] * &#34;=&#34;
-        hdutfS = (headS + &#34;\n&#34; + bordrS + &#34;\n&#34; + titleS + &#34;\n&#34; + bordrS + &#34;\n&#34;)
-        hdmdS = (headS + &#34;\n## &#34; + titleS + &#34;\n&#34;)
-
-        snumI = labelD[&#34;secnumI&#34;] + 1
-        labelD[&#34;secnumI&#34;] = snumI
-        docnumS = labelD[&#34;docnumS&#34;]
-        dnumS = docnumS + &#34;-[&#34; + str(snumI) + &#34;]&#34;
-        headS = dnumS + &#34; &#34; + titleS
-        bordrS = labelD[&#34;widthI&#34;] * &#34;-&#34;
-
-        hdutfS = bordrS + &#34;\n&#34; + headS + &#34;\n&#34; + bordrS + &#34;\n&#34;
-        hdmdS = &#34;### &#34; + headS + &#34;\n&#34;
-        hdrstS += (
-            &#34;.. raw:: latex&#34;
-            + &#34;   \n\n ?x?vspace{.2in} &#34;
-            + &#34;   ?x?begin{tcolorbox} &#34;
-            + &#34;   ?x?textbf{ &#34; + titleS + &#34;}&#34;
-            + &#34;   ?x?hfill?x?textbf{SECTION &#34; + dnumS + &#34; }&#34;
-            + &#34;   ?x?end{tcolorbox}&#34;
-            + &#34;   \n&#34; + &#34;   ?x?newline&#34; + &#34;   ?x?vspace{.05in}&#34;
-            + &#34;\n\n&#34;)
-
-#        print(hdutfS)
-#        return hdutfS, hdmdS, hdrstS
-
-        utfS += hutfS
-        rstS += hrstS
-
-        # valid commands and tags
-        if methS == &#34;R&#34;:
-            self.cmdL = [&#34;run&#34;, &#34;process&#34;]
-
-            self.tagsD = {&#34;link]&#34;: &#34;link&#34;, &#34;line]&#34;: &#34;line&#34;, &#34;page]&#34;: &#34;page&#34;}
-
-        elif methS == &#34;I&#34;:
-            self.cmdL = [&#34;image&#34;, &#34;table&#34;, &#34;text&#34;]
-
-            self.tagsD = {&#34;b]&#34;: &#34;bold&#34;, &#34;i]&#34;: &#34;italic&#34;, &#34;u]&#34;: &#34;underline&#34;,
-                          &#34;c]&#34;: &#34;center&#34;, &#34;r]&#34;: &#34;right&#34;,
-                          &#34;e]&#34;: &#34;equation&#34;, &#34;f]&#34;: &#34;figure&#34;, &#34;t]&#34;: &#34;table&#34;,
-                          &#34;#]&#34;: &#34;foot&#34;, &#34;d]&#34;: &#34;description&#34;,
-                          &#34;l]&#34;: &#34;latex&#34;, &#34;s]&#34;: &#34;sympy&#34;,
-                          &#34;link]&#34;: &#34;link&#34;, &#34;line]&#34;: &#34;line&#34;, &#34;page]&#34;: &#34;page&#34;,
-                          &#34;[c]]&#34;: &#34;centerblk&#34;,  &#34;[p]]&#34;: &#34;plainblk&#34;,
-                          &#34;[l]]&#34;: &#34;latexblk&#34;, &#34;[m]]&#34;: &#34;mathblk&#34;,
-                          &#34;[o]]&#34;: &#34;codeblk&#34;, &#34;[q]]&#34;: &#34;quitblk&#34;}
-
-        elif methS == &#34;V&#34;:
-            self.cmdL = [&#34;image&#34;, &#34;table&#34;, &#34;text&#34;, &#34;assign&#34;, &#34;declare&#34;]
-
-            self.tagsD = {&#34;e]&#34;: &#34;equation&#34;, &#34;f]&#34;: &#34;figure&#34;, &#34;t]&#34;: &#34;table&#34;,
-                          &#34;#]&#34;: &#34;foot&#34;, &#34;d]&#34;: &#34;description&#34;,
-                          &#34;l]&#34;: &#34;latex&#34;, &#34;s]&#34;: &#34;sympy&#34;,
-                          &#34;:=&#34;: &#34;declare&#34;,  &#34;=&#34;: &#34;assign&#34;}
-
-        elif methS == &#34;T&#34;:
-            self.cmdL = []
-
-            self.tagsD = {}
-
-        elif methS == &#34;W&#34;:
-            self.cmdL = []
-
-            self.tagsD = {}
-        else:
-            pass
-
-        modnameS = __name__.split(&#34;.&#34;)[1]
+        modnameS = self.labelD[&#34;modnameS&#34;]
         # print(f&#34;{modnameS=}&#34;)
         logging.basicConfig(
             level=logging.DEBUG,
@@ -535,276 +447,474 @@ hljs.highlightAll();
             filename=self.errlogP,
             filemode=&#34;w&#34;,
         )
-        warnings.filterwarnings(&#34;ignore&#34;)
-        # self.rivtD.update(locals())
+    warnings.filterwarnings(&#34;ignore&#34;)
 
-    def str_parse(self, strL):
-        &#34;&#34;&#34;parse method string line by line starting with second line
+    def bold(self):
+        &#34;&#34;&#34;bold text _[b]
 
-            :param list strL: split method string
-            :return mdS: md formatted string
-            :return rstS: reST formatted string
-            :return labelD: increment references
-            :return folderD: folder paths
-            :rtype mdS: string
-            :rtype rstS: string
-            :rtype folderD: dictionary
-            :rtype labelD: dictionary
+        :return lineS: bold line
+        :rtype: str
+        &#34;&#34;&#34;
+        return &#34;**&#34; + self.lineS.strip() + &#34;**&#34;
+
+    def center(self):
+        &#34;&#34;&#34;center text _[c]
+
+        : return lineS: centered line
+        : rtype: str
+        &#34;&#34;&#34;
+        lineS = &#34;.. raw:: latex \n\n&#34; \
+            + &#34;   ?x?begin{center} &#34; + self.lineS + &#34; ?x?end{center}&#34; \
+            + &#34;\n&#34;
+
+        return lineS
+
+    def italic(self):
+        &#34;&#34;&#34;italicize text _[i]
+
+        :return lineS: centered line
+        :rtype: str
+        &#34;&#34;&#34;
+        return &#34;*&#34; + self.lineS.strip() + &#34;*&#34;
+
+    def right(self):
+        &#34;&#34;&#34;right justify text _[r]
+
+        :return lineS: right justified text
+        :rtype: str
+        &#34;&#34;&#34;
+        return &#34;?x?hfill &#34; + self.lineS
+
+    def boldcenter(self):
+        &#34;&#34;&#34;bold center text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        &#34;&#34;&#34;
+        lineS = &#34;.. raw:: latex \n\n&#34; \
+            + &#34;   ?x?begin{center} ?x?textbf{&#34; + self.lineS +  \
+            &#34;} ?x?end{center}&#34; + &#34;\n&#34;
+        return lineS
+
+    def boldright(self):
+        &#34;&#34;&#34;bold right text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        &#34;&#34;&#34;
+        lineS = &#34;.. raw:: latex \n\n&#34; \
+            + &#34;?x?hfill ?x?textbf{&#34; + self.lineS + &#34;}&#34; \
+            + &#34;\n&#34;
+        return lineS
+
+    def italiccenter(self):
+        &#34;&#34;&#34;italic center text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        &#34;&#34;&#34;
+        lineS = &#34;.. raw:: latex \n\n&#34; \
+            + &#34;   ?x?begin{center} ?x?textit{&#34; + self.lineS +  \
+            &#34;} ?x?end{center}&#34; + &#34;\n&#34;
+        return lineS
+
+    def italicright(self):
+        &#34;&#34;&#34;italic right text _[c]
+
+        :return lineS: centered line
+        :rtype: str
         &#34;&#34;&#34;
 
-        xutfS = &#34;&#34;&#34;&#34;&#34;&#34;      # utfS local string
-        xmdS = &#34;&#34;&#34;&#34;&#34;&#34;       # mdS local string
-        xrstS = &#34;&#34;&#34;&#34;&#34;&#34;      # rstS local string
-        uS = &#34;&#34;&#34;&#34;&#34;&#34;         # raw local line
-        blockB = False
+        lineS = &#34;.. raw:: latex \n\n&#34; \
+            + &#34;?x?hfill ?x?textit{&#34; + self.lineS + &#34;}&#34; \
+            + &#34;\n&#34;
+        return lineS
 
-        # table alignment
-        hdrdL = [&#34;variable&#34;, &#34;value&#34;, &#34;[value]&#34;, &#34;description&#34;]
-        aligndL = [&#34;left&#34;, &#34;right&#34;, &#34;right&#34;, &#34;left&#34;]
-        hdraL = [&#34;variable&#34;, &#34;value&#34;, &#34;[value]&#34;, &#34;description [eq. number]&#34;]
-        alignaL = [&#34;left&#34;, &#34;right&#34;, &#34;right&#34;, &#34;left&#34;]
+    def label(self, labelS, numS):
+        &#34;&#34;&#34;format labels for equations, tables and figures
 
-        blockevalL = []     # current value table
-        blockevalB = False  # stop accumulation of values
-        vtableL = []        # value table for export
-        eqL = []            # equation result table
-        lineS = &#34;&#34;
-        for uS in strL:
-            # print(f&#34;{blockassignB=}&#34;)
-            # print(f&#34;{uS=}&#34;)
-            uS = uS[4:]                                # remove indent
-            if blockB:                                 # accumulate block
-                lineS += uS
-                continue
-            if blockB and uS.strip() == &#34;[q]]&#34;:        # end of block
-                tagS = self.tagsD[&#34;[q]&#34;]
-                rvtS = tag_utf.TagsUTF(lineS, tagS,
-                                       self.labelD, self.folderD,  self.rivtD)
-                xutfS += rvtS + &#34;\n&#34;
-                rvtS = tag_md.TagsMD(lineS, tagS,
-                                     self.labelD, self.folderD,  self.rivtD)
-                xmdS += rvtS + &#34;\n&#34;
-                rvtS = tag_rst.TagsRST(lineS, tagS,
-                                       self.labelD, self.folderD,  self.rivtD)
-                xrstS += rvtS + &#34;\n&#34;
-                blockB = False
-            if blockevalB and len(uS.strip()) &lt; 2:    # value tables
-                vtableL += blockevalL
-                if tfS == &#34;declare&#34;:
-                    vutfS = self.dtable(blockevalL, hdrdL,
-                                        &#34;rst&#34;, aligndL) + &#34;\n\n&#34;
-                    vmdS = self.dtable(blockevalL, hdrdL,
-                                       &#34;html&#34;, aligndL) + &#34;\n\n&#34;
-                    xutfS += vutfS
-                    xmdS += vmdS
-                    xrstS += vutfS
-                if tfS == &#34;assign&#34;:
-                    vutfS = self.dtable(blockevalL, hdrdL,
-                                        &#34;rst&#34;, aligndL) + &#34;\n\n&#34;
-                    vmdS = self.atable(blockevalL, hdraL,
-                                       &#34;html&#34;, alignaL) + &#34;\n\n&#34;
-                    xutfS += vutfS
-                    xmdS += vmdS
-                    xrstS += vutfS
-                blockevalL = []
-                blockevalB = False
-            elif uS[0:2] == &#34;||&#34;:                      # commands
-                usL = uS[2:].split(&#34;|&#34;)
-                parL = usL[1:]
-                cmdS = usL[0].strip()
-                if cmdS in self.cmdL:
-                    rvtC = cmd_utf.CmdUTF(
-                        parL, self.labelD, self.folderD, self.rivtD)
-                    utfS = rvtC.cmd_parse(cmdS)
-                    # print(f&#34;{utfS=}&#34;)
-                    xutfS += utfS
-                    rvtC = cmd_md.CmdMD(
-                        parL, self.labelD, self.folderD, self.rivtD)
-                    mdS = rvtC.cmd_parse(cmdS)
-                    # print(f&#34;{mdS=}&#34;)
-                    xmdS += mdS
-                    rvtC = cmd_rst.CmdRST(
-                        parL, self.labelD, self.folderD, self.rivtD)
-                    reS = rvtC.cmd_parse(cmdS)
-                    xrstS += reS
-            elif &#34;_[&#34; in uS:                           # line tag
-                usL = uS.split(&#34;_[&#34;)
-                lineS = usL[0]
-                tagS = usL[1].strip()
-                if tagS[0] == &#34;[&#34;:                     # block tag
-                    blockB = True
-                if tagS in self.tagsD:
-                    rvtC = tag_utf.TagsUTF(lineS, self.labelD, self.folderD,
-                                           self.tagsD, self.rivtD)
-                    utfxS = rvtC.tag_parse(tagS)
-                    xutfS += utfxS + &#34;\n&#34;
-                    rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
-                                         self.tagsD, self.rivtD)
-                    mdS = rvtC.tag_parse(tagS)
-                    xmdS += mdS + &#34;\n&#34;
-                    rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
-                                           self.tagsD, self.rivtD)
-                    reS = rvtC.tag_parse(tagS)
-                    xrstS += reS + &#34;\n&#34;
-            elif &#34;=&#34; in uS and self.methS == &#34;V&#34;:       # equation tag
-                # print(f&#34;{uS=}&#34;)
-                usL = uS.split(&#34;|&#34;)
-                lineS = usL[0]
-                self.labelD[&#34;unitS&#34;] = usL[1].strip()
-                self.labelD[&#34;descS&#34;] = usL[2].strip()
-                rvtC = tag_md.TagsMD(lineS, self.labelD, self.folderD,
-                                     self.localD)
-                if &#34;:=&#34; in uS:                         # declare tag
-                    tfS = &#34;declare&#34;
-                    blockevalL.append(rvtC.tag_parse(&#34;:=&#34;))
+            : return labelS: formatted label
+            : rtype: str
+        &#34;&#34;&#34;
+        secS = str(self.labelD[&#34;secnumI&#34;]).zfill(2)
+        return secS + &#34; - &#34; + labelS + numS
 
-                    rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
-                                           self.localD)
-                    eqL = rvtC.tag_parse(&#34;:=&#34;)
-                    blockevalB = True
-                    continue
-                else:
-                    tfS = &#34;assign&#34;                     # assign tag
-                    eqL = rvtC.tag_parse(&#34;=&#34;)
-                    mdS += eqL[1]
-                    blockevalL.append(eqL[0])
+    def description(self):
+        &#34;&#34;&#34;footnote description _[d]
 
-                    rvtC = tag_rst.TagsRST(lineS, self.labelD, self.folderD,
-                                           self.localD)
-                    eqL = rvtC.tag_parse(&#34;=&#34;)
-                    rstS += eqL[1]
-                    blockevalB = True
-                    continue
-            else:
-                print(uS)       # pass unformatted string
+        : return lineS: footnote
+        : rtype: str
+        &#34;&#34;&#34;
+        return &#34;.. [*] &#34; + self.lineS
 
-        # export values
-        valP = Path(self.folderD[&#34;dataP&#34;], self.folderD[&#34;valfileS&#34;])
-        with open(valP, &#34;w&#34;, newline=&#34;&#34;) as f:
-            writecsv = csv.writer(f)
-            writecsv.writerow(hdraL)
-            writecsv.writerows(vtableL)
+    def equation(self):
+        &#34;&#34;&#34;reST equation label _[e]
 
-        return (xutfS, xmdS, xrstS,  self.labelD, self.folderD, self.rivtD)
+        : return lineS: reST equation label
+        : rtype: str
+        &#34;&#34;&#34;
+        enumI = int(self.labelD[&#34;equI&#34;])
+        fillS = str(enumI).zfill(2)
+        refS = self.label(&#34;E&#34;, fillS)
+        lineS = &#34;\n\n&#34; + &#34;**&#34; + &#34;Eq. &#34; + str(enumI) + &#34;: &#34;  \
+                + self.lineS.strip() + &#34;** &#34; + &#34; ?x?hfill &#34; + refS + &#34;\n\n&#34;
+        return lineS
 
-    def atable(self, tblL, hdreL, tblfmt, alignaL):
-        &#34;&#34;&#34;write assign values table&#34;&#34;&#34;
+    def figure(self):
+        &#34;&#34;&#34;figure label _[f]
 
-        locals().update(self.rivtD)
+        : return lineS: figure label
+        : rtype: str
+        &#34;&#34;&#34;
+        fnumI = int(self.labelD[&#34;figI&#34;])
+        fillS = str(fnumI).zfill(2)
+        refS = self.label(&#34;F&#34;, fillS)
+        lineS = &#34;\n \n&#34; + &#34;**&#34; + &#34;Figure &#34; + str(fnumI) + &#34;: &#34; + \
+                self.lineS.strip() + &#34;** &#34; + &#34; ?x?hfill &#34; + refS + &#34;\n \n&#34;
+        return self.vgap + lineS + self.vgap + &#34; ?x?nopagebreak \n&#34;
 
-        valL = []
-        for vaL in tblL:
+    def footnumber(self):
+        &#34;&#34;&#34;insert footnote number _[#]
 
-            varS = vaL[0].strip()
-            valS = vaL[1].strip()
-            unit1S, unit2S = vaL[2], vaL[3]
-            descripS = vaL[4].strip()
-            if unit1S != &#34;-&#34;:
-                if type(eval(valS)) == list:
-                    val1U = array(eval(valS)) * eval(unit1S)
-                    val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
-                else:
-                    cmdS = varS + &#34;= &#34; + valS
-                    exec(cmdS, globals(), locals())
-                    valU = eval(varS)
-                    val1U = str(valU.cast_unit(eval(unit1S)))
-                    val2U = str(valU.cast_unit(eval(unit2S)))
-            else:
-                cmdS = varS + &#34;= &#34; + valS
-                exec(cmdS, globals(), locals())
-                valU = eval(varS)
-                val1U = str(valU)
-                val2U = str(valU)
-            valL.append([varS, val1U, val2U, descripS])
+        :return: _description_
+        :rtype: _type_
+        &#34;&#34;&#34;
+        lineS = &#34;&#34;.join(self.lineS)
+        return lineS.replace(&#34;*]&#34;, &#34;[*]_ &#34;)
 
-        sys.stdout.flush()
-        old_stdout = sys.stdout
-        output = StringIO()
-        output.write(
-            tabulate(
-                valL, tablefmt=tblfmt, headers=hdreL,
-                showindex=False,  colalign=alignaL))
-        mdS = output.getvalue()
-        sys.stdout = old_stdout
-        sys.stdout.flush()
+    def latex(self):
+        &#34;&#34;&#34;format latex _[l]
 
-        self.localD.update(locals())
-        print(&#34;\n&#34; + mdS+&#34;\n&#34;)
-        return mdS
+        :return lineS: reST formatted latex
+        :rtype: str
+        &#34;&#34;&#34;
+        return &#34;.. raw:: math\n\n   &#34; + self.lineS + &#34;\n&#34;
 
-    def dtable(self, tblL, hdrvL, tblfmt, alignvL):
-        &#34;&#34;&#34;write declare values table&#34;&#34;&#34;
+    def link(self):
+        &#34;&#34;&#34;url or internal link
 
-        locals().update(self.rivtD)
+        :return: _description_
+        :rtype: _type_
+        &#34;&#34;&#34;
+        lineL = lineS.split(&#34;,&#34;)
+        lineS = &#34;.. _&#34; + lineL[0] + &#34;: &#34; + lineL[1]
 
-        valL = []
-        for vaL in tblL:
-            varS = vaL[0].strip()
-            valS = vaL[1].strip()
-            unit1S, unit2S = vaL[2], vaL[3]
-            descripS = vaL[4].strip()
-            if unit1S != &#34;-&#34;:
-                if type(eval(valS)) == list:
-                    val1U = array(eval(valS)) * eval(unit1S)
-                    val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
-                else:
-                    cmdS = varS + &#34;= &#34; + valS + &#34; * &#34; + unit1S
-                    exec(cmdS, globals(), locals())
-                    valU = eval(varS)
-                    val1U = str(valU.cast_unit(eval(unit1S)))
-                    val2U = str(valU.cast_unit(eval(unit2S)))
-            else:
-                cmdS = varS + &#34;= &#34; + valS
-                exec(cmdS, globals(), locals())
-                valU = eval(varS)
-                val1U = str(valU)
-                val2U = str(valU)
-            valL.append([varS, val1U, val2U, descripS])
+        return lineS
 
-        sys.stdout.flush()
-        old_stdout = sys.stdout
-        output = StringIO()
-        output.write(
-            tabulate(
-                valL, tablefmt=tblfmt, headers=hdrvL,
-                showindex=False,  colalign=alignvL))
-        mdS = output.getvalue()
-        sys.stdout = old_stdout
-        sys.stdout.flush()
+    def line(self):
+        &#34;&#34;&#34;insert line _[line]:
 
-        self.rivtD.update(locals())
+        param lineS: _description_
+        :type lineS: _type_
+        &#34;&#34;&#34;
+        return self.widthI * &#34;-&#34;
 
-        print(&#34;\n&#34; + mdS+&#34;\n&#34;)
-        return mdS</code></pre>
+    def plain(self):
+        &#34;&#34;&#34;format plain literal _[p]
+
+        :return lineS: page break line
+        :rtype: str
+        &#34;&#34;&#34;
+        return &#34;.. raw:: latex \n\n ?x?newpage \n&#34;
+
+    def sympy(self):
+        &#34;&#34;&#34;reST line of sympy _[s]
+
+        :return lineS: formatted sympy
+        :rtype: str
+        &#34;&#34;&#34;
+        spS = self.lineS
+        txS = sp.latex(S(spS))
+        return &#34;.. raw:: math\n\n   &#34; + txS + &#34;\n&#34;
+
+    def underline(self):
+        &#34;&#34;&#34;underline _[u]
+
+        :return lineS: underline
+        :rtype: str
+        &#34;&#34;&#34;
+        return &#34;:math: `?x?text?x?underline{&#34; + self.lineS.strip() + &#34;}&#34;
+
+    def page(self):
+        &#34;&#34;&#34;insert page break _[page]
+
+        :return lineS: page break line
+        :rtype: str
+        &#34;&#34;&#34;
+        return &#34;.. raw:: latex \n\n ?x?newpage \n&#34;
+
+    def table(self):
+        &#34;&#34;&#34;table label _[t]
+
+        :return lineS: figure label
+        :rtype: str
+        &#34;&#34;&#34;
+        tnumI = int(self.labelD[&#34;tableI&#34;])
+        fillS = str(tnumI).zfill(2)
+        refS = self.label(&#34;T&#34;, fillS)
+        lineS = &#34;\n&#34; + &#34;**&#34; + &#34;Table &#34; + fillS + &#34;: &#34; + self.lineS.strip() + \
+                &#34;** &#34; + &#34; ?x?hfill &#34; + refS + &#34;\n&#34;
+        return self.vgap + lineS + self.vgap + &#34; ?x?nopagebreak \n&#34;
+
+    def centerblk(self):
+        &#34;&#34;&#34;_summary_
+        &#34;&#34;&#34;
+        lineS = &#34;.. raw:: latex \n\n&#34; \
+            + &#34;   ?x?begin{center} + ?x?parbox{5cm}&#34; \
+            + self.lineS + &#34; ?x?end{center}&#34; \
+            + &#34;\n\n&#34;
+        return lineS
+
+    def latexblk(self):
+        pass
+
+    def mathblk(self):
+        pass
+
+    def codeblk(self):
+        pass
+
+    def rightblk(self):
+        pass
+
+    def tagblk(self):
+        pass</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
-<dt id="parse.RivtParse.atable"><code class="name flex">
-<span>def <span class="ident">atable</span></span>(<span>self, tblL, hdreL, tblfmt, alignaL)</span>
+<dt id="tag_rst.TagsRST.bold"><code class="name flex">
+<span>def <span class="ident">bold</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>write assign values table</p></div>
+<div class="desc"><p>bold text _[b]</p>
+<p>:return lineS: bold line
+:rtype: str</p></div>
 </dd>
-<dt id="parse.RivtParse.dtable"><code class="name flex">
-<span>def <span class="ident">dtable</span></span>(<span>self, tblL, hdrvL, tblfmt, alignvL)</span>
+<dt id="tag_rst.TagsRST.boldcenter"><code class="name flex">
+<span>def <span class="ident">boldcenter</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>write declare values table</p></div>
+<div class="desc"><p>bold center text _[c]</p>
+<p>:return lineS: centered line
+:rtype: str</p></div>
 </dd>
-<dt id="parse.RivtParse.str_parse"><code class="name flex">
-<span>def <span class="ident">str_parse</span></span>(<span>self, strL)</span>
+<dt id="tag_rst.TagsRST.boldright"><code class="name flex">
+<span>def <span class="ident">boldright</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>parse method string line by line starting with second line</p>
-<p>:param list strL: split method string
-:return mdS: md formatted string
-:return rstS: reST formatted string
-:return labelD: increment references
-:return folderD: folder paths
-:rtype mdS: string
-:rtype rstS: string
-:rtype folderD: dictionary
-:rtype labelD: dictionary</p></div>
+<div class="desc"><p>bold right text _[c]</p>
+<p>:return lineS: centered line
+:rtype: str</p></div>
+</dd>
+<dt id="tag_rst.TagsRST.center"><code class="name flex">
+<span>def <span class="ident">center</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><dl>
+<dt>center text _[c]</dt>
+<dd>
+<p>return lineS: centered line</p>
+</dd>
+<dd>
+<p>rtype: str</p>
+</dd>
+</dl></div>
+</dd>
+<dt id="tag_rst.TagsRST.centerblk"><code class="name flex">
+<span>def <span class="ident">centerblk</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>summary</em></p></div>
+</dd>
+<dt id="tag_rst.TagsRST.codeblk"><code class="name flex">
+<span>def <span class="ident">codeblk</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tag_rst.TagsRST.description"><code class="name flex">
+<span>def <span class="ident">description</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><dl>
+<dt>footnote description _[d]</dt>
+<dd>
+<p>return lineS: footnote</p>
+</dd>
+<dd>
+<p>rtype: str</p>
+</dd>
+</dl></div>
+</dd>
+<dt id="tag_rst.TagsRST.equation"><code class="name flex">
+<span>def <span class="ident">equation</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><dl>
+<dt>reST equation label _[e]</dt>
+<dd>
+<p>return lineS: reST equation label</p>
+</dd>
+<dd>
+<p>rtype: str</p>
+</dd>
+</dl></div>
+</dd>
+<dt id="tag_rst.TagsRST.figure"><code class="name flex">
+<span>def <span class="ident">figure</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><dl>
+<dt>figure label _[f]</dt>
+<dd>
+<p>return lineS: figure label</p>
+</dd>
+<dd>
+<p>rtype: str</p>
+</dd>
+</dl></div>
+</dd>
+<dt id="tag_rst.TagsRST.footnumber"><code class="name flex">
+<span>def <span class="ident">footnumber</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>insert footnote number _[#]</p>
+<p>:return: <em>description</em>
+:rtype: <em>type</em></p></div>
+</dd>
+<dt id="tag_rst.TagsRST.italic"><code class="name flex">
+<span>def <span class="ident">italic</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>italicize text _[i]</p>
+<p>:return lineS: centered line
+:rtype: str</p></div>
+</dd>
+<dt id="tag_rst.TagsRST.italiccenter"><code class="name flex">
+<span>def <span class="ident">italiccenter</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>italic center text _[c]</p>
+<p>:return lineS: centered line
+:rtype: str</p></div>
+</dd>
+<dt id="tag_rst.TagsRST.italicright"><code class="name flex">
+<span>def <span class="ident">italicright</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>italic right text _[c]</p>
+<p>:return lineS: centered line
+:rtype: str</p></div>
+</dd>
+<dt id="tag_rst.TagsRST.label"><code class="name flex">
+<span>def <span class="ident">label</span></span>(<span>self, labelS, numS)</span>
+</code></dt>
+<dd>
+<div class="desc"><dl>
+<dt>format labels for equations, tables and figures</dt>
+<dd>
+<p>return labelS: formatted label</p>
+</dd>
+<dd>
+<p>rtype: str</p>
+</dd>
+</dl></div>
+</dd>
+<dt id="tag_rst.TagsRST.latex"><code class="name flex">
+<span>def <span class="ident">latex</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>format latex _[l]</p>
+<p>:return lineS: reST formatted latex
+:rtype: str</p></div>
+</dd>
+<dt id="tag_rst.TagsRST.latexblk"><code class="name flex">
+<span>def <span class="ident">latexblk</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tag_rst.TagsRST.line"><code class="name flex">
+<span>def <span class="ident">line</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>insert line _[line]:</p>
+<p>param lineS: <em>description</em>
+:type lineS: <em>type</em></p></div>
+</dd>
+<dt id="tag_rst.TagsRST.link"><code class="name flex">
+<span>def <span class="ident">link</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>url or internal link</p>
+<p>:return: <em>description</em>
+:rtype: <em>type</em></p></div>
+</dd>
+<dt id="tag_rst.TagsRST.mathblk"><code class="name flex">
+<span>def <span class="ident">mathblk</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tag_rst.TagsRST.page"><code class="name flex">
+<span>def <span class="ident">page</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>insert page break _[page]</p>
+<p>:return lineS: page break line
+:rtype: str</p></div>
+</dd>
+<dt id="tag_rst.TagsRST.plain"><code class="name flex">
+<span>def <span class="ident">plain</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>format plain literal _[p]</p>
+<p>:return lineS: page break line
+:rtype: str</p></div>
+</dd>
+<dt id="tag_rst.TagsRST.right"><code class="name flex">
+<span>def <span class="ident">right</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>right justify text _[r]</p>
+<p>:return lineS: right justified text
+:rtype: str</p></div>
+</dd>
+<dt id="tag_rst.TagsRST.rightblk"><code class="name flex">
+<span>def <span class="ident">rightblk</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tag_rst.TagsRST.sympy"><code class="name flex">
+<span>def <span class="ident">sympy</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>reST line of sympy _[s]</p>
+<p>:return lineS: formatted sympy
+:rtype: str</p></div>
+</dd>
+<dt id="tag_rst.TagsRST.table"><code class="name flex">
+<span>def <span class="ident">table</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>table label _[t]</p>
+<p>:return lineS: figure label
+:rtype: str</p></div>
+</dd>
+<dt id="tag_rst.TagsRST.tagblk"><code class="name flex">
+<span>def <span class="ident">tagblk</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tag_rst.TagsRST.underline"><code class="name flex">
+<span>def <span class="ident">underline</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>underline _[u]</p>
+<p>:return lineS: underline
+:rtype: str</p></div>
 </dd>
 </dl>
 </dd>
@@ -819,11 +929,35 @@ hljs.highlightAll();
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="parse.RivtParse" href="#parse.RivtParse">RivtParse</a></code></h4>
-<ul class="">
-<li><code><a title="parse.RivtParse.atable" href="#parse.RivtParse.atable">atable</a></code></li>
-<li><code><a title="parse.RivtParse.dtable" href="#parse.RivtParse.dtable">dtable</a></code></li>
-<li><code><a title="parse.RivtParse.str_parse" href="#parse.RivtParse.str_parse">str_parse</a></code></li>
+<h4><code><a title="tag_rst.TagsRST" href="#tag_rst.TagsRST">TagsRST</a></code></h4>
+<ul class="two-column">
+<li><code><a title="tag_rst.TagsRST.bold" href="#tag_rst.TagsRST.bold">bold</a></code></li>
+<li><code><a title="tag_rst.TagsRST.boldcenter" href="#tag_rst.TagsRST.boldcenter">boldcenter</a></code></li>
+<li><code><a title="tag_rst.TagsRST.boldright" href="#tag_rst.TagsRST.boldright">boldright</a></code></li>
+<li><code><a title="tag_rst.TagsRST.center" href="#tag_rst.TagsRST.center">center</a></code></li>
+<li><code><a title="tag_rst.TagsRST.centerblk" href="#tag_rst.TagsRST.centerblk">centerblk</a></code></li>
+<li><code><a title="tag_rst.TagsRST.codeblk" href="#tag_rst.TagsRST.codeblk">codeblk</a></code></li>
+<li><code><a title="tag_rst.TagsRST.description" href="#tag_rst.TagsRST.description">description</a></code></li>
+<li><code><a title="tag_rst.TagsRST.equation" href="#tag_rst.TagsRST.equation">equation</a></code></li>
+<li><code><a title="tag_rst.TagsRST.figure" href="#tag_rst.TagsRST.figure">figure</a></code></li>
+<li><code><a title="tag_rst.TagsRST.footnumber" href="#tag_rst.TagsRST.footnumber">footnumber</a></code></li>
+<li><code><a title="tag_rst.TagsRST.italic" href="#tag_rst.TagsRST.italic">italic</a></code></li>
+<li><code><a title="tag_rst.TagsRST.italiccenter" href="#tag_rst.TagsRST.italiccenter">italiccenter</a></code></li>
+<li><code><a title="tag_rst.TagsRST.italicright" href="#tag_rst.TagsRST.italicright">italicright</a></code></li>
+<li><code><a title="tag_rst.TagsRST.label" href="#tag_rst.TagsRST.label">label</a></code></li>
+<li><code><a title="tag_rst.TagsRST.latex" href="#tag_rst.TagsRST.latex">latex</a></code></li>
+<li><code><a title="tag_rst.TagsRST.latexblk" href="#tag_rst.TagsRST.latexblk">latexblk</a></code></li>
+<li><code><a title="tag_rst.TagsRST.line" href="#tag_rst.TagsRST.line">line</a></code></li>
+<li><code><a title="tag_rst.TagsRST.link" href="#tag_rst.TagsRST.link">link</a></code></li>
+<li><code><a title="tag_rst.TagsRST.mathblk" href="#tag_rst.TagsRST.mathblk">mathblk</a></code></li>
+<li><code><a title="tag_rst.TagsRST.page" href="#tag_rst.TagsRST.page">page</a></code></li>
+<li><code><a title="tag_rst.TagsRST.plain" href="#tag_rst.TagsRST.plain">plain</a></code></li>
+<li><code><a title="tag_rst.TagsRST.right" href="#tag_rst.TagsRST.right">right</a></code></li>
+<li><code><a title="tag_rst.TagsRST.rightblk" href="#tag_rst.TagsRST.rightblk">rightblk</a></code></li>
+<li><code><a title="tag_rst.TagsRST.sympy" href="#tag_rst.TagsRST.sympy">sympy</a></code></li>
+<li><code><a title="tag_rst.TagsRST.table" href="#tag_rst.TagsRST.table">table</a></code></li>
+<li><code><a title="tag_rst.TagsRST.tagblk" href="#tag_rst.TagsRST.tagblk">tagblk</a></code></li>
+<li><code><a title="tag_rst.TagsRST.underline" href="#tag_rst.TagsRST.underline">underline</a></code></li>
 </ul>
 </li>
 </ul>
@@ -849,20 +983,20 @@ hljs.highlightAll();
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="units.html"
+       href="parse.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">units</p>
+        <p class="prev-next-title">parse</p>
       </div>
     </a>
     <a class="right-next"
-       href="tag_rst.html"
+       href="tag_utf.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">tag_rst</p>
+        <p class="prev-next-title">tag_utf</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -880,7 +1014,7 @@ hljs.highlightAll();
   <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="_sources/parse.rst.txt">
+    <a href="_sources/tag_rst.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

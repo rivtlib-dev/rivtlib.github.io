@@ -1,0 +1,1579 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="_static/favicon-32x32.png" sizes="64x64" rel="icon" type="image/png">
+    <link href="_static/favicon-16x16.png" sizes="64x64" rel="icon" type="image/png">
+    <title>tag_utf &#8212; rivtlib.net 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/jquery.js?v=5d32c60e"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="_static/documentation_options.js?v=2709fde1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tag_utf';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cmd_rst" href="cmd_rst.html" />
+    <link rel="prev" title="tag_rst" href="tag_rst.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="_static/rivtpy64.png" class="logo__image only-light" alt="rivtlib.net 0.1 documentation - Home"/>
+    <img src="_static/rivtpy64.png" class="logo__image only-dark pst-js-only" alt="rivtlib.net 0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="units.html">
+    units
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parse.html">
+    parse
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tag_rst.html">
+    tag_rst
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    tag_utf
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="cmd_rst.html">
+    cmd_rst
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="cmd_utf.html">
+    cmd_utf.rst
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="units.html">
+    units
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="parse.html">
+    parse
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tag_rst.html">
+    tag_rst
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    tag_utf
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="cmd_rst.html">
+    cmd_rst
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="cmd_utf.html">
+    cmd_utf.rst
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">tag_utf</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="tag-utf">
+<h1>tag_utf<a class="headerlink" href="#tag-utf" title="Link to this heading">#</a></h1>
+<p>tag utf test</p>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.3">
+<title>tag_utf API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>tag_utf</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="tag_utf.Tags"><code class="flex name class">
+<span>class <span class="ident">Tags</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>subclass - convert rivt tags to MD or reST</p>
+<p>============================ =======================================
+tags
+description
+============================ =======================================</p>
+<p>I,V line format:
+text <em>[h1-h6]
+heading type
+<br>
+text </em>[b]
+bold
+text <em>[i]
+italic
+text </em>[c]
+center
+text <em>[bic]
+combined formatting
+text </em>[u]
+underline <br>
+text <em>[r]
+right justify
+text </em>[l]
+LaTeX math
+text <em>[s]
+sympy math
+text </em>[l,s;bic]
+combined formatting
+text <em>[e]
+equation label and autonumber
+text </em>[f]
+figure caption and autonumber
+text <em>[t]
+table title and autonumber
+text </em>[#]
+footnote and autonumber
+text <em>[d]
+footnote description
+</em>[line]
+horizontal line
+<em>[page]
+new page
+</em>[address, label]
+url, internal reference
+I,V
+block format:
+<br>
+<em>[[b]]
+bold
+</em>[[c]]
+center
+<em>[[i]]
+italic
+</em>[[p]]
+plain<br>
+<em>[[bcip]]
+combined formatting
+</em>[[l]]
+LaTeX
+<em>[[h]]
+HTML
+</em>[[q]]
+quit block</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Tags():
+    &#34;&#34;&#34;subclass - convert rivt tags to MD or reST
+
+            ============================ =======================================
+            tags                                   description 
+            ============================ =======================================
+
+            I,V line format:
+            text _[h1-h6]                     heading type        
+            text _[b]                       bold 
+            text _[i]                       italic
+            text _[c]                       center
+            text _[bic]                     combined formatting
+            text _[u]                       underline   
+            text _[r]                       right justify
+            text _[l]                       LaTeX math
+            text _[s]                       sympy math
+            text _[l,s;bic]                 combined formatting
+            text _[e]                       equation label and autonumber
+            text _[f]                       figure caption and autonumber
+            text _[t]                       table title and autonumber
+            text _[#]                       footnote and autonumber
+            text _[d]                       footnote description 
+            _[line]                         horizontal line
+            _[page]                         new page
+            _[address, label]               url, internal reference
+            I,V  block format:          
+            _[[b]]                          bold
+            _[[c]]                          center
+            _[[i]]                          italic
+            _[[p]]                          plain  
+            _[[bcip]]                       combined formatting
+            _[[l]]                          LaTeX
+            _[[h]]                          HTML 
+            _[[q]]                          quit block
+
+        &#34;&#34;&#34;
+
+    def tag_parse(self, tagS):
+        &#34;&#34;&#34;convert rivt tags to md
+
+        &#34;&#34;&#34;
+
+        if tagS in self.tagsD:
+            return eval(&#34;self.&#34; + self.tagsD[tagS] + &#34;()&#34;)
+        if &#34;b&#34; in tagS and &#34;c&#34; in tagS:
+            return self.boldcenter()
+        if &#34;b&#34; in tagS and &#34;i&#34; in tagS:
+            return self.bolditalic()
+        if &#34;b&#34; in tagS and &#34;i&#34; in tagS and &#34;c&#34; in tagS:
+            return self.bolditaliccenter()
+        if &#34;i&#34; in tagS and &#34;c&#34; in tagS:
+            return self.italiccenter()
+
+    def declare(self):
+        &#34;&#34;&#34;declare variable values
+
+        :return: _description_
+        :rtype: _type_
+        &#34;&#34;&#34;
+        locals().update(self.localD)
+        varS = str(self.lineS).split(&#34;:=&#34;)[0].strip()
+        valS = str(self.lineS).split(&#34;:=&#34;)[1].strip()
+        unit1S = str(self.labelD[&#34;unitS&#34;]).split(&#34;,&#34;)[0]
+        unit2S = str(self.labelD[&#34;unitS&#34;]).split(&#34;,&#34;)[1]
+        descripS = str(self.labelD[&#34;descS&#34;])
+        if unit1S.strip() != &#34;-&#34;:
+            cmdS = varS + &#34;= &#34; + valS + &#34;*&#34; + unit1S
+        else:
+            cmdS = varS + &#34;= as_unum(&#34; + valS + &#34;)&#34;
+
+        exec(cmdS, globals(), locals())
+        self.localD.update(locals())
+        return [varS, valS, unit1S, unit2S, descripS]
+
+    def assign(self):
+        &#34;&#34;&#34;assign value to equation
+
+        :return: _description_
+        :rtype: _type_
+        &#34;&#34;&#34;
+        locals().update(self.localD)
+        varS = str(self.lineS).split(&#34;=&#34;)[0].strip()
+        valS = str(self.lineS).split(&#34;=&#34;)[1].strip()
+        unit1S = str(self.labelD[&#34;unitS&#34;]).split(&#34;,&#34;)[0]
+        unit2S = str(self.labelD[&#34;unitS&#34;]).split(&#34;,&#34;)[1]
+        descS = str(self.labelD[&#34;eqlabelS&#34;])
+        precI = int(self.labelD[&#34;descS&#34;])  # trim result
+        fmtS = &#34;%.&#34; + str(precI) + &#34;f&#34;
+        if unit1S.strip() != &#34;-&#34;:
+            if type(eval(valS)) == list:
+                val1U = array(eval(valS)) * eval(unit1S)
+                val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+            else:
+                cmdS = varS + &#34;= &#34; + valS
+                exec(cmdS, globals(), locals())
+
+                val1U = eval(varS).cast_unit(eval(unit1S))
+                val1U.set_format(value_format=fmtS, auto_norm=True)
+                val2U = val1U.cast_unit(eval(unit2S))
+                # print(f&#34;{val1U=}&#34;)
+        else:
+            cmdS = varS + &#34;= as_unum(&#34; + valS + &#34;)&#34;
+            exec(cmdS, globals(), locals())
+
+            valU = eval(varS)
+            valdec = round(valU.number(), precI)
+            val1U = val2U = str(valdec)
+
+        spS = &#34;Eq(&#34; + varS + &#34;,(&#34; + valS + &#34;))&#34;
+        mdS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+        mdS = &#34;\n&#34; + mdS + &#34;\n&#34;
+        eqL = [varS, valS, unit1S, unit2S, descS]
+
+        print(mdS)                      # print equation
+
+        subS = &#34; &#34;
+        if self.labelD[&#34;subB&#34;]:
+            subS = self.vsub(eqL, precI, varS, val1U)
+            print(subS)                  # print with substition
+
+        self.localD.update(locals())
+        return [eqL, mdS + &#34;\n&#34; + subS + &#34;\n\n&#34;]
+
+    def vsub(self, eqL, precI, varS, val1U):
+        &#34;&#34;&#34;substitute variables with values
+
+        :param eqL: _description_
+        :type eqL: _type_
+        :param precI: _description_
+        :type precI: _type_
+        :param varS: _description_
+        :type varS: _type_
+        :param val1U: _description_
+        :type val1U: _type_
+        :return: _description_
+        :rtype: _type_
+        &#34;&#34;&#34;
+
+        locals().update(self.localD)
+        fmtS = &#34;%.&#34; + str(precI) + &#34;f&#34;
+        varL = [str(eqL[0]), str(eqL[1])]
+        # resultS = vars[0].strip() + &#34; = &#34; + str(eval(vars[1]))
+        # sps = sps.encode(&#39;unicode-escape&#39;).decode()
+        eqS = &#34;Eq(&#34; + eqL[0] + &#34;,(&#34; + eqL[1] + &#34;))&#34;
+        with sp.evaluate(False):
+            symeq = sp.sympify(eqS.strip())
+        # print(f&#34;{symeq=}&#34;)
+        symat = symeq.atoms(sp.Symbol)
+        # print(f&#34;{symat=}&#34;)
+        for n1O in symat:
+            if str(n1O) == varS:
+                symeq = symeq.subs(n1O, sp.Symbol(str(val1U)))
+                continue
+            # print(f&#34;{n1O=}&#34;)
+            n1U = eval(str(n1O))
+            n1U.set_format(value_format=fmtS, auto_norm=True)
+            # print(f&#34;{n1U=}&#34;)
+            evlen = len(str(n1U))  # get var length
+            new_var = str(n1U).rjust(evlen, &#34;~&#34;)
+            new_var = new_var.replace(&#34;_&#34;, &#34;|&#34;)
+            # print(f&#34;{new_var=}&#34;)
+            with sp.evaluate(False):
+                symeq = symeq.subs(n1O, sp.Symbol(new_var))
+            # print(f&#34;{symeq=}&#34;)
+        out2 = sp.pretty(symeq, wrap_line=False)
+        # print(&#39;out2a\n&#39;, out2)
+        # symat1 = symeq.atoms(sp.Symbol)  # adjust character length
+        # for n2 in symat1:
+        #     orig_var = str(n2).replace(&#34;~&#34;, &#34;&#34;)
+        #     orig_var = orig_var.replace(&#34;|&#34;, &#34;_&#34;)
+        #     expr = eval(varL[1])
+        #     if type(expr) == float:
+        #         form = &#34;{%.&#34; + str(precI) + &#34;f}&#34;
+        #         symeval1 = form.format(eval(str(expr)))
+        #     else:
+        #         try:
+        #             symeval1 = eval(
+        #                 orig_var.__str__()).__str__()
+        #         except:
+        #             symeval1 = eval(orig_var.__str__()).__str__()
+        #     out2 = out2.replace(n2.__str__(), symeval1)   # substitute
+        # print(&#39;out2b\n&#39;, out2)
+        out3 = out2  # clean up unicode
+        out3 = out3.replace(&#34;*&#34;, &#34;\\u22C5&#34;)
+        _cnt = 0
+        for _m in out3:
+            if _m == &#34;-&#34;:
+                _cnt += 1
+                continue
+            else:
+                if _cnt &gt; 1:
+                    out3 = out3.replace(&#34;-&#34; * _cnt, &#34;\u2014&#34; * _cnt)
+                _cnt = 0
+        self.localD.update(locals())
+        mdS = out3 + &#34;\n\n&#34;
+
+        return mdS
+
+    def declare(self):
+        &#34;&#34;&#34; := declare variable value
+
+        :return assignL: assign results
+        :rtype: list
+        :return rstS: restruct string 
+        :rtype: string
+        &#34;&#34;&#34;
+        locals().update(self.localD)
+        varS = str(self.lineS).split(&#34;:=&#34;)[0].strip()
+        valS = str(self.lineS).split(&#34;:=&#34;)[1].strip()
+        unit1S = str(self.labelD[&#34;unitS&#34;]).split(&#34;,&#34;)[0]
+        unit2S = str(self.labelD[&#34;unitS&#34;]).split(&#34;,&#34;)[1]
+        descripS = str(self.labelD[&#34;descS&#34;])
+        if unit1S.strip() != &#34;-&#34;:
+            cmdS = varS + &#34;= &#34; + valS + &#34;*&#34; + unit1S
+        else:
+            cmdS = varS + &#34;= as_unum(&#34; + valS + &#34;)&#34;
+
+        exec(cmdS, globals(), locals())
+
+        self.localD.update(locals())
+
+        return [varS, valS, unit1S, unit2S, descripS]
+
+    def assign(self):
+        &#34;&#34;&#34; = assign result to equation
+
+        :return assignL: assign results
+        :rtype: list
+        :return rstS: restruct string 
+        :rtype: string
+        &#34;&#34;&#34;
+        locals().update(self.localD)
+        varS = str(self.lineS).split(&#34;=&#34;)[0].strip()
+        valS = str(self.lineS).split(&#34;=&#34;)[1].strip()
+        unit1S = str(self.labelD[&#34;unitS&#34;]).split(&#34;,&#34;)[0]
+        unit2S = str(self.labelD[&#34;unitS&#34;]).split(&#34;,&#34;)[1]
+        descS = str(self.labelD[&#34;eqlabelS&#34;])
+        precI = int(self.labelD[&#34;descS&#34;])  # trim result
+        fmtS = &#34;%.&#34; + str(precI) + &#34;f&#34;
+        if unit1S.strip() != &#34;-&#34;:
+            if type(eval(valS)) == list:
+                val1U = array(eval(valS)) * eval(unit1S)
+                val2U = [q.cast_unit(eval(unit2S)) for q in val1U]
+            else:
+                cmdS = varS + &#34;= &#34; + valS
+                exec(cmdS, globals(), locals())
+
+                val1U = eval(varS).cast_unit(eval(unit1S))
+                val1U.set_format(value_format=fmtS, auto_norm=True)
+                val2U = val1U.cast_unit(eval(unit2S))
+        else:
+            cmdS = varS + &#34;= as_unum(&#34; + valS + &#34;)&#34;
+            exec(cmdS, globals(), locals())
+
+            valU = eval(varS)
+            valdec = round(valU.number(), precI)
+            val1U = val2U = str(valdec)
+        spS = &#34;Eq(&#34; + varS + &#34;,(&#34; + valS + &#34;))&#34;
+        # symeq = sp.sympify(spS, _clash2, evaluate=False)
+        # eqltxS = sp.latex(symeq, mul_symbol=&#34;dot&#34;)
+        eqS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+        indeqS = eqS.replace(&#34;\n&#34;, &#34;\n   &#34;)
+        rstS = &#34;\n::\n\n   &#34; + indeqS + &#34;\n\n&#34;
+        eqL = [varS, valS, unit1S, unit2S, descS]
+        self.localD.update(locals())
+
+        subS = &#34;\n\n&#34;
+        if self.labelD[&#34;subB&#34;]:              # replace variables with numbers
+            subS = self.vsub(eqL, precI, varS, val1U) + &#34;\n\n&#34;
+
+        assignL = [varS, str(val1U), unit1S, unit2S, descS]
+        return [assignL, rstS + subS]
+
+    def vsub(self, eqL, precI, varS, val1U):
+        &#34;&#34;&#34;substitute numbers for variables in printed output
+
+        :return assignL: assign results
+        :rtype: list
+        :return rstS: restruct string 
+        :rtype: string
+        &#34;&#34;&#34;
+        locals().update(self.localD)
+        fmtS = &#34;%.&#34; + str(precI) + &#34;f&#34;
+        varL = [str(eqL[0]), str(eqL[1])]
+        # resultS = vars[0].strip() + &#34; = &#34; + str(eval(vars[1]))
+        # sps = sps.encode(&#39;unicode-escape&#39;).decode()
+        eqS = &#34;Eq(&#34; + eqL[0] + &#34;,(&#34; + eqL[1] + &#34;))&#34;
+        with sp.evaluate(False):
+            symeq = sp.sympify(eqS.strip())
+        symat = symeq.atoms(sp.Symbol)
+        for n1O in symat:
+            if str(n1O) == varS:
+                symeq = symeq.subs(n1O, sp.Symbol(str(val1U)))
+                continue
+            n1U = eval(str(n1O))
+            n1U.set_format(value_format=fmtS, auto_norm=True)
+            evlen = len(str(n1U))  # get var length
+            new_var = str(n1U).rjust(evlen, &#34;~&#34;)
+            new_var = new_var.replace(&#34;_&#34;, &#34;|&#34;)
+            with sp.evaluate(False):                # sub values
+                symeq = symeq.subs(n1O, sp.Symbol(new_var))
+        out2 = sp.pretty(symeq, wrap_line=False)
+        # symat1 = symeq.atoms(sp.Symbol)
+        # for n2 in symat1:
+        #     orig_var = str(n2).replace(&#34;~&#34;, &#34;&#34;)
+        #     orig_var = orig_var.replace(&#34;|&#34;, &#34;_&#34;)
+        #     expr = eval(varL[1])
+        #     if type(expr) == float:
+        #         form = &#34;{%.&#34; + str(precI) + &#34;f}&#34;
+        #         symeval1 = form.format(eval(str(expr)))
+        #     else:
+        #         try:
+        #             symeval1 = eval(
+        #                 orig_var.__str__()).__str__()
+        #         except:
+        #             symeval1 = eval(orig_var.__str__()).__str__()
+        #     out2 = out2.replace(n2.__str__(), symeval1)   # substitute
+        # print(&#39;out2b\n&#39;, out2)
+        out3 = out2  # clean up unicode
+        out3 = out3.replace(&#34;*&#34;, &#34;\\u22C5&#34;)
+        _cnt = 0
+        for _m in out3:
+            if _m == &#34;-&#34;:
+                _cnt += 1
+                continue
+            else:
+                if _cnt &gt; 1:
+                    out3 = out3.replace(&#34;-&#34; * _cnt, &#34;\u2014&#34; * _cnt)
+                _cnt = 0
+        self.localD.update(locals())
+        indeqS = out3.replace(&#34;\n&#34;, &#34;\n   &#34;)
+        rstS = &#34;\n::\n\n   &#34; + indeqS + &#34;\n\n&#34;
+
+        return rstS</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="tag_utf.TagsUTF" href="#tag_utf.TagsUTF">TagsUTF</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="tag_utf.Tags.assign"><code class="name flex">
+<span>def <span class="ident">assign</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>= assign result to equation</p>
+<p>:return assignL: assign results
+:rtype: list
+:return rstS: restruct string
+:rtype: string</p></div>
+</dd>
+<dt id="tag_utf.Tags.declare"><code class="name flex">
+<span>def <span class="ident">declare</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>:= declare variable value</p>
+<p>:return assignL: assign results
+:rtype: list
+:return rstS: restruct string
+:rtype: string</p></div>
+</dd>
+<dt id="tag_utf.Tags.tag_parse"><code class="name flex">
+<span>def <span class="ident">tag_parse</span></span>(<span>self, tagS)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>convert rivt tags to md</p></div>
+</dd>
+<dt id="tag_utf.Tags.vsub"><code class="name flex">
+<span>def <span class="ident">vsub</span></span>(<span>self, eqL, precI, varS, val1U)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>substitute numbers for variables in printed output</p>
+<p>:return assignL: assign results
+:rtype: list
+:return rstS: restruct string
+:rtype: string</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="tag_utf.TagsUTF"><code class="flex name class">
+<span>class <span class="ident">TagsUTF</span></span>
+<span>(</span><span>lineS, labelD, folderD, tagsD, localD)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>convert rivt tags to md</p>
+<p>:param paramL: <em>description</em>
+:type paramL: <em>type</em>
+:param labelD: <em>description</em>
+:type labelD: <em>type</em>
+:param folderD: <em>description</em>
+:type folderD: <em>type</em>
+:param localD: <em>description</em>
+:type localD: <em>type</em>
+:return: <em>description</em>
+:rtype: <em>type</em></p>
+<p>convert rivt tags to md or reST</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TagsUTF(Tags):
+    &#34;&#34;&#34;convert rivt tags to md
+
+    :param paramL: _description_
+    :type paramL: _type_
+    :param labelD: _description_
+    :type labelD: _type_
+    :param folderD: _description_
+    :type folderD: _type_
+    :param localD: _description_
+    :type localD: _type_
+    :return: _description_
+    :rtype: _type_
+    &#34;&#34;&#34;
+
+    def __init__(self, lineS, labelD, folderD, tagsD, localD):
+        &#34;&#34;&#34;convert rivt tags to md or reST
+
+        &#34;&#34;&#34;
+
+        self.lineS = lineS
+        self.tagsD = tagsD
+        self.localD = localD
+        self.folderD = folderD
+        self.labelD = labelD
+        self.lineS = lineS
+        self.widthI = labelD[&#34;widthI&#34;]
+        self.errlogP = folderD[&#34;errlogP&#34;]
+        self.valL = []                         # accumulate values in list
+
+        modnameS = self.labelD[&#34;modnameS&#34;]
+        # print(f&#34;{modnameS=}&#34;)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format=&#34;%(asctime)-8s  &#34; + modnameS +
+            &#34;   %(levelname)-8s %(message)s&#34;,
+            datefmt=&#34;%m-%d %H:%M&#34;,
+            filename=self.errlogP,
+            filemode=&#34;w&#34;,
+        )
+        warnings.filterwarnings(&#34;ignore&#34;)
+
+    def bold(self):
+        &#34;&#34;&#34;bold text _[b]
+
+        :return lineS: bold line
+        :rtype: str
+        &#34;&#34;&#34;
+        print(self.lineS)
+        return self.lineS
+
+    def center(self):
+        &#34;&#34;&#34;center text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        &#34;&#34;&#34;
+        lineS = self.lineS.center(int(self.widthI))
+        print(lineS)
+        return lineS
+
+    def italic(self):
+        &#34;&#34;&#34;italicize text _[i]
+
+        :return lineS: centered line
+        :rtype: str
+        &#34;&#34;&#34;
+        print(self.lineS)
+        return self.lineS
+
+    def boldcenter(self):
+        &#34;&#34;&#34;center text _[bc]
+
+        :return lineS: centered line
+        :rtype: str
+        &#34;&#34;&#34;
+
+        lineS = self.lineS.center(int(self.widthI))
+
+        print(lineS)
+
+    def bolditalic(self):
+        &#34;&#34;&#34;center text _[bc]
+
+        :return lineS: centered line
+        :rtype: str
+        &#34;&#34;&#34;
+
+        lineS = self.lineS.center(int(self.widthI))
+
+        print(lineS)
+        return lineS
+
+    def bolditaliccenter(self):
+        &#34;&#34;&#34;center text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        &#34;&#34;&#34;
+
+        lineS = self.lineS.rjust(int(self.widthI))
+
+        print(lineS)
+        return lineS
+
+    def italiccenter(self):
+        &#34;&#34;&#34;center text _[c]
+
+        :return lineS: centered line
+        :rtype: str
+        &#34;&#34;&#34;
+        lineS = self.lineS.center(int(self.widthI))
+        print(lineS)
+        return lineS
+
+    def right(self):
+        &#34;&#34;&#34;right justify text _[r]
+
+        :return lineS: right justified text
+        :rtype: str
+        &#34;&#34;&#34;
+
+        lineS = self.lineS.rjust(int(self.widthI))
+
+        return lineS
+
+    def label(self, labelS, numS):
+        &#34;&#34;&#34;format labels for equations, tables and figures
+
+            :return labelS: formatted label
+            :rtype: str
+        &#34;&#34;&#34;
+        secS = str(self.labelD[&#34;secnumI&#34;]).zfill(2)
+        labelS = secS + &#34; - &#34; + labelS + numS
+        # store for equation table
+        self.labelD[&#34;eqlabelS&#34;] = self.lineS + &#34; [&#34; + numS.zfill(2) + &#34;]&#34;
+        return labelS
+
+    def description(self):
+        &#34;&#34;&#34;footnote description _[d]
+
+        :return lineS: footnote
+        :rtype: str
+        &#34;&#34;&#34;
+        ftnumI = self.labelD[&#34;noteL&#34;].pop(0)
+        lineS = &#34;[&#34; + str(ftnumI) + &#34;] &#34; + self.lineS
+        print(lineS)
+        return lineS
+
+    def equation(self):
+        &#34;&#34;&#34;md equation label _[e]
+
+        :return lineS: md equation label
+        :rtype: str
+        &#34;&#34;&#34;
+
+        enumI = int(self.labelD[&#34;equI&#34;]) + 1
+        fillS = str(enumI).zfill(2)
+        wI = self.labelD[&#34;widthI&#34;]
+        refS = self.label(&#34;E&#34;, fillS)
+        spcI = len(&#34;Equ. &#34; + fillS + &#34; - &#34; + self.lineS.strip())
+        lineS = &#34;Equ. &#34; + fillS + &#34; - &#34; + self.lineS.strip() \
+            + refS.rjust(wI-spcI)
+        self.labelD[&#34;equI&#34;] = enumI
+
+        print(lineS)
+        return lineS
+
+    def figure(self):
+        &#34;&#34;&#34;md figure caption _[f]
+
+        :return lineS: figure label
+        :rtype: str
+        &#34;&#34;&#34;
+
+        fnumI = int(self.labelD[&#34;figI&#34;])
+        self.labelD[&#34;figI&#34;] = fnumI + 1
+        lineS = &#34;Fig. &#34; + str(fnumI) + &#34; - &#34; + self.lineS
+
+        print(lineS + &#34;\n&#34;)
+        return lineS + &#34;\n&#34;
+
+    def foot(self):
+        &#34;&#34;&#34;footnote number _[#]
+
+
+        &#34;&#34;&#34;
+        ftnumI = self.labelD[&#34;footL&#34;].pop(0)
+        self.labelD[&#34;noteL&#34;].append(ftnumI + 1)
+        self.labelD[&#34;footL&#34;].append(ftnumI + 1)
+        lineS = self.lineS.replace(&#34;*]&#34;, &#34;[&#34; + str(ftnumI) + &#34;]&#34;)
+        print(lineS)
+        return lineS
+
+    def latex(self):
+        &#34;&#34;&#34;format latex
+
+        :return lineS: formatted latex
+        :rtype: str
+        &#34;&#34;&#34;
+        txS = self.lineS
+        # txS = txs.encode(&#39;unicode-escape&#39;).decode()
+        ptxS = sp.parse_latex(txS)
+        lineS = sp.pretty(sp.sympify(ptxS, _clash2, evaluate=False))
+        print(lineS)
+        return lineS
+
+    def plain(self):
+        &#34;&#34;&#34;format plain literal text _[p]
+
+        :param lineS: _description_
+        :type lineS: _type_
+        &#34;&#34;&#34;
+        print(self.lineS)
+        return self.lineS
+
+    def sympy(self):
+        &#34;&#34;&#34;format line of sympy _[s]
+
+        :return lineS: formatted sympy
+        :rtype: str
+        &#34;&#34;&#34;
+
+        spS = self.lineS.strip()
+        # try:
+        #     spL = spS.split(&#34;=&#34;)
+        #     spS = &#34;Eq(&#34; + spL[0] + &#34;,(&#34; + spL[1] + &#34;))&#34;
+        #     # sps = sp.encode(&#39;unicode-escape&#39;).decode()
+        # except:
+        lineS = sp.pretty(sp.sympify(spS, _clash2, evaluate=False))
+        print(lineS)
+        return lineS
+
+    def table(self):
+        &#34;&#34;&#34;format table title  _[t]
+
+        :return lineS: md table title
+        :rtype: str
+        &#34;&#34;&#34;
+        tnumI = int(self.labelD[&#34;tableI&#34;])
+        self.labelD[&#34;tableI&#34;] = tnumI + 1
+        lineS = &#34;Table &#34; + str(tnumI) + &#34; - &#34; + self.lineS
+        print(lineS)
+        return lineS
+
+    def link(self):
+        &#34;&#34;&#34;format url or internal link _[link]
+
+        :return: _description_
+        :rtype: _type_
+        &#34;&#34;&#34;
+        lineL = self.lineS.split(&#34;,&#34;)
+        lineS = &#34;.. _&#34; + lineL[0] + &#34;: &#34; + lineL[1]
+        print(lineS)
+        return lineS
+
+    def page(self):
+        &#34;&#34;&#34;insert new page header _[page]
+
+        :return lineS: page header
+        :rtype: str
+        &#34;&#34;&#34;
+        pagenoS = str(self.labelD[&#34;pageI&#34;])
+        rvtS = self.labelD[&#34;headuS&#34;].replace(&#34;p##&#34;, pagenoS)
+        self.labelD[&#34;pageI&#34;] = int(pagenoS)+1
+        lineS = &#34;\n&#34;+&#34;_&#34; * self.labelD[&#34;widthI&#34;] + &#34;\n&#34; + rvtS +\
+                &#34;\n&#34;+&#34;_&#34; * self.labelD[&#34;widthI&#34;] + &#34;\n&#34;
+        return &#34;\n&#34; + rvtS
+
+    def underline(self):
+        &#34;&#34;&#34;underline _[u]
+
+        :return lineS: underline
+        :rtype: str
+        &#34;&#34;&#34;
+        return self.lineS
+
+    def centerblk(self):
+        &#34;&#34;&#34;
+
+        &#34;&#34;&#34;
+        lineS = &#34;&#34;
+        for i in self.lineS:
+            lineS += i.center(int(self.widthI))
+
+        return lineS
+
+    def latexblk(self):
+        pass
+
+    def mathblk(self):
+        pass
+
+    def codeblk(self):
+        pass
+
+    def rightblk(self):
+        pass
+
+    def shadeblk(self):
+        &#34;&#34;&#34; start shade block _[[s]]
+
+        :param lineS: _description_
+        :type lineS: _type_
+        &#34;&#34;&#34;
+        pass
+
+    def quitblock(self):
+        &#34;&#34;&#34; quit shade block _[[q]]
+
+        :param lineS: _description_
+        :type lineS: _type_
+        &#34;&#34;&#34;
+        pass
+
+    def tagblk(self):
+        pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="tag_utf.Tags" href="#tag_utf.Tags">Tags</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="tag_utf.TagsUTF.bold"><code class="name flex">
+<span>def <span class="ident">bold</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>bold text _[b]</p>
+<p>:return lineS: bold line
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.boldcenter"><code class="name flex">
+<span>def <span class="ident">boldcenter</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>center text _[bc]</p>
+<p>:return lineS: centered line
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.bolditalic"><code class="name flex">
+<span>def <span class="ident">bolditalic</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>center text _[bc]</p>
+<p>:return lineS: centered line
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.bolditaliccenter"><code class="name flex">
+<span>def <span class="ident">bolditaliccenter</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>center text _[c]</p>
+<p>:return lineS: centered line
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.center"><code class="name flex">
+<span>def <span class="ident">center</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>center text _[c]</p>
+<p>:return lineS: centered line
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.centerblk"><code class="name flex">
+<span>def <span class="ident">centerblk</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tag_utf.TagsUTF.codeblk"><code class="name flex">
+<span>def <span class="ident">codeblk</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tag_utf.TagsUTF.description"><code class="name flex">
+<span>def <span class="ident">description</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>footnote description _[d]</p>
+<p>:return lineS: footnote
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.equation"><code class="name flex">
+<span>def <span class="ident">equation</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>md equation label _[e]</p>
+<p>:return lineS: md equation label
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.figure"><code class="name flex">
+<span>def <span class="ident">figure</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>md figure caption _[f]</p>
+<p>:return lineS: figure label
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.foot"><code class="name flex">
+<span>def <span class="ident">foot</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>footnote number _[#]</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.italic"><code class="name flex">
+<span>def <span class="ident">italic</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>italicize text _[i]</p>
+<p>:return lineS: centered line
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.italiccenter"><code class="name flex">
+<span>def <span class="ident">italiccenter</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>center text _[c]</p>
+<p>:return lineS: centered line
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.label"><code class="name flex">
+<span>def <span class="ident">label</span></span>(<span>self, labelS, numS)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>format labels for equations, tables and figures</p>
+<p>:return labelS: formatted label
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.latex"><code class="name flex">
+<span>def <span class="ident">latex</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>format latex</p>
+<p>:return lineS: formatted latex
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.latexblk"><code class="name flex">
+<span>def <span class="ident">latexblk</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tag_utf.TagsUTF.link"><code class="name flex">
+<span>def <span class="ident">link</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>format url or internal link _[link]</p>
+<p>:return: <em>description</em>
+:rtype: <em>type</em></p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.mathblk"><code class="name flex">
+<span>def <span class="ident">mathblk</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tag_utf.TagsUTF.page"><code class="name flex">
+<span>def <span class="ident">page</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>insert new page header _[page]</p>
+<p>:return lineS: page header
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.plain"><code class="name flex">
+<span>def <span class="ident">plain</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>format plain literal text _[p]</p>
+<p>:param lineS: <em>description</em>
+:type lineS: <em>type</em></p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.quitblock"><code class="name flex">
+<span>def <span class="ident">quitblock</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>quit shade block _[[q]]</p>
+<p>:param lineS: <em>description</em>
+:type lineS: <em>type</em></p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.right"><code class="name flex">
+<span>def <span class="ident">right</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>right justify text _[r]</p>
+<p>:return lineS: right justified text
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.rightblk"><code class="name flex">
+<span>def <span class="ident">rightblk</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tag_utf.TagsUTF.shadeblk"><code class="name flex">
+<span>def <span class="ident">shadeblk</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>start shade block _[[s]]</p>
+<p>:param lineS: <em>description</em>
+:type lineS: <em>type</em></p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.sympy"><code class="name flex">
+<span>def <span class="ident">sympy</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>format line of sympy _[s]</p>
+<p>:return lineS: formatted sympy
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.table"><code class="name flex">
+<span>def <span class="ident">table</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>format table title
+_[t]</p>
+<p>:return lineS: md table title
+:rtype: str</p></div>
+</dd>
+<dt id="tag_utf.TagsUTF.tagblk"><code class="name flex">
+<span>def <span class="ident">tagblk</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="tag_utf.TagsUTF.underline"><code class="name flex">
+<span>def <span class="ident">underline</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>underline _[u]</p>
+<p>:return lineS: underline
+:rtype: str</p></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="tag_utf.Tags" href="#tag_utf.Tags">Tags</a></b></code>:
+<ul class="hlist">
+<li><code><a title="tag_utf.Tags.assign" href="#tag_utf.Tags.assign">assign</a></code></li>
+<li><code><a title="tag_utf.Tags.declare" href="#tag_utf.Tags.declare">declare</a></code></li>
+<li><code><a title="tag_utf.Tags.tag_parse" href="#tag_utf.Tags.tag_parse">tag_parse</a></code></li>
+<li><code><a title="tag_utf.Tags.vsub" href="#tag_utf.Tags.vsub">vsub</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="tag_utf.Tags" href="#tag_utf.Tags">Tags</a></code></h4>
+<ul class="">
+<li><code><a title="tag_utf.Tags.assign" href="#tag_utf.Tags.assign">assign</a></code></li>
+<li><code><a title="tag_utf.Tags.declare" href="#tag_utf.Tags.declare">declare</a></code></li>
+<li><code><a title="tag_utf.Tags.tag_parse" href="#tag_utf.Tags.tag_parse">tag_parse</a></code></li>
+<li><code><a title="tag_utf.Tags.vsub" href="#tag_utf.Tags.vsub">vsub</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="tag_utf.TagsUTF" href="#tag_utf.TagsUTF">TagsUTF</a></code></h4>
+<ul class="two-column">
+<li><code><a title="tag_utf.TagsUTF.bold" href="#tag_utf.TagsUTF.bold">bold</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.boldcenter" href="#tag_utf.TagsUTF.boldcenter">boldcenter</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.bolditalic" href="#tag_utf.TagsUTF.bolditalic">bolditalic</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.bolditaliccenter" href="#tag_utf.TagsUTF.bolditaliccenter">bolditaliccenter</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.center" href="#tag_utf.TagsUTF.center">center</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.centerblk" href="#tag_utf.TagsUTF.centerblk">centerblk</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.codeblk" href="#tag_utf.TagsUTF.codeblk">codeblk</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.description" href="#tag_utf.TagsUTF.description">description</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.equation" href="#tag_utf.TagsUTF.equation">equation</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.figure" href="#tag_utf.TagsUTF.figure">figure</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.foot" href="#tag_utf.TagsUTF.foot">foot</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.italic" href="#tag_utf.TagsUTF.italic">italic</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.italiccenter" href="#tag_utf.TagsUTF.italiccenter">italiccenter</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.label" href="#tag_utf.TagsUTF.label">label</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.latex" href="#tag_utf.TagsUTF.latex">latex</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.latexblk" href="#tag_utf.TagsUTF.latexblk">latexblk</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.link" href="#tag_utf.TagsUTF.link">link</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.mathblk" href="#tag_utf.TagsUTF.mathblk">mathblk</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.page" href="#tag_utf.TagsUTF.page">page</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.plain" href="#tag_utf.TagsUTF.plain">plain</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.quitblock" href="#tag_utf.TagsUTF.quitblock">quitblock</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.right" href="#tag_utf.TagsUTF.right">right</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.rightblk" href="#tag_utf.TagsUTF.rightblk">rightblk</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.shadeblk" href="#tag_utf.TagsUTF.shadeblk">shadeblk</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.sympy" href="#tag_utf.TagsUTF.sympy">sympy</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.table" href="#tag_utf.TagsUTF.table">table</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.tagblk" href="#tag_utf.TagsUTF.tagblk">tagblk</a></code></li>
+<li><code><a title="tag_utf.TagsUTF.underline" href="#tag_utf.TagsUTF.underline">underline</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.3</a>.</p>
+</footer>
+</body>
+</html>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tag_rst.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">tag_rst</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="cmd_rst.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">cmd_rst</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/tag_utf.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2023 StructureLabs.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

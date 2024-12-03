@@ -29,7 +29,7 @@ here `rivt.info  <https://rivt.info>`_.  The source code is here `GitHub
 
     units.rst
     parse.rst
-    check.rst
-    folders.rst
-    
-
+    tag_rst.rst
+    tag_utf.rst
+    cmd_rst.rst
+    cmd_utf.rst

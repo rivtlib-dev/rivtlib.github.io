@@ -1,8 +1,8 @@
-checks
+units
 ======
 
 checks test
 
 .. raw:: html
-    :file: checks.html
+    :file: units.html
 

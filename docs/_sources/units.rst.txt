@@ -1,7 +1,7 @@
 units
 ======
 
-checks test
+units test
 
 .. raw:: html
     :file: units.html

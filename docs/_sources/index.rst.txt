@@ -15,7 +15,8 @@
     </embed>
 
 
-**rivtlib.py Documentation**
+rivtlib Documentation
+=====================
 
 **rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
 package for writing and publishing engineering documents, with an emphasis on

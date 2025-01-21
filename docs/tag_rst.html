@@ -381,19 +381,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-<meta name="generator" content="pdoc3 0.11.3">
+<meta name="generator" content="pdoc3 0.11.5">
 <title>tag_rst API documentation</title>
 <meta name="description" content="">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
-<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
 <style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
 <script>window.addEventListener('DOMContentLoaded', () => {
 hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
 hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
 })</script>
 </head>
 <body>
@@ -418,8 +429,6 @@ hljs.highlightAll();
 <span>(</span><span>lineS, labelD, folderD, tagsD, localD)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>convert rivt tags to reST</p>
-<p>convert rivt tags to md or reST</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -687,12 +696,26 @@ hljs.highlightAll();
     def tagblk(self):
         pass</code></pre>
 </details>
+<div class="desc"><p>convert rivt tags to reST</p>
+<p>convert rivt tags to md or reST</p></div>
 <h3>Methods</h3>
 <dl>
 <dt id="tag_rst.TagsRST.bold"><code class="name flex">
 <span>def <span class="ident">bold</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bold(self):
+    &#34;&#34;&#34;bold text _[b]
+
+    :return lineS: bold line
+    :rtype: str
+    &#34;&#34;&#34;
+    return &#34;**&#34; + self.lineS.strip() + &#34;**&#34;</code></pre>
+</details>
 <div class="desc"><p>bold text _[b]</p>
 <p>:return lineS: bold line
 :rtype: str</p></div>
@@ -701,6 +724,21 @@ hljs.highlightAll();
 <span>def <span class="ident">boldcenter</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def boldcenter(self):
+    &#34;&#34;&#34;bold center text _[c]
+
+    :return lineS: centered line
+    :rtype: str
+    &#34;&#34;&#34;
+    lineS = &#34;.. raw:: latex \n\n&#34; \
+        + &#34;   ?x?begin{center} ?x?textbf{&#34; + self.lineS +  \
+        &#34;} ?x?end{center}&#34; + &#34;\n&#34;
+    return lineS</code></pre>
+</details>
 <div class="desc"><p>bold center text _[c]</p>
 <p>:return lineS: centered line
 :rtype: str</p></div>
@@ -709,6 +747,21 @@ hljs.highlightAll();
 <span>def <span class="ident">boldright</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def boldright(self):
+    &#34;&#34;&#34;bold right text _[c]
+
+    :return lineS: centered line
+    :rtype: str
+    &#34;&#34;&#34;
+    lineS = &#34;.. raw:: latex \n\n&#34; \
+        + &#34;?x?hfill ?x?textbf{&#34; + self.lineS + &#34;}&#34; \
+        + &#34;\n&#34;
+    return lineS</code></pre>
+</details>
 <div class="desc"><p>bold right text _[c]</p>
 <p>:return lineS: centered line
 :rtype: str</p></div>
@@ -717,6 +770,22 @@ hljs.highlightAll();
 <span>def <span class="ident">center</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def center(self):
+    &#34;&#34;&#34;center text _[c]
+
+    : return lineS: centered line
+    : rtype: str
+    &#34;&#34;&#34;
+    lineS = &#34;.. raw:: latex \n\n&#34; \
+        + &#34;   ?x?begin{center} &#34; + self.lineS + &#34; ?x?end{center}&#34; \
+        + &#34;\n&#34;
+
+    return lineS</code></pre>
+</details>
 <div class="desc"><dl>
 <dt>center text _[c]</dt>
 <dd>
@@ -731,18 +800,50 @@ hljs.highlightAll();
 <span>def <span class="ident">centerblk</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def centerblk(self):
+    &#34;&#34;&#34;_summary_
+    &#34;&#34;&#34;
+    lineS = &#34;.. raw:: latex \n\n&#34; \
+        + &#34;   ?x?begin{center} + ?x?parbox{5cm}&#34; \
+        + self.lineS + &#34; ?x?end{center}&#34; \
+        + &#34;\n\n&#34;
+    return lineS</code></pre>
+</details>
 <div class="desc"><p><em>summary</em></p></div>
 </dd>
 <dt id="tag_rst.TagsRST.codeblk"><code class="name flex">
 <span>def <span class="ident">codeblk</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def codeblk(self):
+    pass</code></pre>
+</details>
 <div class="desc"></div>
 </dd>
 <dt id="tag_rst.TagsRST.description"><code class="name flex">
 <span>def <span class="ident">description</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def description(self):
+    &#34;&#34;&#34;footnote description _[d]
+
+    : return lineS: footnote
+    : rtype: str
+    &#34;&#34;&#34;
+    return &#34;.. [*] &#34; + self.lineS</code></pre>
+</details>
 <div class="desc"><dl>
 <dt>footnote description _[d]</dt>
 <dd>
@@ -757,6 +858,23 @@ hljs.highlightAll();
 <span>def <span class="ident">equation</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def equation(self):
+    &#34;&#34;&#34;reST equation label _[e]
+
+    : return lineS: reST equation label
+    : rtype: str
+    &#34;&#34;&#34;
+    enumI = int(self.labelD[&#34;equI&#34;])
+    fillS = str(enumI).zfill(2)
+    refS = self.label(&#34;E&#34;, fillS)
+    lineS = &#34;\n\n&#34; + &#34;**&#34; + &#34;Eq. &#34; + str(enumI) + &#34;: &#34;  \
+            + self.lineS.strip() + &#34;** &#34; + &#34; ?x?hfill &#34; + refS + &#34;\n\n&#34;
+    return lineS</code></pre>
+</details>
 <div class="desc"><dl>
 <dt>reST equation label _[e]</dt>
 <dd>
@@ -771,6 +889,23 @@ hljs.highlightAll();
 <span>def <span class="ident">figure</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def figure(self):
+    &#34;&#34;&#34;figure label _[f]
+
+    : return lineS: figure label
+    : rtype: str
+    &#34;&#34;&#34;
+    fnumI = int(self.labelD[&#34;figI&#34;])
+    fillS = str(fnumI).zfill(2)
+    refS = self.label(&#34;F&#34;, fillS)
+    lineS = &#34;\n \n&#34; + &#34;**&#34; + &#34;Figure &#34; + str(fnumI) + &#34;: &#34; + \
+            self.lineS.strip() + &#34;** &#34; + &#34; ?x?hfill &#34; + refS + &#34;\n \n&#34;
+    return self.vgap + lineS + self.vgap + &#34; ?x?nopagebreak \n&#34;</code></pre>
+</details>
 <div class="desc"><dl>
 <dt>figure label _[f]</dt>
 <dd>
@@ -785,6 +920,19 @@ hljs.highlightAll();
 <span>def <span class="ident">footnumber</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def footnumber(self):
+    &#34;&#34;&#34;insert footnote number _[#]
+
+    :return: _description_
+    :rtype: _type_
+    &#34;&#34;&#34;
+    lineS = &#34;&#34;.join(self.lineS)
+    return lineS.replace(&#34;*]&#34;, &#34;[*]_ &#34;)</code></pre>
+</details>
 <div class="desc"><p>insert footnote number _[#]</p>
 <p>:return: <em>description</em>
 :rtype: <em>type</em></p></div>
@@ -793,6 +941,18 @@ hljs.highlightAll();
 <span>def <span class="ident">italic</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def italic(self):
+    &#34;&#34;&#34;italicize text _[i]
+
+    :return lineS: centered line
+    :rtype: str
+    &#34;&#34;&#34;
+    return &#34;*&#34; + self.lineS.strip() + &#34;*&#34;</code></pre>
+</details>
 <div class="desc"><p>italicize text _[i]</p>
 <p>:return lineS: centered line
 :rtype: str</p></div>
@@ -801,6 +961,21 @@ hljs.highlightAll();
 <span>def <span class="ident">italiccenter</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def italiccenter(self):
+    &#34;&#34;&#34;italic center text _[c]
+
+    :return lineS: centered line
+    :rtype: str
+    &#34;&#34;&#34;
+    lineS = &#34;.. raw:: latex \n\n&#34; \
+        + &#34;   ?x?begin{center} ?x?textit{&#34; + self.lineS +  \
+        &#34;} ?x?end{center}&#34; + &#34;\n&#34;
+    return lineS</code></pre>
+</details>
 <div class="desc"><p>italic center text _[c]</p>
 <p>:return lineS: centered line
 :rtype: str</p></div>
@@ -809,6 +984,22 @@ hljs.highlightAll();
 <span>def <span class="ident">italicright</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def italicright(self):
+    &#34;&#34;&#34;italic right text _[c]
+
+    :return lineS: centered line
+    :rtype: str
+    &#34;&#34;&#34;
+
+    lineS = &#34;.. raw:: latex \n\n&#34; \
+        + &#34;?x?hfill ?x?textit{&#34; + self.lineS + &#34;}&#34; \
+        + &#34;\n&#34;
+    return lineS</code></pre>
+</details>
 <div class="desc"><p>italic right text _[c]</p>
 <p>:return lineS: centered line
 :rtype: str</p></div>
@@ -817,6 +1008,19 @@ hljs.highlightAll();
 <span>def <span class="ident">label</span></span>(<span>self, labelS, numS)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def label(self, labelS, numS):
+    &#34;&#34;&#34;format labels for equations, tables and figures
+
+        : return labelS: formatted label
+        : rtype: str
+    &#34;&#34;&#34;
+    secS = str(self.labelD[&#34;secnumI&#34;]).zfill(2)
+    return secS + &#34; - &#34; + labelS + numS</code></pre>
+</details>
 <div class="desc"><dl>
 <dt>format labels for equations, tables and figures</dt>
 <dd>
@@ -831,6 +1035,18 @@ hljs.highlightAll();
 <span>def <span class="ident">latex</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def latex(self):
+    &#34;&#34;&#34;format latex _[l]
+
+    :return lineS: reST formatted latex
+    :rtype: str
+    &#34;&#34;&#34;
+    return &#34;.. raw:: math\n\n   &#34; + self.lineS + &#34;\n&#34;</code></pre>
+</details>
 <div class="desc"><p>format latex _[l]</p>
 <p>:return lineS: reST formatted latex
 :rtype: str</p></div>
@@ -839,12 +1055,31 @@ hljs.highlightAll();
 <span>def <span class="ident">latexblk</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def latexblk(self):
+    pass</code></pre>
+</details>
 <div class="desc"></div>
 </dd>
 <dt id="tag_rst.TagsRST.line"><code class="name flex">
 <span>def <span class="ident">line</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def line(self):
+    &#34;&#34;&#34;insert line _[line]:
+
+    param lineS: _description_
+    :type lineS: _type_
+    &#34;&#34;&#34;
+    return self.widthI * &#34;-&#34;</code></pre>
+</details>
 <div class="desc"><p>insert line _[line]:</p>
 <p>param lineS: <em>description</em>
 :type lineS: <em>type</em></p></div>
@@ -853,6 +1088,21 @@ hljs.highlightAll();
 <span>def <span class="ident">link</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def link(self):
+    &#34;&#34;&#34;url or internal link
+
+    :return: _description_
+    :rtype: _type_
+    &#34;&#34;&#34;
+    lineL = lineS.split(&#34;,&#34;)
+    lineS = &#34;.. _&#34; + lineL[0] + &#34;: &#34; + lineL[1]
+
+    return lineS</code></pre>
+</details>
 <div class="desc"><p>url or internal link</p>
 <p>:return: <em>description</em>
 :rtype: <em>type</em></p></div>
@@ -861,12 +1111,31 @@ hljs.highlightAll();
 <span>def <span class="ident">mathblk</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mathblk(self):
+    pass</code></pre>
+</details>
 <div class="desc"></div>
 </dd>
 <dt id="tag_rst.TagsRST.page"><code class="name flex">
 <span>def <span class="ident">page</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def page(self):
+    &#34;&#34;&#34;insert page break _[page]
+
+    :return lineS: page break line
+    :rtype: str
+    &#34;&#34;&#34;
+    return &#34;.. raw:: latex \n\n ?x?newpage \n&#34;</code></pre>
+</details>
 <div class="desc"><p>insert page break _[page]</p>
 <p>:return lineS: page break line
 :rtype: str</p></div>
@@ -875,6 +1144,18 @@ hljs.highlightAll();
 <span>def <span class="ident">plain</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plain(self):
+    &#34;&#34;&#34;format plain literal _[p]
+
+    :return lineS: page break line
+    :rtype: str
+    &#34;&#34;&#34;
+    return &#34;.. raw:: latex \n\n ?x?newpage \n&#34;</code></pre>
+</details>
 <div class="desc"><p>format plain literal _[p]</p>
 <p>:return lineS: page break line
 :rtype: str</p></div>
@@ -883,6 +1164,18 @@ hljs.highlightAll();
 <span>def <span class="ident">right</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def right(self):
+    &#34;&#34;&#34;right justify text _[r]
+
+    :return lineS: right justified text
+    :rtype: str
+    &#34;&#34;&#34;
+    return &#34;?x?hfill &#34; + self.lineS</code></pre>
+</details>
 <div class="desc"><p>right justify text _[r]</p>
 <p>:return lineS: right justified text
 :rtype: str</p></div>
@@ -891,12 +1184,33 @@ hljs.highlightAll();
 <span>def <span class="ident">rightblk</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rightblk(self):
+    pass</code></pre>
+</details>
 <div class="desc"></div>
 </dd>
 <dt id="tag_rst.TagsRST.sympy"><code class="name flex">
 <span>def <span class="ident">sympy</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sympy(self):
+    &#34;&#34;&#34;reST line of sympy _[s]
+
+    :return lineS: formatted sympy
+    :rtype: str
+    &#34;&#34;&#34;
+    spS = self.lineS
+    txS = sp.latex(S(spS))
+    return &#34;.. raw:: math\n\n   &#34; + txS + &#34;\n&#34;</code></pre>
+</details>
 <div class="desc"><p>reST line of sympy _[s]</p>
 <p>:return lineS: formatted sympy
 :rtype: str</p></div>
@@ -905,6 +1219,23 @@ hljs.highlightAll();
 <span>def <span class="ident">table</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def table(self):
+    &#34;&#34;&#34;table label _[t]
+
+    :return lineS: figure label
+    :rtype: str
+    &#34;&#34;&#34;
+    tnumI = int(self.labelD[&#34;tableI&#34;])
+    fillS = str(tnumI).zfill(2)
+    refS = self.label(&#34;T&#34;, fillS)
+    lineS = &#34;\n&#34; + &#34;**&#34; + &#34;Table &#34; + fillS + &#34;: &#34; + self.lineS.strip() + \
+            &#34;** &#34; + &#34; ?x?hfill &#34; + refS + &#34;\n&#34;
+    return self.vgap + lineS + self.vgap + &#34; ?x?nopagebreak \n&#34;</code></pre>
+</details>
 <div class="desc"><p>table label _[t]</p>
 <p>:return lineS: figure label
 :rtype: str</p></div>
@@ -913,12 +1244,31 @@ hljs.highlightAll();
 <span>def <span class="ident">tagblk</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tagblk(self):
+    pass</code></pre>
+</details>
 <div class="desc"></div>
 </dd>
 <dt id="tag_rst.TagsRST.underline"><code class="name flex">
 <span>def <span class="ident">underline</span></span>(<span>self)</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def underline(self):
+    &#34;&#34;&#34;underline _[u]
+
+    :return lineS: underline
+    :rtype: str
+    &#34;&#34;&#34;
+    return &#34;:math: `?x?text?x?underline{&#34; + self.lineS.strip() + &#34;}&#34;</code></pre>
+</details>
 <div class="desc"><p>underline _[u]</p>
 <p>:return lineS: underline
 :rtype: str</p></div>
@@ -973,7 +1323,7 @@ hljs.highlightAll();
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.3</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
 </footer>
 </body>
 </html>

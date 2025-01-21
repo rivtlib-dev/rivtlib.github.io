@@ -14,7 +14,7 @@ extensions = ['sphinx.ext.githubpages',
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-source_suffix = ['.rst', '.md']
+source_suffix = ['.rst']
 
 html_theme = 'pydata_sphinx_theme'
 html_context = {"default_mode": "light"}

@@ -4,7 +4,7 @@
     :scale: 40 %
     :figwidth: image
     :align: center
-    :alt: rivt logo
+    :alt: rivtlib logo
 
 .. raw:: html
 
@@ -15,7 +15,7 @@
     </embed>
 
 
-**rivtlib Documentation**
+**rivtlib.py Documentation**
 
 **rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
 package for writing and publishing engineering documents, with an emphasis on

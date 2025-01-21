@@ -1,18 +1,18 @@
 #! python
 """rivt API
 
-import rivtlib.rivtapi as rv 
+import rivtlib.api as rv 
 
 rv.R(rS) - (Run) Execute shell scripts 
 rv.I(rS) - (Insert) Insert static text, math, images and tables
 rv.V(rS) - (Values) Evaluate values and equations 
 rv.T(rS) - (Tools) Execute Python functions and scripts 
 rv.X(rS) - (eXclude) Skip string processing 
-rv.W(rS) - (Write) Write formatted document 
+rv.W(rS) - (Write) Write formatted documents 
 
-where rS is a triple quoted Python string (rivt string)
+where rS is a triple quoted Python rivt-string 
 
-In the rivtlib code base the variable types are identified by the last letter
+Note: In the rivtlib code base variable types are identified by the last letter
 of the variable name using the following convention:
 
 A = array
@@ -45,7 +45,7 @@ from rivtlib import folders
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
-# rivt file path
+# get rivt file path
 curP = Path(os.getcwd())
 if __name__ == "rivtlib.rivtapi":
     argfileS = Path(__main__.__file__)
@@ -72,7 +72,7 @@ labelD = folderD = rivtD = {}  # label, folder and rivt dictionaries
 def rivt_parse(mS, rS):
     """call parsing class for specified API function
 
-    :param mS: rivt string method - R,I,V,T or X
+    :param mS: rivt string method - R,I,V,T,W or X
     :param rS: rivt string
     :param utfS: utf output string
     :param rstS: rst output string

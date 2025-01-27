@@ -20,7 +20,7 @@ rivtlib Documentation
 
 **rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
 package for writing and publishing engineering documents, with an emphasis on
-document reuse. It implements the **rivt** markup language and API described
+document reuse. It implements the **rivt** markup API and framework described
 here `rivt.info  <https://rivt.info>`_.  The source code is here `GitHub
 <https://github.com/rivtlib-net/rivtlib/>`_.
 
@@ -30,8 +30,6 @@ here `rivt.info  <https://rivt.info>`_.  The source code is here `GitHub
 
     api.rst
     parse.rst
-    tag_rst.rst
-    tag_utf.rst
-    cmd_rst.rst
-    cmd_utf.rst
+    tags.rst
+    cmds.rst
     units.rst

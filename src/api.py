@@ -1,19 +1,20 @@
 #! python
 """rivt API
 
-import rivtlib.api as rv 
 
 rv.R(rS) - (Run) Execute shell scripts 
 rv.I(rS) - (Insert) Insert static text, math, images and tables
 rv.V(rS) - (Values) Evaluate values and equations 
 rv.T(rS) - (Tools) Execute Python functions and scripts 
-rv.X(rS) - (eXclude) Skip string processing 
 rv.W(rS) - (Write) Write formatted documents 
+rv.X(rS) - (eXclude) Skip string processing 
 
-where rS is a triple quoted Python rivt-string 
+The API is intialized with 
 
-Note: In the rivtlib code base variable types are identified by the last letter
-of the variable name using the following convention:
+             import rivtlib.api as rv 
+
+and rS is a triple quoted utf-8 string. The rivtlib code base uses variable
+types identified with the last letter of a variable name:
 
 A = array
 B = boolean
@@ -22,72 +23,68 @@ D = dictionary
 F = float
 I = integer
 L = list
+N = file name
 P = path
 S = string
 """
 
-import __main__
-import fnmatch
 import logging
-import os
-import shutil
-import sys
-import time
 import warnings
-import IPython
-from pathlib import Path
 from configparser import ConfigParser
 from pathlib import Path
-from datetime import datetime, time
 
 from rivtlib import parse
-from rivtlib import folders
+from rivtlib.folders import *
 
-warnings.simplefilter(action="ignore", category=FutureWarning)
+# from rivtlib import write
 
-# get rivt file path
-curP = Path(os.getcwd())
-if __name__ == "rivtlib.rivtapi":
-    argfileS = Path(__main__.__file__)
-    rivS = argfileS.name
-    print(f"{argfileS=}")
-    if fnmatch.fnmatch(rivS, "riv????-*.py"):
-        rivP = Path(curP, rivS)
-        print(f"{rivS=}")
-        print(f"{curP=}")
-    else:
-        print(f"INFO     rivt file - {rivS}")
-        print(f"INFO     The name must match 'rivddss-filename.py' where")
-        print(f"INFO     dd and ss are two digit integers")
-        sys.exit()
-else:
-    print(f"INFO  file path does not include a rivt file  - {curP}")
-    sys.exit()
+# read config file
+config = ConfigParser()
+config.read(Path(projP, "rivt-config.ini"))
+headS = config.get('report', 'title')
+footS = config.get('utf', 'foot1')
 
-# initialize global variables
-rstS = utfS = """"""  # rst and utf output strings
-labelD = folderD = rivtD = {}  # label, folder and rivt dictionaries
+modnameS = __name__.split(".")[1]
+# print(f"{modnameS=}")
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)-8s  " + modnameS +
+    "   %(levelname)-8s %(message)s",
+    datefmt="%m-%d %H:%M",
+    filename=errlogP,
+    filemode="w",
+)
+warnings.filterwarnings("ignore")
+# warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
-def rivt_parse(mS, rS):
-    """call parsing class for specified API function
+def rivt_parse(rS, tS):
+    """parse rivt string and print doc text
 
-    :param mS: rivt string method - R,I,V,T,W or X
-    :param rS: rivt string
-    :param utfS: utf output string
-    :param rstS: rst output string
-    :param labelD: label dictionary
-    :param folderD: folder dictionary
-    :param rivtD: rivt values dictionary      
+    Globals:
+        utfS (str): accumulating utf text string 
+        rstS (str): acculating restr text string
+        labelD (dict): label dictionary
+        folderD (dict): folder dictionary
+        rivtD (dict): rivt values dictionary 
+
+    Args:
+        tS (str): section type R,I,V,T,W or X
+        rS (str): rivt string
     """
-
     global utfS, rstS, labelD, folderD, rivtD
+    rL = rS.split("\n")
 
-    rL = rS.split()
-    parseC = parse.RivtParse(mS, rL[0], folderD, labelD,  rivtD)
+    # pass header and initialize class
+    parseC = parse.RivtParse(rL[0], tS, folderD, labelD,  rivtD)
+
+    # parse section string
     xutfS, xrstS, labelD, folderD, rivtD = parseC.str_parse(rL[1:])
 
-    # accumulate processed strings
+    # print doc text
+    print(xutfS)
+
+    # accumulate output strings
     utfS += xutfS
     rstS += xrstS
 
@@ -95,41 +92,46 @@ def rivt_parse(mS, rS):
 def R(rS):
     """process Run string
 
-        : param rS: run string
-    """
-    global utfS, rstS, labelD, folderD
+    Globals:
+        utfS
+        rstS
+        labelD (dict): label dictionary
+        folderD: folder dictionary
+        rivtD: rivt values dictionary 
 
-    rivt_parse("R", rS)
+        Args:
+            rS (str): rivt string - run 
+    """
+    global utfS, rstS, labelD, folderD, rivtD
+    rivt_parse(rS, "R")
 
 
 def I(rS):
     """format Insert string
 
-        : param rS: insert string
+        : param rS: rivt string - insert 
     """
     global utfS, rstS, labelD, folderD
-
-    rivt_parse("I", rS)
+    rivt_parse(rS, "I")
 
 
 def V(rS):
     """format Value string
 
-        :param rS: value string
+        :param rS: rivt string - value
     """
     global utfS, rstS, labelD, folderD, rivtD
-
     locals().update(rivtD)
-    rivt_parse("V", rS)
+    rivt_parse(rS, "V")
     rivtD.update(locals())
 
 
 def T(rS):
     """process Tools string
 
-        : param rS: tool string
+        : param rS: rivt string - tools
     """
-
+    global utfS, rstS, labelD, folderD, rivtD
     locals().update(rivtD)
     rivt_parse("T", rS)
     rivtD.update(locals())
@@ -138,15 +140,14 @@ def T(rS):
 def W(rS):
     """write output files
 
-    :param rS: write string
+    :param rS: rivt string - write 
     """
     pass
 
 
 def X(rS):
-    """skip string - do not format
+    """skip rivt string - do not process or format
     """
 
     rL = rS.split("\n")
-    print("\n skip section: " + rL[0] + "\n")
-    pass
+    print("\n X func - skip section: " + rL[0] + "\n")

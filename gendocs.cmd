@@ -5,10 +5,8 @@ pdoc --html --force --output-dir .\ .\src\api.py
 pdoc --html --force --output-dir .\ .\src\units.py
 pdoc --html --force --output-dir .\ .\src\folders.py
 pdoc --html --force --output-dir .\ .\src\parse.py
-pdoc --html --force --output-dir .\ .\src\tag_rst.py
-pdoc --html --force --output-dir .\ .\src\tag_utf.py
-pdoc --html --force --output-dir .\ .\src\cmd_rst.py
-pdoc --html --force --output-dir .\ .\src\cmd_utf.py
+pdoc --html --force --output-dir .\ .\src\tags.py
+pdoc --html --force --output-dir .\ .\src\cmds.py
 pdoc --html --force --output-dir .\ .\src\write.py
 sphinx-build . docs
 echo F | xcopy /y CNAME .\docs\CNAME

@@ -1,6 +1,6 @@
 echo Y | rmdir docs /S
 echo Y | rmdir src /S
-echo F | xcopy /y /i C:\python313\Lib\site-packages\rivtlib\*.* .\src\
+echo F | xcopy /y /i C:\python313\Lib\site-packages\rivtlib\*.py .\src\
 pdoc --html --force --output-dir .\ .\src\api.py
 pdoc --html --force --output-dir .\ .\src\units.py
 pdoc --html --force --output-dir .\ .\src\folders.py

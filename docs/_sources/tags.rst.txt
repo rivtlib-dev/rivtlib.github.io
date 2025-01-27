@@ -1,9 +1,9 @@
-tag_rst
+tags
 =======
 
 tag rst test
 
 .. raw:: html
-    :file: tag_rst.html
+    :file: tags.html
 
 

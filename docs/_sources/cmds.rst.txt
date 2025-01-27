@@ -1,9 +1,9 @@
-cmd_rst
+cmds
 =======
 
 command rst test
 
 .. raw:: html
-    :file: cmd_rst.html
+    :file: cmds.html
 
 

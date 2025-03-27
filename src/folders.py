@@ -1,40 +1,53 @@
-"""parse rivtlib folder structure"""
+"""folders and global dicts"""
 
-
-from pathlib import Path
-import os
 import fnmatch
+import os
+import sys
+from pathlib import Path
 
+import __main__
+
+# initialize strings and dicts
+rstS = utfS = xrstS = xutfS = """"""
+labelD = folderD = rivtD = {}
+# print(f"{Path(projP, 'rivt-config.ini')=}")
 docS = "x.py"
 docP = "/"
 
+# rivt file in IDE
+curP = Path(os.getcwd())
+rivtP = curP
+print(f"{__name__=}")
+if __name__ == "rivtlib.folders":
+    argfileP = Path(__main__.__file__)
+    print(f"{argfileP=}")
+    rivN = argfileP.name
+    if fnmatch.fnmatch(rivN, "r????-*.py"):
+        rivP = Path(curP, rivN)
+        print(f"{rivN=}")
+        print(f"{curP=}")
+    else:
+        print(f"INFO     rivt file - {rivN}")
+        print(f"INFO     The name must match 'rddss-filename.py' where")
+        print(f"INFO     dd and ss are two digit integers")
+        sys.exit()
+else:
+    print(f"INFO  file path does not include a rivt file  - {curP}")
+    sys.exit()
 
-def get_riv_files(cur_dirP):
-    """list of rivt files
-    """
-
-    docpathP = Path(os.getcwd())
-    for fileS in os.listdir(docpathP):
-        # print(fileS)
-        if fnmatch.fnmatch(fileS, "riv????-*.py"):
-            docfileS = fileS
-            docP = Path(docpathP, docfileS)
-            # print(docP)
-            break
-    if docfileS == "xx":
-        print("INFO     rivt file not found")
-        exit()
-
-
-# files and paths
-baseS = docS.split(".py")[0]
+# input paths
+baseS = rivN.split(".py")[0]
 titleS = baseS.split("-")[1]
-projP = docP
-bakP = docP / ".".join((baseS, "bak"))
+dnumS = baseS.split("-")[0][1:3]
+projP = Path(os.path.dirname(curP))
+bakP = Path(curP / ".".join((baseS, "bak")))
 prfxS = baseS[0:7]
-dataP = Path(projP, "data")
 toolsP = Path(projP, "tools")
-
+docsP = Path(projP, "docs")
+insP = Path(curP / ("ins" + dnumS))
+valsP = Path(curP / ("vals" + dnumS))
+print(f"{insP=}")
+print(f"{valsP=}")
 # output paths
 reportP = Path(projP, "reports")
 xrivtP = Path(projP, "xrivt")
@@ -45,27 +58,18 @@ errlogP = Path(tempP, "rivt-log.txt")
 styleP = Path(projP, "reports", "pdf")
 valfileS = baseS.replace("riv", "val") + ".csv"
 readmeP = Path(projP, "README.txt")
+print(f"{projP=}")
+print(f"{rivtP=}")
 
-# config file
-config = ConfigParser()
-config.read(Path(projP, "config.ini"))
-headS = config.get('format', 'header')
-footS = config.get('format', 'footer')
-
-# global dictionaries and strings
-rivtS = """"""                              # rivt input string
-utfS = """"""                               # utf-8 output string
-rmeS = """"""                               # readme output string
-xremS = """"""                              # redacted readme string
-rstS = """"""                               # reST output string
-declareS = """"""                           # declares output string
-assignS = """"""                            # assigns output string
-rivtD = {}                                  # rivt object dictionary
-folderD = {}                                # folder dictionary
-for item in ["rivtP", "dataP", "readmeP", "reportP",
-             "dataP", "valfileS", "errlogP", "styleP", "tempP"]:
+# folder dict
+folderD = {}
+for item in ["rivtP", "docsP", "readmeP", "reportP",
+             "valsP", "insP", "errlogP", "styleP", "tempP"]:
     folderD[item] = eval(item)
+
+# label dict
 labelD = {
+    "baseS": baseS,                         # file base name
     "titleS": titleS,                       # document title
     "docnumS": prfxS,                       # doc number
     "sectS": "",                            # section title

@@ -7,25 +7,21 @@ copyright = '2023 StructureLabs'
 author = 'rholland'
 release = '0.1'
 
-myst_heading_anchors = 3
-
-myst_enable_extensions = ['substitution', 'deflist', 'attrs_block',
-                          'html_image', 'amsmath']
-
-extensions = ['myst_parser', 'sphinx.ext.githubpages',
+extensions = ['sphinx.ext.githubpages',
               "sphinxcontrib.jquery", 'sphinx_copybutton',
               'sphinx_favicon', 'sphinx.ext.duration',
               'sphinx.ext.doctest', 'sphinx.ext.autodoc']
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-source_suffix = ['.rst', '.md']
+source_suffix = ['.rst']
 
 html_theme = 'pydata_sphinx_theme'
 html_context = {"default_mode": "light"}
 html_sidebars = {"**": []}
-html_static_path = ['_static', '_static/img/']
+html_static_path = ['_static', '_static/img']
 html_logo = "_static/img/rivtpy64.png"
+html_css_files = ['css/custom.css',]
 html_theme_options = {
     "show_nav_level": 2,
     "show_toc_level": 3,

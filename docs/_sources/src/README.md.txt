@@ -1,2 +1,0 @@
-# rivtlib
-rivtlib source code

@@ -4,7 +4,7 @@
     :scale: 40 %
     :figwidth: image
     :align: center
-    :alt: rivt logo
+    :alt: rivtlib logo
 
 .. raw:: html
 
@@ -15,11 +15,12 @@
     </embed>
 
 
-**rivtlib Documentation**
+rivtlib Documentation
+=====================
 
 **rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
 package for writing and publishing engineering documents, with an emphasis on
-document reuse. It implements the **rivt** markup language and API described
+document reuse. It implements the **rivt** markup API and framework described
 here `rivt.info  <https://rivt.info>`_.  The source code is here `GitHub
 <https://github.com/rivtlib-net/rivtlib/>`_.
 
@@ -27,12 +28,8 @@ here `rivt.info  <https://rivt.info>`_.  The source code is here `GitHub
 .. toctree::
     :maxdepth: 1
 
-    init.rst
-    main.rst
+    api.rst
     parse.rst
+    tags.rst
+    cmds.rst
     units.rst
-    tag_rst.rst
-    tag_utf.rst
-    cmd_rst.rst
-    cmd_utf.rst
-

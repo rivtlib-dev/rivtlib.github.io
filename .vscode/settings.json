@@ -6,18 +6,8 @@
         "rivtcalc",
         "sympy"
     ],
+    "cSpell.enabled": false,
     "editor.formatOnSave": true,
     "inline-bookmarks.view.showVisibleFilesOnly": false,
-    "fsdeploy.nodes": [
-        {
-            "source": "e:/git/rivtlib.github.io/src/rivtlib",
-            "target": "e:/Python311/Lib/site-packages/rivtlib",
-            "include": "**/*.*",
-            "deleteTargetOnDeploy": true,
-        }
-    ],
-    "fsdeploy.deployOnSave": true,
-    "fsdeploy.deployWorkspaceOnSave": true,
     "debug.console.wordWrap": true,
-    "cSpell.enabled": false,
 }

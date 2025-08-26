@@ -24,6 +24,6 @@ described at `rivt.info <https://rivt.info>`_. The source code is here `GitHub
 
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 3
     
     rivtlib

@@ -9,7 +9,7 @@
 .. raw:: html
 
     <embed>
-        <h1 style="font-size:2em; text-align:center"> rivtlib.net </h1>
+        <h1 style="font-size:2em; text-align:center"> rivtlib.dev </h1>
         
         <hr width="100%" size="6" color="LightGrey" noshade>
     </embed>
@@ -32,6 +32,6 @@ here `rivt.info  <https://rivt.info>`_.  The source code is here `GitHub
     rvparse.rst
     rvtag.rst
     rvcmd.rst
-    rvunits.rst
     rvlabels.rst
     rvpub.rst
+    rvunits.rst

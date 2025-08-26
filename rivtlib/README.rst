@@ -1,4 +1,0 @@
-rivtlib
-========
-
-rivtlib source code

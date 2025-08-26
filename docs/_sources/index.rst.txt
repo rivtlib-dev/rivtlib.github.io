@@ -17,10 +17,10 @@
 
 
 **rivtlib** is an open source Python package for writing and publishing
-engineering documents, with an emphasis on document reuse. It implements
-**rivt** markup and an open source framework described here `rivt.info
-<https://rivt.info>`_. The source code is here `GitHub
-<https://github.com/rivtlib-net/rivtlib/>`_.
+engineering documents that can easily be shared, modified and reused. It implements
+**rivt** markup and an open source editing and publishing framework described
+at `rivt.info <https://rivt.info>`_. The source code is here `GitHub
+<https://github.com/rivtlib-dev/rivtlib/>`_.
 
 
 .. toctree::

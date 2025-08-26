@@ -15,27 +15,15 @@
     </embed>
 
 
-Documentation
-=====================
 
-**rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
-package for writing and publishing engineering documents, with an emphasis on
-document reuse. It implements the **rivt** markup API and framework described
-here `rivt.info  <https://rivt.info>`_.  The source code is here `GitHub
+**rivtlib** is an open source Python package for writing and publishing
+engineering documents, with an emphasis on document reuse. It implements
+**rivt** markup and an open source framework described here `rivt.info
+<https://rivt.info>`_. The source code is here `GitHub
 <https://github.com/rivtlib-net/rivtlib/>`_.
 
 
-Modules
-=====================
-
 .. toctree::
     :maxdepth: 1
-
-
-    rvapi.rst
-    rvparse.rst
-    rvtag.rst
-    rvcmd.rst
-    rvlabels.rst
-    rvpub.rst
-    rvunits.rst
+    
+    rivtlib

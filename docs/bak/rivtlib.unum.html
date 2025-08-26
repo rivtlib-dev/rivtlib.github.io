@@ -1,0 +1,810 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="dark">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" sizes="16x16" href="../_static/favicon-16x16.png" type="image/png">
+    <link rel="icon" sizes="32x32" href="../_static/favicon-32x32.png" type="image/png">
+    <title>rivtlib.unum package &#8212; rivtlib.dev 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=9226c430" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'bak/rivtlib.unum';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="dark">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../_static/rivtpy64.png" class="logo__image only-dark" alt="rivtlib.dev 0.1 documentation - Home"/>
+    <img src="../_static/rivtpy64.png" class="logo__image only-light pst-js-only" alt="rivtlib.dev 0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../rivtlib.html">
+    rivtlib package
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../rivtlib.html">
+    rivtlib package
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">rivtlib.unum package</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">rivtlib.unum package</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="rivtlib-unum-package">
+<h1>rivtlib.unum package<a class="headerlink" href="#rivtlib-unum-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-rivtlib.unum.core">
+<span id="rivtlib-unum-core-module"></span><h2>rivtlib.unum.core module<a class="headerlink" href="#module-rivtlib.unum.core" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Formatter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rivtlib.unum.core.</span></span><span class="sig-name descname"><span class="pre">Formatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Formatter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Formatter.DEFAULT_CONFIG">
+<span class="sig-name descname"><span class="pre">DEFAULT_CONFIG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'always_display_number':</span> <span class="pre">False,</span> <span class="pre">'auto_norm':</span> <span class="pre">False,</span> <span class="pre">'div_separator':</span> <span class="pre">'/',</span> <span class="pre">'indent':</span> <span class="pre">'</span> <span class="pre">',</span> <span class="pre">'mul_separator':</span> <span class="pre">'·',</span> <span class="pre">'superscript':</span> <span class="pre">True,</span> <span class="pre">'unit':</span> <span class="pre">None,</span> <span class="pre">'unit_format':</span> <span class="pre">'%s',</span> <span class="pre">'unitless':</span> <span class="pre">'[-]',</span> <span class="pre">'value_format':</span> <span class="pre">'%s'}</span></em><a class="headerlink" href="#rivtlib.unum.core.Formatter.DEFAULT_CONFIG" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Formatter.configure">
+<span class="sig-name descname"><span class="pre">configure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Formatter.configure" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Formatter.format">
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Formatter.format" title="Link to this definition">#</a></dt>
+<dd><p>Return our string representation, normalized if applicable.</p>
+<p>Normalization occurs if Unum.AUTO_NORM is set.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Formatter.format_number">
+<span class="sig-name descname"><span class="pre">format_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Formatter.format_number" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Formatter.format_unit">
+<span class="sig-name descname"><span class="pre">format_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Formatter.format_unit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rivtlib.unum.core.UnitDefinition">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rivtlib.unum.core.</span></span><span class="sig-name descname"><span class="pre">UnitDefinition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">definition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.UnitDefinition" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rivtlib.unum.core.UnitDefinition.definition">
+<span class="sig-name descname"><span class="pre">definition</span></span><a class="headerlink" href="#rivtlib.unum.core.UnitDefinition.definition" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rivtlib.unum.core.UnitDefinition.level">
+<span class="sig-name descname"><span class="pre">level</span></span><a class="headerlink" href="#rivtlib.unum.core.UnitDefinition.level" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rivtlib.unum.core.UnitDefinition.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#rivtlib.unum.core.UnitDefinition.name" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rivtlib.unum.core.UnitTable">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rivtlib.unum.core.</span></span><span class="sig-name descname"><span class="pre">UnitTable</span></span><a class="headerlink" href="#rivtlib.unum.core.UnitTable" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.UnitTable.get_definition">
+<span class="sig-name descname"><span class="pre">get_definition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.UnitTable.get_definition" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.UnitTable.is_basic">
+<span class="sig-name descname"><span class="pre">is_basic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.UnitTable.is_basic" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.UnitTable.is_derived">
+<span class="sig-name descname"><span class="pre">is_derived</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.UnitTable.is_derived" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.UnitTable.new_unit">
+<span class="sig-name descname"><span class="pre">new_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">definition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.UnitTable.new_unit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.UnitTable.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.UnitTable.reset" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rivtlib.unum.core.</span></span><span class="sig-name descname"><span class="pre">Unum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Encapsulates a value attached to a unit.</p>
+<p>Implements arithmetic operators, dynamic unit consistency checking, and
+string representation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.assert_no_unit">
+<span class="sig-name descname"><span class="pre">assert_no_unit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.assert_no_unit" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../rivtlib.html#rivtlib.rvcheck.ShouldBeUnitlessError" title="rivtlib.rvcheck.ShouldBeUnitlessError"><strong>ShouldBeUnitlessError</strong></a> – if self has a unit</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.cast_unit">
+<span class="sig-name descname"><span class="pre">cast_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.cast_unit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normalized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.copy" title="Link to this definition">#</a></dt>
+<dd><p>Return a copy of this Unum, normalizing the copy if specified.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.format_number">
+<span class="sig-name descname"><span class="pre">format_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.format_number" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.format_unit">
+<span class="sig-name descname"><span class="pre">format_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.format_unit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.formatter">
+<span class="sig-name descname"><span class="pre">formatter</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rivtlib.unum.core.Formatter</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#rivtlib.unum.core.Unum.formatter" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.is_basic">
+<span class="sig-name descname"><span class="pre">is_basic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.is_basic" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.is_unit">
+<span class="sig-name descname"><span class="pre">is_unit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.is_unit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.match_units">
+<span class="sig-name descname"><span class="pre">match_units</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.match_units" title="Link to this definition">#</a></dt>
+<dd><p>Return (self, other) where both Unums have the same units.</p>
+<p>Raises IncompatibleUnitsError if there is no way to do this.
+If there are multiple ways to do this, the units of self, then other
+are preferred, and then by maximum level.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.max_level">
+<span class="sig-name descname"><span class="pre">max_level</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.max_level" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the maximum level of self’s units</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.number">
+<span class="sig-name descname"><span class="pre">number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.number" title="Link to this definition">#</a></dt>
+<dd><p>Return the (normalized) raw value of self.</p>
+<p>If other is supplied, first convert to other’s units before returning
+the raw value.</p>
+<p>Raises NonBasicUnitError if other is supplied, but has a value other
+than 1. (e.g., kg.number(2*g) is an error, but kg.number(g) is ok.)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.replaced">
+<span class="sig-name descname"><span class="pre">replaced</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">definition</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.replaced" title="Link to this definition">#</a></dt>
+<dd><p>Return a Unum with the string u replaced by the Unum conv_unum.</p>
+<p>If u is absent from self, a copy of self is returned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.reset_format">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reset_format</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.reset_format" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.set_format">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.set_format" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.simplify_unit">
+<span class="sig-name descname"><span class="pre">simplify_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forDisplay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.simplify_unit" title="Link to this definition">#</a></dt>
+<dd><p>Normalize our units IN PLACE and return self.</p>
+<p>Substitutions may be applied to reduce the number of different units,
+while making the fewest substitutions.</p>
+<p>If forDisplay is True, then prefer a single unit to no unit.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.uniform">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.uniform" title="Link to this definition">#</a></dt>
+<dd><p>Return a unitless Unum if value is a number.</p>
+<p>If value is a Unum already, it is returned unmodified.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rivtlib.unum.core.Unum.unit">
+<span class="sig-name descname"><span class="pre">unit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.Unum.unit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rivtlib.unum.core.new_unit">
+<span class="sig-prename descclassname"><span class="pre">rivtlib.unum.core.</span></span><span class="sig-name descname"><span class="pre">new_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">definition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.new_unit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rivtlib.unum.core.uniform_unum">
+<span class="sig-prename descclassname"><span class="pre">rivtlib.unum.core.</span></span><span class="sig-name descname"><span class="pre">uniform_unum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.core.uniform_unum" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-rivtlib.unum.exceptions">
+<span id="rivtlib-unum-exceptions-module"></span><h2>rivtlib.unum.exceptions module<a class="headerlink" href="#module-rivtlib.unum.exceptions" title="Link to this heading">#</a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="rivtlib.unum.exceptions.ConversionError">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rivtlib.unum.exceptions.</span></span><span class="sig-name descname"><span class="pre">ConversionError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.exceptions.ConversionError" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../rivtlib.unum.html#rivtlib.unum.exceptions.UnumError" title="rivtlib.unum.exceptions.UnumError"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnumError</span></code></a></p>
+<p>Failed to convert a unit to the desired type.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="rivtlib.unum.exceptions.IncompatibleUnitsError">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rivtlib.unum.exceptions.</span></span><span class="sig-name descname"><span class="pre">IncompatibleUnitsError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.exceptions.IncompatibleUnitsError" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypeError</span></code></p>
+<p>An operation on two Unums failed because the units were incompatible.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="rivtlib.unum.exceptions.NameConflictError">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rivtlib.unum.exceptions.</span></span><span class="sig-name descname"><span class="pre">NameConflictError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.exceptions.NameConflictError" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../rivtlib.unum.html#rivtlib.unum.exceptions.UnumError" title="rivtlib.unum.exceptions.UnumError"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnumError</span></code></a></p>
+<p>Tried to define a symbol that was already defined.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="rivtlib.unum.exceptions.NonBasicUnitError">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rivtlib.unum.exceptions.</span></span><span class="sig-name descname"><span class="pre">NonBasicUnitError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.exceptions.NonBasicUnitError" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../rivtlib.unum.html#rivtlib.unum.exceptions.UnumError" title="rivtlib.unum.exceptions.UnumError"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnumError</span></code></a></p>
+<p>Expected a basic unit but got a non-basic unit.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="rivtlib.unum.exceptions.ShouldBeUnitlessError">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rivtlib.unum.exceptions.</span></span><span class="sig-name descname"><span class="pre">ShouldBeUnitlessError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.exceptions.ShouldBeUnitlessError" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypeError</span></code></p>
+<p>An operation on a Unum failed because it had units unexpectedly.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="rivtlib.unum.exceptions.UnumError">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rivtlib.unum.exceptions.</span></span><span class="sig-name descname"><span class="pre">UnumError</span></span><a class="headerlink" href="#rivtlib.unum.exceptions.UnumError" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>A Unum error occurred that was unrelated to dimensional errors.</p>
+</dd></dl>
+
+</section>
+<section id="module-rivtlib.unum.utils">
+<span id="rivtlib-unum-utils-module"></span><h2>rivtlib.unum.utils module<a class="headerlink" href="#module-rivtlib.unum.utils" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="rivtlib.unum.utils.as_number">
+<span class="sig-prename descclassname"><span class="pre">rivtlib.unum.utils.</span></span><span class="sig-name descname"><span class="pre">as_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.utils.as_number" title="Link to this definition">#</a></dt>
+<dd><p>Using:
+as_number(value, [places=])
+as_number(value, to_unit, [places=])
+as_number(value, from_unit, to_unit, [places=])</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – float or unum value to conversion</p></li>
+<li><p><strong>from_unit</strong> – unit which value has when is given as float or int</p></li>
+<li><p><strong>to_unit</strong> – unit for which numeric value is getting</p></li>
+<li><p><strong>places</strong> – round argument</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>evaluated float value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rivtlib.unum.utils.as_unit">
+<span class="sig-prename descclassname"><span class="pre">rivtlib.unum.utils.</span></span><span class="sig-name descname"><span class="pre">as_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.utils.as_unit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rivtlib.unum.utils.as_unum">
+<span class="sig-prename descclassname"><span class="pre">rivtlib.unum.utils.</span></span><span class="sig-name descname"><span class="pre">as_unum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.utils.as_unum" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rivtlib.unum.utils.decode">
+<span class="sig-prename descclassname"><span class="pre">rivtlib.unum.utils.</span></span><span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.utils.decode" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rivtlib.unum.utils.encode">
+<span class="sig-prename descclassname"><span class="pre">rivtlib.unum.utils.</span></span><span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.utils.encode" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rivtlib.unum.utils.is_unit">
+<span class="sig-prename descclassname"><span class="pre">rivtlib.unum.utils.</span></span><span class="sig-name descname"><span class="pre">is_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.utils.is_unit" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rivtlib.unum.utils.uarray">
+<span class="sig-prename descclassname"><span class="pre">rivtlib.unum.utils.</span></span><span class="sig-name descname"><span class="pre">uarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array_like</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.utils.uarray" title="Link to this definition">#</a></dt>
+<dd><p>Convenience function to return a Unum containing a numpy array.
+With current versions of numpy, we have the following undesirable behavior:
+&gt;&gt;&gt; from unum.units import M
+&gt;&gt;&gt; array([5,6,7,8]) * M
+array([5 [m], 6 [m], 7 [m], 8 [m]], dtype=object)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array_like</strong> – numpy array</p></li>
+<li><p><strong>args</strong> – args given to numpy array</p></li>
+<li><p><strong>kwargs</strong> – kwargs given to numpy</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Unum containing numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rivtlib.unum.utils.unitless">
+<span class="sig-prename descclassname"><span class="pre">rivtlib.unum.utils.</span></span><span class="sig-name descname"><span class="pre">unitless</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rivtlib.unum.utils.unitless" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-rivtlib.unum">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-rivtlib.unum" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-rivtlib.unum.core">rivtlib.unum.core module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Formatter"><code class="docutils literal notranslate"><span class="pre">Formatter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Formatter.DEFAULT_CONFIG"><code class="docutils literal notranslate"><span class="pre">Formatter.DEFAULT_CONFIG</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Formatter.configure"><code class="docutils literal notranslate"><span class="pre">Formatter.configure()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Formatter.format"><code class="docutils literal notranslate"><span class="pre">Formatter.format()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Formatter.format_number"><code class="docutils literal notranslate"><span class="pre">Formatter.format_number()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Formatter.format_unit"><code class="docutils literal notranslate"><span class="pre">Formatter.format_unit()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.UnitDefinition"><code class="docutils literal notranslate"><span class="pre">UnitDefinition</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.UnitDefinition.definition"><code class="docutils literal notranslate"><span class="pre">UnitDefinition.definition</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.UnitDefinition.level"><code class="docutils literal notranslate"><span class="pre">UnitDefinition.level</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.UnitDefinition.name"><code class="docutils literal notranslate"><span class="pre">UnitDefinition.name</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.UnitTable"><code class="docutils literal notranslate"><span class="pre">UnitTable</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.UnitTable.get_definition"><code class="docutils literal notranslate"><span class="pre">UnitTable.get_definition()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.UnitTable.is_basic"><code class="docutils literal notranslate"><span class="pre">UnitTable.is_basic()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.UnitTable.is_derived"><code class="docutils literal notranslate"><span class="pre">UnitTable.is_derived()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.UnitTable.new_unit"><code class="docutils literal notranslate"><span class="pre">UnitTable.new_unit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.UnitTable.reset"><code class="docutils literal notranslate"><span class="pre">UnitTable.reset()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum"><code class="docutils literal notranslate"><span class="pre">Unum</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.assert_no_unit"><code class="docutils literal notranslate"><span class="pre">Unum.assert_no_unit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.cast_unit"><code class="docutils literal notranslate"><span class="pre">Unum.cast_unit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.copy"><code class="docutils literal notranslate"><span class="pre">Unum.copy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.format_number"><code class="docutils literal notranslate"><span class="pre">Unum.format_number()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.format_unit"><code class="docutils literal notranslate"><span class="pre">Unum.format_unit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.formatter"><code class="docutils literal notranslate"><span class="pre">Unum.formatter</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.is_basic"><code class="docutils literal notranslate"><span class="pre">Unum.is_basic()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.is_unit"><code class="docutils literal notranslate"><span class="pre">Unum.is_unit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.match_units"><code class="docutils literal notranslate"><span class="pre">Unum.match_units()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.max_level"><code class="docutils literal notranslate"><span class="pre">Unum.max_level()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.number"><code class="docutils literal notranslate"><span class="pre">Unum.number()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.replaced"><code class="docutils literal notranslate"><span class="pre">Unum.replaced()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.reset_format"><code class="docutils literal notranslate"><span class="pre">Unum.reset_format()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.set_format"><code class="docutils literal notranslate"><span class="pre">Unum.set_format()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.simplify_unit"><code class="docutils literal notranslate"><span class="pre">Unum.simplify_unit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.uniform"><code class="docutils literal notranslate"><span class="pre">Unum.uniform()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.Unum.unit"><code class="docutils literal notranslate"><span class="pre">Unum.unit()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.new_unit"><code class="docutils literal notranslate"><span class="pre">new_unit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.core.uniform_unum"><code class="docutils literal notranslate"><span class="pre">uniform_unum()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-rivtlib.unum.exceptions">rivtlib.unum.exceptions module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.exceptions.ConversionError"><code class="docutils literal notranslate"><span class="pre">ConversionError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.exceptions.IncompatibleUnitsError"><code class="docutils literal notranslate"><span class="pre">IncompatibleUnitsError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.exceptions.NameConflictError"><code class="docutils literal notranslate"><span class="pre">NameConflictError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.exceptions.NonBasicUnitError"><code class="docutils literal notranslate"><span class="pre">NonBasicUnitError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.exceptions.ShouldBeUnitlessError"><code class="docutils literal notranslate"><span class="pre">ShouldBeUnitlessError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.exceptions.UnumError"><code class="docutils literal notranslate"><span class="pre">UnumError</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-rivtlib.unum.utils">rivtlib.unum.utils module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.utils.as_number"><code class="docutils literal notranslate"><span class="pre">as_number()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.utils.as_unit"><code class="docutils literal notranslate"><span class="pre">as_unit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.utils.as_unum"><code class="docutils literal notranslate"><span class="pre">as_unum()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.utils.decode"><code class="docutils literal notranslate"><span class="pre">decode()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.utils.encode"><code class="docutils literal notranslate"><span class="pre">encode()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.utils.is_unit"><code class="docutils literal notranslate"><span class="pre">is_unit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.utils.uarray"><code class="docutils literal notranslate"><span class="pre">uarray()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rivtlib.unum.utils.unitless"><code class="docutils literal notranslate"><span class="pre">unitless()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-rivtlib.unum">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2023 StructureLabs.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

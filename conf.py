@@ -15,7 +15,7 @@ extensions = ['sphinx.ext.githubpages','sphinx_togglebutton',
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-source_suffix = ['.rst', '.md']
+source_suffix = ['.rst', '.md', '*.py']
 master_doc = 'index'
 templates_path = ['_templates']
 locale_dirs = ['_locale'] 

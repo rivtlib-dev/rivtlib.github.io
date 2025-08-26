@@ -1,0 +1,31 @@
+{
+    "configurations": [
+        {
+            "name": "rivtCalc",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": true,
+            "console": "integratedTerminal",
+            "module": "rivt",
+            "args": [
+                "${file}"
+            ],
+            "cwd": "${fileDirname}",
+            "env": {
+                "name": "value"
+            }
+        },
+        {
+            "name": "Python",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": true,
+            "console": "integratedTerminal",
+            "program": "${file}",
+            "cwd": "${fileDirname}",
+            "env": {
+                "name": "value"
+            }
+        },
+    ]
+}

@@ -1,0 +1,274 @@
+{
+    "new R method": {
+        "prefix": "rvR",
+        "description": "add new Repo method",
+        "scope": "python",
+        "body": [
+            "rv.R(\"\"\"${1:section label} | ${2:calc title} | ${3:utf;pdf;html;inter} | ${4:start}",
+            "    ",
+            "    ${0:new Repo text}",
+            "    ",
+            "    \"\"\")"
+        ]
+    },
+    "new I method": {
+        "prefix": "rvI",
+        "description": "add new Insert method",
+        "scope": "python",
+        "body": [
+            "rv.I(\"\"\"${1:section label} | ${2:docfolder; default}",
+            "    ",
+            "    ${0:new Insert text}",
+            "    ",
+            "    \"\"\")"
+        ]
+    },
+    "new V method": {
+        "prefix": "rvV",
+        "description": "add new Value method",
+        "scope": "python",
+        "body": [
+            "rv.V(\"\"\"${1:section label} | ${2:docfolder; default} | ${3:sub; nosub} ",
+            "    ",
+            "    ${0:new Value text}",
+            "    ",
+            "    \"\"\")"
+        ]
+    },
+    "new T method": {
+        "prefix": "rvT",
+        "description": "add new Table method",
+        "scope": "python",
+        "body": [
+            "rv.T(\"\"\"${1:section label} | ${2:docfolder; default} ",
+            "    ",
+            "    ${0:new Table text}",
+            "    ",
+            "    \"\"\")"
+        ]
+    },
+    "image": {
+        "prefix": "|i1",
+        "description": "insert image",
+        "scope": "python",
+        "body": [
+            "|| image | ${1: filename} | ${0:0.5}"
+        ]
+    },
+    "image2": {
+        "prefix": "|i2",
+        "description": "insert side by side image",
+        "scope": "python",
+        "body": [
+            "|| image2 | ${1: filename} | ${0:0.5} | ${1: filename} | ${0:0.5}"
+        ]
+    },
+    "table": {
+        "prefix": "|t",
+        "description": "insert table ",
+        "scope": "python",
+        "body": [
+            "|| table | ${1: filename} | ${2:40} | ${3:[:]}"
+        ]
+    },
+    "text": {
+        "prefix": "|x",
+        "description": "read table from file",
+        "scope": "python",
+        "body": [
+            "|| text | ${1: filename} | ${0:plain} "
+        ]
+    },
+    "values": {
+        "prefix": "|v",
+        "description": "read values from file",
+        "scope": "python",
+        "body": [
+            "|| values | ${1: filename} | ${0:[:]} "
+        ]
+    },
+    "lists": {
+        "prefix": "|l",
+        "description": "read lists from file",
+        "scope": "python",
+        "body": [
+            "|| lists | ${1: filename} | ${0:[:]} "
+        ]
+    },
+    "functions": {
+        "prefix": "|f",
+        "description": "insert functions from file",
+        "scope": "python",
+        "body": [
+            "|| functions | ${1: filename} | ${0:docs} "
+        ]
+    },
+    "github": {
+        "prefix": "|g",
+        "description": "push calcs folder to github",
+        "scope": "python",
+        "body": [
+            "|| github | ${1: param1} | ${0:param2} "
+        ]
+    },
+    "project": {
+        "prefix": "|p",
+        "description": "insert project in",
+        "scope": "python",
+        "body": [
+            "|| project | ${1: file} | ${0:default} "
+        ]
+    },
+    "attach": {
+        "prefix": "|a",
+        "description": "attach pdf file",
+        "scope": "python",
+        "body": [
+            "|| attach | ${1: file} |  ${1: number} | ${0:default} |"
+        ]
+    },
+    "tag equation lable": {
+        "prefix": "_e",
+        "description": "equation label tag",
+        "scope": "python",
+        "body": [
+            "_[e]"
+        ]
+    },
+    "tag sympy equation": {
+        "prefix": "_s",
+        "description": "sympy equation tag",
+        "scope": "python",
+        "body": [
+            "_[s]"
+        ]
+    },
+    "tag latex equation": {
+        "prefix": "_x",
+        "description": "latex equation tag",
+        "scope": "python",
+        "body": [
+            "_[x]"
+        ]
+    },
+    "tag table title": {
+        "prefix": "_t",
+        "description": "table title tag",
+        "scope": "python",
+        "body": [
+            "_[t]"
+        ]
+    },
+    "tag paragraph title": {
+        "prefix": "_p",
+        "description": "paragraph heading - centered",
+        "scope": "python",
+        "body": [
+            "_[p]"
+        ]
+    },
+    "tag figure caption": {
+        "prefix": "_f",
+        "description": "figure caption",
+        "scope": "python",
+        "body": [
+            "_[f]"
+        ]
+    },
+    "tag footnote": {
+        "prefix": "_#",
+        "description": "tag a footnote ",
+        "scope": "python",
+        "body": [
+            "_[#]"
+        ]
+    },
+    "tag insert line": {
+        "prefix": "_-",
+        "description": "insert horizontal line",
+        "scope": "python",
+        "body": [
+            "_[-]"
+        ]
+    },
+    "tag new page": {
+        "prefix": "_n",
+        "description": "start new page",
+        "scope": "python",
+        "body": [
+            "_[n]"
+        ]
+    },
+    "tag right justify": {
+        "prefix": "_r",
+        "description": "right justify line",
+        "scope": "python",
+        "body": [
+            "_[r]"
+        ]
+    },
+    "tag center": {
+        "prefix": "_c",
+        "description": "center line",
+        "scope": "python",
+        "body": [
+            "_[c]"
+        ]
+    },
+    "tag footnote description": {
+        "prefix": "_o",
+        "description": "tag footnote description",
+        "scope": "python",
+        "body": [
+            "_[foot]"
+        ]
+    },
+    "tag url": {
+        "prefix": "_u",
+        "description": "tag url",
+        "scope": "python",
+        "body": [
+            "_[ https://${1: url} ${0: url label} url]"
+        ]
+    },
+    "block tag latex": {
+        "prefix": "__x",
+        "description": "tag latex block",
+        "scope": "python",
+        "body": [
+            "___[x]"
+        ]
+    },
+    "block tag math": {
+        "prefix": "__m",
+        "description": "tag latex math block",
+        "scope": "python",
+        "body": [
+            "___[m]"
+        ]
+    },
+    "block tag literal": {
+        "prefix": "__l",
+        "description": "tag literal text block",
+        "scope": "python",
+        "body": [
+            "___[l]"
+        ]
+    },
+    "block tag right": {
+        "prefix": "__r",
+        "description": "tag right justify block",
+        "scope": "python",
+        "body": [
+            "___[r]"
+        ]
+    },
+    "block tag center": {
+        "prefix": "__c",
+        "description": "tag center block",
+        "scope": "python",
+        "body": [
+            "___[c]"
+        ]
+    }
+}

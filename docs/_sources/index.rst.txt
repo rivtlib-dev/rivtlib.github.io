@@ -28,8 +28,10 @@ here `rivt.info  <https://rivt.info>`_.  The source code is here `GitHub
 .. toctree::
     :maxdepth: 1
 
-    api.rst
-    parse.rst
-    tags.rst
-    cmds.rst
-    units.rst
+    rvapi.rst
+    rvparse.rst
+    rvtag.rst
+    rvcmd.rst
+    rvunits.rst
+    rvlabels.rst
+    rvpub.rst

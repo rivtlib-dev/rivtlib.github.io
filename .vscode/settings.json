@@ -96,7 +96,4 @@
                 "useVsCodeApi": true,
                 "command": "settings.cycle.explorerSort2",
             },
-        ],
-    },
-    "iis.configDir": "",
-}
+        }

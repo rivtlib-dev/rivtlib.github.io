@@ -15,7 +15,7 @@
     </embed>
 
 
-rivtlib Documentation
+Documentation
 =====================
 
 **rivtlib** is a Python `open source <https://opensource.org/license/mit/>`_
@@ -25,8 +25,12 @@ here `rivt.info  <https://rivt.info>`_.  The source code is here `GitHub
 <https://github.com/rivtlib-net/rivtlib/>`_.
 
 
+Modules
+=====================
+
 .. toctree::
     :maxdepth: 1
+
 
     rvapi.rst
     rvparse.rst

@@ -1,5 +1,7 @@
 /* For overriding purposes */
 
+/* overrides */
+
 img.align-center {
     margin-left: auto;
     margin-right: auto;
@@ -8,13 +10,98 @@ img.align-center {
 }
 
 
-a {
-    color: #005580;
-    text-decoration: underline;
+html {
+    --pst-font-weight-heading: normal;
+    --pst-font-weight-base: normal;
+    --pst-font-size-base: 14px;
+    --pst-font-size-h1: 16px;
+    --pst-font-size-h2: 14px;
+    --pst-font-size-h3: 12px;
+    --pst-font-size-h4: 12px;
+    --pst-font-size-h5: 12px;
+    --pst-font-size-h6: 12px;
+
+}
+
+.toctree-l1>a {
+    font-size: 1em;
     font-weight: normal;
 }
 
+.toctree-l2>a {
+    font-size: 1em;
+    font-weight: normal;
+}
 
-a.underline {
-    text-decoration: underline
+.toctree-l3>a {
+    font-size: 1em;
+    font-weight: normal;
+}
+
+.indented-section {
+    margin-left: 2em;
+}
+
+.bd-toc-item a {
+    font-size: 0.8em;
+    /* Adjust this value as needed */
+}
+
+.bd-sidebar {
+    margin-top: 4em !important;
+}
+
+.bd-secondary-sidebar {
+    margin-top: 4em !important;
+}
+
+a {
+    color: hwb(200 11% 41%);
+    text-decoration: underline;
+    font-weight: 400;
+}
+
+html[data-theme="light"] a {
+    color: hwb(200 13% 47%);
+}
+
+html[data-theme="dark"] a {
+    color: hwb(200 15% 27%);
+}
+
+
+a.visited {
+    color: hwb(200 15% 27%);
+    text-decoration: underline;
+    font-weight: 400;
+
+}
+
+.right-next {
+    color: hwb(200 15% 27%);
+    font-weight: 300;
+    /* Replace with a color name or hex code */
+}
+
+.left-prev {
+    color: hwb(200 15% 27%);
+    font-weight: 300;
+    /* Replace with a color name or hex code */
+}
+
+.center {
+    text-align: center;
+}
+
+
+.left {
+    text-align: left;
+}
+
+hr {
+    height: 3px;
+    /* Adjust thickness as needed */
+    background-color: hwb(200 15% 27%);
+    /* Example: red color */
+    border: none;
 }

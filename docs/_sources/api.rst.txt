@@ -3,10 +3,14 @@ API Reference
 
 .. autosummary::
    :toctree: _autosummary
-   :recursive:
+   :recursive: 
 
-   rivtlib.rvlabels
-   rivtlib.rvtag
-   rivtlib.rvcmd
-   rivtlib.rvparse
-   rivtlib.rvpub
+   rvtag
+   rvcmd
+   rvpub
+   rvreport
+   rvcheck
+   rvunits
+   rvapi
+   rvlabels
+   rvparse

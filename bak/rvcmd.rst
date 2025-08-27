@@ -1,6 +1,0 @@
-rvcmds
-=======
-
-command test
-
-

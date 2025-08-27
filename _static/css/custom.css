@@ -13,13 +13,13 @@ img.align-center {
 html {
     --pst-font-weight-heading: normal;
     --pst-font-weight-base: normal;
-    --pst-font-size-base: 14px;
+    --pst-font-size-base: 16px;
     --pst-font-size-h1: 16px;
-    --pst-font-size-h2: 14px;
-    --pst-font-size-h3: 12px;
-    --pst-font-size-h4: 12px;
-    --pst-font-size-h5: 12px;
-    --pst-font-size-h6: 12px;
+    --pst-font-size-h2: 16px;
+    --pst-font-size-h3: 14px;
+    --pst-font-size-h4: 14px;
+    --pst-font-size-h5: 14px;
+    --pst-font-size-h6: 14px;
 
 }
 
@@ -34,16 +34,16 @@ html {
 }
 
 .toctree-l3>a {
-    font-size: 1em;
+    font-size: .9em;
     font-weight: normal;
 }
 
 .indented-section {
-    margin-left: 2em;
+    margin-left: 1em;
 }
 
 .bd-toc-item a {
-    font-size: 0.8em;
+    font-size: 1.1em;
     /* Adjust this value as needed */
 }
 

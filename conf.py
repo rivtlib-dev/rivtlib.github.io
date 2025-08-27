@@ -11,13 +11,13 @@ extensions = ['sphinx.ext.githubpages','sphinx_togglebutton',
               "sphinxcontrib.jquery", 'sphinx_copybutton',
               'sphinx_favicon', 'sphinx.ext.duration',
               'sphinx.ext.doctest', 'sphinx.ext.autodoc',
-              'sphinx_design', 'sphinx.ext.autosummary']
+              'sphinx_design', 'sphinx.ext.autosummary', 
+              'sphinx.ext.viewcode',]
 
-templates_path = ['_templates']
+templates_path = ['_static/templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-source_suffix = ['.rst', '.md', '*.py']
+source_suffix = ['.rst', '*.py']
 master_doc = 'index'
-templates_path = ['_templates']
 locale_dirs = ['_locale'] 
 autosummary_generate = True
 
@@ -30,6 +30,7 @@ html_css_files = ['css/custom.css',]
 html_theme_options = {
     "collapse_navigation": True ,
     "header_links_before_dropdown": 6,
+    "navbar_start": ["navbar-logo", "index_link"],
     "navbar_align": "left",
     "show_toc_level": 1,
     "navigation_depth": 1,

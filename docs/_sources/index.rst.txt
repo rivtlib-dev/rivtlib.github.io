@@ -24,7 +24,7 @@ is here `GitHub <https://github.com/rivtlib-dev/rivtlib/>`_.
 
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
     
     api
     rvtag

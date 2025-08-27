@@ -10,25 +10,57 @@
 
     <embed>
         <h1 style="font-size:2em; text-align:center"> rivtlib.dev </h1>
-        
-        <hr width="100%" size="6" color="LightGrey" noshade>
+        <br>
     </embed>
 
 
 
-**rivtlib** is an open source Python package for writing and publishing
-engineering documents that can be shared, modified and reused with minimum
-friction. It implements a markup up language and open source framework for
-editing and publishing (see `rivt.info <https://rivt.info>`_). The source code
-is here `GitHub <https://github.com/rivtlib-dev/rivtlib/>`_.
+**rivtlib** is an open source Python package for writing, sharing and modifying
+engineering documents with minimum friction. It implements a markup up language
+and open source framework for editing and publishing (see `rivt.info
+<https://rivt.info>`_). The source code is here `GitHub
+<https://github.com/rivtlib-dev/rivtlib/>`_.
+
+
+.. raw:: html
+
+    <embed>
+        <hr width="100%" size="6" color="LightGrey" noshade>
+        <br>
+    </embed>
 
 
 .. toctree::
     :maxdepth: 1
-    
-    api
-    rvtag
-    rvcmd
-    rvpub
-    rvreport
+
+    modules
+
+
+.. raw:: html
+
+    <br>
+
+
+.. toctree::
+    :maxdepth: 1
+
+    class
+
+
+.. raw:: html
+
+    <br>
+
+
+.. toctree::
+    :maxdepth: 2
+
     changelog
+
+.. raw:: html
+
+    <br>
+
+
+
+

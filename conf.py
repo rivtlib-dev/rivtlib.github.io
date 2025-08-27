@@ -20,6 +20,7 @@ source_suffix = ['.rst', '*.py']
 master_doc = 'index'
 locale_dirs = ['_locale'] 
 autosummary_generate = True
+toc_object_entries_show_parents = "all"
 
 html_theme = 'pydata_sphinx_theme'
 html_show_sourcelink = False
@@ -32,10 +33,11 @@ html_theme_options = {
     "header_links_before_dropdown": 6,
     "navbar_start": ["navbar-logo", "index_link"],
     "navbar_align": "left",
-    "show_toc_level": 1,
-    "navigation_depth": 1,
+    "show_toc_level": 2,
+    "navigation_depth": 2,
     "footer_start": ["copyright"],
     "footer_end": [],
+    
     "logo": {
         "image_dark": "_static/img/rivtpy64.png",
         "image_light": "_static/img/rivtpy64.png",
